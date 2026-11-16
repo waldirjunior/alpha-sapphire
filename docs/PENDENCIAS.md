@@ -32,7 +32,7 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-005 Conversão de modelos 3D `BCH`/`CGFX` para `.glb`
 
-- **Estado:** aberta
+- **Estado:** fechada
 - **Data:** 2026-11-16
-- **Evidência:** Os modelos 3D reais dos mapas (`BCH` na seção 1 de `a/0/3/9`) e Pokémon (`a/0/0/8`) foram localizados, mas `dotnet`, `mono`, `blender` e `gltf-transform` não estão instalados na VPS (`which dotnet mono blender gltf-transform` sem resultados).
-- **Próximo passo:** Instalar/configurar conversor `BCH → .glb` (via `.NET` + `SPICA` ou parser Python dedicado + `gltf-transform`) e carregar no `SceneManager` via `map.modelUrl` ([engine-3d/PRD-001](features/engine-3d/prds/PRD-001-cena-3d-e-glb-sob-demanda.md)).
+- **Evidência:** Instalados `.NET 8.0.428` (`/root/.dotnet`), `SPICA` + `SpicaExport` (`/opt/tools/SpicaExport`), `libgdiplus` e `assimp-utils` (`5.2`). Criado [scripts/convert_gr_to_glb.py](../scripts/convert_gr_to_glb.py) gerando `littleroot_town.glb` (`669 KB`), `route_101.glb` (`491 KB`) e `oldale_town.glb` (`991 KB`) em `public/assets/maps/` (ignorado pelo `.gitignore`), e integrado `GLTFLoader` em [SceneManager.ts](../src/engine/SceneManager.ts).
+- **Próximo passo:** Concluído para o vertical slice inicial; extrair texturas/modelos de personagens e Pokémon na sequência.

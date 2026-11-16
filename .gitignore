@@ -15,3 +15,4 @@ RomFS/
 *.cci
 *.bin
 node_modules
+public/assets/

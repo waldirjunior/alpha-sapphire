@@ -8,6 +8,7 @@ import route101 from './route_101.json';
 export const MAPS: Record<string, MapDefinition> = {
   littleroot_town: {
     ...littlerootTown,
+    modelUrl: '/assets/maps/littleroot_town.glb',
     interactables: [
       {
         id: 'littleroot_town_sign',
@@ -30,9 +31,13 @@ export const MAPS: Record<string, MapDefinition> = {
       },
     ],
   },
-  route_101: route101,
+  route_101: {
+    ...route101,
+    modelUrl: '/assets/maps/route_101.glb',
+  },
   oldale_town: {
     ...oldaleTown,
+    modelUrl: '/assets/maps/oldale_town.glb',
     interactables: [
       {
         id: 'oldale_town_sign',

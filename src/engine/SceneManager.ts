@@ -1,5 +1,8 @@
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { GameState, MapDefinition } from '../core/types';
+
+const ORAS_TILE_UNITS = 18;
 
 export class SceneManager {
   private scene: THREE.Scene;
@@ -7,6 +10,7 @@ export class SceneManager {
   private renderer: THREE.WebGLRenderer;
   private playerMesh: THREE.Mesh;
   private mapGroup: THREE.Group;
+  private gltfLoader = new GLTFLoader();
   private currentMapId = '';
 
   constructor(container: HTMLElement) {
@@ -119,6 +123,9 @@ export class SceneManager {
     if (this.currentMapId !== map.id) {
       this.currentMapId = map.id;
       this.buildMapPlaceholder(map);
+      if (map.modelUrl) {
+        this.loadMapModel(map);
+      }
     }
 
     this.playerMesh.position.x = state.player.pos.x;
@@ -131,6 +138,27 @@ export class SceneManager {
       state.player.pos.z + 8
     );
     this.camera.lookAt(state.player.pos.x, 0.5, state.player.pos.z);
+  }
+
+  private loadMapModel(map: MapDefinition): void {
+    if (!map.modelUrl) return;
+    const expectedMapId = map.id;
+    this.gltfLoader.load(
+      map.modelUrl,
+      (gltf) => {
+        if (this.currentMapId !== expectedMapId) return;
+        const model = gltf.scene;
+        const scale = 1 / ORAS_TILE_UNITS;
+        model.scale.setScalar(scale);
+        model.position.set(map.width / 2 - 0.5, 0, map.height / 2 - 0.5);
+        this.mapGroup.clear();
+        this.mapGroup.add(model);
+      },
+      undefined,
+      () => {
+        // Mantém placeholder geométrico caso o .glb não esteja disponível localmente.
+      }
+    );
   }
 
   public render(): void {
