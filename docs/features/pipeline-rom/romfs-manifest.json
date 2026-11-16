@@ -1,0 +1,18 @@
+{
+  "romfs_base_hex": "0x342000",
+  "total_directories": 40,
+  "total_files": 655,
+  "total_bytes": 1872201296,
+  "zero_byte_files": [
+    "a/0/8/7"
+  ],
+  "top_level_counts": {
+    "(root)": 146,
+    ".crr": 1,
+    "a": 299,
+    "m": 2,
+    "shader": 4,
+    "sound": 201,
+    "sounddebug": 2
+  }
+}

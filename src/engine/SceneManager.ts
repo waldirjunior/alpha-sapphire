@@ -72,12 +72,20 @@ export class SceneManager {
 
     const blockGeo = new THREE.BoxGeometry(0.95, 0.9, 0.95);
     const blockMat = new THREE.MeshStandardMaterial({ color: '#475569' });
+    const grassGeo = new THREE.BoxGeometry(0.92, 0.25, 0.92);
+    const grassMat = new THREE.MeshStandardMaterial({ color: '#16a34a' });
     for (let z = 0; z < map.height; z++) {
       for (let x = 0; x < map.width; x++) {
         if (map.collisions[z]?.[x] === 1) {
           const wall = new THREE.Mesh(blockGeo, blockMat);
           wall.position.set(x, 0.45, z);
           this.mapGroup.add(wall);
+          continue;
+        }
+        if (map.terrain?.[z]?.[x] === 2) {
+          const grass = new THREE.Mesh(grassGeo, grassMat);
+          grass.position.set(x, 0.125, z);
+          this.mapGroup.add(grass);
         }
       }
     }

@@ -1,11 +1,15 @@
 import type { Direction, GameState, GridPosition, MapDefinition } from './types';
 
-export function createInitialState(startMapId = 'littleroot_town'): GameState {
+export function createInitialState(
+  startMapId = 'littleroot_town',
+  maps?: Record<string, MapDefinition>
+): GameState {
+  const spawn = maps?.[startMapId]?.spawnPos;
   return {
     player: {
       id: 'local-player',
       mapId: startMapId,
-      pos: { x: 5, z: 5 },
+      pos: spawn ? { ...spawn } : { x: 5, z: 5 },
       facing: 'down',
     },
     storyFlags: {
@@ -27,6 +31,13 @@ export function isWalkable(map: MapDefinition, pos: GridPosition): boolean {
     return false;
   }
   return map.collisions[pos.z]?.[pos.x] === 0;
+}
+
+export function isTallGrass(map: MapDefinition, pos: GridPosition): boolean {
+  if (pos.x < 0 || pos.z < 0 || pos.x >= map.width || pos.z >= map.height) {
+    return false;
+  }
+  return map.terrain?.[pos.z]?.[pos.x] === 2;
 }
 
 export function movePlayer(

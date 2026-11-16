@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { createInitialState, movePlayer } from './gameState';
+import { MAPS as EXTRACTED_MAPS } from '../data/maps';
+import { createInitialState, isTallGrass, movePlayer } from './gameState';
 import type { MapDefinition } from './types';
 
 const TEST_MAPS: Record<string, MapDefinition> = {
@@ -48,5 +49,23 @@ describe('gameState', () => {
     const next = movePlayer(state, 'up', TEST_MAPS);
     expect(next.player.mapId).toBe('route_101');
     expect(next.player.pos).toEqual({ x: 5, z: 8 });
+  });
+
+  it('uses map spawnPos and traverses extracted 40x40 Hoenn maps', () => {
+    let state = createInitialState('littleroot_town', EXTRACTED_MAPS);
+    expect(state.player.pos).toEqual({ x: 20, z: 14 });
+
+    // Walk north from (20, 1) to warp at (20, 0) -> Route 101 (20, 38)
+    state = {
+      ...state,
+      player: { ...state.player, pos: { x: 20, z: 1 } },
+    };
+    state = movePlayer(state, 'up', EXTRACTED_MAPS);
+    expect(state.player.mapId).toBe('route_101');
+    expect(state.player.pos).toEqual({ x: 20, z: 38 });
+
+    // Detect tall grass tile extracted from GR 0005
+    expect(isTallGrass(EXTRACTED_MAPS.route_101, { x: 12, z: 25 })).toBe(true);
+    expect(isTallGrass(EXTRACTED_MAPS.littleroot_town, { x: 20, z: 14 })).toBe(false);
   });
 });
