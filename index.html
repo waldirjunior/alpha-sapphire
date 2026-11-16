@@ -54,6 +54,59 @@
       #dialogue-box.open {
         display: block;
       }
+      #battle-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 6, 23, 0.86);
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+      }
+      #battle-overlay.open {
+        display: flex;
+      }
+      #battle-card {
+        width: min(560px, calc(100% - 32px));
+        padding: 20px;
+        border-radius: 12px;
+        background: #0f172a;
+        border: 2px solid #f59e0b;
+        display: grid;
+        gap: 14px;
+      }
+      .battle-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: #1e293b;
+      }
+      #battle-log {
+        min-height: 76px;
+        max-height: 120px;
+        overflow-y: auto;
+        font-size: 13px;
+        line-height: 1.5;
+        color: #cbd5e1;
+      }
+      #battle-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      #battle-actions button {
+        padding: 8px 14px;
+        border-radius: 8px;
+        border: 1px solid #38bdf8;
+        background: #1e293b;
+        color: #f8fafc;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      #battle-actions button:hover {
+        background: #0284c7;
+      }
     </style>
   </head>
   <body>
@@ -64,6 +117,14 @@
       <div>Controles: WASD/Setas para mover · Espaço/Enter para interagir</div>
     </div>
     <div id="dialogue-box" role="dialog" aria-live="polite"></div>
+    <div id="battle-overlay" role="dialog" aria-modal="true">
+      <div id="battle-card">
+        <div class="battle-row" id="battle-enemy"></div>
+        <div class="battle-row" id="battle-player"></div>
+        <div id="battle-log"></div>
+        <div id="battle-actions"></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

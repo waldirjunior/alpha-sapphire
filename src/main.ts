@@ -1,11 +1,26 @@
-import { createInitialState, interact, movePlayer } from './core/gameState';
+import {
+  type BattleState,
+  createPokemonInstance,
+  executeBattleTurn,
+  rollWildEncounter,
+  runFromBattle,
+  startWildBattle,
+} from './core/battle';
+import { createInitialState, interact, isTallGrass, movePlayer } from './core/gameState';
 import type { Direction } from './core/types';
 import { MAPS } from './data/maps';
+import { ROUTE_101_ENCOUNTERS } from './data/pokemon/route101';
+import { SPECIES } from './data/pokemon/species';
 import { SceneManager } from './engine/SceneManager';
 
 const app = document.getElementById('app');
 const hudPos = document.getElementById('hud-pos');
 const dialogueBox = document.getElementById('dialogue-box');
+const battleOverlay = document.getElementById('battle-overlay');
+const battleEnemy = document.getElementById('battle-enemy');
+const battlePlayer = document.getElementById('battle-player');
+const battleLog = document.getElementById('battle-log');
+const battleActions = document.getElementById('battle-actions');
 
 if (!app) {
   throw new Error('Elemento #app não encontrado');
@@ -13,6 +28,60 @@ if (!app) {
 
 const sceneManager = new SceneManager(app);
 let state = createInitialState('littleroot_town', MAPS);
+let starter = createPokemonInstance(SPECIES.torchic, 5);
+let activeBattle: BattleState | null = null;
+
+function renderBattle(): void {
+  if (!battleOverlay || !battleEnemy || !battlePlayer || !battleLog || !battleActions) return;
+  if (!activeBattle) {
+    battleOverlay.classList.remove('open');
+    return;
+  }
+
+  battleOverlay.classList.add('open');
+  const b = activeBattle;
+  battleEnemy.textContent = `Selvagem: ${b.enemy.species.name} (Lv.${b.enemy.level}) — HP ${b.enemy.currentHp}/${b.enemy.maxHp}`;
+  battlePlayer.textContent = `Seu Pokémon: ${b.player.species.name} (Lv.${b.player.level}) — HP ${b.player.currentHp}/${b.player.maxHp}`;
+  battleLog.innerHTML = b.log.slice(-4).map((line) => `<div>${line}</div>`).join('');
+  battleActions.innerHTML = '';
+
+  if (b.status === 'ongoing') {
+    b.player.moves.forEach((move, idx) => {
+      const btn = document.createElement('button');
+      btn.textContent = `${move.name} (${move.type})`;
+      btn.onclick = () => {
+        if (!activeBattle) return;
+        activeBattle = executeBattleTurn(activeBattle, idx);
+        starter = activeBattle.player;
+        renderBattle();
+      };
+      battleActions.appendChild(btn);
+    });
+
+    const runBtn = document.createElement('button');
+    runBtn.textContent = 'Fugir';
+    runBtn.onclick = () => {
+      if (!activeBattle) return;
+      activeBattle = runFromBattle(activeBattle);
+      renderBattle();
+    };
+    battleActions.appendChild(runBtn);
+    return;
+  }
+
+  const closeBtn = document.createElement('button');
+  closeBtn.textContent = 'Voltar ao mapa';
+  closeBtn.onclick = () => {
+    if (activeBattle?.status === 'defeat') {
+      starter = createPokemonInstance(SPECIES.torchic, 5);
+      state = createInitialState('littleroot_town', MAPS);
+    }
+    activeBattle = null;
+    renderBattle();
+    syncUi();
+  };
+  battleActions.appendChild(closeBtn);
+}
 
 function syncUi(): void {
   sceneManager.sync(state, MAPS);
@@ -45,6 +114,8 @@ const KEY_TO_DIR: Record<string, Direction> = {
 };
 
 window.addEventListener('keydown', (event) => {
+  if (activeBattle) return;
+
   if (event.code === 'Space' || event.code === 'Enter') {
     event.preventDefault();
     state = interact(state, MAPS);
@@ -55,7 +126,20 @@ window.addEventListener('keydown', (event) => {
   const dir = KEY_TO_DIR[event.code];
   if (!dir) return;
 
+  const prevPos = state.player.pos;
   state = movePlayer(state, dir, MAPS);
+  const moved = prevPos.x !== state.player.pos.x || prevPos.z !== state.player.pos.z;
+  const currentMap = MAPS[state.player.mapId];
+
+  if (moved && currentMap && isTallGrass(currentMap, state.player.pos)) {
+    const encounter = rollWildEncounter(ROUTE_101_ENCOUNTERS);
+    const wildSpecies = encounter ? SPECIES[encounter.speciesId] : undefined;
+    if (encounter && wildSpecies) {
+      activeBattle = startWildBattle(starter, createPokemonInstance(wildSpecies, encounter.level));
+      renderBattle();
+    }
+  }
+
   syncUi();
 });
 
