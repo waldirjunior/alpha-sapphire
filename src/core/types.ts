@@ -11,6 +11,14 @@ export interface WarpPoint {
   targetPos: GridPosition;
 }
 
+export interface Interactable {
+  id: string;
+  pos: GridPosition;
+  kind: 'sign' | 'npc';
+  text: string;
+  setFlag?: string;
+}
+
 export interface MapDefinition {
   id: string;
   name: string;
@@ -23,8 +31,14 @@ export interface MapDefinition {
   /** 0 = normal, 1 = bloqueado, 2 = grama alta (encontro selvagem) */
   terrain?: number[][];
   warps: WarpPoint[];
+  interactables?: Interactable[];
   /** Caminho opcional para o modelo .glb extraído da ROM */
   modelUrl?: string;
+}
+
+export interface ActiveDialogue {
+  sourceId: string;
+  text: string;
 }
 
 export interface PlayerState {
@@ -37,4 +51,5 @@ export interface PlayerState {
 export interface GameState {
   player: PlayerState;
   storyFlags: Record<string, boolean>;
+  activeDialogue?: ActiveDialogue;
 }

@@ -35,15 +35,35 @@
       #hud strong {
         color: #38bdf8;
       }
+      #dialogue-box {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(640px, calc(100% - 32px));
+        padding: 16px 20px;
+        border-radius: 12px;
+        background: rgba(15, 23, 42, 0.94);
+        border: 2px solid #38bdf8;
+        font-size: 15px;
+        line-height: 1.5;
+        white-space: pre-line;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      }
+      #dialogue-box.open {
+        display: block;
+      }
     </style>
   </head>
   <body>
     <div id="app"></div>
     <div id="hud">
       <div><strong>Alpha Sapphire Web (Three.js)</strong> — v0.1.0</div>
-      <div id="hud-pos">Mapa: littleroot_town | Pos: (0, 0)</div>
-      <div>Controles: WASD ou Setas para mover</div>
+      <div id="hud-pos">Mapa: littleroot_town | Pos: (20, 14)</div>
+      <div>Controles: WASD/Setas para mover · Espaço/Enter para interagir</div>
     </div>
+    <div id="dialogue-box" role="dialog" aria-live="polite"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

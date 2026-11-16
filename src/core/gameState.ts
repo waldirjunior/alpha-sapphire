@@ -45,6 +45,8 @@ export function movePlayer(
   direction: Direction,
   maps: Record<string, MapDefinition>
 ): GameState {
+  if (state.activeDialogue) return state;
+
   const currentMap = maps[state.player.mapId];
   if (!currentMap) return state;
 
@@ -83,6 +85,41 @@ export function movePlayer(
       ...state.player,
       pos: nextPos,
       facing: direction,
+    },
+  };
+}
+
+export function interact(
+  state: GameState,
+  maps: Record<string, MapDefinition>
+): GameState {
+  if (state.activeDialogue) {
+    const { activeDialogue: _removed, ...rest } = state;
+    return rest;
+  }
+
+  const currentMap = maps[state.player.mapId];
+  if (!currentMap?.interactables?.length) return state;
+
+  const delta = DIRECTION_DELTAS[state.player.facing];
+  const targetPos: GridPosition = {
+    x: state.player.pos.x + delta.x,
+    z: state.player.pos.z + delta.z,
+  };
+
+  const target = currentMap.interactables.find(
+    (item) => item.pos.x === targetPos.x && item.pos.z === targetPos.z
+  );
+  if (!target) return state;
+
+  return {
+    ...state,
+    storyFlags: target.setFlag
+      ? { ...state.storyFlags, [target.setFlag]: true }
+      : state.storyFlags,
+    activeDialogue: {
+      sourceId: target.id,
+      text: target.text,
     },
   };
 }

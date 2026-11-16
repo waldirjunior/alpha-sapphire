@@ -1,10 +1,45 @@
 import type { MapDefinition } from '../../core/types';
+import littlerootTexts from '../texts/littleroot_town.json';
+import oldaleTexts from '../texts/oldale_town.json';
 import littlerootTown from './littleroot_town.json';
 import oldaleTown from './oldale_town.json';
 import route101 from './route_101.json';
 
 export const MAPS: Record<string, MapDefinition> = {
-  littleroot_town: littlerootTown,
+  littleroot_town: {
+    ...littlerootTown,
+    interactables: [
+      {
+        id: 'littleroot_town_sign',
+        pos: { x: 19, z: 14 },
+        kind: 'sign',
+        text: littlerootTexts.lines[9] ?? 'Littleroot Town',
+        setFlag: 'read_littleroot_sign',
+      },
+      {
+        id: 'birch_lab_sign',
+        pos: { x: 17, z: 23 },
+        kind: 'sign',
+        text: littlerootTexts.lines[10] ?? "Professor Birch's Pokémon Lab",
+      },
+      {
+        id: 'littleroot_npc_warning',
+        pos: { x: 20, z: 4 },
+        kind: 'npc',
+        text: littlerootTexts.lines[3] ?? 'Watch out for wild Pokémon in the tall grass!',
+      },
+    ],
+  },
   route_101: route101,
-  oldale_town: oldaleTown,
+  oldale_town: {
+    ...oldaleTown,
+    interactables: [
+      {
+        id: 'oldale_town_sign',
+        pos: { x: 20, z: 25 },
+        kind: 'sign',
+        text: oldaleTexts.lines[2] ?? 'Oldale Town',
+      },
+    ],
+  },
 };

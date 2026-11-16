@@ -14,3 +14,4 @@ RomFS/
 *.cfa
 *.cci
 *.bin
+node_modules

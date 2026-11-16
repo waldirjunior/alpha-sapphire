@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { MAPS as EXTRACTED_MAPS } from '../data/maps';
-import { createInitialState, isTallGrass, movePlayer } from './gameState';
+import { createInitialState, interact, isTallGrass, movePlayer } from './gameState';
 import type { MapDefinition } from './types';
 
 const TEST_MAPS: Record<string, MapDefinition> = {
@@ -67,5 +67,44 @@ describe('gameState', () => {
     // Detect tall grass tile extracted from GR 0005
     expect(isTallGrass(EXTRACTED_MAPS.route_101, { x: 12, z: 25 })).toBe(true);
     expect(isTallGrass(EXTRACTED_MAPS.littleroot_town, { x: 20, z: 14 })).toBe(false);
+  });
+
+  it('opens and closes dialogue when interacting with a sign and pauses movement', () => {
+    const mapsWithSign: Record<string, MapDefinition> = {
+      ...TEST_MAPS,
+      littleroot_town: {
+        ...TEST_MAPS.littleroot_town,
+        interactables: [
+          {
+            id: 'town_sign',
+            pos: { x: 5, z: 4 },
+            kind: 'sign',
+            text: 'Littleroot Town',
+            setFlag: 'read_town_sign',
+          },
+        ],
+      },
+    };
+
+    let state = createInitialState();
+    state = {
+      ...state,
+      player: { ...state.player, pos: { x: 5, z: 5 }, facing: 'up' },
+    };
+
+    state = interact(state, mapsWithSign);
+    expect(state.activeDialogue).toEqual({
+      sourceId: 'town_sign',
+      text: 'Littleroot Town',
+    });
+    expect(state.storyFlags.read_town_sign).toBe(true);
+
+    // Movement is paused while dialogue is active
+    const duringDialogue = movePlayer(state, 'right', mapsWithSign);
+    expect(duringDialogue.player.pos).toEqual({ x: 5, z: 5 });
+
+    // Second interact closes dialogue
+    state = interact(state, mapsWithSign);
+    expect(state.activeDialogue).toBeUndefined();
   });
 });

@@ -97,6 +97,19 @@ export class SceneManager {
       marker.position.set(warp.from.x, 0.05, warp.from.z);
       this.mapGroup.add(marker);
     }
+
+    if (map.interactables?.length) {
+      const signGeo = new THREE.BoxGeometry(0.55, 0.7, 0.55);
+      const signMat = new THREE.MeshStandardMaterial({ color: '#eab308' });
+      const npcGeo = new THREE.CapsuleGeometry(0.32, 0.5, 4, 8);
+      const npcMat = new THREE.MeshStandardMaterial({ color: '#f43f5e' });
+      for (const item of map.interactables) {
+        const isNpc = item.kind === 'npc';
+        const mesh = new THREE.Mesh(isNpc ? npcGeo : signGeo, isNpc ? npcMat : signMat);
+        mesh.position.set(item.pos.x, isNpc ? 0.57 : 0.35, item.pos.z);
+        this.mapGroup.add(mesh);
+      }
+    }
   }
 
   public sync(state: GameState, maps: Record<string, MapDefinition>): void {
