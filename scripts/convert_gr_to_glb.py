@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -16,7 +17,7 @@ from pathlib import Path
 SPICA_EXPORT = Path("/opt/tools/SpicaExport/bin/Release/net8.0/SpicaExport")
 
 
-def convert_gr_to_glb(gr_path: Path, glb_path: Path) -> None:
+def convert_gr_to_glb(gr_path: Path, glb_path: Path, textures_path: Path | None = None) -> None:
     if not SPICA_EXPORT.is_file():
         raise FileNotFoundError(f"SpicaExport não encontrado em: {SPICA_EXPORT}")
     if not gr_path.is_file():
@@ -27,13 +28,19 @@ def convert_gr_to_glb(gr_path: Path, glb_path: Path) -> None:
 
     with tempfile.TemporaryDirectory() as tmp:
         dae_path = Path(tmp) / f"{glb_path.stem}.dae"
-        subprocess.run([str(SPICA_EXPORT), str(gr_path), str(dae_path)], check=True, env=env)
+        cmd = [str(SPICA_EXPORT), str(gr_path), str(dae_path)]
+        if textures_path is not None and textures_path.is_file():
+            cmd.append(str(textures_path))
+        subprocess.run(cmd, check=True, env=env)
         subprocess.run(["assimp", "export", str(dae_path), str(glb_path)], check=True)
+        for png in Path(tmp).glob("*.png"):
+            shutil.copy2(png, glb_path.parent / png.name)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Converte GRs selecionados para .glb.")
     parser.add_argument("--gr-dir", required=True, type=Path)
+    parser.add_argument("--textures", type=Path, default=None, help="Arquivo AD/BCH com texturas de área")
     parser.add_argument("--out-dir", required=True, type=Path)
     args = parser.parse_args()
 
@@ -44,8 +51,8 @@ def main() -> int:
     }
 
     for map_id, gr_name in targets.items():
-        out_glb = args.out_dir / f"{map_id}.glb"
-        convert_gr_to_glb(args.gr_dir / gr_name, out_glb)
+        out_glb = args.out_dir / map_id / f"{map_id}.glb"
+        convert_gr_to_glb(args.gr_dir / gr_name, out_glb, args.textures)
         print(f"Gerado {out_glb} ({out_glb.stat().st_size} bytes)")
 
     return 0
