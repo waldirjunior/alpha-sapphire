@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.vite/
+*.log
+.DS_Store
+
+# ROMs e arquivos extraidos proprietarios (nunca commitar no Git)
+rom/
+raw-assets/
+RomFS/
+*.3ds
+*.cia
+*.cxi
+*.cfa
+*.cci
+*.bin

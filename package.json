@@ -1,0 +1,22 @@
+{
+  "name": "alpha-sapphire-threejs",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Reconstrução web em Three.js de Pokémon Alpha Sapphire com pipeline de extração de ROM, testes automatizados e documentação para TCC.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.170.0",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.5"
+  }
+}
