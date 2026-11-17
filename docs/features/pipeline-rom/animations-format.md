@@ -9,7 +9,7 @@ Nenhum arquivo de `src/` foi alterado. Não houve extração/conversão em lote.
 `GF1MotionPack`.** O SPICA já implementa esse formato em `Formats/GFL/`.
 O wrapper local usa incorretamente `Formats/GFL2/GFMotionPack` e captura a
 exceção sem informar que descartou a animação. Não é preciso inventar outro
-codec para Brendan/May.
+codec para MM 0314/MM 0315.
 
 Os clipes de batalha estão no mini pacote `PB`, seção 0. `PK` contém outra
 família de ações, identificada pelos nomes `kw*` (sleep/eat/happy/touch), não
@@ -98,7 +98,7 @@ AN-E1/AN-E4:
 | `0x08` | u32[N-1] | Ponteiros de clipes; zero = ausente |
 
 O índice original do clipe é `posição_na_tabela - 1`. **Não compacte os
-índices ao descartar ponteiros zero.** Em Brendan, o segundo clipe presente
+índices ao descartar ponteiros zero.** Em MM 0314, o segundo clipe presente
 é índice 2, não índice 1. `GF1Motion.Index` preserva essa identidade; o
 indexador `pack[i]` é uma lista compactada.
 
@@ -117,11 +117,11 @@ No endereço do primeiro ponteiro:
 5. `boneCount` registros de 28 bytes: translation XYZ float32 e quaternion
    de quatro float32 (ordem exata conforme `ReadQuaternion` do SPICA).
 
-Brendan: nomes acabam em `0x57a`, poses acabam em `0xa30`; primeiro clipe
-em `0xa50`. May: nomes acabam em `0x57e`, poses acabam em `0xa34`; primeiro
+MM 0314: nomes acabam em `0x57a`, poses acabam em `0xa30`; primeiro clipe
+em `0xa50`. MM 0315: nomes acabam em `0x57e`, poses acabam em `0xa34`; primeiro
 clipe em `0xa54`. Os bytes entre poses e primeiro clipe não foram
 interpretados. Os 43 bones GF1 **não** equivalem aos 50 joints do BCH de
-Brendan: use nomes, não índices de joints, para aplicar o motion.
+MM 0314: use nomes, não índices de joints, para aplicar o motion.
 
 ### Registro de clipe e curvas
 
@@ -160,7 +160,7 @@ qualifica a escala de slope como empírica. Isso não prova fidelidade exata
 
 AN-E4; offsets relativos à seção 1:
 
-| Índice GF1 | Brendan offset / frames | May offset / frames |
+| Índice GF1 | MM 0314 offset / frames | MM 0315 offset / frames |
 | --- | --- | --- |
 | 0 | `0xa50` / 1 | `0xa54` / 1 |
 | 2 | `0xe20` / 14 | `0xe30` / 14 |
@@ -281,8 +281,8 @@ como números e verificados com `math.isfinite`, incluindo geometria/skin:
 
 | Amostra | Resultado observado |
 | --- | --- |
-| Wrapper anterior, Brendan índice 2 | DAE sem canais de animação |
-| Novo conversor, Brendan índice 2 | GLB 286532 bytes, 1 skin, `motion_2`, 150 canais, 126 samplers variáveis, duração 14/30 s |
+| Wrapper anterior, MM 0314 índice 2 | DAE sem canais de animação |
+| Novo conversor, MM 0314 índice 2 | GLB 286532 bytes, 1 skin, `motion_2`, 150 canais, 126 samplers variáveis, duração 14/30 s |
 | Novo conversor, Bulbasaur PB índice 3 | GLB 492852 bytes, 1 skin, `motion_3`, 195 canais, 177 samplers variáveis, duração 15/30 s |
 | Novo conversor, Bulbasaur PB índice 8 | GLB 584008 bytes, 1 skin, `motion_8`, 195 canais, 177 samplers variáveis, duração 50/30 s |
 
@@ -321,3 +321,130 @@ importado). Não se arredondam poses nem se geram movimentos novos.
 - Expressões exigem transportar/materializar os BCHs de material e
   visibilidade, sincronizando-os com o mesmo índice GF1; este conversor
   esquelético não faz isso. Manter `P-012` aberta até integrar e comparar.
+
+## Integração nos GLBs texturizados
+
+[attach_native_motions.py](../../../scripts/attach_native_motions.py) é o
+wrapper pós-conversão de `extract_pokemon_glb.py` e
+`convert_character_glb.py`: recebe os GLBs produzidos por esses pipelines,
+exporta cada clipe GF1 com `native_motions.py` e anexa apenas os canais e
+buffers de animação. Não reconverte nem substitui geometria, materiais,
+imagens ou skin do GLB-base. Assim preserva PT/texturas de Pokémon e o
+filtro `sw_parts` já aplicado a personagens.
+
+[glb_native_clips.py](../../../scripts/glb_native_clips.py) faz o merge
+binário, preservando o BIN original como prefixo e copiando somente
+bufferViews/accessors referenciados pelos samplers de animação. Alvos são
+resolvidos por nome **dentro de `skin.joints`**, não por índice nem por uma
+busca global de nomes: Treecko possui um joint e um nó de modelo chamados
+`pm0252_00`. Um teste reproduziu a rejeição indevida desses nomes duplicados
+antes de restringir o lookup aos joints. Nomes duplicados entre joints,
+joints ausentes e inverse bind matrices incompatíveis continuam sendo
+erros, não retargeting silencioso.
+
+O contrato é GLB 2 com um buffer embutido, uma skin e curvas float32 não
+sparse. A compatibilidade de bind pose usa tolerância absoluta `1e-4` e
+relativa `1e-5`. Geometria dos probes exportados não é copiada. Um clipe
+nativo substitui somente a animação de mesmo nome; outras animações são
+preservadas. O output deve ser novo: arquivos existentes não são sobrescritos.
+
+### Manifesto explícito e execução serial
+
+Use um array JSON de jobs. Caminhos relativos são resolvidos em relação ao
+manifesto. Cada job exige `source`, `base_glb` e `output`:
+
+- Pokémon: `source` aponta ao GARC e `model_slot` identifica o PC; o wrapper
+  exige PB em `model_slot+5`, sem interpretar PK como batalha.
+- Personagem: `source` aponta ao MM; omita `model_slot`.
+- `clips` opcional mapeia nome final para índice GF1 original. Quando
+  explícito, índice ausente é erro.
+- Sem `clips`, PB seleciona `idle=0`, `physical=8`, `special=12`,
+  `damage=16`, `faint=17`; ausência no source é reportada em `unavailable`,
+  nunca substituída por movimento procedural. MM seleciona todos os clipes
+  presentes como `overworld_NNN`, sem adivinhar semântica.
+- `animations[].extras` registra `nativeGF1`, `sourceFamily`, `sourceIndex`,
+  `sourceFrames` e `sourceFps=30` para rastreabilidade.
+
+```json
+[
+  {
+    "source": "../RomFS/a/0/0/8",
+    "model_slot": 2795,
+    "base_glb": "pokemon/treecko/treecko.glb",
+    "output": "native_validation/treecko.glb"
+  },
+  {
+    "source": "../garc/a_0_2_1/0315.bin",
+    "base_glb": "characters/mm_0315/mm_0315.glb",
+    "output": "native_validation/brendan.glb",
+    "clips": {"overworld_002": 2, "overworld_093": 93}
+  }
+]
+```
+
+O exemplo assume manifesto em `rom/extracted/models/`. Antes de executá-lo,
+confirme `git check-ignore -v rom/extracted/models/native_validation/treecko.glb`
+no checkout que contém os dados. Não gere manifestos com caminhos pessoais
+ou assets proprietários versionados.
+
+```bash
+python3 -B scripts/attach_native_motions.py --manifest "$JOBS" --plan
+nice -n 10 python3 -B scripts/attach_native_motions.py --manifest "$JOBS" \
+  --spica-dll "$TOOLS/SpicaExport/bin/Release/net8.0/SPICA.dll" \
+  --blender "$HOME/Applications/Blender3.4.app/Contents/MacOS/Blender"
+python3 -B -m unittest scripts/test_glb_native_clips.py \
+  scripts/test_native_motions.py scripts/test_pipeline.py
+```
+
+Não há varredura automática, paralelismo ou batch implícito. `--plan` lê
+somente os modelos/motions explicitamente solicitados e não chama Blender.
+O script está preparado para manifestos maiores em uma janela futura de
+CPU; a validação desta mudança usa somente quatro modelos, serialmente.
+Expressões BCH de UV/visibilidade continuam fora do merge esquelético.
+
+### Amostras integradas e verificação AN-E8
+
+Saídas locais no checkout principal, em
+`rom/extracted/models/native_validation/`, confirmadas ignoradas antes da
+conversão. Foram quatro modelos e onze clipes, em execução serial com
+`nice -n 10`; o batch de GRs em outra frente não foi alterado.
+
+| Arquivo | Origem | Bytes | Skin / joints | Imagens / materiais | Clipes nativos e frames |
+| --- | --- | ---: | --- | --- | --- |
+| `treecko.glb` | PC 2795, PB 2800, tag `pm0252_00` | 1437164 | 1 / 64 | 3 / 5 | idle 40, physical 80, special 70, damage 20, faint 50 |
+| `brendan.glb` | MM 0315, `rstr0002_00_fi` | 551648 | 1 / 50 | 3 / 3 | overworld_002 14, overworld_093 36 |
+| `wally.glb` | MM 0180, `rstr0010_00_fi` | 415792 | 1 / 34 | 3 / 3 | overworld_002 14, overworld_093 36 |
+| `roxanne.glb` | MM 0187, `rstr0017_00_fi` | 408308 | 1 / 36 | 3 / 3 | overworld_002 14, overworld_093 36 |
+
+Os nomes Wally/Roxanne seguem a
+[lista comunitária de modelos ORAS](https://gbatemp.net/threads/release-useful-notes-about-oras-for-romhacking.410017/),
+consultada via resultados de busca (acesso direto retornou 403), não uma
+identificação visual nesta investigação. Os IDs e tags acima foram lidos
+localmente. `convert_character_glb.py` e essa lista concordam em
+`0315=Brendan`, `0314=May`; os rótulos da investigação inicial foram
+corrigidos para IDs de arquivo nesta página. Ver correção em `A-011`.
+
+Verificações executadas para todos os quatro arquivos:
+
+- O BIN original é prefixo byte a byte do novo buffer. Todos os campos
+  JSON originais, exceto animations/accessors/bufferViews/buffers, são
+  idênticos; isso inclui meshes, nós, skin, materiais, imagens e texturas.
+- Todas as imagens continuam embutidas e todos os accessors float32 finais
+  são finitos, incluindo geometria e inverse bind matrices.
+- Todos os alvos dos clipes nativos pertencem à skin. Cada sampler começa
+  em zero e termina em `sourceFrames/30`, com tolerância `1e-5` s.
+- Treecko: 192 canais e 180 samplers numericamente variáveis por clipe;
+  Brendan: 150/126; Wally: 102/96; Roxanne: 108/102.
+- `idle` de Treecko foi substituído pelo nativo. Os personagens mantêm os
+  antigos idle/walk procedurais e recebem os dois `overworld_NNN`; não se
+  atribuiu semântica sem evidência a esses IDs.
+- Passaram 28 testes Python (13 novos de merge/integração, 7 nativos e 8
+  existentes), 32 testes Vitest e `npm run build` com o aviso conhecido de
+  bundle maior que 500 kB. O primeiro teste de merge falhou antes do módulo
+  existir; a regressão de nome duplicado falhou antes da correção.
+
+Persistem os avisos CA1416, IOR/NumPy e `cannot find bone Jaw` em Treecko.
+O merge não copia a geometria desses probes e preserva a skin do GLB-base,
+mas não reconstitui o bone perdido no pipeline existente. Não houve
+comparação visual, validação de looping/emulador ou reprodução de expressões;
+`P-012` permanece em andamento.
