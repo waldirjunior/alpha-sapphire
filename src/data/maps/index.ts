@@ -114,6 +114,24 @@ export const MAPS: Record<string, MapDefinition> = {
   route_103: {
     ...route103,
     modelUrl: '/assets/maps/route_103/route_103.glb',
+    interactables: [
+      {
+        id: 'rival_may_103',
+        pos: { x: 20, z: 16 },
+        kind: 'npc',
+        npcModel: 'may',
+        facing: 'down',
+        sightRange: 3,
+        text: 'May: Ei! Que tal testarmos quem treinou melhor até agora na Route 103?',
+        requiredFlag: 'defeated_trainer:rival_may_103',
+        altText: 'May: Você mandou muito bem! Nos vemos no caminho para Petalburg!',
+        trainer: {
+          name: 'Rival May',
+          speciesId: 'treecko',
+          level: 5,
+        },
+      },
+    ],
   },
   route_102: {
     ...route102,
@@ -124,7 +142,16 @@ export const MAPS: Record<string, MapDefinition> = {
         pos: { x: 22, z: 20 },
         kind: 'npc',
         npcModel: 'npc',
+        facing: 'left',
+        sightRange: 3,
         text: 'Youngster Calvin: Vamos testar nossos Pokémon na Route 102!',
+        requiredFlag: 'defeated_trainer:route_102_trainer_calvin',
+        altText: 'Youngster Calvin: Seu Pokémon já está bem treinado!',
+        trainer: {
+          name: 'Youngster Calvin',
+          speciesId: 'poochyena',
+          level: 5,
+        },
       },
     ],
   },

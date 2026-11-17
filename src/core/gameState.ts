@@ -1,4 +1,4 @@
-import type { Direction, GameState, GridPosition, MapDefinition } from './types';
+import type { Direction, GameState, GridPosition, Interactable, MapDefinition } from './types';
 
 export function createInitialState(
   startMapId = 'littleroot_town',
@@ -137,4 +137,33 @@ export function interact(
       text: resolvedText,
     },
   };
+}
+
+/** Verifica se o jogador entrou na linha de visão de algum treinador ainda não derrotado. */
+export function findTriggeredTrainer(
+  state: GameState,
+  maps: Record<string, MapDefinition>
+): Interactable | null {
+  if (state.activeDialogue) return null;
+  const currentMap = maps[state.player.mapId];
+  if (!currentMap?.interactables?.length) return null;
+
+  for (const item of currentMap.interactables) {
+    if (!item.trainer || !item.facing || !item.sightRange) continue;
+    if (state.storyFlags[`defeated_trainer:${item.id}`]) continue;
+
+    const delta = DIRECTION_DELTAS[item.facing];
+    for (let step = 1; step <= item.sightRange; step++) {
+      const checkPos: GridPosition = {
+        x: item.pos.x + delta.x * step,
+        z: item.pos.z + delta.z * step,
+      };
+      if (!isWalkable(currentMap, checkPos)) break;
+      if (checkPos.x === state.player.pos.x && checkPos.z === state.player.pos.z) {
+        return item;
+      }
+    }
+  }
+
+  return null;
 }

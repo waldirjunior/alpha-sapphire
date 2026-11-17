@@ -17,6 +17,6 @@ Atualmente o jogador começa direto na praça de Littleroot Town sem a sequênci
 
 ## 3. Critérios de Aceite
 
-- [ ] Fluxo completo da história inicial (`Casa → Lab → Route 101 (Birch + Inicial) → Oldale → Route 103 (Rival) → Petalburg`) controlado por `storyFlags` em `src/core/`.
-- [ ] Cobertura de testes unitários em Vitest para eventos, inventário e linha de visão de treinadores.
-- [ ] `npm test && npm run build` passando.
+- [x] Fluxo inicial com interiores (`brendan_house`, `birch_lab`, `oldale_pokecenter`), mochila (`Poké Ball`/`Potion`), flags de história e Rival May na `Route 103` controlados por `storyFlags` em `src/core/`.
+- [x] Cobertura de testes unitários em Vitest para eventos, inventário (`bag.test.ts`) e linha de visão de treinadores (`findTriggeredTrainer`).
+- [x] `npm test && npm run build` passando.

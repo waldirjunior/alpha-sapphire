@@ -13,6 +13,12 @@ export interface WarpPoint {
   blockedMessage?: string;
 }
 
+export interface TrainerSpec {
+  name: string;
+  speciesId: string;
+  level: number;
+}
+
 export interface Interactable {
   id: string;
   pos: GridPosition;
@@ -22,6 +28,9 @@ export interface Interactable {
   altText?: string;
   setFlag?: string;
   npcModel?: 'may' | 'npc';
+  facing?: Direction;
+  sightRange?: number;
+  trainer?: TrainerSpec;
 }
 
 export interface MapDefinition {

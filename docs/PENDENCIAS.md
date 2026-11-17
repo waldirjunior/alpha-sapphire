@@ -62,8 +62,8 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 - **Estado:** em andamento
 - **Data:** 2026-11-17
-- **Evidência:** Implementados [src/core/bag.ts](../src/core/bag.ts) (`pokeballs`, `potions`, `keyItems`), suporte a `requiredFlag`/`altText` em warps e NPCs em [gameState.ts](../src/core/gameState.ts), persistência de mochila em [save.ts](../src/core/save.ts), interiores iniciais ([interiors.ts](../src/data/maps/interiors.ts): `brendan_house`, `birch_lab`, `oldale_pokecenter`) e botão de `Potion` + consumo de `Poké Ball` na batalha em [src/main.ts](../src/main.ts). Ainda faltam sequência do caminhão inicial, resgate do Birch, rival na Route 103 e linha de visão de treinadores.
-- **Próximo passo:** Concluir eventos scriptados (caminhão, resgate do Birch, rival Route 103) e line-of-sight de treinadores (`core-jogo/PRD-002` RF-03).
+- **Evidência:** Implementados [src/core/bag.ts](../src/core/bag.ts), `requiredFlag`/`altText` em [gameState.ts](../src/core/gameState.ts), `findTriggeredTrainer` (linha de visão + flag `defeated_trainer:<id>`) em `gameState.ts`, interiores iniciais ([interiors.ts](../src/data/maps/interiors.ts)), Rival May na Route 103 e Youngster Calvin na Route 102 com `sightRange`, além de botão `Potion` e consumo de `Poké Ball` em [src/main.ts](../src/main.ts). Falta apenas a cutscene inicial do caminhão de mudança.
+- **Próximo passo:** Integrar sequência inicial do caminhão de mudança (`intro_completed`) ou seguir para fidelidade visual PICA200 (`P-007`) e áudio (`P-008`).
 
 ## P-010 Mecânicas avançadas de batalha Gen VI (PP, precisão, status, treinadores multi-Pokémon)
 

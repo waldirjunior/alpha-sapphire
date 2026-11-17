@@ -11,7 +11,13 @@ import {
   switchActivePokemon,
   throwPokeball,
 } from './core/battle';
-import { createInitialState, interact, isTallGrass, movePlayer } from './core/gameState';
+import {
+  createInitialState,
+  findTriggeredTrainer,
+  interact,
+  isTallGrass,
+  movePlayer,
+} from './core/gameState';
 import { deserializeSave, serializeSave } from './core/save';
 import type { Direction } from './core/types';
 import { MAPS } from './data/maps';
@@ -46,6 +52,7 @@ let bag = saved?.bag ?? createInitialBag();
 let activePartyIndex = 0;
 let caughtCount = saved?.caughtCount ?? 0;
 let activeBattle: BattleState | null = null;
+let activeTrainerId: string | null = null;
 
 function persistSave(): void {
   window.localStorage.setItem(
@@ -182,11 +189,21 @@ function renderBattle(): void {
   const closeBtn = document.createElement('button');
   closeBtn.textContent = 'Voltar ao mapa';
   closeBtn.onclick = () => {
+    if (activeBattle?.isTrainer && activeBattle.status === 'victory' && activeTrainerId) {
+      state = {
+        ...state,
+        storyFlags: {
+          ...state.storyFlags,
+          [`defeated_trainer:${activeTrainerId}`]: true,
+        },
+      };
+    }
     if (activeBattle?.status === 'defeat') {
       party[0] = createPokemonInstance(SPECIES[starterId], 5);
       state = createInitialState('littleroot_town', MAPS);
     }
     activeBattle = null;
+    activeTrainerId = null;
     persistSave();
     renderBattle();
     syncUi();
@@ -248,17 +265,24 @@ window.addEventListener('keydown', (event) => {
       bag = addBagItem(bag, 'pokeballs', 5);
       bag = addBagItem(bag, 'potions', 2);
     }
-    if (wasDialogueOpen && prevSourceId === 'route_102_trainer_calvin') {
-      const healthyIdx = party.findIndex((p) => p.currentHp > 0);
-      const lead = healthyIdx >= 0 ? party[healthyIdx] : undefined;
-      if (lead) {
-        activePartyIndex = healthyIdx;
-        activeBattle = startTrainerBattle(
-          lead,
-          createPokemonInstance(SPECIES.poochyena, 5),
-          'Youngster Calvin'
-        );
-        renderBattle();
+    if (wasDialogueOpen && prevSourceId) {
+      const trainerSource = MAPS[state.player.mapId]?.interactables?.find(
+        (item) => item.id === prevSourceId && item.trainer
+      );
+      if (trainerSource?.trainer && !state.storyFlags[`defeated_trainer:${trainerSource.id}`]) {
+        const enemySpecies = SPECIES[trainerSource.trainer.speciesId];
+        const healthyIdx = party.findIndex((p) => p.currentHp > 0);
+        const lead = healthyIdx >= 0 ? party[healthyIdx] : undefined;
+        if (lead && enemySpecies) {
+          activePartyIndex = healthyIdx;
+          activeTrainerId = trainerSource.id;
+          activeBattle = startTrainerBattle(
+            lead,
+            createPokemonInstance(enemySpecies, trainerSource.trainer.level),
+            trainerSource.trainer.name
+          );
+          renderBattle();
+        }
       }
     }
     syncUi();
@@ -272,6 +296,21 @@ window.addEventListener('keydown', (event) => {
   state = movePlayer(state, dir, MAPS);
   const moved = prevPos.x !== state.player.pos.x || prevPos.z !== state.player.pos.z;
   const currentMap = MAPS[state.player.mapId];
+
+  if (moved) {
+    const triggeredTrainer = findTriggeredTrainer(state, MAPS);
+    if (triggeredTrainer) {
+      state = {
+        ...state,
+        activeDialogue: {
+          sourceId: triggeredTrainer.id,
+          text: triggeredTrainer.text,
+        },
+      };
+      syncUi();
+      return;
+    }
+  }
 
   if (moved && currentMap && isTallGrass(currentMap, state.player.pos)) {
     const table = MAP_ENCOUNTERS[state.player.mapId];

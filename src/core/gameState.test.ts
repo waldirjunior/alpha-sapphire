@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { MAPS as EXTRACTED_MAPS } from '../data/maps';
-import { createInitialState, interact, isTallGrass, movePlayer } from './gameState';
+import {
+  createInitialState,
+  findTriggeredTrainer,
+  interact,
+  isTallGrass,
+  movePlayer,
+} from './gameState';
 import type { MapDefinition } from './types';
 
 const TEST_MAPS: Record<string, MapDefinition> = {
@@ -154,5 +160,44 @@ describe('gameState', () => {
 
     const warped = movePlayer(state, 'up', gatedMaps);
     expect(warped.player.mapId).toBe('route_101');
+  });
+
+  it('detects undefeated trainer line of sight blocked by walls and ignores after defeat', () => {
+    const trainerMaps: Record<string, MapDefinition> = {
+      route_102: {
+        id: 'route_102',
+        name: 'Route 102',
+        width: 10,
+        height: 10,
+        collisions: Array.from({ length: 10 }, (_, z) =>
+          Array.from({ length: 10 }, (_, x) => (x === 4 && z === 5 ? 1 : 0))
+        ),
+        warps: [],
+        interactables: [
+          {
+            id: 'trainer_calvin',
+            pos: { x: 6, z: 5 },
+            kind: 'npc',
+            facing: 'left',
+            sightRange: 3,
+            text: 'Calvin: Hora da batalha!',
+            trainer: { name: 'Youngster Calvin', speciesId: 'poochyena', level: 5 },
+          },
+        ],
+      },
+    };
+
+    // Blocked by wall at (4,5) when player is at (3,5)
+    let state = createInitialState('route_102', trainerMaps);
+    state = { ...state, player: { ...state.player, pos: { x: 3, z: 5 } } };
+    expect(findTriggeredTrainer(state, trainerMaps)).toBeNull();
+
+    // Clear line of sight at (5,5)
+    state = { ...state, player: { ...state.player, pos: { x: 5, z: 5 } } };
+    expect(findTriggeredTrainer(state, trainerMaps)?.id).toBe('trainer_calvin');
+
+    // Ignored after trainer is marked defeated
+    state = { ...state, storyFlags: { ...state.storyFlags, 'defeated_trainer:trainer_calvin': true } };
+    expect(findTriggeredTrainer(state, trainerMaps)).toBeNull();
   });
 });
