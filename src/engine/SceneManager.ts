@@ -32,6 +32,13 @@ function fixOrasMaterials(root: THREE.Object3D): void {
   });
 }
 
+interface CharacterAnimController {
+  mixer: THREE.AnimationMixer;
+  idle: THREE.AnimationAction | null;
+  walk: THREE.AnimationAction | null;
+  active: 'idle' | 'walk';
+}
+
 export class SceneManager {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
@@ -43,6 +50,11 @@ export class SceneManager {
   private battlePlayerSlot: THREE.Group;
   private battleEnemySlot: THREE.Group;
   private gltfLoader = new GLTFLoader();
+  private clock = new THREE.Clock();
+  private playerAnim: CharacterAnimController | null = null;
+  private entityMixers: THREE.AnimationMixer[] = [];
+  private walkUntilMs = 0;
+  private lastPlayerPos = { mapId: '', x: -1, z: -1 };
   private currentMapId = '';
   private currentBattleKey = '';
   private inBattle = false;
@@ -82,7 +94,7 @@ export class SceneManager {
     placeholder.position.y = 0.65;
     this.playerRoot.add(placeholder);
     this.scene.add(this.playerRoot);
-    this.loadCharacterModel('/assets/characters/brendan/brendan.glb', this.playerRoot);
+    this.loadCharacterModel('/assets/characters/brendan/brendan.glb', this.playerRoot, true);
 
     this.battleGroup = new THREE.Group();
     this.battleGroup.visible = false;
@@ -138,6 +150,10 @@ export class SceneManager {
 
   private buildEntities(map: MapDefinition): void {
     this.entitiesGroup.clear();
+    for (const mixer of this.entityMixers) {
+      mixer.stopAllAction();
+    }
+    this.entityMixers = [];
 
     const warpGeo = new THREE.BoxGeometry(0.88, 0.06, 0.88);
     const warpMat = new THREE.MeshStandardMaterial({ color: '#f59e0b', transparent: true, opacity: 0.75 });
@@ -197,6 +213,18 @@ export class SceneManager {
       }
     }
 
+    if (
+      this.lastPlayerPos.mapId === state.player.mapId &&
+      (this.lastPlayerPos.x !== state.player.pos.x || this.lastPlayerPos.z !== state.player.pos.z)
+    ) {
+      this.walkUntilMs = performance.now() + 260;
+    }
+    this.lastPlayerPos = {
+      mapId: state.player.mapId,
+      x: state.player.pos.x,
+      z: state.player.pos.z,
+    };
+
     this.playerRoot.position.x = state.player.pos.x;
     this.playerRoot.position.z = state.player.pos.z;
     this.playerRoot.rotation.y = FACING_YAW[state.player.facing];
@@ -247,7 +275,7 @@ export class SceneManager {
     this.battleGroup.add(playerPad, enemyPad);
   }
 
-  private loadCharacterModel(url: string, target: THREE.Group): void {
+  private loadCharacterModel(url: string, target: THREE.Group, isPlayer = false): void {
     this.gltfLoader.load(
       url,
       (gltf) => {
@@ -256,6 +284,24 @@ export class SceneManager {
         fixOrasMaterials(model);
         target.clear();
         target.add(model);
+
+        if (gltf.animations.length === 0) return;
+        const mixer = new THREE.AnimationMixer(model);
+        const idleClip = THREE.AnimationClip.findByName(gltf.animations, 'idle') ?? gltf.animations[0];
+        const walkClip = THREE.AnimationClip.findByName(gltf.animations, 'walk');
+        const idleAction = idleClip ? mixer.clipAction(idleClip) : null;
+        const walkAction = walkClip ? mixer.clipAction(walkClip) : null;
+
+        if (idleAction) {
+          idleAction.play();
+          mixer.update(0);
+        }
+
+        if (isPlayer) {
+          this.playerAnim = { mixer, idle: idleAction, walk: walkAction, active: 'idle' };
+        } else {
+          this.entityMixers.push(mixer);
+        }
       },
       undefined,
       () => {
@@ -326,9 +372,27 @@ export class SceneManager {
     );
   }
 
+  private updatePlayerAnimation(): void {
+    if (!this.playerAnim) return;
+    const shouldWalk = performance.now() < this.walkUntilMs && this.playerAnim.walk !== null;
+    const nextState: 'idle' | 'walk' = shouldWalk ? 'walk' : 'idle';
+    if (this.playerAnim.active === nextState) return;
+
+    const current = this.playerAnim.active === 'walk' ? this.playerAnim.walk : this.playerAnim.idle;
+    const target = nextState === 'walk' ? this.playerAnim.walk : this.playerAnim.idle;
+    current?.fadeOut(0.15);
+    target?.reset().fadeIn(0.15).play();
+    this.playerAnim.active = nextState;
+  }
+
   public render(): void {
+    const dt = Math.min(this.clock.getDelta(), 0.1);
     if (!this.inBattle) {
-      this.playerRoot.position.y = Math.sin(performance.now() * 0.005) * 0.03;
+      this.updatePlayerAnimation();
+      this.playerAnim?.mixer.update(dt);
+      for (const mixer of this.entityMixers) {
+        mixer.update(dt);
+      }
     }
     this.renderer.render(this.scene, this.camera);
   }

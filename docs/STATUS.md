@@ -1,6 +1,6 @@
 # Status
 
-Atualizado em 2026-11-16 (verificação local na VPS).
+Atualizado em 2026-11-17 (verificação local na VPS).
 
 ## Estado do Código e Build
 
@@ -15,7 +15,7 @@ Atualizado em 2026-11-16 (verificação local na VPS).
   - [src/core/room.ts](../src/core/room.ts): estado autoritativo de salas multiplayer (`createRoom`, `joinRoom`, `leaveRoom`, `applyRoomMove`) reutilizando `movePlayer`.
   - [src/data/maps/index.ts](../src/data/maps/index.ts): mapas reais `40x40` (`littleroot_town.json`, `route_101.json`, `oldale_town.json`, `route_102.json`, `route_102_west.json`, `route_103.json`, `petalburg_city.json`) com `.glb` + `.png`s em `public/assets/maps/` e diálogos reais em `src/data/texts/`.
   - [src/data/pokemon/](../src/data/pokemon/species.ts): iniciais (`Treecko`, `Torchic`, `Mudkip`) e encontros da `Route 101`/`Route 102` (`Poochyena`, `Zigzagoon`, `Wurmple`, `Lotad`, `Ralts`), com `.glb` + `.png`s em `public/assets/pokemon/`.
-  - [src/engine/SceneManager.ts](../src/engine/SceneManager.ts): cena Three.js carregando `.glb` de mapas, protagonista Brendan e arena de batalha 3D (`syncBattle`) via `GLTFLoader`.
+  - [src/engine/SceneManager.ts](../src/engine/SceneManager.ts): cena Three.js carregando `.glb` de mapas, personagens (`brendan.glb`, `may.glb`, `npc.glb`) com animações esqueléticas `idle`/`walk` via `THREE.AnimationMixer`, e arena de batalha 3D (`syncBattle`) via `GLTFLoader`.
   - [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts): suíte de paridade contra o comportamento esperado da ROM original.
   - [src/main.ts](../src/main.ts): loop de renderização, teclado, caixa de diálogo, HUD de batalha 3D, time de até 6 Pokémon e auto-save em `localStorage`.
 - Diretórios planejados ainda não criados: `src/ai/`.

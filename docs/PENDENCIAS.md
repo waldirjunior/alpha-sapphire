@@ -39,10 +39,10 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-006 Personagens em T-pose sem animação esquelética (idle/walk)
 
-- **Estado:** aberta
+- **Estado:** fechada
 - **Data:** 2026-11-17
-- **Evidência:** Inspeção visual em `http://localhost:5173/` (Littleroot e Oldale Town) mostra Brendan e NPCs em T-pose (`animations: 0` em `brendan.glb`, `may.glb`, `npc.glb`) porque o `assimp` 5.2 achata o esqueleto ao converter `.dae → .glb`.
-- **Próximo passo:** Implementar pipeline de exportação preservando rig e animações (`idle`/`walk`) conforme [engine-3d/PRD-002](features/engine-3d/prds/PRD-002-animacoes-esqueleticas-idle-walk.md).
+- **Evidência:** `SpicaExport` atualizado com `ExportSkinning = true` e fallback seguro em `DAEExporter.PaletteBone`; [scripts/convert_character_glb.py](../scripts/convert_character_glb.py) agora converte `.dae → .glb` via `Blender 3.4.1` gerando `brendan.glb`, `may.glb` e `npc.glb` com `skins: 1` e `animations: ['idle', 'walk']`. [SceneManager.ts](../src/engine/SceneManager.ts) reproduz `idle`/`walk` via `THREE.AnimationMixer`. Verificado visualmente via Chromium headless em `http://localhost:5173/` (personagens em pose relaxada `idle`, sem T-pose).
+- **Próximo passo:** Concluído para personagens (`a/0/2/1`); aplicar o mesmo pipeline aos Pokémon (`a/0/0/8`) e interpolação suave de tiles na sequência.
 
 ## P-007 Materiais PICA200, placas brancas e sombras/flores nos mapas
 
