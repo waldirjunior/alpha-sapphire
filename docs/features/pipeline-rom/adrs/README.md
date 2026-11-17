@@ -6,3 +6,4 @@
 | [ADR-002](ADR-002-isolamento-proprietario-e-worktrees.md) | Isolamento de arquivos proprietários e uso de worktrees | Aceito | 2026-11-16 |
 | [ADR-003](ADR-003-conversao-bcstm-para-ogg-webaudio.md) | Conversão offline `.bcstm → .ogg` e reprodução via Web Audio API | Proposto | 2026-11-17 |
 | [ADR-004](ADR-004-tabelas-de-batalha-sob-demanda.md) | Tabelas de batalha carregadas sob demanda com loader injetado | Aceito | 2026-11-17 |
+| [ADR-005](ADR-005-recorte-de-mapas-por-zone-grid.md) | Recorte de mapas por zone-grid e saída paralela maps_v2 | Aceito | 2026-11-17 |

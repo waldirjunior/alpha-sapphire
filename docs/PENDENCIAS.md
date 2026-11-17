@@ -139,3 +139,11 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Data:** 2026-11-17
 - **Evidência:** `npm install` no worktree `zone-scripts-re` instalou as dependências do lockfile sem alterá-lo e reportou nove vulnerabilidades (três moderadas, quatro altas e duas críticas). Testes/build passam; isso não é evidência de ausência de risco nas dependências.
 - **Próximo passo:** Triar `npm audit`, identificar alcance e atualizar dependências em trabalho dedicado com testes/build. Não executar `npm audit fix --force` nem alterar controles de segurança para destravar o pipeline de scripts.
+
+## P-017 Semântica residual MM e integração dos mapas por zona
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** [maps-format.md](features/pipeline-rom/maps-format.md), A-023/ADR-005: todos os bytes das 431 MM observadas são interpretados estruturalmente, mas o significado do u32 final dos registros sec1 (0/1) e dos 13 valores auxiliares u16 (2–14, sete matrizes) não foi comprovado. Os campos foram preservados sem determinar recortes ou inventar alturas. `mapArea` não indexa a sec1; zoneIds do grid estendido determinam a região.
+- **Progresso:** `build_zone_maps.py` gera 536 JSONs em `maps_v2`, com 911 destinos resolvidos e dez referências sem diferenças de colisão/terreno. `_validation.json` lista 48 warps de origem e 48 targets off-region, todos da zona 0, e quatro NPCs off-map (23/44/177/221). Nenhuma coordenada foi ajustada ou descartada; spawn é fallback derivado e marcado, não ponto original do jogo.
+- **Próximo passo:** Confirmar significados por leitores/runtime/CRO ou trace do jogo; verificar uso especial da zona 0 e atores off-map. Implementar adapter do schema v2 com bordas contínuas, retângulos de warp, scripts/init/save, origem/chunks e posicionamento de modelos, sem assumir que o relatório prova paridade no emulador. O coordenador aprovou encerrar a extração atual com esses limites explícitos; não fechar esta pendência só porque os 13 testes novos e as dez comparações passam.
