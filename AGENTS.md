@@ -10,7 +10,7 @@ Detalhada em [docs/tcc/00-arquitetura.md](docs/tcc/00-arquitetura.md) e nos mód
 
 - **`src/core/`**: Lógica pura de jogo (`gameState.ts`, `types.ts`, testes em `gameState.test.ts`). Proibido importar `three`, DOM (`window`, `document`) ou APIs exclusivas de browser. Deve poder rodar em Node/servidor para multiplayer futuro.
 - **`src/engine/`**: Renderização Three.js (`SceneManager.ts`), carregamento sob demanda de `.glb`, câmera e iluminação. Consome estado do `core/` sem mutá-lo.
-- **`src/main.ts`**: Ponto de entrada Vite que conecta input de teclado, `core/` e `engine/`. Atualmente usa `MAPS` placeholder inline (`littleroot_town` e `route_101`).
+- **`src/main.ts`**: Bootstrap Vite: carrega as tabelas de batalha (`loadBattleTables`, ADR-004 de `pipeline-rom`) e importa `src/game.ts`, que conecta input de teclado, `core/` e `engine/`.
 - **`src/data/`** *(planejado)*: Mapas, diálogos, encontros e tabelas convertidas da ROM para JSON.
 - **`src/ai/`** *(planejado)*: Scripts/agentes de verificação e automação.
 - **`rom/`** *(ignorado no Git)*: Contém a ROM local (`*.3ds`, `*.7z`) e futuros dumps (`RomFS/`, `ExeFS/`). Nunca versionar arquivos proprietários.

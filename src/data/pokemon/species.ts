@@ -5,36 +5,73 @@ import type { ElementalType } from '../../core/typeChart';
 export type PokemonType = ElementalType;
 
 export const SPECIES = {
-  treecko: getSpeciesById('treecko'),
-  torchic: getSpeciesById('torchic'),
-  mudkip: getSpeciesById('mudkip'),
-  poochyena: getSpeciesById('poochyena'),
-  zigzagoon: getSpeciesById('zigzagoon'),
-  wurmple: getSpeciesById('wurmple'),
-  lotad: getSpeciesById('lotad'),
-  ralts: getSpeciesById('ralts'),
+  get treecko(): DexSpecies {
+    return getSpeciesById('treecko');
+  },
+  get torchic(): DexSpecies {
+    return getSpeciesById('torchic');
+  },
+  get mudkip(): DexSpecies {
+    return getSpeciesById('mudkip');
+  },
+  get poochyena(): DexSpecies {
+    return getSpeciesById('poochyena');
+  },
+  get zigzagoon(): DexSpecies {
+    return getSpeciesById('zigzagoon');
+  },
+  get wurmple(): DexSpecies {
+    return getSpeciesById('wurmple');
+  },
+  get lotad(): DexSpecies {
+    return getSpeciesById('lotad');
+  },
+  get ralts(): DexSpecies {
+    return getSpeciesById('ralts');
+  },
 } satisfies Record<string, DexSpecies>;
 
 export const MOVES = {
-  pound: getMoveByName('pound'),
-  absorb: getMoveByName('absorb'),
-  scratch: getMoveByName('scratch'),
-  ember: getMoveByName('ember'),
-  tackle: getMoveByName('tackle'),
-  water_gun: getMoveByName('water_gun'),
-  bite: getMoveByName('bite'),
-  bug_bite: getMoveByName('bug_bite'),
-  confusion: getMoveByName('confusion'),
-  disarming_voice: getMoveByName('disarming_voice'),
+  get pound(): DexMove {
+    return getMoveByName('pound');
+  },
+  get absorb(): DexMove {
+    return getMoveByName('absorb');
+  },
+  get scratch(): DexMove {
+    return getMoveByName('scratch');
+  },
+  get ember(): DexMove {
+    return getMoveByName('ember');
+  },
+  get tackle(): DexMove {
+    return getMoveByName('tackle');
+  },
+  get water_gun(): DexMove {
+    return getMoveByName('water_gun');
+  },
+  get bite(): DexMove {
+    return getMoveByName('bite');
+  },
+  get bug_bite(): DexMove {
+    return getMoveByName('bug_bite');
+  },
+  get confusion(): DexMove {
+    return getMoveByName('confusion');
+  },
+  get disarming_voice(): DexMove {
+    return getMoveByName('disarming_voice');
+  },
 } satisfies Record<string, DexMove>;
 
-const ROSTER: ReadonlyMap<string, DexSpecies> = new Map(Object.values(SPECIES).map((species) => [species.id, species]));
+// Getters: as tabelas da ROM são carregadas sob demanda (ADR-004), então nada é resolvido no import.
+const ROSTER_IDS: readonly string[] = ['treecko', 'torchic', 'mudkip', 'poochyena', 'zigzagoon', 'wurmple', 'lotad', 'ralts'];
 
 /** Espécies com modelo .glb extraído; ids vindos de mapas/encontros podem não estar no elenco. */
 export function findRosterSpecies(id: string): DexSpecies | undefined {
-  return ROSTER.get(id);
+  return ROSTER_IDS.includes(id) ? getSpeciesById(id) : undefined;
 }
 
 export function listRosterSpecies(): DexSpecies[] {
-  return [...ROSTER.values()];
+  return ROSTER_IDS.map(getSpeciesById);
 }

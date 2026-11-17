@@ -1,5 +1,4 @@
-import learnsetTable from '../data/battle/learnsets.json';
-import machineTable from '../data/battle/machines.json';
+import { fromTables } from './battleTables';
 import type { DexSpecies } from './dex';
 
 export interface LevelUpEntry {
@@ -12,14 +11,13 @@ export type LearnMethod = 'level-up' | 'tm' | 'hm';
 // Gen VI: Pokémon selvagens/recém-criados recebem os 4 últimos golpes de level-up até o nível atual.
 const MAX_MOVES = 4;
 
-const LEVEL_UP_BY_PERSONAL = new Map<number, readonly LevelUpEntry[]>(
-  learnsetTable.map((entry) => [entry.personalIndex, entry.levelUp])
+const levelUpByPersonal = fromTables(
+  (tables) => new Map<number, readonly LevelUpEntry[]>(tables.learnsets.map((entry) => [entry.personalIndex, entry.levelUp]))
 );
-const TM_MOVES: readonly number[] = machineTable.tmMoves;
-const HM_MOVES: readonly number[] = machineTable.hmMoves;
+const machines = fromTables((tables) => tables.machines);
 
 export function getLevelUpLearnset(species: DexSpecies): readonly LevelUpEntry[] {
-  const learnset = LEVEL_UP_BY_PERSONAL.get(species.personalIndex);
+  const learnset = levelUpByPersonal().get(species.personalIndex);
   if (!learnset) {
     throw new Error(`Learnset ausente para ${species.name} (personal ${species.personalIndex}).`);
   }
@@ -42,8 +40,8 @@ export function getDefaultMoveset(species: DexSpecies, level: number): number[] 
 
 export function getMachineMoves(species: DexSpecies): { tm: number[]; hm: number[] } {
   return {
-    tm: species.tms.map((tm) => machineMove(TM_MOVES, tm, 'TM')),
-    hm: species.hms.map((hm) => machineMove(HM_MOVES, hm, 'HM')),
+    tm: species.tms.map((tm) => machineMove(machines().tmMoves, tm, 'TM')),
+    hm: species.hms.map((hm) => machineMove(machines().hmMoves, hm, 'HM')),
   };
 }
 

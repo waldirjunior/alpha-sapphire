@@ -6,7 +6,7 @@ Responsável por extrair as partições proprietárias (`RomFS`, `ExeFS`) da ROM
 
 - [prds/](prds/README.md) — requisitos e critérios de aceite do pipeline.
 - [adrs/](adrs/README.md) — decisões arquiteturais e de isolamento proprietário.
-- [battle-tables.md](battle-tables.md) — offsets e formato de personal, golpes, tipos, learnsets e TM/HM (`A-010`).
+- [battle-tables.md](battle-tables.md) — offsets e formato de personal, golpes, tipos, learnsets, TM/HM, evolução e naturezas (`A-010`); carga em runtime por [ADR-004](adrs/ADR-004-tabelas-de-batalha-sob-demanda.md).
 - Referência TCC: [docs/tcc/01-pipeline-rom.md](../../tcc/01-pipeline-rom.md).
 
 ## Estado atual

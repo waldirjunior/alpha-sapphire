@@ -1,4 +1,4 @@
-import typeTable from '../data/battle/types.json';
+import { fromTables } from './battleTables';
 
 // Ordem dos índices de tipo da ROM ORAS (DllBattle.cro, A-010); types.json é validado contra ela.
 export const ELEMENTAL_TYPES = [
@@ -15,8 +15,10 @@ function assertTypeOrder(names: readonly string[]): void {
   }
 }
 
-assertTypeOrder(typeTable.types);
-const EFFECTIVENESS: readonly (readonly number[])[] = typeTable.effectiveness;
+const effectiveness = fromTables((tables) => {
+  assertTypeOrder(tables.types.types);
+  return tables.types.effectiveness;
+});
 
 export function isElementalType(value: string): value is ElementalType {
   return (ELEMENTAL_TYPES as readonly string[]).includes(value);
@@ -31,7 +33,7 @@ export function toElementalType(value: string): ElementalType {
 }
 
 export function getTypeMultiplier(attackType: ElementalType, defenderType: ElementalType): number {
-  const row = EFFECTIVENESS[ELEMENTAL_TYPES.indexOf(attackType)];
+  const row = effectiveness()[ELEMENTAL_TYPES.indexOf(attackType)];
   const multiplier = row?.[ELEMENTAL_TYPES.indexOf(defenderType)];
   if (multiplier === undefined) {
     throw new Error(`Tabela de tipos incompleta para ${attackType} → ${defenderType}.`);

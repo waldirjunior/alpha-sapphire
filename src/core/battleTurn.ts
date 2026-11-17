@@ -23,7 +23,7 @@ export interface BattleAction {
   moveIndex: number | null;
 }
 
-const STRUGGLE: BattleMove = toBattleMove(getMoveById(STRUGGLE_MOVE_ID));
+const struggle = (): BattleMove => toBattleMove(getMoveById(STRUGGLE_MOVE_ID));
 const PARALYSIS_SPEED_MULTIPLIER = 0.25;
 
 export function hasUsableMove(pokemon: PokemonInstance): boolean {
@@ -35,7 +35,7 @@ export function selectEnemyMoveIndex(state: BattleState, rng: Rng): number | nul
 }
 
 function moveFor(pokemon: PokemonInstance, moveIndex: number | null): BattleMove {
-  return moveIndex === null ? STRUGGLE : pokemon.moves[moveIndex] ?? STRUGGLE;
+  return (moveIndex === null ? undefined : pokemon.moves[moveIndex]) ?? struggle();
 }
 
 export function effectiveSpeed(pokemon: PokemonInstance): number {

@@ -1,5 +1,4 @@
-import moveTable from '../data/battle/moves.json';
-import speciesTable from '../data/battle/species.json';
+import { fromTables, type RawMove, type RawSpecies } from './battleTables';
 import { toElementalType, type ElementalType } from './typeChart';
 
 export interface DexBaseStats {
@@ -71,48 +70,6 @@ export interface DexStatChange {
   percent: number;
 }
 
-interface RawSpecies {
-  personalIndex: number;
-  species: number;
-  form: number;
-  name: string;
-  types: readonly string[];
-  baseStats: DexBaseStats;
-  abilities: readonly string[];
-  growthRate: string;
-  eggGroups: readonly string[];
-  catchRate: number;
-  baseExp: number;
-  baseFriendship: number;
-  evYield: DexBaseStats;
-  tms: readonly number[];
-  hms: readonly number[];
-}
-
-interface RawMove {
-  id: number;
-  name: string;
-  type: string;
-  category: string;
-  power: number;
-  accuracy: number;
-  pp: number;
-  priority: number;
-  quality: number;
-  hitMin: number;
-  hitMax: number;
-  inflict: number;
-  inflictPercent: number;
-  turnMin: number;
-  turnMax: number;
-  flinchPercent: number;
-  recoilPercent: number;
-  healing: number;
-  target: number;
-  critStage: number;
-  statChanges: readonly DexStatChange[];
-}
-
 const MOVE_CATEGORIES: readonly DexMoveCategory[] = ['status', 'physical', 'special'];
 
 function toMoveCategory(value: string, moveName: string): DexMoveCategory {
@@ -152,12 +109,20 @@ function toDexMove(raw: RawMove): DexMove {
   };
 }
 
-const RAW_SPECIES: readonly RawSpecies[] = speciesTable;
-const RAW_MOVES: readonly RawMove[] = moveTable;
+const speciesIndexes = fromTables((tables) => {
+  const byPersonal = new Map(tables.species.map((raw) => [raw.personalIndex, toDexSpecies(raw)]));
+  const all = [...byPersonal.values()];
+  return {
+    byPersonal,
+    byDexForm: new Map(all.map((s) => [`${s.dexNumber}:${s.form}`, s])),
+    byId: indexBySlug(all),
+  };
+});
 
-const SPECIES_BY_PERSONAL = new Map(RAW_SPECIES.map((raw) => [raw.personalIndex, toDexSpecies(raw)]));
-const SPECIES_BY_DEX_FORM = new Map([...SPECIES_BY_PERSONAL.values()].map((s) => [`${s.dexNumber}:${s.form}`, s]));
-const SPECIES_BY_ID = indexBySlug([...SPECIES_BY_PERSONAL.values()]);
+const moveIndexes = fromTables((tables) => {
+  const byId = new Map(tables.moves.map((raw) => [raw.id, toDexMove(raw)]));
+  return { byId, byName: new Map([...byId.values()].map((move) => [normalizeName(move.name), move])) };
+});
 
 function indexBySlug(entries: readonly DexSpecies[]): ReadonlyMap<string, DexSpecies> {
   const index = new Map<string, DexSpecies>();
@@ -170,23 +135,21 @@ function indexBySlug(entries: readonly DexSpecies[]): ReadonlyMap<string, DexSpe
   }
   return index;
 }
-const MOVES_BY_ID = new Map(RAW_MOVES.map((raw) => [raw.id, toDexMove(raw)]));
-const MOVES_BY_NAME = new Map([...MOVES_BY_ID.values()].map((move) => [normalizeName(move.name), move]));
 
 function normalizeName(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
 export function getSpeciesByPersonalIndex(personalIndex: number): DexSpecies {
-  const species = SPECIES_BY_PERSONAL.get(personalIndex);
+  const species = speciesIndexes().byPersonal.get(personalIndex);
   if (!species) {
-    throw new Error(`Índice personal desconhecido: ${personalIndex} (esperado 0..${SPECIES_BY_PERSONAL.size - 1}).`);
+    throw new Error(`Índice personal desconhecido: ${personalIndex} (esperado 0..${speciesIndexes().byPersonal.size - 1}).`);
   }
   return species;
 }
 
 export function getSpeciesByDex(dexNumber: number, form = 0): DexSpecies {
-  const species = SPECIES_BY_DEX_FORM.get(`${dexNumber}:${form}`);
+  const species = speciesIndexes().byDexForm.get(`${dexNumber}:${form}`);
   if (!species) {
     throw new Error(`Espécie desconhecida: dex ${dexNumber} forma ${form}.`);
   }
@@ -194,7 +157,7 @@ export function getSpeciesByDex(dexNumber: number, form = 0): DexSpecies {
 }
 
 export function getSpeciesById(id: string): DexSpecies {
-  const species = SPECIES_BY_ID.get(id);
+  const species = speciesIndexes().byId.get(id);
   if (!species) {
     throw new Error(`Espécie desconhecida: id "${id}" (esperado slug como "treecko" ou "sceptile-1").`);
   }
@@ -202,16 +165,16 @@ export function getSpeciesById(id: string): DexSpecies {
 }
 
 export function getMoveById(moveId: number): DexMove {
-  const move = MOVES_BY_ID.get(moveId);
+  const move = moveIndexes().byId.get(moveId);
   if (!move) {
-    throw new Error(`Golpe desconhecido: id ${moveId} (esperado 1..${MOVES_BY_ID.size - 1}).`);
+    throw new Error(`Golpe desconhecido: id ${moveId} (esperado 1..${moveIndexes().byId.size - 1}).`);
   }
   return move;
 }
 
 /** Aceita "Water Gun", "water_gun" ou "watergun". */
 export function getMoveByName(name: string): DexMove {
-  const move = MOVES_BY_NAME.get(normalizeName(name));
+  const move = moveIndexes().byName.get(normalizeName(name));
   if (!move) {
     throw new Error(`Golpe desconhecido: "${name}".`);
   }

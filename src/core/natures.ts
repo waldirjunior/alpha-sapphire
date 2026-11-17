@@ -1,4 +1,4 @@
-import natureTable from '../data/battle/natures.json';
+import { fromTables, type RawNature } from './battleTables';
 
 export type NatureStat = 'atk' | 'def' | 'spe' | 'spa' | 'spd';
 
@@ -7,13 +7,6 @@ export interface Nature {
   name: string;
   increased: NatureStat | null;
   decreased: NatureStat | null;
-}
-
-interface RawNature {
-  id: number;
-  name: string;
-  increased: string | null;
-  decreased: string | null;
 }
 
 const NATURE_STATS: readonly NatureStat[] = ['atk', 'def', 'spe', 'spa', 'spd'];
@@ -28,17 +21,21 @@ function toNatureStat(value: string | null, natureName: string): NatureStat | nu
   return stat;
 }
 
-const RAW_NATURES: readonly RawNature[] = natureTable;
-const NATURES: readonly Nature[] = RAW_NATURES.map((raw) => ({
-  ...raw,
-  increased: toNatureStat(raw.increased, raw.name),
-  decreased: toNatureStat(raw.decreased, raw.name),
-}));
+export const NATURE_COUNT = 25;
 
-export const NATURE_COUNT = NATURES.length;
+function toNature(raw: RawNature): Nature {
+  return { ...raw, increased: toNatureStat(raw.increased, raw.name), decreased: toNatureStat(raw.decreased, raw.name) };
+}
+
+const natures = fromTables((tables) => {
+  if (tables.natures.length !== NATURE_COUNT) {
+    throw new Error(`natures.json com ${tables.natures.length} entradas (esperado ${NATURE_COUNT}).`);
+  }
+  return tables.natures.map(toNature);
+});
 
 export function getNature(id: number): Nature {
-  const nature = NATURES[id];
+  const nature = natures()[id];
   if (!nature) throw new RangeError(`Natureza desconhecida: ${id} (esperado 0..${NATURE_COUNT - 1}).`);
   return nature;
 }

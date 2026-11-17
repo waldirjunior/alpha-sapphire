@@ -1,4 +1,4 @@
-import evolutionTable from '../data/battle/evolutions.json';
+import { fromTables } from './battleTables';
 import { refreshStats, type PokemonInstance } from './battlePokemon';
 import { getSpeciesByDex, type DexSpecies } from './dex';
 import { learnLevelUpMoves } from './levelUp';
@@ -27,12 +27,12 @@ export interface EvolutionResult {
 const FRIENDSHIP_THRESHOLD = 220;
 const PERSONALITY_SPLIT = 5;
 
-const RULES_BY_PERSONAL = new Map<number, readonly EvolutionRule[]>(
-  evolutionTable.map((entry) => [entry.personalIndex, entry.evolutions])
+const rulesByPersonal = fromTables(
+  (tables) => new Map<number, readonly EvolutionRule[]>(tables.evolutions.map((entry) => [entry.personalIndex, entry.evolutions]))
 );
 
 export function getEvolutionRules(species: DexSpecies): readonly EvolutionRule[] {
-  return RULES_BY_PERSONAL.get(species.personalIndex) ?? [];
+  return rulesByPersonal().get(species.personalIndex) ?? [];
 }
 
 /** Faixas do relógio do 3DS usadas pela Gen VI: manhã 4–9h, dia 10–19h, noite 20–3h. */
