@@ -36,6 +36,7 @@ const battleActions = document.getElementById('battle-actions');
 const dsPanel = document.getElementById('ds-panel');
 const dsTabButtons = document.querySelectorAll<HTMLButtonElement>('#ds-tabs button[data-tab]');
 const saveGameBtn = document.getElementById('btn-save-game');
+const newGameBtn = document.getElementById('btn-new-game');
 const starterBar = document.getElementById('starter-bar');
 const introOverlay = document.getElementById('intro-overlay');
 const introCard = document.getElementById('intro-card');
@@ -82,8 +83,7 @@ function persistSave(): void {
   );
 }
 
-const resetBtn = document.getElementById('reset-save');
-resetBtn?.addEventListener('click', () => {
+function startNewGame(): void {
   if (activeBattle) return;
   window.localStorage.removeItem(SAVE_STORAGE_KEY);
   state = createInitialState('littleroot_town', MAPS);
@@ -91,9 +91,20 @@ resetBtn?.addEventListener('click', () => {
   bag = createInitialBag();
   caughtCount = 0;
   introStep = 'birch';
+  openDsTab = null;
   renderIntro();
   syncUi();
+}
+
+const resetBtn = document.getElementById('reset-save');
+resetBtn?.addEventListener('click', () => {
+  startNewGame();
   resetBtn.blur();
+});
+
+newGameBtn?.addEventListener('click', () => {
+  startNewGame();
+  newGameBtn.blur();
 });
 
 const starterButtons = document.querySelectorAll<HTMLButtonElement>('#starter-bar button[data-starter]');

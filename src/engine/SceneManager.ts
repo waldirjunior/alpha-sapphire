@@ -85,6 +85,7 @@ export class SceneManager {
   constructor(container: HTMLElement) {
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('#7dd3fc');
+    this.scene.fog = new THREE.Fog('#93c5fd', 32, 95);
 
     this.camera = new THREE.PerspectiveCamera(
       45,
@@ -97,12 +98,14 @@ export class SceneManager {
     this.renderer.setSize(container.clientWidth, container.clientHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.12;
     container.appendChild(this.renderer.domElement);
 
-    const hemi = new THREE.HemisphereLight(0xf0f9ff, 0x3f6212, 0.95);
+    const hemi = new THREE.HemisphereLight(0xf0f9ff, 0x365314, 1.05);
     this.scene.add(hemi);
 
-    const sun = new THREE.DirectionalLight(0xfffbeb, 1.15);
+    const sun = new THREE.DirectionalLight(0xfffbeb, 1.35);
     sun.position.set(20, 35, 20);
     this.scene.add(sun);
 
