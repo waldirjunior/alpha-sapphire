@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import struct
 import sys
 import tempfile
@@ -12,6 +13,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from extract_gr_maps import parse_gr_grid
+from convert_gr_to_glb import (
+    parse_missing_textures,
+    patch_glb_materials,
+    pica_alpha_state,
+    select_texture_archive,
+)
 from extract_texts import decode_gen6_text
 from unpack_garc import decompress_lz11
 
@@ -54,6 +61,58 @@ class PipelineParsersTest(unittest.TestCase):
         blob = header + sec_header + char_bytes
 
         self.assertEqual(decode_gen6_text(blob), ["Hi"])
+
+
+def build_glb(materials: list[dict[str, object]]) -> bytes:
+    payload = json.dumps({"asset": {"version": "2.0"}, "materials": materials}).encode()
+    payload += b" " * (-len(payload) % 4)
+    total = 12 + 8 + len(payload)
+    return struct.pack("<4sII", b"glTF", 2, total) + struct.pack("<I4s", len(payload), b"JSON") + payload
+
+
+class PicaMaterialConversionTest(unittest.TestCase):
+    def test_parse_missing_textures_ignores_other_warnings(self) -> None:
+        warnings = (
+            "Material 'a' references missing texture 'chip_wind'.\n"
+            "Material 'a' uses a standard shading fallback.\n"
+            "Material 'b' references missing texture 'chip_wind'.\n"
+            "Material 'b' references missing texture 't101_01'.\n"
+        )
+        self.assertEqual(parse_missing_textures(warnings), {"chip_wind", "t101_01"})
+
+    def test_select_texture_archive_prefers_full_coverage_and_whole_names(self) -> None:
+        archives = {
+            "0004": b"\x00chip_wind\x00",
+            "0008": b"\x00chip_wind\x00t101_01\x00",
+            "0009": b"\x00chip_wind2\x00t101_012\x00",
+        }
+        self.assertEqual(select_texture_archive({"chip_wind", "t101_01"}, archives), "0008")
+
+    def test_select_texture_archive_returns_none_without_any_match(self) -> None:
+        self.assertIsNone(select_texture_archive({"x_tex"}, {"0001": b"nothing"}))
+
+    def test_pica_alpha_state_blend_mask_and_opaque(self) -> None:
+        blend = {"BlendFunction": {"ColorSrcFunc": "SourceAlpha"}, "AlphaTest": {"Enabled": True, "Reference": 0}}
+        mask = {"BlendFunction": {"ColorSrcFunc": "One"}, "AlphaTest": {"Enabled": True, "Reference": 127}}
+        opaque = {"BlendFunction": {"ColorSrcFunc": "One"}, "AlphaTest": {"Enabled": False, "Reference": 0}}
+        self.assertEqual(pica_alpha_state(blend), ("BLEND", None))
+        self.assertEqual(pica_alpha_state(mask), ("MASK", 128 / 255))
+        self.assertEqual(pica_alpha_state(opaque), ("OPAQUE", None))
+
+    def test_patch_glb_materials_sets_alpha_mode_and_marker(self) -> None:
+        glb = build_glb([{"name": "shadow1"}, {"name": "t01_01"}, {"name": "sem_pica"}])
+        states = {"shadow1": ("BLEND", None), "t01_01": ("MASK", 0.5)}
+        patched = patch_glb_materials(glb, states)
+        length = struct.unpack_from("<I", patched, 12)[0]
+        doc = json.loads(patched[20 : 20 + length])
+        shadow, wall, untouched = doc["materials"]
+        self.assertEqual(shadow["alphaMode"], "BLEND")
+        self.assertEqual(wall["alphaMode"], "MASK")
+        self.assertEqual(wall["alphaCutoff"], 0.5)
+        self.assertTrue(wall["extras"]["pica"])
+        self.assertNotIn("extras", untouched)
+        self.assertEqual(struct.unpack_from("<I", patched, 8)[0], len(patched))
+        self.assertEqual(len(patched) % 4, 0)
 
 
 if __name__ == "__main__":
