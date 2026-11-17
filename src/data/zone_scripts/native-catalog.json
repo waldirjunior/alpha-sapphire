@@ -1,0 +1,1630 @@
+{
+ "hashAlgorithm": "h=((h*131)^byte)&0xffffffff",
+ "natives": [
+  {
+   "hash": "020ee4b3",
+   "name": "_PostmanReceivePresent",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106391
+  },
+  {
+   "hash": "0473be4e",
+   "name": "float",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5277022
+  },
+  {
+   "hash": "0511b06e",
+   "name": "YesNoWin_Seq",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103866
+  },
+  {
+   "hash": "06bbcaed",
+   "name": "BadgeGetFlag",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100021
+  },
+  {
+   "hash": "081c2508",
+   "name": "PokePartyGetCount",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1107166
+  },
+  {
+   "hash": "092d6450",
+   "name": "RegionGet",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105551
+  },
+  {
+   "hash": "0967d92d",
+   "name": "Random",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5120033
+  },
+  {
+   "hash": "0ad9d8d8",
+   "name": "BuildMdlEventAnimeIsEnd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096136
+  },
+  {
+   "hash": "0b13a389",
+   "name": "_Suspend",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5127052
+  },
+  {
+   "hash": "1221052c",
+   "name": "_PGLPostmanFuncCall",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101078
+  },
+  {
+   "hash": "133daa6a",
+   "name": "FlagGet",
+   "evidence": "community-hash",
+   "source": "XAMX/commands.txt"
+  },
+  {
+   "hash": "13413496",
+   "name": "FlagSet",
+   "evidence": "community-hash",
+   "source": "XAMX/commands.txt"
+  },
+  {
+   "hash": "136f8362",
+   "name": "PokePartyChangeFormNo",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1102830
+  },
+  {
+   "hash": "13cad614",
+   "name": "PokePartySetWaza",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095345
+  },
+  {
+   "hash": "153a0918",
+   "name": "MdlSetWaitAnimeReq",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103788
+  },
+  {
+   "hash": "15f86e59",
+   "name": "MdlAcmdUpdate",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1098884
+  },
+  {
+   "hash": "184d321e",
+   "name": "MEReturnBGM",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094775
+  },
+  {
+   "hash": "194f0128",
+   "name": "MdlAcmdInit",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106256
+  },
+  {
+   "hash": "19a639e6",
+   "name": "BuildMdlEventAnimeSetEnd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096208
+  },
+  {
+   "hash": "1a718213",
+   "name": "CreateSenarioTVProgram",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101794
+  },
+  {
+   "hash": "1b0b8b06",
+   "name": "PokePartyAdd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095563
+  },
+  {
+   "hash": "1b4412dd",
+   "name": "BallsIsLoaded",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095657
+  },
+  {
+   "hash": "1b6e915e",
+   "name": "_ReportWait",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106195
+  },
+  {
+   "hash": "1e8094d5",
+   "name": "TalkMdlClearEye",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099542
+  },
+  {
+   "hash": "1ff7b97b",
+   "name": "ZukanSetFlag",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100060
+  },
+  {
+   "hash": "202bd45e",
+   "name": "BallsLoad",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095460
+  },
+  {
+   "hash": "21d6ffb6",
+   "name": "_MapChangeCore",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1098515
+  },
+  {
+   "hash": "22b75a3e",
+   "name": "_PostmanGetParameter",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104286
+  },
+  {
+   "hash": "23665ddf",
+   "name": "ZukanSetOpenFlag",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099966
+  },
+  {
+   "hash": "2367b782",
+   "name": "PokeMemorySet",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105925
+  },
+  {
+   "hash": "25818e0c",
+   "name": "PlayerGetReturnDir",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104433
+  },
+  {
+   "hash": "2654de74",
+   "name": "WordSetItemName",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097760
+  },
+  {
+   "hash": "27aa5021",
+   "name": "GetDirAddValueGridZ",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094992
+  },
+  {
+   "hash": "27aa5023",
+   "name": "GetDirAddValueGridX",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094822
+  },
+  {
+   "hash": "2ba0cb46",
+   "name": "GlobalSetChildParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101303
+  },
+  {
+   "hash": "2deda76b",
+   "name": "TrainerCardGetRankGold",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095900
+  },
+  {
+   "hash": "2f518f15",
+   "name": "GetTimeZone",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1098319
+  },
+  {
+   "hash": "30191933",
+   "name": "_CallPoke3Select",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5120893
+  },
+  {
+   "hash": "3055247a",
+   "name": "BuildMdlEventAnimeInvStart",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1107431
+  },
+  {
+   "hash": "3528848f",
+   "name": "BuildMdlEventAnimeStart",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1107298
+  },
+  {
+   "hash": "3535660a",
+   "name": "SkyboxEventTimeReset",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105939
+  },
+  {
+   "hash": "358b0372",
+   "name": "LastKeyWait",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106218
+  },
+  {
+   "hash": "3842f7d5",
+   "name": "PokerusCheckTemoti",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100501
+  },
+  {
+   "hash": "3c0c83c5",
+   "name": "MdlDelByFlag",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100160
+  },
+  {
+   "hash": "3e91bf6c",
+   "name": "EVCameraSetDstParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101743
+  },
+  {
+   "hash": "4016ed32",
+   "name": "VanishKeyWaitMark",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100786
+  },
+  {
+   "hash": "403d1b99",
+   "name": "TalkMdlClearEyeToEye",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099502
+  },
+  {
+   "hash": "40d8edf6",
+   "name": "WordSetWazaName",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097484
+  },
+  {
+   "hash": "410cbed4",
+   "name": "FieldMenuPushPage",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096933
+  },
+  {
+   "hash": "4114a564",
+   "name": "MdlSetGPos",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104729
+  },
+  {
+   "hash": "4190ecec",
+   "name": "_FieldMapBlockIsLoading",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5120807
+  },
+  {
+   "hash": "41cc633a",
+   "name": "SpMotionDelete",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099163
+  },
+  {
+   "hash": "41f6fb05",
+   "name": "PokePartyCheckDistribution",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1102671
+  },
+  {
+   "hash": "43c27227",
+   "name": "_FieldClose",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5120795
+  },
+  {
+   "hash": "43c551e8",
+   "name": "MdlGetGPosX",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094880
+  },
+  {
+   "hash": "43c551ea",
+   "name": "MdlGetGPosZ",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095050
+  },
+  {
+   "hash": "447cf41d",
+   "name": "MdlGetGPosDirZ",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095035
+  },
+  {
+   "hash": "447cf41f",
+   "name": "MdlGetGPosDirX",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094865
+  },
+  {
+   "hash": "467ed999",
+   "name": "VoiceIsEnd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096109
+  },
+  {
+   "hash": "46916846",
+   "name": "MdlIsHalfSitSkelPreset",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105994
+  },
+  {
+   "hash": "491dd15b",
+   "name": "EVCameraEnd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096018
+  },
+  {
+   "hash": "4a3e2a96",
+   "name": "RomGetVersion",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1102310
+  },
+  {
+   "hash": "4d855abd",
+   "name": "TalkMdlSetTalkMotion",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1102638
+  },
+  {
+   "hash": "4dc278f3",
+   "name": "_GimmickAnimeWait",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106141
+  },
+  {
+   "hash": "53acc97d",
+   "name": "PokePartyGetWazaCount",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106930
+  },
+  {
+   "hash": "59008363",
+   "name": "PlayerGetSex",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1108003
+  },
+  {
+   "hash": "590f52ee",
+   "name": "CommandNOP",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094811
+  },
+  {
+   "hash": "5cb69d67",
+   "name": "ListMenuStart_Seq",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103896
+  },
+  {
+   "hash": "5f6c0ecf",
+   "name": "BallSetAnime",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1098170
+  },
+  {
+   "hash": "6089524b",
+   "name": "WordSetNumber",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104027
+  },
+  {
+   "hash": "6393be9a",
+   "name": "SEPlay",
+   "evidence": "community-hash",
+   "source": "XAMX/commands.txt"
+  },
+  {
+   "hash": "6671d88f",
+   "name": "_TalkMdlEndInit",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106268
+  },
+  {
+   "hash": "66dfbcea",
+   "name": "TalkMdlSetEyeToEye",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099523
+  },
+  {
+   "hash": "68a9df44",
+   "name": "PokePartyRecoverAll",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101040
+  },
+  {
+   "hash": "6ae30210",
+   "name": "BoxIsFull",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101152
+  },
+  {
+   "hash": "6bb7fc1a",
+   "name": "BGMStartEvent",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106691
+  },
+  {
+   "hash": "6d15bab5",
+   "name": "SpMotionReqLoad",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095444
+  },
+  {
+   "hash": "6e1b803f",
+   "name": "VanishTimerIcon",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1102281
+  },
+  {
+   "hash": "703b3ef8",
+   "name": "TalkMdlSetEye",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099558
+  },
+  {
+   "hash": "70a52046",
+   "name": "MdlParamPosChange",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097015
+  },
+  {
+   "hash": "70be961c",
+   "name": "VoicePlay",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1108145
+  },
+  {
+   "hash": "71f288f7",
+   "name": "PokeIconsPreDelete",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099104
+  },
+  {
+   "hash": "733efb87",
+   "name": "PokeIconsLoad",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095470
+  },
+  {
+   "hash": "74d78dad",
+   "name": "GlobalCall",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101098
+  },
+  {
+   "hash": "75321ba3",
+   "name": "ListMenuInit_Seq",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103879
+  },
+  {
+   "hash": "755882af",
+   "name": "FieldMenuPopPage",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096951
+  },
+  {
+   "hash": "76d538df",
+   "name": "BallsDelete",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099196
+  },
+  {
+   "hash": "78178241",
+   "name": "CalcVecToDir",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104452
+  },
+  {
+   "hash": "78e0cf3a",
+   "name": "GlobalGetParentParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101701
+  },
+  {
+   "hash": "7903fd3e",
+   "name": "ListMenuAdd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095551
+  },
+  {
+   "hash": "7b2fec69",
+   "name": "_FadeRequestIn",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5120040
+  },
+  {
+   "hash": "7d6b7345",
+   "name": "MdlAcmdSetEnd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096194
+  },
+  {
+   "hash": "7ec0e009",
+   "name": "ReserveScript",
+   "evidence": "community-hash",
+   "source": "XAMX/commands.txt"
+  },
+  {
+   "hash": "7ef9603e",
+   "name": "SpMotionSetup",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103758
+  },
+  {
+   "hash": "82fa01a3",
+   "name": "CallPC",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094354
+  },
+  {
+   "hash": "83b4e681",
+   "name": "EVCameraSetSrcParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101245
+  },
+  {
+   "hash": "859f8aba",
+   "name": "BGParamPosChange",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096998
+  },
+  {
+   "hash": "85f49a2f",
+   "name": "FadeRequestOut",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5120055
+  },
+  {
+   "hash": "88862ba6",
+   "name": "WordSetBoxTrayName",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097959
+  },
+  {
+   "hash": "88fa8586",
+   "name": "ItemIsMegaStone",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1098331
+  },
+  {
+   "hash": "897d72c7",
+   "name": "BGMEndEvent",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106465
+  },
+  {
+   "hash": "8a23e4e7",
+   "name": "PokePartySetDefaultName",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097916
+  },
+  {
+   "hash": "8ac7e782",
+   "name": "EVCameraSetSlideParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101348
+  },
+  {
+   "hash": "8b4a18b1",
+   "name": "MdlIsExists",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104861
+  },
+  {
+   "hash": "8c8590ab",
+   "name": "MdlInterestViewClear",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104006
+  },
+  {
+   "hash": "8cf20b38",
+   "name": "MdlSetDirDisp",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103658
+  },
+  {
+   "hash": "8d17311f",
+   "name": "PokeIconsTrans",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104688
+  },
+  {
+   "hash": "8d363aff",
+   "name": "PlayerGetForm",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101973
+  },
+  {
+   "hash": "8d631ffe",
+   "name": "ItemAdd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095524
+  },
+  {
+   "hash": "8d711d46",
+   "name": "GetHour",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104640
+  },
+  {
+   "hash": "8e23b028",
+   "name": "MdlAcmdMakeMoveEx",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1107949
+  },
+  {
+   "hash": "8e370f0d",
+   "name": "BallSetVisible",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097319
+  },
+  {
+   "hash": "8e50f765",
+   "name": "WorkGet",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105508
+  },
+  {
+   "hash": "8e55f629",
+   "name": "WorkSet",
+   "evidence": "community-hash",
+   "source": "XAMX/commands.txt"
+  },
+  {
+   "hash": "8e7eebec",
+   "name": "MdlGetDirDisp",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103644
+  },
+  {
+   "hash": "90278065",
+   "name": "MdlSpMotionUpdate",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1098920
+  },
+  {
+   "hash": "97085025",
+   "name": "MdlChangeMoveCode",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096751
+  },
+  {
+   "hash": "97ab735c",
+   "name": "PokeDiarySet",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105912
+  },
+  {
+   "hash": "97ea4344",
+   "name": "_IsReportLock",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100706
+  },
+  {
+   "hash": "997492a8",
+   "name": "BGMChangeNowMap",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103400
+  },
+  {
+   "hash": "9adf1616",
+   "name": "TalkMdlMsg_Seq",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103851
+  },
+  {
+   "hash": "9aeb74a1",
+   "name": "SetupSangoNetworkData",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095222
+  },
+  {
+   "hash": "9c9e9d6e",
+   "name": "CallFieldCaptureDemoSimplePoke",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097180
+  },
+  {
+   "hash": "9ca582f8",
+   "name": "CallPokePartyNameInput",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1107750
+  },
+  {
+   "hash": "9d75386e",
+   "name": "SEIsPlaying",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100255
+  },
+  {
+   "hash": "9d84eeb2",
+   "name": "MdlSearchByObjCode",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096837
+  },
+  {
+   "hash": "9e1f7cda",
+   "name": "GlobalGetChildParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101283
+  },
+  {
+   "hash": "a3086615",
+   "name": "SpMotionPlay",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1108155
+  },
+  {
+   "hash": "a4883690",
+   "name": "_CallWazaApps",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104824
+  },
+  {
+   "hash": "a4dd5437",
+   "name": "BoxAddPoke",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097119
+  },
+  {
+   "hash": "a5135fde",
+   "name": "ItemAddCheck",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100617
+  },
+  {
+   "hash": "a5d96b8f",
+   "name": "MdlGetMoveCode",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096769
+  },
+  {
+   "hash": "a65244aa",
+   "name": "BallSetAnimeFrame",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1098109
+  },
+  {
+   "hash": "a8214d87",
+   "name": "WordSetItemWazaName",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097464
+  },
+  {
+   "hash": "a82f5777",
+   "name": "PokePartyGetWazaID",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094402
+  },
+  {
+   "hash": "a94ccfea",
+   "name": "PokeIconsDelete",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099208
+  },
+  {
+   "hash": "a9ba4f61",
+   "name": "WordSetTemotiMonsNickName",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097717
+  },
+  {
+   "hash": "abf39924",
+   "name": "MdlGetPosY",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094981
+  },
+  {
+   "hash": "abf39925",
+   "name": "MdlGetPosX",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094931
+  },
+  {
+   "hash": "abf39927",
+   "name": "MdlGetPosZ",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095085
+  },
+  {
+   "hash": "ac7bf1a3",
+   "name": "PlaceNameSetNotCloseFlag",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099826
+  },
+  {
+   "hash": "accbbbd7",
+   "name": "FlagReset",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105984
+  },
+  {
+   "hash": "add9e647",
+   "name": "SkyboxEventTimeSet",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105715
+  },
+  {
+   "hash": "ae0ae11e",
+   "name": "EVCameraIsEndFrame",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1098090
+  },
+  {
+   "hash": "ae0e6742",
+   "name": "ContactEncountStart",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1107398
+  },
+  {
+   "hash": "af6176d5",
+   "name": "GimmickAnimeReq",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103772
+  },
+  {
+   "hash": "aff52ef1",
+   "name": "ContactEncountEnd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096233
+  },
+  {
+   "hash": "b25ed5e2",
+   "name": "_WordSetRegister",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104346
+  },
+  {
+   "hash": "b295378d",
+   "name": "FadeIsEnd",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5120023
+  },
+  {
+   "hash": "b32fa207",
+   "name": "_MdlProperties",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104673
+  },
+  {
+   "hash": "b38d54cb",
+   "name": "CallApplicationDemo",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103161
+  },
+  {
+   "hash": "b5977d74",
+   "name": "GetMinute",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099257
+  },
+  {
+   "hash": "b5f607fa",
+   "name": "WordSetItemPocketName",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1097894
+  },
+  {
+   "hash": "b7c88eac",
+   "name": "PokeAddTableGetMonsNo",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1102947
+  },
+  {
+   "hash": "b9964356",
+   "name": "MsgRelease",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1098778
+  },
+  {
+   "hash": "ba4b3cdd",
+   "name": "MdlInterestViewSetMode",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096893
+  },
+  {
+   "hash": "bc5b6c01",
+   "name": "TrainerCardGetRank",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100720
+  },
+  {
+   "hash": "bcf84ded",
+   "name": "_CallWildBattleWithoutField",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5120767
+  },
+  {
+   "hash": "bfeacf25",
+   "name": "BuildMdlEventAnimeStop",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103490
+  },
+  {
+   "hash": "c09a6c30",
+   "name": "PlayerGetZoneID",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094438
+  },
+  {
+   "hash": "c0fe70b5",
+   "name": "BuildMdlGetHandleByGPos",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104740
+  },
+  {
+   "hash": "c2dc77a4",
+   "name": "MEIsFinished",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095689
+  },
+  {
+   "hash": "c34ad2ab",
+   "name": null,
+   "evidence": "unresolved"
+  },
+  {
+   "hash": "c569fc48",
+   "name": "MdlCanUseTurnAcmd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095936
+  },
+  {
+   "hash": "c5e7859b",
+   "name": "_ReportStart",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1107418
+  },
+  {
+   "hash": "c63b48da",
+   "name": "EVCameraSetFrameParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101394
+  },
+  {
+   "hash": "c73ba953",
+   "name": "IsReserveScriptSetting",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100232
+  },
+  {
+   "hash": "c7de8c7c",
+   "name": "_ABKeyWait",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106207
+  },
+  {
+   "hash": "c894e12b",
+   "name": "floatadd",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5126823
+  },
+  {
+   "hash": "c89872d8",
+   "name": "floatsub",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5126814
+  },
+  {
+   "hash": "c8e7fb61",
+   "name": "CheckWinAllSuspend",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096310
+  },
+  {
+   "hash": "c94c62f4",
+   "name": "SetTimerIcon",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1102297
+  },
+  {
+   "hash": "cb54950c",
+   "name": "MsgIsLoaded",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095645
+  },
+  {
+   "hash": "cd2b19dd",
+   "name": "RecordGet",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105342
+  },
+  {
+   "hash": "cd2b9f5c",
+   "name": "RecordAdd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095507
+  },
+  {
+   "hash": "cdd73846",
+   "name": "GlobalSetParentParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101722
+  },
+  {
+   "hash": "ce136bce",
+   "name": "SpMotionLoadIsEnd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096061
+  },
+  {
+   "hash": "d04413ad",
+   "name": "SetKeyWaitMark",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100804
+  },
+  {
+   "hash": "d1df42d4",
+   "name": "ContactEncountIsActive",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099428
+  },
+  {
+   "hash": "d208edaf",
+   "name": "CallPokeSelect",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105246
+  },
+  {
+   "hash": "d25ed9fe",
+   "name": "FieldMenuChangePagePlayNavi",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100520
+  },
+  {
+   "hash": "d2be92ab",
+   "name": "EVCameraBegin",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1102228
+  },
+  {
+   "hash": "d79b4142",
+   "name": "BallsCreate",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099031
+  },
+  {
+   "hash": "d7d30480",
+   "name": "MdlDel",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1100904
+  },
+  {
+   "hash": "d7d3ceee",
+   "name": "MdlAdd",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095517
+  },
+  {
+   "hash": "db16cbce",
+   "name": "EVCameraSetGameCameraParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101162
+  },
+  {
+   "hash": "db3559b3",
+   "name": "ZukanGetOpenFlag",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1099949
+  },
+  {
+   "hash": "df08852e",
+   "name": "floatround",
+   "evidence": "rom-string-hash",
+   "source": "code.bin",
+   "sourceSha256": "b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16",
+   "offset": 5126832
+  },
+  {
+   "hash": "df9bb8bc",
+   "name": "MdlInterestViewSet",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1105870
+  },
+  {
+   "hash": "df9f03b4",
+   "name": "_TalkMdlStartInit",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1106297
+  },
+  {
+   "hash": "e0f3889d",
+   "name": "IsContinueRecover",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104363
+  },
+  {
+   "hash": "e2540353",
+   "name": "IsKeyTrigger",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1104068
+  },
+  {
+   "hash": "e37091e6",
+   "name": "PlayerSetFieldMenu",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1107828
+  },
+  {
+   "hash": "e53555d8",
+   "name": "MEPlay",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1108109
+  },
+  {
+   "hash": "e5a627ed",
+   "name": "EVCameraSetInitParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101680
+  },
+  {
+   "hash": "e5ab2cfa",
+   "name": "PokePartyGetParam",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1101644
+  },
+  {
+   "hash": "e76e65e4",
+   "name": "PokeIconsIsLoaded",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095671
+  },
+  {
+   "hash": "ebd459b9",
+   "name": "WarpSetID",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094705
+  },
+  {
+   "hash": "ec163e7d",
+   "name": "Assert_",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095096
+  },
+  {
+   "hash": "f01eeee0",
+   "name": "MsgWinCloseNo",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1102753
+  },
+  {
+   "hash": "f0882c66",
+   "name": "MdlAcmdSet",
+   "evidence": "community-hash",
+   "source": "XAMX/commands.txt"
+  },
+  {
+   "hash": "f4890926",
+   "name": "MsgSwap",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1103416
+  },
+  {
+   "hash": "f845bdff",
+   "name": "MsgLoad",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1095436
+  },
+  {
+   "hash": "f9238461",
+   "name": "PocketGetID",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1094678
+  },
+  {
+   "hash": "fc264f03",
+   "name": "ChangeFace",
+   "evidence": "rom-string-hash",
+   "source": "DllField.cro",
+   "sourceSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+   "offset": 1096563
+  }
+ ]
+}

@@ -22,7 +22,7 @@ Planejamento em fases para sair do protótipo placeholder atual até a reconstru
 - **Critérios de pronto:**
   - `RomFS` extraída em diretório ignorado pelo `.gitignore` (`P-002`).
   - Inventário documentado dos arquivos relevantes da ROM (mapas, colisões, textos, modelos).
-  - Scripts de zona: envelope Pawn/AMX v10 e compactação [decodificados](features/pipeline-rom/script-format.md) em 2026-11-17; semântica nativa, dispatch e runner permanecem em P-013.
+  - Scripts de zona: envelope Pawn/AMX v10 e compactação [decodificados](features/pipeline-rom/script-format.md) em 2026-11-17; [disassembly do slice](features/pipeline-rom/script-disassembly.md) com nativas e candidatos de dispatch locais/globais gerado. Semântica runtime, ambiguidades e runner permanecem em P-013.
   - Scripts de conversão gerando JSONs validados por schema e `.glb` otimizados para o vertical slice.
 
 ## Fase 2 — Vertical Slice e Arco Inicial (`Littleroot Town → Route 101 → Oldale → Route 102 → Petalburg`) (Meses 4–8 — Em andamento)

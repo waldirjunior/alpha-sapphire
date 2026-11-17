@@ -28,6 +28,13 @@ Atualizado em 2026-11-17 (verificação local na VPS).
 - `python3 -m unittest scripts/test_zone_scripts.py scripts/test_pipeline.py`: 18 testes passando (10 novos + 8 existentes), fixtures sintéticas sem ROM.
 - A verificação `npm test && npm run build` neste worktree parou em `vitest: command not found` (sem `node_modules`); build não executado. As aprovações de build da seção anterior são históricas, não desta investigação.
 
+## Disassembly do slice (2026-11-17, continuação no mesmo worktree)
+
+- [Gerador](../scripts/disassemble_zone_scripts.py) e [documentação](features/pipeline-rom/script-disassembly.md): 12 zonas (6, 7, 23, 223–231), oito scripts globais referenciados, 28.507 instruções e 71 opcodes em `src/data/zone_scripts/`.
+- Nativas: 204/205 hashes nomeados (198 por strings dos binários locais e seis por referência comunitária); `c34ad2ab` desconhecido. Vínculos NPC/trigger/furniture: 108 únicos e 11 ambíguos, sem seleção especulativa (P-013/A-011).
+- Verificação atual: `python3 -B -m unittest scripts/test_amx_disassembly.py scripts/test_zone_script_bindings.py scripts/test_zone_scripts.py scripts/test_pipeline.py` passou (40 testes); `npm install` executado; `npm test && npm run build` passou (32 testes Vitest). Nenhuma dependência foi atualizada.
+- Avisos herdados: bundle Vite acima de 500 KB e nove vulnerabilidades npm (P-015). Os binários foram somente lidos; nenhuma conversão 3D executada.
+
 ## Estado da ROM e Ambiente na VPS
 
 - Pasta [rom/](../rom/) ignorada pelo [.gitignore](../.gitignore#L8) e contendo:

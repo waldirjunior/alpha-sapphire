@@ -184,7 +184,11 @@ passando (10 novos e 8 existentes, sem ROM). A execução canônica
 worktree não tem `node_modules`; build não executado. Não foram instaladas
 dependências para evitar carga adicional durante o batch de GRs.
 
-## O que permanece aberto (P-013)
+## Questões abertas ao fim da investigação inicial (P-013)
+
+Continuação: [script-disassembly.md](script-disassembly.md) resolve o disassembly,
+204 nomes nativos do slice e os cases locais/globais; mantém explícitas as
+ambiguidades de roteamento e a ausência de runner.
 
 1. Resolver a API nativa (hash→função, argumentos e efeitos) e a ligação entre
    IDs de NPC/trigger e o dispatch AMX. Só então nomear diálogos/flags/cenas.

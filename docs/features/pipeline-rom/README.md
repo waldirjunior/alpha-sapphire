@@ -7,6 +7,7 @@ Responsável por extrair as partições proprietárias (`RomFS`, `ExeFS`) da ROM
 - [prds/](prds/README.md) — requisitos e critérios de aceite do pipeline.
 - [adrs/](adrs/README.md) — decisões arquiteturais e de isolamento proprietário.
 - [script-format.md](script-format.md) — formato Pawn/AMX v10 das zonas ORAS, offsets, compactação, evidências e limites de interpretação (P-013/A-010).
+- [script-disassembly.md](script-disassembly.md) — opcodes, nativas por hash, disassembly do slice e vínculos NPC/trigger com scripts locais/globais (P-013/A-011).
 - Referência TCC: [docs/tcc/01-pipeline-rom.md](../../tcc/01-pipeline-rom.md).
 
 ## Estado atual
