@@ -1,0 +1,9 @@
+{
+ "zone": 373,
+ "name": "Route 110",
+ "textFile": 206,
+ "lines": [
+  "The door is locked.\nA message is written on the scroll on the door:\n“Write the secret code here.”",
+  "A secret code is written on it."
+ ]
+}

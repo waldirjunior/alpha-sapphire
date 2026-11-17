@@ -1,0 +1,55 @@
+{
+ "zone": 367,
+ "name": "Route 104",
+ "mapArea": 162,
+ "mapMatrix": 274,
+ "grIds": [
+  624
+ ],
+ "textFile": 219,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 4134,
+   "movePermissions": 39,
+   "spawnFlag": 677,
+   "script": 3,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 10,
+   "y": 9,
+   "degrees": 9.0
+  },
+  {
+   "id": 1,
+   "model": 283,
+   "movePermissions": 37,
+   "spawnFlag": 667,
+   "script": 2,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 10,
+   "y": 6,
+   "degrees": 9.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 27,
+   "destinationTile": 3,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 135,
+   "z": 0,
+   "y": 225,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

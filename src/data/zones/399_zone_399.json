@@ -1,0 +1,69 @@
+{
+ "zone": 399,
+ "name": "???",
+ "mapArea": 180,
+ "mapMatrix": 302,
+ "grIds": [
+  653
+ ],
+ "textFile": 68,
+ "furniture": [
+  {
+   "script": 3,
+   "x": 8,
+   "y": 2,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 2,
+   "x": 3,
+   "y": 3,
+   "wx": 1,
+   "wy": 3
+  },
+  {
+   "script": 2,
+   "x": 6,
+   "y": 6,
+   "wx": 4,
+   "wy": 1
+  },
+  {
+   "script": 2,
+   "x": 4,
+   "y": 5,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 2,
+   "x": 4,
+   "y": 2,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 2,
+   "x": 9,
+   "y": 2,
+   "wx": 1,
+   "wy": 1
+  }
+ ],
+ "npcs": [],
+ "warps": [],
+ "triggers": [
+  {
+   "script": 4,
+   "constant": 16394,
+   "x": 9,
+   "y": 3,
+   "width": 1,
+   "height": 3
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

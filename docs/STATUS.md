@@ -34,3 +34,18 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   - `ExeFS`: extraída em `rom/extracted/ExeFS/` (`5.6M`: `banner.bin`, `code.bin`, `icon.bin`).
   - `RomFS`: extraída por completo via `scripts/extract_romfs.py` em `rom/extracted/RomFS/` (`40` diretórios, `655` arquivos, `1.872.201.296` bytes; ver `A-003`).
 - Worktree ativo para pipeline: `pipeline-rom` em `/root/orca/workspaces/alpha-sapphire/pipeline-rom` (branch `pipeline-rom`).
+
+## Estado da ROM e Ambiente no macOS (2026-11-17)
+
+- `rom/` no Mac: `.7z` (`1.1G`), `readme.txt` e `rom/extracted/` (`ExeFS`, `garc`, `models`, `RomFS` — `1.8G`). O `.3ds` não foi copiado (não é necessário: extração já feita).
+- Ferramentas instaladas sem sudo:
+  - `.NET SDK 8.0.428` em `~/.dotnet` (via `dotnet-install.sh`).
+  - `Blender 3.4.1` em `~/Applications/Blender3.4.app` (necessário p/ `collada_import`; Blender 5.2.4 também instalado em `~/Applications/Blender.app`).
+  - `assimp 6.0`, `p7zip 17.05`, `vgmstream r2168`, `ffmpeg 9.0.2` via Homebrew.
+  - `SPICA` + `SpicaExport` em `v1/_tools/` (fora do repo), compilado com os patches locais de PNG/`ExportSkinning`; wrappers em `v1/_tools/bin/` (`SpicaExport`, `blender`). `ctrtool` não instalado no Mac (desnecessário — partições já extraídas).
+- Descoberta e extração (macOS):
+  - Tabela de zonas decodificada: `a/0/1/3` (`ZO` × 536 + `0536.bin` ZoneData master + `0537.bin` encontros `EN`) cruzada com `a/0/4/0` (matrizes) e metlist `a_0_7_3/0090`; `src/data/zones.json` gerado por [scripts/build_zone_catalog.py](../scripts/build_zone_catalog.py) — 536 zonas nomeadas com `grIds` e `textFile` (`A-008`).
+  - `a/0/3/9` completo desempacotado (`857` `GR`s) e `a/0/1/4` (`229` `AD`s) em `rom/extracted/garc/` (`417M`).
+  - `536` textos de zona em `src/data/texts/zones/` e `175` arquivos GameText em `src/data/texts/gametext/` (via `extract_texts.decode_gen6_text`).
+  - `199` trilhas `.bcstm` → `.mp3` em `rom/extracted/audio/mp3/` (`281M`).
+  - Batch `.glb` em andamento em `rom/extracted/models/`: `gr_NNNN/` (GRs de mapa), `pokemon/` (`--all`, tags `pmNNNN_NN`), `characters/` (`mm_NNNN`).

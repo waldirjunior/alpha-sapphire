@@ -1,0 +1,88 @@
+{
+ "zone": 110,
+ "name": "Seafloor Cavern",
+ "mapArea": 58,
+ "mapMatrix": 71,
+ "grIds": [
+  340
+ ],
+ "textFile": 403,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 201,
+   "movePermissions": 0,
+   "spawnFlag": 727,
+   "script": 2000,
+   "faceDirection": 6,
+   "sightRange": 0,
+   "x": 19,
+   "y": 23,
+   "degrees": -90.0
+  },
+  {
+   "id": 1,
+   "model": 203,
+   "movePermissions": 0,
+   "spawnFlag": 729,
+   "script": 2000,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 19,
+   "y": 32,
+   "degrees": -90.0
+  },
+  {
+   "id": 2,
+   "model": 4158,
+   "movePermissions": 0,
+   "spawnFlag": 730,
+   "script": 2000,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 18,
+   "y": 15,
+   "degrees": -144.0
+  },
+  {
+   "id": 3,
+   "model": 196,
+   "movePermissions": 0,
+   "spawnFlag": 728,
+   "script": 2000,
+   "faceDirection": 5,
+   "sightRange": 0,
+   "x": 17,
+   "y": 25,
+   "degrees": -90.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 108,
+   "destinationTile": 1,
+   "faceDirection": 0,
+   "transitionEffect": 5,
+   "x": 315,
+   "z": -81,
+   "y": 675,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [
+  {
+   "script": 2,
+   "constant": 16559,
+   "x": 17,
+   "y": 28,
+   "width": 3,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

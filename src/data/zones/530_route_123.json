@@ -1,0 +1,20 @@
+{
+ "zone": 530,
+ "name": "Route 123",
+ "mapArea": 204,
+ "mapMatrix": 427,
+ "grIds": [
+  839,
+  840,
+  841,
+  842
+ ],
+ "textFile": 155,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

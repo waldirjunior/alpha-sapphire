@@ -1,0 +1,55 @@
+{
+ "zone": 254,
+ "name": "Pacifidlog Town",
+ "mapArea": 121,
+ "mapMatrix": 184,
+ "grIds": [
+  526
+ ],
+ "textFile": 23,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 326,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 12,
+   "y": 8,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 343,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 6,
+   "y": 4,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 12,
+   "destinationTile": 3,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 153,
+   "z": 0,
+   "y": 207,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

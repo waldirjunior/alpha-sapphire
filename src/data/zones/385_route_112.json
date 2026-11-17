@@ -1,0 +1,75 @@
+{
+ "zone": 385,
+ "name": "Route 112",
+ "mapArea": 168,
+ "mapMatrix": 289,
+ "grIds": [
+  640
+ ],
+ "textFile": 185,
+ "furniture": [
+  {
+   "script": 5,
+   "x": 9,
+   "y": 23,
+   "wx": 2,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 300,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 16,
+   "y": 22,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 300,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 3,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 21,
+   "y": 26,
+   "degrees": 0.0
+  },
+  {
+   "id": 2,
+   "model": 112,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 4,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 10,
+   "y": 26,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 83,
+   "destinationTile": 1,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 279,
+   "z": 0,
+   "y": 513,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 257,
+ "encounters": []
+}

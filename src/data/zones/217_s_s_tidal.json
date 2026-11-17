@@ -1,0 +1,79 @@
+{
+ "zone": 217,
+ "name": "S.S. Tidal",
+ "mapArea": 104,
+ "mapMatrix": 161,
+ "grIds": [
+  499
+ ],
+ "textFile": 71,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8192,
+   "movePermissions": 0,
+   "spawnFlag": 1486,
+   "script": 7180,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 14,
+   "y": 11,
+   "degrees": -54.0
+  },
+  {
+   "id": 1,
+   "model": 275,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 27,
+   "y": 27,
+   "degrees": -54.0
+  },
+  {
+   "id": 2,
+   "model": 232,
+   "movePermissions": 43,
+   "spawnFlag": 0,
+   "script": 3357,
+   "faceDirection": 3,
+   "sightRange": 2,
+   "x": 19,
+   "y": 19,
+   "degrees": -54.0
+  },
+  {
+   "id": 3,
+   "model": 232,
+   "movePermissions": 29,
+   "spawnFlag": 0,
+   "script": 3358,
+   "faceDirection": 0,
+   "sightRange": 2,
+   "x": 18,
+   "y": 17,
+   "degrees": -54.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 216,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 531,
+   "z": -45,
+   "y": 387,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

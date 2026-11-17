@@ -1,0 +1,42 @@
+{
+ "zone": 175,
+ "name": "Sky Pillar",
+ "mapArea": 81,
+ "mapMatrix": 125,
+ "grIds": [
+  435
+ ],
+ "textFile": 336,
+ "furniture": [],
+ "npcs": [],
+ "warps": [
+  {
+   "destinationMap": 60,
+   "destinationTile": 0,
+   "faceDirection": 0,
+   "transitionEffect": 5,
+   "x": 279,
+   "z": -126,
+   "y": 549,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 60,
+   "destinationTile": 1,
+   "faceDirection": 0,
+   "transitionEffect": 5,
+   "x": 495,
+   "z": -72,
+   "y": 387,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 195,
+ "encounters": []
+}

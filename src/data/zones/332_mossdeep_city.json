@@ -1,0 +1,55 @@
+{
+ "zone": 332,
+ "name": "Mossdeep City",
+ "mapArea": 147,
+ "mapMatrix": 244,
+ "grIds": [
+  589
+ ],
+ "textFile": 505,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 236,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 8,
+   "y": 5,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 237,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 12,
+   "y": 9,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 19,
+   "destinationTile": 3,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 153,
+   "z": 0,
+   "y": 225,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

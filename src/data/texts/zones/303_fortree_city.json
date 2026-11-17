@@ -1,0 +1,15 @@
+{
+ "zone": 303,
+ "name": "Fortree City",
+ "textFile": 540,
+ "lines": [
+  "Hi. There’s this Pokémon that\nI’m looking for.\nI want .\nDo you have one?\nWould you trade it for my ?",
+  "Thank you!\nI’ll be good to your ,\nso please be nice to my !",
+  "Wait!\nThat Pokémon isn’t .\nI guess you don’t want to trade with me.",
+  "Oh, OK. If you change your mind,\nplease come see me.\nI’ll be waiting!",
+  "Thank you for trading with me!\nI really wanted this Pokémon, so\nI promise to take good care of it!",
+  "Sorry!\nI can’t trade with a person\nwho has only one Pokémon.",
+  "Trading Pokémon with others...\nIt’s as if you’re trading your own\nmemories with other people.",
+  "Pluuuuun?"
+ ]
+}

@@ -1,0 +1,55 @@
+{
+ "zone": 506,
+ "name": "Mauville City",
+ "mapArea": 131,
+ "mapMatrix": 403,
+ "grIds": [
+  800
+ ],
+ "textFile": 568,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 272,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 26,
+   "y": 13,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 15,
+   "destinationTile": 8,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 351,
+   "z": 0,
+   "y": 99,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 446,
+   "destinationTile": 13,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 225,
+   "z": 0,
+   "y": 333,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

@@ -10,7 +10,12 @@ import sys
 import tempfile
 from pathlib import Path
 
-SPICA_EXPORT = Path("/opt/tools/SpicaExport/bin/Release/net8.0/SpicaExport")
+SPICA_EXPORT = Path(
+    os.environ.get(
+        "SPICA_EXPORT",
+        "/opt/tools/SpicaExport/bin/Release/net8.0/SpicaExport",
+    )
+)
 
 BLENDER_SCRIPT = """
 import bpy

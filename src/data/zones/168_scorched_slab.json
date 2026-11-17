@@ -1,0 +1,17 @@
+{
+ "zone": 168,
+ "name": "Scorched Slab",
+ "mapArea": 79,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 343,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

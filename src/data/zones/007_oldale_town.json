@@ -1,0 +1,165 @@
+{
+ "zone": 7,
+ "name": "Oldale Town",
+ "mapArea": 8,
+ "mapMatrix": 1,
+ "grIds": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6
+ ],
+ "textFile": 60,
+ "furniture": [
+  {
+   "script": 2,
+   "x": 101,
+   "y": 103,
+   "wx": 2,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 238,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 6,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 84,
+   "y": 101,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 219,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 109,
+   "y": 101,
+   "degrees": 0.0
+  },
+  {
+   "id": 2,
+   "model": 299,
+   "movePermissions": 2,
+   "spawnFlag": 0,
+   "script": 4,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 100,
+   "y": 104,
+   "degrees": 0.0
+  },
+  {
+   "id": 3,
+   "model": 122,
+   "movePermissions": 0,
+   "spawnFlag": 619,
+   "script": 2000,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 100,
+   "y": 119,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 24,
+   "destinationTile": 0,
+   "faceDirection": 3,
+   "transitionEffect": 5,
+   "x": 1449,
+   "z": 0,
+   "y": 1809,
+   "width": 1,
+   "height": 3,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 229,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 3,
+   "x": 1917,
+   "z": 0,
+   "y": 1701,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 228,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 3,
+   "x": 1683,
+   "z": 0,
+   "y": 2007,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 230,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 3,
+   "x": 1665,
+   "z": 0,
+   "y": 1719,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 231,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 3,
+   "x": 1935,
+   "z": 0,
+   "y": 1989,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [
+  {
+   "script": 3,
+   "constant": 16508,
+   "x": 98,
+   "y": 116,
+   "width": 5,
+   "height": 1
+  },
+  {
+   "script": 5,
+   "constant": 16508,
+   "x": 83,
+   "y": 100,
+   "width": 1,
+   "height": 3
+  },
+  {
+   "script": 7,
+   "constant": 16509,
+   "x": 98,
+   "y": 116,
+   "width": 5,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 363,
+ "encounters": []
+}

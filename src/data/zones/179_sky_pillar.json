@@ -1,0 +1,17 @@
+{
+ "zone": 179,
+ "name": "Sky Pillar",
+ "mapArea": 82,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 332,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

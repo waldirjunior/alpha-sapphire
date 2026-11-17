@@ -1,0 +1,17 @@
+{
+ "zone": 3,
+ "name": "Littleroot Town",
+ "mapArea": 5,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 14,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

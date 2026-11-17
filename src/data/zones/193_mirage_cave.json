@@ -1,0 +1,30 @@
+{
+ "zone": 193,
+ "name": "Mirage Cave",
+ "mapArea": 85,
+ "mapMatrix": 139,
+ "grIds": [
+  455
+ ],
+ "textFile": 317,
+ "furniture": [],
+ "npcs": [],
+ "warps": [
+  {
+   "destinationMap": 509,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 333,
+   "z": 18,
+   "y": 279,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

@@ -1,0 +1,77 @@
+{
+ "zone": 328,
+ "name": "Lilycove City",
+ "mapArea": 141,
+ "mapMatrix": 243,
+ "grIds": [
+  588
+ ],
+ "textFile": 512,
+ "furniture": [
+  {
+   "script": 3,
+   "x": 13,
+   "y": 19,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 4,
+   "x": 26,
+   "y": 14,
+   "wx": 2,
+   "wy": 1
+  },
+  {
+   "script": 5,
+   "x": 28,
+   "y": 14,
+   "wx": 2,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 249,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 26,
+   "y": 16,
+   "degrees": 162.0
+  },
+  {
+   "id": 1,
+   "model": 306,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 17,
+   "y": 10,
+   "degrees": 162.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 327,
+   "destinationTile": 1,
+   "faceDirection": 2,
+   "transitionEffect": 5,
+   "x": 441,
+   "z": 162,
+   "y": 189,
+   "width": 1,
+   "height": 3,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

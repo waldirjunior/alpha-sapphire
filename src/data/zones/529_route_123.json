@@ -1,0 +1,33 @@
+{
+ "zone": 529,
+ "name": "Route 123",
+ "mapArea": 204,
+ "mapMatrix": 427,
+ "grIds": [
+  839,
+  840,
+  841,
+  842
+ ],
+ "textFile": 156,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8253,
+   "movePermissions": 0,
+   "spawnFlag": 1070,
+   "script": 10250,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 128,
+   "y": 101,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

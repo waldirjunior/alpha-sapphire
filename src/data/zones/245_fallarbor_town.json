@@ -1,0 +1,43 @@
+{
+ "zone": 245,
+ "name": "Fallarbor Town",
+ "mapArea": 119,
+ "mapMatrix": 180,
+ "grIds": [
+  522
+ ],
+ "textFile": 35,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 240,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2261,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 7,
+   "y": 6,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 10,
+   "destinationTile": 4,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 153,
+   "z": 0,
+   "y": 225,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

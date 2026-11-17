@@ -1,0 +1,17 @@
+{
+ "zone": 119,
+ "name": "Cave of Origin",
+ "mapArea": 63,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 394,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

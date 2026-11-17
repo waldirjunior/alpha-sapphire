@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import shutil
 import struct
 import subprocess
@@ -15,7 +16,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from unpack_garc import decompress_lz11
 
-SPICA_EXPORT = Path("/opt/tools/SpicaExport/bin/Release/net8.0/SpicaExport")
+SPICA_EXPORT = Path(
+    os.environ.get(
+        "SPICA_EXPORT",
+        "/opt/tools/SpicaExport/bin/Release/net8.0/SpicaExport",
+    )
+)
 
 BLENDER_POKEMON_SCRIPT = """
 import bpy
@@ -93,7 +99,10 @@ def read_garc_slot(f, data_offset: int, entries: list[tuple[int, int]], idx: int
     return blob
 
 
-def extract_pokemon_models(garc_path: Path, out_dir: Path) -> None:
+PM_TAG_RE = re.compile(rb"pm\d{4}_\d{2}")
+
+
+def scan_pokemon_models(garc_path: Path, out_dir: Path, all_species: bool) -> None:
     if not SPICA_EXPORT.is_file():
         raise FileNotFoundError(f"SpicaExport não encontrado: {SPICA_EXPORT}")
     if not garc_path.is_file():
@@ -120,10 +129,12 @@ def extract_pokemon_models(garc_path: Path, out_dir: Path) -> None:
 
         remaining = dict(TARGET_SPECIES)
         env = {**os.environ, "DOTNET_ROOT": os.environ.get("DOTNET_ROOT", "/root/.dotnet")}
+        seen: set[str] = set()
 
         # Slots de modelo de Pokémon começam por volta do índice 2000 para dex #252+
-        for idx in range(1800, len(entries) - 2):
-            if not remaining:
+        first = 0 if all_species else 1800
+        for idx in range(first, len(entries) - 2):
+            if not all_species and not remaining:
                 break
             start, length = entries[idx]
             if length < 10000 or length > 2_000_000:
@@ -133,40 +144,56 @@ def extract_pokemon_models(garc_path: Path, out_dir: Path) -> None:
                 continue
 
             matched_name = None
-            for sp_name, tag in remaining.items():
-                if tag in blob:
-                    matched_name = sp_name
-                    break
+            if all_species:
+                m = PM_TAG_RE.search(blob)
+                if m:
+                    tag = m.group(0).decode()
+                    if tag not in seen:
+                        matched_name = tag
+            else:
+                for sp_name, tag in remaining.items():
+                    if tag in blob:
+                        matched_name = sp_name
+                        break
             if not matched_name:
                 continue
 
             tex_blob = read_garc_slot(f, data_offset, entries, idx + 2)
             sp_out = out_dir / matched_name
-            sp_out.mkdir(parents=True, exist_ok=True)
             glb_path = sp_out / f"{matched_name}.glb"
+            if all_species and glb_path.is_file():
+                seen.add(matched_name)
+                continue
+            sp_out.mkdir(parents=True, exist_ok=True)
 
-            with tempfile.TemporaryDirectory() as tmp:
-                tmp_path = Path(tmp)
-                pc_path = tmp_path / "model.pc"
-                pt_path = tmp_path / "textures.pt"
-                dae_path = tmp_path / f"{matched_name}.dae"
-                py_path = tmp_path / "blender_pokemon.py"
-                py_path.write_text(BLENDER_POKEMON_SCRIPT, encoding="utf-8")
-                pc_path.write_bytes(blob)
-                cmd = [str(SPICA_EXPORT), str(pc_path), str(dae_path)]
-                if tex_blob.startswith(b"PT"):
-                    pt_path.write_bytes(tex_blob)
-                    cmd.append(str(pt_path))
-                subprocess.run(cmd, check=True, env=env)
-                subprocess.run(
-                    ["blender", "--background", "--python-exit-code", "1", "--python", str(py_path), "--", str(dae_path), str(glb_path)],
-                    check=True,
-                )
-                for png in tmp_path.glob("*.png"):
-                    shutil.copy2(png, sp_out / png.name)
+            try:
+                with tempfile.TemporaryDirectory() as tmp:
+                    tmp_path = Path(tmp)
+                    pc_path = tmp_path / "model.pc"
+                    pt_path = tmp_path / "textures.pt"
+                    dae_path = tmp_path / f"{matched_name}.dae"
+                    py_path = tmp_path / "blender_pokemon.py"
+                    py_path.write_text(BLENDER_POKEMON_SCRIPT, encoding="utf-8")
+                    pc_path.write_bytes(blob)
+                    cmd = [str(SPICA_EXPORT), str(pc_path), str(dae_path)]
+                    if tex_blob.startswith(b"PT"):
+                        pt_path.write_bytes(tex_blob)
+                        cmd.append(str(pt_path))
+                    subprocess.run(cmd, check=True, env=env)
+                    subprocess.run(
+                        ["blender", "--background", "--python-exit-code", "1", "--python", str(py_path), "--", str(dae_path), str(glb_path)],
+                        check=True,
+                    )
+                    for png in tmp_path.glob("*.png"):
+                        shutil.copy2(png, sp_out / png.name)
+            except subprocess.CalledProcessError as e:
+                seen.discard(matched_name)
+                print(f"Falha {matched_name} (slot {idx}): {e}", file=sys.stderr, flush=True)
+                continue
 
-            print(f"Convertido {matched_name} (slot {idx}): {glb_path} ({glb_path.stat().st_size} bytes)")
-            del remaining[matched_name]
+            seen.add(matched_name)
+            print(f"Convertido {matched_name} (slot {idx}): {glb_path} ({glb_path.stat().st_size} bytes)", flush=True)
+            remaining.pop(matched_name, None)
 
         if remaining:
             print(f"Aviso: espécies não encontradas: {list(remaining.keys())}", file=sys.stderr)
@@ -176,8 +203,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Extrai modelos 3D de Pokémon de a/0/0/8 para .glb.")
     parser.add_argument("--garc", required=True, type=Path)
     parser.add_argument("--out-dir", required=True, type=Path)
+    parser.add_argument("--all", action="store_true", help="Extrai todas as espécies/formas com tag pmNNNN_NN")
     args = parser.parse_args()
-    extract_pokemon_models(args.garc, args.out_dir)
+    scan_pokemon_models(args.garc, args.out_dir, all_species=args.all)
     return 0
 
 

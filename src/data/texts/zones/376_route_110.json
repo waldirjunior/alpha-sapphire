@@ -1,0 +1,14 @@
+{
+ "zone": 376,
+ "name": "Route 110",
+ "textFile": 203,
+ "lines": [
+  "The door is locked.\nA message is written on the scroll on the door:\n“Write the secret code here.”",
+  "A secret code is written on it.",
+  "CLICKETY-CLACK...\nMECHADOLL 3 AM I!\nDO YOU FEEL CONFIDENT?\nAN ESCAPE ROPE, $550!\nYOU’D BETTER BUY ONE!",
+  "CLICKETY-CLACK...\nNICE DOING BUSINESS WITH YOU!",
+  "YOU DON’T HAVE ENOUGH MONEY.",
+  "YOU SHOULD BUY ONE...",
+  "YOU HAVE PLENTY.\nNO NEED TO BUY."
+ ]
+}

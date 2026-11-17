@@ -1,0 +1,64 @@
+{
+ "zone": 118,
+ "name": "Cave of Origin",
+ "mapArea": 62,
+ "mapMatrix": 79,
+ "grIds": [
+  348
+ ],
+ "textFile": 395,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 4123,
+   "movePermissions": 0,
+   "spawnFlag": 742,
+   "script": 2000,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 20,
+   "y": 16,
+   "degrees": -108.0
+  },
+  {
+   "id": 1,
+   "model": 123,
+   "movePermissions": 0,
+   "spawnFlag": 972,
+   "script": 2000,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 20,
+   "y": 29,
+   "degrees": -72.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 116,
+   "destinationTile": 2,
+   "faceDirection": 2,
+   "transitionEffect": 5,
+   "x": 495,
+   "z": -45,
+   "y": 621,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [
+  {
+   "script": 1,
+   "constant": 16556,
+   "x": 17,
+   "y": 24,
+   "width": 7,
+   "height": 2
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 292,
+ "encounters": []
+}

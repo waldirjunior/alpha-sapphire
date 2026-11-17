@@ -1,0 +1,11 @@
+{
+ "zone": 238,
+ "name": "Lavaridge Town",
+ "textFile": 44,
+ "lines": [
+  "You’ve come all the way to look\nat herbal medicine in Lavaridge?\nThat’s rather commendable!\nI like you! Take this!",
+  "That Charcoal I gave you is used\nfor making herbal medicine.\nIt can also do wonders when held\nby a Pokémon.\nIt powers up Fire-type moves!",
+  "Herbal medicine works impressively well.\nBut your Pokémon will dislike you for it.\nIt must be horribly bitter!",
+  "The display reads:\nThe more bitter it tastes, the better it works!"
+ ]
+}

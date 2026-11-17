@@ -1,0 +1,43 @@
+{
+ "zone": 391,
+ "name": "Route 117",
+ "mapArea": 173,
+ "mapMatrix": 295,
+ "grIds": [
+  646
+ ],
+ "textFile": 174,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 287,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2200,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 12,
+   "y": 11,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 44,
+   "destinationTile": 1,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 207,
+   "z": 0,
+   "y": 333,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

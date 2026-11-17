@@ -1,0 +1,79 @@
+{
+ "zone": 214,
+ "name": "Southern Island",
+ "mapArea": 103,
+ "mapMatrix": 158,
+ "grIds": [
+  493,
+  494,
+  495,
+  496
+ ],
+ "textFile": 243,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 182,
+   "movePermissions": 0,
+   "spawnFlag": 719,
+   "script": 3,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 24,
+   "y": 29,
+   "degrees": 90.0
+  },
+  {
+   "id": 1,
+   "model": 232,
+   "movePermissions": 0,
+   "spawnFlag": 515,
+   "script": 6,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 21,
+   "y": 31,
+   "degrees": 90.0
+  },
+  {
+   "id": 2,
+   "model": 123,
+   "movePermissions": 0,
+   "spawnFlag": 720,
+   "script": 4,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 22,
+   "y": 37,
+   "degrees": 90.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 215,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 441,
+   "z": 126,
+   "y": 81,
+   "width": 5,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [
+  {
+   "script": 5,
+   "constant": 16551,
+   "x": 24,
+   "y": 13,
+   "width": 5,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 452,
+ "encounters": []
+}

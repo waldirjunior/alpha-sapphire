@@ -1,0 +1,23 @@
+{
+ "zone": 37,
+ "name": "Route 111",
+ "textFile": 192,
+ "lines": [
+  "Hello! I take it you’re a traveler.\nWhat do you say to taking on our family of four\nin a series of Pokémon battles?",
+  "Is that so?\nStop by again if you change your mind!",
+  "That’s the spirit! I like you!",
+  "Hey, all!\nI’ve found a pretty strong Trainer!",
+  "My goodness! Aren’t you young?\nYou must be quite the Trainer to beat\nmy husband, though.\nNow I suppose it’s my turn to battle!",
+  "We’ve got a strong Trainer here!\nThis one’s really strong!",
+  "You’re stronger than Mom? Wow!\nBut I’m strong, too!\nReally! Honestly!",
+  "This stinks...\nSnivel... Grandmaaa!",
+  "How dare you make my precious\ngranddaughter cry!\nI see I need to teach you a lesson.\nPrepare to feel the sting of defeat!",
+  "If you’re not in any hurry,\nvisit with us awhile.",
+  "If you don’t raise your Pokémon some more,\nit may be tough to keep winning through the ranks.\nI’ve heard the Pokémon League’s Elite Four\nare far stronger than any Gym Leader.",
+  "I challenged the Winstrate family, but\nfour matches in a row is tough going...\nThey destroyed me.",
+  "Route 111\n↓ Mauville City",
+  "Our family’s hearts beat as one!\nThe Winstrates’ House",
+  "Route 111\n← Route 112",
+  "Trainer Tips\nOne indicator of a Pokémon’s potential power\nis its Sp. Atk stat.\nSp. Atk stands for Special Attack.\nIt affects the strength of special moves.\nLikewise, the Sp. Def or Special Defense stat\nprotects against special moves!"
+ ]
+}

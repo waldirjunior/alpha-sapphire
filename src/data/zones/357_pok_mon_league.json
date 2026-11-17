@@ -1,0 +1,55 @@
+{
+ "zone": 357,
+ "name": "Pokémon League",
+ "mapArea": 152,
+ "mapMatrix": 264,
+ "grIds": [
+  609
+ ],
+ "textFile": 471,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 186,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 16,
+   "y": 11,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 361,
+   "destinationTile": 1,
+   "faceDirection": 0,
+   "transitionEffect": 0,
+   "x": 279,
+   "z": 0,
+   "y": 351,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 362,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 297,
+   "z": 0,
+   "y": 99,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 550,
+ "encounters": []
+}

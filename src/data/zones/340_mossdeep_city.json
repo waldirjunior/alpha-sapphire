@@ -1,0 +1,17 @@
+{
+ "zone": 340,
+ "name": "Mossdeep City",
+ "mapArea": 146,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 497,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

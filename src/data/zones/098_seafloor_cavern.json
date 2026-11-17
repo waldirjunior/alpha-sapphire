@@ -1,0 +1,34 @@
+{
+ "zone": 98,
+ "name": "Seafloor Cavern",
+ "mapArea": 106,
+ "mapMatrix": 59,
+ "grIds": [
+  326
+ ],
+ "textFile": 415,
+ "furniture": [
+  {
+   "script": 2,
+   "x": 1,
+   "y": 1,
+   "wx": 1,
+   "wy": 1
+  }
+ ],
+ "npcs": [],
+ "warps": [],
+ "triggers": [
+  {
+   "script": 3,
+   "constant": 16394,
+   "x": 16,
+   "y": 36,
+   "width": 11,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 263,
+ "encounters": []
+}

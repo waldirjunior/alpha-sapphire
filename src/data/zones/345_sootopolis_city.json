@@ -1,0 +1,55 @@
+{
+ "zone": 345,
+ "name": "Sootopolis City",
+ "mapArea": 148,
+ "mapMatrix": 255,
+ "grIds": [
+  600
+ ],
+ "textFile": 485,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 252,
+   "movePermissions": 53,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 11,
+   "y": 7,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 305,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 5,
+   "y": 8,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 20,
+   "destinationTile": 7,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 135,
+   "z": 0,
+   "y": 225,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

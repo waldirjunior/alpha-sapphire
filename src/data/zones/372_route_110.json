@@ -1,0 +1,59 @@
+{
+ "zone": 372,
+ "name": "Route 110",
+ "mapArea": 165,
+ "mapMatrix": 279,
+ "grIds": [
+  629
+ ],
+ "textFile": 207,
+ "furniture": [
+  {
+   "script": 3,
+   "x": 11,
+   "y": 1,
+   "wx": 1,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8192,
+   "movePermissions": 0,
+   "spawnFlag": 1482,
+   "script": 7176,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 21,
+   "y": 3,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 295,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 17,
+   "y": 7,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [],
+ "triggers": [
+  {
+   "script": 2,
+   "constant": 16394,
+   "x": 15,
+   "y": 3,
+   "width": 1,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 284,
+ "encounters": []
+}

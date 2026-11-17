@@ -1,0 +1,38 @@
+{
+ "zone": 470,
+ "name": "Nameless Cavern",
+ "mapArea": 35,
+ "mapMatrix": 28,
+ "grIds": [
+  237,
+  238,
+  239,
+  240,
+  241,
+  242,
+  243,
+  244,
+  245
+ ],
+ "textFile": 284,
+ "furniture": [],
+ "npcs": [],
+ "warps": [
+  {
+   "destinationMap": 526,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 3285,
+   "z": 36,
+   "y": 1899,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

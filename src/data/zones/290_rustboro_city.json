@@ -1,0 +1,55 @@
+{
+ "zone": 290,
+ "name": "Rustboro City",
+ "mapArea": 135,
+ "mapMatrix": 210,
+ "grIds": [
+  554
+ ],
+ "textFile": 557,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 320,
+   "movePermissions": 53,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 21,
+   "y": 16,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 16,
+   "destinationTile": 5,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 333,
+   "z": 0,
+   "y": 387,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 291,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 243,
+   "z": 4,
+   "y": 279,
+   "width": 2,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

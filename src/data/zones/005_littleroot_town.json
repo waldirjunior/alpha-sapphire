@@ -1,0 +1,79 @@
+{
+ "zone": 5,
+ "name": "Littleroot Town",
+ "mapArea": 7,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 12,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 49,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 16,
+   "y": 4,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 49,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 4,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 19,
+   "y": 4,
+   "degrees": 0.0
+  },
+  {
+   "id": 2,
+   "model": 49,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 6,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 22,
+   "y": 4,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [],
+ "triggers": [
+  {
+   "script": 1,
+   "constant": 0,
+   "x": 16,
+   "y": 5,
+   "width": 1,
+   "height": 3
+  },
+  {
+   "script": 3,
+   "constant": 0,
+   "x": 19,
+   "y": 5,
+   "width": 1,
+   "height": 3
+  },
+  {
+   "script": 5,
+   "constant": 0,
+   "x": 22,
+   "y": 5,
+   "width": 1,
+   "height": 3
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

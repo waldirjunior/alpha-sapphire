@@ -1,0 +1,79 @@
+{
+ "zone": 521,
+ "name": "Battle Resort",
+ "mapArea": 215,
+ "mapMatrix": 418,
+ "grIds": [
+  821
+ ],
+ "textFile": 630,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 205,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 4,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 8,
+   "y": 7,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 204,
+   "movePermissions": 0,
+   "spawnFlag": 1003,
+   "script": 2000,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 8,
+   "y": 16,
+   "degrees": 0.0
+  },
+  {
+   "id": 2,
+   "model": 200,
+   "movePermissions": 0,
+   "spawnFlag": 1003,
+   "script": 2000,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 6,
+   "y": 16,
+   "degrees": 0.0
+  },
+  {
+   "id": 3,
+   "model": 199,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 3,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 6,
+   "y": 7,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 211,
+   "destinationTile": 2,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 117,
+   "z": 0,
+   "y": 225,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 232,
+ "encounters": []
+}

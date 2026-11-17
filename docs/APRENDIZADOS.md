@@ -43,3 +43,26 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Contexto:** `P-007` (placas brancas) e busca por GRs de interiores. Complementa `A-004`.
 - **Erro:** (1) Converter qualquer `GR` com um único `--textures` fixo ou sem AD deixa os materiais sem imagem (`references missing texture ...` em `*.dae.warnings.txt`) e o glTF renderiza placas brancas. O AD correto muda por mapa (Littleroot usa `a/0/1/4/0008.bin`, que contém `t101_01`, `chip_wind` etc.). (2) `rom/extracted/garc/a_0_3_9` só tem 30 dos 857 `GR` de `RomFS/a/0/3/9`; todos têm seção 0 de 40x40, então o tamanho do grid não distingue interior de exterior. Falta a tabela zona→`GR` para identificar casa do jogador, laboratório, Centro Pokémon e Mart.
 - **Regra:** Use `scripts/convert_gr_to_glb.py --ad-dir <a_0_1_4>`: o script converte uma vez sem texturas, lê os avisos de textura ausente e escolhe o AD que cobre mais nomes. Não associe um índice de `GR` a um interior sem evidência da tabela de zonas; arquivos `*.bin` extraídos com `unpack_garc.py --decompress` ficam em diretório temporário até a identificação.
+
+## A-008 Tabela zona→matriz→GR está em `a/0/1/3` (ZoneData/metlist) e o macOS roda o pipeline
+
+- **Data:** 2026-11-17
+- **Contexto:** Necessidade de mapear todas as 536 zonas de Hoenn para seus `GR`s (`A-007`) e portar o pipeline Linux/VPS para macOS arm64.
+- **Erro potencial:** Chutar `GR` por índice de zona ou nome (o índice do ZO **não** é o índice do nome); assumir que ferramentas compiladas na VPS funcionam no Mac; Blender ≥ 4 removeu `bpy.ops.wm.collada_import`.
+- **Regra:**
+  - `a/0/1/3`: entradas `0000–0535` = arquivos `ZO` por zona; `0536.bin` = tabela-mestre `ZoneData` (536 registros × `0x38` bytes, layout igual ao `sec0` de cada ZO — referência: `ZoneData` do pk3DS); `0537.bin` = pacote de encontros (`EN`).
+  - `ZoneData`: `MapMatrix` `@0x04` → matriz em `a/0/4/0` cujo grid de `u16` (`EntryList`) indexa direto `a/0/3/9`; `TextFile` `@0x06` → `a/0/8/1`; `ParentMap` `@0x1C & 0x3FF` → metlist `a_0_7_3/0090` (índice 170 = `Littleroot Town`).
+  - `scripts/build_zone_catalog.py` gera `src/data/zones.json` com zona → {nome, mapArea, mapMatrix, grIds, textFile}. Interiores são zonas próprias (ex.: zona 223 = casa do jogador → `GR 506`, confirmando a identificação anterior).
+  - Ferramentas no Mac: `.NET 8` em `~/.dotnet` (`dotnet-install.sh`, sem sudo — casks exigem `sudo`), Blender **3.4.1** em `~/Applications/Blender3.4.app` (wrapper `_tools/bin/blender`), `SpicaExport` via wrapper `_tools/bin/SpicaExport` (apphost exige `DOTNET_ROOT`), `assimp`/`7z`/`vgmstream` via Homebrew. Scripts aceitam `SPICA_EXPORT` por env var.
+  - `ffmpeg` do Homebrew não tem `libvorbis`: usar `libmp3lame` para `.mp3` (ou `aac`). `vgmstream-cli` decodifica `.bcstm` direto.
+
+## A-009 Conteúdo interno do ZO e formato de encontros ORAS (`BBH`, não `HBB`)
+
+- **Data:** 2026-11-17
+- **Contexto:** Extração de warps/entidades/encontros por zona ([scripts/extract_zones.py](../scripts/extract_zones.py) → `src/data/zones/*.json`), seguindo `OWSEStructs.cs` do pk3DS.
+- **Erro potencial:** Ler entradas de encontro como `<HBB` (specform, lvlMin, lvlMax — layout XY/pk3DS) gera espécies absurdas (ex.: 514 na Route 101).
+- **Regra:**
+  - `ZO sec1` = `ZoneEntities`: header `u32 length` + `u8` counts (furniture, npcs, warps, triggers1) + `u32` triggers2; depois `EntityFurniture` (0x14), `EntityNPC` (0x30), `EntityWarp` (0x18), `EntityTrigger` (0x18 ×2 grupos) e um blob de script ao final. `EntityWarp.destinationMap` indexa o `ZO`/zona de destino (ex.: zona 6 → interiores 223/225/227).
+  - `ZO sec3` = tabela de encontros da zona, **idêntica** ao blob correspondente em `a/0/1/3/0537.bin` (`EN` + 536 ponteiros `u32`).
+  - Entrada de encontro ORAS = `<BBH`: `levelMin u8`, `levelMax u8`, `specForm u16` (espécie `&0x7FF`, forma `>>11`). Slots zerados (`species=0`) separam sub-tabelas (grama, surf, pesca etc.) — o particionamento exato por tipo segue a refinar no uso.
+  - NPC: `model` = índice em `a/0/2/1`, `script` = índice de script da zona, `sightRange`/`faceDirection`/`degrees` (÷18) permitem linha de visão estilo ORAS.

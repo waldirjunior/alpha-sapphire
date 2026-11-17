@@ -1,0 +1,26 @@
+{
+ "zone": 76,
+ "name": "Sootopolis City",
+ "mapArea": 45,
+ "mapMatrix": 37,
+ "grIds": [
+  275
+ ],
+ "textFile": 439,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [
+  {
+   "script": 2,
+   "constant": 16394,
+   "x": 17,
+   "y": 37,
+   "width": 7,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 263,
+ "encounters": []
+}

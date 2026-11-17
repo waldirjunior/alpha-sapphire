@@ -1,0 +1,17 @@
+{
+ "zone": 381,
+ "name": "Route 110",
+ "mapArea": 165,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 198,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

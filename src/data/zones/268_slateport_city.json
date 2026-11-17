@@ -1,0 +1,82 @@
+{
+ "zone": 268,
+ "name": "Slateport City",
+ "mapArea": 124,
+ "mapMatrix": 194,
+ "grIds": [
+  537
+ ],
+ "textFile": 597,
+ "furniture": [
+  {
+   "script": 4,
+   "x": 6,
+   "y": 22,
+   "wx": 3,
+   "wy": 2
+  },
+  {
+   "script": 5,
+   "x": 1,
+   "y": 5,
+   "wx": 2,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 231,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 35,
+   "y": 24,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 307,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 7,
+   "y": 24,
+   "degrees": 0.0
+  },
+  {
+   "id": 2,
+   "model": 307,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 3,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 11,
+   "y": 10,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 267,
+   "destinationTile": 1,
+   "faceDirection": 3,
+   "transitionEffect": 5,
+   "x": 99,
+   "z": -9,
+   "y": 27,
+   "width": 1,
+   "height": 3,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

@@ -1,0 +1,115 @@
+{
+ "zone": 504,
+ "name": "Mauville City",
+ "mapArea": 131,
+ "mapMatrix": 401,
+ "grIds": [
+  798
+ ],
+ "textFile": 570,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 320,
+   "movePermissions": 0,
+   "spawnFlag": 839,
+   "script": 2000,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 8,
+   "y": 34,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 308,
+   "movePermissions": 0,
+   "spawnFlag": 839,
+   "script": 2000,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 9,
+   "y": 34,
+   "degrees": 0.0
+  },
+  {
+   "id": 2,
+   "model": 290,
+   "movePermissions": 0,
+   "spawnFlag": 840,
+   "script": 3,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 13,
+   "y": 31,
+   "degrees": 0.0
+  },
+  {
+   "id": 3,
+   "model": 291,
+   "movePermissions": 0,
+   "spawnFlag": 841,
+   "script": 2,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 9,
+   "y": 19,
+   "degrees": 0.0
+  },
+  {
+   "id": 4,
+   "model": 292,
+   "movePermissions": 0,
+   "spawnFlag": 842,
+   "script": 4,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 12,
+   "y": 34,
+   "degrees": 0.0
+  },
+  {
+   "id": 5,
+   "model": 293,
+   "movePermissions": 0,
+   "spawnFlag": 843,
+   "script": 5,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 7,
+   "y": 30,
+   "degrees": 0.0
+  },
+  {
+   "id": 6,
+   "model": 294,
+   "movePermissions": 0,
+   "spawnFlag": 844,
+   "script": 6,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 12,
+   "y": 25,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 446,
+   "destinationTile": 11,
+   "faceDirection": 3,
+   "transitionEffect": 5,
+   "x": 63,
+   "z": 0,
+   "y": 369,
+   "width": 1,
+   "height": 3,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 321,
+ "encounters": []
+}

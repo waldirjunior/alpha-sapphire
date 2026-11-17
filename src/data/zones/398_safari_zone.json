@@ -1,0 +1,17 @@
+{
+ "zone": 398,
+ "name": "Safari Zone",
+ "mapArea": 179,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 135,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

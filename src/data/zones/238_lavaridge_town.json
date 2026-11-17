@@ -1,0 +1,89 @@
+{
+ "zone": 238,
+ "name": "Lavaridge Town",
+ "mapArea": 117,
+ "mapMatrix": 177,
+ "grIds": [
+  519
+ ],
+ "textFile": 44,
+ "furniture": [
+  {
+   "script": 3,
+   "x": 11,
+   "y": 10,
+   "wx": 3,
+   "wy": 1
+  },
+  {
+   "script": 3,
+   "x": 11,
+   "y": 7,
+   "wx": 3,
+   "wy": 1
+  },
+  {
+   "script": 3,
+   "x": 11,
+   "y": 4,
+   "wx": 3,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 322,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 10122,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 7,
+   "y": 6,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 286,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 6,
+   "y": 8,
+   "degrees": 0.0
+  },
+  {
+   "id": 2,
+   "model": 287,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 11,
+   "y": 5,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 9,
+   "destinationTile": 5,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 117,
+   "z": 0,
+   "y": 225,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

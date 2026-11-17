@@ -1,0 +1,13 @@
+{
+ "zone": 385,
+ "name": "Route 112",
+ "textFile": 185,
+ "lines": [
+  "The Cable Car is ready to go down.\nWould you like to get on board?",
+  "Please step this way.",
+  "Please ride with us another time.",
+  "This is the exit.\nThe entrance is over there.",
+  "Thank you for using the Cable Car!",
+  "I know something...\nThe receptionists at the base are twins!\nThe receptionists at the peak are also twins!"
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "zone": 240,
+ "name": "Fallarbor Town",
+ "textFile": 40,
+ "lines": [
+  "Oh, hello.\nYou are?",
+  "OK, you’re",
+  "Oh, I’m sorry. I’m Lanette.\nHonestly, I’m glad to meet you. It’s\ngreat you’re using the Storage System.\nIf you could, please visit me at home.\nMy house is on Route 114.",
+  "I wonder what Pokémon looked like\nlong, long ago.\nMaybe the Fossil Maniac at the edge\nof town will know.",
+  "In the fields of Fallarbor, we plant\nseedlings of hardy trees that thrive\neven in volcanic ash.",
+  "Oh... I see.\nThat’s how you attract wild Pokémon.\nThen I don’t need this anymore.",
+  "Give it a try if you like.",
+  "The Aha! Pokémon Journal gives us a lot of\nuseful information, doesn’t it?\nBy the way, I have more Honey at home,\nso I’ll bring some more tomorrow.",
+  "Hi!\nI still have some Honey,\nso take this.",
+  "Aha! Pokémon Journal\nDo you know the Pokémon move\ncalled Sweet Scent?\nIf you use it in tall grass, Pokémon\ncome out in a horde!"
+ ]
+}

@@ -1,0 +1,79 @@
+{
+ "zone": 250,
+ "name": "Verdanturf Town",
+ "mapArea": 120,
+ "mapMatrix": 181,
+ "grIds": [
+  523
+ ],
+ "textFile": 28,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 322,
+   "movePermissions": 13,
+   "spawnFlag": 854,
+   "script": 4,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 21,
+   "y": 9,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 236,
+   "movePermissions": 14,
+   "spawnFlag": 853,
+   "script": 3,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 21,
+   "y": 7,
+   "degrees": 0.0
+  },
+  {
+   "id": 2,
+   "model": 288,
+   "movePermissions": 47,
+   "spawnFlag": 519,
+   "script": 1,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 16,
+   "y": 7,
+   "degrees": 0.0
+  },
+  {
+   "id": 3,
+   "model": 296,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 10,
+   "y": 5,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 11,
+   "destinationTile": 4,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 225,
+   "z": 0,
+   "y": 225,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

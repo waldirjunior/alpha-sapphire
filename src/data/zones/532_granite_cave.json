@@ -1,0 +1,17 @@
+{
+ "zone": 532,
+ "name": "Granite Cave",
+ "mapArea": 48,
+ "mapMatrix": 428,
+ "grIds": [
+  843
+ ],
+ "textFile": 433,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

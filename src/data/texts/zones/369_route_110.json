@@ -1,0 +1,9 @@
+{
+ "zone": 369,
+ "name": "Route 110",
+ "textFile": 197,
+ "lines": [
+  "On the Cycling Road, you can go all\nout and cycle as fast as you’d like.\nIt feels great to go that fast, but only\nif you don’t crash into anyone!",
+  "Sorry, but you can’t walk on the\nCycling Road. It’s too dangerous.\nPlease come back with a Bike."
+ ]
+}

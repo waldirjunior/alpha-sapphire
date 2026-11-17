@@ -1,0 +1,30 @@
+{
+ "zone": 471,
+ "name": "Fabled Cave",
+ "mapArea": 92,
+ "mapMatrix": 371,
+ "grIds": [
+  768
+ ],
+ "textFile": 282,
+ "furniture": [],
+ "npcs": [],
+ "warps": [
+  {
+   "destinationMap": 527,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 405,
+   "z": 36,
+   "y": 459,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

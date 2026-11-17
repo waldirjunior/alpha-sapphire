@@ -1,0 +1,16 @@
+{
+ "zone": 251,
+ "name": "Verdanturf Town",
+ "textFile": 27,
+ "lines": [
+  "Let me see how friendly your\nPokémon is toward you.\nOh.\nYour Pokémon...",
+  "It’s extremely friendly toward you.\nIt couldn’t possibly love you more.\nIt’s a pleasure to see!",
+  "It seems to be very happy.\nIt’s obviously friendly toward you.",
+  "It’s quite friendly toward you.\nIt seems to want to be babied a little.",
+  "It’s getting used to you.\nIt seems to believe in you.",
+  "It’s not very used to you yet.\nIt neither loves nor hates you.",
+  "It’s very wary.\nIt has a scary look in its eyes.\nIt doesn’t like you much at all.",
+  "This is a little hard for me to say...\nYour Pokémon simply detests you.\nDoesn’t that make you uncomfortable?",
+  "Skiski?"
+ ]
+}

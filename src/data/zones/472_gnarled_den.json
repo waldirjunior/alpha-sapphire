@@ -1,0 +1,30 @@
+{
+ "zone": 472,
+ "name": "Gnarled Den",
+ "mapArea": 93,
+ "mapMatrix": 372,
+ "grIds": [
+  769
+ ],
+ "textFile": 280,
+ "furniture": [],
+ "npcs": [],
+ "warps": [
+  {
+   "destinationMap": 528,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 369,
+   "z": -54,
+   "y": 117,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

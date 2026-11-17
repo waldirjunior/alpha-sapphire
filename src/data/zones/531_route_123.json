@@ -1,0 +1,46 @@
+{
+ "zone": 531,
+ "name": "Route 123",
+ "mapArea": 204,
+ "mapMatrix": 427,
+ "grIds": [
+  839,
+  840,
+  841,
+  842
+ ],
+ "textFile": 154,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 234,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 134,
+   "y": 137,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 52,
+   "destinationTile": 3,
+   "faceDirection": 0,
+   "transitionEffect": 5,
+   "x": 2385,
+   "z": -9,
+   "y": 2547,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

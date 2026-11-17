@@ -1,0 +1,10 @@
+{
+ "zone": 229,
+ "name": "Oldale Town",
+ "textFile": 59,
+ "lines": [
+  "The clerk says they’re all sold out.\nI can’t buy any Poké Balls.",
+  "I’m going to buy a bunch of Poké Balls\nand catch a bunch of Pokémon!",
+  "If a Pokémon gets hurt and loses its HP\nand faints, it won’t be able to battle.\nTo prevent your Pokémon from fainting,\nrestore its HP with a Potion."
+ ]
+}

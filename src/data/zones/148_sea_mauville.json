@@ -1,0 +1,26 @@
+{
+ "zone": 148,
+ "name": "Sea Mauville",
+ "mapArea": 218,
+ "mapMatrix": 100,
+ "grIds": [
+  394
+ ],
+ "textFile": 363,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [
+  {
+   "script": 1,
+   "constant": 16394,
+   "x": 17,
+   "y": 31,
+   "width": 5,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

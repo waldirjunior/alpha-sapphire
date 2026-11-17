@@ -1,0 +1,642 @@
+{
+ "zone": 47,
+ "name": "Route 119",
+ "mapArea": 31,
+ "mapMatrix": 24,
+ "grIds": [
+  207,
+  208,
+  209,
+  210,
+  211,
+  212,
+  213,
+  214,
+  215,
+  216,
+  217,
+  218
+ ],
+ "textFile": 170,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 223,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 133,
+   "y": 249,
+   "degrees": 9.0
+  },
+  {
+   "id": 1,
+   "model": 8192,
+   "movePermissions": 0,
+   "spawnFlag": 1353,
+   "script": 7047,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 107,
+   "y": 272,
+   "degrees": 9.0
+  },
+  {
+   "id": 2,
+   "model": 8192,
+   "movePermissions": 0,
+   "spawnFlag": 1354,
+   "script": 7048,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 90,
+   "y": 224,
+   "degrees": 45.0
+  },
+  {
+   "id": 3,
+   "model": 8253,
+   "movePermissions": 0,
+   "spawnFlag": 1057,
+   "script": 10250,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 138,
+   "y": 259,
+   "degrees": 9.0
+  },
+  {
+   "id": 4,
+   "model": 250,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 6,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 87,
+   "y": 206,
+   "degrees": 99.0
+  },
+  {
+   "id": 5,
+   "model": 218,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 3,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 138,
+   "y": 220,
+   "degrees": 81.0
+  },
+  {
+   "id": 6,
+   "model": 258,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 122,
+   "y": 284,
+   "degrees": 9.0
+  },
+  {
+   "id": 7,
+   "model": 236,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 3731,
+   "faceDirection": 1,
+   "sightRange": 5,
+   "x": 139,
+   "y": 208,
+   "degrees": 99.0
+  },
+  {
+   "id": 8,
+   "model": 244,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 5731,
+   "faceDirection": 1,
+   "sightRange": 5,
+   "x": 140,
+   "y": 208,
+   "degrees": 99.0
+  },
+  {
+   "id": 9,
+   "model": 344,
+   "movePermissions": 62,
+   "spawnFlag": 0,
+   "script": 3551,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 104,
+   "y": 238,
+   "degrees": 9.0
+  },
+  {
+   "id": 10,
+   "model": 241,
+   "movePermissions": 2,
+   "spawnFlag": 0,
+   "script": 3103,
+   "faceDirection": 1,
+   "sightRange": 1,
+   "x": 121,
+   "y": 261,
+   "degrees": 9.0
+  },
+  {
+   "id": 11,
+   "model": 241,
+   "movePermissions": 2,
+   "spawnFlag": 0,
+   "script": 3104,
+   "faceDirection": 1,
+   "sightRange": 1,
+   "x": 138,
+   "y": 272,
+   "degrees": 9.0
+  },
+  {
+   "id": 12,
+   "model": 241,
+   "movePermissions": 2,
+   "spawnFlag": 0,
+   "script": 3105,
+   "faceDirection": 1,
+   "sightRange": 1,
+   "x": 132,
+   "y": 261,
+   "degrees": 9.0
+  },
+  {
+   "id": 13,
+   "model": 220,
+   "movePermissions": 58,
+   "spawnFlag": 0,
+   "script": 3106,
+   "faceDirection": 1,
+   "sightRange": 1,
+   "x": 133,
+   "y": 275,
+   "degrees": 9.0
+  },
+  {
+   "id": 14,
+   "model": 220,
+   "movePermissions": 59,
+   "spawnFlag": 0,
+   "script": 3107,
+   "faceDirection": 1,
+   "sightRange": 1,
+   "x": 110,
+   "y": 270,
+   "degrees": 9.0
+  },
+  {
+   "id": 15,
+   "model": 220,
+   "movePermissions": 58,
+   "spawnFlag": 0,
+   "script": 3108,
+   "faceDirection": 1,
+   "sightRange": 1,
+   "x": 122,
+   "y": 269,
+   "degrees": 9.0
+  },
+  {
+   "id": 16,
+   "model": 251,
+   "movePermissions": 2,
+   "spawnFlag": 0,
+   "script": 3110,
+   "faceDirection": 1,
+   "sightRange": 4,
+   "x": 117,
+   "y": 256,
+   "degrees": 9.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 45,
+   "destinationTile": 1,
+   "faceDirection": 0,
+   "transitionEffect": 5,
+   "x": 2115,
+   "z": 9,
+   "y": 5229,
+   "width": 5,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 394,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 3,
+   "x": 2439,
+   "z": 9,
+   "y": 4491,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [
+  {
+   "script": 4,
+   "constant": 0,
+   "x": 113,
+   "y": 285,
+   "width": 12,
+   "height": 1
+  },
+  {
+   "script": 5,
+   "constant": 0,
+   "x": 117,
+   "y": 288,
+   "width": 5,
+   "height": 1
+  }
+ ],
+ "scriptBytes": 601,
+ "encounters": [
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 264,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 264,
+   "form": 0,
+   "levelMin": 22,
+   "levelMax": 22
+  },
+  {
+   "species": 264,
+   "form": 0,
+   "levelMin": 23,
+   "levelMax": 23
+  },
+  {
+   "species": 264,
+   "form": 0,
+   "levelMin": 24,
+   "levelMax": 24
+  },
+  {
+   "species": 44,
+   "form": 0,
+   "levelMin": 25,
+   "levelMax": 25
+  },
+  {
+   "species": 44,
+   "form": 0,
+   "levelMin": 22,
+   "levelMax": 22
+  },
+  {
+   "species": 44,
+   "form": 0,
+   "levelMin": 23,
+   "levelMax": 23
+  },
+  {
+   "species": 44,
+   "form": 0,
+   "levelMin": 24,
+   "levelMax": 24
+  },
+  {
+   "species": 357,
+   "form": 0,
+   "levelMin": 25,
+   "levelMax": 25
+  },
+  {
+   "species": 357,
+   "form": 0,
+   "levelMin": 23,
+   "levelMax": 23
+  },
+  {
+   "species": 352,
+   "form": 0,
+   "levelMin": 25,
+   "levelMax": 25
+  },
+  {
+   "species": 352,
+   "form": 0,
+   "levelMin": 25,
+   "levelMax": 25
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 25,
+   "levelMax": 25
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 72,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 278,
+   "form": 0,
+   "levelMin": 20,
+   "levelMax": 20
+  },
+  {
+   "species": 72,
+   "form": 0,
+   "levelMin": 20,
+   "levelMax": 20
+  },
+  {
+   "species": 279,
+   "form": 0,
+   "levelMin": 25,
+   "levelMax": 25
+  },
+  {
+   "species": 279,
+   "form": 0,
+   "levelMin": 25,
+   "levelMax": 25
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 30,
+   "levelMax": 30
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 129,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 72,
+   "form": 0,
+   "levelMin": 10,
+   "levelMax": 10
+  },
+  {
+   "species": 349,
+   "form": 0,
+   "levelMin": 5,
+   "levelMax": 5
+  },
+  {
+   "species": 129,
+   "form": 0,
+   "levelMin": 15,
+   "levelMax": 15
+  },
+  {
+   "species": 318,
+   "form": 0,
+   "levelMin": 25,
+   "levelMax": 25
+  },
+  {
+   "species": 349,
+   "form": 0,
+   "levelMin": 25,
+   "levelMax": 25
+  },
+  {
+   "species": 318,
+   "form": 0,
+   "levelMin": 25,
+   "levelMax": 25
+  },
+  {
+   "species": 319,
+   "form": 0,
+   "levelMin": 35,
+   "levelMax": 35
+  },
+  {
+   "species": 349,
+   "form": 0,
+   "levelMin": 40,
+   "levelMax": 40
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 35,
+   "levelMax": 35
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 43,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 12,
+   "levelMax": 12
+  }
+ ]
+}

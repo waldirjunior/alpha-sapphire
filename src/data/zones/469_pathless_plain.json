@@ -1,0 +1,30 @@
+{
+ "zone": 469,
+ "name": "Pathless Plain",
+ "mapArea": 91,
+ "mapMatrix": 369,
+ "grIds": [
+  766
+ ],
+ "textFile": 285,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8277,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 7,
+   "y": 6,
+   "degrees": 72.0
+  }
+ ],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

@@ -1,0 +1,11 @@
+{
+ "zone": 154,
+ "name": "Sea Mauville",
+ "textFile": 357,
+ "lines": [
+  "There is something glimmering faintly in the water...\nWill you pick it up?",
+  "The",
+  "A mysterious ring is floating in the water...\nExtremely pure seawater is flowing out from within it.\nWould you like to examine it?",
+  "A mysterious ring is floating in the water..."
+ ]
+}

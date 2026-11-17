@@ -1,0 +1,17 @@
+{
+ "zone": 141,
+ "name": "New Mauville",
+ "mapArea": 73,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 370,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

@@ -1,0 +1,17 @@
+{
+ "zone": 430,
+ "name": "Lavaridge Town",
+ "mapArea": 182,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 46,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

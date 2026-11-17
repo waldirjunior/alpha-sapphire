@@ -1,0 +1,240 @@
+{
+ "zone": 173,
+ "name": "Team Magma Hideout",
+ "mapArea": 210,
+ "mapMatrix": 123,
+ "grIds": [
+  432
+ ],
+ "textFile": 338,
+ "furniture": [
+  {
+   "script": 1,
+   "x": 7,
+   "y": 26,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 1,
+   "x": 32,
+   "y": 26,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 2,
+   "x": 7,
+   "y": 30,
+   "wx": 3,
+   "wy": 1
+  },
+  {
+   "script": 3,
+   "x": 36,
+   "y": 27,
+   "wx": 1,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8193,
+   "movePermissions": 0,
+   "spawnFlag": 1460,
+   "script": 7154,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 37,
+   "y": 34,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 170,
+   "destinationTile": 11,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 459,
+   "z": 0,
+   "y": 513,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 170,
+   "destinationTile": 12,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 279,
+   "z": 0,
+   "y": 513,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 171,
+   "destinationTile": 12,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 369,
+   "z": 54,
+   "y": 117,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 8,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 279,
+   "z": 54,
+   "y": 189,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 2,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 369,
+   "z": 54,
+   "y": 189,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 6,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 459,
+   "z": 54,
+   "y": 189,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 5,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 279,
+   "z": 36,
+   "y": 261,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 10,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 369,
+   "z": 36,
+   "y": 261,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 3,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 459,
+   "z": 36,
+   "y": 261,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 4,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 279,
+   "z": 18,
+   "y": 333,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 7,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 369,
+   "z": 18,
+   "y": 333,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 12,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 459,
+   "z": 18,
+   "y": 333,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 11,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 279,
+   "z": 0,
+   "y": 405,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 173,
+   "destinationTile": 7,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 369,
+   "z": 0,
+   "y": 405,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 174,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 6,
+   "x": 459,
+   "z": 0,
+   "y": 405,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

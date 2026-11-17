@@ -1,0 +1,14 @@
+{
+ "zone": 35,
+ "name": "Route 111",
+ "textFile": 194,
+ "lines": [
+  "You found the Root Fossil.\nIf you take this Fossil, no doubt the other one\nwill sink into the sand.\nTake the Root Fossil anyway?",
+  "You found the Claw Fossil.\nIf you take this Fossil, no doubt the other one\nwill sink into the sand.\nTake the Claw Fossil anyway?",
+  "I get it, OK?!\nYou’re trying to show me how\nmuch you like goggles, right?!\nI get it, OK?!",
+  "You can protect yourself from all\nkinds of stuff with Safety Goggles!\nEven though these things that I’m wearing\nlook like glasses, they’re actually goggles, too!",
+  "How did you manage to climb your way up here?\nDid you use a strange power like me, I wonder?\n...You rode a Mach Bike up here?\nIt wasn’t some strange power?\nDo you think I could ride one, too?",
+  "I’m in pretty good shape, so maybe\nI’ll try riding one of those Mach Bikes, too.",
+  "The sandstorm is vicious.\nIt’s impossible to keep going."
+ ]
+}

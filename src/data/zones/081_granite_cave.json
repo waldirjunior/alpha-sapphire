@@ -1,0 +1,92 @@
+{
+ "zone": 81,
+ "name": "Granite Cave",
+ "mapArea": 48,
+ "mapMatrix": 42,
+ "grIds": [
+  282
+ ],
+ "textFile": 434,
+ "furniture": [
+  {
+   "script": 5,
+   "x": 16,
+   "y": 4,
+   "wx": 9,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 182,
+   "movePermissions": 0,
+   "spawnFlag": 614,
+   "script": 2000,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 20,
+   "y": 7,
+   "degrees": -36.0
+  },
+  {
+   "id": 1,
+   "model": 4153,
+   "movePermissions": 0,
+   "spawnFlag": 823,
+   "script": 4,
+   "faceDirection": 4,
+   "sightRange": 0,
+   "x": 21,
+   "y": 8,
+   "degrees": -36.0
+  },
+  {
+   "id": 2,
+   "model": 212,
+   "movePermissions": 0,
+   "spawnFlag": 804,
+   "script": 3,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 20,
+   "y": 7,
+   "degrees": -36.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 78,
+   "destinationTile": 1,
+   "faceDirection": 0,
+   "transitionEffect": 5,
+   "x": 369,
+   "z": -90,
+   "y": 603,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [
+  {
+   "script": 1,
+   "constant": 16506,
+   "x": 18,
+   "y": 20,
+   "width": 5,
+   "height": 1
+  },
+  {
+   "script": 2,
+   "constant": 16506,
+   "x": 18,
+   "y": 20,
+   "width": 5,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 271,
+ "encounters": []
+}

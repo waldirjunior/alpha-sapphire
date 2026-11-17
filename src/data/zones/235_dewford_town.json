@@ -1,0 +1,55 @@
+{
+ "zone": 235,
+ "name": "Dewford Town",
+ "mapArea": 116,
+ "mapMatrix": 175,
+ "grIds": [
+  517
+ ],
+ "textFile": 50,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 323,
+   "movePermissions": 60,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 11,
+   "y": 7,
+   "degrees": 9.0
+  },
+  {
+   "id": 1,
+   "model": 329,
+   "movePermissions": 60,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 8,
+   "y": 7,
+   "degrees": 9.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 8,
+   "destinationTile": 6,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 117,
+   "z": 0,
+   "y": 207,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

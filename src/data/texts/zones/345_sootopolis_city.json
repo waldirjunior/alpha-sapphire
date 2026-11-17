@@ -1,0 +1,11 @@
+{
+ "zone": 345,
+ "name": "Sootopolis City",
+ "textFile": 485,
+ "lines": [
+  "You’re a Pokémon Trainer, aren’t you?\nSootopolis’s Gym Leader, Wallace, has a lot of fans.\nDo you have any fans?",
+  "Ohhh... Then you must be pretty strong.",
+  "Oh dear...\nThat’s kinda sad.\nPut a little work into getting your own fan following!",
+  "Dedicated fans flock in, even from as far away\nas the Kanto and Johto regions.\nHe must be the coolest Water-type Gym Leader\nin the world!"
+ ]
+}

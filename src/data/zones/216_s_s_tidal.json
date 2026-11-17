@@ -1,0 +1,265 @@
+{
+ "zone": 216,
+ "name": "S.S. Tidal",
+ "mapArea": 104,
+ "mapMatrix": 160,
+ "grIds": [
+  498
+ ],
+ "textFile": 72,
+ "furniture": [
+  {
+   "script": 7,
+   "x": 6,
+   "y": 8,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 8,
+   "x": 14,
+   "y": 8,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 9,
+   "x": 22,
+   "y": 8,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 10,
+   "x": 30,
+   "y": 8,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 11,
+   "x": 6,
+   "y": 16,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 12,
+   "x": 14,
+   "y": 16,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 13,
+   "x": 22,
+   "y": 16,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 14,
+   "x": 30,
+   "y": 16,
+   "wx": 1,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 186,
+   "movePermissions": 0,
+   "spawnFlag": 1014,
+   "script": 2000,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 12,
+   "y": 10,
+   "degrees": 54.0
+  },
+  {
+   "id": 1,
+   "model": 283,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 5,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 10,
+   "y": 10,
+   "degrees": 54.0
+  },
+  {
+   "id": 2,
+   "model": 232,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 3,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 38,
+   "y": 9,
+   "degrees": 54.0
+  },
+  {
+   "id": 3,
+   "model": 232,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 4,
+   "faceDirection": 2,
+   "sightRange": 0,
+   "x": 25,
+   "y": 14,
+   "degrees": 54.0
+  },
+  {
+   "id": 4,
+   "model": 4134,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 6,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 8,
+   "y": 10,
+   "degrees": 54.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 217,
+   "destinationTile": 0,
+   "faceDirection": 0,
+   "transitionEffect": 5,
+   "x": 657,
+   "z": 45,
+   "y": 297,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 218,
+   "destinationTile": 0,
+   "faceDirection": 0,
+   "transitionEffect": 3,
+   "x": 99,
+   "z": 54,
+   "y": 297,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 218,
+   "destinationTile": 1,
+   "faceDirection": 0,
+   "transitionEffect": 3,
+   "x": 243,
+   "z": 54,
+   "y": 297,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 218,
+   "destinationTile": 2,
+   "faceDirection": 0,
+   "transitionEffect": 3,
+   "x": 387,
+   "z": 54,
+   "y": 297,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 218,
+   "destinationTile": 3,
+   "faceDirection": 0,
+   "transitionEffect": 3,
+   "x": 531,
+   "z": 54,
+   "y": 297,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 218,
+   "destinationTile": 4,
+   "faceDirection": 1,
+   "transitionEffect": 3,
+   "x": 99,
+   "z": 54,
+   "y": 153,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 218,
+   "destinationTile": 5,
+   "faceDirection": 1,
+   "transitionEffect": 3,
+   "x": 243,
+   "z": 54,
+   "y": 153,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 218,
+   "destinationTile": 6,
+   "faceDirection": 1,
+   "transitionEffect": 3,
+   "x": 387,
+   "z": 54,
+   "y": 153,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 218,
+   "destinationTile": 7,
+   "faceDirection": 1,
+   "transitionEffect": 3,
+   "x": 531,
+   "z": 54,
+   "y": 153,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 478,
+   "destinationTile": 0,
+   "faceDirection": 3,
+   "transitionEffect": 2,
+   "x": 27,
+   "z": 54,
+   "y": 207,
+   "width": 1,
+   "height": 3,
+   "directionality": 0
+  }
+ ],
+ "triggers": [
+  {
+   "script": 15,
+   "constant": 16620,
+   "x": 17,
+   "y": 9,
+   "width": 1,
+   "height": 7
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 282,
+ "encounters": []
+}

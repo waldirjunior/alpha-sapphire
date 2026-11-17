@@ -1,0 +1,17 @@
+{
+ "zone": 535,
+ "name": "Soaring in the sky",
+ "mapArea": 180,
+ "mapMatrix": 302,
+ "grIds": [
+  653
+ ],
+ "textFile": 127,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

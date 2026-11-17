@@ -1,0 +1,21 @@
+{
+ "zone": 389,
+ "name": "Route 114",
+ "textFile": 179,
+ "lines": [
+  "Oh!",
+  "It’s Lanette’s research notes.\nThere’s information about Boxes.\nDesign Boxes to hold 30 Pokémon each.\nEach Trainer should be able to store\n900 Pokémon on the PC system.\nKeep reading?",
+  "A marking system should be added to\nmake organizing Boxes easier.\nThe name and wallpaper design of each\nBox will be made changeable.\nKeep reading?",
+  "When storing a Pokémon, it should be\nsent to the Box inspected last.\nIf that Box is full, the received\nPokémon is stored in the next Box.\nIn other words, when a Box is examined,\nit is automatically selected as the Box\nto which Pokémon are sent.",
+  "There’s an email from someone on\nthe PC.\n“...\nYour Storage System is quite convenient.\nIt has a lot of user-friendly features\nthat make it fun and useful, too.\nIt makes me proud that I played\na part in its development.\nHere’s hoping that you’ll continue\nresearch in Storage Systems.\n...”",
+  "Complicated math formulas are\ndisplayed on the monitor.",
+  "Something that looks like letters is written on it,\nbut it’s so messy and not legible.",
+  "Oh,",
+  "Oh, I see.\nI thought it was a simple deduction.",
+  "That’s what I thought.\nHow I arrived at that conclusion is\na simple deductive process.\n...Just because you took the trouble\nto talk to me.",
+  "Then please wait for a while.",
+  "It’s done.\nI set up “Organize Boxes” at\nthe top of the menu in the PC.\nIf you want to return it to normal,\nplease talk to me again.",
+  "Oh,",
+  "Now, it’s done.\nI returned the order of the menu\nin the PC back to normal.\nIf you want to move “Organize Boxes”\nto the top of the menu, please talk\nto me again."
+ ]
+}

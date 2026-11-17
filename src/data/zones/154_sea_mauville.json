@@ -1,0 +1,55 @@
+{
+ "zone": 154,
+ "name": "Sea Mauville",
+ "mapArea": 222,
+ "mapMatrix": 106,
+ "grIds": [
+  400
+ ],
+ "textFile": 357,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8277,
+   "movePermissions": 0,
+   "spawnFlag": 1030,
+   "script": 2000,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 19,
+   "y": 9,
+   "degrees": -58.0
+  }
+ ],
+ "warps": [],
+ "triggers": [
+  {
+   "script": 2,
+   "constant": 16396,
+   "x": 30,
+   "y": 17,
+   "width": 1,
+   "height": 1
+  },
+  {
+   "script": 1,
+   "constant": 16394,
+   "x": 17,
+   "y": 28,
+   "width": 5,
+   "height": 1
+  },
+  {
+   "script": 4,
+   "constant": 16395,
+   "x": 17,
+   "y": 13,
+   "width": 5,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 450,
+ "encounters": []
+}

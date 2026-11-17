@@ -1,0 +1,28 @@
+{
+ "zone": 397,
+ "name": "Route 124",
+ "textFile": 152,
+ "lines": [
+  "I’m the diving Treasure Hunter!\nI’m the awesome dude who goes\ndeep-sea diving to gather treasures\nresting at the bottom of the seas.",
+  "Tell me, have you seen any shards of\ntools made in ancient times?",
+  "You haven’t got any treasures\nfor me...\nIf you see any shards, like the Red\nShard, you’ve got to trade them with me!",
+  "Oh hey! That...\nThat’s a shard! I’m looking for those!\nOh, man, you’ve got to trade that\nto me! I’ll give you something good!",
+  "What do you want to trade?",
+  "Red Shard",
+  "Yellow Shard",
+  "Blue Shard",
+  "Green Shard",
+  "Quit",
+  "You want to trade your Red Shard\nfor my Fire Stone, right?",
+  "You want to trade your Yellow Shard\nfor my Thunder Stone, right?",
+  "You want to trade your Blue Shard\nfor my Water Stone, right?",
+  "You want to trade your Green Shard\nfor my Leaf Stone, right?",
+  "It’s a done deal!\nUse that wisely!",
+  "Do you want to trade something else?",
+  "Oops, your Bag’s full.\nGet rid of some items, friend!",
+  "No? That’s a downer.\nWell, if you change your mind, come back.",
+  "Wanted item: Red Shard\nTrade item: Fire Stone\nWanted item: Yellow Shard\nTrade item: Thunder Stone\nWanted item: Blue Shard\nTrade item: Water Stone\nWanted item: Green Shard\nTrade item: Leaf Stone",
+  "It’s a map of the Hoenn region!",
+  "Many shards of different colors\nare beautifully displayed."
+ ]
+}

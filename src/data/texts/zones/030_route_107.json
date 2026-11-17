@@ -1,0 +1,8 @@
+{
+ "zone": 30,
+ "name": "Route 107",
+ "textFile": 215,
+ "lines": [
+  "Route 107\n←Dewford Town\n→Route 108"
+ ]
+}

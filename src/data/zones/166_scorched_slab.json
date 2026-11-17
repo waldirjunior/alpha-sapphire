@@ -1,0 +1,434 @@
+{
+ "zone": 166,
+ "name": "Scorched Slab",
+ "mapArea": 79,
+ "mapMatrix": 117,
+ "grIds": [
+  420
+ ],
+ "textFile": 345,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8201,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 10054,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 20,
+   "y": 8,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 8253,
+   "movePermissions": 0,
+   "spawnFlag": 1073,
+   "script": 10250,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 8,
+   "y": 34,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 165,
+   "destinationTile": 1,
+   "faceDirection": 3,
+   "transitionEffect": 5,
+   "x": 459,
+   "z": 45,
+   "y": 387,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 167,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 369,
+   "z": -9,
+   "y": 99,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": [
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 26,
+   "levelMax": 26
+  },
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 26,
+   "levelMax": 26
+  },
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 27,
+   "levelMax": 27
+  },
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 27,
+   "levelMax": 27
+  },
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 27,
+   "levelMax": 27
+  },
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 28,
+   "levelMax": 28
+  },
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 28,
+   "levelMax": 28
+  },
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 28,
+   "levelMax": 28
+  },
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 29,
+   "levelMax": 29
+  },
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 29,
+   "levelMax": 29
+  },
+  {
+   "species": 42,
+   "form": 0,
+   "levelMin": 29,
+   "levelMax": 29
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 29,
+   "levelMax": 29
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 1,
+   "levelMax": 1
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 41,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  },
+  {
+   "species": 0,
+   "form": 0,
+   "levelMin": 14,
+   "levelMax": 14
+  }
+ ]
+}

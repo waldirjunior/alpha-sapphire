@@ -1,0 +1,11 @@
+{
+ "zone": 383,
+ "name": "Route 111",
+ "textFile": 190,
+ "lines": [
+  "Oh, dear me. Aren’t you and your Pokémon exhausted!\nYou ought to stop and rest a bit here.\nYes, indeedy. That’s exactly what you should do.",
+  "That’s right.\nTake your time and rest up!",
+  "Oh, dear me.\nAre you and your Pokémon still tired?\nYou should take another little rest here.\nYes, indeedy. That’s what you should do.",
+  "Really?\nAre you sure that’s wise?\nNo need to be shy about it!"
+ ]
+}

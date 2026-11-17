@@ -1,0 +1,14 @@
+{
+ "zone": 256,
+ "name": "Pacifidlog Town",
+ "textFile": 21,
+ "lines": [
+  "Hello, Trainer. Would you do me a favor\nand trade Pokémon with me?\nLiving in Pacifidlog, I can only catch\ncertain kinds of Pokémon.\nDo you have ?\nI’ll trade you my  for it.",
+  "Wow!\nThis  is so fluffy!\nSince we traded, you and me,\nwe’re friends, aren’t we?",
+  "That’s not .",
+  "I’m a little disappointed...",
+  "All right! Let’s trade!",
+  "Oh! I can’t trade with you because you\nhave only one Pokémon.",
+  "Is that a Pokédex?\nDid you get to meet a lot of\ndifferent Pokémon?\nI wish I was like you."
+ ]
+}

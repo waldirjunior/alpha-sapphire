@@ -1,0 +1,17 @@
+{
+ "zone": 456,
+ "name": "Fallarbor Town",
+ "mapArea": 111,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 37,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

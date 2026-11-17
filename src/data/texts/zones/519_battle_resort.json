@@ -1,0 +1,14 @@
+{
+ "zone": 519,
+ "name": "Battle Resort",
+ "textFile": 632,
+ "lines": [
+  "This island even has a Pokémon Day Care.\nWhat a convenient place!",
+  "How could I be so careless?\nI lost my purse, and I’m in a somewhat\ncompromised situation.\nWell, shall I allow you to give me some money?\nYes, $100 would be fine.",
+  "You’re unbelievable.\nYou’re missing the opportunity to help me out.",
+  "You don’t have enough money.\nYou’re missing the opportunity to help me out.",
+  "Fine. You may help me.\nHowever, my pride won’t let\nme accept your charity.\nTherefore, I will show my generosity\nby giving you this in return.",
+  "You may embrace the happiness and\nexpress your gratitude for having been\nable to help me every time you use\nthe move.",
+  "I’m a two-time champ in the\nOldale Junior League!\nI was invited here ’cause I won the\nchampionship twice in a row!"
+ ]
+}

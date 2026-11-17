@@ -1,0 +1,9 @@
+{
+ "zone": 365,
+ "name": "Pokémon League",
+ "textFile": 463,
+ "lines": [
+  "This room...\nThis is where we maintain the records of Pokémon\nthat prevailed through the harshest of battles.\nIt is here that League Champions are honored.",
+  "Come. We will use this machine to record your name\nand the names of the partners who battled along\nwith you to triumph over the Pokémon League!"
+ ]
+}

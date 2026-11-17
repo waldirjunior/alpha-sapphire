@@ -1,0 +1,10 @@
+{
+ "zone": 276,
+ "name": "Slateport City",
+ "textFile": 588,
+ "lines": [
+  "My Pokémon has a Hasty Nature.\nAnd it has a higher Speed stat than my other Pokémon.\nMaybe Nature has something to do with how stats grow?",
+  "You’ll need a Contest Pass if\nyou want to enter a contest.\nI got mine from the famous\ncontest star Lisia!",
+  "Oh, isn’t that a Contest Pass?\nThen I guess that makes us rivals!"
+ ]
+}

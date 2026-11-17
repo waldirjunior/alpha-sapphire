@@ -1,0 +1,6220 @@
+{
+  "zones": [
+    {
+      "zone": 0,
+      "name": "Littleroot Town",
+      "mapArea": 2,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 17
+    },
+    {
+      "zone": 1,
+      "name": "Littleroot Town",
+      "mapArea": 3,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 16
+    },
+    {
+      "zone": 2,
+      "name": "Littleroot Town",
+      "mapArea": 4,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 15
+    },
+    {
+      "zone": 3,
+      "name": "Littleroot Town",
+      "mapArea": 5,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 14
+    },
+    {
+      "zone": 4,
+      "name": "Littleroot Town",
+      "mapArea": 6,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 13
+    },
+    {
+      "zone": 5,
+      "name": "Littleroot Town",
+      "mapArea": 7,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 12
+    },
+    {
+      "zone": 6,
+      "name": "Littleroot Town",
+      "mapArea": 8,
+      "mapMatrix": 1,
+      "grIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "textFile": 66
+    },
+    {
+      "zone": 7,
+      "name": "Oldale Town",
+      "mapArea": 8,
+      "mapMatrix": 1,
+      "grIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "textFile": 60
+    },
+    {
+      "zone": 8,
+      "name": "Dewford Town",
+      "mapArea": 10,
+      "mapMatrix": 3,
+      "grIds": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "textFile": 55
+    },
+    {
+      "zone": 9,
+      "name": "Lavaridge Town",
+      "mapArea": 14,
+      "mapMatrix": 7,
+      "grIds": [
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "textFile": 49
+    },
+    {
+      "zone": 10,
+      "name": "Fallarbor Town",
+      "mapArea": 15,
+      "mapMatrix": 8,
+      "grIds": [
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85
+      ],
+      "textFile": 42
+    },
+    {
+      "zone": 11,
+      "name": "Verdanturf Town",
+      "mapArea": 13,
+      "mapMatrix": 6,
+      "grIds": [
+        54,
+        55,
+        56
+      ],
+      "textFile": 34
+    },
+    {
+      "zone": 12,
+      "name": "Pacifidlog Town",
+      "mapArea": 27,
+      "mapMatrix": 20,
+      "grIds": [
+        181,
+        182
+      ],
+      "textFile": 25
+    },
+    {
+      "zone": 13,
+      "name": "Petalburg City",
+      "mapArea": 9,
+      "mapMatrix": 2,
+      "grIds": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "textFile": 618
+    },
+    {
+      "zone": 14,
+      "name": "Slateport City",
+      "mapArea": 20,
+      "mapMatrix": 13,
+      "grIds": [
+        149,
+        150,
+        151,
+        152
+      ],
+      "textFile": 601
+    },
+    {
+      "zone": 15,
+      "name": "Mauville City",
+      "mapArea": 21,
+      "mapMatrix": 14,
+      "grIds": [
+        153
+      ],
+      "textFile": 586
+    },
+    {
+      "zone": 16,
+      "name": "Rustboro City",
+      "mapArea": 11,
+      "mapMatrix": 4,
+      "grIds": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "textFile": 565
+    },
+    {
+      "zone": 17,
+      "name": "Fortree City",
+      "mapArea": 22,
+      "mapMatrix": 15,
+      "grIds": [
+        154,
+        155
+      ],
+      "textFile": 544
+    },
+    {
+      "zone": 18,
+      "name": "Lilycove City",
+      "mapArea": 23,
+      "mapMatrix": 16,
+      "grIds": [
+        156,
+        157,
+        158,
+        159,
+        160,
+        161
+      ],
+      "textFile": 534
+    },
+    {
+      "zone": 19,
+      "name": "Mossdeep City",
+      "mapArea": 17,
+      "mapMatrix": 10,
+      "grIds": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "textFile": 509
+    },
+    {
+      "zone": 20,
+      "name": "Sootopolis City",
+      "mapArea": 24,
+      "mapMatrix": 17,
+      "grIds": [
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170
+      ],
+      "textFile": 494
+    },
+    {
+      "zone": 21,
+      "name": "Ever Grande City",
+      "mapArea": 25,
+      "mapMatrix": 18,
+      "grIds": [
+        171,
+        172,
+        173,
+        174
+      ],
+      "textFile": 476
+    },
+    {
+      "zone": 22,
+      "name": "Pokémon League",
+      "mapArea": 26,
+      "mapMatrix": 19,
+      "grIds": [
+        175,
+        176,
+        177,
+        178,
+        179,
+        180
+      ],
+      "textFile": 236
+    },
+    {
+      "zone": 23,
+      "name": "Route 101",
+      "mapArea": 8,
+      "mapMatrix": 1,
+      "grIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "textFile": 226
+    },
+    {
+      "zone": 24,
+      "name": "Route 102",
+      "mapArea": 9,
+      "mapMatrix": 2,
+      "grIds": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "textFile": 225
+    },
+    {
+      "zone": 25,
+      "name": "Route 103",
+      "mapArea": 8,
+      "mapMatrix": 1,
+      "grIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "textFile": 224
+    },
+    {
+      "zone": 26,
+      "name": "Route 104",
+      "mapArea": 11,
+      "mapMatrix": 4,
+      "grIds": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "textFile": 222
+    },
+    {
+      "zone": 27,
+      "name": "Route 104",
+      "mapArea": 10,
+      "mapMatrix": 3,
+      "grIds": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "textFile": 220
+    },
+    {
+      "zone": 28,
+      "name": "Route 105",
+      "mapArea": 10,
+      "mapMatrix": 3,
+      "grIds": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "textFile": 217
+    },
+    {
+      "zone": 29,
+      "name": "Route 106",
+      "mapArea": 10,
+      "mapMatrix": 3,
+      "grIds": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "textFile": 216
+    },
+    {
+      "zone": 30,
+      "name": "Route 107",
+      "mapArea": 12,
+      "mapMatrix": 5,
+      "grIds": [
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "textFile": 215
+    },
+    {
+      "zone": 31,
+      "name": "Route 108",
+      "mapArea": 12,
+      "mapMatrix": 5,
+      "grIds": [
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "textFile": 214
+    },
+    {
+      "zone": 32,
+      "name": "Route 109",
+      "mapArea": 12,
+      "mapMatrix": 5,
+      "grIds": [
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "textFile": 213
+    },
+    {
+      "zone": 33,
+      "name": "Route 110",
+      "mapArea": 28,
+      "mapMatrix": 21,
+      "grIds": [
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190
+      ],
+      "textFile": 210
+    },
+    {
+      "zone": 34,
+      "name": "Route 110",
+      "mapArea": 29,
+      "mapMatrix": 22,
+      "grIds": [
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198
+      ],
+      "textFile": 209
+    },
+    {
+      "zone": 35,
+      "name": "Route 111",
+      "mapArea": 30,
+      "mapMatrix": 23,
+      "grIds": [
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206
+      ],
+      "textFile": 194
+    },
+    {
+      "zone": 36,
+      "name": "Route 111",
+      "mapArea": 15,
+      "mapMatrix": 8,
+      "grIds": [
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85
+      ],
+      "textFile": 193
+    },
+    {
+      "zone": 37,
+      "name": "Route 111",
+      "mapArea": 14,
+      "mapMatrix": 7,
+      "grIds": [
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "textFile": 192
+    },
+    {
+      "zone": 38,
+      "name": "Route 112",
+      "mapArea": 15,
+      "mapMatrix": 8,
+      "grIds": [
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85
+      ],
+      "textFile": 188
+    },
+    {
+      "zone": 39,
+      "name": "Route 112",
+      "mapArea": 14,
+      "mapMatrix": 7,
+      "grIds": [
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "textFile": 187
+    },
+    {
+      "zone": 40,
+      "name": "Route 113",
+      "mapArea": 15,
+      "mapMatrix": 8,
+      "grIds": [
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85
+      ],
+      "textFile": 184
+    },
+    {
+      "zone": 41,
+      "name": "Route 114",
+      "mapArea": 15,
+      "mapMatrix": 8,
+      "grIds": [
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85
+      ],
+      "textFile": 182
+    },
+    {
+      "zone": 42,
+      "name": "Route 115",
+      "mapArea": 11,
+      "mapMatrix": 4,
+      "grIds": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "textFile": 178
+    },
+    {
+      "zone": 43,
+      "name": "Route 116",
+      "mapArea": 11,
+      "mapMatrix": 4,
+      "grIds": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "textFile": 177
+    },
+    {
+      "zone": 44,
+      "name": "Route 117",
+      "mapArea": 13,
+      "mapMatrix": 6,
+      "grIds": [
+        54,
+        55,
+        56
+      ],
+      "textFile": 175
+    },
+    {
+      "zone": 45,
+      "name": "Route 118",
+      "mapArea": 16,
+      "mapMatrix": 9,
+      "grIds": [
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "textFile": 173
+    },
+    {
+      "zone": 46,
+      "name": "Route 119",
+      "mapArea": 31,
+      "mapMatrix": 24,
+      "grIds": [
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218
+      ],
+      "textFile": 171
+    },
+    {
+      "zone": 47,
+      "name": "Route 119",
+      "mapArea": 31,
+      "mapMatrix": 24,
+      "grIds": [
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218
+      ],
+      "textFile": 170
+    },
+    {
+      "zone": 48,
+      "name": "Route 120",
+      "mapArea": 32,
+      "mapMatrix": 25,
+      "grIds": [
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228
+      ],
+      "textFile": 165
+    },
+    {
+      "zone": 49,
+      "name": "Route 120",
+      "mapArea": 32,
+      "mapMatrix": 25,
+      "grIds": [
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228
+      ],
+      "textFile": 164
+    },
+    {
+      "zone": 50,
+      "name": "Route 121",
+      "mapArea": 33,
+      "mapMatrix": 26,
+      "grIds": [
+        229,
+        230,
+        231,
+        232
+      ],
+      "textFile": 163
+    },
+    {
+      "zone": 51,
+      "name": "Route 122",
+      "mapArea": 34,
+      "mapMatrix": 27,
+      "grIds": [
+        233,
+        234,
+        235,
+        236
+      ],
+      "textFile": 161
+    },
+    {
+      "zone": 52,
+      "name": "Route 123",
+      "mapArea": 16,
+      "mapMatrix": 9,
+      "grIds": [
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      "textFile": 160
+    },
+    {
+      "zone": 53,
+      "name": "Route 124",
+      "mapArea": 17,
+      "mapMatrix": 10,
+      "grIds": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "textFile": 153
+    },
+    {
+      "zone": 54,
+      "name": "Route 125",
+      "mapArea": 17,
+      "mapMatrix": 10,
+      "grIds": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "textFile": 151
+    },
+    {
+      "zone": 55,
+      "name": "Route 126",
+      "mapArea": 35,
+      "mapMatrix": 28,
+      "grIds": [
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245
+      ],
+      "textFile": 150
+    },
+    {
+      "zone": 56,
+      "name": "Route 127",
+      "mapArea": 18,
+      "mapMatrix": 11,
+      "grIds": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130
+      ],
+      "textFile": 149
+    },
+    {
+      "zone": 57,
+      "name": "Route 128",
+      "mapArea": 18,
+      "mapMatrix": 11,
+      "grIds": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130
+      ],
+      "textFile": 148
+    },
+    {
+      "zone": 58,
+      "name": "Route 129",
+      "mapArea": 18,
+      "mapMatrix": 11,
+      "grIds": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130
+      ],
+      "textFile": 147
+    },
+    {
+      "zone": 59,
+      "name": "Route 130",
+      "mapArea": 18,
+      "mapMatrix": 11,
+      "grIds": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130
+      ],
+      "textFile": 146
+    },
+    {
+      "zone": 60,
+      "name": "Route 131",
+      "mapArea": 18,
+      "mapMatrix": 11,
+      "grIds": [
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130
+      ],
+      "textFile": 145
+    },
+    {
+      "zone": 61,
+      "name": "Route 132",
+      "mapArea": 19,
+      "mapMatrix": 12,
+      "grIds": [
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148
+      ],
+      "textFile": 144
+    },
+    {
+      "zone": 62,
+      "name": "Route 133",
+      "mapArea": 19,
+      "mapMatrix": 12,
+      "grIds": [
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148
+      ],
+      "textFile": 143
+    },
+    {
+      "zone": 63,
+      "name": "Route 134",
+      "mapArea": 19,
+      "mapMatrix": 12,
+      "grIds": [
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148
+      ],
+      "textFile": 142
+    },
+    {
+      "zone": 64,
+      "name": "Route 107",
+      "mapArea": 36,
+      "mapMatrix": 29,
+      "grIds": [
+        246
+      ],
+      "textFile": 6
+    },
+    {
+      "zone": 65,
+      "name": "Route 124",
+      "mapArea": 37,
+      "mapMatrix": 30,
+      "grIds": [
+        247,
+        248,
+        249,
+        250
+      ],
+      "textFile": 5
+    },
+    {
+      "zone": 66,
+      "name": "Route 126",
+      "mapArea": 38,
+      "mapMatrix": 31,
+      "grIds": [
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259
+      ],
+      "textFile": 4
+    },
+    {
+      "zone": 67,
+      "name": "Route 127",
+      "mapArea": 212,
+      "mapMatrix": 413,
+      "grIds": [
+        810,
+        811,
+        812,
+        813,
+        814,
+        815,
+        816
+      ],
+      "textFile": 3
+    },
+    {
+      "zone": 68,
+      "name": "Route 128",
+      "mapArea": 212,
+      "mapMatrix": 413,
+      "grIds": [
+        810,
+        811,
+        812,
+        813,
+        814,
+        815,
+        816
+      ],
+      "textFile": 2
+    },
+    {
+      "zone": 69,
+      "name": "Route 129",
+      "mapArea": 227,
+      "mapMatrix": 426,
+      "grIds": [
+        829,
+        830,
+        831,
+        832,
+        833,
+        834,
+        835,
+        836,
+        837,
+        838
+      ],
+      "textFile": 1
+    },
+    {
+      "zone": 70,
+      "name": "Route 130",
+      "mapArea": 227,
+      "mapMatrix": 426,
+      "grIds": [
+        829,
+        830,
+        831,
+        832,
+        833,
+        834,
+        835,
+        836,
+        837,
+        838
+      ],
+      "textFile": 0
+    },
+    {
+      "zone": 71,
+      "name": "Meteor Falls",
+      "mapArea": 107,
+      "mapMatrix": 32,
+      "grIds": [
+        260,
+        261,
+        262,
+        263
+      ],
+      "textFile": 444
+    },
+    {
+      "zone": 72,
+      "name": "Meteor Falls",
+      "mapArea": 43,
+      "mapMatrix": 33,
+      "grIds": [
+        264,
+        265,
+        266,
+        267
+      ],
+      "textFile": 443
+    },
+    {
+      "zone": 73,
+      "name": "Meteor Falls",
+      "mapArea": 43,
+      "mapMatrix": 34,
+      "grIds": [
+        268,
+        269,
+        270,
+        271
+      ],
+      "textFile": 442
+    },
+    {
+      "zone": 74,
+      "name": "Meteor Falls",
+      "mapArea": 43,
+      "mapMatrix": 35,
+      "grIds": [
+        272
+      ],
+      "textFile": 441
+    },
+    {
+      "zone": 75,
+      "name": "Rusturf Tunnel",
+      "mapArea": 44,
+      "mapMatrix": 36,
+      "grIds": [
+        273,
+        274
+      ],
+      "textFile": 440
+    },
+    {
+      "zone": 76,
+      "name": "Sootopolis City",
+      "mapArea": 45,
+      "mapMatrix": 37,
+      "grIds": [
+        275
+      ],
+      "textFile": 439
+    },
+    {
+      "zone": 77,
+      "name": "Desert Ruins",
+      "mapArea": 46,
+      "mapMatrix": 38,
+      "grIds": [
+        276,
+        277
+      ],
+      "textFile": 438
+    },
+    {
+      "zone": 78,
+      "name": "Granite Cave",
+      "mapArea": 47,
+      "mapMatrix": 39,
+      "grIds": [
+        278,
+        279
+      ],
+      "textFile": 437
+    },
+    {
+      "zone": 79,
+      "name": "Granite Cave",
+      "mapArea": 47,
+      "mapMatrix": 40,
+      "grIds": [
+        280
+      ],
+      "textFile": 436
+    },
+    {
+      "zone": 80,
+      "name": "Granite Cave",
+      "mapArea": 47,
+      "mapMatrix": 41,
+      "grIds": [
+        281
+      ],
+      "textFile": 435
+    },
+    {
+      "zone": 81,
+      "name": "Granite Cave",
+      "mapArea": 48,
+      "mapMatrix": 42,
+      "grIds": [
+        282
+      ],
+      "textFile": 434
+    },
+    {
+      "zone": 82,
+      "name": "Petalburg Woods",
+      "mapArea": 49,
+      "mapMatrix": 43,
+      "grIds": [
+        283,
+        284,
+        285,
+        286
+      ],
+      "textFile": 432
+    },
+    {
+      "zone": 83,
+      "name": "Mt. Chimney",
+      "mapArea": 50,
+      "mapMatrix": 44,
+      "grIds": [
+        287,
+        288,
+        289,
+        290
+      ],
+      "textFile": 431
+    },
+    {
+      "zone": 84,
+      "name": "Jagged Pass",
+      "mapArea": 51,
+      "mapMatrix": 45,
+      "grIds": [
+        291,
+        292,
+        293,
+        294,
+        295,
+        296
+      ],
+      "textFile": 430
+    },
+    {
+      "zone": 85,
+      "name": "Fiery Path",
+      "mapArea": 52,
+      "mapMatrix": 46,
+      "grIds": [
+        297,
+        298,
+        299,
+        300
+      ],
+      "textFile": 429
+    },
+    {
+      "zone": 86,
+      "name": "Mt. Pyre",
+      "mapArea": 53,
+      "mapMatrix": 47,
+      "grIds": [
+        301
+      ],
+      "textFile": 428
+    },
+    {
+      "zone": 87,
+      "name": "Mt. Pyre",
+      "mapArea": 53,
+      "mapMatrix": 48,
+      "grIds": [
+        302
+      ],
+      "textFile": 427
+    },
+    {
+      "zone": 88,
+      "name": "Mt. Pyre",
+      "mapArea": 53,
+      "mapMatrix": 49,
+      "grIds": [
+        303
+      ],
+      "textFile": 426
+    },
+    {
+      "zone": 89,
+      "name": "Mt. Pyre",
+      "mapArea": 53,
+      "mapMatrix": 50,
+      "grIds": [
+        304
+      ],
+      "textFile": 425
+    },
+    {
+      "zone": 90,
+      "name": "Mt. Pyre",
+      "mapArea": 54,
+      "mapMatrix": 51,
+      "grIds": [
+        305,
+        306,
+        307,
+        308
+      ],
+      "textFile": 424
+    },
+    {
+      "zone": 91,
+      "name": "Mt. Pyre",
+      "mapArea": 55,
+      "mapMatrix": 52,
+      "grIds": [
+        309,
+        310,
+        311,
+        312
+      ],
+      "textFile": 423
+    },
+    {
+      "zone": 92,
+      "name": "Team Aqua Hideout",
+      "mapArea": 56,
+      "mapMatrix": 53,
+      "grIds": [
+        313,
+        314
+      ],
+      "textFile": 421
+    },
+    {
+      "zone": 93,
+      "name": "Team Aqua Hideout",
+      "mapArea": 205,
+      "mapMatrix": 54,
+      "grIds": [
+        315,
+        316
+      ],
+      "textFile": 420
+    },
+    {
+      "zone": 94,
+      "name": "Team Aqua Hideout",
+      "mapArea": 206,
+      "mapMatrix": 55,
+      "grIds": [
+        317,
+        318,
+        319,
+        320
+      ],
+      "textFile": 419
+    },
+    {
+      "zone": 95,
+      "name": "Team Aqua Hideout",
+      "mapArea": 206,
+      "mapMatrix": 56,
+      "grIds": [
+        321,
+        322
+      ],
+      "textFile": 418
+    },
+    {
+      "zone": 96,
+      "name": "Team Aqua Hideout",
+      "mapArea": 207,
+      "mapMatrix": 57,
+      "grIds": [
+        323
+      ],
+      "textFile": 417
+    },
+    {
+      "zone": 97,
+      "name": "Team Aqua Hideout",
+      "mapArea": 207,
+      "mapMatrix": 58,
+      "grIds": [
+        324,
+        325
+      ],
+      "textFile": 416
+    },
+    {
+      "zone": 98,
+      "name": "Seafloor Cavern",
+      "mapArea": 106,
+      "mapMatrix": 59,
+      "grIds": [
+        326
+      ],
+      "textFile": 415
+    },
+    {
+      "zone": 99,
+      "name": "Seafloor Cavern",
+      "mapArea": 57,
+      "mapMatrix": 60,
+      "grIds": [
+        327
+      ],
+      "textFile": 414
+    },
+    {
+      "zone": 100,
+      "name": "Seafloor Cavern",
+      "mapArea": 57,
+      "mapMatrix": 61,
+      "grIds": [
+        328
+      ],
+      "textFile": 413
+    },
+    {
+      "zone": 101,
+      "name": "Seafloor Cavern",
+      "mapArea": 57,
+      "mapMatrix": 62,
+      "grIds": [
+        329
+      ],
+      "textFile": 412
+    },
+    {
+      "zone": 102,
+      "name": "Seafloor Cavern",
+      "mapArea": 57,
+      "mapMatrix": 63,
+      "grIds": [
+        330
+      ],
+      "textFile": 411
+    },
+    {
+      "zone": 103,
+      "name": "Seafloor Cavern",
+      "mapArea": 57,
+      "mapMatrix": 64,
+      "grIds": [
+        331
+      ],
+      "textFile": 410
+    },
+    {
+      "zone": 104,
+      "name": "Seafloor Cavern",
+      "mapArea": 57,
+      "mapMatrix": 65,
+      "grIds": [
+        332
+      ],
+      "textFile": 409
+    },
+    {
+      "zone": 105,
+      "name": "Seafloor Cavern",
+      "mapArea": 57,
+      "mapMatrix": 66,
+      "grIds": [
+        333
+      ],
+      "textFile": 408
+    },
+    {
+      "zone": 106,
+      "name": "Seafloor Cavern",
+      "mapArea": 57,
+      "mapMatrix": 67,
+      "grIds": [
+        334
+      ],
+      "textFile": 407
+    },
+    {
+      "zone": 107,
+      "name": "Seafloor Cavern",
+      "mapArea": 57,
+      "mapMatrix": 68,
+      "grIds": [
+        335
+      ],
+      "textFile": 406
+    },
+    {
+      "zone": 108,
+      "name": "Seafloor Cavern",
+      "mapArea": 58,
+      "mapMatrix": 69,
+      "grIds": [
+        336,
+        337
+      ],
+      "textFile": 405
+    },
+    {
+      "zone": 109,
+      "name": "Seafloor Cavern",
+      "mapArea": 59,
+      "mapMatrix": 70,
+      "grIds": [
+        338,
+        339
+      ],
+      "textFile": 404
+    },
+    {
+      "zone": 110,
+      "name": "Seafloor Cavern",
+      "mapArea": 58,
+      "mapMatrix": 71,
+      "grIds": [
+        340
+      ],
+      "textFile": 403
+    },
+    {
+      "zone": 111,
+      "name": "Seafloor Cavern",
+      "mapArea": 59,
+      "mapMatrix": 72,
+      "grIds": [
+        341
+      ],
+      "textFile": 402
+    },
+    {
+      "zone": 112,
+      "name": "Cave of Origin",
+      "mapArea": 60,
+      "mapMatrix": 73,
+      "grIds": [
+        342
+      ],
+      "textFile": 401
+    },
+    {
+      "zone": 113,
+      "name": "Cave of Origin",
+      "mapArea": 60,
+      "mapMatrix": 74,
+      "grIds": [
+        343
+      ],
+      "textFile": 400
+    },
+    {
+      "zone": 114,
+      "name": "Cave of Origin",
+      "mapArea": 60,
+      "mapMatrix": 75,
+      "grIds": [
+        344
+      ],
+      "textFile": 399
+    },
+    {
+      "zone": 115,
+      "name": "Cave of Origin",
+      "mapArea": 60,
+      "mapMatrix": 76,
+      "grIds": [
+        345
+      ],
+      "textFile": 398
+    },
+    {
+      "zone": 116,
+      "name": "Cave of Origin",
+      "mapArea": 60,
+      "mapMatrix": 77,
+      "grIds": [
+        346
+      ],
+      "textFile": 397
+    },
+    {
+      "zone": 117,
+      "name": "Cave of Origin",
+      "mapArea": 61,
+      "mapMatrix": 78,
+      "grIds": [
+        347
+      ],
+      "textFile": 396
+    },
+    {
+      "zone": 118,
+      "name": "Cave of Origin",
+      "mapArea": 62,
+      "mapMatrix": 79,
+      "grIds": [
+        348
+      ],
+      "textFile": 395
+    },
+    {
+      "zone": 119,
+      "name": "Cave of Origin",
+      "mapArea": 63,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 394
+    },
+    {
+      "zone": 120,
+      "name": "Cave of Origin",
+      "mapArea": 64,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 393
+    },
+    {
+      "zone": 121,
+      "name": "Cave of Origin",
+      "mapArea": 65,
+      "mapMatrix": 82,
+      "grIds": [
+        353,
+        354
+      ],
+      "textFile": 392
+    },
+    {
+      "zone": 122,
+      "name": "Cave of Origin",
+      "mapArea": 66,
+      "mapMatrix": 83,
+      "grIds": [
+        355
+      ],
+      "textFile": 391
+    },
+    {
+      "zone": 123,
+      "name": "Victory Road",
+      "mapArea": 67,
+      "mapMatrix": 84,
+      "grIds": [
+        356,
+        357,
+        358,
+        359
+      ],
+      "textFile": 389
+    },
+    {
+      "zone": 124,
+      "name": "Victory Road",
+      "mapArea": 68,
+      "mapMatrix": 85,
+      "grIds": [
+        360,
+        361,
+        362,
+        363
+      ],
+      "textFile": 388
+    },
+    {
+      "zone": 125,
+      "name": "Victory Road",
+      "mapArea": 69,
+      "mapMatrix": 86,
+      "grIds": [
+        364,
+        365,
+        366,
+        367
+      ],
+      "textFile": 387
+    },
+    {
+      "zone": 126,
+      "name": "Victory Road",
+      "mapArea": 70,
+      "mapMatrix": 87,
+      "grIds": [
+        368,
+        369,
+        370,
+        371
+      ],
+      "textFile": 386
+    },
+    {
+      "zone": 127,
+      "name": "Victory Road",
+      "mapArea": 71,
+      "mapMatrix": 88,
+      "grIds": [
+        372,
+        373,
+        374,
+        375
+      ],
+      "textFile": 385
+    },
+    {
+      "zone": 128,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 89,
+      "grIds": [
+        376
+      ],
+      "textFile": 384
+    },
+    {
+      "zone": 129,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 90,
+      "grIds": [
+        377,
+        378
+      ],
+      "textFile": 383
+    },
+    {
+      "zone": 130,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 91,
+      "grIds": [
+        379
+      ],
+      "textFile": 382
+    },
+    {
+      "zone": 131,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 92,
+      "grIds": [
+        380,
+        381
+      ],
+      "textFile": 381
+    },
+    {
+      "zone": 132,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 93,
+      "grIds": [
+        382
+      ],
+      "textFile": 380
+    },
+    {
+      "zone": 133,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 94,
+      "grIds": [
+        383,
+        384
+      ],
+      "textFile": 379
+    },
+    {
+      "zone": 134,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 95,
+      "grIds": [
+        385,
+        386
+      ],
+      "textFile": 378
+    },
+    {
+      "zone": 135,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 377
+    },
+    {
+      "zone": 136,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 376
+    },
+    {
+      "zone": 137,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 375
+    },
+    {
+      "zone": 138,
+      "name": "Shoal Cave",
+      "mapArea": 72,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 374
+    },
+    {
+      "zone": 139,
+      "name": "New Mauville",
+      "mapArea": 73,
+      "mapMatrix": 96,
+      "grIds": [
+        387
+      ],
+      "textFile": 372
+    },
+    {
+      "zone": 140,
+      "name": "New Mauville",
+      "mapArea": 73,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 371
+    },
+    {
+      "zone": 141,
+      "name": "New Mauville",
+      "mapArea": 73,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 370
+    },
+    {
+      "zone": 142,
+      "name": "New Mauville",
+      "mapArea": 73,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 369
+    },
+    {
+      "zone": 143,
+      "name": "New Mauville",
+      "mapArea": 73,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 368
+    },
+    {
+      "zone": 144,
+      "name": "New Mauville",
+      "mapArea": 73,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 367
+    },
+    {
+      "zone": 145,
+      "name": "Sea Mauville",
+      "mapArea": 74,
+      "mapMatrix": 97,
+      "grIds": [
+        388,
+        389,
+        390,
+        391
+      ],
+      "textFile": 366
+    },
+    {
+      "zone": 146,
+      "name": "Sea Mauville",
+      "mapArea": 216,
+      "mapMatrix": 98,
+      "grIds": [
+        392
+      ],
+      "textFile": 365
+    },
+    {
+      "zone": 147,
+      "name": "Sea Mauville",
+      "mapArea": 217,
+      "mapMatrix": 99,
+      "grIds": [
+        393
+      ],
+      "textFile": 364
+    },
+    {
+      "zone": 148,
+      "name": "Sea Mauville",
+      "mapArea": 218,
+      "mapMatrix": 100,
+      "grIds": [
+        394
+      ],
+      "textFile": 363
+    },
+    {
+      "zone": 149,
+      "name": "Sea Mauville",
+      "mapArea": 219,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 362
+    },
+    {
+      "zone": 150,
+      "name": "Sea Mauville",
+      "mapArea": 220,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 361
+    },
+    {
+      "zone": 151,
+      "name": "Sea Mauville",
+      "mapArea": 220,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 360
+    },
+    {
+      "zone": 152,
+      "name": "Sea Mauville",
+      "mapArea": 217,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 359
+    },
+    {
+      "zone": 153,
+      "name": "Sea Mauville",
+      "mapArea": 221,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 358
+    },
+    {
+      "zone": 154,
+      "name": "Sea Mauville",
+      "mapArea": 222,
+      "mapMatrix": 106,
+      "grIds": [
+        400
+      ],
+      "textFile": 357
+    },
+    {
+      "zone": 155,
+      "name": "Sea Mauville",
+      "mapArea": 217,
+      "mapMatrix": 107,
+      "grIds": [
+        401
+      ],
+      "textFile": 356
+    },
+    {
+      "zone": 156,
+      "name": "Sea Mauville",
+      "mapArea": 217,
+      "mapMatrix": 108,
+      "grIds": [
+        402
+      ],
+      "textFile": 355
+    },
+    {
+      "zone": 157,
+      "name": "Sea Mauville",
+      "mapArea": 74,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 354
+    },
+    {
+      "zone": 158,
+      "name": "Island Cave",
+      "mapArea": 75,
+      "mapMatrix": 109,
+      "grIds": [
+        403,
+        404
+      ],
+      "textFile": 353
+    },
+    {
+      "zone": 159,
+      "name": "Ancient Tomb",
+      "mapArea": 76,
+      "mapMatrix": 110,
+      "grIds": [
+        405,
+        406
+      ],
+      "textFile": 352
+    },
+    {
+      "zone": 160,
+      "name": "Route 134",
+      "mapArea": 77,
+      "mapMatrix": 111,
+      "grIds": [
+        407
+      ],
+      "textFile": 351
+    },
+    {
+      "zone": 161,
+      "name": "Route 134",
+      "mapArea": 77,
+      "mapMatrix": 112,
+      "grIds": [
+        408,
+        409
+      ],
+      "textFile": 350
+    },
+    {
+      "zone": 162,
+      "name": "Sealed Chamber",
+      "mapArea": 78,
+      "mapMatrix": 113,
+      "grIds": [
+        410,
+        411,
+        412,
+        413
+      ],
+      "textFile": 349
+    },
+    {
+      "zone": 163,
+      "name": "Sealed Chamber",
+      "mapArea": 78,
+      "mapMatrix": 114,
+      "grIds": [
+        414,
+        415,
+        416,
+        417
+      ],
+      "textFile": 348
+    },
+    {
+      "zone": 164,
+      "name": "Scorched Slab",
+      "mapArea": 79,
+      "mapMatrix": 115,
+      "grIds": [
+        418
+      ],
+      "textFile": 347
+    },
+    {
+      "zone": 165,
+      "name": "Scorched Slab",
+      "mapArea": 79,
+      "mapMatrix": 116,
+      "grIds": [
+        419
+      ],
+      "textFile": 346
+    },
+    {
+      "zone": 166,
+      "name": "Scorched Slab",
+      "mapArea": 79,
+      "mapMatrix": 117,
+      "grIds": [
+        420
+      ],
+      "textFile": 345
+    },
+    {
+      "zone": 167,
+      "name": "Scorched Slab",
+      "mapArea": 79,
+      "mapMatrix": 118,
+      "grIds": [
+        421
+      ],
+      "textFile": 344
+    },
+    {
+      "zone": 168,
+      "name": "Scorched Slab",
+      "mapArea": 79,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 343
+    },
+    {
+      "zone": 169,
+      "name": "Team Magma Hideout",
+      "mapArea": 80,
+      "mapMatrix": 119,
+      "grIds": [
+        422,
+        423
+      ],
+      "textFile": 342
+    },
+    {
+      "zone": 170,
+      "name": "Team Magma Hideout",
+      "mapArea": 208,
+      "mapMatrix": 120,
+      "grIds": [
+        424,
+        425
+      ],
+      "textFile": 341
+    },
+    {
+      "zone": 171,
+      "name": "Team Magma Hideout",
+      "mapArea": 209,
+      "mapMatrix": 121,
+      "grIds": [
+        426,
+        427,
+        428,
+        429
+      ],
+      "textFile": 340
+    },
+    {
+      "zone": 172,
+      "name": "Team Magma Hideout",
+      "mapArea": 209,
+      "mapMatrix": 122,
+      "grIds": [
+        430,
+        431
+      ],
+      "textFile": 339
+    },
+    {
+      "zone": 173,
+      "name": "Team Magma Hideout",
+      "mapArea": 210,
+      "mapMatrix": 123,
+      "grIds": [
+        432
+      ],
+      "textFile": 338
+    },
+    {
+      "zone": 174,
+      "name": "Team Magma Hideout",
+      "mapArea": 210,
+      "mapMatrix": 124,
+      "grIds": [
+        433,
+        434
+      ],
+      "textFile": 337
+    },
+    {
+      "zone": 175,
+      "name": "Sky Pillar",
+      "mapArea": 81,
+      "mapMatrix": 125,
+      "grIds": [
+        435
+      ],
+      "textFile": 336
+    },
+    {
+      "zone": 176,
+      "name": "Sky Pillar",
+      "mapArea": 82,
+      "mapMatrix": 126,
+      "grIds": [
+        436,
+        437,
+        438,
+        439
+      ],
+      "textFile": 335
+    },
+    {
+      "zone": 177,
+      "name": "Sky Pillar",
+      "mapArea": 83,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 334
+    },
+    {
+      "zone": 178,
+      "name": "Sky Pillar",
+      "mapArea": 82,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 333
+    },
+    {
+      "zone": 179,
+      "name": "Sky Pillar",
+      "mapArea": 82,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 332
+    },
+    {
+      "zone": 180,
+      "name": "Sky Pillar",
+      "mapArea": 82,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 331
+    },
+    {
+      "zone": 181,
+      "name": "Sky Pillar",
+      "mapArea": 83,
+      "mapMatrix": 127,
+      "grIds": [
+        440,
+        441,
+        442,
+        443
+      ],
+      "textFile": 330
+    },
+    {
+      "zone": 182,
+      "name": "Secret Islet",
+      "mapArea": 84,
+      "mapMatrix": 128,
+      "grIds": [
+        444
+      ],
+      "textFile": 329
+    },
+    {
+      "zone": 183,
+      "name": "Secret Shore",
+      "mapArea": 84,
+      "mapMatrix": 129,
+      "grIds": [
+        445
+      ],
+      "textFile": 328
+    },
+    {
+      "zone": 184,
+      "name": "Mirage Forest",
+      "mapArea": 85,
+      "mapMatrix": 130,
+      "grIds": [
+        446
+      ],
+      "textFile": 327
+    },
+    {
+      "zone": 185,
+      "name": "Mirage Forest",
+      "mapArea": 85,
+      "mapMatrix": 131,
+      "grIds": [
+        447
+      ],
+      "textFile": 326
+    },
+    {
+      "zone": 186,
+      "name": "Mirage Forest",
+      "mapArea": 85,
+      "mapMatrix": 132,
+      "grIds": [
+        448
+      ],
+      "textFile": 325
+    },
+    {
+      "zone": 187,
+      "name": "Mirage Forest",
+      "mapArea": 85,
+      "mapMatrix": 133,
+      "grIds": [
+        449
+      ],
+      "textFile": 324
+    },
+    {
+      "zone": 188,
+      "name": "Mirage Forest",
+      "mapArea": 85,
+      "mapMatrix": 134,
+      "grIds": [
+        450
+      ],
+      "textFile": 323
+    },
+    {
+      "zone": 189,
+      "name": "Mirage Forest",
+      "mapArea": 85,
+      "mapMatrix": 135,
+      "grIds": [
+        451
+      ],
+      "textFile": 322
+    },
+    {
+      "zone": 190,
+      "name": "Mirage Forest",
+      "mapArea": 85,
+      "mapMatrix": 136,
+      "grIds": [
+        452
+      ],
+      "textFile": 321
+    },
+    {
+      "zone": 191,
+      "name": "Mirage Forest",
+      "mapArea": 85,
+      "mapMatrix": 137,
+      "grIds": [
+        453
+      ],
+      "textFile": 320
+    },
+    {
+      "zone": 192,
+      "name": "Mirage Cave",
+      "mapArea": 85,
+      "mapMatrix": 138,
+      "grIds": [
+        454
+      ],
+      "textFile": 319
+    },
+    {
+      "zone": 193,
+      "name": "Mirage Cave",
+      "mapArea": 85,
+      "mapMatrix": 139,
+      "grIds": [
+        455
+      ],
+      "textFile": 317
+    },
+    {
+      "zone": 194,
+      "name": "Mirage Cave",
+      "mapArea": 85,
+      "mapMatrix": 140,
+      "grIds": [
+        456
+      ],
+      "textFile": 315
+    },
+    {
+      "zone": 195,
+      "name": "Mirage Cave",
+      "mapArea": 85,
+      "mapMatrix": 141,
+      "grIds": [
+        457
+      ],
+      "textFile": 313
+    },
+    {
+      "zone": 196,
+      "name": "Mirage Cave",
+      "mapArea": 85,
+      "mapMatrix": 142,
+      "grIds": [
+        458
+      ],
+      "textFile": 311
+    },
+    {
+      "zone": 197,
+      "name": "Mirage Cave",
+      "mapArea": 85,
+      "mapMatrix": 143,
+      "grIds": [
+        459
+      ],
+      "textFile": 309
+    },
+    {
+      "zone": 198,
+      "name": "Mirage Cave",
+      "mapArea": 87,
+      "mapMatrix": 144,
+      "grIds": [
+        460
+      ],
+      "textFile": 307
+    },
+    {
+      "zone": 199,
+      "name": "Mirage Cave",
+      "mapArea": 87,
+      "mapMatrix": 145,
+      "grIds": [
+        461
+      ],
+      "textFile": 305
+    },
+    {
+      "zone": 200,
+      "name": "Mirage Island",
+      "mapArea": 85,
+      "mapMatrix": 146,
+      "grIds": [
+        462
+      ],
+      "textFile": 303
+    },
+    {
+      "zone": 201,
+      "name": "Mirage Island",
+      "mapArea": 85,
+      "mapMatrix": 147,
+      "grIds": [
+        463
+      ],
+      "textFile": 302
+    },
+    {
+      "zone": 202,
+      "name": "Mirage Island",
+      "mapArea": 85,
+      "mapMatrix": 148,
+      "grIds": [
+        464
+      ],
+      "textFile": 301
+    },
+    {
+      "zone": 203,
+      "name": "Mirage Island",
+      "mapArea": 85,
+      "mapMatrix": 149,
+      "grIds": [
+        465
+      ],
+      "textFile": 300
+    },
+    {
+      "zone": 204,
+      "name": "Mirage Island",
+      "mapArea": 85,
+      "mapMatrix": 150,
+      "grIds": [
+        466
+      ],
+      "textFile": 299
+    },
+    {
+      "zone": 205,
+      "name": "Mirage Island",
+      "mapArea": 85,
+      "mapMatrix": 151,
+      "grIds": [
+        467
+      ],
+      "textFile": 298
+    },
+    {
+      "zone": 206,
+      "name": "Mirage Island",
+      "mapArea": 87,
+      "mapMatrix": 152,
+      "grIds": [
+        468
+      ],
+      "textFile": 297
+    },
+    {
+      "zone": 207,
+      "name": "Mirage Island",
+      "mapArea": 85,
+      "mapMatrix": 153,
+      "grIds": [
+        469
+      ],
+      "textFile": 296
+    },
+    {
+      "zone": 208,
+      "name": "Mirage Mountain",
+      "mapArea": 85,
+      "mapMatrix": 154,
+      "grIds": [
+        470
+      ],
+      "textFile": 295
+    },
+    {
+      "zone": 209,
+      "name": "Battle Resort",
+      "mapArea": 98,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 9
+    },
+    {
+      "zone": 210,
+      "name": "Battle Resort",
+      "mapArea": 99,
+      "mapMatrix": 155,
+      "grIds": [
+        471,
+        472,
+        473,
+        474,
+        475,
+        476,
+        477,
+        478,
+        479
+      ],
+      "textFile": 634
+    },
+    {
+      "zone": 211,
+      "name": "Battle Resort",
+      "mapArea": 100,
+      "mapMatrix": 156,
+      "grIds": [
+        480,
+        481,
+        482,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488
+      ],
+      "textFile": 625
+    },
+    {
+      "zone": 212,
+      "name": "Battle Resort",
+      "mapArea": 101,
+      "mapMatrix": 157,
+      "grIds": [
+        489,
+        490,
+        491,
+        492
+      ],
+      "textFile": 624
+    },
+    {
+      "zone": 213,
+      "name": "Battle Resort",
+      "mapArea": 102,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 623
+    },
+    {
+      "zone": 214,
+      "name": "Southern Island",
+      "mapArea": 103,
+      "mapMatrix": 158,
+      "grIds": [
+        493,
+        494,
+        495,
+        496
+      ],
+      "textFile": 243
+    },
+    {
+      "zone": 215,
+      "name": "Southern Island",
+      "mapArea": 103,
+      "mapMatrix": 159,
+      "grIds": [
+        497
+      ],
+      "textFile": 242
+    },
+    {
+      "zone": 216,
+      "name": "S.S. Tidal",
+      "mapArea": 104,
+      "mapMatrix": 160,
+      "grIds": [
+        498
+      ],
+      "textFile": 72
+    },
+    {
+      "zone": 217,
+      "name": "S.S. Tidal",
+      "mapArea": 104,
+      "mapMatrix": 161,
+      "grIds": [
+        499
+      ],
+      "textFile": 71
+    },
+    {
+      "zone": 218,
+      "name": "S.S. Tidal",
+      "mapArea": 104,
+      "mapMatrix": 162,
+      "grIds": [
+        500,
+        501
+      ],
+      "textFile": 70
+    },
+    {
+      "zone": 219,
+      "name": "Safari Zone",
+      "mapArea": 105,
+      "mapMatrix": 163,
+      "grIds": [
+        502,
+        503,
+        504,
+        505
+      ],
+      "textFile": 139
+    },
+    {
+      "zone": 220,
+      "name": "Safari Zone",
+      "mapArea": 105,
+      "mapMatrix": 163,
+      "grIds": [
+        502,
+        503,
+        504,
+        505
+      ],
+      "textFile": 138
+    },
+    {
+      "zone": 221,
+      "name": "Safari Zone",
+      "mapArea": 105,
+      "mapMatrix": 163,
+      "grIds": [
+        502,
+        503,
+        504,
+        505
+      ],
+      "textFile": 137
+    },
+    {
+      "zone": 222,
+      "name": "Safari Zone",
+      "mapArea": 105,
+      "mapMatrix": 163,
+      "grIds": [
+        502,
+        503,
+        504,
+        505
+      ],
+      "textFile": 136
+    },
+    {
+      "zone": 223,
+      "name": "Littleroot Town",
+      "mapArea": 112,
+      "mapMatrix": 164,
+      "grIds": [
+        506
+      ],
+      "textFile": 65
+    },
+    {
+      "zone": 224,
+      "name": "Littleroot Town",
+      "mapArea": 112,
+      "mapMatrix": 165,
+      "grIds": [
+        507
+      ],
+      "textFile": 64
+    },
+    {
+      "zone": 225,
+      "name": "Littleroot Town",
+      "mapArea": 113,
+      "mapMatrix": 166,
+      "grIds": [
+        508
+      ],
+      "textFile": 63
+    },
+    {
+      "zone": 226,
+      "name": "Littleroot Town",
+      "mapArea": 113,
+      "mapMatrix": 167,
+      "grIds": [
+        509
+      ],
+      "textFile": 62
+    },
+    {
+      "zone": 227,
+      "name": "Littleroot Town",
+      "mapArea": 114,
+      "mapMatrix": 168,
+      "grIds": [
+        510
+      ],
+      "textFile": 61
+    },
+    {
+      "zone": 228,
+      "name": "Oldale Town",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 58
+    },
+    {
+      "zone": 229,
+      "name": "Oldale Town",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 59
+    },
+    {
+      "zone": 230,
+      "name": "Oldale Town",
+      "mapArea": 115,
+      "mapMatrix": 171,
+      "grIds": [
+        513
+      ],
+      "textFile": 57
+    },
+    {
+      "zone": 231,
+      "name": "Oldale Town",
+      "mapArea": 115,
+      "mapMatrix": 172,
+      "grIds": [
+        514
+      ],
+      "textFile": 56
+    },
+    {
+      "zone": 232,
+      "name": "Dewford Town",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 53
+    },
+    {
+      "zone": 233,
+      "name": "Dewford Town",
+      "mapArea": 116,
+      "mapMatrix": 173,
+      "grIds": [
+        515
+      ],
+      "textFile": 52
+    },
+    {
+      "zone": 234,
+      "name": "Dewford Town",
+      "mapArea": 116,
+      "mapMatrix": 174,
+      "grIds": [
+        516
+      ],
+      "textFile": 51
+    },
+    {
+      "zone": 235,
+      "name": "Dewford Town",
+      "mapArea": 116,
+      "mapMatrix": 175,
+      "grIds": [
+        517
+      ],
+      "textFile": 50
+    },
+    {
+      "zone": 236,
+      "name": "Lavaridge Town",
+      "mapArea": 109,
+      "mapMatrix": 176,
+      "grIds": [
+        518
+      ],
+      "textFile": 45
+    },
+    {
+      "zone": 237,
+      "name": "Lavaridge Town",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 48
+    },
+    {
+      "zone": 238,
+      "name": "Lavaridge Town",
+      "mapArea": 117,
+      "mapMatrix": 177,
+      "grIds": [
+        519
+      ],
+      "textFile": 44
+    },
+    {
+      "zone": 239,
+      "name": "Lavaridge Town",
+      "mapArea": 117,
+      "mapMatrix": 178,
+      "grIds": [
+        520
+      ],
+      "textFile": 43
+    },
+    {
+      "zone": 240,
+      "name": "Fallarbor Town",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 40
+    },
+    {
+      "zone": 241,
+      "name": "Fallarbor Town",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 41
+    },
+    {
+      "zone": 242,
+      "name": "Fallarbor Town",
+      "mapArea": 111,
+      "mapMatrix": 358,
+      "grIds": [
+        755
+      ],
+      "textFile": 39
+    },
+    {
+      "zone": 243,
+      "name": "Fallarbor Town",
+      "mapArea": 111,
+      "mapMatrix": 359,
+      "grIds": [
+        756
+      ],
+      "textFile": 38
+    },
+    {
+      "zone": 244,
+      "name": "Fallarbor Town",
+      "mapArea": 118,
+      "mapMatrix": 179,
+      "grIds": [
+        521
+      ],
+      "textFile": 36
+    },
+    {
+      "zone": 245,
+      "name": "Fallarbor Town",
+      "mapArea": 119,
+      "mapMatrix": 180,
+      "grIds": [
+        522
+      ],
+      "textFile": 35
+    },
+    {
+      "zone": 246,
+      "name": "Verdanturf Town",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 32
+    },
+    {
+      "zone": 247,
+      "name": "Verdanturf Town",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 33
+    },
+    {
+      "zone": 248,
+      "name": "Verdanturf Town",
+      "mapArea": 111,
+      "mapMatrix": 358,
+      "grIds": [
+        755
+      ],
+      "textFile": 31
+    },
+    {
+      "zone": 249,
+      "name": "Verdanturf Town",
+      "mapArea": 111,
+      "mapMatrix": 359,
+      "grIds": [
+        756
+      ],
+      "textFile": 30
+    },
+    {
+      "zone": 250,
+      "name": "Verdanturf Town",
+      "mapArea": 120,
+      "mapMatrix": 181,
+      "grIds": [
+        523
+      ],
+      "textFile": 28
+    },
+    {
+      "zone": 251,
+      "name": "Verdanturf Town",
+      "mapArea": 120,
+      "mapMatrix": 182,
+      "grIds": [
+        524
+      ],
+      "textFile": 27
+    },
+    {
+      "zone": 252,
+      "name": "Verdanturf Town",
+      "mapArea": 120,
+      "mapMatrix": 183,
+      "grIds": [
+        525
+      ],
+      "textFile": 26
+    },
+    {
+      "zone": 253,
+      "name": "Pacifidlog Town",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 24
+    },
+    {
+      "zone": 254,
+      "name": "Pacifidlog Town",
+      "mapArea": 121,
+      "mapMatrix": 184,
+      "grIds": [
+        526
+      ],
+      "textFile": 23
+    },
+    {
+      "zone": 255,
+      "name": "Pacifidlog Town",
+      "mapArea": 121,
+      "mapMatrix": 185,
+      "grIds": [
+        527
+      ],
+      "textFile": 22
+    },
+    {
+      "zone": 256,
+      "name": "Pacifidlog Town",
+      "mapArea": 121,
+      "mapMatrix": 186,
+      "grIds": [
+        528
+      ],
+      "textFile": 21
+    },
+    {
+      "zone": 257,
+      "name": "Pacifidlog Town",
+      "mapArea": 121,
+      "mapMatrix": 187,
+      "grIds": [
+        529
+      ],
+      "textFile": 20
+    },
+    {
+      "zone": 258,
+      "name": "Pacifidlog Town",
+      "mapArea": 121,
+      "mapMatrix": 188,
+      "grIds": [
+        530
+      ],
+      "textFile": 19
+    },
+    {
+      "zone": 259,
+      "name": "Petalburg City",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 606
+    },
+    {
+      "zone": 260,
+      "name": "Petalburg City",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 617
+    },
+    {
+      "zone": 261,
+      "name": "Petalburg City",
+      "mapArea": 122,
+      "mapMatrix": 189,
+      "grIds": [
+        531
+      ],
+      "textFile": 605
+    },
+    {
+      "zone": 262,
+      "name": "Petalburg City",
+      "mapArea": 122,
+      "mapMatrix": 190,
+      "grIds": [
+        532
+      ],
+      "textFile": 604
+    },
+    {
+      "zone": 263,
+      "name": "Petalburg City",
+      "mapArea": 123,
+      "mapMatrix": 191,
+      "grIds": [
+        533
+      ],
+      "textFile": 603
+    },
+    {
+      "zone": 264,
+      "name": "Petalburg City",
+      "mapArea": 123,
+      "mapMatrix": 192,
+      "grIds": [
+        534
+      ],
+      "textFile": 602
+    },
+    {
+      "zone": 265,
+      "name": "Slateport City",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 599
+    },
+    {
+      "zone": 266,
+      "name": "Slateport City",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 600
+    },
+    {
+      "zone": 267,
+      "name": "Slateport City",
+      "mapArea": 124,
+      "mapMatrix": 193,
+      "grIds": [
+        535,
+        536
+      ],
+      "textFile": 598
+    },
+    {
+      "zone": 268,
+      "name": "Slateport City",
+      "mapArea": 124,
+      "mapMatrix": 194,
+      "grIds": [
+        537
+      ],
+      "textFile": 597
+    },
+    {
+      "zone": 269,
+      "name": "Slateport City",
+      "mapArea": 179,
+      "mapMatrix": 358,
+      "grIds": [
+        755
+      ],
+      "textFile": 596
+    },
+    {
+      "zone": 270,
+      "name": "Slateport City",
+      "mapArea": 179,
+      "mapMatrix": 359,
+      "grIds": [
+        756
+      ],
+      "textFile": 595
+    },
+    {
+      "zone": 271,
+      "name": "Slateport City",
+      "mapArea": 128,
+      "mapMatrix": 195,
+      "grIds": [
+        538
+      ],
+      "textFile": 593
+    },
+    {
+      "zone": 272,
+      "name": "Slateport City",
+      "mapArea": 128,
+      "mapMatrix": 196,
+      "grIds": [
+        539
+      ],
+      "textFile": 592
+    },
+    {
+      "zone": 273,
+      "name": "Slateport City",
+      "mapArea": 125,
+      "mapMatrix": 197,
+      "grIds": [
+        540
+      ],
+      "textFile": 591
+    },
+    {
+      "zone": 274,
+      "name": "Slateport City",
+      "mapArea": 125,
+      "mapMatrix": 198,
+      "grIds": [
+        541
+      ],
+      "textFile": 590
+    },
+    {
+      "zone": 275,
+      "name": "Slateport City",
+      "mapArea": 126,
+      "mapMatrix": 199,
+      "grIds": [
+        542,
+        543
+      ],
+      "textFile": 589
+    },
+    {
+      "zone": 276,
+      "name": "Slateport City",
+      "mapArea": 128,
+      "mapMatrix": 200,
+      "grIds": [
+        544
+      ],
+      "textFile": 588
+    },
+    {
+      "zone": 277,
+      "name": "Slateport City",
+      "mapArea": 127,
+      "mapMatrix": 201,
+      "grIds": [
+        545
+      ],
+      "textFile": 587
+    },
+    {
+      "zone": 278,
+      "name": "Mauville City",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 580
+    },
+    {
+      "zone": 279,
+      "name": "Mauville City",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 582
+    },
+    {
+      "zone": 280,
+      "name": "Mauville City",
+      "mapArea": 129,
+      "mapMatrix": 202,
+      "grIds": [
+        546
+      ],
+      "textFile": 579
+    },
+    {
+      "zone": 281,
+      "name": "Mauville City",
+      "mapArea": 130,
+      "mapMatrix": 203,
+      "grIds": [
+        547
+      ],
+      "textFile": 578
+    },
+    {
+      "zone": 282,
+      "name": "Mauville City",
+      "mapArea": 131,
+      "mapMatrix": 204,
+      "grIds": [
+        548
+      ],
+      "textFile": 577
+    },
+    {
+      "zone": 283,
+      "name": "Mauville City",
+      "mapArea": 131,
+      "mapMatrix": 205,
+      "grIds": [
+        549
+      ],
+      "textFile": 576
+    },
+    {
+      "zone": 284,
+      "name": "Rustboro City",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 562
+    },
+    {
+      "zone": 285,
+      "name": "Rustboro City",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 564
+    },
+    {
+      "zone": 286,
+      "name": "Rustboro City",
+      "mapArea": 132,
+      "mapMatrix": 206,
+      "grIds": [
+        550
+      ],
+      "textFile": 561
+    },
+    {
+      "zone": 287,
+      "name": "Rustboro City",
+      "mapArea": 132,
+      "mapMatrix": 207,
+      "grIds": [
+        551
+      ],
+      "textFile": 560
+    },
+    {
+      "zone": 288,
+      "name": "Rustboro City",
+      "mapArea": 132,
+      "mapMatrix": 208,
+      "grIds": [
+        552
+      ],
+      "textFile": 559
+    },
+    {
+      "zone": 289,
+      "name": "Rustboro City",
+      "mapArea": 133,
+      "mapMatrix": 209,
+      "grIds": [
+        553
+      ],
+      "textFile": 558
+    },
+    {
+      "zone": 290,
+      "name": "Rustboro City",
+      "mapArea": 135,
+      "mapMatrix": 210,
+      "grIds": [
+        554
+      ],
+      "textFile": 557
+    },
+    {
+      "zone": 291,
+      "name": "Rustboro City",
+      "mapArea": 135,
+      "mapMatrix": 211,
+      "grIds": [
+        555
+      ],
+      "textFile": 556
+    },
+    {
+      "zone": 292,
+      "name": "Rustboro City",
+      "mapArea": 135,
+      "mapMatrix": 212,
+      "grIds": [
+        556
+      ],
+      "textFile": 555
+    },
+    {
+      "zone": 293,
+      "name": "Rustboro City",
+      "mapArea": 135,
+      "mapMatrix": 213,
+      "grIds": [
+        557
+      ],
+      "textFile": 554
+    },
+    {
+      "zone": 294,
+      "name": "Rustboro City",
+      "mapArea": 135,
+      "mapMatrix": 214,
+      "grIds": [
+        558
+      ],
+      "textFile": 553
+    },
+    {
+      "zone": 295,
+      "name": "Rustboro City",
+      "mapArea": 135,
+      "mapMatrix": 215,
+      "grIds": [
+        559
+      ],
+      "textFile": 552
+    },
+    {
+      "zone": 296,
+      "name": "Rustboro City",
+      "mapArea": 135,
+      "mapMatrix": 216,
+      "grIds": [
+        560
+      ],
+      "textFile": 551
+    },
+    {
+      "zone": 297,
+      "name": "Rustboro City",
+      "mapArea": 134,
+      "mapMatrix": 217,
+      "grIds": [
+        561
+      ],
+      "textFile": 548
+    },
+    {
+      "zone": 298,
+      "name": "Rustboro City",
+      "mapArea": 134,
+      "mapMatrix": 218,
+      "grIds": [
+        562
+      ],
+      "textFile": 547
+    },
+    {
+      "zone": 299,
+      "name": "Rustboro City",
+      "mapArea": 134,
+      "mapMatrix": 219,
+      "grIds": [
+        563
+      ],
+      "textFile": 546
+    },
+    {
+      "zone": 300,
+      "name": "Rustboro City",
+      "mapArea": 135,
+      "mapMatrix": 220,
+      "grIds": [
+        564
+      ],
+      "textFile": 545
+    },
+    {
+      "zone": 301,
+      "name": "Fortree City",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 541
+    },
+    {
+      "zone": 302,
+      "name": "Fortree City",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 543
+    },
+    {
+      "zone": 303,
+      "name": "Fortree City",
+      "mapArea": 136,
+      "mapMatrix": 221,
+      "grIds": [
+        565
+      ],
+      "textFile": 540
+    },
+    {
+      "zone": 304,
+      "name": "Fortree City",
+      "mapArea": 136,
+      "mapMatrix": 222,
+      "grIds": [
+        566
+      ],
+      "textFile": 539
+    },
+    {
+      "zone": 305,
+      "name": "Fortree City",
+      "mapArea": 136,
+      "mapMatrix": 223,
+      "grIds": [
+        567
+      ],
+      "textFile": 538
+    },
+    {
+      "zone": 306,
+      "name": "Fortree City",
+      "mapArea": 136,
+      "mapMatrix": 224,
+      "grIds": [
+        568
+      ],
+      "textFile": 537
+    },
+    {
+      "zone": 307,
+      "name": "Fortree City",
+      "mapArea": 136,
+      "mapMatrix": 225,
+      "grIds": [
+        569
+      ],
+      "textFile": 536
+    },
+    {
+      "zone": 308,
+      "name": "Fortree City",
+      "mapArea": 136,
+      "mapMatrix": 226,
+      "grIds": [
+        570
+      ],
+      "textFile": 535
+    },
+    {
+      "zone": 309,
+      "name": "Lilycove City",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 532
+    },
+    {
+      "zone": 310,
+      "name": "Lilycove City",
+      "mapArea": 137,
+      "mapMatrix": 227,
+      "grIds": [
+        571
+      ],
+      "textFile": 531
+    },
+    {
+      "zone": 311,
+      "name": "Lilycove City",
+      "mapArea": 137,
+      "mapMatrix": 228,
+      "grIds": [
+        572
+      ],
+      "textFile": 530
+    },
+    {
+      "zone": 312,
+      "name": "Lilycove City",
+      "mapArea": 138,
+      "mapMatrix": 229,
+      "grIds": [
+        573
+      ],
+      "textFile": 529
+    },
+    {
+      "zone": 313,
+      "name": "Lilycove City",
+      "mapArea": 138,
+      "mapMatrix": 230,
+      "grIds": [
+        574
+      ],
+      "textFile": 528
+    },
+    {
+      "zone": 314,
+      "name": "Lilycove City",
+      "mapArea": 179,
+      "mapMatrix": 358,
+      "grIds": [
+        755
+      ],
+      "textFile": 527
+    },
+    {
+      "zone": 315,
+      "name": "Lilycove City",
+      "mapArea": 179,
+      "mapMatrix": 359,
+      "grIds": [
+        756
+      ],
+      "textFile": 526
+    },
+    {
+      "zone": 316,
+      "name": "Lilycove City",
+      "mapArea": 142,
+      "mapMatrix": 231,
+      "grIds": [
+        575
+      ],
+      "textFile": 524
+    },
+    {
+      "zone": 317,
+      "name": "Lilycove City",
+      "mapArea": 139,
+      "mapMatrix": 232,
+      "grIds": [
+        576,
+        577
+      ],
+      "textFile": 523
+    },
+    {
+      "zone": 318,
+      "name": "Lilycove City",
+      "mapArea": 143,
+      "mapMatrix": 233,
+      "grIds": [
+        578
+      ],
+      "textFile": 522
+    },
+    {
+      "zone": 319,
+      "name": "Lilycove City",
+      "mapArea": 143,
+      "mapMatrix": 234,
+      "grIds": [
+        579
+      ],
+      "textFile": 521
+    },
+    {
+      "zone": 320,
+      "name": "Lilycove City",
+      "mapArea": 143,
+      "mapMatrix": 235,
+      "grIds": [
+        580
+      ],
+      "textFile": 520
+    },
+    {
+      "zone": 321,
+      "name": "Lilycove City",
+      "mapArea": 143,
+      "mapMatrix": 236,
+      "grIds": [
+        581
+      ],
+      "textFile": 519
+    },
+    {
+      "zone": 322,
+      "name": "Lilycove City",
+      "mapArea": 143,
+      "mapMatrix": 237,
+      "grIds": [
+        582
+      ],
+      "textFile": 518
+    },
+    {
+      "zone": 323,
+      "name": "Lilycove City",
+      "mapArea": 140,
+      "mapMatrix": 238,
+      "grIds": [
+        583
+      ],
+      "textFile": 517
+    },
+    {
+      "zone": 324,
+      "name": "Lilycove City",
+      "mapArea": 140,
+      "mapMatrix": 239,
+      "grIds": [
+        584
+      ],
+      "textFile": 516
+    },
+    {
+      "zone": 325,
+      "name": "Lilycove City",
+      "mapArea": 140,
+      "mapMatrix": 240,
+      "grIds": [
+        585
+      ],
+      "textFile": 515
+    },
+    {
+      "zone": 326,
+      "name": "Lilycove City",
+      "mapArea": 140,
+      "mapMatrix": 241,
+      "grIds": [
+        586
+      ],
+      "textFile": 514
+    },
+    {
+      "zone": 327,
+      "name": "Lilycove City",
+      "mapArea": 140,
+      "mapMatrix": 242,
+      "grIds": [
+        587
+      ],
+      "textFile": 513
+    },
+    {
+      "zone": 328,
+      "name": "Lilycove City",
+      "mapArea": 141,
+      "mapMatrix": 243,
+      "grIds": [
+        588
+      ],
+      "textFile": 512
+    },
+    {
+      "zone": 329,
+      "name": "Lilycove City",
+      "mapArea": 141,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 510
+    },
+    {
+      "zone": 330,
+      "name": "Mossdeep City",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 506
+    },
+    {
+      "zone": 331,
+      "name": "Mossdeep City",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 508
+    },
+    {
+      "zone": 332,
+      "name": "Mossdeep City",
+      "mapArea": 147,
+      "mapMatrix": 244,
+      "grIds": [
+        589
+      ],
+      "textFile": 505
+    },
+    {
+      "zone": 333,
+      "name": "Mossdeep City",
+      "mapArea": 147,
+      "mapMatrix": 245,
+      "grIds": [
+        590
+      ],
+      "textFile": 504
+    },
+    {
+      "zone": 334,
+      "name": "Mossdeep City",
+      "mapArea": 147,
+      "mapMatrix": 246,
+      "grIds": [
+        591
+      ],
+      "textFile": 503
+    },
+    {
+      "zone": 335,
+      "name": "Mossdeep City",
+      "mapArea": 144,
+      "mapMatrix": 247,
+      "grIds": [
+        592
+      ],
+      "textFile": 502
+    },
+    {
+      "zone": 336,
+      "name": "Mossdeep City",
+      "mapArea": 147,
+      "mapMatrix": 248,
+      "grIds": [
+        593
+      ],
+      "textFile": 501
+    },
+    {
+      "zone": 337,
+      "name": "Mossdeep City",
+      "mapArea": 145,
+      "mapMatrix": 249,
+      "grIds": [
+        594
+      ],
+      "textFile": 500
+    },
+    {
+      "zone": 338,
+      "name": "Mossdeep City",
+      "mapArea": 213,
+      "mapMatrix": 250,
+      "grIds": [
+        595
+      ],
+      "textFile": 499
+    },
+    {
+      "zone": 339,
+      "name": "Mossdeep City",
+      "mapArea": 146,
+      "mapMatrix": 251,
+      "grIds": [
+        596
+      ],
+      "textFile": 498
+    },
+    {
+      "zone": 340,
+      "name": "Mossdeep City",
+      "mapArea": 146,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 497
+    },
+    {
+      "zone": 341,
+      "name": "Sootopolis City",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 488
+    },
+    {
+      "zone": 342,
+      "name": "Sootopolis City",
+      "mapArea": 110,
+      "mapMatrix": 170,
+      "grIds": [
+        512
+      ],
+      "textFile": 490
+    },
+    {
+      "zone": 343,
+      "name": "Sootopolis City",
+      "mapArea": 148,
+      "mapMatrix": 253,
+      "grIds": [
+        598
+      ],
+      "textFile": 487
+    },
+    {
+      "zone": 344,
+      "name": "Sootopolis City",
+      "mapArea": 148,
+      "mapMatrix": 254,
+      "grIds": [
+        599
+      ],
+      "textFile": 486
+    },
+    {
+      "zone": 345,
+      "name": "Sootopolis City",
+      "mapArea": 148,
+      "mapMatrix": 255,
+      "grIds": [
+        600
+      ],
+      "textFile": 485
+    },
+    {
+      "zone": 346,
+      "name": "Sootopolis City",
+      "mapArea": 148,
+      "mapMatrix": 256,
+      "grIds": [
+        601
+      ],
+      "textFile": 484
+    },
+    {
+      "zone": 347,
+      "name": "Sootopolis City",
+      "mapArea": 148,
+      "mapMatrix": 257,
+      "grIds": [
+        602
+      ],
+      "textFile": 483
+    },
+    {
+      "zone": 348,
+      "name": "Sootopolis City",
+      "mapArea": 148,
+      "mapMatrix": 258,
+      "grIds": [
+        603
+      ],
+      "textFile": 482
+    },
+    {
+      "zone": 349,
+      "name": "Sootopolis City",
+      "mapArea": 148,
+      "mapMatrix": 259,
+      "grIds": [
+        604
+      ],
+      "textFile": 481
+    },
+    {
+      "zone": 350,
+      "name": "Sootopolis City",
+      "mapArea": 148,
+      "mapMatrix": 260,
+      "grIds": [
+        605
+      ],
+      "textFile": 480
+    },
+    {
+      "zone": 351,
+      "name": "Sootopolis City",
+      "mapArea": 148,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 479
+    },
+    {
+      "zone": 352,
+      "name": "Sootopolis City",
+      "mapArea": 148,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 478
+    },
+    {
+      "zone": 353,
+      "name": "Ever Grande City",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 475
+    },
+    {
+      "zone": 354,
+      "name": "Pokémon League",
+      "mapArea": 149,
+      "mapMatrix": 261,
+      "grIds": [
+        606
+      ],
+      "textFile": 474
+    },
+    {
+      "zone": 355,
+      "name": "Pokémon League",
+      "mapArea": 150,
+      "mapMatrix": 262,
+      "grIds": [
+        607
+      ],
+      "textFile": 473
+    },
+    {
+      "zone": 356,
+      "name": "Pokémon League",
+      "mapArea": 151,
+      "mapMatrix": 263,
+      "grIds": [
+        608
+      ],
+      "textFile": 472
+    },
+    {
+      "zone": 357,
+      "name": "Pokémon League",
+      "mapArea": 152,
+      "mapMatrix": 264,
+      "grIds": [
+        609
+      ],
+      "textFile": 471
+    },
+    {
+      "zone": 358,
+      "name": "Pokémon League",
+      "mapArea": 153,
+      "mapMatrix": 265,
+      "grIds": [
+        610
+      ],
+      "textFile": 470
+    },
+    {
+      "zone": 359,
+      "name": "Pokémon League",
+      "mapArea": 154,
+      "mapMatrix": 266,
+      "grIds": [
+        611,
+        612
+      ],
+      "textFile": 469
+    },
+    {
+      "zone": 360,
+      "name": "Pokémon League",
+      "mapArea": 155,
+      "mapMatrix": 267,
+      "grIds": [
+        613,
+        614
+      ],
+      "textFile": 468
+    },
+    {
+      "zone": 361,
+      "name": "Pokémon League",
+      "mapArea": 156,
+      "mapMatrix": 268,
+      "grIds": [
+        615,
+        616
+      ],
+      "textFile": 467
+    },
+    {
+      "zone": 362,
+      "name": "Pokémon League",
+      "mapArea": 157,
+      "mapMatrix": 269,
+      "grIds": [
+        617,
+        618
+      ],
+      "textFile": 466
+    },
+    {
+      "zone": 363,
+      "name": "Pokémon League",
+      "mapArea": 158,
+      "mapMatrix": 270,
+      "grIds": [
+        619,
+        620
+      ],
+      "textFile": 465
+    },
+    {
+      "zone": 364,
+      "name": "Pokémon League",
+      "mapArea": 159,
+      "mapMatrix": 271,
+      "grIds": [
+        621
+      ],
+      "textFile": 464
+    },
+    {
+      "zone": 365,
+      "name": "Pokémon League",
+      "mapArea": 160,
+      "mapMatrix": 272,
+      "grIds": [
+        622
+      ],
+      "textFile": 463
+    },
+    {
+      "zone": 366,
+      "name": "Route 104",
+      "mapArea": 161,
+      "mapMatrix": 273,
+      "grIds": [
+        623
+      ],
+      "textFile": 221
+    },
+    {
+      "zone": 367,
+      "name": "Route 104",
+      "mapArea": 162,
+      "mapMatrix": 274,
+      "grIds": [
+        624
+      ],
+      "textFile": 219
+    },
+    {
+      "zone": 368,
+      "name": "Route 109",
+      "mapArea": 163,
+      "mapMatrix": 275,
+      "grIds": [
+        625
+      ],
+      "textFile": 212
+    },
+    {
+      "zone": 369,
+      "name": "Route 110",
+      "mapArea": 164,
+      "mapMatrix": 276,
+      "grIds": [
+        626
+      ],
+      "textFile": 197
+    },
+    {
+      "zone": 370,
+      "name": "Route 110",
+      "mapArea": 164,
+      "mapMatrix": 277,
+      "grIds": [
+        627
+      ],
+      "textFile": 196
+    },
+    {
+      "zone": 371,
+      "name": "Route 110",
+      "mapArea": 165,
+      "mapMatrix": 278,
+      "grIds": [
+        628
+      ],
+      "textFile": 208
+    },
+    {
+      "zone": 372,
+      "name": "Route 110",
+      "mapArea": 165,
+      "mapMatrix": 279,
+      "grIds": [
+        629
+      ],
+      "textFile": 207
+    },
+    {
+      "zone": 373,
+      "name": "Route 110",
+      "mapArea": 223,
+      "mapMatrix": 280,
+      "grIds": [
+        630
+      ],
+      "textFile": 206
+    },
+    {
+      "zone": 374,
+      "name": "Route 110",
+      "mapArea": 223,
+      "mapMatrix": 281,
+      "grIds": [
+        631
+      ],
+      "textFile": 205
+    },
+    {
+      "zone": 375,
+      "name": "Route 110",
+      "mapArea": 224,
+      "mapMatrix": 282,
+      "grIds": [
+        632
+      ],
+      "textFile": 204
+    },
+    {
+      "zone": 376,
+      "name": "Route 110",
+      "mapArea": 225,
+      "mapMatrix": 283,
+      "grIds": [
+        633
+      ],
+      "textFile": 203
+    },
+    {
+      "zone": 377,
+      "name": "Route 110",
+      "mapArea": 224,
+      "mapMatrix": 284,
+      "grIds": [
+        634
+      ],
+      "textFile": 202
+    },
+    {
+      "zone": 378,
+      "name": "Route 110",
+      "mapArea": 226,
+      "mapMatrix": 285,
+      "grIds": [
+        635,
+        636
+      ],
+      "textFile": 201
+    },
+    {
+      "zone": 379,
+      "name": "Route 110",
+      "mapArea": 165,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 200
+    },
+    {
+      "zone": 380,
+      "name": "Route 110",
+      "mapArea": 165,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 199
+    },
+    {
+      "zone": 381,
+      "name": "Route 110",
+      "mapArea": 165,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 198
+    },
+    {
+      "zone": 382,
+      "name": "Route 111",
+      "mapArea": 166,
+      "mapMatrix": 286,
+      "grIds": [
+        637
+      ],
+      "textFile": 191
+    },
+    {
+      "zone": 383,
+      "name": "Route 111",
+      "mapArea": 167,
+      "mapMatrix": 287,
+      "grIds": [
+        638
+      ],
+      "textFile": 190
+    },
+    {
+      "zone": 384,
+      "name": "Route 112",
+      "mapArea": 168,
+      "mapMatrix": 288,
+      "grIds": [
+        639
+      ],
+      "textFile": 186
+    },
+    {
+      "zone": 385,
+      "name": "Route 112",
+      "mapArea": 168,
+      "mapMatrix": 289,
+      "grIds": [
+        640
+      ],
+      "textFile": 185
+    },
+    {
+      "zone": 386,
+      "name": "Route 113",
+      "mapArea": 169,
+      "mapMatrix": 290,
+      "grIds": [
+        641
+      ],
+      "textFile": 183
+    },
+    {
+      "zone": 387,
+      "name": "Route 114",
+      "mapArea": 170,
+      "mapMatrix": 291,
+      "grIds": [
+        642
+      ],
+      "textFile": 181
+    },
+    {
+      "zone": 388,
+      "name": "Route 114",
+      "mapArea": 170,
+      "mapMatrix": 292,
+      "grIds": [
+        643
+      ],
+      "textFile": 180
+    },
+    {
+      "zone": 389,
+      "name": "Route 114",
+      "mapArea": 171,
+      "mapMatrix": 293,
+      "grIds": [
+        644
+      ],
+      "textFile": 179
+    },
+    {
+      "zone": 390,
+      "name": "Route 116",
+      "mapArea": 172,
+      "mapMatrix": 294,
+      "grIds": [
+        645
+      ],
+      "textFile": 176
+    },
+    {
+      "zone": 391,
+      "name": "Route 117",
+      "mapArea": 173,
+      "mapMatrix": 295,
+      "grIds": [
+        646
+      ],
+      "textFile": 174
+    },
+    {
+      "zone": 392,
+      "name": "Route 119",
+      "mapArea": 174,
+      "mapMatrix": 296,
+      "grIds": [
+        647
+      ],
+      "textFile": 169
+    },
+    {
+      "zone": 393,
+      "name": "Route 119",
+      "mapArea": 174,
+      "mapMatrix": 297,
+      "grIds": [
+        648
+      ],
+      "textFile": 168
+    },
+    {
+      "zone": 394,
+      "name": "Route 119",
+      "mapArea": 175,
+      "mapMatrix": 298,
+      "grIds": [
+        649
+      ],
+      "textFile": 167
+    },
+    {
+      "zone": 395,
+      "name": "Route 121",
+      "mapArea": 176,
+      "mapMatrix": 299,
+      "grIds": [
+        650
+      ],
+      "textFile": 162
+    },
+    {
+      "zone": 396,
+      "name": "Route 123",
+      "mapArea": 177,
+      "mapMatrix": 300,
+      "grIds": [
+        651
+      ],
+      "textFile": 159
+    },
+    {
+      "zone": 397,
+      "name": "Route 124",
+      "mapArea": 178,
+      "mapMatrix": 301,
+      "grIds": [
+        652
+      ],
+      "textFile": 152
+    },
+    {
+      "zone": 398,
+      "name": "Safari Zone",
+      "mapArea": 179,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 135
+    },
+    {
+      "zone": 399,
+      "name": "???",
+      "mapArea": 180,
+      "mapMatrix": 302,
+      "grIds": [
+        653
+      ],
+      "textFile": 68
+    },
+    {
+      "zone": 400,
+      "name": "Secret Base",
+      "mapArea": 191,
+      "mapMatrix": 303,
+      "grIds": [
+        654
+      ],
+      "textFile": 124
+    },
+    {
+      "zone": 401,
+      "name": "Secret Base",
+      "mapArea": 192,
+      "mapMatrix": 304,
+      "grIds": [
+        655
+      ],
+      "textFile": 123
+    },
+    {
+      "zone": 402,
+      "name": "Secret Base",
+      "mapArea": 190,
+      "mapMatrix": 305,
+      "grIds": [
+        656
+      ],
+      "textFile": 122
+    },
+    {
+      "zone": 403,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 306,
+      "grIds": [
+        657
+      ],
+      "textFile": 121
+    },
+    {
+      "zone": 404,
+      "name": "Secret Base",
+      "mapArea": 193,
+      "mapMatrix": 307,
+      "grIds": [
+        658
+      ],
+      "textFile": 120
+    },
+    {
+      "zone": 405,
+      "name": "Secret Base",
+      "mapArea": 192,
+      "mapMatrix": 308,
+      "grIds": [
+        659
+      ],
+      "textFile": 119
+    },
+    {
+      "zone": 406,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 309,
+      "grIds": [
+        660
+      ],
+      "textFile": 118
+    },
+    {
+      "zone": 407,
+      "name": "Secret Base",
+      "mapArea": 193,
+      "mapMatrix": 310,
+      "grIds": [
+        661
+      ],
+      "textFile": 117
+    },
+    {
+      "zone": 408,
+      "name": "Secret Base",
+      "mapArea": 190,
+      "mapMatrix": 311,
+      "grIds": [
+        662
+      ],
+      "textFile": 116
+    },
+    {
+      "zone": 409,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 312,
+      "grIds": [
+        663
+      ],
+      "textFile": 115
+    },
+    {
+      "zone": 410,
+      "name": "Secret Base",
+      "mapArea": 193,
+      "mapMatrix": 313,
+      "grIds": [
+        664
+      ],
+      "textFile": 114
+    },
+    {
+      "zone": 411,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 314,
+      "grIds": [
+        665
+      ],
+      "textFile": 113
+    },
+    {
+      "zone": 412,
+      "name": "Secret Base",
+      "mapArea": 192,
+      "mapMatrix": 315,
+      "grIds": [
+        666
+      ],
+      "textFile": 112
+    },
+    {
+      "zone": 413,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 316,
+      "grIds": [
+        667
+      ],
+      "textFile": 111
+    },
+    {
+      "zone": 414,
+      "name": "Secret Base",
+      "mapArea": 191,
+      "mapMatrix": 317,
+      "grIds": [
+        668
+      ],
+      "textFile": 110
+    },
+    {
+      "zone": 415,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 318,
+      "grIds": [
+        669
+      ],
+      "textFile": 109
+    },
+    {
+      "zone": 416,
+      "name": "Secret Base",
+      "mapArea": 189,
+      "mapMatrix": 319,
+      "grIds": [
+        670
+      ],
+      "textFile": 108
+    },
+    {
+      "zone": 417,
+      "name": "Secret Base",
+      "mapArea": 191,
+      "mapMatrix": 320,
+      "grIds": [
+        671
+      ],
+      "textFile": 107
+    },
+    {
+      "zone": 418,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 321,
+      "grIds": [
+        672
+      ],
+      "textFile": 106
+    },
+    {
+      "zone": 419,
+      "name": "Secret Base",
+      "mapArea": 189,
+      "mapMatrix": 322,
+      "grIds": [
+        673
+      ],
+      "textFile": 105
+    },
+    {
+      "zone": 420,
+      "name": "Secret Base",
+      "mapArea": 192,
+      "mapMatrix": 323,
+      "grIds": [
+        674
+      ],
+      "textFile": 104
+    },
+    {
+      "zone": 421,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 324,
+      "grIds": [
+        675
+      ],
+      "textFile": 103
+    },
+    {
+      "zone": 422,
+      "name": "Secret Base",
+      "mapArea": 189,
+      "mapMatrix": 325,
+      "grIds": [
+        676
+      ],
+      "textFile": 102
+    },
+    {
+      "zone": 423,
+      "name": "Secret Base",
+      "mapArea": 192,
+      "mapMatrix": 326,
+      "grIds": [
+        677
+      ],
+      "textFile": 101
+    },
+    {
+      "zone": 424,
+      "name": "Secret Base",
+      "mapArea": 192,
+      "mapMatrix": 327,
+      "grIds": [
+        678
+      ],
+      "textFile": 100
+    },
+    {
+      "zone": 425,
+      "name": "Secret Base",
+      "mapArea": 190,
+      "mapMatrix": 328,
+      "grIds": [
+        679
+      ],
+      "textFile": 99
+    },
+    {
+      "zone": 426,
+      "name": "Secret Base",
+      "mapArea": 191,
+      "mapMatrix": 329,
+      "grIds": [
+        680
+      ],
+      "textFile": 98
+    },
+    {
+      "zone": 427,
+      "name": "Secret Base",
+      "mapArea": 189,
+      "mapMatrix": 330,
+      "grIds": [
+        681
+      ],
+      "textFile": 97
+    },
+    {
+      "zone": 428,
+      "name": "Dewford Town",
+      "mapArea": 181,
+      "mapMatrix": 331,
+      "grIds": [
+        682,
+        683
+      ],
+      "textFile": 54
+    },
+    {
+      "zone": 429,
+      "name": "Lavaridge Town",
+      "mapArea": 182,
+      "mapMatrix": 332,
+      "grIds": [
+        684,
+        685,
+        686,
+        687,
+        688,
+        689
+      ],
+      "textFile": 47
+    },
+    {
+      "zone": 430,
+      "name": "Lavaridge Town",
+      "mapArea": 182,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 46
+    },
+    {
+      "zone": 431,
+      "name": "Petalburg City",
+      "mapArea": 183,
+      "mapMatrix": 333,
+      "grIds": [
+        690
+      ],
+      "textFile": 616
+    },
+    {
+      "zone": 432,
+      "name": "Petalburg City",
+      "mapArea": 183,
+      "mapMatrix": 334,
+      "grIds": [
+        691
+      ],
+      "textFile": 615
+    },
+    {
+      "zone": 433,
+      "name": "Petalburg City",
+      "mapArea": 183,
+      "mapMatrix": 335,
+      "grIds": [
+        692
+      ],
+      "textFile": 614
+    },
+    {
+      "zone": 434,
+      "name": "Petalburg City",
+      "mapArea": 183,
+      "mapMatrix": 336,
+      "grIds": [
+        693
+      ],
+      "textFile": 613
+    },
+    {
+      "zone": 435,
+      "name": "Petalburg City",
+      "mapArea": 183,
+      "mapMatrix": 337,
+      "grIds": [
+        694
+      ],
+      "textFile": 612
+    },
+    {
+      "zone": 436,
+      "name": "Petalburg City",
+      "mapArea": 183,
+      "mapMatrix": 338,
+      "grIds": [
+        695
+      ],
+      "textFile": 611
+    },
+    {
+      "zone": 437,
+      "name": "Petalburg City",
+      "mapArea": 183,
+      "mapMatrix": 339,
+      "grIds": [
+        696
+      ],
+      "textFile": 610
+    },
+    {
+      "zone": 438,
+      "name": "Petalburg City",
+      "mapArea": 183,
+      "mapMatrix": 340,
+      "grIds": [
+        697
+      ],
+      "textFile": 609
+    },
+    {
+      "zone": 439,
+      "name": "Petalburg City",
+      "mapArea": 183,
+      "mapMatrix": 341,
+      "grIds": [
+        698
+      ],
+      "textFile": 608
+    },
+    {
+      "zone": 440,
+      "name": "Mauville City",
+      "mapArea": 184,
+      "mapMatrix": 342,
+      "grIds": [
+        699,
+        700,
+        701,
+        702
+      ],
+      "textFile": 581
+    },
+    {
+      "zone": 441,
+      "name": "Rustboro City",
+      "mapArea": 185,
+      "mapMatrix": 343,
+      "grIds": [
+        703
+      ],
+      "textFile": 563
+    },
+    {
+      "zone": 442,
+      "name": "Fortree City",
+      "mapArea": 186,
+      "mapMatrix": 344,
+      "grIds": [
+        704
+      ],
+      "textFile": 542
+    },
+    {
+      "zone": 443,
+      "name": "Mossdeep City",
+      "mapArea": 187,
+      "mapMatrix": 345,
+      "grIds": [
+        705
+      ],
+      "textFile": 507
+    },
+    {
+      "zone": 444,
+      "name": "Sootopolis City",
+      "mapArea": 188,
+      "mapMatrix": 346,
+      "grIds": [
+        706,
+        707
+      ],
+      "textFile": 489
+    },
+    {
+      "zone": 445,
+      "name": "Mauville City",
+      "mapArea": 196,
+      "mapMatrix": 347,
+      "grIds": [
+        708,
+        709,
+        710,
+        711,
+        712,
+        713,
+        714,
+        715,
+        716,
+        717,
+        718,
+        719
+      ],
+      "textFile": 585
+    },
+    {
+      "zone": 446,
+      "name": "Mauville City",
+      "mapArea": 197,
+      "mapMatrix": 348,
+      "grIds": [
+        720,
+        721,
+        722,
+        723,
+        724,
+        725,
+        726,
+        727,
+        728,
+        729,
+        730,
+        731
+      ],
+      "textFile": 584
+    },
+    {
+      "zone": 447,
+      "name": "Mauville City",
+      "mapArea": 198,
+      "mapMatrix": 349,
+      "grIds": [
+        732,
+        733,
+        734,
+        735,
+        736,
+        737,
+        738,
+        739,
+        740
+      ],
+      "textFile": 583
+    },
+    {
+      "zone": 448,
+      "name": "Mauville City",
+      "mapArea": 199,
+      "mapMatrix": 350,
+      "grIds": [
+        741
+      ],
+      "textFile": 575
+    },
+    {
+      "zone": 449,
+      "name": "Mauville City",
+      "mapArea": 199,
+      "mapMatrix": 351,
+      "grIds": [
+        742
+      ],
+      "textFile": 574
+    },
+    {
+      "zone": 450,
+      "name": "Mauville City",
+      "mapArea": 200,
+      "mapMatrix": 352,
+      "grIds": [
+        743
+      ],
+      "textFile": 573
+    },
+    {
+      "zone": 451,
+      "name": "Mauville City",
+      "mapArea": 201,
+      "mapMatrix": 353,
+      "grIds": [
+        744
+      ],
+      "textFile": 572
+    },
+    {
+      "zone": 452,
+      "name": "Cave of Origin",
+      "mapArea": 60,
+      "mapMatrix": 354,
+      "grIds": [
+        745
+      ],
+      "textFile": 390
+    },
+    {
+      "zone": 453,
+      "name": "Mossdeep City",
+      "mapArea": 147,
+      "mapMatrix": 355,
+      "grIds": [
+        746
+      ],
+      "textFile": 496
+    },
+    {
+      "zone": 454,
+      "name": "Sootopolis City",
+      "mapArea": 202,
+      "mapMatrix": 356,
+      "grIds": [
+        747,
+        748,
+        749,
+        750
+      ],
+      "textFile": 493
+    },
+    {
+      "zone": 455,
+      "name": "Sootopolis City",
+      "mapArea": 203,
+      "mapMatrix": 357,
+      "grIds": [
+        751,
+        752,
+        753,
+        754
+      ],
+      "textFile": 492
+    },
+    {
+      "zone": 456,
+      "name": "Fallarbor Town",
+      "mapArea": 111,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 37
+    },
+    {
+      "zone": 457,
+      "name": "Verdanturf Town",
+      "mapArea": 111,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 29
+    },
+    {
+      "zone": 458,
+      "name": "Slateport City",
+      "mapArea": 111,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 594
+    },
+    {
+      "zone": 459,
+      "name": "Lilycove City",
+      "mapArea": 111,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 525
+    },
+    {
+      "zone": 460,
+      "name": "Mirage Mountain",
+      "mapArea": 85,
+      "mapMatrix": 360,
+      "grIds": [
+        757
+      ],
+      "textFile": 294
+    },
+    {
+      "zone": 461,
+      "name": "Mirage Mountain",
+      "mapArea": 87,
+      "mapMatrix": 361,
+      "grIds": [
+        758
+      ],
+      "textFile": 293
+    },
+    {
+      "zone": 462,
+      "name": "Mirage Mountain",
+      "mapArea": 85,
+      "mapMatrix": 362,
+      "grIds": [
+        759
+      ],
+      "textFile": 292
+    },
+    {
+      "zone": 463,
+      "name": "Mirage Mountain",
+      "mapArea": 85,
+      "mapMatrix": 363,
+      "grIds": [
+        760
+      ],
+      "textFile": 291
+    },
+    {
+      "zone": 464,
+      "name": "Mirage Mountain",
+      "mapArea": 85,
+      "mapMatrix": 364,
+      "grIds": [
+        761
+      ],
+      "textFile": 290
+    },
+    {
+      "zone": 465,
+      "name": "Mirage Mountain",
+      "mapArea": 85,
+      "mapMatrix": 365,
+      "grIds": [
+        762
+      ],
+      "textFile": 289
+    },
+    {
+      "zone": 466,
+      "name": "Mirage Mountain",
+      "mapArea": 85,
+      "mapMatrix": 366,
+      "grIds": [
+        763
+      ],
+      "textFile": 288
+    },
+    {
+      "zone": 467,
+      "name": "Crescent Isle",
+      "mapArea": 89,
+      "mapMatrix": 367,
+      "grIds": [
+        764
+      ],
+      "textFile": 287
+    },
+    {
+      "zone": 468,
+      "name": "Trackless Forest",
+      "mapArea": 90,
+      "mapMatrix": 368,
+      "grIds": [
+        765
+      ],
+      "textFile": 286
+    },
+    {
+      "zone": 469,
+      "name": "Pathless Plain",
+      "mapArea": 91,
+      "mapMatrix": 369,
+      "grIds": [
+        766
+      ],
+      "textFile": 285
+    },
+    {
+      "zone": 470,
+      "name": "Nameless Cavern",
+      "mapArea": 35,
+      "mapMatrix": 28,
+      "grIds": [
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245
+      ],
+      "textFile": 284
+    },
+    {
+      "zone": 471,
+      "name": "Fabled Cave",
+      "mapArea": 92,
+      "mapMatrix": 371,
+      "grIds": [
+        768
+      ],
+      "textFile": 282
+    },
+    {
+      "zone": 472,
+      "name": "Gnarled Den",
+      "mapArea": 93,
+      "mapMatrix": 372,
+      "grIds": [
+        769
+      ],
+      "textFile": 280
+    },
+    {
+      "zone": 473,
+      "name": "???",
+      "mapArea": 95,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 278
+    },
+    {
+      "zone": 474,
+      "name": "???",
+      "mapArea": 96,
+      "mapMatrix": 0,
+      "grIds": [
+        0
+      ],
+      "textFile": 277
+    },
+    {
+      "zone": 475,
+      "name": "Secret Meadow",
+      "mapArea": 84,
+      "mapMatrix": 373,
+      "grIds": [
+        770
+      ],
+      "textFile": 276
+    },
+    {
+      "zone": 476,
+      "name": "Route 123",
+      "mapArea": 177,
+      "mapMatrix": 374,
+      "grIds": [
+        771
+      ],
+      "textFile": 158
+    },
+    {
+      "zone": 477,
+      "name": "Route 123",
+      "mapArea": 204,
+      "mapMatrix": 427,
+      "grIds": [
+        839,
+        840,
+        841,
+        842
+      ],
+      "textFile": 157
+    },
+    {
+      "zone": 478,
+      "name": "S.S. Tidal",
+      "mapArea": 211,
+      "mapMatrix": 375,
+      "grIds": [
+        772
+      ],
+      "textFile": 69
+    },
+    {
+      "zone": 479,
+      "name": "Secret Base",
+      "mapArea": 193,
+      "mapMatrix": 376,
+      "grIds": [
+        773
+      ],
+      "textFile": 96
+    },
+    {
+      "zone": 480,
+      "name": "Secret Base",
+      "mapArea": 191,
+      "mapMatrix": 377,
+      "grIds": [
+        774
+      ],
+      "textFile": 95
+    },
+    {
+      "zone": 481,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 378,
+      "grIds": [
+        775
+      ],
+      "textFile": 94
+    },
+    {
+      "zone": 482,
+      "name": "Secret Base",
+      "mapArea": 189,
+      "mapMatrix": 379,
+      "grIds": [
+        776
+      ],
+      "textFile": 93
+    },
+    {
+      "zone": 483,
+      "name": "Secret Base",
+      "mapArea": 193,
+      "mapMatrix": 380,
+      "grIds": [
+        777
+      ],
+      "textFile": 92
+    },
+    {
+      "zone": 484,
+      "name": "Secret Base",
+      "mapArea": 193,
+      "mapMatrix": 381,
+      "grIds": [
+        778
+      ],
+      "textFile": 91
+    },
+    {
+      "zone": 485,
+      "name": "Secret Base",
+      "mapArea": 191,
+      "mapMatrix": 382,
+      "grIds": [
+        779
+      ],
+      "textFile": 90
+    },
+    {
+      "zone": 486,
+      "name": "Secret Base",
+      "mapArea": 193,
+      "mapMatrix": 383,
+      "grIds": [
+        780
+      ],
+      "textFile": 89
+    },
+    {
+      "zone": 487,
+      "name": "Secret Base",
+      "mapArea": 190,
+      "mapMatrix": 384,
+      "grIds": [
+        781
+      ],
+      "textFile": 88
+    },
+    {
+      "zone": 488,
+      "name": "Secret Base",
+      "mapArea": 189,
+      "mapMatrix": 385,
+      "grIds": [
+        782
+      ],
+      "textFile": 87
+    },
+    {
+      "zone": 489,
+      "name": "Secret Base",
+      "mapArea": 193,
+      "mapMatrix": 386,
+      "grIds": [
+        783
+      ],
+      "textFile": 86
+    },
+    {
+      "zone": 490,
+      "name": "Secret Base",
+      "mapArea": 192,
+      "mapMatrix": 387,
+      "grIds": [
+        784
+      ],
+      "textFile": 85
+    },
+    {
+      "zone": 491,
+      "name": "Secret Base",
+      "mapArea": 189,
+      "mapMatrix": 388,
+      "grIds": [
+        785
+      ],
+      "textFile": 84
+    },
+    {
+      "zone": 492,
+      "name": "Secret Base",
+      "mapArea": 193,
+      "mapMatrix": 389,
+      "grIds": [
+        786
+      ],
+      "textFile": 83
+    },
+    {
+      "zone": 493,
+      "name": "Secret Base",
+      "mapArea": 189,
+      "mapMatrix": 390,
+      "grIds": [
+        787
+      ],
+      "textFile": 82
+    },
+    {
+      "zone": 494,
+      "name": "Secret Base",
+      "mapArea": 192,
+      "mapMatrix": 391,
+      "grIds": [
+        788
+      ],
+      "textFile": 81
+    },
+    {
+      "zone": 495,
+      "name": "Secret Base",
+      "mapArea": 191,
+      "mapMatrix": 392,
+      "grIds": [
+        789
+      ],
+      "textFile": 80
+    },
+    {
+      "zone": 496,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 393,
+      "grIds": [
+        790
+      ],
+      "textFile": 79
+    },
+    {
+      "zone": 497,
+      "name": "Secret Base",
+      "mapArea": 189,
+      "mapMatrix": 394,
+      "grIds": [
+        791
+      ],
+      "textFile": 78
+    },
+    {
+      "zone": 498,
+      "name": "Secret Base",
+      "mapArea": 191,
+      "mapMatrix": 395,
+      "grIds": [
+        792
+      ],
+      "textFile": 77
+    },
+    {
+      "zone": 499,
+      "name": "Secret Base",
+      "mapArea": 194,
+      "mapMatrix": 396,
+      "grIds": [
+        793
+      ],
+      "textFile": 76
+    },
+    {
+      "zone": 500,
+      "name": "Secret Base",
+      "mapArea": 192,
+      "mapMatrix": 397,
+      "grIds": [
+        794
+      ],
+      "textFile": 75
+    },
+    {
+      "zone": 501,
+      "name": "Secret Base",
+      "mapArea": 191,
+      "mapMatrix": 398,
+      "grIds": [
+        795
+      ],
+      "textFile": 74
+    },
+    {
+      "zone": 502,
+      "name": "Secret Base",
+      "mapArea": 190,
+      "mapMatrix": 399,
+      "grIds": [
+        796
+      ],
+      "textFile": 73
+    },
+    {
+      "zone": 503,
+      "name": "Mauville City",
+      "mapArea": 131,
+      "mapMatrix": 400,
+      "grIds": [
+        797
+      ],
+      "textFile": 571
+    },
+    {
+      "zone": 504,
+      "name": "Mauville City",
+      "mapArea": 131,
+      "mapMatrix": 401,
+      "grIds": [
+        798
+      ],
+      "textFile": 570
+    },
+    {
+      "zone": 505,
+      "name": "Mauville City",
+      "mapArea": 131,
+      "mapMatrix": 402,
+      "grIds": [
+        799
+      ],
+      "textFile": 569
+    },
+    {
+      "zone": 506,
+      "name": "Mauville City",
+      "mapArea": 131,
+      "mapMatrix": 403,
+      "grIds": [
+        800
+      ],
+      "textFile": 568
+    },
+    {
+      "zone": 507,
+      "name": "Mauville City",
+      "mapArea": 131,
+      "mapMatrix": 404,
+      "grIds": [
+        801
+      ],
+      "textFile": 567
+    },
+    {
+      "zone": 508,
+      "name": "Mirage Cave",
+      "mapArea": 86,
+      "mapMatrix": 405,
+      "grIds": [
+        802
+      ],
+      "textFile": 318
+    },
+    {
+      "zone": 509,
+      "name": "Mirage Cave",
+      "mapArea": 86,
+      "mapMatrix": 406,
+      "grIds": [
+        803
+      ],
+      "textFile": 316
+    },
+    {
+      "zone": 510,
+      "name": "Mirage Cave",
+      "mapArea": 86,
+      "mapMatrix": 407,
+      "grIds": [
+        804
+      ],
+      "textFile": 314
+    },
+    {
+      "zone": 511,
+      "name": "Mirage Cave",
+      "mapArea": 86,
+      "mapMatrix": 408,
+      "grIds": [
+        805
+      ],
+      "textFile": 312
+    },
+    {
+      "zone": 512,
+      "name": "Mirage Cave",
+      "mapArea": 86,
+      "mapMatrix": 409,
+      "grIds": [
+        806
+      ],
+      "textFile": 310
+    },
+    {
+      "zone": 513,
+      "name": "Mirage Cave",
+      "mapArea": 86,
+      "mapMatrix": 410,
+      "grIds": [
+        807
+      ],
+      "textFile": 308
+    },
+    {
+      "zone": 514,
+      "name": "Mirage Cave",
+      "mapArea": 86,
+      "mapMatrix": 411,
+      "grIds": [
+        808
+      ],
+      "textFile": 306
+    },
+    {
+      "zone": 515,
+      "name": "Mirage Cave",
+      "mapArea": 86,
+      "mapMatrix": 412,
+      "grIds": [
+        809
+      ],
+      "textFile": 304
+    },
+    {
+      "zone": 516,
+      "name": "Battle Resort",
+      "mapArea": 214,
+      "mapMatrix": 414,
+      "grIds": [
+        817
+      ],
+      "textFile": 620
+    },
+    {
+      "zone": 517,
+      "name": "Battle Resort",
+      "mapArea": 214,
+      "mapMatrix": 415,
+      "grIds": [
+        818
+      ],
+      "textFile": 619
+    },
+    {
+      "zone": 518,
+      "name": "Battle Resort",
+      "mapArea": 108,
+      "mapMatrix": 169,
+      "grIds": [
+        511
+      ],
+      "textFile": 633
+    },
+    {
+      "zone": 519,
+      "name": "Battle Resort",
+      "mapArea": 173,
+      "mapMatrix": 416,
+      "grIds": [
+        819
+      ],
+      "textFile": 632
+    },
+    {
+      "zone": 520,
+      "name": "Battle Resort",
+      "mapArea": 215,
+      "mapMatrix": 417,
+      "grIds": [
+        820
+      ],
+      "textFile": 631
+    },
+    {
+      "zone": 521,
+      "name": "Battle Resort",
+      "mapArea": 215,
+      "mapMatrix": 418,
+      "grIds": [
+        821
+      ],
+      "textFile": 630
+    },
+    {
+      "zone": 522,
+      "name": "Battle Resort",
+      "mapArea": 215,
+      "mapMatrix": 419,
+      "grIds": [
+        822
+      ],
+      "textFile": 629
+    },
+    {
+      "zone": 523,
+      "name": "Battle Resort",
+      "mapArea": 215,
+      "mapMatrix": 420,
+      "grIds": [
+        823
+      ],
+      "textFile": 628
+    },
+    {
+      "zone": 524,
+      "name": "Battle Resort",
+      "mapArea": 215,
+      "mapMatrix": 421,
+      "grIds": [
+        824
+      ],
+      "textFile": 627
+    },
+    {
+      "zone": 525,
+      "name": "Lilycove City",
+      "mapArea": 141,
+      "mapMatrix": 422,
+      "grIds": [
+        825
+      ],
+      "textFile": 511
+    },
+    {
+      "zone": 526,
+      "name": "Nameless Cavern",
+      "mapArea": 94,
+      "mapMatrix": 423,
+      "grIds": [
+        826
+      ],
+      "textFile": 283
+    },
+    {
+      "zone": 527,
+      "name": "Fabled Cave",
+      "mapArea": 95,
+      "mapMatrix": 424,
+      "grIds": [
+        827
+      ],
+      "textFile": 281
+    },
+    {
+      "zone": 528,
+      "name": "Gnarled Den",
+      "mapArea": 96,
+      "mapMatrix": 425,
+      "grIds": [
+        828
+      ],
+      "textFile": 279
+    },
+    {
+      "zone": 529,
+      "name": "Route 123",
+      "mapArea": 204,
+      "mapMatrix": 427,
+      "grIds": [
+        839,
+        840,
+        841,
+        842
+      ],
+      "textFile": 156
+    },
+    {
+      "zone": 530,
+      "name": "Route 123",
+      "mapArea": 204,
+      "mapMatrix": 427,
+      "grIds": [
+        839,
+        840,
+        841,
+        842
+      ],
+      "textFile": 155
+    },
+    {
+      "zone": 531,
+      "name": "Route 123",
+      "mapArea": 204,
+      "mapMatrix": 427,
+      "grIds": [
+        839,
+        840,
+        841,
+        842
+      ],
+      "textFile": 154
+    },
+    {
+      "zone": 532,
+      "name": "Granite Cave",
+      "mapArea": 48,
+      "mapMatrix": 428,
+      "grIds": [
+        843
+      ],
+      "textFile": 433
+    },
+    {
+      "zone": 533,
+      "name": "Mt. Pyre",
+      "mapArea": 55,
+      "mapMatrix": 429,
+      "grIds": [
+        844,
+        845,
+        846,
+        847
+      ],
+      "textFile": 422
+    },
+    {
+      "zone": 534,
+      "name": "Sootopolis City",
+      "mapArea": 24,
+      "mapMatrix": 430,
+      "grIds": [
+        848,
+        849,
+        850,
+        851,
+        852,
+        853,
+        854,
+        855,
+        856
+      ],
+      "textFile": 491
+    },
+    {
+      "zone": 535,
+      "name": "Soaring in the sky",
+      "mapArea": 180,
+      "mapMatrix": 302,
+      "grIds": [
+        653
+      ],
+      "textFile": 127
+    }
+  ]
+}

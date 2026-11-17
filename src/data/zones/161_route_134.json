@@ -1,0 +1,49 @@
+{
+ "zone": 161,
+ "name": "Route 134",
+ "mapArea": 77,
+ "mapMatrix": 112,
+ "grIds": [
+  408,
+  409
+ ],
+ "textFile": 350,
+ "furniture": [
+  {
+   "script": 10660,
+   "x": 18,
+   "y": 66,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 10660,
+   "x": 19,
+   "y": 66,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 10660,
+   "x": 20,
+   "y": 66,
+   "wx": 1,
+   "wy": 1
+  }
+ ],
+ "npcs": [],
+ "warps": [],
+ "triggers": [
+  {
+   "script": 2,
+   "constant": 16394,
+   "x": 16,
+   "y": 5,
+   "width": 7,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 263,
+ "encounters": []
+}

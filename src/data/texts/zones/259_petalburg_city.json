@@ -1,0 +1,15 @@
+{
+ "zone": 259,
+ "name": "Petalburg City",
+ "textFile": 606,
+ "lines": [
+  "That PC-based Pokémon storage system...\nWhoever made it must be some kind of\nscientific wizard!",
+  "When I fed my Pokémon an Oran Berry, it regained HP!",
+  "There are many types of Pokémon.\nAll types have their strengths and\nweaknesses against other types.\nSome battles will be easier or harder\nbased on the types of your Pokémon.",
+  "For example, your Treecko is a Grass type.\nIt’s strong against Water and Ground types.\nBut it’s weak against Fire types.",
+  "For example, your Torchic is a Fire type.\nIt’s strong against Grass and Bug types.\nBut it’s weak against Water types.",
+  "For example, your Mudkip is a Water type.\nIt’s strong against Fire types.\nBut it’s weak against Grass and Electric types.",
+  "Hello there, Trainer!\nYou’ve got a wonderful smile.\nIf you can use the PlayNav on your PokéNav Plus,\nI recommend that you renew your profile!",
+  "Aha! Pokémon Journal\nSelect and drag the move buttons on the status\nscreen to swap the positions of the moves."
+ ]
+}

@@ -1,0 +1,183 @@
+{
+ "zone": 454,
+ "name": "Sootopolis City",
+ "mapArea": 202,
+ "mapMatrix": 356,
+ "grIds": [
+  747,
+  748,
+  749,
+  750
+ ],
+ "textFile": 493,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 201,
+   "movePermissions": 0,
+   "spawnFlag": 759,
+   "script": 9,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 42,
+   "y": 35,
+   "degrees": 36.0
+  },
+  {
+   "id": 1,
+   "model": 203,
+   "movePermissions": 0,
+   "spawnFlag": 760,
+   "script": 10,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 43,
+   "y": 36,
+   "degrees": 36.0
+  },
+  {
+   "id": 2,
+   "model": 182,
+   "movePermissions": 0,
+   "spawnFlag": 762,
+   "script": 6,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 42,
+   "y": 44,
+   "degrees": 36.0
+  },
+  {
+   "id": 3,
+   "model": 311,
+   "movePermissions": 0,
+   "spawnFlag": 758,
+   "script": 12,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 38,
+   "y": 33,
+   "degrees": 36.0
+  },
+  {
+   "id": 4,
+   "model": 311,
+   "movePermissions": 0,
+   "spawnFlag": 758,
+   "script": 13,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 44,
+   "y": 33,
+   "degrees": 36.0
+  },
+  {
+   "id": 5,
+   "model": 8253,
+   "movePermissions": 0,
+   "spawnFlag": 1079,
+   "script": 10250,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 66,
+   "y": 72,
+   "degrees": 18.0
+  },
+  {
+   "id": 6,
+   "model": 195,
+   "movePermissions": 0,
+   "spawnFlag": 763,
+   "script": 7,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 40,
+   "y": 45,
+   "degrees": 36.0
+  },
+  {
+   "id": 7,
+   "model": 196,
+   "movePermissions": 0,
+   "spawnFlag": 761,
+   "script": 8,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 40,
+   "y": 36,
+   "degrees": 36.0
+  },
+  {
+   "id": 8,
+   "model": 286,
+   "movePermissions": 0,
+   "spawnFlag": 757,
+   "script": 11,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 41,
+   "y": 35,
+   "degrees": 36.0
+  },
+  {
+   "id": 9,
+   "model": 122,
+   "movePermissions": 0,
+   "spawnFlag": 776,
+   "script": 5,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 41,
+   "y": 49,
+   "degrees": 36.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 20,
+   "destinationTile": 0,
+   "faceDirection": 3,
+   "transitionEffect": 3,
+   "x": 369,
+   "z": 27,
+   "y": 1089,
+   "width": 1,
+   "height": 3,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 112,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 25,
+   "x": 729,
+   "z": 36,
+   "y": 549,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [
+  {
+   "script": 3,
+   "constant": 16571,
+   "x": 30,
+   "y": 60,
+   "width": 1,
+   "height": 3
+  },
+  {
+   "script": 4,
+   "constant": 16554,
+   "x": 38,
+   "y": 37,
+   "width": 7,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 580,
+ "encounters": []
+}

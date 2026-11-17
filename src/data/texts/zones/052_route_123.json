@@ -1,0 +1,16 @@
+{
+ "zone": 52,
+ "name": "Route 123",
+ "textFile": 160,
+ "lines": [
+  "I love Grass-type Pokémon!\nHow about you?",
+  "Oh?\nYou also love Grass-type Pokémon, eh?\nI’m so happy that I want to give you this!\nIt’ll be a token of our friendship!",
+  "I check on the health of the trees around here\nwith my Grass-type Pokémon.\nI guess you could say I’m a tree doctor!",
+  "Oh...\nYou don’t travel with any\nGrass-type Pokémon...",
+  "→ Route 123\n← Route 118",
+  "↑ Mt. Pyre\nForbidden to the faint of heart.",
+  "Berry Master’s House",
+  "Hey, hey!\nFairy types are sure-enough cute,\nbut they can be strong, too!\nI bet you already knew that, eh?",
+  "There’s no Fairy-type Gym in Hoenn, eh?\nMaybe I’ll sure-enough go ahead and make one!\nBefore Miss Valerie even gets here!"
+ ]
+}

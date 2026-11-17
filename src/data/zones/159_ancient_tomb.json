@@ -1,0 +1,80 @@
+{
+ "zone": 159,
+ "name": "Ancient Tomb",
+ "mapArea": 76,
+ "mapMatrix": 110,
+ "grIds": [
+  405,
+  406
+ ],
+ "textFile": 352,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 4140,
+   "movePermissions": 0,
+   "spawnFlag": 1054,
+   "script": 1,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 60,
+   "y": 12,
+   "degrees": -9.0
+  },
+  {
+   "id": 1,
+   "model": 312,
+   "movePermissions": 0,
+   "spawnFlag": 503,
+   "script": 10681,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 12,
+   "y": 4,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 159,
+   "destinationTile": 2,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 225,
+   "z": 0,
+   "y": 81,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 49,
+   "destinationTile": 0,
+   "faceDirection": 0,
+   "transitionEffect": 5,
+   "x": 225,
+   "z": 0,
+   "y": 333,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 159,
+   "destinationTile": 0,
+   "faceDirection": 0,
+   "transitionEffect": 5,
+   "x": 1089,
+   "z": 0,
+   "y": 657,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 291,
+ "encounters": []
+}

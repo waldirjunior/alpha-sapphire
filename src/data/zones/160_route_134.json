@@ -1,0 +1,26 @@
+{
+ "zone": 160,
+ "name": "Route 134",
+ "mapArea": 77,
+ "mapMatrix": 111,
+ "grIds": [
+  407
+ ],
+ "textFile": 351,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [
+  {
+   "script": 2,
+   "constant": 16394,
+   "x": 16,
+   "y": 36,
+   "width": 7,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 263,
+ "encounters": []
+}

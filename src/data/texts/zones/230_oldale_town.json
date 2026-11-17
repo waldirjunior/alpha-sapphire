@@ -1,0 +1,8 @@
+{
+ "zone": 230,
+ "name": "Oldale Town",
+ "textFile": 57,
+ "lines": [
+  "When a Pokémon battle starts, the one\nat the top left of the list goes out first.\nTry switching around the order your\nPokémon are in, according to the situation.\nIt could give you an advantage."
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "zone": 301,
+ "name": "Fortree City",
+ "textFile": 541,
+ "lines": [
+  "Listen, kid, are you working on a Pokédex?\nHmm... Go to the Safari Zone on Route 121.\nThat’s my suggestion.",
+  "Did you know that you can do different stuff with\nQR Code patterns on the PC in a Secret Base?\nYou can create a QR Code for your Secret Base\nor find somebody’s Secret Base with a QR Code!",
+  "Hey, you’ve got a PokéNav Plus!\nOf course, you know how it works, right?",
+  "Great!\nDevon’s PokéNav Plus is the best, right?",
+  "Seriously? Well, all right.\nIf you select Trainer’s Eye on the AreaNav\non the PokéNav Plus, you can see\nTrainers who want to have a\nrematch with you.",
+  "Aha! Pokémon Journal\nTouch the place you want to fly to on the AreaNav.\nYou can instantly use Fly!"
+ ]
+}

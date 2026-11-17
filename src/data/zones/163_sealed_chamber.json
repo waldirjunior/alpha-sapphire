@@ -1,0 +1,83 @@
+{
+ "zone": 163,
+ "name": "Sealed Chamber",
+ "mapArea": 78,
+ "mapMatrix": 114,
+ "grIds": [
+  414,
+  415,
+  416,
+  417
+ ],
+ "textFile": 348,
+ "furniture": [
+  {
+   "script": 1,
+   "x": 41,
+   "y": 13,
+   "wx": 7,
+   "wy": 1
+  },
+  {
+   "script": 10673,
+   "x": 31,
+   "y": 34,
+   "wx": 3,
+   "wy": 1
+  },
+  {
+   "script": 10674,
+   "x": 55,
+   "y": 34,
+   "wx": 3,
+   "wy": 1
+  },
+  {
+   "script": 10675,
+   "x": 24,
+   "y": 49,
+   "wx": 3,
+   "wy": 1
+  },
+  {
+   "script": 10676,
+   "x": 62,
+   "y": 49,
+   "wx": 3,
+   "wy": 1
+  },
+  {
+   "script": 10677,
+   "x": 31,
+   "y": 64,
+   "wx": 3,
+   "wy": 1
+  },
+  {
+   "script": 10678,
+   "x": 55,
+   "y": 64,
+   "wx": 3,
+   "wy": 1
+  }
+ ],
+ "npcs": [],
+ "warps": [
+  {
+   "destinationMap": 162,
+   "destinationTile": 0,
+   "faceDirection": 0,
+   "transitionEffect": 5,
+   "x": 801,
+   "z": 0,
+   "y": 1305,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

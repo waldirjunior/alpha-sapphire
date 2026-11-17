@@ -1,0 +1,228 @@
+{
+ "zone": 155,
+ "name": "Sea Mauville",
+ "mapArea": 217,
+ "mapMatrix": 107,
+ "grIds": [
+  401
+ ],
+ "textFile": 356,
+ "furniture": [
+  {
+   "script": 4,
+   "x": 1,
+   "y": 22,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 5,
+   "x": 34,
+   "y": 22,
+   "wx": 2,
+   "wy": 1
+  },
+  {
+   "script": 6,
+   "x": 37,
+   "y": 22,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 7,
+   "x": 6,
+   "y": 1,
+   "wx": 2,
+   "wy": 1
+  },
+  {
+   "script": 8,
+   "x": 38,
+   "y": 22,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 9,
+   "x": 31,
+   "y": 1,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 10,
+   "x": 1,
+   "y": 4,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 11,
+   "x": 32,
+   "y": 1,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 12,
+   "x": 1,
+   "y": 5,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 13,
+   "x": 1,
+   "y": 8,
+   "wx": 3,
+   "wy": 2
+  },
+  {
+   "script": 14,
+   "x": 36,
+   "y": 9,
+   "wx": 3,
+   "wy": 2
+  },
+  {
+   "script": 15,
+   "x": 1,
+   "y": 29,
+   "wx": 3,
+   "wy": 2
+  },
+  {
+   "script": 16,
+   "x": 36,
+   "y": 29,
+   "wx": 3,
+   "wy": 2
+  },
+  {
+   "script": 17,
+   "x": 2,
+   "y": 0,
+   "wx": 3,
+   "wy": 1
+  },
+  {
+   "script": 17,
+   "x": 35,
+   "y": 0,
+   "wx": 3,
+   "wy": 1
+  },
+  {
+   "script": 18,
+   "x": 2,
+   "y": 22,
+   "wx": 1,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8192,
+   "movePermissions": 0,
+   "spawnFlag": 1427,
+   "script": 7121,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 4,
+   "y": 8,
+   "degrees": -67.0
+  },
+  {
+   "id": 1,
+   "model": 261,
+   "movePermissions": 13,
+   "spawnFlag": 0,
+   "script": 3,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 35,
+   "y": 24,
+   "degrees": -220.0
+  },
+  {
+   "id": 2,
+   "model": 8274,
+   "movePermissions": 0,
+   "spawnFlag": 922,
+   "script": 2000,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 1,
+   "y": 24,
+   "degrees": -211.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 146,
+   "destinationTile": 1,
+   "faceDirection": 2,
+   "transitionEffect": 2,
+   "x": 207,
+   "z": -22,
+   "y": 63,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 146,
+   "destinationTile": 3,
+   "faceDirection": 3,
+   "transitionEffect": 2,
+   "x": 513,
+   "z": -31,
+   "y": 63,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 146,
+   "destinationTile": 5,
+   "faceDirection": 3,
+   "transitionEffect": 2,
+   "x": 513,
+   "z": -220,
+   "y": 441,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 146,
+   "destinationTile": 6,
+   "faceDirection": 2,
+   "transitionEffect": 2,
+   "x": 207,
+   "z": -211,
+   "y": 441,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 145,
+   "destinationTile": 1,
+   "faceDirection": 2,
+   "transitionEffect": 5,
+   "x": 711,
+   "z": -40,
+   "y": 81,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 569,
+ "encounters": []
+}

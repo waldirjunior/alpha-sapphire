@@ -1,0 +1,17 @@
+{
+ "zone": 255,
+ "name": "Pacifidlog Town",
+ "textFile": 22,
+ "lines": [
+  "Er-hem!\nAllow me to introduce myself...\nThe Pokémon Fan Club’s most\nimportant person, the chairman...\n...is my older brother.\nI’m here enjoying my vacation with\nPokémon, yes indeed.",
+  "Ah!\nYour Pokémon...",
+  "It’s clearly very friendly toward you.\nA Pokémon that adoring and adorable\ndeserves a TM like this, no?",
+  "Hmm...\nIt’s not bad, but it’s also not good.\nYou, as the Trainer, need to put in\nsome more effort.",
+  "It has a vicious look to it.\nA frightening Pokémon like that\ndeserves a TM like this.",
+  "If a Pokémon is very friendly toward you,\nReturn’s power is enhanced.\nIf it’s not friendly, Frustration’s power\ngoes up.",
+  "Mariiii...",
+  "It appears to be very friendly\nwith its Trainer.",
+  "Rrrr-illll!",
+  "It doesn’t appear to be friendly\nwith its Trainer..."
+ ]
+}

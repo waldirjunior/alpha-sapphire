@@ -1,0 +1,17 @@
+{
+ "zone": 352,
+ "name": "Sootopolis City",
+ "mapArea": 148,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 478,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

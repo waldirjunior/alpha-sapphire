@@ -1,0 +1,17 @@
+{
+ "zone": 136,
+ "name": "Shoal Cave",
+ "mapArea": 72,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 376,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

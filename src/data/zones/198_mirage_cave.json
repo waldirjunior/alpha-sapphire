@@ -1,0 +1,55 @@
+{
+ "zone": 198,
+ "name": "Mirage Cave",
+ "mapArea": 87,
+ "mapMatrix": 144,
+ "grIds": [
+  460
+ ],
+ "textFile": 307,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8192,
+   "movePermissions": 0,
+   "spawnFlag": 1475,
+   "script": 7169,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 29,
+   "y": 20,
+   "degrees": 108.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 514,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5,
+   "x": 369,
+   "z": 0,
+   "y": 279,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  },
+  {
+   "destinationMap": 514,
+   "destinationTile": 1,
+   "faceDirection": 1,
+   "transitionEffect": 11,
+   "x": 531,
+   "z": 108,
+   "y": 243,
+   "width": 1,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

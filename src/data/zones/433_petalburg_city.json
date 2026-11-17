@@ -1,0 +1,54 @@
+{
+ "zone": 433,
+ "name": "Petalburg City",
+ "mapArea": 183,
+ "mapMatrix": 335,
+ "grIds": [
+  692
+ ],
+ "textFile": 614,
+ "furniture": [
+  {
+   "script": 3,
+   "x": 6,
+   "y": 3,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 4,
+   "x": 12,
+   "y": 3,
+   "wx": 1,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 330,
+   "movePermissions": 0,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 9,
+   "y": 6,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [],
+ "triggers": [
+  {
+   "script": 5,
+   "constant": 0,
+   "x": 5,
+   "y": 12,
+   "width": 3,
+   "height": 1
+  }
+ ],
+ "triggers2": [],
+ "scriptBytes": 358,
+ "encounters": []
+}

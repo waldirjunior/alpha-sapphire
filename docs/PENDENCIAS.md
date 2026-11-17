@@ -60,7 +60,8 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Estado:** aberta
 - **Data:** 2026-11-17
 - **Evidência:** `201` arquivos `.bcstm` e `sango_sound.bcsar` já foram extraídos em `rom/extracted/RomFS/sound/`, mas o motor web ainda é silencioso.
-- **Próximo passo:** Converter trilhas principais (Littleroot, Route 101, Batalha, Cura) para `.ogg`/`.mp3` e reproduzir via Web Audio API ([pipeline-rom/PRD-002](features/pipeline-rom/prds/PRD-002-extracao-audio-bcstm.md)).
+- **Progresso (2026-11-17):** os `199` `.bcstm` foram convertidos para `.mp3` em `rom/extracted/audio/mp3/` (`281 MB`) via `vgmstream-cli` + `ffmpeg`/`libmp3lame` no macOS (`A-008`). Resta reproduzir via Web Audio API e mapear trilha → zona.
+- **Próximo passo:** Reproduzir trilhas (Littleroot, Route 101, Batalha, Cura) via Web Audio API ([pipeline-rom/PRD-002](features/pipeline-rom/prds/PRD-002-extracao-audio-bcstm.md)).
 
 ## P-009 Interiores, eventos de história, itens e inventário ausentes
 
@@ -95,7 +96,8 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Estado:** aberta
 - **Data:** 2026-11-17
 - **Evidência:** A introdução (Birch + caminhão) e os primeiros interiores foram montados manualmente para o vertical slice inicial; faltam cutscenes com movimento coreografado de NPCs, resgate real do Prof. Birch escolhendo a Poké Ball da mochila no chão, entrega de Pokédex/Running Shoes, e todo o restante da campanha de Hoenn até a Liga Pokémon.
-- **Próximo passo:** Extrair e interpretar as tabelas de scripts/eventos de mapa da ROM em `src/data/` e criar um runner determinístico de cutscenes em `src/core/`.
+- **Progresso (2026-11-17):** [scripts/extract_zones.py](../scripts/extract_zones.py) extraiu entidades/warps/triggers/encontros das 536 zonas para `src/data/zones/*.json` (911 warps, 9150 entradas de encontro). Falta decodificar o blob de script ao final de `ZO sec1` e os scripts de evento (`a/0/2/9`).
+- **Próximo passo:** Interpretar o formato de script das zonas e criar um runner determinístico de cutscenes em `src/core/`.
 
 ## P-014 Cenários 3D reais de batalha, partículas de golpes e câmera dinâmica ORAS
 

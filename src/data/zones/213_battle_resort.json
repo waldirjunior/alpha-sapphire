@@ -1,0 +1,17 @@
+{
+ "zone": 213,
+ "name": "Battle Resort",
+ "mapArea": 102,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 623,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

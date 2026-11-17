@@ -1,0 +1,115 @@
+{
+ "zone": 226,
+ "name": "Littleroot Town",
+ "mapArea": 113,
+ "mapMatrix": 167,
+ "grIds": [
+  509
+ ],
+ "textFile": 62,
+ "furniture": [
+  {
+   "script": 10582,
+   "x": 13,
+   "y": 6,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 10594,
+   "x": 11,
+   "y": 6,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 10595,
+   "x": 15,
+   "y": 7,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 4,
+   "x": 7,
+   "y": 10,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 10593,
+   "x": 9,
+   "y": 10,
+   "wx": 1,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8267,
+   "movePermissions": 0,
+   "spawnFlag": 785,
+   "script": 5,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 17,
+   "y": 7,
+   "degrees": 18.0
+  },
+  {
+   "id": 1,
+   "model": 8269,
+   "movePermissions": 0,
+   "spawnFlag": 518,
+   "script": 6,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 7,
+   "y": 13,
+   "degrees": 0.0
+  },
+  {
+   "id": 2,
+   "model": 280,
+   "movePermissions": 0,
+   "spawnFlag": 611,
+   "script": 2000,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 7,
+   "y": 7,
+   "degrees": -36.0
+  },
+  {
+   "id": 3,
+   "model": 122,
+   "movePermissions": 0,
+   "spawnFlag": 609,
+   "script": 10589,
+   "faceDirection": 0,
+   "sightRange": 0,
+   "x": 15,
+   "y": 8,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 225,
+   "destinationTile": 1,
+   "faceDirection": 3,
+   "transitionEffect": 5,
+   "x": 171,
+   "z": -9,
+   "y": 135,
+   "width": 1,
+   "height": 2,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 194,
+ "encounters": []
+}

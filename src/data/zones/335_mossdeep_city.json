@@ -1,0 +1,124 @@
+{
+ "zone": 335,
+ "name": "Mossdeep City",
+ "mapArea": 144,
+ "mapMatrix": 247,
+ "grIds": [
+  592
+ ],
+ "textFile": 502,
+ "furniture": [
+  {
+   "script": 10,
+   "x": 8,
+   "y": 8,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 3,
+   "x": 4,
+   "y": 4,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 4,
+   "x": 15,
+   "y": 7,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 5,
+   "x": 15,
+   "y": 8,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 6,
+   "x": 15,
+   "y": 9,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 7,
+   "x": 15,
+   "y": 10,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 8,
+   "x": 15,
+   "y": 11,
+   "wx": 1,
+   "wy": 1
+  },
+  {
+   "script": 9,
+   "x": 9,
+   "y": 8,
+   "wx": 1,
+   "wy": 1
+  }
+ ],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 8192,
+   "movePermissions": 0,
+   "spawnFlag": 793,
+   "script": 2000,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 8,
+   "y": 8,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 182,
+   "movePermissions": 0,
+   "spawnFlag": 717,
+   "script": 2,
+   "faceDirection": 6,
+   "sightRange": 0,
+   "x": 11,
+   "y": 5,
+   "degrees": 0.0
+  },
+  {
+   "id": 2,
+   "model": 8283,
+   "movePermissions": 0,
+   "spawnFlag": 1035,
+   "script": 2000,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 9,
+   "y": 8,
+   "degrees": 0.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 19,
+   "destinationTile": 6,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 153,
+   "z": 0,
+   "y": 225,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 559,
+ "encounters": []
+}

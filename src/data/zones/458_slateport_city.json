@@ -1,0 +1,17 @@
+{
+ "zone": 458,
+ "name": "Slateport City",
+ "mapArea": 111,
+ "mapMatrix": 0,
+ "grIds": [
+  0
+ ],
+ "textFile": 594,
+ "furniture": [],
+ "npcs": [],
+ "warps": [],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

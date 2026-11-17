@@ -1,0 +1,13 @@
+{
+ "zone": 287,
+ "name": "Rustboro City",
+ "textFile": 560,
+ "lines": [
+  "We’re developing a device for talking\nwith Pokémon.\nBut we haven’t had much success...",
+  "I’m developing new kinds of\nPoké Balls...\nBut I haven’t made much headway...",
+  "We’ve finally made some\nnew kinds of Poké Balls!\nThe Repeat Ball makes it easier to\ncatch Pokémon you’ve caught before.\nThe Timer Ball gets better at catching\nPokémon the longer a battle runs.\nBoth are proudly developed by the\nDevon Corporation.\nPlease give them a try!",
+  "I made the PokéNav Plus!\nAs an engineer, I feel blessed to\nhave made something so great!",
+  "Wow! That’s a PokéNav Plus!\nIt’s a navigation system for connecting\npeople, Pokémon, and the world!\nThat was the idea of our president,\nand I made it a reality.\nWould you like me to describe\nits features in detail?\nNo, no. I think you’ll find out just by\ntrying the PokéNav Plus for yourself.",
+  "I’m trying to develop a device\nthat visually reproduces the dreams\nof Pokémon...\nAnd I’ve heard that my rival, who lives\nfar away, is doing the same research!\nI can’t lose this race."
+ ]
+}

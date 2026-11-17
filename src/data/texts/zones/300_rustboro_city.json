@@ -1,0 +1,10 @@
+{
+ "zone": 300,
+ "name": "Rustboro City",
+ "textFile": 545,
+ "lines": [
+  "That determined expression...\nThat limber way you move...\nAnd your well-trained Pokémon...\nYou’re obviously a skilled Trainer!\nNo, wait, don’t say a word.\nI can tell just by looking at you.\nI’m sure that you will be capable\nof putting this HM to good use.\nNo need to be modest or shy.\nGo on, take it!",
+  "Any Pokémon that’s learned Cut can\nchop down prickly trees if the Trainer\nhas earned the Stone Badge.\nHMs like this can be used outside\nof battle, too, with the right Badges!",
+  "My dad helped make Rustboro City\nwhat it is today.\nHe had his Pokémon use Cut to clear\nthe land of trees and expand the city."
+ ]
+}

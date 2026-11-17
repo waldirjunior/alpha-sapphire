@@ -1,0 +1,55 @@
+{
+ "zone": 239,
+ "name": "Lavaridge Town",
+ "mapArea": 117,
+ "mapMatrix": 178,
+ "grIds": [
+  520
+ ],
+ "textFile": 43,
+ "furniture": [],
+ "npcs": [
+  {
+   "id": 0,
+   "model": 4143,
+   "movePermissions": 47,
+   "spawnFlag": 0,
+   "script": 2,
+   "faceDirection": 1,
+   "sightRange": 0,
+   "x": 9,
+   "y": 9,
+   "degrees": 0.0
+  },
+  {
+   "id": 1,
+   "model": 338,
+   "movePermissions": 60,
+   "spawnFlag": 0,
+   "script": 1,
+   "faceDirection": 3,
+   "sightRange": 0,
+   "x": 10,
+   "y": 7,
+   "degrees": 9.0
+  }
+ ],
+ "warps": [
+  {
+   "destinationMap": 9,
+   "destinationTile": 6,
+   "faceDirection": 0,
+   "transitionEffect": 2,
+   "x": 117,
+   "z": 0,
+   "y": 207,
+   "width": 3,
+   "height": 1,
+   "directionality": 0
+  }
+ ],
+ "triggers": [],
+ "triggers2": [],
+ "scriptBytes": 178,
+ "encounters": []
+}

@@ -1,0 +1,8 @@
+{
+ "zone": 61,
+ "name": "Route 132",
+ "textFile": 144,
+ "lines": [
+  "Route 132\n→Pacifidlog Town\n←Route 133"
+ ]
+}
