@@ -1,6 +1,8 @@
 import type { WildEncounterEntry } from '../data/pokemon/route101';
+import { firstHealthyIndex, switchPlayerIn, validateParty, withPokemon, type BattleState } from './battleParty';
 import { restoreAtPokemonCenter, withdrawFromBattle, type PokemonInstance } from './battlePokemon';
-import { hasUsableMove, resolveTurn, type BattleState } from './battleTurn';
+import { hasUsableMove, resolveTurn } from './battleTurn';
+import { replaceMove } from './levelUp';
 import type { Rng } from './statusConditions';
 
 export {
@@ -10,10 +12,13 @@ export {
   type MajorStatusKind,
   type PokemonInstance,
 } from './battlePokemon';
-export type { BattleAction, BattleState, BattleStatus } from './battleTurn';
+export type { BattleAction, BattleState, BattleStatus, PendingMoveLearn } from './battleTurn';
 export { calculateDamage, getTypeEffectiveness } from './damage';
+export { gainExperience, replaceMove } from './levelUp';
 
 const ENCOUNTER_RATE = 0.2;
+
+type PartyInput = PokemonInstance | readonly PokemonInstance[];
 
 export function rollWildEncounter(
   table: WildEncounterEntry[],
@@ -37,30 +42,55 @@ export function rollWildEncounter(
   return fallback ? { speciesId: fallback.speciesId, level: fallback.minLevel } : null;
 }
 
-export function startWildBattle(player: PokemonInstance, enemy: PokemonInstance): BattleState {
+function isPartyList(input: PartyInput): input is readonly PokemonInstance[] {
+  return Array.isArray(input);
+}
+
+function toParty(input: PartyInput, owner: string): PokemonInstance[] {
+  const party = isPartyList(input) ? [...input] : [input];
+  validateParty(party, owner);
+  return party.map(withdrawFromBattle);
+}
+
+function leadIndex(party: readonly PokemonInstance[], owner: string): number {
+  const index = firstHealthyIndex(party);
+  if (index < 0) throw new Error(`Time de ${owner} não tem Pokémon de pé para iniciar a batalha.`);
+  return index;
+}
+
+function createBattle(playerInput: PartyInput, enemyInput: PartyInput, firstLine: (enemy: PokemonInstance) => string, trainerName?: string): BattleState {
+  const playerParty = toParty(playerInput, 'jogador');
+  const enemyParty = toParty(enemyInput, trainerName ?? 'selvagem');
+  const playerActive = leadIndex(playerParty, 'jogador');
+  const enemyActive = leadIndex(enemyParty, trainerName ?? 'selvagem');
+  const player = playerParty[playerActive] ?? playerParty[0];
+  const enemy = enemyParty[enemyActive] ?? enemyParty[0];
+  if (!player || !enemy) throw new Error('Batalha sem combatentes.');
   return {
-    player: withdrawFromBattle(player),
-    enemy: withdrawFromBattle(enemy),
+    player,
+    enemy,
+    playerParty,
+    enemyParty,
+    playerActive,
+    enemyActive,
+    participants: [playerActive],
+    pendingSwitch: false,
+    pendingMoves: [],
     turn: 1,
     status: 'ongoing',
-    log: [`Um ${enemy.species.name} selvagem (Lv.${enemy.level}) apareceu!`],
+    log: [firstLine(enemy)],
+    ...(trainerName ? { isTrainer: true, trainerName } : {}),
   };
 }
 
-export function startTrainerBattle(
-  player: PokemonInstance,
-  enemy: PokemonInstance,
-  trainerName: string
-): BattleState {
-  return {
-    player: withdrawFromBattle(player),
-    enemy: withdrawFromBattle(enemy),
-    turn: 1,
-    status: 'ongoing',
-    isTrainer: true,
-    trainerName,
-    log: [`${trainerName} desafiou você! Ele enviou ${enemy.species.name} (Lv.${enemy.level})!`],
-  };
+/** Aceita um Pokémon ou o time inteiro (até 6); o primeiro de pé entra em campo. */
+export function startWildBattle(player: PartyInput, enemy: PokemonInstance): BattleState {
+  return createBattle(player, enemy, (wild) => `Um ${wild.species.name} selvagem (Lv.${wild.level}) apareceu!`);
+}
+
+export function startTrainerBattle(player: PartyInput, enemy: PartyInput, trainerName: string): BattleState {
+  const intro = (lead: PokemonInstance) => `${trainerName} desafiou você! Ele enviou ${lead.species.name} (Lv.${lead.level})!`;
+  return createBattle(player, enemy, intro, trainerName);
 }
 
 export function runFromBattle(state: BattleState): BattleState {
@@ -83,22 +113,21 @@ export function healParty(party: PokemonInstance[]): PokemonInstance[] {
   return party.map(restoreAtPokemonCenter);
 }
 
-export function switchActivePokemon(
-  state: BattleState,
-  nextPokemon: PokemonInstance,
-  rng: Rng = Math.random
-): BattleState {
-  if (state.status !== 'ongoing' || nextPokemon.currentHp <= 0) return state;
-  const switched: BattleState = {
-    ...state,
-    player: withdrawFromBattle(nextPokemon),
-    log: [...state.log, `Vai, ${nextPokemon.species.name}!`],
-  };
+/** Atualiza o Pokémon ativo do jogador mantendo `playerParty` sincronizado (ex.: Potion). */
+export function updateActivePlayer(state: BattleState, pokemon: PokemonInstance): BattleState {
+  return withPokemon(state, 'player', pokemon);
+}
+
+/** Troca forçada (após desmaio) não dá turno ao inimigo; troca voluntária sim. */
+export function switchActivePokemon(state: BattleState, partyIndex: number, rng: Rng = Math.random): BattleState {
+  if (state.status !== 'ongoing') return state;
+  const switched = switchPlayerIn(state, partyIndex);
+  if (state.pendingSwitch) return { ...switched, pendingSwitch: false };
   return resolveTurn(switched, null, rng);
 }
 
 export function throwPokeball(state: BattleState, rng: Rng = Math.random): BattleState {
-  if (state.status !== 'ongoing') return state;
+  if (state.status !== 'ongoing' || state.pendingSwitch) return state;
   if (state.isTrainer) {
     return {
       ...state,
@@ -123,6 +152,9 @@ export function throwPokeball(state: BattleState, rng: Rng = Math.random): Battl
  */
 export function executeBattleTurn(state: BattleState, playerMoveIndex: number, rng: Rng = Math.random): BattleState {
   if (state.status !== 'ongoing') return state;
+  if (state.pendingSwitch) {
+    return { ...state, log: [...state.log, 'Escolha um Pokémon para entrar antes de atacar!'] };
+  }
   if (!hasUsableMove(state.player)) {
     return resolveTurn(state, { side: 'player', moveIndex: null }, rng);
   }
@@ -134,4 +166,16 @@ export function executeBattleTurn(state: BattleState, playerMoveIndex: number, r
     return { ...state, log: [...state.log, `Não há PP restante para ${move.name}!`] };
   }
   return resolveTurn(state, { side: 'player', moveIndex: playerMoveIndex }, rng);
+}
+
+/** Resolve um golpe pendente de aprendizado: `slot` substituído, ou `null` para desistir. */
+export function resolvePendingMove(state: BattleState, slot: number | null): BattleState {
+  const [pending, ...rest] = state.pendingMoves;
+  if (!pending) return state;
+  const member = state.playerParty[pending.partyIndex];
+  if (!member || slot === null) return { ...state, pendingMoves: rest };
+  const updated = replaceMove(member, slot, pending.moveId);
+  const playerParty = state.playerParty.map((p, idx) => (idx === pending.partyIndex ? updated : p));
+  const player = pending.partyIndex === state.playerActive ? updated : state.player;
+  return { ...state, playerParty, player, pendingMoves: rest };
 }

@@ -10,6 +10,7 @@ import {
   startWildBattle,
   switchActivePokemon,
   throwPokeball,
+  updateActivePlayer,
 } from './core/battle';
 import {
   createInitialState,
@@ -122,6 +123,12 @@ starterButtons.forEach((btn) => {
   });
 });
 
+function syncPartyFromBattle(): void {
+  if (!activeBattle) return;
+  party = [...activeBattle.playerParty];
+  activePartyIndex = activeBattle.playerActive;
+}
+
 function renderBattle(): void {
   sceneManager.syncBattle(activeBattle);
   if (!battleOverlay || !battleEnemy || !battlePlayer || !battleLog || !battleActions) return;
@@ -147,7 +154,7 @@ function renderBattle(): void {
         if (!activeBattle) return;
         sceneManager.playAttackEffect(move.type);
         activeBattle = executeBattleTurn(activeBattle, idx);
-        party[activePartyIndex] = activeBattle.player;
+        syncPartyFromBattle();
         renderBattle();
       };
       battleActions.appendChild(btn);
@@ -159,10 +166,8 @@ function renderBattle(): void {
       swapBtn.textContent = `Trocar: ${member.species.name} (${member.currentHp}/${member.maxHp})`;
       swapBtn.onclick = () => {
         if (!activeBattle) return;
-        party[activePartyIndex] = activeBattle.player;
-        activePartyIndex = idx;
-        activeBattle = switchActivePokemon(activeBattle, member);
-        party[activePartyIndex] = activeBattle.player;
+        activeBattle = switchActivePokemon(activeBattle, idx);
+        syncPartyFromBattle();
         renderBattle();
       };
       battleActions.appendChild(swapBtn);
@@ -177,14 +182,13 @@ function renderBattle(): void {
       if (!result.used) return;
       bag = result.bag;
       activeBattle = {
-        ...activeBattle,
-        player: result.pokemon,
+        ...updateActivePlayer(activeBattle, result.pokemon),
         log: [
           ...activeBattle.log,
           `Potion usada em ${result.pokemon.species.name} (${result.pokemon.currentHp}/${result.pokemon.maxHp} HP).`,
         ],
       };
-      party[activePartyIndex] = activeBattle.player;
+      syncPartyFromBattle();
       renderBattle();
     };
     battleActions.appendChild(potionBtn);
@@ -199,7 +203,7 @@ function renderBattle(): void {
         if (!consumed.ok) return;
         bag = consumed.bag;
         activeBattle = throwPokeball(activeBattle);
-        party[activePartyIndex] = activeBattle.player;
+        syncPartyFromBattle();
         if (activeBattle.status === 'caught') {
           caughtCount += 1;
           if (party.length < 6) {
@@ -523,17 +527,15 @@ window.addEventListener('keydown', (event) => {
         (item) => item.id === prevSourceId && item.trainer
       );
       if (trainerSource?.trainer && !state.storyFlags[`defeated_trainer:${trainerSource.id}`]) {
-        const enemySpecies = findRosterSpecies(trainerSource.trainer.speciesId);
-        const healthyIdx = party.findIndex((p) => p.currentHp > 0);
-        const lead = healthyIdx >= 0 ? party[healthyIdx] : undefined;
-        if (lead && enemySpecies) {
-          activePartyIndex = healthyIdx;
+        const trainer = trainerSource.trainer;
+        const enemyTeam = (trainer.team ?? [trainer]).flatMap((member) => {
+          const species = findRosterSpecies(member.speciesId);
+          return species ? [createPokemonInstance(species, member.level)] : [];
+        });
+        if (party.some((p) => p.currentHp > 0) && enemyTeam.length > 0) {
           activeTrainerId = trainerSource.id;
-          activeBattle = startTrainerBattle(
-            lead,
-            createPokemonInstance(enemySpecies, trainerSource.trainer.level),
-            trainerSource.trainer.name
-          );
+          activeBattle = startTrainerBattle(party, enemyTeam, trainer.name);
+          syncPartyFromBattle();
           renderBattle();
         }
       }
@@ -571,11 +573,9 @@ window.addEventListener('keydown', (event) => {
     const table = MAP_ENCOUNTERS[state.player.mapId];
     const encounter = table ? rollWildEncounter(table) : null;
     const wildSpecies = encounter ? findRosterSpecies(encounter.speciesId) : undefined;
-    const healthyIdx = party.findIndex((p) => p.currentHp > 0);
-    const lead = healthyIdx >= 0 ? party[healthyIdx] : undefined;
-    if (encounter && wildSpecies && lead) {
-      activePartyIndex = healthyIdx;
-      activeBattle = startWildBattle(lead, createPokemonInstance(wildSpecies, encounter.level));
+    if (encounter && wildSpecies && party.some((p) => p.currentHp > 0)) {
+      activeBattle = startWildBattle(party, createPokemonInstance(wildSpecies, encounter.level));
+      syncPartyFromBattle();
       renderBattle();
     }
   }

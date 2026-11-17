@@ -13,10 +13,15 @@ export interface WarpPoint {
   blockedMessage?: string;
 }
 
-export interface TrainerSpec {
-  name: string;
+export interface TrainerPokemonSpec {
   speciesId: string;
   level: number;
+}
+
+export interface TrainerSpec extends TrainerPokemonSpec {
+  name: string;
+  /** Time completo (até 6); sem ele o treinador usa só `speciesId`/`level`. */
+  team?: TrainerPokemonSpec[];
 }
 
 export interface Interactable {

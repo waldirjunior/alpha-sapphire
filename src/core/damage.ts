@@ -6,6 +6,21 @@ import { getTypeEffectivenessAgainst, type ElementalType } from './typeChart';
 
 export const STRUGGLE_MOVE_ID = 165;
 const STAB = 1.5;
+// Gen VI: estágio 0 = 1/16, 1 = 1/8, 2 = 1/2, 3+ = sempre; dano crítico ×1.5.
+const CRIT_CHANCE_BY_STAGE: readonly number[] = [1 / 16, 1 / 8, 1 / 2, 1];
+const CRIT_MULTIPLIER = 1.5;
+const CRIT_IMMUNE_ABILITIES: ReadonlySet<string> = new Set(['Battle Armor', 'Shell Armor']);
+
+export interface DamageOptions {
+  critical?: boolean;
+}
+
+export function rollCritical(defender: PokemonInstance, move: DexMove, rng: Rng): boolean {
+  if (CRIT_IMMUNE_ABILITIES.has(defender.ability)) return false;
+  const stage = Math.min(CRIT_CHANCE_BY_STAGE.length - 1, Math.max(0, move.critStage));
+  const chance = CRIT_CHANCE_BY_STAGE[stage] ?? 1;
+  return chance >= 1 || rng() < chance;
+}
 const BURN_PHYSICAL_MULTIPLIER = 0.5;
 
 export function getTypeEffectiveness(moveType: ElementalType, defenderTypes: readonly ElementalType[]): number {
@@ -17,17 +32,20 @@ export function moveEffectiveness(move: DexMove, defender: PokemonInstance): num
   return move.id === STRUGGLE_MOVE_ID ? 1 : getTypeEffectiveness(move.type, defender.species.types);
 }
 
-function attackingStat(attacker: PokemonInstance, move: DexMove): number {
+/** Crítico ignora estágios ofensivos negativos do atacante e defensivos positivos do alvo. */
+function attackingStat(attacker: PokemonInstance, move: DexMove, critical: boolean): number {
   const physical = move.category === 'physical';
   const raw = physical ? attacker.attack : attacker.spAtk;
-  const stage = physical ? attacker.stages.atk : attacker.stages.spa;
+  const rawStage = physical ? attacker.stages.atk : attacker.stages.spa;
+  const stage = critical ? Math.max(0, rawStage) : rawStage;
   return Math.max(1, Math.floor(raw * statStageMultiplier(stage)));
 }
 
-function defendingStat(defender: PokemonInstance, move: DexMove): number {
+function defendingStat(defender: PokemonInstance, move: DexMove, critical: boolean): number {
   const physical = move.category === 'physical';
   const raw = physical ? defender.defense : defender.spDef;
-  const stage = physical ? defender.stages.def : defender.stages.spd;
+  const rawStage = physical ? defender.stages.def : defender.stages.spd;
+  const stage = critical ? Math.min(0, rawStage) : rawStage;
   return Math.max(1, Math.floor(raw * statStageMultiplier(stage)));
 }
 
@@ -43,14 +61,16 @@ export function calculateDamage(
   attacker: PokemonInstance,
   defender: PokemonInstance,
   move: DexMove,
-  rng: Rng = Math.random
+  rng: Rng = Math.random,
+  { critical = false }: DamageOptions = {}
 ): number {
   const effectiveness = moveEffectiveness(move, defender);
   if (effectiveness === 0 || move.power === 0) return 0;
-  const ratio = attackingStat(attacker, move) / defendingStat(defender, move);
+  const ratio = attackingStat(attacker, move, critical) / defendingStat(defender, move, critical);
   const base = Math.floor((((2 * attacker.level) / 5 + 2) * move.power * ratio) / 50) + 2;
   const randomFactor = 0.85 + 0.15 * Math.min(1, Math.max(0, rng()));
-  const modifier = stabFor(attacker, move) * effectiveness * burnFor(attacker, move) * randomFactor;
+  const critMultiplier = critical ? CRIT_MULTIPLIER : 1;
+  const modifier = critMultiplier * stabFor(attacker, move) * effectiveness * burnFor(attacker, move) * randomFactor;
   return Math.max(1, Math.floor(base * modifier));
 }
 

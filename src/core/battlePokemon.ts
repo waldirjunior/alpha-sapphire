@@ -1,4 +1,5 @@
 import { getMoveById, type DexMove, type DexSpecies } from './dex';
+import { MAX_LEVEL, toGrowthRate, totalExpForLevel } from './experience';
 import { getDefaultMoveset } from './learnsets';
 import { NEUTRAL_STAGES, type StatStages } from './statStages';
 
@@ -19,7 +20,11 @@ export interface PokemonInstance {
   species: DexSpecies;
   ability: string;
   level: number;
+  /** XP total acumulado pela curva real da espécie (A-013). */
+  totalExp: number;
+  /** XP dentro do nível atual (barra de EXP). */
   xp: number;
+  /** XP necessário entre o nível atual e o próximo (0 no nível 100). */
   nextLevelXp: number;
   maxHp: number;
   currentHp: number;
@@ -34,7 +39,6 @@ export interface PokemonInstance {
 }
 
 const MIN_LEVEL = 1;
-const MAX_LEVEL = 100;
 
 function calcStat(base: number, level: number, isHp: boolean): number {
   const scaled = Math.floor((2 * base * level) / 100);
@@ -45,8 +49,23 @@ export function toBattleMove(move: DexMove): BattleMove {
   return { ...move, currentPp: move.pp, maxPp: move.pp };
 }
 
-function nextLevelXpFor(level: number): number {
-  return level * level * 8;
+export function expProgress(species: DexSpecies, level: number, totalExp: number): { xp: number; nextLevelXp: number } {
+  const rate = toGrowthRate(species.growthRate);
+  const floor = totalExpForLevel(rate, level);
+  const nextLevelXp = level >= MAX_LEVEL ? 0 : totalExpForLevel(rate, level + 1) - floor;
+  return { xp: totalExp - floor, nextLevelXp };
+}
+
+export function computeStats(species: DexSpecies, level: number): Pick<PokemonInstance, 'maxHp' | 'attack' | 'defense' | 'spAtk' | 'spDef' | 'speed'> {
+  const { hp, atk, def, spa, spd, spe } = species.baseStats;
+  return {
+    maxHp: calcStat(hp, level, true),
+    attack: calcStat(atk, level, false),
+    defense: calcStat(def, level, false),
+    spAtk: calcStat(spa, level, false),
+    spDef: calcStat(spd, level, false),
+    speed: calcStat(spe, level, false),
+  };
 }
 
 export function createPokemonInstance(
@@ -57,21 +76,16 @@ export function createPokemonInstance(
   if (level < MIN_LEVEL || level > MAX_LEVEL) {
     throw new RangeError(`Nível inválido para ${species.name}: ${level} (esperado ${MIN_LEVEL}..${MAX_LEVEL}).`);
   }
-  const { hp, atk, def, spa, spd, spe } = species.baseStats;
-  const maxHp = calcStat(hp, level, true);
+  const stats = computeStats(species, level);
+  const totalExp = totalExpForLevel(toGrowthRate(species.growthRate), level);
   return {
     species,
     ability: species.abilities[0] ?? '',
     level,
-    xp: 0,
-    nextLevelXp: nextLevelXpFor(level),
-    maxHp,
-    currentHp: maxHp,
-    attack: calcStat(atk, level, false),
-    defense: calcStat(def, level, false),
-    spAtk: calcStat(spa, level, false),
-    spDef: calcStat(spd, level, false),
-    speed: calcStat(spe, level, false),
+    totalExp,
+    ...expProgress(species, level, totalExp),
+    ...stats,
+    currentHp: stats.maxHp,
     moves: moveIds.map((id) => toBattleMove(getMoveById(id))),
     status: null,
     stages: NEUTRAL_STAGES,
@@ -91,34 +105,5 @@ export function restoreAtPokemonCenter(pokemon: PokemonInstance): PokemonInstanc
     status: null,
     stages: NEUTRAL_STAGES,
     moves: pokemon.moves.map((move) => ({ ...move, currentPp: move.maxPp })),
-  };
-}
-
-export function awardXp(pokemon: PokemonInstance, gainedXp: number): { updated: PokemonInstance; leveledUp: boolean } {
-  let xp = pokemon.xp + gainedXp;
-  let level = pokemon.level;
-  let nextLevelXp = pokemon.nextLevelXp;
-  while (xp >= nextLevelXp && level < MAX_LEVEL) {
-    xp -= nextLevelXp;
-    level += 1;
-    nextLevelXp = nextLevelXpFor(level);
-  }
-  if (level === pokemon.level) {
-    return { updated: { ...pokemon, xp }, leveledUp: false };
-  }
-  return { updated: rebuildForLevel(pokemon, level, xp), leveledUp: true };
-}
-
-function rebuildForLevel(pokemon: PokemonInstance, level: number, xp: number): PokemonInstance {
-  const rebuilt = createPokemonInstance(pokemon.species, level, pokemon.moves.map((move) => move.id));
-  const hpGain = Math.max(0, rebuilt.maxHp - pokemon.maxHp);
-  return {
-    ...rebuilt,
-    ability: pokemon.ability,
-    moves: pokemon.moves,
-    status: pokemon.status,
-    stages: pokemon.stages,
-    xp,
-    currentHp: Math.min(rebuilt.maxHp, pokemon.currentHp + hpGain),
   };
 }

@@ -1,5 +1,5 @@
 import type { BattleMove, PokemonInstance } from './battlePokemon';
-import { calculateDamage, moveEffectiveness, rollHitCount } from './damage';
+import { calculateDamage, moveEffectiveness, rollCritical, rollHitCount } from './damage';
 import type { DexStatChange } from './dex';
 import { accuracyStageMultiplier, applyStageDelta, STAT_LABELS, statsForRomId } from './statStages';
 import { statusKindForMove, tryInflictStatus, type Rng } from './statusConditions';
@@ -116,14 +116,18 @@ function executeDamagingMove(user: PokemonInstance, target: PokemonInstance, mov
   const hits = rollHitCount(move, rng);
   let defender = target;
   let total = 0;
+  let crits = 0;
   for (let hit = 0; hit < hits && defender.currentHp > 0; hit += 1) {
-    const dmg = calculateDamage(user, defender, move, rng);
+    const critical = rollCritical(defender, move, rng);
+    const dmg = calculateDamage(user, defender, move, rng, { critical });
     defender = { ...defender, currentHp: Math.max(0, defender.currentHp - dmg) };
     total += dmg;
+    crits += critical ? 1 : 0;
   }
   const effNote = effectiveness > 1 ? ' (Super efetivo!)' : effectiveness < 1 ? ' (Pouco efetivo...)' : '';
   const hitNote = hits > 1 ? ` em ${hits} golpes` : '';
-  const messages = [`${user.species.name} usou ${move.name} e causou ${total} de dano${hitNote}!${effNote}`];
+  const critNote = crits > 0 ? ' Acerto crítico!' : '';
+  const messages = [`${user.species.name} usou ${move.name} e causou ${total} de dano${hitNote}!${effNote}${critNote}`];
   return applyAfterDamage({ user, target: defender, messages, flinched: false }, move, total, rng);
 }
 

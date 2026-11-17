@@ -56,6 +56,8 @@ export interface DexMove {
   /** Byte com sinal: >0 = cura (% do HP máx.), <0 = dano ao usuário (% do HP máx., ex.: Struggle). */
   healPercent: number;
   target: number;
+  /** Estágio de crítico do golpe (0 normal, 1 alta taxa como Slash/Crabhammer, 3+ sempre). */
+  critStage: number;
   statChanges: readonly DexStatChange[];
 }
 
@@ -103,6 +105,7 @@ interface RawMove {
   recoilPercent: number;
   healing: number;
   target: number;
+  critStage: number;
   statChanges: readonly DexStatChange[];
 }
 

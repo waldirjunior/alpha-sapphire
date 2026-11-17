@@ -79,8 +79,8 @@ describe('battle engine', () => {
     const mudkip = createPokemonInstance(SPECIES.mudkip, 5);
     const wild = createPokemonInstance(SPECIES.zigzagoon, 2);
 
-    const battle = startWildBattle(torchic, wild);
-    const switched = switchActivePokemon(battle, mudkip, () => 0.5);
+    const battle = startWildBattle([torchic, mudkip], wild);
+    const switched = switchActivePokemon(battle, 1, () => 0.5);
     expect(switched.player.species.id).toBe('mudkip');
     expect(switched.turn).toBe(2);
 

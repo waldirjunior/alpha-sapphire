@@ -22,6 +22,7 @@ function isValidPokemonInstance(value: unknown): value is PokemonInstance {
     typeof value.species.personalIndex === 'number' &&
     isObjectRecord(value.stages) &&
     typeof value.level === 'number' &&
+    typeof value.totalExp === 'number' &&
     typeof value.currentHp === 'number' &&
     typeof value.maxHp === 'number' &&
     Array.isArray(value.moves) &&
