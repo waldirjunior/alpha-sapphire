@@ -4,6 +4,7 @@ import oldaleTexts from '../texts/oldale_town.json';
 import littlerootTown from './littleroot_town.json';
 import oldaleTown from './oldale_town.json';
 import route101 from './route_101.json';
+import route102 from './route_102.json';
 import route103 from './route_103.json';
 
 export const MAPS: Record<string, MapDefinition> = {
@@ -57,5 +58,9 @@ export const MAPS: Record<string, MapDefinition> = {
   route_103: {
     ...route103,
     modelUrl: '/assets/maps/route_103/route_103.glb',
+  },
+  route_102: {
+    ...route102,
+    modelUrl: '/assets/maps/route_102/route_102.glb',
   },
 };

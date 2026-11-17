@@ -49,6 +49,7 @@ def main() -> int:
         "route_101": "0005.bin",
         "oldale_town": "0004.bin",
         "route_103": "0001.bin",
+        "route_102": "0010.bin",
     }
 
     for map_id, gr_name in targets.items():

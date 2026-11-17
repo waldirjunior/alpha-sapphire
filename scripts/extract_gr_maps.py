@@ -120,6 +120,22 @@ def main() -> int:
                     {"from": {"x": x, "z": 0}, "targetMapId": "route_103", "targetPos": {"x": x, "z": 38}}
                     for x in (18, 19, 20, 21, 22)
                 ],
+                *[
+                    {"from": {"x": 1, "z": z}, "targetMapId": "route_102", "targetPos": {"x": 37, "z": z}}
+                    for z in (20, 21, 22)
+                ],
+            ],
+        },
+        {
+            "gr": "0010.bin",
+            "id": "route_102",
+            "name": "Route 102",
+            "spawnPos": {"x": 35, "z": 21},
+            "warps": [
+                *[
+                    {"from": {"x": 38, "z": z}, "targetMapId": "oldale_town", "targetPos": {"x": 2, "z": z}}
+                    for z in (20, 21, 22)
+                ],
             ],
         },
         {
