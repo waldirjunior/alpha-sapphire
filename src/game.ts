@@ -29,6 +29,9 @@ import { buildZoneEncounterTables, generatePokemon, resolveEncounterTable, type 
 import { MAP_ENCOUNTERS, type WildEncounterEntry } from './data/pokemon/route101';
 import { findRosterSpecies, SPECIES } from './data/pokemon/species';
 import { SceneManager } from './engine/SceneManager';
+import { BgmPlayer } from './engine/audioPlayer';
+import { bgmUrl, resolveMapBgm, type ZoneAudioEntry } from './core/zoneAudio';
+import { MAP_ZONE_IDS } from './data/audio/mapZones';
 
 // Zonas extraídas da ROM (src/data/zones/*.json, A-009) são opcionais: sem elas vale MAP_ENCOUNTERS.
 const ZONE_FILES = import.meta.glob<ZoneEncounterSource>('./data/zones/*.json', { import: 'default' });
@@ -491,8 +494,29 @@ saveGameBtn?.addEventListener('click', () => {
   saveGameBtn.blur();
 });
 
+// P-008: BGM por zona; zone_audio.json chega por chunk e o áudio só começa após o primeiro gesto.
+const bgmPlayer = new BgmPlayer();
+bgmPlayer.attachUnlock(window);
+let zoneAudio: readonly ZoneAudioEntry[] = [];
+let bgmMapId: string | null = null;
+
+function syncBgm(mapId: string): void {
+  if (mapId === bgmMapId) return;
+  bgmMapId = mapId;
+  const track = resolveMapBgm(mapId, MAP_ZONE_IDS, zoneAudio);
+  if (track) void bgmPlayer.play(bgmUrl(import.meta.env.BASE_URL, track));
+  else bgmPlayer.stop();
+}
+
+void import('./data/zone_audio.json').then((module) => {
+  zoneAudio = module.default;
+  bgmMapId = null;
+  syncBgm(state.player.mapId);
+});
+
 function syncUi(): void {
   sceneManager.sync(state, MAPS);
+  syncBgm(state.player.mapId);
   persistSave();
   renderDsPanel();
   if (hudPos) {
