@@ -12,12 +12,33 @@ const FACING_YAW: Record<Direction, number> = {
   left: -Math.PI / 2,
 };
 
+function fixOrasMaterials(root: THREE.Object3D): void {
+  root.traverse((obj) => {
+    if (!(obj instanceof THREE.Mesh)) return;
+    const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+    for (const mat of mats) {
+      if (mat instanceof THREE.MeshStandardMaterial) {
+        mat.side = THREE.DoubleSide;
+        mat.roughness = 0.92;
+        mat.metalness = 0.0;
+        if (mat.map) {
+          mat.map.colorSpace = THREE.SRGBColorSpace;
+          mat.alphaTest = 0.45;
+          mat.transparent = false;
+        }
+        mat.needsUpdate = true;
+      }
+    }
+  });
+}
+
 export class SceneManager {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private renderer: THREE.WebGLRenderer;
   private playerRoot: THREE.Group;
-  private mapGroup: THREE.Group;
+  private terrainGroup: THREE.Group;
+  private entitiesGroup: THREE.Group;
   private battleGroup: THREE.Group;
   private battlePlayerSlot: THREE.Group;
   private battleEnemySlot: THREE.Group;
@@ -28,29 +49,31 @@ export class SceneManager {
 
   constructor(container: HTMLElement) {
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color('#0f172a');
+    this.scene.background = new THREE.Color('#7dd3fc');
 
     this.camera = new THREE.PerspectiveCamera(
       45,
       container.clientWidth / container.clientHeight,
       0.1,
-      200
+      250
     );
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(container.clientWidth, container.clientHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     container.appendChild(this.renderer.domElement);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.7);
-    this.scene.add(ambient);
+    const hemi = new THREE.HemisphereLight(0xf0f9ff, 0x3f6212, 0.95);
+    this.scene.add(hemi);
 
-    const sun = new THREE.DirectionalLight(0xffffff, 1.1);
-    sun.position.set(10, 20, 10);
+    const sun = new THREE.DirectionalLight(0xfffbeb, 1.15);
+    sun.position.set(20, 35, 20);
     this.scene.add(sun);
 
-    this.mapGroup = new THREE.Group();
-    this.scene.add(this.mapGroup);
+    this.terrainGroup = new THREE.Group();
+    this.entitiesGroup = new THREE.Group();
+    this.scene.add(this.terrainGroup, this.entitiesGroup);
 
     this.playerRoot = new THREE.Group();
     const playerGeo = new THREE.CapsuleGeometry(0.35, 0.6, 4, 8);
@@ -59,7 +82,7 @@ export class SceneManager {
     placeholder.position.y = 0.65;
     this.playerRoot.add(placeholder);
     this.scene.add(this.playerRoot);
-    this.loadPlayerModel();
+    this.loadCharacterModel('/assets/characters/brendan/brendan.glb', this.playerRoot);
 
     this.battleGroup = new THREE.Group();
     this.battleGroup.visible = false;
@@ -82,24 +105,15 @@ export class SceneManager {
     this.renderer.setSize(container.clientWidth, container.clientHeight);
   }
 
-  private buildMapPlaceholder(map: MapDefinition): void {
-    this.mapGroup.clear();
+  private buildTerrainPlaceholder(map: MapDefinition): void {
+    this.terrainGroup.clear();
 
-    const floorGeo = new THREE.PlaneGeometry(map.width, map.height);
-    const floorMat = new THREE.MeshStandardMaterial({ color: '#1e3a2f' });
+    const floorGeo = new THREE.PlaneGeometry(map.width + 24, map.height + 24);
+    const floorMat = new THREE.MeshStandardMaterial({ color: '#2d5a27' });
     const floor = new THREE.Mesh(floorGeo, floorMat);
     floor.rotation.x = -Math.PI / 2;
-    floor.position.set(map.width / 2 - 0.5, 0, map.height / 2 - 0.5);
-    this.mapGroup.add(floor);
-
-    const grid = new THREE.GridHelper(
-      Math.max(map.width, map.height),
-      Math.max(map.width, map.height),
-      0x334155,
-      0x1e293b
-    );
-    grid.position.set(map.width / 2 - 0.5, 0.01, map.height / 2 - 0.5);
-    this.mapGroup.add(grid);
+    floor.position.set(map.width / 2 - 0.5, -0.04, map.height / 2 - 0.5);
+    this.terrainGroup.add(floor);
 
     const blockGeo = new THREE.BoxGeometry(0.95, 0.9, 0.95);
     const blockMat = new THREE.MeshStandardMaterial({ color: '#475569' });
@@ -110,36 +124,63 @@ export class SceneManager {
         if (map.collisions[z]?.[x] === 1) {
           const wall = new THREE.Mesh(blockGeo, blockMat);
           wall.position.set(x, 0.45, z);
-          this.mapGroup.add(wall);
+          this.terrainGroup.add(wall);
           continue;
         }
         if (map.terrain?.[z]?.[x] === 2) {
           const grass = new THREE.Mesh(grassGeo, grassMat);
           grass.position.set(x, 0.125, z);
-          this.mapGroup.add(grass);
+          this.terrainGroup.add(grass);
         }
       }
     }
+  }
 
-    const warpGeo = new THREE.BoxGeometry(0.9, 0.1, 0.9);
-    const warpMat = new THREE.MeshStandardMaterial({ color: '#f59e0b' });
+  private buildEntities(map: MapDefinition): void {
+    this.entitiesGroup.clear();
+
+    const warpGeo = new THREE.BoxGeometry(0.88, 0.06, 0.88);
+    const warpMat = new THREE.MeshStandardMaterial({ color: '#f59e0b', transparent: true, opacity: 0.75 });
     for (const warp of map.warps) {
       const marker = new THREE.Mesh(warpGeo, warpMat);
-      marker.position.set(warp.from.x, 0.05, warp.from.z);
-      this.mapGroup.add(marker);
+      marker.position.set(warp.from.x, 0.03, warp.from.z);
+      this.entitiesGroup.add(marker);
     }
 
-    if (map.interactables?.length) {
-      const signGeo = new THREE.BoxGeometry(0.55, 0.7, 0.55);
-      const signMat = new THREE.MeshStandardMaterial({ color: '#eab308' });
-      const npcGeo = new THREE.CapsuleGeometry(0.32, 0.5, 4, 8);
-      const npcMat = new THREE.MeshStandardMaterial({ color: '#f43f5e' });
-      for (const item of map.interactables) {
-        const isNpc = item.kind === 'npc';
-        const mesh = new THREE.Mesh(isNpc ? npcGeo : signGeo, isNpc ? npcMat : signMat);
-        mesh.position.set(item.pos.x, isNpc ? 0.57 : 0.35, item.pos.z);
-        this.mapGroup.add(mesh);
+    if (!map.interactables?.length) return;
+    const postGeo = new THREE.BoxGeometry(0.14, 0.55, 0.14);
+    const boardGeo = new THREE.BoxGeometry(0.7, 0.45, 0.12);
+    const woodMat = new THREE.MeshStandardMaterial({ color: '#92400e' });
+    const boardMat = new THREE.MeshStandardMaterial({ color: '#fef3c7' });
+
+    for (const item of map.interactables) {
+      if (item.kind === 'sign') {
+        const signGroup = new THREE.Group();
+        const post = new THREE.Mesh(postGeo, woodMat);
+        post.position.y = 0.27;
+        const board = new THREE.Mesh(boardGeo, boardMat);
+        board.position.y = 0.65;
+        signGroup.add(post, board);
+        signGroup.position.set(item.pos.x, 0, item.pos.z);
+        this.entitiesGroup.add(signGroup);
+        continue;
       }
+
+      const npcGroup = new THREE.Group();
+      npcGroup.position.set(item.pos.x, 0, item.pos.z);
+      const fallback = new THREE.Mesh(
+        new THREE.CapsuleGeometry(0.3, 0.5, 4, 8),
+        new THREE.MeshStandardMaterial({ color: '#f43f5e' })
+      );
+      fallback.position.y = 0.55;
+      npcGroup.add(fallback);
+      this.entitiesGroup.add(npcGroup);
+
+      const modelPath =
+        item.npcModel === 'may'
+          ? '/assets/characters/may/may.glb'
+          : '/assets/characters/npc/npc.glb';
+      this.loadCharacterModel(modelPath, npcGroup);
     }
   }
 
@@ -149,9 +190,10 @@ export class SceneManager {
 
     if (this.currentMapId !== map.id) {
       this.currentMapId = map.id;
-      this.buildMapPlaceholder(map);
+      this.buildTerrainPlaceholder(map);
+      this.buildEntities(map);
       if (map.modelUrl) {
-        this.loadMapModel(map);
+        this.loadMapModels(map);
       }
     }
 
@@ -160,12 +202,7 @@ export class SceneManager {
     this.playerRoot.rotation.y = FACING_YAW[state.player.facing];
 
     if (!this.inBattle) {
-      // Câmera inclinada estilo ORAS
-      this.camera.position.set(
-        state.player.pos.x,
-        9,
-        state.player.pos.z + 8
-      );
+      this.camera.position.set(state.player.pos.x, 9, state.player.pos.z + 8);
       this.camera.lookAt(state.player.pos.x, 0.5, state.player.pos.z);
     }
   }
@@ -173,7 +210,8 @@ export class SceneManager {
   public syncBattle(battle: BattleState | null): void {
     const active = battle !== null;
     this.inBattle = active;
-    this.mapGroup.visible = !active;
+    this.terrainGroup.visible = !active;
+    this.entitiesGroup.visible = !active;
     this.playerRoot.visible = !active;
     this.battleGroup.visible = active;
 
@@ -209,6 +247,23 @@ export class SceneManager {
     this.battleGroup.add(playerPad, enemyPad);
   }
 
+  private loadCharacterModel(url: string, target: THREE.Group): void {
+    this.gltfLoader.load(
+      url,
+      (gltf) => {
+        const model = gltf.scene;
+        model.scale.setScalar(1 / ORAS_TILE_UNITS);
+        fixOrasMaterials(model);
+        target.clear();
+        target.add(model);
+      },
+      undefined,
+      () => {
+        // Mantém placeholder geométrico caso o .glb não exista localmente.
+      }
+    );
+  }
+
   private loadPokemonModel(speciesId: string, target: THREE.Group): void {
     target.clear();
     this.gltfLoader.load(
@@ -216,6 +271,7 @@ export class SceneManager {
       (gltf) => {
         const model = gltf.scene;
         model.scale.setScalar(POKEMON_SCALE);
+        fixOrasMaterials(model);
         target.clear();
         target.add(model);
       },
@@ -231,23 +287,7 @@ export class SceneManager {
     );
   }
 
-  private loadPlayerModel(): void {
-    this.gltfLoader.load(
-      '/assets/characters/brendan/brendan.glb',
-      (gltf) => {
-        const model = gltf.scene;
-        model.scale.setScalar(1 / ORAS_TILE_UNITS);
-        this.playerRoot.clear();
-        this.playerRoot.add(model);
-      },
-      undefined,
-      () => {
-        // Mantém cápsula placeholder caso o .glb do protagonista não exista localmente.
-      }
-    );
-  }
-
-  private loadMapModel(map: MapDefinition): void {
+  private loadMapModels(map: MapDefinition): void {
     if (!map.modelUrl) return;
     const expectedMapId = map.id;
     this.gltfLoader.load(
@@ -255,11 +295,29 @@ export class SceneManager {
       (gltf) => {
         if (this.currentMapId !== expectedMapId) return;
         const model = gltf.scene;
-        const scale = 1 / ORAS_TILE_UNITS;
-        model.scale.setScalar(scale);
+        model.scale.setScalar(1 / ORAS_TILE_UNITS);
         model.position.set(map.width / 2 - 0.5, 0, map.height / 2 - 0.5);
-        this.mapGroup.clear();
-        this.mapGroup.add(model);
+        fixOrasMaterials(model);
+
+        this.terrainGroup.clear();
+        const baseFloor = new THREE.Mesh(
+          new THREE.PlaneGeometry(map.width + 40, map.height + 40),
+          new THREE.MeshStandardMaterial({ color: '#2d5a27' })
+        );
+        baseFloor.rotation.x = -Math.PI / 2;
+        baseFloor.position.set(map.width / 2 - 0.5, -0.08, map.height / 2 - 0.5);
+        this.terrainGroup.add(baseFloor, model);
+
+        if (map.propsUrl) {
+          this.gltfLoader.load(map.propsUrl, (propsGltf) => {
+            if (this.currentMapId !== expectedMapId) return;
+            const propsModel = propsGltf.scene;
+            propsModel.scale.setScalar(1 / ORAS_TILE_UNITS);
+            propsModel.position.set(map.width / 2 - 0.5, 0, map.height / 2 - 0.5);
+            fixOrasMaterials(propsModel);
+            this.terrainGroup.add(propsModel);
+          });
+        }
       },
       undefined,
       () => {
@@ -269,6 +327,9 @@ export class SceneManager {
   }
 
   public render(): void {
+    if (!this.inBattle) {
+      this.playerRoot.position.y = Math.sin(performance.now() * 0.005) * 0.03;
+    }
     this.renderer.render(this.scene, this.camera);
   }
 }

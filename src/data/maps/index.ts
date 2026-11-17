@@ -1,4 +1,5 @@
 import type { MapDefinition } from '../../core/types';
+import birchLabTexts from '../texts/birch_lab.json';
 import littlerootTexts from '../texts/littleroot_town.json';
 import oldaleTexts from '../texts/oldale_town.json';
 import littlerootTown from './littleroot_town.json';
@@ -28,9 +29,24 @@ export const MAPS: Record<string, MapDefinition> = {
         text: littlerootTexts.lines[10] ?? "Professor Birch's Pokémon Lab",
       },
       {
+        id: 'mom_npc',
+        pos: { x: 14, z: 12 },
+        kind: 'npc',
+        npcModel: 'npc',
+        text: littlerootTexts.lines[0] ?? 'Don’t push yourself too hard, honey!',
+      },
+      {
+        id: 'may_littleroot_npc',
+        pos: { x: 26, z: 12 },
+        kind: 'npc',
+        npcModel: 'may',
+        text: littlerootTexts.lines[13] ?? 'Whoa! Are we in sync or what!',
+      },
+      {
         id: 'littleroot_npc_warning',
         pos: { x: 20, z: 4 },
         kind: 'npc',
+        npcModel: 'npc',
         text: littlerootTexts.lines[3] ?? 'Watch out for wild Pokémon in the tall grass!',
       },
     ],
@@ -38,6 +54,25 @@ export const MAPS: Record<string, MapDefinition> = {
   route_101: {
     ...route101,
     modelUrl: '/assets/maps/route_101/route_101.glb',
+    propsUrl: '/assets/maps/route_101/route_101_props.glb',
+    interactables: [
+      {
+        id: 'prof_birch_npc',
+        pos: { x: 20, z: 26 },
+        kind: 'npc',
+        npcModel: 'npc',
+        text:
+          birchLabTexts.lines[2] ??
+          'Prof. Birch: Obrigado por explorar a Route 101! Escolha seu inicial no topo da tela e teste os encontros na grama alta.',
+        setFlag: 'met_birch_route_101',
+      },
+      {
+        id: 'route_101_sign',
+        pos: { x: 21, z: 34 },
+        kind: 'sign',
+        text: 'Route 101 — Sul: Littleroot Town | Norte: Oldale Town',
+      },
+    ],
   },
   oldale_town: {
     ...oldaleTown,
@@ -53,7 +88,15 @@ export const MAPS: Record<string, MapDefinition> = {
         id: 'oldale_pokecenter',
         pos: { x: 16, z: 18 },
         kind: 'npc',
+        npcModel: 'npc',
         text: 'Bem-vindo ao Centro Pokémon de Oldale! Sua equipe foi totalmente curada.',
+      },
+      {
+        id: 'oldale_mart_npc',
+        pos: { x: 24, z: 18 },
+        kind: 'npc',
+        npcModel: 'npc',
+        text: oldaleTexts.lines[0] ?? 'Oldale Town — Where things start off scarce.',
       },
     ],
   },
@@ -69,6 +112,7 @@ export const MAPS: Record<string, MapDefinition> = {
         id: 'route_102_trainer_calvin',
         pos: { x: 22, z: 20 },
         kind: 'npc',
+        npcModel: 'npc',
         text: 'Youngster Calvin: Vamos testar nossos Pokémon na Route 102!',
       },
     ],

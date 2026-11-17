@@ -17,6 +17,7 @@ export interface Interactable {
   kind: 'sign' | 'npc';
   text: string;
   setFlag?: string;
+  npcModel?: 'may' | 'npc';
 }
 
 export interface MapDefinition {
@@ -34,6 +35,8 @@ export interface MapDefinition {
   interactables?: Interactable[];
   /** Caminho opcional para o modelo .glb extraído da ROM */
   modelUrl?: string;
+  /** Caminho opcional para props/vegetação extraídos da seção 5 do GR */
+  propsUrl?: string;
 }
 
 export interface ActiveDialogue {
