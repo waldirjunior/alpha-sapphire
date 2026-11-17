@@ -4,6 +4,8 @@ import type { MoveDefinition, PokemonSpecies, PokemonType } from '../data/pokemo
 export interface PokemonInstance {
   species: PokemonSpecies;
   level: number;
+  xp: number;
+  nextLevelXp: number;
   maxHp: number;
   currentHp: number;
   attack: number;
@@ -14,7 +16,7 @@ export interface PokemonInstance {
   moves: MoveDefinition[];
 }
 
-export type BattleStatus = 'ongoing' | 'victory' | 'defeat' | 'fled';
+export type BattleStatus = 'ongoing' | 'victory' | 'defeat' | 'fled' | 'caught';
 
 export interface BattleState {
   player: PokemonInstance;
@@ -48,6 +50,8 @@ export function createPokemonInstance(species: PokemonSpecies, level: number): P
   return {
     species,
     level,
+    xp: 0,
+    nextLevelXp: level * level * 8,
     maxHp,
     currentHp: maxHp,
     attack: calcStat(species.baseStats.attack, level, false),
@@ -56,6 +60,35 @@ export function createPokemonInstance(species: PokemonSpecies, level: number): P
     spDef: calcStat(species.baseStats.spDef, level, false),
     speed: calcStat(species.baseStats.speed, level, false),
     moves: [...species.moves],
+  };
+}
+
+function awardXp(pokemon: PokemonInstance, gainedXp: number): { updated: PokemonInstance; leveledUp: boolean } {
+  let xp = pokemon.xp + gainedXp;
+  let level = pokemon.level;
+  let nextLevelXp = pokemon.nextLevelXp;
+  let leveledUp = false;
+
+  while (xp >= nextLevelXp && level < 100) {
+    xp -= nextLevelXp;
+    level += 1;
+    nextLevelXp = level * level * 8;
+    leveledUp = true;
+  }
+
+  if (!leveledUp) {
+    return { updated: { ...pokemon, xp }, leveledUp: false };
+  }
+
+  const rebuilt = createPokemonInstance(pokemon.species, level);
+  const hpDiff = Math.max(0, rebuilt.maxHp - pokemon.maxHp);
+  return {
+    updated: {
+      ...rebuilt,
+      xp,
+      currentHp: Math.min(rebuilt.maxHp, pokemon.currentHp + hpDiff),
+    },
+    leveledUp: true,
   };
 }
 
@@ -122,6 +155,41 @@ export function runFromBattle(state: BattleState): BattleState {
   };
 }
 
+export function throwPokeball(
+  state: BattleState,
+  rng: () => number = Math.random
+): BattleState {
+  if (state.status !== 'ongoing') return state;
+  const hpRatio = state.enemy.currentHp / state.enemy.maxHp;
+  const catchChance = Math.min(0.9, Math.max(0.25, 0.85 - hpRatio * 0.55));
+  if (rng() < catchChance) {
+    return {
+      ...state,
+      status: 'caught',
+      log: [...state.log, `Você capturou ${state.enemy.species.name}!`],
+    };
+  }
+
+  const enemyMove = state.enemy.moves[0];
+  if (!enemyMove) {
+    return {
+      ...state,
+      turn: state.turn + 1,
+      log: [...state.log, `${state.enemy.species.name} escapou da Poké Ball!`],
+    };
+  }
+  const res = applyAttack(state.enemy, state.player, enemyMove, rng);
+  const logs = [...state.log, `${state.enemy.species.name} escapou da Poké Ball!`, res.message];
+  const nextStatus: BattleStatus = res.updatedDefender.currentHp === 0 ? 'defeat' : 'ongoing';
+  return {
+    ...state,
+    player: res.updatedDefender,
+    turn: state.turn + 1,
+    status: nextStatus,
+    log: logs,
+  };
+}
+
 function applyAttack(
   attacker: PokemonInstance,
   defender: PokemonInstance,
@@ -165,8 +233,11 @@ export function executeBattleTurn(
     enemy = res1.updatedDefender;
     logs.push(res1.message);
     if (enemy.currentHp === 0) {
-      logs.push(`${enemy.species.name} selvagem foi derrotado!`);
-      return { player, enemy, turn: state.turn + 1, status: 'victory', log: logs };
+      const xpGain = enemy.level * 24;
+      const { updated, leveledUp } = awardXp(player, xpGain);
+      logs.push(`${enemy.species.name} selvagem foi derrotado! (+${xpGain} XP)`);
+      if (leveledUp) logs.push(`${updated.species.name} subiu para o nível ${updated.level}!`);
+      return { player: updated, enemy, turn: state.turn + 1, status: 'victory', log: logs };
     }
     const res2 = applyAttack(enemy, player, enemyMove, rng);
     player = res2.updatedDefender;
@@ -187,8 +258,11 @@ export function executeBattleTurn(
     enemy = res2.updatedDefender;
     logs.push(res2.message);
     if (enemy.currentHp === 0) {
-      logs.push(`${enemy.species.name} selvagem foi derrotado!`);
-      return { player, enemy, turn: state.turn + 1, status: 'victory', log: logs };
+      const xpGain = enemy.level * 24;
+      const { updated, leveledUp } = awardXp(player, xpGain);
+      logs.push(`${enemy.species.name} selvagem foi derrotado! (+${xpGain} XP)`);
+      if (leveledUp) logs.push(`${updated.species.name} subiu para o nível ${updated.level}!`);
+      return { player: updated, enemy, turn: state.turn + 1, status: 'victory', log: logs };
     }
   }
 

@@ -5,6 +5,7 @@ import {
   rollWildEncounter,
   runFromBattle,
   startWildBattle,
+  throwPokeball,
 } from './core/battle';
 import { createInitialState, interact, isTallGrass, movePlayer } from './core/gameState';
 import type { Direction } from './core/types';
@@ -30,6 +31,7 @@ const sceneManager = new SceneManager(app);
 let state = createInitialState('littleroot_town', MAPS);
 let starterId: 'treecko' | 'torchic' | 'mudkip' = 'torchic';
 let starter = createPokemonInstance(SPECIES[starterId], 5);
+let caughtCount = 0;
 let activeBattle: BattleState | null = null;
 
 const starterButtons = document.querySelectorAll<HTMLButtonElement>('#starter-bar button[data-starter]');
@@ -73,6 +75,17 @@ function renderBattle(): void {
       battleActions.appendChild(btn);
     });
 
+    const ballBtn = document.createElement('button');
+    ballBtn.textContent = 'Poké Ball';
+    ballBtn.onclick = () => {
+      if (!activeBattle) return;
+      activeBattle = throwPokeball(activeBattle);
+      starter = activeBattle.player;
+      if (activeBattle.status === 'caught') caughtCount += 1;
+      renderBattle();
+    };
+    battleActions.appendChild(ballBtn);
+
     const runBtn = document.createElement('button');
     runBtn.textContent = 'Fugir';
     runBtn.onclick = () => {
@@ -102,7 +115,7 @@ function syncUi(): void {
   sceneManager.sync(state, MAPS);
   if (hudPos) {
     const mapName = MAPS[state.player.mapId]?.name ?? state.player.mapId;
-    hudPos.textContent = `Mapa: ${mapName} | Pos: (${state.player.pos.x}, ${state.player.pos.z})`;
+    hudPos.textContent = `Mapa: ${mapName} | Pos: (${state.player.pos.x}, ${state.player.pos.z}) | Capturados: ${caughtCount}`;
   }
   if (dialogueBox) {
     if (state.activeDialogue) {

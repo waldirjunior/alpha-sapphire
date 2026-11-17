@@ -36,6 +36,15 @@ describe('emulator parity suite (Alpha Sapphire Gen VI)', () => {
     state = movePlayer(state, 'up', MAPS);
     expect(state.player.mapId).toBe('oldale_town');
     expect(state.player.pos).toEqual({ x: 20, z: 38 });
+
+    // Posiciona na saída norte de Oldale Town e cruza para Route 103
+    state = {
+      ...state,
+      player: { ...state.player, pos: { x: 20, z: 1 } },
+    };
+    state = movePlayer(state, 'up', MAPS);
+    expect(state.player.mapId).toBe('route_103');
+    expect(state.player.pos).toEqual({ x: 20, z: 38 });
   });
 
   it('matches Gen VI Lv.5 starter stats, type chart, and damage bounds', () => {

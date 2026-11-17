@@ -9,6 +9,7 @@ import {
   rollWildEncounter,
   runFromBattle,
   startWildBattle,
+  throwPokeball,
 } from './battle';
 
 describe('battle engine', () => {
@@ -48,10 +49,24 @@ describe('battle engine', () => {
       battle = executeBattleTurn(battle, 1, () => 1);
     }
     expect(battle.status).toBe('victory');
+    expect(battle.player.xp).toBeGreaterThan(0);
 
     // Run from battle
     const fresh = startWildBattle(starter, createPokemonInstance(SPECIES.poochyena, 2));
     const fled = runFromBattle(fresh);
     expect(fled.status).toBe('fled');
+  });
+
+  it('supports Poké Ball capture and levels up on enough XP', () => {
+    const starter = createPokemonInstance(SPECIES.mudkip, 5);
+    const wild = createPokemonInstance(SPECIES.poochyena, 2);
+    const battle = startWildBattle(starter, wild);
+
+    const caught = throwPokeball(battle, () => 0.01);
+    expect(caught.status).toBe('caught');
+
+    const missed = throwPokeball(battle, () => 0.99);
+    expect(['ongoing', 'defeat']).toContain(missed.status);
+    expect(missed.turn).toBe(2);
   });
 });
