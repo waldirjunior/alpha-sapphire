@@ -24,15 +24,15 @@ Planejamento em fases para sair do protótipo placeholder atual até a reconstru
   - Inventário documentado dos arquivos relevantes da ROM (mapas, colisões, textos, modelos).
   - Scripts de conversão gerando JSONs validados por schema e `.glb` otimizados para o vertical slice.
 
-## Fase 2 — Vertical Slice e Arco Inicial (`Littleroot Town → Route 101 → Oldale`) (Meses 4–8)
+## Fase 2 — Vertical Slice e Arco Inicial (`Littleroot Town → Route 101 → Oldale → Route 102 → Petalburg`) (Meses 4–8 — Em andamento)
 
-**Objetivo:** Substituir os placeholders inline de [src/main.ts](../src/main.ts) por dados reais extraídos, carregamento assíncrono de `.glb` no `SceneManager` e HUD/câmera compatíveis com exploração 3D.
+**Objetivo:** Substituir os placeholders por dados reais extraídos, carregamento assíncrono de `.glb`, fidelidade visual (animações, shaders/materiais, interiores, áudio) e eventos de história iniciais.
 
-- **Referências:** [engine-3d/PRD-001](features/engine-3d/prds/PRD-001-cena-3d-e-glb-sob-demanda.md), [core-jogo/PRD-001](features/core-jogo/prds/PRD-001-estado-movimento-warps.md), [core-jogo/ADR-001](features/core-jogo/adrs/ADR-001-separacao-core-engine.md).
+- **Referências:** [engine-3d/PRD-001](features/engine-3d/prds/PRD-001-cena-3d-e-glb-sob-demanda.md), [engine-3d/PRD-002](features/engine-3d/prds/PRD-002-animacoes-esqueleticas-idle-walk.md), [engine-3d/PRD-003](features/engine-3d/prds/PRD-003-fidelidade-visual-mapas-e-interiores.md), [engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md), [pipeline-rom/PRD-002](features/pipeline-rom/prds/PRD-002-extracao-audio-bcstm.md), [core-jogo/PRD-002](features/core-jogo/prds/PRD-002-eventos-historia-interiores-inventario.md).
 - **Critérios de pronto:**
-  - `src/data/` carregando definições reais de `littleroot_town` e `route_101` (`P-004`).
-  - `SceneManager` carregando `.glb` sob demanda com fallback seguro para placeholder.
-  - Diálogos básicos, interação com NPCs/placas e transição suave de warp testados no `core/`.
+  - `src/data/` carregando mapas, textos e áudios reais (`P-004` concluída, `P-008` aberta).
+  - Personagens com rig e animações `idle`/`walk` sem T-pose (`P-006`).
+  - Materiais multi-textura PICA200, interiores e UI estilo 3DS (`P-007`, `P-009`, `P-011`).
 
 ## Fase 3 — Sistemas de Jogo, Tabelas e Validação contra Emulador (Meses 9–14)
 

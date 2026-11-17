@@ -36,3 +36,45 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Data:** 2026-11-16
 - **Evidência:** Instalados `.NET 8.0.428` (`/root/.dotnet`), `SPICA` + `SpicaExport` (`/opt/tools/SpicaExport`), `libgdiplus` e `assimp-utils` (`5.2`). Criado [scripts/convert_gr_to_glb.py](../scripts/convert_gr_to_glb.py) gerando `littleroot_town.glb` (`669 KB`), `route_101.glb` (`491 KB`) e `oldale_town.glb` (`991 KB`) em `public/assets/maps/` (ignorado pelo `.gitignore`), e integrado `GLTFLoader` em [SceneManager.ts](../src/engine/SceneManager.ts).
 - **Próximo passo:** Concluído para o vertical slice inicial; extrair texturas/modelos de personagens e Pokémon na sequência.
+
+## P-006 Personagens em T-pose sem animação esquelética (idle/walk)
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** Inspeção visual em `http://localhost:5173/` (Littleroot e Oldale Town) mostra Brendan e NPCs em T-pose (`animations: 0` em `brendan.glb`, `may.glb`, `npc.glb`) porque o `assimp` 5.2 achata o esqueleto ao converter `.dae → .glb`.
+- **Próximo passo:** Implementar pipeline de exportação preservando rig e animações (`idle`/`walk`) conforme [engine-3d/PRD-002](features/engine-3d/prds/PRD-002-animacoes-esqueleticas-idle-walk.md).
+
+## P-007 Materiais PICA200, placas brancas e sombras/flores nos mapas
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** Em Oldale Town e Littleroot Town, placas/telhados específicos ficam brancos e sombras de flores aparecem como faixas escuras por perda de `Texture1`/`Texture2` e blend modes PICA200 na conversão via Collada.
+- **Próximo passo:** Reproduzir multi-textura/vertex-color/alpha-blend e adicionar interiores de casas/Centros Pokémon ([engine-3d/PRD-003](features/engine-3d/prds/PRD-003-fidelidade-visual-mapas-e-interiores.md)).
+
+## P-008 Áudio da ROM (`RomFS/sound/*.bcstm`) não integrado
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** `201` arquivos `.bcstm` e `sango_sound.bcsar` já foram extraídos em `rom/extracted/RomFS/sound/`, mas o motor web ainda é silencioso.
+- **Próximo passo:** Converter trilhas principais (Littleroot, Route 101, Batalha, Cura) para `.ogg`/`.mp3` e reproduzir via Web Audio API ([pipeline-rom/PRD-002](features/pipeline-rom/prds/PRD-002-extracao-audio-bcstm.md)).
+
+## P-009 Interiores, eventos de história, itens e inventário ausentes
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** Portas das casas, Laboratório do Prof. Birch, Centro Pokémon e Poké Mart ainda não possuem warps para mapas internos nem eventos scriptados (caminhão inicial, resgate do Birch, rival na Route 103, itens no chão).
+- **Próximo passo:** Implementar eventos, inventário e warps internos em `src/core/` ([core-jogo/PRD-002](features/core-jogo/prds/PRD-002-eventos-historia-interiores-inventario.md)).
+
+## P-010 Mecânicas avançadas de batalha Gen VI (PP, precisão, status, treinadores multi-Pokémon)
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** `src/core/battle.ts` cobre dano básico, STAB, efetividade, Poké Ball e 1 Pokémon por treinador, mas ainda faltam PP, precisão/esquiva, condições de status, críticos e times de múltiplos Pokémon.
+- **Próximo passo:** Expandir o motor de batalha conforme [batalha/PRD-002](features/batalha/prds/PRD-002-mecanicas-completas-gen6.md).
+
+## P-011 HUD de desenvolvimento em vez de menus estilo Nintendo 3DS
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** A barra superior atual expõe controles de debug (`Treecko / Torchic / Mudkip / Resetar Save`) em vez de menus de jogo (Party, Bag, Pokédex, Mapa, Save).
+- **Próximo passo:** Construir UI estilo tela inferior do 3DS ([engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md)).
