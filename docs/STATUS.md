@@ -28,7 +28,7 @@ Atualizado em 2026-11-17 (verificação local na VPS).
 - `src/data/maps_v2/`: 536 mapas/1.480.000 tiles, 846 GRs compostos via `parse_gr_grid`, 911 warps com destinos existentes, 2.904 NPCs e 9.150 entradas de encontro. Escala 18 unidades/tile comprovada pelos 911 centros de warp; NPCs já estão em tiles. Route 102 agora é 80×40 e Route 103 120×40.
 - Dez referências antigas: 16.000 tiles comparados por camada, zero diferenças de colisão/terreno e zero omissões. `_validation.json` preserva 48 warps e 48 targets off-region (todos da zona 0) e quatro NPCs off-map, sem correções artificiais.
 - Spawn fica marcado `spawnDerived=true`, com política determinística; não é spawn canônico de init/save. Sem mudanças no loader/core/renderer nem conversão 3D. Semântica residual de flags/array auxiliar e futura integração permanecem em P-017, no limite aprovado pelo coordenador.
-- Verificação: 13 regressões sintéticas novas; **107 testes Python, 134 Vitest (17 arquivos) e build canônico passando**. JSONs estruturais, sem dumps binários; A-023/PRD-003/ADR-005 registram evidência, reprodução e limites.
+- Verificação: 13 regressões sintéticas novas; **107 testes Python, 134 Vitest (17 arquivos) e build canônico passando**. JSONs estruturais, sem dumps binários; A-024/PRD-003/ADR-005 registram evidência, reprodução e limites.
 
 ## Investigação de scripts ORAS (2026-11-17, Mac/worktree `zone-scripts-re`)
 
