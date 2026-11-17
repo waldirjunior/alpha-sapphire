@@ -26,6 +26,7 @@ from extract_battle_tables import (
     unpack_mini,
 )
 from extract_gr_maps import parse_gr_grid
+from extract_zone_audio import build_zone_audio, parse_bcsar_sounds, read_zone_bgm_indexes, read_zone_bgm_table
 from convert_gr_to_glb import (
     parse_missing_textures,
     patch_glb_materials,
@@ -194,6 +195,88 @@ class ProgressionParsersTest(unittest.TestCase):
         self.assertEqual((natures[3]["increased"], natures[3]["decreased"]), ("atk", "spa"))
         self.assertEqual((natures[10]["increased"], natures[10]["decreased"]), ("spe", "atk"))
         self.assertIsNone(natures[12]["increased"])
+
+
+def build_bcsar(sounds: list[tuple[str, str | None]]) -> bytes:
+    """BCSAR mínimo: STRG com rótulos e INFO com tabela de sons + tabela de arquivos (externos)."""
+    labels = [label for label, _ in sounds]
+    strg_table = struct.pack("<I", len(labels))
+    blob = b""
+    entries_size = 4 + 12 * len(labels)
+    for label in labels:
+        raw = label.encode() + b"\0"
+        strg_table += struct.pack("<HHiI", 0x1F01, 0, entries_size + len(blob), len(raw))
+        blob += raw
+    strg_body = struct.pack("<HHi", 0x2400, 0, 8) + strg_table + blob
+    strg = b"STRG" + struct.pack("<I", 8 + len(strg_body)) + strg_body
+
+    count = len(sounds)
+    sound_table_size = 4 + 8 * count
+    sound_entry_size = 28
+    sound_table = struct.pack("<I", count)
+    for i in range(count):
+        sound_table += struct.pack("<HHi", 0x2200, 0, sound_table_size + i * sound_entry_size)
+    for i in range(count):
+        sound_table += struct.pack("<IIB3x", i, 0, 100) + struct.pack("<HHi", 0x2201, 0, 0) + struct.pack("<II", 1, i)
+    file_table = struct.pack("<I", count)
+    file_entries = b""
+    file_table_size = 4 + 8 * count
+    for _, file_name in sounds:
+        file_table += struct.pack("<HHi", 0x220D, 0, file_table_size + len(file_entries))
+        name = (file_name or "").encode() + b"\0"
+        kind = 0x220D if file_name else 0x220C
+        entry = struct.pack("<HHi", kind, 0, 8) + name
+        file_entries += entry + b"\0" * (-len(entry) % 4)
+    file_table += file_entries
+    refs_size = 8 * 8
+    info_body = struct.pack("<HHi", 0x2100, 0, refs_size) + struct.pack("<HHi", 0x2106, 0, refs_size + len(sound_table))
+    info_body += b"\0" * (refs_size - len(info_body)) + sound_table + file_table
+    info = b"INFO" + struct.pack("<I", 8 + len(info_body)) + info_body
+
+    strg_offset = 0x40
+    info_offset = strg_offset + len(strg)
+    header = struct.pack("<4sHHIIH2x", b"CSAR", 0xFEFF, 0x40, 0x02030100, info_offset + len(info), 2)
+    header += struct.pack("<HHII", 0x2000, 0, strg_offset, len(strg)) + struct.pack("<HHII", 0x2001, 0, info_offset, len(info))
+    return header + b"\0" * (strg_offset - len(header)) + strg + info
+
+
+class ZoneAudioTest(unittest.TestCase):
+    SOUNDS = [
+        ("STRM_BGM_SILENCE", "bgm_xy_silence.dspadpcm.bcstm"),
+        ("STRM_BGM_T_01", "bgm_sg_t_01.dspadpcm.bcstm"),
+        ("STRM_BGM_R_A", "bgm_sg_r_a.dspadpcm.bcstm"),
+        ("SEQ_SE_DUMMY", None),
+    ]
+
+    def test_parse_bcsar_sounds_maps_index_to_label_and_external_file(self) -> None:
+        sounds = parse_bcsar_sounds(build_bcsar(self.SOUNDS))
+        self.assertEqual([s["label"] for s in sounds], [label for label, _ in self.SOUNDS])
+        self.assertEqual(sounds[1]["file"], "bgm_sg_t_01.dspadpcm.bcstm")
+        self.assertIsNone(sounds[3]["file"])
+
+    def test_parse_bcsar_rejects_other_magic(self) -> None:
+        with self.assertRaisesRegex(ValueError, "não é BCSAR"):
+            parse_bcsar_sounds(b"CWAR" + bytes(60))
+
+    def test_read_zone_bgm_table_follows_bcsar_path_in_code(self) -> None:
+        code = b"\0" * 16 + b"rom:/sound/sango_sound.bcsar\0" + b"\0" * 7 + struct.pack("<3I", 0x01000002, 0x01000001, 0x03000000)
+        self.assertEqual(read_zone_bgm_table(code), [2, 1])
+        with self.assertRaisesRegex(ValueError, "não encontrado"):
+            read_zone_bgm_table(b"\0" * 64)
+
+    def test_build_zone_audio_chains_zone_index_table_and_sounds(self) -> None:
+        zone_data = b"".join(struct.pack("<8xH46x", index) for index in (1, 0, 7))
+        entries = build_zone_audio(
+            read_zone_bgm_indexes(zone_data),
+            [2, 1],
+            parse_bcsar_sounds(build_bcsar(self.SOUNDS)),
+            {0: "Littleroot Town", 1: "Route 101"},
+            {"bgm_sg_t_01"},
+        )
+        self.assertEqual(entries[0], {"zone": 0, "name": "Littleroot Town", "bgmIndex": 1, "soundIndex": 1,
+                                      "soundLabel": "STRM_BGM_T_01", "bgmName": "bgm_sg_t_01", "hasMp3": True})
+        self.assertEqual((entries[1]["bgmName"], entries[1]["hasMp3"]), ("bgm_sg_r_a", False))
+        self.assertIsNone(entries[2]["soundIndex"])
 
 
 def build_glb(materials: list[dict[str, object]]) -> bytes:

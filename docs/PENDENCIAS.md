@@ -61,6 +61,7 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Data:** 2026-11-17
 - **Evidência:** `201` arquivos `.bcstm` e `sango_sound.bcsar` já foram extraídos em `rom/extracted/RomFS/sound/`, mas o motor web ainda é silencioso.
 - **Progresso (2026-11-17):** os `199` `.bcstm` foram convertidos para `.mp3` em `rom/extracted/audio/mp3/` (`281 MB`) via `vgmstream-cli` + `ffmpeg`/`libmp3lame` no macOS (`A-008`). Resta reproduzir via Web Audio API e mapear trilha → zona.
+- **Progresso (2026-11-17, mapeamento):** `src/data/zone_audio.json` liga as 536 zonas ao `.mp3` correto via ZoneData `@0x08` → tabela BGM do `code.bin` → `sango_sound.bcsar` ([audio-format.md](features/pipeline-rom/audio-format.md), `A-023`); todas resolvem para um `.mp3` existente. Ainda falta música de batalha, variações por flag de história e a reprodução no `src/engine/`.
 - **Próximo passo:** Reproduzir trilhas (Littleroot, Route 101, Batalha, Cura) via Web Audio API ([pipeline-rom/PRD-002](features/pipeline-rom/prds/PRD-002-extracao-audio-bcstm.md)).
 
 ## P-009 Interiores, eventos de história, itens e inventário ausentes

@@ -9,6 +9,7 @@ Responsável por extrair as partições proprietárias (`RomFS`, `ExeFS`) da ROM
 - [battle-tables.md](battle-tables.md) — offsets e formato de personal, golpes, tipos, learnsets, TM/HM, evolução e naturezas (`A-010`); carga em runtime por [ADR-004](adrs/ADR-004-tabelas-de-batalha-sob-demanda.md).
 - [script-format.md](script-format.md) — formato Pawn/AMX v10 das zonas ORAS, offsets, compactação, evidências e limites de interpretação (P-013/A-016).
 - [script-disassembly.md](script-disassembly.md) — disassembly das 536 zonas/85 globais, 615 nomes nativos, vínculos derivados dos ZOs e primeiro runner puro de chamadas normalizadas (P-013/A-017/A-018).
+- [audio-format.md](audio-format.md) — cadeia zona → BGM (ZoneData `@0x08` → tabela do `code.bin` → BCSAR STRG/INFO → `.bcstm`/`.mp3`) e layout do `sango_sound.bcsar` (`P-008`, `A-023`).
 - [animations-format.md](animations-format.md) — formato GF1, índices de batalha PB/PK, expressões BCH, conversão individual e integração serial por manifesto nos GLBs texturizados (`P-012`, `A-020`, `A-021`).
 - [native-models-manifest.json](native-models-manifest.json) — cobertura dos 544 modelos MM e das 39 espécies selecionadas por encontros/starters/lendários, mapeamento PC/PB/GF1, resultados por modelo e validação amostral (`AN-E9`, `A-022`).
 - Referência TCC: [docs/tcc/01-pipeline-rom.md](../../tcc/01-pipeline-rom.md).
