@@ -1,9 +1,91 @@
 # Disassembly e dispatch de scripts ORAS
 
 Continuação de [script-format.md](script-format.md), em 2026-11-17.
-Escopo: Fase 1/P-013, sem runner nem alteração do comportamento do jogo.
+Escopo inicial: Fase 1/P-013. A continuação abaixo inclui o primeiro runner
+puro da Fase 2, ainda sem integração ao comportamento ativo do jogo.
 
-## Entrega verificada
+## Estado atual: todas as zonas e primeiro runner
+
+Continuação em 2026-11-17, Fases 1–2/P-013 e core-jogo/PRD-002/RF-04.
+
+- Geração `--all`: **536 zonas + 85 globais**, 1.157 programas, 530.246
+  instruções, 82 opcodes e **615/615 nomes nativos resolvidos por strings locais**.
+- Os vínculos agora são construídos diretamente dos bytes do sec1 por
+  `zone_script_entities.py`; o JSON do checkout principal só fornece nome,
+  proveniência e uma conferência independente dos IDs/counts.
+- 4.149 referências: 2.892 com candidato único, 584 ambíguas e 673 sem case
+  estático correspondente. Nenhum candidato é escolhido por conveniência.
+- As zonas contêm `bindingSource: ZO-sec1` e `warpBindings`; os 85 globais
+  incluem `bindings` inversos com zona, entidade, ID e target. A ausência de
+  referência a um global é representada por lista vazia.
+- Os **911 warps não possuem campo de script** no layout sec1: registram
+  destinationMap/destinationTile e parâmetros de transição, com `scriptId: null`
+  e status `navigation-no-script-field`. Não se confunde destinationMap com
+  ID de evento. IDs de scripts calculados dinamicamente continuam fora do mapa
+  estático; as 673 referências não resolvidas não são descartadas.
+
+### Hash c34ad2ab resolvido
+
+O nome é **MdlSetVisible**. Em `DllField.cro` (SHA-256
+`9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925`),
+a string `BuildMdlSetVisible\0` começa em 1097300; o sufixo `MdlSetVisible\0`
+começa em **1097305** e produz exatamente o hash GF `c34ad2ab`.
+A string C pode começar no meio de outra string: exigir fronteira não alfanumérica
+antes do nome era incorreto para um pool com sufixos compartilhados.
+O resolver agora examina todos os sufixos terminados em zero, conserva
+source/offset/SHA-256 e rejeita colisões de nomes no corpus pesquisado.
+Isso também resolveu os antigos nomes comunitários diretamente nos binários.
+
+Como corroborante contextual, zona 223/sec1 em offset de código 656 chama
+esse hash com duas células, empilhadas como `0,255`; global 63 em 6492/7592
+usa pares `0,255`/`1,255`. Isso é compatível com esconder/mostrar um modelo,
+mas não substitui uma validação runtime da ABI. A fixture sintética
+`BuildMdlSetVisible\0` reproduz a falha do resolver anterior.
+
+### Runner puro: contrato normalizado, não VM AMX
+
+`src/core/scriptRunner.ts`, `scriptTypes.ts` e `scriptNatives.ts` implementam
+um executor determinístico e imutável de `ScriptCommand[]`, sem I/O,
+DOM, Three.js, relógio ou dependências novas. [ADR-002](../core-jogo/adrs/ADR-002-runner-puro-de-chamadas-normalizadas.md)
+registra a decisão e seus limites. O estado contém pc, zona, atores, texto e
+status; o chamador fornece textos e destinos de warp já resolvidos.
+
+**Não se passa o JSON de disassembly diretamente para esse runner.** A VM,
+a pilha de células, resolução de ponteiros de texto, ABI e conversão de
+coordenadas/ACMD ainda precisam de adaptador validado. A abertura original
+não foi integrada nem declarada reproduzida. Os argumentos abaixo são o
+contrato local normalizado, não assinaturas comprovadas das nativas da ROM.
+
+| Nome suportado | Argumentos normalizados | Efeito no core |
+| --- | --- | --- |
+| `CommandNOP` | nenhum | Sem efeito explícito |
+| `MdlSetGPos` | actorId, x, y, z | Reposiciona NPC/player |
+| `MdlSetDirDisp` | actorId, direção 0–3 | Atualiza direção local |
+| `MdlSetVisible` | actorId, booleano 0/1 | Atualiza visibilidade |
+| `TalkMdlMsg_Seq` | textId | Abre texto fornecido em `context.texts` |
+| `MsgWinAllClose` | nenhum | Fecha o texto |
+| `_ABKeyWait` | nenhum | Pausa até `resumeScript` |
+| `_Suspend` | ticks inteiros não negativos | Pausa até ticks fornecidos pelo chamador |
+| `WarpSetID` | zoneId, warpId | Move player ao destino `context.warps[zoneId:warpId]` |
+
+O ator 255 é a convenção **desse contrato** para player. Posições e direções
+já devem estar normalizadas pelo chamador; nenhuma unidade ROM é adivinhada.
+`jump` usa índice de comando validado e `stop` encerra explicitamente.
+`runScript` executa até pausa/término, com orçamento finito; `resumeScript`
+retoma sem I/O. PC fora do programa não é término silencioso.
+
+Uma nativa desconhecida lança `UnsupportedScriptNativeError` com seu nome,
+inclusive `MdlAcmdSet` e qualquer comando não listado. Aridade, números não
+finitos, ator/texto/warp ausentes e salto inválido falham explicitamente;
+loop excedido falha com `ScriptExecutionLimitError` na mensagem. A sequência
+sintética dos testes move NPC/player, mostra texto, pausa, fecha e faz warp.
+
+Verificação desta continuação: 44 testes Python, 39 Vitest e build canônico;
+sete testes novos do runner, sem ROM nem WebGL. A geração completa foi
+repetida e comparada byte a byte antes do commit. Os números do slice abaixo
+são o registro histórico da etapa anterior, não o limite da entrega atual.
+
+## Entrega verificada — histórico do slice
 
 - [Disassembler](../../../scripts/amx_disassembly.py) próprio para Pawn/AMX v10,
   com instruções packed, operandos, targets relativos e tabelas de switch.
@@ -214,14 +296,16 @@ Defina `CHECKOUT` como o checkout original que contém a ROM e o catálogo de
 entidades (não este worktree, que começou sem esses arquivos ignorados).
 
 ```bash
-python3 -B -m scripts.disassemble_zone_scripts \
+python3 -B -m scripts.disassemble_zone_scripts --all \
   --zones "$CHECKOUT/rom/extracted/garc/a_0_1_3" \
   --zone-data "$CHECKOUT/src/data/zones" \
   --romfs "$CHECKOUT/rom/extracted/RomFS"
 ```
 
-`--zone-ids` seleciona outras zonas; `--all` processa todas as 536 e inclui os
-globais necessários. `--out` troca o destino. O gerador lê também
+`--all` processa todas as 536 zonas e **todas as 85 entradas globais**, inclusive
+as não referenciadas estaticamente. Sem `--all`, `--zone-ids` seleciona um
+subconjunto e apenas globais referenciados; use um `--out` separado para não
+misturar esse catálogo parcial com a entrega completa. `--out` troca o destino. O gerador lê também
 `ExeFS/code.bin`, ao lado de `RomFS`, para resolver as nativas do executável.
 Saídas não contêm timestamps, caminhos absolutos nem binários originais.
 
@@ -243,12 +327,12 @@ neste trabalho (P-015).
 
 ## Próximos passos de P-013
 
-1. Resolver o nome `c34ad2ab` e validar assinaturas/efeitos das nativas no
-   runtime/emulador; os nomes resolvidos ainda não são uma implementação.
-2. Confirmar o canal de interação versus callbacks para os 11 vínculos
-   ambíguos, bem como a regra de seleção global do jogo.
-3. Tipar movimentos e demais dados, levantar flags/eventos do arco inicial
-   e só então implementar runner determinístico com teste de paridade.
+1. Validar assinaturas/efeitos das nativas no runtime/emulador e construir
+   o adaptador da VM AMX para o contrato normalizado do runner puro.
+2. Confirmar os 584 vínculos ambíguos e resolver os 673 sem case estático,
+   incluindo regras de IDs dinâmicos, callbacks e seleção global.
+3. Tipar ACMD e demais dados, integrar eventos da abertura e o renderer,
+   levantar flags/eventos e verificar paridade com o jogo original.
 
 ## Referências e revisão
 

@@ -311,6 +311,36 @@
    ]
   }
  ],
+ "warpBindings": [
+  {
+   "index": 0,
+   "scriptId": null,
+   "status": "navigation-no-script-field",
+   "destinationMap": 223,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 3
+  },
+  {
+   "index": 1,
+   "scriptId": null,
+   "status": "navigation-no-script-field",
+   "destinationMap": 225,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 3
+  },
+  {
+   "index": 2,
+   "scriptId": null,
+   "status": "navigation-no-script-field",
+   "destinationMap": 227,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 3
+  }
+ ],
+ "bindingSource": "ZO-sec1",
  "programs": {
   "entities": {
    "sha256": "e0c246a97d669f1d2b21e9c5ac81d627d42211a105293c1cc34ef283c68d3556",
@@ -1525,7 +1555,7 @@
       "index": 6,
       "hash": "133daa6a",
       "name": "FlagGet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -1648,7 +1678,7 @@
       "index": 6,
       "hash": "133daa6a",
       "name": "FlagGet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -1692,7 +1722,7 @@
       "index": 6,
       "hash": "133daa6a",
       "name": "FlagGet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -1736,7 +1766,7 @@
       "index": 6,
       "hash": "133daa6a",
       "name": "FlagGet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -2179,7 +2209,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -2345,7 +2375,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -2501,7 +2531,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -2815,7 +2845,7 @@
       "index": 10,
       "hash": "13413496",
       "name": "FlagSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -2841,7 +2871,7 @@
       "index": 10,
       "hash": "13413496",
       "name": "FlagSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -3566,7 +3596,7 @@
       "index": 10,
       "hash": "13413496",
       "name": "FlagSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -3601,7 +3631,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -3662,7 +3692,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -5635,7 +5665,7 @@
       "index": 6,
       "hash": "6393be9a",
       "name": "SEPlay",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -5845,7 +5875,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -6027,7 +6057,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -6146,7 +6176,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -6337,7 +6367,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -6393,7 +6423,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -6691,7 +6721,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -6798,7 +6828,7 @@
       "index": 6,
       "hash": "6393be9a",
       "name": "SEPlay",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -7008,7 +7038,7 @@
       "index": 6,
       "hash": "6393be9a",
       "name": "SEPlay",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -9732,7 +9762,7 @@
       "index": 29,
       "hash": "f0882c66",
       "name": "MdlAcmdSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 16
     },
@@ -14038,7 +14068,7 @@
       "index": 44,
       "hash": "13413496",
       "name": "FlagSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -14073,7 +14103,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -14108,7 +14138,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -14910,7 +14940,7 @@
       "index": 44,
       "hash": "13413496",
       "name": "FlagSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -15229,7 +15259,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -15377,7 +15407,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -15525,7 +15555,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -15819,7 +15849,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -16957,7 +16987,7 @@
       "index": 9,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -20791,7 +20821,7 @@
       "index": 6,
       "hash": "6393be9a",
       "name": "SEPlay",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },

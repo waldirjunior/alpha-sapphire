@@ -517,7 +517,7 @@
     "index": 5,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -753,7 +753,7 @@
     "index": 5,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -1531,7 +1531,7 @@
     "index": 12,
     "hash": "f0882c66",
     "name": "MdlAcmdSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 16
   },
@@ -3113,7 +3113,7 @@
     "index": 23,
     "hash": "8e55f629",
     "name": "WorkSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 8
   },
@@ -3341,7 +3341,7 @@
     "index": 23,
     "hash": "8e55f629",
     "name": "WorkSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 8
   },
@@ -3683,7 +3683,7 @@
     "index": 29,
     "hash": "13413496",
     "name": "FlagSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -3709,7 +3709,7 @@
     "index": 29,
     "hash": "13413496",
     "name": "FlagSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -6357,6 +6357,333 @@
    "mnemonic": "retn",
    "operands": [],
    "size": 4
+  }
+ ],
+ "bindingSource": "ZO-sec1",
+ "bindings": [
+  {
+   "zoneId": 6,
+   "kind": "npcs",
+   "index": 5,
+   "entityId": 5,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 9,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 11,
+   "kind": "npcs",
+   "index": 4,
+   "entityId": 4,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 12,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 22,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 34,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 47,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 53,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 56,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 72,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 80,
+   "kind": "npcs",
+   "index": 11,
+   "entityId": 11,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 82,
+   "kind": "npcs",
+   "index": 5,
+   "entityId": 5,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 84,
+   "kind": "npcs",
+   "index": 6,
+   "entityId": 6,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 85,
+   "kind": "npcs",
+   "index": 5,
+   "entityId": 5,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 89,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 91,
+   "kind": "npcs",
+   "index": 4,
+   "entityId": 4,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 134,
+   "kind": "npcs",
+   "index": 2,
+   "entityId": 2,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 139,
+   "kind": "npcs",
+   "index": 10,
+   "entityId": 10,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 156,
+   "kind": "npcs",
+   "index": 15,
+   "entityId": 15,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 166,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 219,
+   "kind": "npcs",
+   "index": 4,
+   "entityId": 4,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 277,
+   "kind": "npcs",
+   "index": 5,
+   "entityId": 5,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 454,
+   "kind": "npcs",
+   "index": 5,
+   "entityId": 5,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 455,
+   "kind": "npcs",
+   "index": 4,
+   "entityId": 4,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 478,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 524,
+   "kind": "npcs",
+   "index": 6,
+   "entityId": 6,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
+  },
+  {
+   "zoneId": 529,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 10250,
+   "status": "matched-dispatch",
+   "target": 2592,
+   "functions": [
+    2700
+   ]
   }
  ]
 }

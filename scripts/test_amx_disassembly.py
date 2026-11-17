@@ -53,6 +53,11 @@ class AmxDisassemblyTests(unittest.TestCase):
     def test_hash_matches_known_command(self):
         self.assertEqual(hash_name('CommandNOP'), 0x590F52EE)
 
+    def test_suffix_pooled_native_string(self):
+        result = resolve_native_names({0xc34ad2ab}, [('synthetic.cro', b'BuildMdlSetVisible\0')])
+        self.assertEqual(result[0xc34ad2ab]['name'], 'MdlSetVisible')
+        self.assertEqual(result[0xc34ad2ab]['offset'], 5)
+
     def test_rom_strings_resolve_by_hash(self):
         result = resolve_native_names({hash_name('FlagSet'), 123},
                                       [('test.cro', b'\0FlagSet\0OtherName\0')])

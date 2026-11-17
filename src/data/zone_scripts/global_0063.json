@@ -1654,7 +1654,7 @@
     "index": 9,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -2171,7 +2171,7 @@
     "index": 9,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -4895,7 +4895,7 @@
     "index": 29,
     "hash": "f0882c66",
     "name": "MdlAcmdSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 16
   },
@@ -7558,7 +7558,7 @@
     "index": 44,
     "hash": "13413496",
     "name": "FlagSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -8222,7 +8222,7 @@
     "index": 45,
     "hash": "133daa6a",
     "name": "FlagGet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -8358,7 +8358,7 @@
     "index": 44,
     "hash": "13413496",
     "name": "FlagSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -9010,7 +9010,7 @@
     "index": 9,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -10109,7 +10109,7 @@
     "index": 45,
     "hash": "133daa6a",
     "name": "FlagGet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -10145,7 +10145,7 @@
     "index": 45,
     "hash": "133daa6a",
     "name": "FlagGet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -11022,8 +11022,8 @@
    "native": {
     "index": 61,
     "hash": "c34ad2ab",
-    "name": null,
-    "evidence": "unresolved"
+    "name": "MdlSetVisible",
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 8
   },
@@ -11598,7 +11598,7 @@
     "index": 45,
     "hash": "133daa6a",
     "name": "FlagGet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -11634,7 +11634,7 @@
     "index": 45,
     "hash": "133daa6a",
     "name": "FlagGet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -11858,7 +11858,7 @@
     "index": 45,
     "hash": "133daa6a",
     "name": "FlagGet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -12612,8 +12612,8 @@
    "native": {
     "index": 61,
     "hash": "c34ad2ab",
-    "name": null,
-    "evidence": "unresolved"
+    "name": "MdlSetVisible",
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 8
   },
@@ -13043,7 +13043,7 @@
     "index": 9,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -13123,7 +13123,7 @@
     "index": 9,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -13360,7 +13360,7 @@
     "index": 78,
     "hash": "8e55f629",
     "name": "WorkSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 8
   },
@@ -13405,7 +13405,7 @@
     "index": 78,
     "hash": "8e55f629",
     "name": "WorkSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 8
   },
@@ -13575,7 +13575,7 @@
     "index": 45,
     "hash": "133daa6a",
     "name": "FlagGet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -14413,7 +14413,7 @@
     "index": 44,
     "hash": "13413496",
     "name": "FlagSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -17141,6 +17141,213 @@
    "mnemonic": "retn",
    "operands": [],
    "size": 4
+  }
+ ],
+ "bindingSource": "ZO-sec1",
+ "bindings": [
+  {
+   "zoneId": 228,
+   "kind": "npcs",
+   "index": 6,
+   "entityId": 6,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 232,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 236,
+   "kind": "npcs",
+   "index": 5,
+   "entityId": 5,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 240,
+   "kind": "npcs",
+   "index": 6,
+   "entityId": 6,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 246,
+   "kind": "npcs",
+   "index": 4,
+   "entityId": 4,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 253,
+   "kind": "npcs",
+   "index": 5,
+   "entityId": 5,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 259,
+   "kind": "npcs",
+   "index": 5,
+   "entityId": 5,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 265,
+   "kind": "npcs",
+   "index": 6,
+   "entityId": 6,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 278,
+   "kind": "npcs",
+   "index": 9,
+   "entityId": 9,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 284,
+   "kind": "npcs",
+   "index": 6,
+   "entityId": 6,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 301,
+   "kind": "npcs",
+   "index": 4,
+   "entityId": 4,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 309,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 330,
+   "kind": "npcs",
+   "index": 5,
+   "entityId": 5,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 341,
+   "kind": "npcs",
+   "index": 4,
+   "entityId": 4,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 353,
+   "kind": "npcs",
+   "index": 5,
+   "entityId": 5,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
+  },
+  {
+   "zoneId": 364,
+   "kind": "npcs",
+   "index": 2,
+   "entityId": 2,
+   "scriptId": 2103,
+   "status": "matched-dispatch",
+   "target": 3756,
+   "functions": [
+    9296
+   ]
+  },
+  {
+   "zoneId": 518,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 2100,
+   "status": "matched-dispatch",
+   "target": 3696,
+   "functions": [
+    6260
+   ]
   }
  ]
 }

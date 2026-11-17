@@ -753,7 +753,7 @@
     "index": 5,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -1154,7 +1154,7 @@
     "index": 5,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -3878,7 +3878,7 @@
     "index": 24,
     "hash": "f0882c66",
     "name": "MdlAcmdSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 16
   },
@@ -8279,6 +8279,201 @@
    "mnemonic": "retn",
    "operands": [],
    "size": 4
+  }
+ ],
+ "bindingSource": "ZO-sec1",
+ "bindings": [
+  {
+   "zoneId": 228,
+   "kind": "npcs",
+   "index": 2,
+   "entityId": 2,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 232,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 236,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 240,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 246,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 253,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 259,
+   "kind": "npcs",
+   "index": 2,
+   "entityId": 2,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 265,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 278,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 284,
+   "kind": "npcs",
+   "index": 2,
+   "entityId": 2,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 301,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 309,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 330,
+   "kind": "npcs",
+   "index": 3,
+   "entityId": 3,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 341,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 353,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
+  },
+  {
+   "zoneId": 518,
+   "kind": "npcs",
+   "index": 2,
+   "entityId": 2,
+   "scriptId": 10390,
+   "status": "matched-dispatch",
+   "target": 2552,
+   "functions": [
+    2660
+   ]
   }
  ]
 }

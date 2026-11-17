@@ -1821,7 +1821,7 @@
     "index": 4,
     "hash": "8e55f629",
     "name": "WorkSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 8
   },
@@ -2003,7 +2003,7 @@
     "index": 4,
     "hash": "8e55f629",
     "name": "WorkSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 8
   },
@@ -2230,7 +2230,7 @@
     "index": 10,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -2631,7 +2631,7 @@
     "index": 10,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -5355,7 +5355,7 @@
     "index": 28,
     "hash": "f0882c66",
     "name": "MdlAcmdSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 16
   },
@@ -11846,7 +11846,7 @@
     "index": 53,
     "hash": "133daa6a",
     "name": "FlagGet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -12617,7 +12617,7 @@
     "index": 53,
     "hash": "133daa6a",
     "name": "FlagGet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -14783,7 +14783,7 @@
     "index": 10,
     "hash": "6393be9a",
     "name": "SEPlay",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -14901,7 +14901,7 @@
     "index": 4,
     "hash": "8e55f629",
     "name": "WorkSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 8
   },
@@ -14927,7 +14927,7 @@
     "index": 58,
     "hash": "13413496",
     "name": "FlagSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -15424,7 +15424,7 @@
     "index": 58,
     "hash": "13413496",
     "name": "FlagSet",
-    "evidence": "community-hash"
+    "evidence": "rom-string-hash"
    },
    "argumentBytes": 4
   },
@@ -19905,6 +19905,213 @@
    "mnemonic": "retn",
    "operands": [],
    "size": 4
+  }
+ ],
+ "bindingSource": "ZO-sec1",
+ "bindings": [
+  {
+   "zoneId": 227,
+   "kind": "furniture",
+   "index": 3,
+   "entityId": null,
+   "scriptId": 10315,
+   "status": "matched-dispatch",
+   "target": 4088,
+   "functions": [
+    6644
+   ]
+  },
+  {
+   "zoneId": 242,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 10316,
+   "status": "matched-dispatch",
+   "target": 4108,
+   "functions": [
+    6700
+   ]
+  },
+  {
+   "zoneId": 242,
+   "kind": "triggers",
+   "index": 3,
+   "entityId": null,
+   "scriptId": 10319,
+   "status": "matched-dispatch",
+   "target": 4168,
+   "functions": [
+    7596
+   ]
+  },
+  {
+   "zoneId": 243,
+   "kind": "furniture",
+   "index": 0,
+   "entityId": null,
+   "scriptId": 10318,
+   "status": "matched-dispatch",
+   "target": 4148,
+   "functions": [
+    7160
+   ]
+  },
+  {
+   "zoneId": 243,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 10317,
+   "status": "matched-dispatch",
+   "target": 4128,
+   "functions": [
+    6736
+   ]
+  },
+  {
+   "zoneId": 248,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 10316,
+   "status": "matched-dispatch",
+   "target": 4108,
+   "functions": [
+    6700
+   ]
+  },
+  {
+   "zoneId": 248,
+   "kind": "triggers",
+   "index": 3,
+   "entityId": null,
+   "scriptId": 10319,
+   "status": "matched-dispatch",
+   "target": 4168,
+   "functions": [
+    7596
+   ]
+  },
+  {
+   "zoneId": 249,
+   "kind": "furniture",
+   "index": 0,
+   "entityId": null,
+   "scriptId": 10318,
+   "status": "matched-dispatch",
+   "target": 4148,
+   "functions": [
+    7160
+   ]
+  },
+  {
+   "zoneId": 249,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 10317,
+   "status": "matched-dispatch",
+   "target": 4128,
+   "functions": [
+    6736
+   ]
+  },
+  {
+   "zoneId": 269,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 10316,
+   "status": "matched-dispatch",
+   "target": 4108,
+   "functions": [
+    6700
+   ]
+  },
+  {
+   "zoneId": 269,
+   "kind": "triggers",
+   "index": 3,
+   "entityId": null,
+   "scriptId": 10319,
+   "status": "matched-dispatch",
+   "target": 4168,
+   "functions": [
+    7596
+   ]
+  },
+  {
+   "zoneId": 270,
+   "kind": "furniture",
+   "index": 0,
+   "entityId": null,
+   "scriptId": 10318,
+   "status": "matched-dispatch",
+   "target": 4148,
+   "functions": [
+    7160
+   ]
+  },
+  {
+   "zoneId": 270,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 10317,
+   "status": "matched-dispatch",
+   "target": 4128,
+   "functions": [
+    6736
+   ]
+  },
+  {
+   "zoneId": 314,
+   "kind": "npcs",
+   "index": 1,
+   "entityId": 1,
+   "scriptId": 10316,
+   "status": "matched-dispatch",
+   "target": 4108,
+   "functions": [
+    6700
+   ]
+  },
+  {
+   "zoneId": 314,
+   "kind": "triggers",
+   "index": 3,
+   "entityId": null,
+   "scriptId": 10319,
+   "status": "matched-dispatch",
+   "target": 4168,
+   "functions": [
+    7596
+   ]
+  },
+  {
+   "zoneId": 315,
+   "kind": "furniture",
+   "index": 0,
+   "entityId": null,
+   "scriptId": 10318,
+   "status": "matched-dispatch",
+   "target": 4148,
+   "functions": [
+    7160
+   ]
+  },
+  {
+   "zoneId": 315,
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 10317,
+   "status": "matched-dispatch",
+   "target": 4128,
+   "functions": [
+    6736
+   ]
   }
  ]
 }

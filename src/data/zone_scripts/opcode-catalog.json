@@ -7,7 +7,7 @@
    "mnemonic": "load.i",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 106
+   "occurrences": 1779
   },
   {
    "opcode": 11,
@@ -15,7 +15,7 @@
    "mnemonic": "const.pri",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 27
+   "occurrences": 458
   },
   {
    "opcode": 12,
@@ -23,7 +23,7 @@
    "mnemonic": "const.alt",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 26
+   "occurrences": 452
   },
   {
    "opcode": 14,
@@ -31,7 +31,7 @@
    "mnemonic": "addr.alt",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 18
+   "occurrences": 239
   },
   {
    "opcode": 23,
@@ -39,7 +39,7 @@
    "mnemonic": "stor.i",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 49
+   "occurrences": 861
   },
   {
    "opcode": 31,
@@ -47,7 +47,7 @@
    "mnemonic": "lctrl",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 6
+   "occurrences": 30
   },
   {
    "opcode": 32,
@@ -55,7 +55,7 @@
    "mnemonic": "sctrl",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 6
+   "occurrences": 30
   },
   {
    "opcode": 33,
@@ -63,7 +63,7 @@
    "mnemonic": "move.pri",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 1
+   "occurrences": 9
   },
   {
    "opcode": 34,
@@ -71,7 +71,7 @@
    "mnemonic": "move.alt",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 67
+   "occurrences": 1213
   },
   {
    "opcode": 35,
@@ -79,7 +79,7 @@
    "mnemonic": "xchg",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 3
+   "occurrences": 42
   },
   {
    "opcode": 36,
@@ -87,7 +87,7 @@
    "mnemonic": "push.pri",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 323
+   "occurrences": 4260
   },
   {
    "opcode": 37,
@@ -95,7 +95,7 @@
    "mnemonic": "push.alt",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 11
+   "occurrences": 183
   },
   {
    "opcode": 39,
@@ -103,7 +103,7 @@
    "mnemonic": "push.c",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 295
+   "occurrences": 5124
   },
   {
    "opcode": 43,
@@ -111,7 +111,7 @@
    "mnemonic": "pop.alt",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 141
+   "occurrences": 1654
   },
   {
    "opcode": 46,
@@ -119,7 +119,7 @@
    "mnemonic": "proc",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 759
+   "occurrences": 17326
   },
   {
    "opcode": 48,
@@ -127,7 +127,7 @@
    "mnemonic": "retn",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 849
+   "occurrences": 18848
   },
   {
    "opcode": 49,
@@ -135,7 +135,7 @@
    "mnemonic": "call",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 2959
+   "occurrences": 56172
   },
   {
    "opcode": 51,
@@ -143,7 +143,7 @@
    "mnemonic": "jump",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 1300
+   "occurrences": 23063
   },
   {
    "opcode": 53,
@@ -151,7 +151,7 @@
    "mnemonic": "jzer",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 479
+   "occurrences": 9126
   },
   {
    "opcode": 54,
@@ -159,7 +159,7 @@
    "mnemonic": "jnz",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 285
+   "occurrences": 5273
   },
   {
    "opcode": 55,
@@ -167,7 +167,7 @@
    "mnemonic": "jeq",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 39
+   "occurrences": 710
   },
   {
    "opcode": 56,
@@ -175,7 +175,7 @@
    "mnemonic": "jneq",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 9
+   "occurrences": 86
   },
   {
    "opcode": 61,
@@ -183,7 +183,7 @@
    "mnemonic": "jsless",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 37
+   "occurrences": 660
   },
   {
    "opcode": 62,
@@ -191,7 +191,7 @@
    "mnemonic": "jsleq",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 3
+   "occurrences": 83
   },
   {
    "opcode": 63,
@@ -199,7 +199,7 @@
    "mnemonic": "jsgrtr",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 7
+   "occurrences": 83
   },
   {
    "opcode": 64,
@@ -207,7 +207,15 @@
    "mnemonic": "jsgeq",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 59
+   "occurrences": 1038
+  },
+  {
+   "opcode": 67,
+   "hex": "43",
+   "mnemonic": "sshr",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 1
   },
   {
    "opcode": 74,
@@ -215,7 +223,7 @@
    "mnemonic": "sdiv.alt",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 2
+   "occurrences": 31
   },
   {
    "opcode": 78,
@@ -223,7 +231,15 @@
    "mnemonic": "add",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 25
+   "occurrences": 109
+  },
+  {
+   "opcode": 79,
+   "hex": "4f",
+   "mnemonic": "sub",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 1
   },
   {
    "opcode": 80,
@@ -231,7 +247,7 @@
    "mnemonic": "sub.alt",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 20
+   "occurrences": 261
   },
   {
    "opcode": 81,
@@ -239,7 +255,7 @@
    "mnemonic": "and",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 185
+   "occurrences": 3679
   },
   {
    "opcode": 82,
@@ -247,7 +263,15 @@
    "mnemonic": "or",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 33
+   "occurrences": 613
+  },
+  {
+   "opcode": 85,
+   "hex": "55",
+   "mnemonic": "neg",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 4
   },
   {
    "opcode": 87,
@@ -255,7 +279,7 @@
    "mnemonic": "add.c",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 6
+   "occurrences": 30
   },
   {
    "opcode": 89,
@@ -263,7 +287,7 @@
    "mnemonic": "zero.pri",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 855
+   "occurrences": 18634
   },
   {
    "opcode": 90,
@@ -271,7 +295,15 @@
    "mnemonic": "zero.alt",
    "trailingCells": 0,
    "packed": false,
-   "occurrences": 26
+   "occurrences": 495
+  },
+  {
+   "opcode": 95,
+   "hex": "5f",
+   "mnemonic": "eq",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 56
   },
   {
    "opcode": 96,
@@ -279,7 +311,31 @@
    "mnemonic": "neq",
    "trailingCells": 0,
    "packed": false,
+   "occurrences": 11
+  },
+  {
+   "opcode": 101,
+   "hex": "65",
+   "mnemonic": "sless",
+   "trailingCells": 0,
+   "packed": false,
    "occurrences": 1
+  },
+  {
+   "opcode": 103,
+   "hex": "67",
+   "mnemonic": "sgrtr",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 1
+  },
+  {
+   "opcode": 104,
+   "hex": "68",
+   "mnemonic": "sgeq",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 22
   },
   {
    "opcode": 105,
@@ -287,7 +343,7 @@
    "mnemonic": "eq.c.pri",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 18
+   "occurrences": 397
   },
   {
    "opcode": 117,
@@ -295,7 +351,7 @@
    "mnemonic": "movs",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 16
+   "occurrences": 142
   },
   {
    "opcode": 119,
@@ -303,7 +359,7 @@
    "mnemonic": "fill",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 2
+   "occurrences": 97
   },
   {
    "opcode": 120,
@@ -311,7 +367,7 @@
    "mnemonic": "halt",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 20
+   "occurrences": 416
   },
   {
    "opcode": 129,
@@ -319,7 +375,7 @@
    "mnemonic": "switch",
    "trailingCells": 1,
    "packed": false,
-   "occurrences": 149
+   "occurrences": 2000
   },
   {
    "opcode": 130,
@@ -327,7 +383,7 @@
    "mnemonic": "casetbl",
    "trailingCells": "variable",
    "packed": false,
-   "occurrences": 149
+   "occurrences": 2000
   },
   {
    "opcode": 135,
@@ -335,7 +391,7 @@
    "mnemonic": "sysreq.n",
    "trailingCells": 2,
    "packed": false,
-   "occurrences": 2508
+   "occurrences": 47404
   },
   {
    "opcode": 138,
@@ -343,7 +399,7 @@
    "mnemonic": "push2.c",
    "trailingCells": 2,
    "packed": false,
-   "occurrences": 41
+   "occurrences": 978
   },
   {
    "opcode": 142,
@@ -351,7 +407,7 @@
    "mnemonic": "push3.c",
    "trailingCells": 3,
    "packed": false,
-   "occurrences": 35
+   "occurrences": 1030
   },
   {
    "opcode": 146,
@@ -359,7 +415,7 @@
    "mnemonic": "push4.c",
    "trailingCells": 4,
    "packed": false,
-   "occurrences": 5
+   "occurrences": 10
   },
   {
    "opcode": 150,
@@ -367,7 +423,7 @@
    "mnemonic": "push5.c",
    "trailingCells": 5,
    "packed": false,
-   "occurrences": 67
+   "occurrences": 1617
   },
   {
    "opcode": 155,
@@ -375,7 +431,7 @@
    "mnemonic": "load.s.both",
    "trailingCells": 2,
    "packed": false,
-   "occurrences": 93
+   "occurrences": 1721
   },
   {
    "opcode": 157,
@@ -383,7 +439,7 @@
    "mnemonic": "const.s",
    "trailingCells": 2,
    "packed": false,
-   "occurrences": 84
+   "occurrences": 1779
   },
   {
    "opcode": 162,
@@ -391,7 +447,15 @@
    "mnemonic": "load.p.pri",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 35
+   "occurrences": 1170
+  },
+  {
+   "opcode": 163,
+   "hex": "a3",
+   "mnemonic": "load.p.alt",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 4
   },
   {
    "opcode": 164,
@@ -399,7 +463,7 @@
    "mnemonic": "load.p.s.pri",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 1033
+   "occurrences": 16785
   },
   {
    "opcode": 165,
@@ -407,7 +471,7 @@
    "mnemonic": "load.p.s.alt",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 4
+   "occurrences": 66
   },
   {
    "opcode": 171,
@@ -415,7 +479,7 @@
    "mnemonic": "const.p.pri",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 120
+   "occurrences": 1948
   },
   {
    "opcode": 172,
@@ -423,7 +487,7 @@
    "mnemonic": "const.p.alt",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 251
+   "occurrences": 4971
   },
   {
    "opcode": 173,
@@ -431,7 +495,7 @@
    "mnemonic": "addr.p.pri",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 13
+   "occurrences": 201
   },
   {
    "opcode": 174,
@@ -439,7 +503,7 @@
    "mnemonic": "addr.p.alt",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 6
+   "occurrences": 144
   },
   {
    "opcode": 175,
@@ -447,7 +511,7 @@
    "mnemonic": "stor.p.pri",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 2
+   "occurrences": 6
   },
   {
    "opcode": 177,
@@ -455,7 +519,7 @@
    "mnemonic": "stor.p.s.pri",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 543
+   "occurrences": 9128
   },
   {
    "opcode": 184,
@@ -463,7 +527,7 @@
    "mnemonic": "lidx.p.b",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 8
+   "occurrences": 168
   },
   {
    "opcode": 185,
@@ -471,7 +535,7 @@
    "mnemonic": "idxaddr.p.b",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 106
+   "occurrences": 1646
   },
   {
    "opcode": 188,
@@ -479,7 +543,7 @@
    "mnemonic": "push.p.c",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 10594
+   "occurrences": 202423
   },
   {
    "opcode": 189,
@@ -487,7 +551,7 @@
    "mnemonic": "push.p",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 34
+   "occurrences": 80
   },
   {
    "opcode": 190,
@@ -495,7 +559,7 @@
    "mnemonic": "push.p.s",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 2315
+   "occurrences": 36749
   },
   {
    "opcode": 191,
@@ -503,7 +567,7 @@
    "mnemonic": "stack.p",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 704
+   "occurrences": 12674
   },
   {
    "opcode": 197,
@@ -511,7 +575,7 @@
    "mnemonic": "add.p.c",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 140
+   "occurrences": 2288
   },
   {
    "opcode": 198,
@@ -519,7 +583,7 @@
    "mnemonic": "smul.p.c",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 32
+   "occurrences": 68
   },
   {
    "opcode": 199,
@@ -527,7 +591,7 @@
    "mnemonic": "zero.p",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 1
+   "occurrences": 7
   },
   {
    "opcode": 200,
@@ -535,7 +599,7 @@
    "mnemonic": "zero.p.s",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 39
+   "occurrences": 542
   },
   {
    "opcode": 201,
@@ -543,7 +607,15 @@
    "mnemonic": "eq.p.c.pri",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 239
+   "occurrences": 4972
+  },
+  {
+   "opcode": 203,
+   "hex": "cb",
+   "mnemonic": "inc.p",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 1
   },
   {
    "opcode": 204,
@@ -551,7 +623,23 @@
    "mnemonic": "inc.p.s",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 34
+   "occurrences": 472
+  },
+  {
+   "opcode": 206,
+   "hex": "ce",
+   "mnemonic": "dec.p.s",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 1
+  },
+  {
+   "opcode": 207,
+   "hex": "cf",
+   "mnemonic": "movs.p",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 2
   },
   {
    "opcode": 210,
@@ -559,7 +647,7 @@
    "mnemonic": "halt.p",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 32
+   "occurrences": 1157
   },
   {
    "opcode": 212,
@@ -567,7 +655,7 @@
    "mnemonic": "push.p.adr",
    "trailingCells": 0,
    "packed": true,
-   "occurrences": 18
+   "occurrences": 231
   }
  ]
 }

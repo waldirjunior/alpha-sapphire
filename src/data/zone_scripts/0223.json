@@ -277,6 +277,27 @@
    ]
   }
  ],
+ "warpBindings": [
+  {
+   "index": 0,
+   "scriptId": null,
+   "status": "navigation-no-script-field",
+   "destinationMap": 6,
+   "destinationTile": 0,
+   "faceDirection": 0,
+   "transitionEffect": 2
+  },
+  {
+   "index": 1,
+   "scriptId": null,
+   "status": "navigation-no-script-field",
+   "destinationMap": 224,
+   "destinationTile": 0,
+   "faceDirection": 1,
+   "transitionEffect": 5
+  }
+ ],
+ "bindingSource": "ZO-sec1",
  "programs": {
   "entities": {
    "sha256": "f263b4679f3d4a130c379cf65ca85eda4fdccb4a8383dc008f17c0d8b80bf9ef",
@@ -1443,8 +1464,8 @@
      "native": {
       "index": 6,
       "hash": "c34ad2ab",
-      "name": null,
-      "evidence": "unresolved"
+      "name": "MdlSetVisible",
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -2431,7 +2452,7 @@
       "index": 2,
       "hash": "6393be9a",
       "name": "SEPlay",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },

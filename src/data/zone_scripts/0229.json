@@ -51,6 +51,14 @@
       2292
      ],
      "tableOffset": 2228
+    },
+    {
+     "program": "global:0033",
+     "target": 20,
+     "functions": [
+      128
+     ],
+     "tableOffset": 80
     }
    ]
   },
@@ -89,6 +97,18 @@
    ]
   }
  ],
+ "warpBindings": [
+  {
+   "index": 0,
+   "scriptId": null,
+   "status": "navigation-no-script-field",
+   "destinationMap": 7,
+   "destinationTile": 1,
+   "faceDirection": 0,
+   "transitionEffect": 2
+  }
+ ],
+ "bindingSource": "ZO-sec1",
  "programs": {
   "entities": {
    "sha256": "bc131a977342eff80da0d367dab9dd602d102fbbeb5e16dc611330cac7ec5a7c",
@@ -191,7 +211,7 @@
       "index": 0,
       "hash": "133daa6a",
       "name": "FlagGet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -299,7 +319,7 @@
       "index": 3,
       "hash": "13413496",
       "name": "FlagSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -1208,7 +1228,7 @@
       "index": 2,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -1390,7 +1410,7 @@
       "index": 2,
       "hash": "8e55f629",
       "name": "WorkSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 8
     },
@@ -1484,7 +1504,7 @@
       "index": 5,
       "hash": "6393be9a",
       "name": "SEPlay",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -4208,7 +4228,7 @@
       "index": 19,
       "hash": "f0882c66",
       "name": "MdlAcmdSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 16
     },
@@ -4741,7 +4761,7 @@
       "index": 24,
       "hash": "133daa6a",
       "name": "FlagGet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -5012,7 +5032,7 @@
       "index": 24,
       "hash": "133daa6a",
       "name": "FlagGet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },

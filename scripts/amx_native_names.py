@@ -21,8 +21,8 @@ def resolve_native_names(identifiers: set[int], sources: Iterable[tuple[str, byt
     resolved = {}
     for source, raw in sources:
         source_hash = hashlib.sha256(raw).hexdigest()
-        for match in re.finditer(rb'(?<![A-Za-z0-9_])[A-Za-z_][A-Za-z0-9_]{2,100}\x00', raw):
-            name = match.group()[:-1].decode('ascii')
+        for match in re.finditer(rb'(?=([A-Za-z_][A-Za-z0-9_]{2,100})\x00)', raw):
+            name = match.group(1).decode('ascii')
             identifier = hash_name(name)
             if identifier not in identifiers:
                 continue

@@ -28,7 +28,14 @@ Atualizado em 2026-11-17 (verificação local na VPS).
 - `python3 -m unittest scripts/test_zone_scripts.py scripts/test_pipeline.py`: 18 testes passando (10 novos + 8 existentes), fixtures sintéticas sem ROM.
 - A verificação `npm test && npm run build` neste worktree parou em `vitest: command not found` (sem `node_modules`); build não executado. As aprovações de build da seção anterior são históricas, não desta investigação.
 
-## Disassembly do slice (2026-11-17, continuação no mesmo worktree)
+## Corpus completo e runner puro inicial (2026-11-17)
+
+- `src/data/zone_scripts/`: 536 zonas + 85 globais (todas as entradas), 530.246 instruções e 82 opcodes; 615/615 nomes nativos resolvidos por strings locais, inclusive `c34ad2ab=MdlSetVisible` (A-012).
+- Vínculos construídos dos ZOs, conferidos com o catálogo externo: 2.892 únicos, 584 ambíguos e 673 sem case estático. Os 911 warps registram navegação, sem inventar script. Globais incluem vínculos inversos; `--all` é o comando canônico de regeneração completa.
+- `src/core/scriptRunner.ts`: runner puro, imutável e determinístico de chamadas normalizadas de movimento/visibilidade/texto/warp/espera; falha explícita em nativa desconhecida. Sete testes sintéticos, sem DOM/Three.js. Não é VM AMX e não está ligado ao jogo ativo; ADR-002/core-jogo e P-013 documentam limites.
+- Verificação: 44 testes Python, 39 Vitest e `npm run build`; geração completa repetida sem diferenças. Sem dependências novas nem execução de conversores.
+
+## Disassembly do slice (2026-11-17, histórico da etapa anterior)
 
 - [Gerador](../scripts/disassemble_zone_scripts.py) e [documentação](features/pipeline-rom/script-disassembly.md): 12 zonas (6, 7, 23, 223–231), oito scripts globais referenciados, 28.507 instruções e 71 opcodes em `src/data/zone_scripts/`.
 - Nativas: 204/205 hashes nomeados (198 por strings dos binários locais e seis por referência comunitária); `c34ad2ab` desconhecido. Vínculos NPC/trigger/furniture: 108 únicos e 11 ambíguos, sem seleção especulativa (P-013/A-011).

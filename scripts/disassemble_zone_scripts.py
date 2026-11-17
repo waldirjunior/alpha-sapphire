@@ -13,6 +13,7 @@ from .amx_native_names import resolve_native_names
 from .amx_opcodes import NAMES, OPERAND_COUNTS
 from .extract_zone_scripts import parse_zone_scripts
 from .zone_script_bindings import bind_entities, find_dispatch, validate_entity_scripts
+from .zone_script_entities import parse_zone_entities, warp_bindings
 
 
 SLICE_ZONES = (6, 7, 23, *range(223, 232))
@@ -34,7 +35,7 @@ def load_zone(zone_id: int, zones: Path, zone_data: Path) -> dict:
     validate_entity_scripts(raw, entities)
     return {'zoneId': zone_id, 'zoneName': entities['name'], 'entitySource': matches[0].name,
             'entitySourceSha256': hashlib.sha256(entities_raw).hexdigest(),
-            'programs': programs, 'entities': entities}
+            'programs': programs, 'entities': parse_zone_entities(raw)}
 
 
 def decode_program(program: dict, names: dict) -> dict:
@@ -67,7 +68,16 @@ def decode_zone(zone: dict, names: dict, globals_decoded: dict | None = None) ->
     dispatches = {name: program['dispatch'] for name, program in {**programs, **(globals_decoded or {})}.items()}
     return {'zoneId': zone['zoneId'], 'zoneName': zone['zoneName'],
             'entitySource': zone['entitySource'], 'entitySourceSha256': zone['entitySourceSha256'],
-            'bindings': bind_entities(zone['entities'], dispatches), 'programs': programs}
+            'bindings': bind_entities(zone['entities'], dispatches),
+            'warpBindings': warp_bindings(zone['entities']), 'bindingSource': 'ZO-sec1', 'programs': programs}
+
+
+def global_bindings(name: str, zones: list[dict]) -> list[dict]:
+    return [{'zoneId': zone['zoneId'], 'kind': binding['kind'], 'index': binding['index'],
+             'entityId': binding['entityId'], 'scriptId': binding['scriptId'],
+             'status': binding['status'], 'target': match['target'], 'functions': match['functions']}
+            for zone in zones for binding in zone['bindings'] for match in binding['matches']
+            if match['program'] == name]
 
 
 def write_json(path: Path, document: dict) -> None:
@@ -101,7 +111,9 @@ def main() -> int:
     args = parse_args()
     zone_ids = range(536) if args.all else sorted(set(args.zone_ids))
     zones = [load_zone(zone_id, args.zones, args.zone_data) for zone_id in zone_ids]
-    globals_raw = select_globals(zones, parse_global_scripts((args.romfs / 'a/0/2/9').read_bytes()))
+    globals_raw = parse_global_scripts((args.romfs / 'a/0/2/9').read_bytes())
+    if not args.all:
+        globals_raw = select_globals(zones, globals_raw)
     raw_programs = [program for zone in zones for program in zone['programs'].values()] + list(globals_raw.values())
     identifiers = {row['identifier'] for program in raw_programs for row in program['tables']['natives']}
     source_paths = [*sorted(args.romfs.glob('*.cro')), args.romfs.parent / 'ExeFS/code.bin']
@@ -112,7 +124,8 @@ def main() -> int:
     for zone in decoded:
         write_json(args.out / f'{zone["zoneId"]:04d}.json', zone)
     for name, program in globals_decoded.items():
-        write_json(args.out / f'{name.replace(":", "_")}.json', program)
+        write_json(args.out / f'{name.replace(":", "_")}.json',
+                   {**program, 'bindingSource': 'ZO-sec1', 'bindings': global_bindings(name, decoded)})
     programs = [program for zone in decoded for program in zone['programs'].values()] + list(globals_decoded.values())
     write_catalogs(args.out, programs, identifiers, names)
     print(f'{len(decoded)} zonas + {len(globals_decoded)} globais; {len(names)}/{len(identifiers)} hashes nativos resolvidos')

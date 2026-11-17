@@ -4,6 +4,8 @@ import unittest
 from scripts.amx_global_scripts import parse_global_scripts
 from scripts.test_zone_scripts import synthetic_amx
 from scripts.zone_script_bindings import bind_entities, validate_entity_scripts, wrapper_calls
+from scripts.zone_script_entities import parse_zone_entities, parse_entity, warp_bindings
+from scripts.disassemble_zone_scripts import global_bindings
 
 
 def synthetic_garc():
@@ -27,6 +29,28 @@ def synthetic_entities():
 
 
 class ZoneScriptBindingsTests(unittest.TestCase):
+    def test_entity_references_come_from_zo_bytes(self):
+        entities = parse_zone_entities(synthetic_entities())
+        self.assertEqual(entities['npcs'], [{'id': 3, 'script': 2000}])
+        self.assertEqual(entities['triggers2'], [{'script': 8}])
+
+    def test_warp_has_destination_not_fabricated_script(self):
+        record = struct.pack('<HH', 7, 2) + bytes(20)
+        entities = {'warps': [parse_entity(record, 'warps', None)]}
+        binding = warp_bindings(entities)[0]
+        self.assertIsNone(binding['scriptId'])
+        self.assertEqual(binding['destinationMap'], 7)
+        self.assertEqual(binding['status'], 'navigation-no-script-field')
+
+    def test_global_reverse_references_preserve_zone_and_ambiguity(self):
+        zone = {'zoneId': 6, 'bindings': [{'kind': 'npcs', 'index': 2, 'entityId': 3,
+                'scriptId': 2000, 'status': 'ambiguous', 'matches': [
+                {'program': 'global:0015', 'target': 32, 'functions': [64]}]}]}
+        result = global_bindings('global:0015', [zone])
+        self.assertEqual(result[0]['zoneId'], 6)
+        self.assertEqual(result[0]['status'], 'ambiguous')
+        self.assertEqual(global_bindings('global:0099', [zone]), [])
+
     def test_global_garc_in_memory(self):
         programs = parse_global_scripts(synthetic_garc())
         self.assertEqual(programs['global:0000']['codeCells'], [46, 112])

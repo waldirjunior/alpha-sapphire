@@ -158,6 +158,18 @@
    ]
   }
  ],
+ "warpBindings": [
+  {
+   "index": 0,
+   "scriptId": null,
+   "status": "navigation-no-script-field",
+   "destinationMap": 223,
+   "destinationTile": 1,
+   "faceDirection": 2,
+   "transitionEffect": 5
+  }
+ ],
+ "bindingSource": "ZO-sec1",
  "programs": {
   "entities": {
    "sha256": "91ab285164978c348b861399556851ed95f71b62192edda24553a6bc3944af0a",
@@ -495,7 +507,7 @@
       "index": 1,
       "hash": "13413496",
       "name": "FlagSet",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
@@ -1059,7 +1071,7 @@
       "index": 2,
       "hash": "6393be9a",
       "name": "SEPlay",
-      "evidence": "community-hash"
+      "evidence": "rom-string-hash"
      },
      "argumentBytes": 4
     },
