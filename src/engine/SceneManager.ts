@@ -23,8 +23,15 @@ function fixOrasMaterials(root: THREE.Object3D): void {
         mat.metalness = 0.0;
         if (mat.map) {
           mat.map.colorSpace = THREE.SRGBColorSpace;
-          mat.alphaTest = 0.45;
-          mat.transparent = false;
+          const isShadowMat = /kage|shadow/i.test(mat.name);
+          if (isShadowMat) {
+            mat.transparent = true;
+            mat.alphaTest = 0.02;
+            mat.depthWrite = false;
+          } else {
+            mat.alphaTest = 0.45;
+            mat.transparent = false;
+          }
         }
         mat.needsUpdate = true;
       }
@@ -122,22 +129,37 @@ export class SceneManager {
   private buildTerrainPlaceholder(map: MapDefinition): void {
     this.terrainGroup.clear();
 
-    const floorGeo = new THREE.PlaneGeometry(map.width + 24, map.height + 24);
-    const floorMat = new THREE.MeshStandardMaterial({ color: '#2d5a27' });
+    const isInterior = !map.modelUrl;
+    const floorColor =
+      map.id === 'brendan_house'
+        ? '#d6b48c'
+        : map.id === 'oldale_pokecenter'
+          ? '#f8fafc'
+          : isInterior
+            ? '#cbd5e1'
+            : '#2d5a27';
+    const wallColor =
+      map.id === 'oldale_pokecenter' ? '#ef4444' : isInterior ? '#94a3b8' : '#475569';
+
+    const floorGeo = new THREE.PlaneGeometry(
+      isInterior ? map.width : map.width + 24,
+      isInterior ? map.height : map.height + 24
+    );
+    const floorMat = new THREE.MeshStandardMaterial({ color: floorColor });
     const floor = new THREE.Mesh(floorGeo, floorMat);
     floor.rotation.x = -Math.PI / 2;
     floor.position.set(map.width / 2 - 0.5, -0.04, map.height / 2 - 0.5);
     this.terrainGroup.add(floor);
 
-    const blockGeo = new THREE.BoxGeometry(0.95, 0.9, 0.95);
-    const blockMat = new THREE.MeshStandardMaterial({ color: '#475569' });
+    const blockGeo = new THREE.BoxGeometry(0.95, isInterior ? 1.4 : 0.9, 0.95);
+    const blockMat = new THREE.MeshStandardMaterial({ color: wallColor });
     const grassGeo = new THREE.BoxGeometry(0.92, 0.25, 0.92);
     const grassMat = new THREE.MeshStandardMaterial({ color: '#16a34a' });
     for (let z = 0; z < map.height; z++) {
       for (let x = 0; x < map.width; x++) {
         if (map.collisions[z]?.[x] === 1) {
           const wall = new THREE.Mesh(blockGeo, blockMat);
-          wall.position.set(x, 0.45, z);
+          wall.position.set(x, isInterior ? 0.7 : 0.45, z);
           this.terrainGroup.add(wall);
           continue;
         }
@@ -158,7 +180,8 @@ export class SceneManager {
     this.entityMixers = [];
 
     const warpGeo = new THREE.BoxGeometry(0.88, 0.06, 0.88);
-    const warpMat = new THREE.MeshStandardMaterial({ color: '#f59e0b', transparent: true, opacity: 0.75 });
+    const warpColor = !map.modelUrl ? '#dc2626' : '#f59e0b';
+    const warpMat = new THREE.MeshStandardMaterial({ color: warpColor, transparent: true, opacity: 0.78 });
     for (const warp of map.warps) {
       const marker = new THREE.Mesh(warpGeo, warpMat);
       marker.position.set(warp.from.x, 0.03, warp.from.z);

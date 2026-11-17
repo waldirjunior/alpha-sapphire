@@ -46,10 +46,10 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-007 Materiais PICA200, placas brancas e sombras/flores nos mapas
 
-- **Estado:** aberta
+- **Estado:** em andamento
 - **Data:** 2026-11-17
-- **Evidência:** Em Oldale Town e Littleroot Town, placas/telhados específicos ficam brancos e sombras de flores aparecem como faixas escuras por perda de `Texture1`/`Texture2` e blend modes PICA200 na conversão via Collada.
-- **Próximo passo:** Reproduzir multi-textura/vertex-color/alpha-blend e adicionar interiores de casas/Centros Pokémon ([engine-3d/PRD-003](features/engine-3d/prds/PRD-003-fidelidade-visual-mapas-e-interiores.md)).
+- **Evidência:** Em [SceneManager.ts](../src/engine/SceneManager.ts), materiais de sombra (`kage`/`shadow`) agora usam `transparent: true`, `alphaTest: 0.02`, `depthWrite: false`, e os interiores (`brendan_house`, `birch_lab`, `oldale_pokecenter`) renderizam piso/paredes/tapetes próprios. Ainda faltam multi-textura (`Texture1`/`Texture2`) e texturas das placas brancas na conversão Collada.
+- **Próximo passo:** Reproduzir multi-textura/vertex-color PICA200 no pipeline de exportação ([engine-3d/PRD-003](features/engine-3d/prds/PRD-003-fidelidade-visual-mapas-e-interiores.md)).
 
 ## P-008 Áudio da ROM (`RomFS/sound/*.bcstm`) não integrado
 
