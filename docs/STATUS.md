@@ -24,7 +24,7 @@ Atualizado em 2026-11-17 (verificação local na VPS).
 
 ## Investigação de scripts ORAS (2026-11-17, Mac/worktree `zone-scripts-re`)
 
-- [Formato documentado](features/pipeline-rom/script-format.md): 1.072 scripts de zonas e 85 entradas de `a/0/2/9` são Pawn/AMX v10, com células de 32 bits compactadas. Semântica de chamadas nativas e runner ainda pendentes (P-013/A-010).
+- [Formato documentado](features/pipeline-rom/script-format.md): 1.072 scripts de zonas e 85 entradas de `a/0/2/9` são Pawn/AMX v10, com células de 32 bits compactadas. Semântica de chamadas nativas e runner ainda pendentes (P-013/A-016).
 - [Extrator](../scripts/extract_zone_scripts.py) validado nas 536 zonas; JSONs gerados somente em `rom/extracted/zones_scripts/` ignorado, sem mudanças em `src/` nem binários no Git.
 - `python3 -m unittest scripts/test_zone_scripts.py scripts/test_pipeline.py`: 18 testes passando (10 novos + 8 existentes), fixtures sintéticas sem ROM.
 - A verificação `npm test && npm run build` neste worktree parou em `vitest: command not found` (sem `node_modules`); build não executado. As aprovações de build da seção anterior são históricas, não desta investigação.
@@ -47,9 +47,25 @@ Atualizado em 2026-11-17 (verificação local na VPS).
 ## Disassembly do slice (2026-11-17, histórico da etapa anterior)
 
 - [Gerador](../scripts/disassemble_zone_scripts.py) e [documentação](features/pipeline-rom/script-disassembly.md): 12 zonas (6, 7, 23, 223–231), oito scripts globais referenciados, 28.507 instruções e 71 opcodes em `src/data/zone_scripts/`.
-- Nativas: 204/205 hashes nomeados (198 por strings dos binários locais e seis por referência comunitária); `c34ad2ab` desconhecido. Vínculos NPC/trigger/furniture: 108 únicos e 11 ambíguos, sem seleção especulativa (P-013/A-011).
+- Nativas: 204/205 hashes nomeados (198 por strings dos binários locais e seis por referência comunitária); `c34ad2ab` desconhecido. Vínculos NPC/trigger/furniture: 108 únicos e 11 ambíguos, sem seleção especulativa (P-013/A-017).
 - Verificação atual: `python3 -B -m unittest scripts/test_amx_disassembly.py scripts/test_zone_script_bindings.py scripts/test_zone_scripts.py scripts/test_pipeline.py` passou (40 testes); `npm install` executado; `npm test && npm run build` passou (32 testes Vitest). Nenhuma dependência foi atualizada.
-- Avisos herdados: bundle Vite acima de 500 KB e nove vulnerabilidades npm (P-015). Os binários foram somente lidos; nenhuma conversão 3D executada.
+- Avisos herdados: bundle Vite acima de 500 KB e nove vulnerabilidades npm (P-016). Os binários foram somente lidos; nenhuma conversão 3D executada.
+
+## Investigação local de animações (macOS, 2026-11-17)
+
+- Worktree `anim-0xef-re`, base `b060a9b`; os registros anteriores de VPS acima/abaixo são históricos e não foram revalidados nesta investigação.
+- `P-012`: [formato nativo documentado](features/pipeline-rom/animations-format.md), incluindo offsets/hashes (`AN-E1`–`AN-E7`). `0xef` é N=239 de `GF1MotionPack`, já suportado pelo SPICA GFL; o wrapper local usava GFL2 incorretamente. `PB` contém batalha, `PK` interações, e expressões ficam em BCHs separados de material/visibilidade.
+- [native_motions.py](../scripts/native_motions.py) converte um clipe por chamada; [attach_native_motions.py](../scripts/attach_native_motions.py) integra os canais ao GLB texturizado produzido pelos pipelines existentes, por manifesto explícito serial (`--plan` disponível), preservando materiais/imagens/skin e filtro `sw_parts`. Não altera `src/` ou ferramentas compartilhadas e não sobrescreve outputs existentes.
+- `AN-E8`: quatro saídas novas em `rom/extracted/models/native_validation/` do checkout principal: Treecko (PC 2795/PB 2800, cinco clipes semânticos), Brendan (MM 0315), Wally (MM 0180) e Roxanne (MM 0187), os personagens com `overworld_002/093` além dos idle/walk procedurais existentes. Todos mantêm o BIN original como prefixo, geometria/material/texturas idênticos, três imagens embutidas, accessors float32 finitos e durações nativas corretas a 30 fps; paridade visual e expressões continuam não verificadas/integradas. São quatro modelos/11 clipes seriais em baixa prioridade, não batch pesado; `A-021` registra o lookup por joints e a correção dos rótulos 0314/0315.
+- Ambiente observado: Python 3.12.3, .NET SDK 8.0.428 em `~/.dotnet/dotnet`, Blender 3.4.1 em `~/Applications/Blender3.4.app`. SPICA fonte em `/Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/_tools/SPICA`, commit `82acbd63695e4ef8b95a92ce884f25ec1044788f` com patches locais existentes de exportação. ROM extraída no checkout principal irmão de `_tools/`, ausente no worktree.
+- Verificação neste worktree: `npm ci --offline`; `npm test` (8 arquivos / 32 testes) e `npm run build` passaram; Vite manteve aviso de bundle >500 kB. A suíte Python passou com 28 testes (13 de merge/integração + 7 nativos + 8 existentes); o ataque Bulbasaur PB 8 foi exportado com 195 canais e duração 50/30 s após regressão reproduzida de perda do último frame. Detalhes em [animations-format.md](features/pipeline-rom/animations-format.md). Avisos CA1416, IOR/NumPy e bones ausentes do Blender foram registrados, sem reivindicação de fidelidade visual.
+
+## Cobertura ampla de animações (AN-E9, macOS, 2026-11-17)
+
+- [Manifesto versionado](features/pipeline-rom/native-models-manifest.json): 585 modelos inventariados — todos os 544 diretórios MM e 41 modelos Pokémon de 39 espécies derivadas dos encontros das zonas 6, 7, 23–30, starters/evoluções e lendários de capa (incluídas segundas variantes). Mapeamento espécie→PC usa a tabela do slot 0 de `a/0/0/8`; PB=PC+5, sem inferir espécie pelo tag interno (`A-022`).
+- Lote autorizado executado com `nice 10`, concorrência 2: **388 GLBs novos / 544 clipes nativos**, em `rom/extracted/models/clips_merged/` do checkout principal, ignorado antes de gravar. Personagens: 348 merges, 177 sem seção GF1, 9 com poses de um frame e 10 falhas MM0024–0033 (bases sem skin; import sem action). Pokémon: 40 merges / 196 clipes, falha Taillow #276 (`Segment scale compensation has a zero parent scale` no SPICA). Nenhum output-base ou `src/` foi modificado; logs individuais permanecem locais.
+- O runner terminou com código 1, corretamente, pelas 11 falhas registradas; não significa cobertura completa com sucesso. Magikarp #129 não tem `special/faint` solicitados e Tympole #535 não tem `physical/faint`; ausências registradas sem fallback. Não houve correção das ferramentas compartilhadas nem fabricação de clipes.
+- Dez amostras passaram na validação estrutural: MM0034/0172/0263/0350/0543 e espécies 72/256/279/383 variante 1/692. BIN e campos-base preservados, imagens embutidas, floats finitos, alvos em joints e tempos/durações corretos; hashes/métricas no manifesto. Verificação: 42 testes Python, 32 Vitest e build passaram; aviso Vite >500 kB permanece. Paridade visual/emulador, looping, expressões e adoção no jogo não foram validados.
 
 ## Estado da ROM e Ambiente na VPS
 

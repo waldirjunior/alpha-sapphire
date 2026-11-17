@@ -44,6 +44,7 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro:** (1) Converter qualquer `GR` com um único `--textures` fixo ou sem AD deixa os materiais sem imagem (`references missing texture ...` em `*.dae.warnings.txt`) e o glTF renderiza placas brancas. O AD correto muda por mapa (Littleroot usa `a/0/1/4/0008.bin`, que contém `t101_01`, `chip_wind` etc.). (2) `rom/extracted/garc/a_0_3_9` só tem 30 dos 857 `GR` de `RomFS/a/0/3/9`; todos têm seção 0 de 40x40, então o tamanho do grid não distingue interior de exterior. Falta a tabela zona→`GR` para identificar casa do jogador, laboratório, Centro Pokémon e Mart.
 - **Regra:** Use `scripts/convert_gr_to_glb.py --ad-dir <a_0_1_4>`: o script converte uma vez sem texturas, lê os avisos de textura ausente e escolhe o AD que cobre mais nomes. Não associe um índice de `GR` a um interior sem evidência da tabela de zonas; arquivos `*.bin` extraídos com `unpack_garc.py --decompress` ficam em diretório temporário até a identificação.
 
+<<<<<<< HEAD
 ## A-008 Tabela zona→matriz→GR está em `a/0/1/3` (ZoneData/metlist) e o macOS roda o pipeline
 
 - **Data:** 2026-11-17
@@ -136,3 +137,29 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Contexto:** Continuação de A-018/P-013, testes das zonas 6/223/225/227 e dependências da abertura, decisão ADR-003/core-jogo.
 - **Erro reproduzido:** Executar a fixture real pelo contrato anterior trocaria argumentos: `TalkMdlMsg_Seq` usa 19 células, `WarpSetID` uma, `MdlSetGPos` x/y/z/ator. Os inits de 223 e 225 ainda escolhem ramos diferentes por sexo e usam work IDs diferentes; repetir o mesmo cenário deu pausa/posição divergente. Sem memória inicial, seletor e frames, testar um IR reescrito não provaria execução do script extraído.
 - **Regra:** Testar o próprio disassembly mais dados iniciais com SHA correspondente, separar cenário de mundo/respostas do host de evidência do emulador e distinguir aridade declarada de ramo executado. Inferências de assinatura ficam documentadas, não viram prova de paridade. Efeitos opacos solicitam completion explícita em vez de retornar sucesso; natives/opcodes desconhecidos falham por nome. Validar região alocada heap/stack e células de entrada (regressões reproduzem gap aceito e NaN convertido silenciosamente em zero). P-013 permanece aberta para host/renderer, concorrência e ABI ACMD/objetos.
+
+## A-020 O “0xef” de motion overworld é o contador GF1, e batalha usa PB
+
+- **Data:** 2026-11-17
+- **Contexto:** Investigação de `P-012` no worktree `anim-0xef-re`, base `b060a9b`. Renumerado de `A-010` no merge (colisão com `battle-tables`/`zone-scripts-re`). Inspeção de MM 0314/0315, PB 8 e PK 9 e comparação com os leitores GFL do SPICA.
+- **Erro:** Tratar `ef 00 00 00` como assinatura desconhecida ou chamar `GFL2.GFMotionPack`: é N=239 de `GFL.GF1MotionPack`, cujo primeiro ponteiro é esqueleto e os demais são clipes esparsos relativos à base do pack. O wrapper local usava GFL2 e silenciava a exceção, gerando DAE sem canais. Compactar ponteiros não nulos também troca IDs (o segundo clipe presente de Brendan tem índice 2, não 1).
+- **Regra:** Usar GF1 e selecionar por `GF1Motion.Index`, aplicando conversão world→local pelo esqueleto BCH. Em `a/0/0/8`, verificar magic dos vizinhos: nas amostras, modelo PC em M, PB em M+5 (batalha `ba*`), PK em M+6 (interações `kw*`); não calcular espécie por `8*dex`. Expressões são BCHs separados de material/visibilidade e não acompanham automaticamente o clipe esquelético em glTF.
+- **Evidência:** [Formato, offsets e hashes](features/pipeline-rom/animations-format.md) (`AN-E1`–`AN-E7`); [native_motions.py](../scripts/native_motions.py) exportou Brendan índice 2 e Bulbasaur PB índice 3 para GLB com skin, canais variáveis e accessors finitos. Isso comprova transporte do clipe, não paridade visual; avisos de bones/Blender e lacunas de expressões permanecem registrados em `P-012`.
+
+## A-021 Anexar GF1 ao GLB-base preserva materiais; retarget deve usar os joints da skin
+
+- **Data:** 2026-11-17
+- **Contexto:** Continuação de `P-012` e `A-020`, integrando clipes aos modelos já convertidos sem perder PT/texturas nem o filtro `sw_parts`.
+- **Erro:** Procurar alvos por nome global rejeitou Treecko: tanto o joint quanto um nó de modelo se chamam `pm0252_00`. Usar índices numéricos entre dois exports também pode animar o nó errado.
+- **Regra:** Resolver nomes somente em `skin.joints` e conferir inverse bind matrices antes do merge. Copiar apenas accessors/bufferViews de animação, mantendo o BIN original como prefixo e todos os materiais, imagens, meshes e skin do GLB-base inalterados. Falhar em rigs incompatíveis; não aplicar retargeting aproximado ou fallback procedural silencioso.
+- **Evidência:** [glb_native_clips.py](../scripts/glb_native_clips.py), [wrapper serial](../scripts/attach_native_motions.py) e [regressão sintética](../scripts/test_glb_native_clips.py), incluindo o caso joint/nó com nome duplicado que falhou antes da correção.
+- **Correção de identificação:** Os rótulos iniciais Brendan/May nas notas de `A-020` foram invertidos: o pipeline `convert_character_glb.py` usa `0315=Brendan` (`rstr0002_00_fi`) e `0314=May` (`rstr0001_00_fi`). A estrutura, offsets e clipes medidos continuam válidos por ID de arquivo, não por esses rótulos.
+
+## A-022 A tabela do slot 0 relaciona espécie a modelo; o tag interno não é sempre o número da Pokédex
+
+- **Data:** 2026-11-17
+- **Contexto:** Cobertura ampla de `P-012`: 544 diretórios `mm_NNNN` e espécies dos encontros das zonas 6, 7 e 23–30, mais starters/evoluções e lendários de capa.
+- **Erro potencial:** Procurar sempre `pm{species:04d}_00` perde formas e espécies da geração 6: espécie 422 usa primeiro modelo `pm0422_11`, espécie 650 corresponde a `pm0720_00` e 692 a `pm0756_00`. O registro de encontros com espécie 0 é delimitador/slot vazio, não um alvo de conversão.
+- **Regra:** No GARC `a/0/0/8`, ler o slot 0: registro `<HBB` em `4*(species-1)` contém primeiro ordinal de modelo, quantidade e flags. Para variante ordinal `v`, PC=`3+8*(first+v)` e PB=`PC+5`; validar signatures PC/PB e ler o tag real do BCH para localizar o GLB-base. Não inferir a espécie pelo tag nem atribuir significado não validado às flags.
+- **Evidência:** [Gerador](../scripts/build_native_manifest.py), [manifesto de cobertura](features/pipeline-rom/native-models-manifest.json) e testes sintéticos; Treecko: registro `349,1,1` → PC 2795/PB 2800; espécie 692: `969,1,1` → PC 7755/PB 7760 → tag `pm0756_00`. A fórmula foi conferida nas assinaturas/tags dos 41 modelos Pokémon selecionados.
+- **Limite:** Nem todo `mm_NNNN` é um ator animável: 177 não possuem seção de motion e 9 só possuem poses de um frame. A existência de um pack GF1 também não prova que o modelo BCH exportado possui armature; o lote registra a falha em vez de fabricar movimento. Merge binário é leve, mas o attach atual ainda exporta SPICA/Blender por clipe; limitar concorrência e manter logs individuais.
