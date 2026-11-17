@@ -48,8 +48,8 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 - **Estado:** em andamento
 - **Data:** 2026-11-17
-- **Evidência:** Em [SceneManager.ts](../src/engine/SceneManager.ts), materiais de sombra (`kage`/`shadow`) agora usam `transparent: true`, `alphaTest: 0.02`, `depthWrite: false`, e os interiores (`brendan_house`, `birch_lab`, `oldale_pokecenter`) renderizam piso/paredes/tapetes próprios. Ainda faltam multi-textura (`Texture1`/`Texture2`) e texturas das placas brancas na conversão Collada.
-- **Próximo passo:** Reproduzir multi-textura/vertex-color PICA200 no pipeline de exportação ([engine-3d/PRD-003](features/engine-3d/prds/PRD-003-fidelidade-visual-mapas-e-interiores.md)).
+- **Evidência:** Em [SceneManager.ts](../src/engine/SceneManager.ts), materiais de sombra (`kage`/`shadow`) agora usam `transparent: true`, `alphaTest: 0.02`, `depthWrite: false`, e os interiores (`brendan_house`, `birch_lab`, `oldale_pokecenter`) renderizam piso/paredes/tapetes placeholder. Ainda faltam shaders PICA200 (multi-textura `Texture1`/`Texture2`, *TexEnv combiners*, *toon shading*/LUTs), texturas das placas brancas e os modelos `.glb` reais dos interiores da ROM.
+- **Próximo passo:** Reproduzir multi-textura/vertex-color/shader PICA200 e extrair modelos `.glb` dos interiores reais da ROM ([engine-3d/PRD-003](features/engine-3d/prds/PRD-003-fidelidade-visual-mapas-e-interiores.md)).
 
 ## P-008 Áudio da ROM (`RomFS/sound/*.bcstm`) não integrado
 
@@ -78,3 +78,24 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Data:** 2026-11-17
 - **Evidência:** Reaberta após feedback do usuário: a versão inicial (`#ds-menu` com 4 abas simples no topo) ainda não reproduz o layout real da tela inferior do Nintendo 3DS / Alpha Sapphire (PlayNav, cards de Equipe, categorias de Mochila e grade de Pokédex).
 - **Próximo passo:** Reconstruir layout dual-screen estilo Nintendo 3DS com tela superior limpa e tela inferior estilo PlayNav/ORAS ([engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md)).
+
+## P-012 Animações nativas da ROM (tabela overworld `0xef` em `a/0/2/1` e golpes em `a/0/0/8`)
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** As animações atuais (`idle` e `walk` dos personagens; `idle` dos Pokémon) são geradas proceduralmente no Blender sobre o esqueleto real da ROM porque o pacote de motion overworld (`a/0/2/1` seção 1, cabeçalho `0xef`) difere do formato `GFMotionPack` suportado pelo SPICA, e os Pokémon ainda não exportam clipes de ataque/dano/vitória de `a/0/0/8`.
+- **Próximo passo:** Mapear o formato binário das animações overworld (`0xef`) e exportar todos os clipes de batalha dos Pokémon (`idle`, `attack`, `hit`, `faint`) + expressões faciais.
+
+## P-013 Motor de scripts e eventos completos da história da ROM
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** A introdução (Birch + caminhão) e os primeiros interiores foram montados manualmente para o vertical slice inicial; faltam cutscenes com movimento coreografado de NPCs, resgate real do Prof. Birch escolhendo a Poké Ball da mochila no chão, entrega de Pokédex/Running Shoes, e todo o restante da campanha de Hoenn até a Liga Pokémon.
+- **Próximo passo:** Extrair e interpretar as tabelas de scripts/eventos de mapa da ROM em `src/data/` e criar um runner determinístico de cutscenes em `src/core/`.
+
+## P-014 Cenários 3D reais de batalha, partículas de golpes e câmera dinâmica ORAS
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** `buildBattleArena()` em [SceneManager.ts](../src/engine/SceneManager.ts) usa círculo/cilindros geométricos verdes em vez das arenas 3D reais da ROM (grama, água, caverna, ginásio), câmera cinemática de turnos e efeitos visuais de golpes/Poké Ball.
+- **Próximo passo:** Extrair os modelos de arena de batalha da ROM, implementar câmera dinâmica por turno e efeitos visuais básicos por tipo de golpe.
