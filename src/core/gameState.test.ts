@@ -209,7 +209,7 @@ describe('gameState', () => {
     expect(state.player.mapId).toBe('brendan_house');
 
     // Exit brendan_house back to littleroot_town
-    state = { ...state, player: { ...state.player, pos: { x: 4, z: 6 }, facing: 'down' } };
+    state = { ...state, player: { ...state.player, pos: { x: 16, z: 17 }, facing: 'down' } };
     state = movePlayer(state, 'down', EXTRACTED_MAPS);
     expect(state.player.mapId).toBe('littleroot_town');
 

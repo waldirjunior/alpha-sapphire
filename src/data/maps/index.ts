@@ -33,9 +33,9 @@ export const MAPS: Record<string, MapDefinition> = {
     modelUrl: '/assets/maps/littleroot_town/littleroot_town.glb',
     warps: [
       ...littlerootTown.warps,
-      { from: { x: 14, z: 11 }, targetMapId: 'brendan_house', targetPos: { x: 4, z: 6 } },
-      { from: { x: 25, z: 11 }, targetMapId: 'may_house', targetPos: { x: 4, z: 6 } },
-      { from: { x: 16, z: 23 }, targetMapId: 'birch_lab', targetPos: { x: 5, z: 8 } },
+      { from: { x: 14, z: 11 }, targetMapId: 'brendan_house', targetPos: { x: 16, z: 17 } },
+      { from: { x: 25, z: 11 }, targetMapId: 'may_house', targetPos: { x: 8, z: 17 } },
+      { from: { x: 16, z: 23 }, targetMapId: 'birch_lab', targetPos: { x: 14, z: 21 } },
     ],
     interactables: [
       {
