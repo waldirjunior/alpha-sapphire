@@ -9,6 +9,8 @@ export interface WarpPoint {
   from: GridPosition;
   targetMapId: string;
   targetPos: GridPosition;
+  requiredFlag?: string;
+  blockedMessage?: string;
 }
 
 export interface Interactable {
@@ -16,6 +18,8 @@ export interface Interactable {
   pos: GridPosition;
   kind: 'sign' | 'npc';
   text: string;
+  requiredFlag?: string;
+  altText?: string;
   setFlag?: string;
   npcModel?: 'may' | 'npc';
 }

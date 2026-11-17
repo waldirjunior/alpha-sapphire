@@ -1,4 +1,5 @@
 import type { MapDefinition } from '../../core/types';
+import { INTERIOR_MAPS } from './interiors';
 import birchLabTexts from '../texts/birch_lab.json';
 import littlerootTexts from '../texts/littleroot_town.json';
 import oldaleTexts from '../texts/oldale_town.json';
@@ -11,9 +12,15 @@ import route102West from './route_102_west.json';
 import route103 from './route_103.json';
 
 export const MAPS: Record<string, MapDefinition> = {
+  ...INTERIOR_MAPS,
   littleroot_town: {
     ...littlerootTown,
     modelUrl: '/assets/maps/littleroot_town/littleroot_town.glb',
+    warps: [
+      ...littlerootTown.warps,
+      { from: { x: 13, z: 12 }, targetMapId: 'brendan_house', targetPos: { x: 4, z: 6 } },
+      { from: { x: 16, z: 24 }, targetMapId: 'birch_lab', targetPos: { x: 5, z: 8 } },
+    ],
     interactables: [
       {
         id: 'littleroot_town_sign',
@@ -77,6 +84,10 @@ export const MAPS: Record<string, MapDefinition> = {
   oldale_town: {
     ...oldaleTown,
     modelUrl: '/assets/maps/oldale_town/oldale_town.glb',
+    warps: [
+      ...oldaleTown.warps,
+      { from: { x: 16, z: 18 }, targetMapId: 'oldale_pokecenter', targetPos: { x: 4, z: 6 } },
+    ],
     interactables: [
       {
         id: 'oldale_town_sign',
@@ -86,7 +97,7 @@ export const MAPS: Record<string, MapDefinition> = {
       },
       {
         id: 'oldale_pokecenter',
-        pos: { x: 16, z: 18 },
+        pos: { x: 17, z: 18 },
         kind: 'npc',
         npcModel: 'npc',
         text: 'Bem-vindo ao Centro Pokémon de Oldale! Sua equipe foi totalmente curada.',

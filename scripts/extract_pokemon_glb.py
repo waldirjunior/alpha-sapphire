@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extrai modelos 3D e texturas de Pokémon do GARC a/0/0/8 e converte para .glb via SpicaExport + assimp."""
+"""Extrai modelos 3D e texturas de Pokémon do GARC a/0/0/8 e converte para .glb animado via SpicaExport + Blender."""
 
 from __future__ import annotations
 
@@ -16,6 +16,56 @@ sys.path.insert(0, str(Path(__file__).parent))
 from unpack_garc import decompress_lz11
 
 SPICA_EXPORT = Path("/opt/tools/SpicaExport/bin/Release/net8.0/SpicaExport")
+
+BLENDER_POKEMON_SCRIPT = """
+import bpy
+import math
+import sys
+from mathutils import Matrix
+
+argv = sys.argv[sys.argv.index("--") + 1:]
+in_dae, out_glb = argv[0], argv[1]
+
+bpy.ops.wm.read_factory_settings(use_empty=True)
+bpy.ops.wm.collada_import(filepath=in_dae)
+
+armature = next((obj for obj in bpy.data.objects if obj.type == 'ARMATURE'), None)
+if armature:
+    bpy.context.view_layer.objects.active = armature
+    action = bpy.data.actions.new(name="idle")
+    action.use_fake_user = True
+    armature.animation_data_create()
+    armature.animation_data.action = action
+
+    # Cria respiração sutil em ossos centrais comuns dos Pokémon (Waist/Spine/Head/Origin)
+    waist = armature.pose.bones.get("Waist") or armature.pose.bones.get("Origin")
+    head = armature.pose.bones.get("Head") or armature.pose.bones.get("Neck")
+    for frame, breath in ((1, 0.0), (25, 1.0), (49, 0.0)):
+        if waist:
+            waist.location = (0.0, breath * 0.4, 0.0)
+            waist.keyframe_insert(data_path="location", frame=frame)
+        if head and head.name in armature.data.bones:
+            m_rest = armature.data.bones[head.name].matrix_local.to_3x3()
+            rot = Matrix.Rotation(math.radians(breath * 3.0), 3, 'X')
+            head.rotation_mode = 'QUATERNION'
+            head.rotation_quaternion = (m_rest.inverted() @ rot @ m_rest).to_quaternion()
+            head.keyframe_insert(data_path="rotation_quaternion", frame=frame)
+
+    track = armature.animation_data.nla_tracks.new()
+    track.name = "idle"
+    strip = track.strips.new("idle", 1, action)
+    strip.name = "idle"
+
+bpy.ops.export_scene.gltf(
+    filepath=out_glb,
+    export_format='GLB',
+    export_animations=True,
+    export_nla_strips=True,
+    export_skins=True,
+    export_texcoords=True,
+    export_normals=True,
+)
+"""
 
 TARGET_SPECIES: dict[str, bytes] = {
     "treecko": b"pm0252_00",
@@ -100,13 +150,18 @@ def extract_pokemon_models(garc_path: Path, out_dir: Path) -> None:
                 pc_path = tmp_path / "model.pc"
                 pt_path = tmp_path / "textures.pt"
                 dae_path = tmp_path / f"{matched_name}.dae"
+                py_path = tmp_path / "blender_pokemon.py"
+                py_path.write_text(BLENDER_POKEMON_SCRIPT, encoding="utf-8")
                 pc_path.write_bytes(blob)
                 cmd = [str(SPICA_EXPORT), str(pc_path), str(dae_path)]
                 if tex_blob.startswith(b"PT"):
                     pt_path.write_bytes(tex_blob)
                     cmd.append(str(pt_path))
                 subprocess.run(cmd, check=True, env=env)
-                subprocess.run(["assimp", "export", str(dae_path), str(glb_path)], check=True)
+                subprocess.run(
+                    ["blender", "--background", "--python-exit-code", "1", "--python", str(py_path), "--", str(dae_path), str(glb_path)],
+                    check=True,
+                )
                 for png in tmp_path.glob("*.png"):
                     shutil.copy2(png, sp_out / png.name)
 

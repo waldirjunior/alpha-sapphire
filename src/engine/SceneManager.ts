@@ -53,7 +53,9 @@ export class SceneManager {
   private clock = new THREE.Clock();
   private playerAnim: CharacterAnimController | null = null;
   private entityMixers: THREE.AnimationMixer[] = [];
+  private battleMixers: THREE.AnimationMixer[] = [];
   private walkUntilMs = 0;
+  private playerTargetPos = new THREE.Vector3();
   private lastPlayerPos = { mapId: '', x: -1, z: -1 };
   private currentMapId = '';
   private currentBattleKey = '';
@@ -213,11 +215,12 @@ export class SceneManager {
       }
     }
 
+    const mapChanged = this.lastPlayerPos.mapId !== state.player.mapId;
     if (
-      this.lastPlayerPos.mapId === state.player.mapId &&
+      !mapChanged &&
       (this.lastPlayerPos.x !== state.player.pos.x || this.lastPlayerPos.z !== state.player.pos.z)
     ) {
-      this.walkUntilMs = performance.now() + 260;
+      this.walkUntilMs = performance.now() + 220;
     }
     this.lastPlayerPos = {
       mapId: state.player.mapId,
@@ -225,13 +228,15 @@ export class SceneManager {
       z: state.player.pos.z,
     };
 
-    this.playerRoot.position.x = state.player.pos.x;
-    this.playerRoot.position.z = state.player.pos.z;
+    this.playerTargetPos.set(state.player.pos.x, 0, state.player.pos.z);
+    if (mapChanged) {
+      this.playerRoot.position.copy(this.playerTargetPos);
+    }
     this.playerRoot.rotation.y = FACING_YAW[state.player.facing];
 
     if (!this.inBattle) {
-      this.camera.position.set(state.player.pos.x, 9, state.player.pos.z + 8);
-      this.camera.lookAt(state.player.pos.x, 0.5, state.player.pos.z);
+      this.camera.position.set(this.playerRoot.position.x, 9, this.playerRoot.position.z + 8);
+      this.camera.lookAt(this.playerRoot.position.x, 0.5, this.playerRoot.position.z);
     }
   }
 
@@ -245,6 +250,10 @@ export class SceneManager {
 
     if (!battle) {
       this.currentBattleKey = '';
+      for (const mixer of this.battleMixers) {
+        mixer.stopAllAction();
+      }
+      this.battleMixers = [];
       return;
     }
 
@@ -254,6 +263,10 @@ export class SceneManager {
     const key = `${battle.player.species.id}:${battle.enemy.species.id}`;
     if (this.currentBattleKey === key) return;
     this.currentBattleKey = key;
+    for (const mixer of this.battleMixers) {
+      mixer.stopAllAction();
+    }
+    this.battleMixers = [];
 
     this.loadPokemonModel(battle.player.species.id, this.battlePlayerSlot);
     this.loadPokemonModel(battle.enemy.species.id, this.battleEnemySlot);
@@ -320,6 +333,15 @@ export class SceneManager {
         fixOrasMaterials(model);
         target.clear();
         target.add(model);
+        if (gltf.animations.length > 0) {
+          const mixer = new THREE.AnimationMixer(model);
+          const clip = THREE.AnimationClip.findByName(gltf.animations, 'idle') ?? gltf.animations[0];
+          if (clip) {
+            mixer.clipAction(clip).play();
+            mixer.update(0);
+          }
+          this.battleMixers.push(mixer);
+        }
       },
       undefined,
       () => {
@@ -374,7 +396,10 @@ export class SceneManager {
 
   private updatePlayerAnimation(): void {
     if (!this.playerAnim) return;
-    const shouldWalk = performance.now() < this.walkUntilMs && this.playerAnim.walk !== null;
+    const isMoving =
+      this.playerRoot.position.distanceToSquared(this.playerTargetPos) > 0.002 ||
+      performance.now() < this.walkUntilMs;
+    const shouldWalk = isMoving && this.playerAnim.walk !== null;
     const nextState: 'idle' | 'walk' = shouldWalk ? 'walk' : 'idle';
     if (this.playerAnim.active === nextState) return;
 
@@ -388,9 +413,28 @@ export class SceneManager {
   public render(): void {
     const dt = Math.min(this.clock.getDelta(), 0.1);
     if (!this.inBattle) {
+      this.playerRoot.position.x = THREE.MathUtils.damp(
+        this.playerRoot.position.x,
+        this.playerTargetPos.x,
+        18,
+        dt
+      );
+      this.playerRoot.position.z = THREE.MathUtils.damp(
+        this.playerRoot.position.z,
+        this.playerTargetPos.z,
+        18,
+        dt
+      );
+      this.camera.position.set(this.playerRoot.position.x, 9, this.playerRoot.position.z + 8);
+      this.camera.lookAt(this.playerRoot.position.x, 0.5, this.playerRoot.position.z);
+
       this.updatePlayerAnimation();
       this.playerAnim?.mixer.update(dt);
       for (const mixer of this.entityMixers) {
+        mixer.update(dt);
+      }
+    } else {
+      for (const mixer of this.battleMixers) {
         mixer.update(dt);
       }
     }

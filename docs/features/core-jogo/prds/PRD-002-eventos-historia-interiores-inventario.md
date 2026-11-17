@@ -1,7 +1,7 @@
 # PRD-002 — Eventos de História, Interiores, Itens e Inventário
 
 - **Módulo:** [core-jogo](../README.md)
-- **Estado:** Planejado (Fase 2–3 do [ROADMAP.md](../../../ROADMAP.md))
+- **Estado:** Em andamento (Fase 2–3 do [ROADMAP.md](../../../ROADMAP.md))
 - **Data:** 2026-11-17
 - **Pendências relacionadas:** `P-009`
 

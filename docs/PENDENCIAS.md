@@ -60,10 +60,10 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-009 Interiores, eventos de história, itens e inventário ausentes
 
-- **Estado:** aberta
+- **Estado:** em andamento
 - **Data:** 2026-11-17
-- **Evidência:** Portas das casas, Laboratório do Prof. Birch, Centro Pokémon e Poké Mart ainda não possuem warps para mapas internos nem eventos scriptados (caminhão inicial, resgate do Birch, rival na Route 103, itens no chão).
-- **Próximo passo:** Implementar eventos, inventário e warps internos em `src/core/` ([core-jogo/PRD-002](features/core-jogo/prds/PRD-002-eventos-historia-interiores-inventario.md)).
+- **Evidência:** Implementados [src/core/bag.ts](../src/core/bag.ts) (`pokeballs`, `potions`, `keyItems`), suporte a `requiredFlag`/`altText` em warps e NPCs em [gameState.ts](../src/core/gameState.ts), persistência de mochila em [save.ts](../src/core/save.ts), interiores iniciais ([interiors.ts](../src/data/maps/interiors.ts): `brendan_house`, `birch_lab`, `oldale_pokecenter`) e botão de `Potion` + consumo de `Poké Ball` na batalha em [src/main.ts](../src/main.ts). Ainda faltam sequência do caminhão inicial, resgate do Birch, rival na Route 103 e linha de visão de treinadores.
+- **Próximo passo:** Concluir eventos scriptados (caminhão, resgate do Birch, rival Route 103) e line-of-sight de treinadores (`core-jogo/PRD-002` RF-03).
 
 ## P-010 Mecânicas avançadas de batalha Gen VI (PP, precisão, status, treinadores multi-Pokémon)
 

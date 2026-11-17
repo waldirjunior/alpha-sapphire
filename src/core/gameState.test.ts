@@ -107,4 +107,52 @@ describe('gameState', () => {
     state = interact(state, mapsWithSign);
     expect(state.activeDialogue).toBeUndefined();
   });
+
+  it('blocks warp with requiredFlag until flag is set and supports altText on interactables', () => {
+    const gatedMaps: Record<string, MapDefinition> = {
+      littleroot_town: {
+        ...TEST_MAPS.littleroot_town,
+        warps: [
+          {
+            from: { x: 5, z: 1 },
+            targetMapId: 'route_101',
+            targetPos: { x: 5, z: 8 },
+            requiredFlag: 'starter_chosen',
+            blockedMessage: 'Você precisa escolher um Pokémon antes de sair!',
+          },
+        ],
+        interactables: [
+          {
+            id: 'birch_aide',
+            pos: { x: 6, z: 5 },
+            kind: 'npc',
+            text: 'Fale com o Prof. Birch primeiro!',
+            requiredFlag: 'starter_chosen',
+            altText: 'Boa sorte na sua jornada por Hoenn!',
+          },
+        ],
+      },
+      route_101: TEST_MAPS.route_101,
+    };
+
+    let state = createInitialState();
+    state = { ...state, player: { ...state.player, pos: { x: 5, z: 2 }, facing: 'up' } };
+
+    // Blocked without flag
+    const blocked = movePlayer(state, 'up', gatedMaps);
+    expect(blocked.player.mapId).toBe('littleroot_town');
+    expect(blocked.activeDialogue?.text).toContain('escolher um Pokémon');
+
+    // Before flag: NPC shows default text
+    const preNpc = interact({ ...state, player: { ...state.player, pos: { x: 5, z: 5 }, facing: 'right' } }, gatedMaps);
+    expect(preNpc.activeDialogue?.text).toBe('Fale com o Prof. Birch primeiro!');
+
+    // After flag: NPC shows altText and warp succeeds
+    state = { ...state, storyFlags: { ...state.storyFlags, starter_chosen: true } };
+    const postNpc = interact({ ...state, player: { ...state.player, pos: { x: 5, z: 5 }, facing: 'right' } }, gatedMaps);
+    expect(postNpc.activeDialogue?.text).toBe('Boa sorte na sua jornada por Hoenn!');
+
+    const warped = movePlayer(state, 'up', gatedMaps);
+    expect(warped.player.mapId).toBe('route_101');
+  });
 });

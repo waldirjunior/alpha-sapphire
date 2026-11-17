@@ -68,6 +68,16 @@ export function movePlayer(
   );
 
   if (warp && maps[warp.targetMapId]) {
+    if (warp.requiredFlag && !state.storyFlags[warp.requiredFlag]) {
+      return {
+        ...state,
+        player: { ...state.player, facing: direction },
+        activeDialogue: {
+          sourceId: `warp:${warp.targetMapId}`,
+          text: warp.blockedMessage ?? 'Esta passagem ainda está bloqueada.',
+        },
+      };
+    }
     return {
       ...state,
       player: {
@@ -112,6 +122,11 @@ export function interact(
   );
   if (!target) return state;
 
+  const resolvedText =
+    target.requiredFlag && target.altText && state.storyFlags[target.requiredFlag]
+      ? target.altText
+      : target.text;
+
   return {
     ...state,
     storyFlags: target.setFlag
@@ -119,7 +134,7 @@ export function interact(
       : state.storyFlags,
     activeDialogue: {
       sourceId: target.id,
-      text: target.text,
+      text: resolvedText,
     },
   };
 }

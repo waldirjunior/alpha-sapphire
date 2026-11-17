@@ -1,7 +1,7 @@
 # PRD-002 — Animações Esqueléticas (`idle` e `walk`) sem T-Pose
 
 - **Módulo:** [engine-3d](../README.md)
-- **Estado:** Em andamento (personagens `idle`/`walk` entregues; faltam Pokémon e interpolação de tiles)
+- **Estado:** Concluído (Fase 2 do [ROADMAP.md](../../../ROADMAP.md))
 - **Data:** 2026-11-17
 - **ADRs relacionados:** [ADR-002](../adrs/ADR-002-exportacao-rig-animacoes-bch-para-glb.md)
 - **Pendências relacionadas:** `P-006`
@@ -18,6 +18,6 @@ Os personagens (`brendan.glb`, `may.glb`, `npc.glb`) e Pokémon convertidos via 
 
 ## 3. Critérios de Aceite
 
-- [x] `brendan.glb`, `may.glb` e `npc.glb` contêm `animations.length > 0` (`idle`, `walk`) e não renderizam mais em T-pose.
-- [x] Inspeção visual no browser confirma pose `idle` sem T-pose e troca para `walk` integrada em `SceneManager.ts`.
+- [x] `brendan.glb`, `may.glb`, `npc.glb` e os 8 Pokémon (`a/0/0/8`) contêm `animations.length > 0` (`idle`/`walk`, `skins: 1`) e não renderizam mais em T-pose.
+- [x] Interpolação suave entre tiles (`THREE.MathUtils.damp`) e `THREE.AnimationMixer` para overworld (`idle`/`walk`) e batalha (`battleMixers`) integrados em [SceneManager.ts](../../../../src/engine/SceneManager.ts).
 - [x] `npm test && npm run build` passando sem erros.

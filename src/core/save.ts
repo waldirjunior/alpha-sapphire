@@ -1,3 +1,4 @@
+import type { BagState } from './bag';
 import type { PokemonInstance } from './battle';
 import type { GameState } from './types';
 
@@ -5,6 +6,7 @@ export interface SaveData {
   version: 1;
   state: GameState;
   party: PokemonInstance[];
+  bag?: BagState;
   caughtCount: number;
 }
 
@@ -36,6 +38,15 @@ function isValidGameState(value: unknown): value is GameState {
   );
 }
 
+function isValidBagState(value: unknown): value is BagState {
+  if (!isObjectRecord(value)) return false;
+  return (
+    typeof value.pokeballs === 'number' &&
+    typeof value.potions === 'number' &&
+    Array.isArray(value.keyItems)
+  );
+}
+
 export function serializeSave(data: SaveData): string {
   return JSON.stringify(data);
 }
@@ -49,10 +60,12 @@ export function deserializeSave(raw: string): SaveData | null {
     if (!parsed.party.every(isValidPokemonInstance)) return null;
     if (typeof parsed.caughtCount !== 'number') return null;
 
+    const bag = isValidBagState(parsed.bag) ? parsed.bag : undefined;
     return {
       version: 1,
       state: parsed.state,
       party: parsed.party,
+      ...(bag ? { bag } : {}),
       caughtCount: parsed.caughtCount,
     };
   } catch {
