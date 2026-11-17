@@ -108,3 +108,31 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Contexto:** `P-015` / [ADR-004](features/pipeline-rom/adrs/ADR-004-tabelas-de-batalha-sob-demanda.md) e geração de selvagens ([wildPokemon.ts](../src/core/wildPokemon.ts)).
 - **Erro potencial:** (1) Mover dados versionados para `public/assets/` os tira do Git (a pasta é ignorada por conter assets da ROM). (2) Qualquer constante de módulo que chame `getSpeciesById`/`getMoveById`/`getTypeMultiplier` (ex.: `STRUGGLE`, `SPECIES = { treecko: ... }`) quebra com "Tabelas de batalha não carregadas" porque roda antes de `loadBattleTables`. (3) `src/data/zones/*.json` só existe no checkout principal (não versionado ainda); importar estaticamente quebraria o build em worktrees.
 - **Regra:** Derive índices com `fromTables(build)` e exponha espécies/golpes por getter ou função. Testes dependem de `vitest.config.ts` → `src/core/testing/setupBattleTables.ts`. Zonas entram por `import.meta.glob` (vazio = fallback `MAP_ENCOUNTERS`). Pokémon gerados usam `generatePokemon(species, level, rng)`; `createPokemonInstance` sem opções continua com IV 0 / natureza neutra para fixtures determinísticas.
+
+## A-016 Scripts ORAS são Pawn/AMX v10 compactado, não scripts NDS
+
+- **Data:** 2026-11-17
+- **Contexto:** Investigação de P-013; comparação dos 1.072 scripts das 536 zonas e 85 programas de `a/0/2/9`. Renumerado de `A-010` no merge (colisão com o branch `battle-tables`).
+- **Erro potencial:** Tratar o `u32 length` como prefixo externo ao AMX, ler o payload como opcodes `u16`/`u32` sem expansão, chamar todos os dados de movimentos ou copiar os nomes enganosos `PtrOffset`/`PtrCount` do pk3DS.
+- **Regra:** O tamanho inclui o próprio campo; `F1E0` é magic AMX de 32 bits, os dois `0A` são versões, `@08=001C` são flags e `@0A=8` é tamanho de registro. Expandir `[cod,size)` em grupos de sete bits, mais significativo primeiro, com sinal no primeiro grupo e wrap `u32`; separar código `[cod,dat)` dos dados `[dat,hea)` na imagem expandida. Preservar identificadores/hash sem inventar nomes de nativas. `ScriptFile @18` não indexa diretamente as 85 entradas de `a/0/2/9` (observado 0–537), e NPC.script não indexa diretamente uma tabela publics que é vazia em todos os scripts de entidades. Formato, offsets, hashes de evidência e limites em [script-format.md](features/pipeline-rom/script-format.md); extrator [extract_zone_scripts.py](../scripts/extract_zone_scripts.py) validado nas 536 zonas, com 10 testes sintéticos novos. P-013 permanece aberta para semântica e runner.
+
+## A-017 IDs de scripts ORAS são valores de dispatch, não índices de função
+
+- **Data:** 2026-11-17
+- **Contexto:** Continuação de A-016/P-013 com disassembly de 12 zonas do slice e oito scripts globais referenciados, usando Pawn v10/GF e referências XAMX.
+- **Erro potencial:** Associar `npc.script` ao índice de `publics`, escolher a primeira tabela switch, tratar toda coincidência de ID como roteamento provado ou resolver um índice nativo como se fosse opcode sem considerar a tabela local.
+- **Regra:** Conferir IDs/counts contra o sec1 original e seguir o main `proc; load.p.pri <variável pública>; switch`. Comparar o ID com valores dos cases e conservar o programa de origem. Saltos são relativos ao opcode, mas deltas de `casetbl` são relativos à célula do valor (default relativo ao count). IDs como 2000/10591 pertencem a cases de globais `a/0/2/9[15]/[47]`, não a índices fora de faixa do script local. Colisões entre sec1/sec2 permanecem explícitas: 108 vínculos únicos e 11 ambíguos no slice. Nomes de nativas são resolvidos por hash GF (`h=h*131 XOR byte`, wrap u32), com evidência ROM ou comunitária; nomes não validam efeitos/assinaturas runtime. [script-disassembly.md](features/pipeline-rom/script-disassembly.md) documenta 204/205 nomes, 71 opcodes e testes; o nome `c34ad2ab`, o roteador runtime e o runner continuam pendentes.
+
+## A-018 Strings C podem compartilhar sufixos; nome resolvido não define ABI
+
+- **Data:** 2026-11-17
+- **Contexto:** Geração de 536 zonas e 85 globais; continuação de A-017/P-013 e início do runner puro.
+- **Erro:** O regex exigia início de identificador e não encontrava `MdlSetVisible`, cujo hash é `c34ad2ab`, pois o binário contém `BuildMdlSetVisible\0` no mesmo pool. Também seria incorreto aceitar células AMX como argumentos de um contrato local sem resolver tipos, referências e unidades.
+- **Regra:** Examinar sufixos terminados em zero e resolver apenas por hash exato, conservando origem, offset e SHA-256; rejeitar colisões no corpus pesquisado. `DllField.cro+1097305` resolve o hash e a fixture sintética falha no resolver anterior. Os 615 nomes usados agora têm evidência local. O runner inicial de [ADR-002](features/core-jogo/adrs/ADR-002-runner-puro-de-chamadas-normalizadas.md) executa chamadas normalizadas, não bytecode/ABI brutos; comandos desconhecidos falham por nome. Warps do sec1 têm destino, não script: representar essa ausência explicitamente. Vínculos devem vir dos ZOs, com JSON externo apenas para metadata/conferência.
+
+## A-019 Disassembly real exige memória/frames e ABI distinta do contrato normalizado
+
+- **Data:** 2026-11-17
+- **Contexto:** Continuação de A-018/P-013, testes das zonas 6/223/225/227 e dependências da abertura, decisão ADR-003/core-jogo.
+- **Erro reproduzido:** Executar a fixture real pelo contrato anterior trocaria argumentos: `TalkMdlMsg_Seq` usa 19 células, `WarpSetID` uma, `MdlSetGPos` x/y/z/ator. Os inits de 223 e 225 ainda escolhem ramos diferentes por sexo e usam work IDs diferentes; repetir o mesmo cenário deu pausa/posição divergente. Sem memória inicial, seletor e frames, testar um IR reescrito não provaria execução do script extraído.
+- **Regra:** Testar o próprio disassembly mais dados iniciais com SHA correspondente, separar cenário de mundo/respostas do host de evidência do emulador e distinguir aridade declarada de ramo executado. Inferências de assinatura ficam documentadas, não viram prova de paridade. Efeitos opacos solicitam completion explícita em vez de retornar sucesso; natives/opcodes desconhecidos falham por nome. Validar região alocada heap/stack e células de entrada (regressões reproduzem gap aceito e NaN convertido silenciosamente em zero). P-013 permanece aberta para host/renderer, concorrência e ABI ACMD/objetos.

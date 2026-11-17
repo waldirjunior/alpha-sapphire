@@ -1,0 +1,661 @@
+{
+ "version": "Pawn/AMX 10, 32-bit",
+ "opcodes": [
+  {
+   "opcode": 9,
+   "hex": "09",
+   "mnemonic": "load.i",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 1779
+  },
+  {
+   "opcode": 11,
+   "hex": "0b",
+   "mnemonic": "const.pri",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 458
+  },
+  {
+   "opcode": 12,
+   "hex": "0c",
+   "mnemonic": "const.alt",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 452
+  },
+  {
+   "opcode": 14,
+   "hex": "0e",
+   "mnemonic": "addr.alt",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 239
+  },
+  {
+   "opcode": 23,
+   "hex": "17",
+   "mnemonic": "stor.i",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 861
+  },
+  {
+   "opcode": 31,
+   "hex": "1f",
+   "mnemonic": "lctrl",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 30
+  },
+  {
+   "opcode": 32,
+   "hex": "20",
+   "mnemonic": "sctrl",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 30
+  },
+  {
+   "opcode": 33,
+   "hex": "21",
+   "mnemonic": "move.pri",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 9
+  },
+  {
+   "opcode": 34,
+   "hex": "22",
+   "mnemonic": "move.alt",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 1213
+  },
+  {
+   "opcode": 35,
+   "hex": "23",
+   "mnemonic": "xchg",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 42
+  },
+  {
+   "opcode": 36,
+   "hex": "24",
+   "mnemonic": "push.pri",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 4260
+  },
+  {
+   "opcode": 37,
+   "hex": "25",
+   "mnemonic": "push.alt",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 183
+  },
+  {
+   "opcode": 39,
+   "hex": "27",
+   "mnemonic": "push.c",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 5124
+  },
+  {
+   "opcode": 43,
+   "hex": "2b",
+   "mnemonic": "pop.alt",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 1654
+  },
+  {
+   "opcode": 46,
+   "hex": "2e",
+   "mnemonic": "proc",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 17326
+  },
+  {
+   "opcode": 48,
+   "hex": "30",
+   "mnemonic": "retn",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 18848
+  },
+  {
+   "opcode": 49,
+   "hex": "31",
+   "mnemonic": "call",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 56172
+  },
+  {
+   "opcode": 51,
+   "hex": "33",
+   "mnemonic": "jump",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 23063
+  },
+  {
+   "opcode": 53,
+   "hex": "35",
+   "mnemonic": "jzer",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 9126
+  },
+  {
+   "opcode": 54,
+   "hex": "36",
+   "mnemonic": "jnz",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 5273
+  },
+  {
+   "opcode": 55,
+   "hex": "37",
+   "mnemonic": "jeq",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 710
+  },
+  {
+   "opcode": 56,
+   "hex": "38",
+   "mnemonic": "jneq",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 86
+  },
+  {
+   "opcode": 61,
+   "hex": "3d",
+   "mnemonic": "jsless",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 660
+  },
+  {
+   "opcode": 62,
+   "hex": "3e",
+   "mnemonic": "jsleq",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 83
+  },
+  {
+   "opcode": 63,
+   "hex": "3f",
+   "mnemonic": "jsgrtr",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 83
+  },
+  {
+   "opcode": 64,
+   "hex": "40",
+   "mnemonic": "jsgeq",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 1038
+  },
+  {
+   "opcode": 67,
+   "hex": "43",
+   "mnemonic": "sshr",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 1
+  },
+  {
+   "opcode": 74,
+   "hex": "4a",
+   "mnemonic": "sdiv.alt",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 31
+  },
+  {
+   "opcode": 78,
+   "hex": "4e",
+   "mnemonic": "add",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 109
+  },
+  {
+   "opcode": 79,
+   "hex": "4f",
+   "mnemonic": "sub",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 1
+  },
+  {
+   "opcode": 80,
+   "hex": "50",
+   "mnemonic": "sub.alt",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 261
+  },
+  {
+   "opcode": 81,
+   "hex": "51",
+   "mnemonic": "and",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 3679
+  },
+  {
+   "opcode": 82,
+   "hex": "52",
+   "mnemonic": "or",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 613
+  },
+  {
+   "opcode": 85,
+   "hex": "55",
+   "mnemonic": "neg",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 4
+  },
+  {
+   "opcode": 87,
+   "hex": "57",
+   "mnemonic": "add.c",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 30
+  },
+  {
+   "opcode": 89,
+   "hex": "59",
+   "mnemonic": "zero.pri",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 18634
+  },
+  {
+   "opcode": 90,
+   "hex": "5a",
+   "mnemonic": "zero.alt",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 495
+  },
+  {
+   "opcode": 95,
+   "hex": "5f",
+   "mnemonic": "eq",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 56
+  },
+  {
+   "opcode": 96,
+   "hex": "60",
+   "mnemonic": "neq",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 11
+  },
+  {
+   "opcode": 101,
+   "hex": "65",
+   "mnemonic": "sless",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 1
+  },
+  {
+   "opcode": 103,
+   "hex": "67",
+   "mnemonic": "sgrtr",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 1
+  },
+  {
+   "opcode": 104,
+   "hex": "68",
+   "mnemonic": "sgeq",
+   "trailingCells": 0,
+   "packed": false,
+   "occurrences": 22
+  },
+  {
+   "opcode": 105,
+   "hex": "69",
+   "mnemonic": "eq.c.pri",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 397
+  },
+  {
+   "opcode": 117,
+   "hex": "75",
+   "mnemonic": "movs",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 142
+  },
+  {
+   "opcode": 119,
+   "hex": "77",
+   "mnemonic": "fill",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 97
+  },
+  {
+   "opcode": 120,
+   "hex": "78",
+   "mnemonic": "halt",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 416
+  },
+  {
+   "opcode": 129,
+   "hex": "81",
+   "mnemonic": "switch",
+   "trailingCells": 1,
+   "packed": false,
+   "occurrences": 2000
+  },
+  {
+   "opcode": 130,
+   "hex": "82",
+   "mnemonic": "casetbl",
+   "trailingCells": "variable",
+   "packed": false,
+   "occurrences": 2000
+  },
+  {
+   "opcode": 135,
+   "hex": "87",
+   "mnemonic": "sysreq.n",
+   "trailingCells": 2,
+   "packed": false,
+   "occurrences": 47404
+  },
+  {
+   "opcode": 138,
+   "hex": "8a",
+   "mnemonic": "push2.c",
+   "trailingCells": 2,
+   "packed": false,
+   "occurrences": 978
+  },
+  {
+   "opcode": 142,
+   "hex": "8e",
+   "mnemonic": "push3.c",
+   "trailingCells": 3,
+   "packed": false,
+   "occurrences": 1030
+  },
+  {
+   "opcode": 146,
+   "hex": "92",
+   "mnemonic": "push4.c",
+   "trailingCells": 4,
+   "packed": false,
+   "occurrences": 10
+  },
+  {
+   "opcode": 150,
+   "hex": "96",
+   "mnemonic": "push5.c",
+   "trailingCells": 5,
+   "packed": false,
+   "occurrences": 1617
+  },
+  {
+   "opcode": 155,
+   "hex": "9b",
+   "mnemonic": "load.s.both",
+   "trailingCells": 2,
+   "packed": false,
+   "occurrences": 1721
+  },
+  {
+   "opcode": 157,
+   "hex": "9d",
+   "mnemonic": "const.s",
+   "trailingCells": 2,
+   "packed": false,
+   "occurrences": 1779
+  },
+  {
+   "opcode": 162,
+   "hex": "a2",
+   "mnemonic": "load.p.pri",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 1170
+  },
+  {
+   "opcode": 163,
+   "hex": "a3",
+   "mnemonic": "load.p.alt",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 4
+  },
+  {
+   "opcode": 164,
+   "hex": "a4",
+   "mnemonic": "load.p.s.pri",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 16785
+  },
+  {
+   "opcode": 165,
+   "hex": "a5",
+   "mnemonic": "load.p.s.alt",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 66
+  },
+  {
+   "opcode": 171,
+   "hex": "ab",
+   "mnemonic": "const.p.pri",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 1948
+  },
+  {
+   "opcode": 172,
+   "hex": "ac",
+   "mnemonic": "const.p.alt",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 4971
+  },
+  {
+   "opcode": 173,
+   "hex": "ad",
+   "mnemonic": "addr.p.pri",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 201
+  },
+  {
+   "opcode": 174,
+   "hex": "ae",
+   "mnemonic": "addr.p.alt",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 144
+  },
+  {
+   "opcode": 175,
+   "hex": "af",
+   "mnemonic": "stor.p.pri",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 6
+  },
+  {
+   "opcode": 177,
+   "hex": "b1",
+   "mnemonic": "stor.p.s.pri",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 9128
+  },
+  {
+   "opcode": 184,
+   "hex": "b8",
+   "mnemonic": "lidx.p.b",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 168
+  },
+  {
+   "opcode": 185,
+   "hex": "b9",
+   "mnemonic": "idxaddr.p.b",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 1646
+  },
+  {
+   "opcode": 188,
+   "hex": "bc",
+   "mnemonic": "push.p.c",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 202423
+  },
+  {
+   "opcode": 189,
+   "hex": "bd",
+   "mnemonic": "push.p",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 80
+  },
+  {
+   "opcode": 190,
+   "hex": "be",
+   "mnemonic": "push.p.s",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 36749
+  },
+  {
+   "opcode": 191,
+   "hex": "bf",
+   "mnemonic": "stack.p",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 12674
+  },
+  {
+   "opcode": 197,
+   "hex": "c5",
+   "mnemonic": "add.p.c",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 2288
+  },
+  {
+   "opcode": 198,
+   "hex": "c6",
+   "mnemonic": "smul.p.c",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 68
+  },
+  {
+   "opcode": 199,
+   "hex": "c7",
+   "mnemonic": "zero.p",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 7
+  },
+  {
+   "opcode": 200,
+   "hex": "c8",
+   "mnemonic": "zero.p.s",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 542
+  },
+  {
+   "opcode": 201,
+   "hex": "c9",
+   "mnemonic": "eq.p.c.pri",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 4972
+  },
+  {
+   "opcode": 203,
+   "hex": "cb",
+   "mnemonic": "inc.p",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 1
+  },
+  {
+   "opcode": 204,
+   "hex": "cc",
+   "mnemonic": "inc.p.s",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 472
+  },
+  {
+   "opcode": 206,
+   "hex": "ce",
+   "mnemonic": "dec.p.s",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 1
+  },
+  {
+   "opcode": 207,
+   "hex": "cf",
+   "mnemonic": "movs.p",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 2
+  },
+  {
+   "opcode": 210,
+   "hex": "d2",
+   "mnemonic": "halt.p",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 1157
+  },
+  {
+   "opcode": 212,
+   "hex": "d4",
+   "mnemonic": "push.p.adr",
+   "trailingCells": 0,
+   "packed": true,
+   "occurrences": 231
+  }
+ ]
+}

@@ -22,6 +22,7 @@ Planejamento em fases para sair do protótipo placeholder atual até a reconstru
 - **Critérios de pronto:**
   - `RomFS` extraída em diretório ignorado pelo `.gitignore` (`P-002`).
   - Inventário documentado dos arquivos relevantes da ROM (mapas, colisões, textos, modelos).
+  - Scripts de zona: envelope Pawn/AMX v10 e compactação [decodificados](features/pipeline-rom/script-format.md) em 2026-11-17; [disassembly completo](features/pipeline-rom/script-disassembly.md) das 536 zonas/85 globais, com 615 nomes nativos e candidatos de dispatch derivados dos ZOs. Runner puro normalizado (core-jogo/ADR-002) e VM Pawn real da abertura (ADR-003/PRD-003) na Fase 2; efeitos tipados aguardam completion do host. ABI ACMD/objetos, integração gráfica, ambiguidades e paridade permanecem em P-013.
   - Scripts de conversão gerando JSONs validados por schema e `.glb` otimizados para o vertical slice.
 
 ## Fase 2 — Vertical Slice e Arco Inicial (`Littleroot Town → Route 101 → Oldale → Route 102 → Petalburg`) (Meses 4–8 — Em andamento)

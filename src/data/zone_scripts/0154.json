@@ -1,0 +1,8439 @@
+{
+ "zoneId": 154,
+ "zoneName": "Sea Mauville",
+ "entitySource": "154_sea_mauville.json",
+ "entitySourceSha256": "c5198677f563e003512285858bfd672d21992a8c6c620fbf377de4cd5d2c8f9c",
+ "bindings": [
+  {
+   "kind": "npcs",
+   "index": 0,
+   "entityId": 0,
+   "scriptId": 2000,
+   "status": "matched-dispatch",
+   "matches": [
+    {
+     "program": "global:0015",
+     "target": 2828,
+     "functions": [
+      3104
+     ],
+     "tableOffset": 3008
+    }
+   ]
+  },
+  {
+   "kind": "triggers",
+   "index": 0,
+   "entityId": null,
+   "scriptId": 2,
+   "status": "ambiguous",
+   "matches": [
+    {
+     "program": "entities",
+     "target": 60,
+     "functions": [
+      632
+     ],
+     "tableOffset": 120
+    },
+    {
+     "program": "map",
+     "target": 2836,
+     "functions": [
+      3128
+     ],
+     "tableOffset": 2936
+    }
+   ]
+  },
+  {
+   "kind": "triggers",
+   "index": 1,
+   "entityId": null,
+   "scriptId": 1,
+   "status": "ambiguous",
+   "matches": [
+    {
+     "program": "entities",
+     "target": 40,
+     "functions": [
+      620
+     ],
+     "tableOffset": 120
+    },
+    {
+     "program": "map",
+     "target": 2816,
+     "functions": [
+      3028
+     ],
+     "tableOffset": 2936
+    },
+    {
+     "program": "global:0033",
+     "target": 20,
+     "functions": [
+      128
+     ],
+     "tableOffset": 80
+    }
+   ]
+  },
+  {
+   "kind": "triggers",
+   "index": 2,
+   "entityId": null,
+   "scriptId": 4,
+   "status": "matched-dispatch",
+   "matches": [
+    {
+     "program": "map",
+     "target": 2876,
+     "functions": [
+      3540
+     ],
+     "tableOffset": 2936
+    }
+   ]
+  }
+ ],
+ "warpBindings": [],
+ "bindingSource": "ZO-sec1",
+ "programs": {
+  "entities": {
+   "sha256": "fb0bdf69e1a7d017d0db0a716808df300b969bd0e631aaaa08fdaf23b1ee42ad",
+   "entryPoint": 4,
+   "dataByteLength": 4,
+   "functions": [
+    4,
+    172,
+    184,
+    620,
+    632
+   ],
+   "nativeHashes": [
+    "590f52ee",
+    "133daa6a",
+    "8e50f765",
+    "4a3e2a96",
+    "accbbbd7",
+    "8e55f629"
+   ],
+   "dispatch": {
+    "main": 4,
+    "selectorAddress": 0,
+    "selectorHash": "d7477c97",
+    "switchOffset": 12,
+    "tableOffset": 120,
+    "defaultTarget": 100,
+    "cases": [
+     {
+      "value": -1,
+      "target": 80
+     },
+     {
+      "value": 0,
+      "target": 20
+     },
+     {
+      "value": 1,
+      "target": 40
+     },
+     {
+      "value": 2,
+      "target": 60
+     }
+    ],
+    "caseCalls": {
+     "-1": [
+      172
+     ],
+     "0": [
+      184
+     ],
+     "1": [
+      620
+     ],
+     "2": [
+      632
+     ]
+    },
+    "evidence": "main-exported-selector-switch"
+   },
+   "instructions": [
+    {
+     "offset": 0,
+     "opcode": 210,
+     "mnemonic": "halt.p",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 8,
+     "opcode": 162,
+     "mnemonic": "load.p.pri",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 12,
+     "opcode": 129,
+     "mnemonic": "switch",
+     "operands": [
+      108
+     ],
+     "size": 8,
+     "target": 120
+    },
+    {
+     "offset": 20,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 24,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      160
+     ],
+     "size": 8,
+     "target": 184
+    },
+    {
+     "offset": 32,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      132
+     ],
+     "size": 8,
+     "target": 164
+    },
+    {
+     "offset": 40,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 44,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      576
+     ],
+     "size": 8,
+     "target": 620
+    },
+    {
+     "offset": 52,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      112
+     ],
+     "size": 8,
+     "target": 164
+    },
+    {
+     "offset": 60,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 64,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      568
+     ],
+     "size": 8,
+     "target": 632
+    },
+    {
+     "offset": 72,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      92
+     ],
+     "size": 8,
+     "target": 164
+    },
+    {
+     "offset": 80,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 84,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      88
+     ],
+     "size": 8,
+     "target": 172
+    },
+    {
+     "offset": 92,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      72
+     ],
+     "size": 8,
+     "target": 164
+    },
+    {
+     "offset": 100,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      0,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 0,
+      "hash": "590f52ee",
+      "name": "CommandNOP",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 112,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      52
+     ],
+     "size": 8,
+     "target": 164
+    },
+    {
+     "offset": 120,
+     "opcode": 130,
+     "mnemonic": "casetbl",
+     "operands": [
+      4,
+      -24,
+      -1,
+      -52,
+      0,
+      -120,
+      1,
+      -108,
+      2,
+      -96
+     ],
+     "size": 44,
+     "defaultTarget": 100,
+     "cases": [
+      {
+       "value": -1,
+       "target": 80
+      },
+      {
+       "value": 0,
+       "target": 20
+      },
+      {
+       "value": 1,
+       "target": 40
+      },
+      {
+       "value": 2,
+       "target": 60
+      }
+     ]
+    },
+    {
+     "offset": 164,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 168,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 172,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 176,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 180,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 184,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 188,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 192,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      301
+     ],
+     "size": 4
+    },
+    {
+     "offset": 196,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      1,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 1,
+      "hash": "133daa6a",
+      "name": "FlagGet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 208,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 212,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 216,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      179
+     ],
+     "size": 4
+    },
+    {
+     "offset": 220,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      1,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 1,
+      "hash": "133daa6a",
+      "name": "FlagGet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 232,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 236,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 240,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 244,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 248,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 252,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 256,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16633
+     ],
+     "size": 4
+    },
+    {
+     "offset": 260,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      2,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 2,
+      "hash": "8e50f765",
+      "name": "WorkGet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 272,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -28
+     ],
+     "size": 4
+    },
+    {
+     "offset": 276,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 280,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 284,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      236
+     ],
+     "size": 8,
+     "target": 520
+    },
+    {
+     "offset": 292,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 296,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 300,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      220
+     ],
+     "size": 8,
+     "target": 520
+    },
+    {
+     "offset": 308,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      3,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 3,
+      "hash": "4a3e2a96",
+      "name": "RomGetVersion",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 320,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 324,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 328,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      26
+     ],
+     "size": 4
+    },
+    {
+     "offset": 332,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      188
+     ],
+     "size": 8,
+     "target": 520
+    },
+    {
+     "offset": 340,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      305
+     ],
+     "size": 4
+    },
+    {
+     "offset": 344,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      1,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 1,
+      "hash": "133daa6a",
+      "name": "FlagGet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 356,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 360,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      2910
+     ],
+     "size": 4
+    },
+    {
+     "offset": 364,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      1,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 1,
+      "hash": "133daa6a",
+      "name": "FlagGet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 376,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 380,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1030
+     ],
+     "size": 4
+    },
+    {
+     "offset": 384,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      1,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 1,
+      "hash": "133daa6a",
+      "name": "FlagGet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 396,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 400,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 404,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 408,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 432
+    },
+    {
+     "offset": 416,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1030
+     ],
+     "size": 4
+    },
+    {
+     "offset": 420,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      4,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 4,
+      "hash": "accbbbd7",
+      "name": "FlagReset",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 432,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 436,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16395
+     ],
+     "size": 4
+    },
+    {
+     "offset": 440,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      5,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 5,
+      "hash": "8e55f629",
+      "name": "WorkSet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 452,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 456,
+     "opcode": 54,
+     "mnemonic": "jnz",
+     "operands": [
+      32
+     ],
+     "size": 8,
+     "target": 488
+    },
+    {
+     "offset": 464,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 468,
+     "opcode": 54,
+     "mnemonic": "jnz",
+     "operands": [
+      20
+     ],
+     "size": 8,
+     "target": 488
+    },
+    {
+     "offset": 476,
+     "opcode": 171,
+     "mnemonic": "const.p.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 480,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      12
+     ],
+     "size": 8,
+     "target": 492
+    },
+    {
+     "offset": 488,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 492,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      28
+     ],
+     "size": 8,
+     "target": 520
+    },
+    {
+     "offset": 500,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 504,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16394
+     ],
+     "size": 4
+    },
+    {
+     "offset": 508,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      5,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 5,
+      "hash": "8e55f629",
+      "name": "WorkSet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 520,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 524,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 528,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      80
+     ],
+     "size": 8,
+     "target": 608
+    },
+    {
+     "offset": 536,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 540,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 544,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      32
+     ],
+     "size": 8,
+     "target": 576
+    },
+    {
+     "offset": 552,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -28
+     ],
+     "size": 4
+    },
+    {
+     "offset": 556,
+     "opcode": 54,
+     "mnemonic": "jnz",
+     "operands": [
+      20
+     ],
+     "size": 8,
+     "target": 576
+    },
+    {
+     "offset": 564,
+     "opcode": 171,
+     "mnemonic": "const.p.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 568,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      12
+     ],
+     "size": 8,
+     "target": 580
+    },
+    {
+     "offset": 576,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 580,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      28
+     ],
+     "size": 8,
+     "target": 608
+    },
+    {
+     "offset": 588,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 592,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16396
+     ],
+     "size": 4
+    },
+    {
+     "offset": 596,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      5,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 5,
+      "hash": "8e55f629",
+      "name": "WorkSet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 608,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      28
+     ],
+     "size": 4
+    },
+    {
+     "offset": 612,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 616,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 620,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 624,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 628,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 632,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 636,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 640,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    }
+   ]
+  },
+  "map": {
+   "sha256": "567679959b7b746d2930debace867e27ac21cb463936e315dcd2cc8c9924515f",
+   "entryPoint": 2800,
+   "dataByteLength": 52,
+   "functions": [
+    4,
+    48,
+    80,
+    168,
+    292,
+    392,
+    460,
+    488,
+    584,
+    688,
+    720,
+    856,
+    936,
+    1188,
+    1272,
+    1356,
+    1452,
+    1512,
+    1700,
+    1996,
+    2324,
+    2516,
+    2672,
+    2800,
+    2996,
+    3008,
+    3028,
+    3128,
+    3340,
+    3540
+   ],
+   "nativeHashes": [
+    "0b13a389",
+    "b25ed5e2",
+    "ae0ae11e",
+    "d04413ad",
+    "c7de8c7c",
+    "4016ed32",
+    "6393be9a",
+    "f01eeee0",
+    "c2dc77a4",
+    "184d321e",
+    "0511b06e",
+    "8e50f765",
+    "9adf1616",
+    "c8e7fb61",
+    "194f0128",
+    "f0882c66",
+    "7d6b7345",
+    "15f86e59",
+    "9d75386e",
+    "cb54950c",
+    "21d6ffb6",
+    "f4890926",
+    "f845bdff",
+    "a5135fde",
+    "b9964356",
+    "88fa8586",
+    "f9238461",
+    "2654de74",
+    "a8214d87",
+    "b5f607fa",
+    "358b0372",
+    "8d631ffe",
+    "e53555d8",
+    "590f52ee",
+    "8e55f629",
+    "4a3e2a96",
+    "133daa6a",
+    "e5a627ed",
+    "3e91bf6c",
+    "c63b48da",
+    "d2be92ab",
+    "74d78dad",
+    "db16cbce",
+    "491dd15b"
+   ],
+   "dispatch": {
+    "main": 2800,
+    "selectorAddress": 24,
+    "selectorHash": "d7477c97",
+    "switchOffset": 2808,
+    "tableOffset": 2936,
+    "defaultTarget": 2916,
+    "cases": [
+     {
+      "value": -1,
+      "target": 2896
+     },
+     {
+      "value": 1,
+      "target": 2816
+     },
+     {
+      "value": 2,
+      "target": 2836
+     },
+     {
+      "value": 3,
+      "target": 2856
+     },
+     {
+      "value": 4,
+      "target": 2876
+     }
+    ],
+    "caseCalls": {
+     "-1": [
+      2996
+     ],
+     "1": [
+      3028
+     ],
+     "2": [
+      3128
+     ],
+     "3": [
+      3340
+     ],
+     "4": [
+      3540
+     ]
+    },
+    "evidence": "main-exported-selector-switch"
+   },
+   "instructions": [
+    {
+     "offset": 0,
+     "opcode": 210,
+     "mnemonic": "halt.p",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 8,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 12,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      0,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 0,
+      "hash": "0b13a389",
+      "name": "_Suspend",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 24,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 28,
+     "opcode": 90,
+     "mnemonic": "zero.alt",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 32,
+     "opcode": 120,
+     "mnemonic": "halt",
+     "operands": [
+      12
+     ],
+     "size": 8
+    },
+    {
+     "offset": 40,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 44,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 48,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 52,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 56,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 60,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 64,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      1,
+      12
+     ],
+     "size": 12,
+     "native": {
+      "index": 1,
+      "hash": "b25ed5e2",
+      "name": "_WordSetRegister",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 12
+    },
+    {
+     "offset": 76,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 80,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 84,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 88,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 92,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 96,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      60
+     ],
+     "size": 8,
+     "target": 156
+    },
+    {
+     "offset": 104,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 108,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 112,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -108
+     ],
+     "size": 8,
+     "target": 4
+    },
+    {
+     "offset": 120,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      2,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 2,
+      "hash": "ae0ae11e",
+      "name": "EVCameraIsEndFrame",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 132,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 136,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      12
+     ],
+     "size": 8,
+     "target": 148
+    },
+    {
+     "offset": 144,
+     "opcode": 200,
+     "mnemonic": "zero.p.s",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 148,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      -60
+     ],
+     "size": 8,
+     "target": 88
+    },
+    {
+     "offset": 156,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 160,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 164,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 168,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 172,
+     "opcode": 155,
+     "mnemonic": "load.s.both",
+     "operands": [
+      24,
+      20
+     ],
+     "size": 12
+    },
+    {
+     "offset": 184,
+     "opcode": 82,
+     "mnemonic": "or",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 188,
+     "opcode": 172,
+     "mnemonic": "const.p.alt",
+     "operands": [
+      512
+     ],
+     "size": 4
+    },
+    {
+     "offset": 192,
+     "opcode": 82,
+     "mnemonic": "or",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 196,
+     "opcode": 36,
+     "mnemonic": "push.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 200,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 204,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      -1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 208,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 212,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 216,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 220,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 224,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 228,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 232,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 236,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 240,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 244,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 248,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 252,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 256,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 260,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      -1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 264,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 268,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 272,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      76
+     ],
+     "size": 4
+    },
+    {
+     "offset": 276,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      444
+     ],
+     "size": 8,
+     "target": 720
+    },
+    {
+     "offset": 284,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 288,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 292,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 296,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 300,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 304,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      -1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 308,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 312,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 316,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 320,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 324,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 328,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 332,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 336,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 340,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 344,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 348,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 352,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 356,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      11
+     ],
+     "size": 4
+    },
+    {
+     "offset": 360,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      -1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 364,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 368,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 372,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      76
+     ],
+     "size": 4
+    },
+    {
+     "offset": 376,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      344
+     ],
+     "size": 8,
+     "target": 720
+    },
+    {
+     "offset": 384,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 388,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 392,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 396,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      3,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 3,
+      "hash": "d04413ad",
+      "name": "SetKeyWaitMark",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 408,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      4,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 4,
+      "hash": "c7de8c7c",
+      "name": "_ABKeyWait",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 420,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      5,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 5,
+      "hash": "4016ed32",
+      "name": "VanishKeyWaitMark",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 432,
+     "opcode": 39,
+     "mnemonic": "push.c",
+     "operands": [
+      393216
+     ],
+     "size": 8
+    },
+    {
+     "offset": 440,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      6,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 6,
+      "hash": "6393be9a",
+      "name": "SEPlay",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 452,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 456,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 460,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 464,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 468,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      7,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 7,
+      "hash": "f01eeee0",
+      "name": "MsgWinCloseNo",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 480,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 484,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 488,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 492,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      8
+     ],
+     "size": 8,
+     "target": 500
+    },
+    {
+     "offset": 500,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 504,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      8,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 8,
+      "hash": "c2dc77a4",
+      "name": "MEIsFinished",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 516,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      36
+     ],
+     "size": 8,
+     "target": 552
+    },
+    {
+     "offset": 524,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      9,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 9,
+      "hash": "184d321e",
+      "name": "MEReturnBGM",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 536,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      40
+     ],
+     "size": 8,
+     "target": 576
+    },
+    {
+     "offset": 544,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 568
+    },
+    {
+     "offset": 552,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 556,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 560,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -556
+     ],
+     "size": 8,
+     "target": 4
+    },
+    {
+     "offset": 568,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      -68
+     ],
+     "size": 8,
+     "target": 500
+    },
+    {
+     "offset": 576,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 580,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 584,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 588,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      8
+     ],
+     "size": 8,
+     "target": 596
+    },
+    {
+     "offset": 596,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 600,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 604,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 608,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 612,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      10,
+      16
+     ],
+     "size": 12,
+     "native": {
+      "index": 10,
+      "hash": "0511b06e",
+      "name": "YesNoWin_Seq",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 16
+    },
+    {
+     "offset": 624,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      32
+     ],
+     "size": 8,
+     "target": 656
+    },
+    {
+     "offset": 632,
+     "opcode": 39,
+     "mnemonic": "push.c",
+     "operands": [
+      32784
+     ],
+     "size": 8
+    },
+    {
+     "offset": 640,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      11,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 11,
+      "hash": "8e50f765",
+      "name": "WorkGet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 652,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 656,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 660,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 664,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -660
+     ],
+     "size": 8,
+     "target": 4
+    },
+    {
+     "offset": 672,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      -76
+     ],
+     "size": 8,
+     "target": 596
+    },
+    {
+     "offset": 680,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 684,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 688,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 692,
+     "opcode": 39,
+     "mnemonic": "push.c",
+     "operands": [
+      393216
+     ],
+     "size": 8
+    },
+    {
+     "offset": 700,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      6,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 6,
+      "hash": "6393be9a",
+      "name": "SEPlay",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 712,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 716,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 720,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 724,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      84
+     ],
+     "size": 4
+    },
+    {
+     "offset": 728,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      80
+     ],
+     "size": 4
+    },
+    {
+     "offset": 732,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      76
+     ],
+     "size": 4
+    },
+    {
+     "offset": 736,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      72
+     ],
+     "size": 4
+    },
+    {
+     "offset": 740,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      68
+     ],
+     "size": 4
+    },
+    {
+     "offset": 744,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      64
+     ],
+     "size": 4
+    },
+    {
+     "offset": 748,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      60
+     ],
+     "size": 4
+    },
+    {
+     "offset": 752,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      56
+     ],
+     "size": 4
+    },
+    {
+     "offset": 756,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      52
+     ],
+     "size": 4
+    },
+    {
+     "offset": 760,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      48
+     ],
+     "size": 4
+    },
+    {
+     "offset": 764,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      44
+     ],
+     "size": 4
+    },
+    {
+     "offset": 768,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      40
+     ],
+     "size": 4
+    },
+    {
+     "offset": 772,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      36
+     ],
+     "size": 4
+    },
+    {
+     "offset": 776,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      32
+     ],
+     "size": 4
+    },
+    {
+     "offset": 780,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      28
+     ],
+     "size": 4
+    },
+    {
+     "offset": 784,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 788,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 792,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 796,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 800,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      12,
+      76
+     ],
+     "size": 12,
+     "native": {
+      "index": 12,
+      "hash": "9adf1616",
+      "name": "TalkMdlMsg_Seq",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 76
+    },
+    {
+     "offset": 812,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      84
+     ],
+     "size": 4
+    },
+    {
+     "offset": 816,
+     "opcode": 12,
+     "mnemonic": "const.alt",
+     "operands": [
+      65536
+     ],
+     "size": 8
+    },
+    {
+     "offset": 824,
+     "opcode": 81,
+     "mnemonic": "and",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 828,
+     "opcode": 54,
+     "mnemonic": "jnz",
+     "operands": [
+      20
+     ],
+     "size": 8,
+     "target": 848
+    },
+    {
+     "offset": 836,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 840,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      16
+     ],
+     "size": 8,
+     "target": 856
+    },
+    {
+     "offset": 848,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 852,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 856,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 860,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      8
+     ],
+     "size": 8,
+     "target": 868
+    },
+    {
+     "offset": 868,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      13,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 13,
+      "hash": "c8e7fb61",
+      "name": "CheckWinAllSuspend",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 880,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 904
+    },
+    {
+     "offset": 888,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      40
+     ],
+     "size": 8,
+     "target": 928
+    },
+    {
+     "offset": 896,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 920
+    },
+    {
+     "offset": 904,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 908,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 912,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -908
+     ],
+     "size": 8,
+     "target": 4
+    },
+    {
+     "offset": 920,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      -52
+     ],
+     "size": 8,
+     "target": 868
+    },
+    {
+     "offset": 928,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 932,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 936,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 940,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 944,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      14,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 14,
+      "hash": "194f0128",
+      "name": "MdlAcmdInit",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 956,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 960,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      20
+     ],
+     "size": 8,
+     "target": 980
+    },
+    {
+     "offset": 968,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 972,
+     "opcode": 197,
+     "mnemonic": "add.p.c",
+     "operands": [
+      3
+     ],
+     "size": 4
+    },
+    {
+     "offset": 976,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 980,
+     "opcode": 155,
+     "mnemonic": "load.s.both",
+     "operands": [
+      -4,
+      20
+     ],
+     "size": 12
+    },
+    {
+     "offset": 992,
+     "opcode": 64,
+     "mnemonic": "jsgeq",
+     "operands": [
+      172
+     ],
+     "size": 8,
+     "target": 1164
+    },
+    {
+     "offset": 1000,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1004,
+     "opcode": 36,
+     "mnemonic": "push.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1008,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1012,
+     "opcode": 43,
+     "mnemonic": "pop.alt",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1016,
+     "opcode": 185,
+     "mnemonic": "idxaddr.p.b",
+     "operands": [
+      2
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1020,
+     "opcode": 9,
+     "mnemonic": "load.i",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1024,
+     "opcode": 105,
+     "mnemonic": "eq.c.pri",
+     "operands": [
+      65535
+     ],
+     "size": 8
+    },
+    {
+     "offset": 1032,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      16
+     ],
+     "size": 8,
+     "target": 1048
+    },
+    {
+     "offset": 1040,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      124
+     ],
+     "size": 8,
+     "target": 1164
+    },
+    {
+     "offset": 1048,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1052,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1056,
+     "opcode": 36,
+     "mnemonic": "push.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1060,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1064,
+     "opcode": 197,
+     "mnemonic": "add.p.c",
+     "operands": [
+      2
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1068,
+     "opcode": 43,
+     "mnemonic": "pop.alt",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1072,
+     "opcode": 185,
+     "mnemonic": "idxaddr.p.b",
+     "operands": [
+      2
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1076,
+     "opcode": 9,
+     "mnemonic": "load.i",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1080,
+     "opcode": 36,
+     "mnemonic": "push.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1084,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1088,
+     "opcode": 36,
+     "mnemonic": "push.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1092,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1096,
+     "opcode": 197,
+     "mnemonic": "add.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1100,
+     "opcode": 43,
+     "mnemonic": "pop.alt",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1104,
+     "opcode": 185,
+     "mnemonic": "idxaddr.p.b",
+     "operands": [
+      2
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1108,
+     "opcode": 9,
+     "mnemonic": "load.i",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1112,
+     "opcode": 36,
+     "mnemonic": "push.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1116,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1120,
+     "opcode": 36,
+     "mnemonic": "push.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1124,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1128,
+     "opcode": 43,
+     "mnemonic": "pop.alt",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1132,
+     "opcode": 185,
+     "mnemonic": "idxaddr.p.b",
+     "operands": [
+      2
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1136,
+     "opcode": 9,
+     "mnemonic": "load.i",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1140,
+     "opcode": 36,
+     "mnemonic": "push.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1144,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      15,
+      16
+     ],
+     "size": 12,
+     "native": {
+      "index": 15,
+      "hash": "f0882c66",
+      "name": "MdlAcmdSet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 16
+    },
+    {
+     "offset": 1156,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      -188
+     ],
+     "size": 8,
+     "target": 968
+    },
+    {
+     "offset": 1164,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1168,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      16,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 16,
+      "hash": "7d6b7345",
+      "name": "MdlAcmdSetEnd",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 1180,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1184,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1188,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1192,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      8
+     ],
+     "size": 8,
+     "target": 1200
+    },
+    {
+     "offset": 1200,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1204,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      17,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 17,
+      "hash": "15f86e59",
+      "name": "MdlAcmdUpdate",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 1216,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 1240
+    },
+    {
+     "offset": 1224,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      40
+     ],
+     "size": 8,
+     "target": 1264
+    },
+    {
+     "offset": 1232,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 1256
+    },
+    {
+     "offset": 1240,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1244,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1248,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -1244
+     ],
+     "size": 8,
+     "target": 4
+    },
+    {
+     "offset": 1256,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      -56
+     ],
+     "size": 8,
+     "target": 1200
+    },
+    {
+     "offset": 1264,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1268,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1272,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1276,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      8
+     ],
+     "size": 8,
+     "target": 1284
+    },
+    {
+     "offset": 1284,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1288,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      18,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 18,
+      "hash": "9d75386e",
+      "name": "SEIsPlaying",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 1300,
+     "opcode": 54,
+     "mnemonic": "jnz",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 1324
+    },
+    {
+     "offset": 1308,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      40
+     ],
+     "size": 8,
+     "target": 1348
+    },
+    {
+     "offset": 1316,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 1340
+    },
+    {
+     "offset": 1324,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1328,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1332,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -1328
+     ],
+     "size": 8,
+     "target": 4
+    },
+    {
+     "offset": 1340,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      -56
+     ],
+     "size": 8,
+     "target": 1284
+    },
+    {
+     "offset": 1348,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1352,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1356,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1360,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      8
+     ],
+     "size": 8,
+     "target": 1368
+    },
+    {
+     "offset": 1368,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1372,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1376,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      19,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 19,
+      "hash": "cb54950c",
+      "name": "MsgIsLoaded",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 1388,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1392,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1396,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      20
+     ],
+     "size": 8,
+     "target": 1416
+    },
+    {
+     "offset": 1404,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1408,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1412,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1416,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1420,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1424,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -1420
+     ],
+     "size": 8,
+     "target": 4
+    },
+    {
+     "offset": 1432,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1436,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      -68
+     ],
+     "size": 8,
+     "target": 1368
+    },
+    {
+     "offset": 1444,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1448,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1452,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1456,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      32
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1460,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1464,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1468,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1472,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      28
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1476,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1480,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1484,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1488,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1492,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      20,
+      36
+     ],
+     "size": 12,
+     "native": {
+      "index": 20,
+      "hash": "21d6ffb6",
+      "name": "_MapChangeCore",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 36
+    },
+    {
+     "offset": 1504,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1508,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1512,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1516,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      21,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 21,
+      "hash": "f4890926",
+      "name": "MsgSwap",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 1528,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1532,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1536,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      22,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 22,
+      "hash": "f845bdff",
+      "name": "MsgLoad",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 1548,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1552,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1556,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1560,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -204
+     ],
+     "size": 8,
+     "target": 1356
+    },
+    {
+     "offset": 1568,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1572,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1576,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1580,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      23,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 23,
+      "hash": "a5135fde",
+      "name": "ItemAddCheck",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 1592,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      44
+     ],
+     "size": 8,
+     "target": 1636
+    },
+    {
+     "offset": 1600,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1604,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1608,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1612,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1616,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1620,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      896
+     ],
+     "size": 8,
+     "target": 2516
+    },
+    {
+     "offset": 1628,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      36
+     ],
+     "size": 8,
+     "target": 1664
+    },
+    {
+     "offset": 1636,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1640,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1644,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1648,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1652,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1656,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      1016
+     ],
+     "size": 8,
+     "target": 2672
+    },
+    {
+     "offset": 1664,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      24,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 24,
+      "hash": "b9964356",
+      "name": "MsgRelease",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 1676,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      21,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 21,
+      "hash": "f4890926",
+      "name": "MsgSwap",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 1688,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1692,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1696,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1700,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1704,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1708,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1712,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      534
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1716,
+     "opcode": 54,
+     "mnemonic": "jnz",
+     "operands": [
+      36
+     ],
+     "size": 8,
+     "target": 1752
+    },
+    {
+     "offset": 1724,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1728,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      535
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1732,
+     "opcode": 54,
+     "mnemonic": "jnz",
+     "operands": [
+      20
+     ],
+     "size": 8,
+     "target": 1752
+    },
+    {
+     "offset": 1740,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1744,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      12
+     ],
+     "size": 8,
+     "target": 1756
+    },
+    {
+     "offset": 1752,
+     "opcode": 171,
+     "mnemonic": "const.p.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1756,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 1780
+    },
+    {
+     "offset": 1764,
+     "opcode": 11,
+     "mnemonic": "const.pri",
+     "operands": [
+      327717
+     ],
+     "size": 8
+    },
+    {
+     "offset": 1772,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1776,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1780,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1784,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1788,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      25,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 25,
+      "hash": "88fa8586",
+      "name": "ItemIsMegaStone",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 1800,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1804,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1808,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 1832
+    },
+    {
+     "offset": 1816,
+     "opcode": 11,
+     "mnemonic": "const.pri",
+     "operands": [
+      327721
+     ],
+     "size": 8
+    },
+    {
+     "offset": 1824,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1828,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1832,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1836,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1840,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      26,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 26,
+      "hash": "f9238461",
+      "name": "PocketGetID",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 1852,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1856,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1860,
+     "opcode": 129,
+     "mnemonic": "switch",
+     "operands": [
+      88
+     ],
+     "size": 8,
+     "target": 1948
+    },
+    {
+     "offset": 1868,
+     "opcode": 157,
+     "mnemonic": "const.s",
+     "operands": [
+      -4,
+      327683
+     ],
+     "size": 12
+    },
+    {
+     "offset": 1880,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      104
+     ],
+     "size": 8,
+     "target": 1984
+    },
+    {
+     "offset": 1888,
+     "opcode": 157,
+     "mnemonic": "const.s",
+     "operands": [
+      -4,
+      327687
+     ],
+     "size": 12
+    },
+    {
+     "offset": 1900,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      84
+     ],
+     "size": 8,
+     "target": 1984
+    },
+    {
+     "offset": 1908,
+     "opcode": 157,
+     "mnemonic": "const.s",
+     "operands": [
+      -4,
+      327689
+     ],
+     "size": 12
+    },
+    {
+     "offset": 1920,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      64
+     ],
+     "size": 8,
+     "target": 1984
+    },
+    {
+     "offset": 1928,
+     "opcode": 157,
+     "mnemonic": "const.s",
+     "operands": [
+      -4,
+      327682
+     ],
+     "size": 12
+    },
+    {
+     "offset": 1940,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      44
+     ],
+     "size": 8,
+     "target": 1984
+    },
+    {
+     "offset": 1948,
+     "opcode": 130,
+     "mnemonic": "casetbl",
+     "operands": [
+      3,
+      -24,
+      2,
+      -72,
+      3,
+      -60,
+      4,
+      -108
+     ],
+     "size": 36,
+     "defaultTarget": 1928,
+     "cases": [
+      {
+       "value": 2,
+       "target": 1888
+      },
+      {
+       "value": 3,
+       "target": 1908
+      },
+      {
+       "value": 4,
+       "target": 1868
+      }
+     ]
+    },
+    {
+     "offset": 1984,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1988,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 1992,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 1996,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2000,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2004,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2008,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      26,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 26,
+      "hash": "f9238461",
+      "name": "PocketGetID",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 2020,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2024,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2028,
+     "opcode": 129,
+     "mnemonic": "switch",
+     "operands": [
+      256
+     ],
+     "size": 8,
+     "target": 2284
+    },
+    {
+     "offset": 2036,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2040,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2044,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -1996
+     ],
+     "size": 8,
+     "target": 48
+    },
+    {
+     "offset": 2052,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2056,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2060,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2064,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      27,
+      12
+     ],
+     "size": 12,
+     "native": {
+      "index": 27,
+      "hash": "2654de74",
+      "name": "WordSetItemName",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 12
+    },
+    {
+     "offset": 2076,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2080,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      2
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2084,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      28,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 28,
+      "hash": "a8214d87",
+      "name": "WordSetItemWazaName",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 2096,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2100,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2104,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      170
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2108,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      3
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2112,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2116,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -1824
+     ],
+     "size": 8,
+     "target": 292
+    },
+    {
+     "offset": 2124,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      188
+     ],
+     "size": 8,
+     "target": 2312
+    },
+    {
+     "offset": 2132,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2136,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2140,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2092
+     ],
+     "size": 8,
+     "target": 48
+    },
+    {
+     "offset": 2148,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2152,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2156,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2160,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      27,
+      12
+     ],
+     "size": 12,
+     "native": {
+      "index": 27,
+      "hash": "2654de74",
+      "name": "WordSetItemName",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 12
+    },
+    {
+     "offset": 2172,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2176,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2180,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      170
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2184,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2188,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2192,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -1900
+     ],
+     "size": 8,
+     "target": 292
+    },
+    {
+     "offset": 2200,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      112
+     ],
+     "size": 8,
+     "target": 2312
+    },
+    {
+     "offset": 2208,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2212,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2216,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2168
+     ],
+     "size": 8,
+     "target": 48
+    },
+    {
+     "offset": 2224,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2228,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2232,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2236,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      27,
+      12
+     ],
+     "size": 12,
+     "native": {
+      "index": 27,
+      "hash": "2654de74",
+      "name": "WordSetItemName",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 12
+    },
+    {
+     "offset": 2248,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2252,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2256,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      170
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2260,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2264,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2268,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -1976
+     ],
+     "size": 8,
+     "target": 292
+    },
+    {
+     "offset": 2276,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      36
+     ],
+     "size": 8,
+     "target": 2312
+    },
+    {
+     "offset": 2284,
+     "opcode": 130,
+     "mnemonic": "casetbl",
+     "operands": [
+      2,
+      -80,
+      2,
+      -260,
+      4,
+      -172
+     ],
+     "size": 28,
+     "defaultTarget": 2208,
+     "cases": [
+      {
+       "value": 2,
+       "target": 2036
+      },
+      {
+       "value": 4,
+       "target": 2132
+      }
+     ]
+    },
+    {
+     "offset": 2312,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2316,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2320,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2324,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2328,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2332,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2336,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2288
+     ],
+     "size": 8,
+     "target": 48
+    },
+    {
+     "offset": 2344,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2348,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2352,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2356,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      27,
+      12
+     ],
+     "size": 12,
+     "native": {
+      "index": 27,
+      "hash": "2654de74",
+      "name": "WordSetItemName",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 12
+    },
+    {
+     "offset": 2368,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2372,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2376,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      26,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 26,
+      "hash": "f9238461",
+      "name": "PocketGetID",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 2388,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2392,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2396,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      2
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2400,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      29,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 29,
+      "hash": "b5f607fa",
+      "name": "WordSetItemPocketName",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 2412,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2416,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2420,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      170
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2424,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      9
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2428,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2432,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2140
+     ],
+     "size": 8,
+     "target": 292
+    },
+    {
+     "offset": 2440,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2444,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2448,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      28
+     ],
+     "size": 8,
+     "target": 2476
+    },
+    {
+     "offset": 2456,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2460,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2068
+     ],
+     "size": 8,
+     "target": 392
+    },
+    {
+     "offset": 2468,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      20
+     ],
+     "size": 8,
+     "target": 2488
+    },
+    {
+     "offset": 2476,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      30,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 30,
+      "hash": "358b0372",
+      "name": "LastKeyWait",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 2488,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2492,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2496,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2036
+     ],
+     "size": 8,
+     "target": 460
+    },
+    {
+     "offset": 2504,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2508,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2512,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2516,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2520,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2524,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2528,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      31,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 31,
+      "hash": "8d631ffe",
+      "name": "ItemAdd",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 2540,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2544,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2548,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2552,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -852
+     ],
+     "size": 8,
+     "target": 1700
+    },
+    {
+     "offset": 2560,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2564,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2568,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      32,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 32,
+      "hash": "e53555d8",
+      "name": "MEPlay",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 2580,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2584,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2588,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2592,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2596,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -600
+     ],
+     "size": 8,
+     "target": 1996
+    },
+    {
+     "offset": 2604,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2608,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2612,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2124
+     ],
+     "size": 8,
+     "target": 488
+    },
+    {
+     "offset": 2620,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2624,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2232
+     ],
+     "size": 8,
+     "target": 392
+    },
+    {
+     "offset": 2632,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2636,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2640,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2644,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2648,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2652,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -328
+     ],
+     "size": 8,
+     "target": 2324
+    },
+    {
+     "offset": 2660,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2664,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2668,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2672,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2676,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2680,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2684,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2688,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      27,
+      12
+     ],
+     "size": 12,
+     "native": {
+      "index": 27,
+      "hash": "2654de74",
+      "name": "WordSetItemName",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 12
+    },
+    {
+     "offset": 2700,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2704,
+     "opcode": 190,
+     "mnemonic": "push.p.s",
+     "operands": [
+      24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2708,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      170
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2712,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      7
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2716,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2720,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2428
+     ],
+     "size": 8,
+     "target": 292
+    },
+    {
+     "offset": 2728,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      20
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2732,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2736,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      28
+     ],
+     "size": 8,
+     "target": 2764
+    },
+    {
+     "offset": 2744,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2748,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2356
+     ],
+     "size": 8,
+     "target": 392
+    },
+    {
+     "offset": 2756,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      20
+     ],
+     "size": 8,
+     "target": 2776
+    },
+    {
+     "offset": 2764,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      30,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 30,
+      "hash": "358b0372",
+      "name": "LastKeyWait",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 2776,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2780,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2784,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2324
+     ],
+     "size": 8,
+     "target": 460
+    },
+    {
+     "offset": 2792,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2796,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2800,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2804,
+     "opcode": 162,
+     "mnemonic": "load.p.pri",
+     "operands": [
+      24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2808,
+     "opcode": 129,
+     "mnemonic": "switch",
+     "operands": [
+      128
+     ],
+     "size": 8,
+     "target": 2936
+    },
+    {
+     "offset": 2816,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2820,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      208
+     ],
+     "size": 8,
+     "target": 3028
+    },
+    {
+     "offset": 2828,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      160
+     ],
+     "size": 8,
+     "target": 2988
+    },
+    {
+     "offset": 2836,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2840,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      288
+     ],
+     "size": 8,
+     "target": 3128
+    },
+    {
+     "offset": 2848,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      140
+     ],
+     "size": 8,
+     "target": 2988
+    },
+    {
+     "offset": 2856,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2860,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      480
+     ],
+     "size": 8,
+     "target": 3340
+    },
+    {
+     "offset": 2868,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      120
+     ],
+     "size": 8,
+     "target": 2988
+    },
+    {
+     "offset": 2876,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2880,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      660
+     ],
+     "size": 8,
+     "target": 3540
+    },
+    {
+     "offset": 2888,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      100
+     ],
+     "size": 8,
+     "target": 2988
+    },
+    {
+     "offset": 2896,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 2900,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      96
+     ],
+     "size": 8,
+     "target": 2996
+    },
+    {
+     "offset": 2908,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      80
+     ],
+     "size": 8,
+     "target": 2988
+    },
+    {
+     "offset": 2916,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      33,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 33,
+      "hash": "590f52ee",
+      "name": "CommandNOP",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 2928,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      60
+     ],
+     "size": 8,
+     "target": 2988
+    },
+    {
+     "offset": 2936,
+     "opcode": 130,
+     "mnemonic": "casetbl",
+     "operands": [
+      5,
+      -24,
+      -1,
+      -52,
+      1,
+      -140,
+      2,
+      -128,
+      3,
+      -116,
+      4,
+      -104
+     ],
+     "size": 52,
+     "defaultTarget": 2916,
+     "cases": [
+      {
+       "value": -1,
+       "target": 2896
+      },
+      {
+       "value": 1,
+       "target": 2816
+      },
+      {
+       "value": 2,
+       "target": 2836
+      },
+      {
+       "value": 3,
+       "target": 2856
+      },
+      {
+       "value": 4,
+       "target": 2876
+      }
+     ]
+    },
+    {
+     "offset": 2988,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2992,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 2996,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3000,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3004,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3008,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3012,
+     "opcode": 172,
+     "mnemonic": "const.p.alt",
+     "operands": [
+      36
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3016,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3020,
+     "opcode": 184,
+     "mnemonic": "lidx.p.b",
+     "operands": [
+      2
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3024,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3028,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3032,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      33,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 33,
+      "hash": "590f52ee",
+      "name": "CommandNOP",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 3044,
+     "opcode": 39,
+     "mnemonic": "push.c",
+     "operands": [
+      655389
+     ],
+     "size": 8
+    },
+    {
+     "offset": 3052,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      6,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 6,
+      "hash": "6393be9a",
+      "name": "SEPlay",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 3064,
+     "opcode": 39,
+     "mnemonic": "push.c",
+     "operands": [
+      655389
+     ],
+     "size": 8
+    },
+    {
+     "offset": 3072,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3076,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -1804
+     ],
+     "size": 8,
+     "target": 1272
+    },
+    {
+     "offset": 3084,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3088,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3092,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      30
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3096,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      -360
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3100,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      19
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3104,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      148
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3108,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      24
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3112,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -1660
+     ],
+     "size": 8,
+     "target": 1452
+    },
+    {
+     "offset": 3120,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3124,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3128,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3132,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3136,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3140,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2452
+     ],
+     "size": 8,
+     "target": 688
+    },
+    {
+     "offset": 3148,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3152,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      256
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3156,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3160,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      3
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3164,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3168,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3000
+     ],
+     "size": 8,
+     "target": 168
+    },
+    {
+     "offset": 3176,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3180,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2788
+     ],
+     "size": 8,
+     "target": 392
+    },
+    {
+     "offset": 3188,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3192,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3196,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2612
+     ],
+     "size": 8,
+     "target": 584
+    },
+    {
+     "offset": 3204,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3208,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3212,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3216,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      96
+     ],
+     "size": 8,
+     "target": 3312
+    },
+    {
+     "offset": 3224,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3228,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3232,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2772
+     ],
+     "size": 8,
+     "target": 460
+    },
+    {
+     "offset": 3240,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3244,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3248,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      727
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3252,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3256,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -1744
+     ],
+     "size": 8,
+     "target": 1512
+    },
+    {
+     "offset": 3264,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3268,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16633
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3272,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      34,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 34,
+      "hash": "8e55f629",
+      "name": "WorkSet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 3284,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3288,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16396
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3292,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      34,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 34,
+      "hash": "8e55f629",
+      "name": "WorkSet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 3304,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      24
+     ],
+     "size": 8,
+     "target": 3328
+    },
+    {
+     "offset": 3312,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3316,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3320,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2860
+     ],
+     "size": 8,
+     "target": 460
+    },
+    {
+     "offset": 3328,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3332,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3336,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3340,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3344,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3348,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      35,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 35,
+      "hash": "4a3e2a96",
+      "name": "RomGetVersion",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 3360,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3364,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3368,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      305
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3372,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      36,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 36,
+      "hash": "133daa6a",
+      "name": "FlagGet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 3384,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3388,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3392,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      26
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3396,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      112
+     ],
+     "size": 8,
+     "target": 3508
+    },
+    {
+     "offset": 3404,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3408,
+     "opcode": 54,
+     "mnemonic": "jnz",
+     "operands": [
+      100
+     ],
+     "size": 8,
+     "target": 3508
+    },
+    {
+     "offset": 3416,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3420,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2732
+     ],
+     "size": 8,
+     "target": 688
+    },
+    {
+     "offset": 3428,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3432,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      503
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3436,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3440,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      27,
+      12
+     ],
+     "size": 12,
+     "native": {
+      "index": 27,
+      "hash": "2654de74",
+      "name": "WordSetItemName",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 12
+    },
+    {
+     "offset": 3452,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3456,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      256
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3460,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3464,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3468,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3472,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3304
+     ],
+     "size": 8,
+     "target": 168
+    },
+    {
+     "offset": 3480,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      30,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 30,
+      "hash": "358b0372",
+      "name": "LastKeyWait",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 3492,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3496,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3500,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3040
+     ],
+     "size": 8,
+     "target": 460
+    },
+    {
+     "offset": 3508,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3512,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16394
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3516,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      34,
+      8
+     ],
+     "size": 12,
+     "native": {
+      "index": 34,
+      "hash": "8e55f629",
+      "name": "WorkSet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 8
+    },
+    {
+     "offset": 3528,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3532,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3536,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3540,
+     "opcode": 46,
+     "mnemonic": "proc",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 3544,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3548,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      305
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3552,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      36,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 36,
+      "hash": "133daa6a",
+      "name": "FlagGet",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 3564,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3568,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3572,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3576,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      3
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3580,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      12
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3584,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      255
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3588,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3592,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2656
+     ],
+     "size": 8,
+     "target": 936
+    },
+    {
+     "offset": 3600,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      37,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 37,
+      "hash": "e5a627ed",
+      "name": "EVCameraSetInitParam",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 3612,
+     "opcode": 150,
+     "mnemonic": "push5.c",
+     "operands": [
+      -1167881602,
+      1106247680,
+      1130799527,
+      -1056528736,
+      1135537996
+     ],
+     "size": 24
+    },
+    {
+     "offset": 3636,
+     "opcode": 142,
+     "mnemonic": "push3.c",
+     "operands": [
+      1137073126,
+      1126578517,
+      1135575039
+     ],
+     "size": 16
+    },
+    {
+     "offset": 3652,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3656,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      38,
+      36
+     ],
+     "size": 12,
+     "native": {
+      "index": 38,
+      "hash": "3e91bf6c",
+      "name": "EVCameraSetDstParam",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 36
+    },
+    {
+     "offset": 3668,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3672,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3676,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      45
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3680,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3684,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      39,
+      16
+     ],
+     "size": 12,
+     "native": {
+      "index": 39,
+      "hash": "c63b48da",
+      "name": "EVCameraSetFrameParam",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 16
+    },
+    {
+     "offset": 3696,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      40,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 40,
+      "hash": "d2be92ab",
+      "name": "EVCameraBegin",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 3708,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3712,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3632
+     ],
+     "size": 8,
+     "target": 80
+    },
+    {
+     "offset": 3720,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      -1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3724,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3728,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2540
+     ],
+     "size": 8,
+     "target": 1188
+    },
+    {
+     "offset": 3736,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3740,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3052
+     ],
+     "size": 8,
+     "target": 688
+    },
+    {
+     "offset": 3748,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3752,
+     "opcode": 54,
+     "mnemonic": "jnz",
+     "operands": [
+      272
+     ],
+     "size": 8,
+     "target": 4024
+    },
+    {
+     "offset": 3760,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3764,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      256
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3768,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3772,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      5
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3776,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3780,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3612
+     ],
+     "size": 8,
+     "target": 168
+    },
+    {
+     "offset": 3788,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3792,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3400
+     ],
+     "size": 8,
+     "target": 392
+    },
+    {
+     "offset": 3800,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3804,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3808,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3224
+     ],
+     "size": 8,
+     "target": 584
+    },
+    {
+     "offset": 3816,
+     "opcode": 177,
+     "mnemonic": "stor.p.s.pri",
+     "operands": [
+      -8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3820,
+     "opcode": 164,
+     "mnemonic": "load.p.s.pri",
+     "operands": [
+      -8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3824,
+     "opcode": 201,
+     "mnemonic": "eq.p.c.pri",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3828,
+     "opcode": 53,
+     "mnemonic": "jzer",
+     "operands": [
+      48
+     ],
+     "size": 8,
+     "target": 3876
+    },
+    {
+     "offset": 3836,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3840,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3844,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3384
+     ],
+     "size": 8,
+     "target": 460
+    },
+    {
+     "offset": 3852,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      10454
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3856,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      41,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 41,
+      "hash": "74d78dad",
+      "name": "GlobalCall",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 3868,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      148
+     ],
+     "size": 8,
+     "target": 4016
+    },
+    {
+     "offset": 3876,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3880,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3884,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3424
+     ],
+     "size": 8,
+     "target": 460
+    },
+    {
+     "offset": 3892,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      42,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 42,
+      "hash": "db16cbce",
+      "name": "EVCameraSetGameCameraParam",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 3904,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3908,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3912,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      45
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3916,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3920,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      39,
+      16
+     ],
+     "size": 12,
+     "native": {
+      "index": 39,
+      "hash": "c63b48da",
+      "name": "EVCameraSetFrameParam",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 16
+    },
+    {
+     "offset": 3932,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      40,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 40,
+      "hash": "d2be92ab",
+      "name": "EVCameraBegin",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 3944,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3948,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      3
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3952,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3956,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      255
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3960,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3964,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3028
+     ],
+     "size": 8,
+     "target": 936
+    },
+    {
+     "offset": 3972,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      -1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3976,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3980,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2792
+     ],
+     "size": 8,
+     "target": 1188
+    },
+    {
+     "offset": 3988,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 3992,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3912
+     ],
+     "size": 8,
+     "target": 80
+    },
+    {
+     "offset": 4000,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4004,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      43,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 43,
+      "hash": "491dd15b",
+      "name": "EVCameraEnd",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 4016,
+     "opcode": 51,
+     "mnemonic": "jump",
+     "operands": [
+      188
+     ],
+     "size": 8,
+     "target": 4204
+    },
+    {
+     "offset": 4024,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4028,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      256
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4032,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4036,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      6
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4040,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4044,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3876
+     ],
+     "size": 8,
+     "target": 168
+    },
+    {
+     "offset": 4052,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      30,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 30,
+      "hash": "358b0372",
+      "name": "LastKeyWait",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 4064,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4068,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4072,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3612
+     ],
+     "size": 8,
+     "target": 460
+    },
+    {
+     "offset": 4080,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      42,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 42,
+      "hash": "db16cbce",
+      "name": "EVCameraSetGameCameraParam",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 4092,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4096,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4100,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      45
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4104,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4108,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      39,
+      16
+     ],
+     "size": 12,
+     "native": {
+      "index": 39,
+      "hash": "c63b48da",
+      "name": "EVCameraSetFrameParam",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 16
+    },
+    {
+     "offset": 4120,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      40,
+      0
+     ],
+     "size": 12,
+     "native": {
+      "index": 40,
+      "hash": "d2be92ab",
+      "name": "EVCameraBegin",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 0
+    },
+    {
+     "offset": 4132,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4136,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      3
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4140,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4144,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      255
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4148,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      16
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4152,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -3216
+     ],
+     "size": 8,
+     "target": 936
+    },
+    {
+     "offset": 4160,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      -1
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4164,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      4
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4168,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -2980
+     ],
+     "size": 8,
+     "target": 1188
+    },
+    {
+     "offset": 4176,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4180,
+     "opcode": 49,
+     "mnemonic": "call",
+     "operands": [
+      -4100
+     ],
+     "size": 8,
+     "target": 80
+    },
+    {
+     "offset": 4188,
+     "opcode": 188,
+     "mnemonic": "push.p.c",
+     "operands": [
+      0
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4192,
+     "opcode": 135,
+     "mnemonic": "sysreq.n",
+     "operands": [
+      43,
+      4
+     ],
+     "size": 12,
+     "native": {
+      "index": 43,
+      "hash": "491dd15b",
+      "name": "EVCameraEnd",
+      "evidence": "rom-string-hash"
+     },
+     "argumentBytes": 4
+    },
+    {
+     "offset": 4204,
+     "opcode": 191,
+     "mnemonic": "stack.p",
+     "operands": [
+      8
+     ],
+     "size": 4
+    },
+    {
+     "offset": 4208,
+     "opcode": 89,
+     "mnemonic": "zero.pri",
+     "operands": [],
+     "size": 4
+    },
+    {
+     "offset": 4212,
+     "opcode": 48,
+     "mnemonic": "retn",
+     "operands": [],
+     "size": 4
+    }
+   ]
+  }
+ }
+}

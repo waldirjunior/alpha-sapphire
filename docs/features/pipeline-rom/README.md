@@ -7,6 +7,8 @@ Responsável por extrair as partições proprietárias (`RomFS`, `ExeFS`) da ROM
 - [prds/](prds/README.md) — requisitos e critérios de aceite do pipeline.
 - [adrs/](adrs/README.md) — decisões arquiteturais e de isolamento proprietário.
 - [battle-tables.md](battle-tables.md) — offsets e formato de personal, golpes, tipos, learnsets, TM/HM, evolução e naturezas (`A-010`); carga em runtime por [ADR-004](adrs/ADR-004-tabelas-de-batalha-sob-demanda.md).
+- [script-format.md](script-format.md) — formato Pawn/AMX v10 das zonas ORAS, offsets, compactação, evidências e limites de interpretação (P-013/A-016).
+- [script-disassembly.md](script-disassembly.md) — disassembly das 536 zonas/85 globais, 615 nomes nativos, vínculos derivados dos ZOs e primeiro runner puro de chamadas normalizadas (P-013/A-017/A-018).
 - Referência TCC: [docs/tcc/01-pipeline-rom.md](../../tcc/01-pipeline-rom.md).
 
 ## Estado atual
