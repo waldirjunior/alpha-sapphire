@@ -21,6 +21,13 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   - [src/main.ts](../src/main.ts): loop de renderização, teclado, caixa de diálogo, menu estilo 3DS (`Time`, `Mochila`, `Pokédex`, `Salvar`), HUD de batalha 3D com barras de HP coloridas, time de até 6 Pokémon e auto-save em `localStorage`.
 - Diretórios planejados ainda não criados: `src/ai/`.
 
+## Investigação de scripts ORAS (2026-11-17, Mac/worktree `zone-scripts-re`)
+
+- [Formato documentado](features/pipeline-rom/script-format.md): 1.072 scripts de zonas e 85 entradas de `a/0/2/9` são Pawn/AMX v10, com células de 32 bits compactadas. Semântica de chamadas nativas e runner ainda pendentes (P-013/A-010).
+- [Extrator](../scripts/extract_zone_scripts.py) validado nas 536 zonas; JSONs gerados somente em `rom/extracted/zones_scripts/` ignorado, sem mudanças em `src/` nem binários no Git.
+- `python3 -m unittest scripts/test_zone_scripts.py scripts/test_pipeline.py`: 18 testes passando (10 novos + 8 existentes), fixtures sintéticas sem ROM.
+- A verificação `npm test && npm run build` neste worktree parou em `vitest: command not found` (sem `node_modules`); build não executado. As aprovações de build da seção anterior são históricas, não desta investigação.
+
 ## Estado da ROM e Ambiente na VPS
 
 - Pasta [rom/](../rom/) ignorada pelo [.gitignore](../.gitignore#L8) e contendo:

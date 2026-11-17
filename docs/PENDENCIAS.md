@@ -95,7 +95,8 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Estado:** aberta
 - **Data:** 2026-11-17
 - **Evidência:** A introdução (Birch + caminhão) e os primeiros interiores foram montados manualmente para o vertical slice inicial; faltam cutscenes com movimento coreografado de NPCs, resgate real do Prof. Birch escolhendo a Poké Ball da mochila no chão, entrega de Pokédex/Running Shoes, e todo o restante da campanha de Hoenn até a Liga Pokémon.
-- **Próximo passo:** Extrair e interpretar as tabelas de scripts/eventos de mapa da ROM em `src/data/` e criar um runner determinístico de cutscenes em `src/core/`.
+- **Progresso (2026-11-17, engenharia reversa):** Envelope identificado como Pawn/AMX v10 com células compactadas de 32 bits. [extract_zone_scripts.py](../scripts/extract_zone_scripts.py) gerou 536 JSONs/1.072 programas de entidades e mapa em saída local ignorada, sem modificar `src/`; os 85 programas de `a/0/2/9` também passam o parser em memória. Formato, offsets, exemplos hex e limites em [script-format.md](features/pipeline-rom/script-format.md), aprendizado A-010. Verificação: 10 testes novos + 8 existentes passando em Python; verificação npm bloqueada por `vitest` ausente neste worktree.
+- **Próximo passo:** Resolver hashes das funções nativas, dispatch dos IDs de NPC/trigger e seleção dos scripts de `a/0/2/9`; desmontar instruções Pawn v10 e tipar movimentos/dados antes de implementar runner determinístico de cutscenes em `src/core/`. O envelope decodificado não comprova semântica dos eventos nem encerra P-013.
 
 ## P-014 Cenários 3D reais de batalha, partículas de golpes e câmera dinâmica ORAS
 
