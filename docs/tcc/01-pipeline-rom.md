@@ -16,11 +16,13 @@
      - `a/0/1/4`: pacotes `AD` com texturas compartilhadas de cenário (ex.: `0008.bin` para Littleroot/Route 101/Oldale).
      - `a/0/4/0`: matrizes `MM` (`0001.bin` conecta `GR 0006`, `0005`, `0004`).
      - `a/0/7/3` e `a/0/8/1`: textos em inglês (`GameText` e `StoryText`).
+     - `a/0/2/1`: modelos 3D de personagens overworld (`MM\x01\x00` — ex.: `0314.bin` Brendan, `0315.bin` May).
      - `a/0/0/8`: modelos, texturas e animações 3D dos Pokémon (`8.067` entradas).
 3. **Conversão para JSON e `.glb` (Web):**
    - `scripts/extract_gr_maps.py` gera `src/data/maps/*.json` (`collisions`, `terrain`, `warps`, `spawnPos`).
    - `scripts/extract_texts.py` decodifica textos Gen 6 (`XOR 0x7C89`) para `src/data/texts/*.json`.
    - `scripts/convert_gr_to_glb.py` usa `SpicaExport` (`.NET 8` + `SPICA` sem `System.Drawing`) + `assimp` (`5.2`) para gerar `<mapa>.glb` + `.png`s em `public/assets/maps/<mapa>/` (escala ORAS `1 / 18` por tile).
+   - O mesmo `SpicaExport` + `assimp` converte personagens (`a/0/2/1/0314.bin` → `public/assets/characters/brendan/brendan.glb`).
 
 ## 3. Regra de Segurança no Repositório
 Arquivos proprietários da ROM (`rom/`, `RomFS/`, `ExeFS/`, `public/assets/`, `*.3ds`, `*.cia`, `*.cxi`, `*.7z`) ficam **sempre no `.gitignore`** e nunca sobem para o GitHub. Apenas o motor, scripts de conversão, schemas, JSONs estruturais e documentação são versionados.

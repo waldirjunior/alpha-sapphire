@@ -1,14 +1,20 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import type { GameState, MapDefinition } from '../core/types';
+import type { Direction, GameState, MapDefinition } from '../core/types';
 
 const ORAS_TILE_UNITS = 18;
+const FACING_YAW: Record<Direction, number> = {
+  down: 0,
+  up: Math.PI,
+  right: Math.PI / 2,
+  left: -Math.PI / 2,
+};
 
 export class SceneManager {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private renderer: THREE.WebGLRenderer;
-  private playerMesh: THREE.Mesh;
+  private playerRoot: THREE.Group;
   private mapGroup: THREE.Group;
   private gltfLoader = new GLTFLoader();
   private currentMapId = '';
@@ -39,12 +45,14 @@ export class SceneManager {
     this.mapGroup = new THREE.Group();
     this.scene.add(this.mapGroup);
 
-    // Placeholder do protagonista (será substituído pelo .glb extraído da ROM)
+    this.playerRoot = new THREE.Group();
     const playerGeo = new THREE.CapsuleGeometry(0.35, 0.6, 4, 8);
     const playerMat = new THREE.MeshStandardMaterial({ color: '#38bdf8' });
-    this.playerMesh = new THREE.Mesh(playerGeo, playerMat);
-    this.playerMesh.position.y = 0.65;
-    this.scene.add(this.playerMesh);
+    const placeholder = new THREE.Mesh(playerGeo, playerMat);
+    placeholder.position.y = 0.65;
+    this.playerRoot.add(placeholder);
+    this.scene.add(this.playerRoot);
+    this.loadPlayerModel();
 
     window.addEventListener('resize', () => this.onResize(container));
   }
@@ -128,8 +136,9 @@ export class SceneManager {
       }
     }
 
-    this.playerMesh.position.x = state.player.pos.x;
-    this.playerMesh.position.z = state.player.pos.z;
+    this.playerRoot.position.x = state.player.pos.x;
+    this.playerRoot.position.z = state.player.pos.z;
+    this.playerRoot.rotation.y = FACING_YAW[state.player.facing];
 
     // Câmera inclinada estilo ORAS
     this.camera.position.set(
@@ -138,6 +147,22 @@ export class SceneManager {
       state.player.pos.z + 8
     );
     this.camera.lookAt(state.player.pos.x, 0.5, state.player.pos.z);
+  }
+
+  private loadPlayerModel(): void {
+    this.gltfLoader.load(
+      '/assets/characters/brendan/brendan.glb',
+      (gltf) => {
+        const model = gltf.scene;
+        model.scale.setScalar(1 / ORAS_TILE_UNITS);
+        this.playerRoot.clear();
+        this.playerRoot.add(model);
+      },
+      undefined,
+      () => {
+        // Mantém cápsula placeholder caso o .glb do protagonista não exista localmente.
+      }
+    );
   }
 
   private loadMapModel(map: MapDefinition): void {
