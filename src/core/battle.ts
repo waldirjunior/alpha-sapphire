@@ -155,6 +155,35 @@ export function runFromBattle(state: BattleState): BattleState {
   };
 }
 
+export function healParty(party: PokemonInstance[]): PokemonInstance[] {
+  return party.map((pokemon) => ({ ...pokemon, currentHp: pokemon.maxHp }));
+}
+
+export function switchActivePokemon(
+  state: BattleState,
+  nextPokemon: PokemonInstance,
+  rng: () => number = Math.random
+): BattleState {
+  if (state.status !== 'ongoing' || nextPokemon.currentHp <= 0) return state;
+
+  const logs = [...state.log, `Vai, ${nextPokemon.species.name}!`];
+  const enemyMove = state.enemy.moves[0];
+  if (!enemyMove) {
+    return { ...state, player: { ...nextPokemon }, turn: state.turn + 1, log: logs };
+  }
+
+  const res = applyAttack(state.enemy, nextPokemon, enemyMove, rng);
+  logs.push(res.message);
+  const nextStatus: BattleStatus = res.updatedDefender.currentHp === 0 ? 'defeat' : 'ongoing';
+  return {
+    ...state,
+    player: res.updatedDefender,
+    turn: state.turn + 1,
+    status: nextStatus,
+    log: logs,
+  };
+}
+
 export function throwPokeball(
   state: BattleState,
   rng: () => number = Math.random

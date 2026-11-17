@@ -6,9 +6,11 @@ import {
   createPokemonInstance,
   executeBattleTurn,
   getTypeEffectiveness,
+  healParty,
   rollWildEncounter,
   runFromBattle,
   startWildBattle,
+  switchActivePokemon,
   throwPokeball,
 } from './battle';
 
@@ -68,5 +70,19 @@ describe('battle engine', () => {
     const missed = throwPokeball(battle, () => 0.99);
     expect(['ongoing', 'defeat']).toContain(missed.status);
     expect(missed.turn).toBe(2);
+  });
+
+  it('switches active Pokémon in battle and heals party to full HP', () => {
+    const torchic = { ...createPokemonInstance(SPECIES.torchic, 5), currentHp: 4 };
+    const mudkip = createPokemonInstance(SPECIES.mudkip, 5);
+    const wild = createPokemonInstance(SPECIES.zigzagoon, 2);
+
+    const battle = startWildBattle(torchic, wild);
+    const switched = switchActivePokemon(battle, mudkip, () => 0.5);
+    expect(switched.player.species.id).toBe('mudkip');
+    expect(switched.turn).toBe(2);
+
+    const healed = healParty([torchic, { ...mudkip, currentHp: 1 }]);
+    expect(healed.every((p) => p.currentHp === p.maxHp)).toBe(true);
   });
 });

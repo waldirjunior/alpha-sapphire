@@ -5,7 +5,8 @@ Atualizado em 2026-11-16 (verificação local na VPS).
 ## Estado do Código e Build
 
 - Branch atual: `main`.
-- `npm test` (`vitest run`): **passando** (`4` arquivos, `13` testes: `4` em [src/core/gameState.test.ts](../src/core/gameState.test.ts), `4` em [src/core/battle.test.ts](../src/core/battle.test.ts), `2` em [src/core/save.test.ts](../src/core/save.test.ts) e `3` em [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts)).
+- `npm test` (`vitest run`): **passando** (`4` arquivos, `14` testes: `4` em [src/core/gameState.test.ts](../src/core/gameState.test.ts), `5` em [src/core/battle.test.ts](../src/core/battle.test.ts), `2` em [src/core/save.test.ts](../src/core/save.test.ts) e `3` em [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts)).
+- `python3 -m unittest scripts/test_pipeline.py`: **passando** (`3` testes com fixtures sintéticas para `decompress_lz11`, `parse_gr_grid` e `decode_gen6_text`).
 - `npm run build` (`tsc && vite build`): **passando** (`dist/index.html` e bundle JS gerados sem erros de TypeScript).
 - Módulos existentes:
   - [src/core/types.ts](../src/core/types.ts) e [src/core/gameState.ts](../src/core/gameState.ts): estado inicial com `spawnPos`, `isWalkable`, `isTallGrass`, `interact`, movimentação e transição por `warp`.

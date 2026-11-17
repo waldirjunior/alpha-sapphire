@@ -2,9 +2,11 @@ import {
   type BattleState,
   createPokemonInstance,
   executeBattleTurn,
+  healParty,
   rollWildEncounter,
   runFromBattle,
   startWildBattle,
+  switchActivePokemon,
   throwPokeball,
 } from './core/battle';
 import { createInitialState, interact, isTallGrass, movePlayer } from './core/gameState';
@@ -38,6 +40,7 @@ const sceneManager = new SceneManager(app);
 let state = saved?.state ?? createInitialState('littleroot_town', MAPS);
 let starterId: 'treecko' | 'torchic' | 'mudkip' = 'torchic';
 let party = saved?.party ?? [createPokemonInstance(SPECIES[starterId], 5)];
+let activePartyIndex = 0;
 let caughtCount = saved?.caughtCount ?? 0;
 let activeBattle: BattleState | null = null;
 
@@ -96,10 +99,25 @@ function renderBattle(): void {
       btn.onclick = () => {
         if (!activeBattle) return;
         activeBattle = executeBattleTurn(activeBattle, idx);
-        party[0] = activeBattle.player;
+        party[activePartyIndex] = activeBattle.player;
         renderBattle();
       };
       battleActions.appendChild(btn);
+    });
+
+    party.forEach((member, idx) => {
+      if (idx === activePartyIndex || member.currentHp <= 0) return;
+      const swapBtn = document.createElement('button');
+      swapBtn.textContent = `Trocar: ${member.species.name} (${member.currentHp}/${member.maxHp})`;
+      swapBtn.onclick = () => {
+        if (!activeBattle) return;
+        party[activePartyIndex] = activeBattle.player;
+        activePartyIndex = idx;
+        activeBattle = switchActivePokemon(activeBattle, member);
+        party[activePartyIndex] = activeBattle.player;
+        renderBattle();
+      };
+      battleActions.appendChild(swapBtn);
     });
 
     const ballBtn = document.createElement('button');
@@ -107,7 +125,7 @@ function renderBattle(): void {
     ballBtn.onclick = () => {
       if (!activeBattle) return;
       activeBattle = throwPokeball(activeBattle);
-      party[0] = activeBattle.player;
+      party[activePartyIndex] = activeBattle.player;
       if (activeBattle.status === 'caught') {
         caughtCount += 1;
         if (party.length < 6) {
@@ -183,6 +201,9 @@ window.addEventListener('keydown', (event) => {
   if (event.code === 'Space' || event.code === 'Enter') {
     event.preventDefault();
     state = interact(state, MAPS);
+    if (state.activeDialogue?.sourceId === 'oldale_pokecenter') {
+      party = healParty(party);
+    }
     syncUi();
     return;
   }
@@ -198,8 +219,10 @@ window.addEventListener('keydown', (event) => {
   if (moved && currentMap && isTallGrass(currentMap, state.player.pos)) {
     const encounter = rollWildEncounter(ROUTE_101_ENCOUNTERS);
     const wildSpecies = encounter ? SPECIES[encounter.speciesId] : undefined;
-    const lead = party[0];
+    const healthyIdx = party.findIndex((p) => p.currentHp > 0);
+    const lead = healthyIdx >= 0 ? party[healthyIdx] : undefined;
     if (encounter && wildSpecies && lead) {
+      activePartyIndex = healthyIdx;
       activeBattle = startWildBattle(lead, createPokemonInstance(wildSpecies, encounter.level));
       renderBattle();
     }

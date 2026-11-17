@@ -46,6 +46,12 @@ export const MAPS: Record<string, MapDefinition> = {
         kind: 'sign',
         text: oldaleTexts.lines[2] ?? 'Oldale Town',
       },
+      {
+        id: 'oldale_pokecenter',
+        pos: { x: 16, z: 18 },
+        kind: 'npc',
+        text: 'Bem-vindo ao Centro Pokémon de Oldale! Sua equipe foi totalmente curada.',
+      },
     ],
   },
   route_103: {
