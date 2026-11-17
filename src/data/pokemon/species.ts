@@ -43,7 +43,7 @@ export const MOVES: Record<string, MoveDefinition> = {
   bite: { id: 'bite', name: 'Bite', type: 'dark', category: 'physical', power: 60, accuracy: 100 },
   bug_bite: { id: 'bug_bite', name: 'Bug Bite', type: 'bug', category: 'physical', power: 60, accuracy: 100 },
   confusion: { id: 'confusion', name: 'Confusion', type: 'psychic', category: 'special', power: 50, accuracy: 100 },
-  disarming_voice: { id: 'disarming_voice', name: 'Disarming Voice', type: 'fairy', category: 'special', power: 40, accuracy: 100 },
+  disarming_voice: { id: 'disarming_voice', name: 'Disarming Voice', type: 'fairy', category: 'special', power: 40, accuracy: 101 },
 };
 
 export const SPECIES: Record<string, PokemonSpecies> = {

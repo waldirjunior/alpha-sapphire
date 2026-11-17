@@ -71,4 +71,4 @@ Testes com fixtures sintéticas: `BattleTablesTest` em [scripts/test_pipeline.py
 
 ## Fora do escopo
 
-Egg moves (`a/1/9/0`), evoluções (`a/1/9/2`), mega evoluções (`a/1/9/3`), tutores (`0x38–0x4F`) e itens (`a/1/9/7`). Os JSONs ainda não são consumidos por `src/core/` (`P-010`).
+Egg moves (`a/1/9/0`), evoluções (`a/1/9/2`), mega evoluções (`a/1/9/3`), tutores (`0x38–0x4F`) e itens (`a/1/9/7`). Consumo em `src/core/`: `typeChart.ts`, `dex.ts`, `learnsets.ts` (ver `A-011`); a simulação de PP/precisão/status segue em `P-010`.

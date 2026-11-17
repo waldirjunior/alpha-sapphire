@@ -74,7 +74,7 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Estado:** aberta
 - **Data:** 2026-11-17
 - **Evidência:** `src/core/battle.ts` cobre dano básico, STAB, efetividade, Poké Ball e 1 Pokémon por treinador, mas ainda faltam PP, precisão/esquiva, condições de status, críticos e times de múltiplos Pokémon.
-- **Atualização 2026-11-17:** dados reais de espécies, golpes (PP, precisão, prioridade, efeitos), tabela de tipos e learnsets extraídos para `src/data/battle/` ([battle-tables.md](features/pipeline-rom/battle-tables.md)); falta o `core/` consumi-los.
+- **Atualização 2026-11-17:** dados reais de espécies, golpes (PP, precisão, prioridade, efeitos), tabela de tipos e learnsets extraídos para `src/data/battle/` ([battle-tables.md](features/pipeline-rom/battle-tables.md)); `src/core/typeChart.ts`, `dex.ts` e `learnsets.ts` já os consomem e `battle.ts` usa a tabela de tipos real. Faltam PP/precisão/prioridade/status na simulação e migrar `PokemonInstance` de `data/pokemon/species.ts` para `DexSpecies`/`DexMove`.
 - **Próximo passo:** Expandir o motor de batalha conforme [batalha/PRD-002](features/batalha/prds/PRD-002-mecanicas-completas-gen6.md).
 
 ## P-011 HUD de desenvolvimento em vez de menus estilo Nintendo 3DS

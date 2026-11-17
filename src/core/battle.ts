@@ -1,5 +1,6 @@
 import type { WildEncounterEntry } from '../data/pokemon/route101';
-import type { MoveDefinition, PokemonSpecies, PokemonType } from '../data/pokemon/species';
+import type { MoveDefinition, PokemonSpecies } from '../data/pokemon/species';
+import { getTypeEffectivenessAgainst, type ElementalType } from './typeChart';
 
 export interface PokemonInstance {
   species: PokemonSpecies;
@@ -27,17 +28,6 @@ export interface BattleState {
   isTrainer?: boolean;
   trainerName?: string;
 }
-
-const TYPE_CHART: Record<PokemonType, Partial<Record<PokemonType, number>>> = {
-  normal: {},
-  grass: { water: 2, grass: 0.5, fire: 0.5, bug: 0.5 },
-  fire: { grass: 2, bug: 2, fire: 0.5, water: 0.5 },
-  water: { fire: 2, water: 0.5, grass: 0.5 },
-  dark: { psychic: 2, dark: 0.5, fairy: 0.5 },
-  bug: { grass: 2, dark: 2, psychic: 2, fire: 0.5, fairy: 0.5 },
-  psychic: { psychic: 0.5, dark: 0 },
-  fairy: { dark: 2, fire: 0.5 },
-};
 
 const ENCOUNTER_RATE = 0.2;
 
@@ -96,11 +86,8 @@ function awardXp(pokemon: PokemonInstance, gainedXp: number): { updated: Pokemon
   };
 }
 
-export function getTypeEffectiveness(moveType: PokemonType, defenderTypes: PokemonType[]): number {
-  return defenderTypes.reduce(
-    (mult, defType) => mult * (TYPE_CHART[moveType]?.[defType] ?? 1),
-    1
-  );
+export function getTypeEffectiveness(moveType: ElementalType, defenderTypes: readonly ElementalType[]): number {
+  return getTypeEffectivenessAgainst(moveType, defenderTypes);
 }
 
 export function calculateDamage(
