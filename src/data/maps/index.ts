@@ -64,6 +64,14 @@ export const MAPS: Record<string, MapDefinition> = {
   route_102: {
     ...route102,
     modelUrl: '/assets/maps/route_102/route_102.glb',
+    interactables: [
+      {
+        id: 'route_102_trainer_calvin',
+        pos: { x: 22, z: 20 },
+        kind: 'npc',
+        text: 'Youngster Calvin: Vamos testar nossos Pokémon na Route 102!',
+      },
+    ],
   },
   route_102_west: {
     ...route102West,

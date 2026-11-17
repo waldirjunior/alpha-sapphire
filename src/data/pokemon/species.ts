@@ -4,7 +4,9 @@ export type PokemonType =
   | 'fire'
   | 'water'
   | 'dark'
-  | 'bug';
+  | 'bug'
+  | 'psychic'
+  | 'fairy';
 
 export interface MoveDefinition {
   id: string;
@@ -40,6 +42,8 @@ export const MOVES: Record<string, MoveDefinition> = {
   water_gun: { id: 'water_gun', name: 'Water Gun', type: 'water', category: 'special', power: 40, accuracy: 100 },
   bite: { id: 'bite', name: 'Bite', type: 'dark', category: 'physical', power: 60, accuracy: 100 },
   bug_bite: { id: 'bug_bite', name: 'Bug Bite', type: 'bug', category: 'physical', power: 60, accuracy: 100 },
+  confusion: { id: 'confusion', name: 'Confusion', type: 'psychic', category: 'special', power: 50, accuracy: 100 },
+  disarming_voice: { id: 'disarming_voice', name: 'Disarming Voice', type: 'fairy', category: 'special', power: 40, accuracy: 100 },
 };
 
 export const SPECIES: Record<string, PokemonSpecies> = {
@@ -90,5 +94,21 @@ export const SPECIES: Record<string, PokemonSpecies> = {
     types: ['bug'],
     baseStats: { hp: 45, attack: 45, defense: 35, spAtk: 20, spDef: 30, speed: 20 },
     moves: [MOVES.tackle, MOVES.bug_bite],
+  },
+  lotad: {
+    id: 'lotad',
+    dexNumber: 270,
+    name: 'Lotad',
+    types: ['water', 'grass'],
+    baseStats: { hp: 40, attack: 30, defense: 30, spAtk: 40, spDef: 50, speed: 30 },
+    moves: [MOVES.absorb, MOVES.water_gun],
+  },
+  ralts: {
+    id: 'ralts',
+    dexNumber: 280,
+    name: 'Ralts',
+    types: ['psychic', 'fairy'],
+    baseStats: { hp: 28, attack: 25, defense: 25, spAtk: 45, spDef: 35, speed: 40 },
+    moves: [MOVES.confusion, MOVES.disarming_voice],
   },
 };

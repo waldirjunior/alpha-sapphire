@@ -24,6 +24,8 @@ TARGET_SPECIES: dict[str, bytes] = {
     "poochyena": b"pm0261_00",
     "zigzagoon": b"pm0263_00",
     "wurmple": b"pm0265_00",
+    "lotad": b"pm0270_00",
+    "ralts": b"pm0280_00",
 }
 
 

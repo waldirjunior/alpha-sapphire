@@ -24,6 +24,8 @@ export interface BattleState {
   turn: number;
   status: BattleStatus;
   log: string[];
+  isTrainer?: boolean;
+  trainerName?: string;
 }
 
 const TYPE_CHART: Record<PokemonType, Partial<Record<PokemonType, number>>> = {
@@ -31,8 +33,10 @@ const TYPE_CHART: Record<PokemonType, Partial<Record<PokemonType, number>>> = {
   grass: { water: 2, grass: 0.5, fire: 0.5, bug: 0.5 },
   fire: { grass: 2, bug: 2, fire: 0.5, water: 0.5 },
   water: { fire: 2, water: 0.5, grass: 0.5 },
-  dark: { dark: 0.5 },
-  bug: { grass: 2, dark: 2, fire: 0.5 },
+  dark: { psychic: 2, dark: 0.5, fairy: 0.5 },
+  bug: { grass: 2, dark: 2, psychic: 2, fire: 0.5, fairy: 0.5 },
+  psychic: { psychic: 0.5, dark: 0 },
+  fairy: { dark: 2, fire: 0.5 },
 };
 
 const ENCOUNTER_RATE = 0.2;
@@ -146,8 +150,30 @@ export function startWildBattle(player: PokemonInstance, enemy: PokemonInstance)
   };
 }
 
+export function startTrainerBattle(
+  player: PokemonInstance,
+  enemy: PokemonInstance,
+  trainerName: string
+): BattleState {
+  return {
+    player: { ...player },
+    enemy: { ...enemy },
+    turn: 1,
+    status: 'ongoing',
+    isTrainer: true,
+    trainerName,
+    log: [`${trainerName} desafiou você! Ele enviou ${enemy.species.name} (Lv.${enemy.level})!`],
+  };
+}
+
 export function runFromBattle(state: BattleState): BattleState {
   if (state.status !== 'ongoing') return state;
+  if (state.isTrainer) {
+    return {
+      ...state,
+      log: [...state.log, 'Não é possível fugir de uma batalha contra treinador!'],
+    };
+  }
   return {
     ...state,
     status: 'fled',
@@ -189,6 +215,12 @@ export function throwPokeball(
   rng: () => number = Math.random
 ): BattleState {
   if (state.status !== 'ongoing') return state;
+  if (state.isTrainer) {
+    return {
+      ...state,
+      log: [...state.log, 'Você não pode capturar o Pokémon de outro treinador!'],
+    };
+  }
   const hpRatio = state.enemy.currentHp / state.enemy.maxHp;
   const catchChance = Math.min(0.9, Math.max(0.25, 0.85 - hpRatio * 0.55));
   if (rng() < catchChance) {

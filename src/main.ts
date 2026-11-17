@@ -5,6 +5,7 @@ import {
   healParty,
   rollWildEncounter,
   runFromBattle,
+  startTrainerBattle,
   startWildBattle,
   switchActivePokemon,
   throwPokeball,
@@ -13,7 +14,7 @@ import { createInitialState, interact, isTallGrass, movePlayer } from './core/ga
 import { deserializeSave, serializeSave } from './core/save';
 import type { Direction } from './core/types';
 import { MAPS } from './data/maps';
-import { ROUTE_101_ENCOUNTERS } from './data/pokemon/route101';
+import { MAP_ENCOUNTERS } from './data/pokemon/route101';
 import { SPECIES } from './data/pokemon/species';
 import { SceneManager } from './engine/SceneManager';
 
@@ -87,7 +88,8 @@ function renderBattle(): void {
 
   battleOverlay.classList.add('open');
   const b = activeBattle;
-  battleEnemy.textContent = `Selvagem: ${b.enemy.species.name} (Lv.${b.enemy.level}) — HP ${b.enemy.currentHp}/${b.enemy.maxHp}`;
+  const enemyPrefix = b.isTrainer && b.trainerName ? `${b.trainerName}: ` : 'Selvagem: ';
+  battleEnemy.textContent = `${enemyPrefix}${b.enemy.species.name} (Lv.${b.enemy.level}) — HP ${b.enemy.currentHp}/${b.enemy.maxHp}`;
   battlePlayer.textContent = `Seu Pokémon: ${b.player.species.name} (Lv.${b.player.level}) — HP ${b.player.currentHp}/${b.player.maxHp}`;
   battleLog.innerHTML = b.log.slice(-4).map((line) => `<div>${line}</div>`).join('');
   battleActions.innerHTML = '';
@@ -120,30 +122,32 @@ function renderBattle(): void {
       battleActions.appendChild(swapBtn);
     });
 
-    const ballBtn = document.createElement('button');
-    ballBtn.textContent = 'Poké Ball';
-    ballBtn.onclick = () => {
-      if (!activeBattle) return;
-      activeBattle = throwPokeball(activeBattle);
-      party[activePartyIndex] = activeBattle.player;
-      if (activeBattle.status === 'caught') {
-        caughtCount += 1;
-        if (party.length < 6) {
-          party.push(activeBattle.enemy);
+    if (!b.isTrainer) {
+      const ballBtn = document.createElement('button');
+      ballBtn.textContent = 'Poké Ball';
+      ballBtn.onclick = () => {
+        if (!activeBattle) return;
+        activeBattle = throwPokeball(activeBattle);
+        party[activePartyIndex] = activeBattle.player;
+        if (activeBattle.status === 'caught') {
+          caughtCount += 1;
+          if (party.length < 6) {
+            party.push(activeBattle.enemy);
+          }
         }
-      }
-      renderBattle();
-    };
-    battleActions.appendChild(ballBtn);
+        renderBattle();
+      };
+      battleActions.appendChild(ballBtn);
 
-    const runBtn = document.createElement('button');
-    runBtn.textContent = 'Fugir';
-    runBtn.onclick = () => {
-      if (!activeBattle) return;
-      activeBattle = runFromBattle(activeBattle);
-      renderBattle();
-    };
-    battleActions.appendChild(runBtn);
+      const runBtn = document.createElement('button');
+      runBtn.textContent = 'Fugir';
+      runBtn.onclick = () => {
+        if (!activeBattle) return;
+        activeBattle = runFromBattle(activeBattle);
+        renderBattle();
+      };
+      battleActions.appendChild(runBtn);
+    }
     return;
   }
 
@@ -200,9 +204,24 @@ window.addEventListener('keydown', (event) => {
 
   if (event.code === 'Space' || event.code === 'Enter') {
     event.preventDefault();
+    const wasDialogueOpen = Boolean(state.activeDialogue);
+    const prevSourceId = state.activeDialogue?.sourceId;
     state = interact(state, MAPS);
     if (state.activeDialogue?.sourceId === 'oldale_pokecenter') {
       party = healParty(party);
+    }
+    if (wasDialogueOpen && prevSourceId === 'route_102_trainer_calvin') {
+      const healthyIdx = party.findIndex((p) => p.currentHp > 0);
+      const lead = healthyIdx >= 0 ? party[healthyIdx] : undefined;
+      if (lead) {
+        activePartyIndex = healthyIdx;
+        activeBattle = startTrainerBattle(
+          lead,
+          createPokemonInstance(SPECIES.poochyena, 5),
+          'Youngster Calvin'
+        );
+        renderBattle();
+      }
     }
     syncUi();
     return;
@@ -217,7 +236,8 @@ window.addEventListener('keydown', (event) => {
   const currentMap = MAPS[state.player.mapId];
 
   if (moved && currentMap && isTallGrass(currentMap, state.player.pos)) {
-    const encounter = rollWildEncounter(ROUTE_101_ENCOUNTERS);
+    const table = MAP_ENCOUNTERS[state.player.mapId];
+    const encounter = table ? rollWildEncounter(table) : null;
     const wildSpecies = encounter ? SPECIES[encounter.speciesId] : undefined;
     const healthyIdx = party.findIndex((p) => p.currentHp > 0);
     const lead = healthyIdx >= 0 ? party[healthyIdx] : undefined;

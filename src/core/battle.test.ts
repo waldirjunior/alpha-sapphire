@@ -9,6 +9,7 @@ import {
   healParty,
   rollWildEncounter,
   runFromBattle,
+  startTrainerBattle,
   startWildBattle,
   switchActivePokemon,
   throwPokeball,
@@ -84,5 +85,15 @@ describe('battle engine', () => {
 
     const healed = healParty([torchic, { ...mudkip, currentHp: 1 }]);
     expect(healed.every((p) => p.currentHp === p.maxHp)).toBe(true);
+  });
+
+  it('prevents fleeing and Poké Ball capture in trainer battles', () => {
+    const starter = createPokemonInstance(SPECIES.treecko, 6);
+    const enemy = createPokemonInstance(SPECIES.poochyena, 5);
+    const trainerBattle = startTrainerBattle(starter, enemy, 'Youngster Calvin');
+
+    expect(trainerBattle.isTrainer).toBe(true);
+    expect(runFromBattle(trainerBattle).status).toBe('ongoing');
+    expect(throwPokeball(trainerBattle, () => 0.01).status).toBe('ongoing');
   });
 });
