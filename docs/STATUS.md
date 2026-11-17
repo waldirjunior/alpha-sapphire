@@ -5,7 +5,7 @@ Atualizado em 2026-11-17 (verificação local na VPS).
 ## Estado do Código e Build
 
 - Branch atual: `main`.
-- `npm test` (`vitest run`): **passando** (`7` arquivos, `28` testes: `4` em [src/engine/fixOrasMaterials.test.ts](../src/engine/fixOrasMaterials.test.ts), `7` em [src/core/gameState.test.ts](../src/core/gameState.test.ts), `5` em [src/core/bag.test.ts](../src/core/bag.test.ts), `6` em [src/core/battle.test.ts](../src/core/battle.test.ts), `2` em [src/core/save.test.ts](../src/core/save.test.ts), `1` em [src/core/room.test.ts](../src/core/room.test.ts) e `3` em [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts)).
+- `npm test` (`vitest run`): **passando** (`8` arquivos, `32` testes: `4` em [src/engine/battleArena.test.ts](../src/engine/battleArena.test.ts), `4` em [src/engine/fixOrasMaterials.test.ts](../src/engine/fixOrasMaterials.test.ts), `7` em [src/core/gameState.test.ts](../src/core/gameState.test.ts), `5` em [src/core/bag.test.ts](../src/core/bag.test.ts), `6` em [src/core/battle.test.ts](../src/core/battle.test.ts), `2` em [src/core/save.test.ts](../src/core/save.test.ts), `1` em [src/core/room.test.ts](../src/core/room.test.ts) e `3` em [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts)).
 - `python3 -m unittest scripts/test_pipeline.py`: **passando** (`8` testes com fixtures sintéticas: `decompress_lz11`, `parse_gr_grid`, `decode_gen6_text` e conversão de materiais PICA200 em `convert_gr_to_glb.py`, `P-007`).
 - `npm run build` (`tsc && vite build`): **passando** (`dist/index.html` e bundle JS gerados sem erros de TypeScript).
 - Módulos existentes:
