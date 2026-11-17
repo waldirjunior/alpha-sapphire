@@ -8,6 +8,7 @@ import {
   throwPokeball,
 } from './core/battle';
 import { createInitialState, interact, isTallGrass, movePlayer } from './core/gameState';
+import { deserializeSave, serializeSave } from './core/save';
 import type { Direction } from './core/types';
 import { MAPS } from './data/maps';
 import { ROUTE_101_ENCOUNTERS } from './data/pokemon/route101';
@@ -27,12 +28,36 @@ if (!app) {
   throw new Error('Elemento #app não encontrado');
 }
 
+const SAVE_STORAGE_KEY = 'alpha_sapphire_web_save_v1';
+const saved = (() => {
+  const raw = window.localStorage.getItem(SAVE_STORAGE_KEY);
+  return raw ? deserializeSave(raw) : null;
+})();
+
 const sceneManager = new SceneManager(app);
-let state = createInitialState('littleroot_town', MAPS);
+let state = saved?.state ?? createInitialState('littleroot_town', MAPS);
 let starterId: 'treecko' | 'torchic' | 'mudkip' = 'torchic';
-let starter = createPokemonInstance(SPECIES[starterId], 5);
-let caughtCount = 0;
+let party = saved?.party ?? [createPokemonInstance(SPECIES[starterId], 5)];
+let caughtCount = saved?.caughtCount ?? 0;
 let activeBattle: BattleState | null = null;
+
+function persistSave(): void {
+  window.localStorage.setItem(
+    SAVE_STORAGE_KEY,
+    serializeSave({ version: 1, state, party, caughtCount })
+  );
+}
+
+const resetBtn = document.getElementById('reset-save');
+resetBtn?.addEventListener('click', () => {
+  if (activeBattle) return;
+  window.localStorage.removeItem(SAVE_STORAGE_KEY);
+  state = createInitialState('littleroot_town', MAPS);
+  party = [createPokemonInstance(SPECIES[starterId], 5)];
+  caughtCount = 0;
+  syncUi();
+  resetBtn.blur();
+});
 
 const starterButtons = document.querySelectorAll<HTMLButtonElement>('#starter-bar button[data-starter]');
 starterButtons.forEach((btn) => {
@@ -41,8 +66,10 @@ starterButtons.forEach((btn) => {
     const id = btn.dataset.starter;
     if (id !== 'treecko' && id !== 'torchic' && id !== 'mudkip') return;
     starterId = id;
-    starter = createPokemonInstance(SPECIES[starterId], 5);
+    party[0] = createPokemonInstance(SPECIES[starterId], 5);
     starterButtons.forEach((b) => b.classList.toggle('active', b.dataset.starter === starterId));
+    persistSave();
+    syncUi();
     btn.blur();
   });
 });
@@ -69,7 +96,7 @@ function renderBattle(): void {
       btn.onclick = () => {
         if (!activeBattle) return;
         activeBattle = executeBattleTurn(activeBattle, idx);
-        starter = activeBattle.player;
+        party[0] = activeBattle.player;
         renderBattle();
       };
       battleActions.appendChild(btn);
@@ -80,8 +107,13 @@ function renderBattle(): void {
     ballBtn.onclick = () => {
       if (!activeBattle) return;
       activeBattle = throwPokeball(activeBattle);
-      starter = activeBattle.player;
-      if (activeBattle.status === 'caught') caughtCount += 1;
+      party[0] = activeBattle.player;
+      if (activeBattle.status === 'caught') {
+        caughtCount += 1;
+        if (party.length < 6) {
+          party.push(activeBattle.enemy);
+        }
+      }
       renderBattle();
     };
     battleActions.appendChild(ballBtn);
@@ -101,10 +133,11 @@ function renderBattle(): void {
   closeBtn.textContent = 'Voltar ao mapa';
   closeBtn.onclick = () => {
     if (activeBattle?.status === 'defeat') {
-      starter = createPokemonInstance(SPECIES[starterId], 5);
+      party[0] = createPokemonInstance(SPECIES[starterId], 5);
       state = createInitialState('littleroot_town', MAPS);
     }
     activeBattle = null;
+    persistSave();
     renderBattle();
     syncUi();
   };
@@ -113,9 +146,12 @@ function renderBattle(): void {
 
 function syncUi(): void {
   sceneManager.sync(state, MAPS);
+  persistSave();
   if (hudPos) {
     const mapName = MAPS[state.player.mapId]?.name ?? state.player.mapId;
-    hudPos.textContent = `Mapa: ${mapName} | Pos: (${state.player.pos.x}, ${state.player.pos.z}) | Capturados: ${caughtCount}`;
+    const lead = party[0];
+    const leadLabel = lead ? `${lead.species.name} Lv.${lead.level}` : 'Nenhum';
+    hudPos.textContent = `Mapa: ${mapName} | Pos: (${state.player.pos.x}, ${state.player.pos.z}) | Time: ${party.length}/6 (${leadLabel}) | Capturados: ${caughtCount}`;
   }
   if (dialogueBox) {
     if (state.activeDialogue) {
@@ -162,8 +198,9 @@ window.addEventListener('keydown', (event) => {
   if (moved && currentMap && isTallGrass(currentMap, state.player.pos)) {
     const encounter = rollWildEncounter(ROUTE_101_ENCOUNTERS);
     const wildSpecies = encounter ? SPECIES[encounter.speciesId] : undefined;
-    if (encounter && wildSpecies) {
-      activeBattle = startWildBattle(starter, createPokemonInstance(wildSpecies, encounter.level));
+    const lead = party[0];
+    if (encounter && wildSpecies && lead) {
+      activeBattle = startWildBattle(lead, createPokemonInstance(wildSpecies, encounter.level));
       renderBattle();
     }
   }
