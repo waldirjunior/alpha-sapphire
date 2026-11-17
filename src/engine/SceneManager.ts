@@ -14,29 +14,39 @@ const FACING_YAW: Record<Direction, number> = {
   left: -Math.PI / 2,
 };
 
-function fixOrasMaterials(root: THREE.Object3D): void {
+// P-007: .glb de mapas gerados por convert_gr_to_glb.py trazem `extras.pica` e o
+// alphaMode/alphaCutoff derivados do BlendFunction/AlphaTest do PICA200. Nesse caso o
+// GLTFLoader já configurou transparência e recorte; só falta impedir depthWrite em BLEND.
+function applyPicaAlphaState(mat: THREE.MeshStandardMaterial): void {
+  if (mat.transparent) mat.depthWrite = false;
+}
+
+// Modelos sem metadado PICA (personagens, Pokémon) mantêm a heurística anterior.
+function applyLegacyAlphaState(mat: THREE.MeshStandardMaterial): void {
+  if (!mat.map) return;
+  if (/kage|shadow/i.test(mat.name)) {
+    mat.transparent = true;
+    mat.alphaTest = 0.02;
+    mat.depthWrite = false;
+    return;
+  }
+  mat.alphaTest = 0.45;
+  mat.transparent = false;
+}
+
+export function fixOrasMaterials(root: THREE.Object3D): void {
   root.traverse((obj) => {
     if (!(obj instanceof THREE.Mesh)) return;
     const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
     for (const mat of mats) {
-      if (mat instanceof THREE.MeshStandardMaterial) {
-        mat.side = THREE.DoubleSide;
-        mat.roughness = 0.92;
-        mat.metalness = 0.0;
-        if (mat.map) {
-          mat.map.colorSpace = THREE.SRGBColorSpace;
-          const isShadowMat = /kage|shadow/i.test(mat.name);
-          if (isShadowMat) {
-            mat.transparent = true;
-            mat.alphaTest = 0.02;
-            mat.depthWrite = false;
-          } else {
-            mat.alphaTest = 0.45;
-            mat.transparent = false;
-          }
-        }
-        mat.needsUpdate = true;
-      }
+      if (!(mat instanceof THREE.MeshStandardMaterial)) continue;
+      mat.side = THREE.DoubleSide;
+      mat.roughness = 0.92;
+      mat.metalness = 0.0;
+      if (mat.map) mat.map.colorSpace = THREE.SRGBColorSpace;
+      if (mat.userData.pica === true) applyPicaAlphaState(mat);
+      else applyLegacyAlphaState(mat);
+      mat.needsUpdate = true;
     }
   });
 }

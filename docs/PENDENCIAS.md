@@ -48,8 +48,12 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 - **Estado:** em andamento
 - **Data:** 2026-11-17
-- **Evidência:** Em [SceneManager.ts](../src/engine/SceneManager.ts), materiais de sombra (`kage`/`shadow`) agora usam `transparent: true`, `alphaTest: 0.02`, `depthWrite: false`, e os interiores (`brendan_house`, `birch_lab`, `oldale_pokecenter`) renderizam piso/paredes/tapetes placeholder. Ainda faltam shaders PICA200 (multi-textura `Texture1`/`Texture2`, *TexEnv combiners*, *toon shading*/LUTs), texturas das placas brancas e os modelos `.glb` reais dos interiores da ROM.
-- **Próximo passo:** Reproduzir multi-textura/vertex-color/shader PICA200 e extrair modelos `.glb` dos interiores reais da ROM ([engine-3d/PRD-003](features/engine-3d/prds/PRD-003-fidelidade-visual-mapas-e-interiores.md)).
+- **Evidência:**
+  - Causa das placas brancas: o `GR` era convertido sem o AD (`a/0/1/4`) correto, deixando materiais sem imagem (`Textures=0`, avisos `references missing texture`). [convert_gr_to_glb.py](../scripts/convert_gr_to_glb.py) agora aceita `--ad-dir`, escolhe o AD que cobre as texturas ausentes (`select_texture_archive`) e regrava os 7 mapas atuais. Nos `.glb` regenerados, 0 materiais ficam sem `baseColorTexture` (Littleroot: 13 materiais e 13 imagens; antes, `Textures=0`).
+  - Estado de alpha do PICA200 (`BlendFunction.ColorSrcFunc == SourceAlpha` vira `BLEND`; `AlphaTest` vira `MASK` com `alphaCutoff = (ref+1)/255`) é gravado no `.glb` com `extras.pica` (`pica_alpha_state`, `patch_glb_materials`). [fixOrasMaterials](../src/engine/SceneManager.ts) respeita esse estado e mantém a heurística antiga só para modelos sem `extras.pica`. Testes: [test_pipeline.py](../scripts/test_pipeline.py) (5 novos) e [fixOrasMaterials.test.ts](../src/engine/fixOrasMaterials.test.ts) (4 novos).
+  - Interiores: os 30 `GR` extraídos em `rom/extracted/garc/a_0_3_9` são exteriores. `RomFS/a/0/3/9` tem 857 `GR` (todos com grid 40x40; vários pequenos de 12–16 KB), mas não há tabela zona→`GR` identificada, então nenhum `.glb` de interior foi gerado e [interiors.ts](../src/data/maps/interiors.ts) continua com os placeholders (ver `A-007`). Os `MM` de `a/0/4/0` têm 352–5388 bytes e não contêm malha.
+- **Não verificado:** renderização no navegador dos `.glb` regenerados (sem captura visual nesta sessão); *vertex color* (`COLOR_0`, com alpha de 0 a 1 em `Comb12`, `shadow1` e `t01_a01`) segue a interpretação padrão do three.js, sem combiners `Texture1`/`Texture2`, LUTs ou toon shading.
+- **Próximo passo:** (1) localizar a tabela de zonas da ORAS (nome de zona em `a/0/7/3/0090.bin` índices 170 = Littleroot, 172 = Oldale) para mapear zona→`GR` e então extrair `player_house_*`, `birch_lab`, `oldale_pokecenter`, `oldale_pokemart` com `unpack_garc.py` completo de `a/0/3/9` e `a/0/1/4`; (2) validar visualmente em Chromium headless e fechar com captura.
 
 ## P-008 Áudio da ROM (`RomFS/sound/*.bcstm`) não integrado
 
