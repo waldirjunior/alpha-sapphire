@@ -19,10 +19,23 @@ function isValidPokemonInstance(value: unknown): value is PokemonInstance {
   return (
     isObjectRecord(value.species) &&
     typeof value.species.id === 'string' &&
+    typeof value.species.personalIndex === 'number' &&
+    isObjectRecord(value.stages) &&
     typeof value.level === 'number' &&
     typeof value.currentHp === 'number' &&
     typeof value.maxHp === 'number' &&
-    Array.isArray(value.moves)
+    Array.isArray(value.moves) &&
+    value.moves.every(isValidBattleMove)
+  );
+}
+
+// Saves anteriores à migração para DexSpecies/BattleMove (sem PP/estágios) são descartados.
+function isValidBattleMove(value: unknown): boolean {
+  return (
+    isObjectRecord(value) &&
+    typeof value.id === 'number' &&
+    typeof value.currentPp === 'number' &&
+    typeof value.maxPp === 'number'
   );
 }
 

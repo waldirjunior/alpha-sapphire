@@ -47,7 +47,7 @@ Formas: entradas `722+` pertencem à espécie cujo `formStatsIndex` aponta para 
 
 ### Golpe (`0x22`)
 
-`0x00` tipo · `0x01` quality · `0x02` categoria (0 status, 1 físico, 2 especial) · `0x03` poder · `0x04` precisão (`101` = nunca erra) · `0x05` PP · `0x06` prioridade (`s8`) · `0x07` hits min/max (nibbles) · `0x08` `u16` inflict + `0x0A` chance + `0x0B` duração · `0x0C/0x0D` turnos min/max · `0x0E` estágio de crítico · `0x0F` flinch % · `0x10` `u16` effect sequence · `0x12` recoil/drain (`s8` %) · `0x13` healing · `0x14` alvo · `0x15–0x1D` até 3 mudanças de stat (stat, estágio `s8`, chance) · `0x1E` `u32` flags.
+`0x00` tipo · `0x01` quality · `0x02` categoria (0 status, 1 físico, 2 especial) · `0x03` poder · `0x04` precisão (`101` = nunca erra) · `0x05` PP · `0x06` prioridade (`s8`) · `0x07` hits min/max (nibbles) · `0x08` `u16` inflict + `0x0A` chance + `0x0B` duração · `0x0C/0x0D` turnos min/max · `0x0E` estágio de crítico · `0x0F` flinch % · `0x10` `u16` effect sequence · `0x12` recoil/drain (`s8` %: >0 dreno, <0 recuo sobre o dano) · `0x13` healing (`s8` %: >0 cura do HP máx., <0 dano ao usuário — Struggle = `231` = −25) · `0x14` alvo · `0x15–0x1D` até 3 mudanças de stat (stat, estágio `s8`, chance) · `0x1E` `u32` flags.
 
 ## Saída (`src/data/battle/`)
 
@@ -71,4 +71,4 @@ Testes com fixtures sintéticas: `BattleTablesTest` em [scripts/test_pipeline.py
 
 ## Fora do escopo
 
-Egg moves (`a/1/9/0`), evoluções (`a/1/9/2`), mega evoluções (`a/1/9/3`), tutores (`0x38–0x4F`) e itens (`a/1/9/7`). Consumo em `src/core/`: `typeChart.ts`, `dex.ts`, `learnsets.ts` (ver `A-011`); a simulação de PP/precisão/status segue em `P-010`.
+Egg moves (`a/1/9/0`), evoluções (`a/1/9/2`), mega evoluções (`a/1/9/3`), tutores (`0x38–0x4F`) e itens (`a/1/9/7`). Consumo em `src/core/`: `typeChart.ts`, `dex.ts`, `learnsets.ts` e a simulação (`battleTurn.ts`, `moveExecution.ts`, `statusConditions.ts`; ver `A-011`/`A-012`). Efeitos ainda não simulados estão listados em `P-010`.

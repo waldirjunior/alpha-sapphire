@@ -25,4 +25,16 @@ describe('save serialization', () => {
     expect(deserializeSave('not-json')).toBeNull();
     expect(deserializeSave(JSON.stringify({ version: 99 }))).toBeNull();
   });
+
+  it('rejects pre-migration party members without PP or stat stages (A-012)', () => {
+    const state = createInitialState('route_101');
+    const legacy = {
+      species: { id: 'torchic', baseStats: { hp: 45, attack: 60 } },
+      level: 5,
+      currentHp: 19,
+      maxHp: 19,
+      moves: [{ id: 'scratch', name: 'Scratch', power: 40 }],
+    };
+    expect(deserializeSave(JSON.stringify({ version: 1, state, party: [legacy], caughtCount: 0 }))).toBeNull();
+  });
 });

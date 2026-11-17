@@ -43,13 +43,14 @@ describe('battle engine', () => {
     let battle = startWildBattle(starter, wild);
 
     expect(battle.status).toBe('ongoing');
-    battle = executeBattleTurn(battle, 1, () => 1); // Ember
+    const emberIdx = battle.player.moves.findIndex((move) => move.name === 'Ember');
+    battle = executeBattleTurn(battle, emberIdx, () => 1);
     expect(['ongoing', 'victory']).toContain(battle.status);
     expect(battle.enemy.currentHp).toBeLessThan(battle.enemy.maxHp);
 
     // Finish battle if still ongoing
     if (battle.status === 'ongoing') {
-      battle = executeBattleTurn(battle, 1, () => 1);
+      battle = executeBattleTurn(battle, emberIdx, () => 1);
     }
     expect(battle.status).toBe('victory');
     expect(battle.player.xp).toBeGreaterThan(0);

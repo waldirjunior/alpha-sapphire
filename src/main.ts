@@ -22,7 +22,7 @@ import { deserializeSave, serializeSave } from './core/save';
 import type { Direction } from './core/types';
 import { MAPS } from './data/maps';
 import { MAP_ENCOUNTERS } from './data/pokemon/route101';
-import { SPECIES } from './data/pokemon/species';
+import { findRosterSpecies, SPECIES } from './data/pokemon/species';
 import { SceneManager } from './engine/SceneManager';
 
 const app = document.getElementById('app');
@@ -141,7 +141,8 @@ function renderBattle(): void {
   if (b.status === 'ongoing') {
     b.player.moves.forEach((move, idx) => {
       const btn = document.createElement('button');
-      btn.textContent = `${move.name} (${move.type})`;
+      btn.textContent = `${move.name} (${move.type}) ${move.currentPp}/${move.maxPp} PP`;
+      btn.disabled = move.currentPp === 0 && b.player.moves.some((slot) => slot.currentPp > 0);
       btn.onclick = () => {
         if (!activeBattle) return;
         sceneManager.playAttackEffect(move.type);
@@ -522,7 +523,7 @@ window.addEventListener('keydown', (event) => {
         (item) => item.id === prevSourceId && item.trainer
       );
       if (trainerSource?.trainer && !state.storyFlags[`defeated_trainer:${trainerSource.id}`]) {
-        const enemySpecies = SPECIES[trainerSource.trainer.speciesId];
+        const enemySpecies = findRosterSpecies(trainerSource.trainer.speciesId);
         const healthyIdx = party.findIndex((p) => p.currentHp > 0);
         const lead = healthyIdx >= 0 ? party[healthyIdx] : undefined;
         if (lead && enemySpecies) {
@@ -569,7 +570,7 @@ window.addEventListener('keydown', (event) => {
   if (moved && currentMap && isTallGrass(currentMap, state.player.pos)) {
     const table = MAP_ENCOUNTERS[state.player.mapId];
     const encounter = table ? rollWildEncounter(table) : null;
-    const wildSpecies = encounter ? SPECIES[encounter.speciesId] : undefined;
+    const wildSpecies = encounter ? findRosterSpecies(encounter.speciesId) : undefined;
     const healthyIdx = party.findIndex((p) => p.currentHp > 0);
     const lead = healthyIdx >= 0 ? party[healthyIdx] : undefined;
     if (encounter && wildSpecies && lead) {

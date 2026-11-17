@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { MOVES, SPECIES } from '../data/pokemon/species';
-import { getMoveById, getMoveByName, getSpeciesByDex, getSpeciesByPersonalIndex } from './dex';
+import { getMoveById, getMoveByName, getSpeciesByDex, getSpeciesById, getSpeciesByPersonalIndex } from './dex';
 import {
   canLearnMove,
   findLearnMethods,
@@ -98,28 +98,21 @@ describe('learnsets (level-up + TM/HM)', () => {
   });
 });
 
-describe('placeholder data parity', () => {
-  it('keeps hand-written SPECIES consistent with the ROM personal table', () => {
-    for (const species of Object.values(SPECIES)) {
-      const real = getSpeciesByDex(species.dexNumber);
-      const { hp, attack, defense, spAtk, spDef, speed } = species.baseStats;
-      expect({ name: species.name, types: species.types, stats: [hp, attack, defense, spAtk, spDef, speed] }).toEqual({
-        name: real.name,
-        types: real.types,
-        stats: [real.baseStats.hp, real.baseStats.atk, real.baseStats.def, real.baseStats.spa, real.baseStats.spd, real.baseStats.spe],
-      });
-    }
+describe('roster derived from the ROM', () => {
+  it('resolves every roster species by stable slug and keeps slugs unique', () => {
+    expect(SPECIES.treecko.baseStats).toEqual({ hp: 40, atk: 45, def: 35, spa: 65, spd: 55, spe: 70 });
+    expect(getSpeciesById('sceptile-1').types).toEqual(['grass', 'dragon']);
+    expect(getSpeciesById('nidoranf').dexNumber).toBe(29);
+    expect(getSpeciesById('nidoranm').dexNumber).toBe(32);
+    expect(() => getSpeciesById('missingno')).toThrow(/missingno/);
   });
 
-  it('keeps hand-written MOVES consistent with the ROM move table', () => {
-    for (const move of Object.values(MOVES)) {
-      const real = getMoveByName(move.id);
-      expect({ type: move.type, category: move.category, power: move.power, accuracy: move.accuracy }).toEqual({
-        type: real.type,
-        category: real.category,
-        power: real.power,
-        accuracy: real.accuracy,
-      });
-    }
+  it('exposes move effect fields straight from the ROM', () => {
+    expect(MOVES.disarming_voice.accuracy).toBe(101);
+    expect(getMoveByName('Struggle').healPercent).toBe(-25);
+    expect(getMoveByName('Recover').healPercent).toBe(50);
+    expect(getMoveByName('Absorb').recoilPercent).toBe(50);
+    expect(getMoveByName('Take Down').recoilPercent).toBe(-25);
+    expect(getMoveByName('Toxic')).toMatchObject({ inflict: 5, turnMax: 15 });
   });
 });

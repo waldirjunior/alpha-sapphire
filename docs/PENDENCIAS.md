@@ -75,6 +75,8 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Data:** 2026-11-17
 - **Evidência:** `src/core/battle.ts` cobre dano básico, STAB, efetividade, Poké Ball e 1 Pokémon por treinador, mas ainda faltam PP, precisão/esquiva, condições de status, críticos e times de múltiplos Pokémon.
 - **Atualização 2026-11-17:** dados reais de espécies, golpes (PP, precisão, prioridade, efeitos), tabela de tipos e learnsets extraídos para `src/data/battle/` ([battle-tables.md](features/pipeline-rom/battle-tables.md)); `src/core/typeChart.ts`, `dex.ts` e `learnsets.ts` já os consomem e `battle.ts` usa a tabela de tipos real. Faltam PP/precisão/prioridade/status na simulação e migrar `PokemonInstance` de `data/pokemon/species.ts` para `DexSpecies`/`DexMove`.
+- **Atualização 2026-11-17 (simulação):** PP (Pressure, bloqueio em 0 PP, Struggle), precisão Gen VI com estágios e `accuracy=101`, prioridade, status maiores com imunidades, estágios, cura, dreno, recuo, multi-hit e flinch implementados com dados reais e `PokemonInstance` migrado para `DexSpecies`/`BattleMove` (`battleMechanics.test.ts`, 22 testes).
+- **Ainda não simulado:** `quality` 5 (Swagger/Flatter), 9 (OHKO), 10/11 (clima, telas, hazards), 12 (forçar troca) e 13 (efeito único: Protect, Substitute, golpes de dois turnos etc. — 90 golpes); `inflict` ≥ 6 (confusão, atração, Leech Seed, Taunt, Disable, Yawn, Perish Song etc.); críticos (`critStage`); habilidades além de Pressure; itens segurados; times de múltiplos Pokémon por treinador; XP pela curva real (`growthRate`/`baseExp`). Golpes não simulados registram "ainda não é simulado (P-010)" no log.
 - **Próximo passo:** Expandir o motor de batalha conforme [batalha/PRD-002](features/batalha/prds/PRD-002-mecanicas-completas-gen6.md).
 
 ## P-011 HUD de desenvolvimento em vez de menus estilo Nintendo 3DS
@@ -105,3 +107,10 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Evidência:** `buildBattleArena()` em [SceneManager.ts](../src/engine/SceneManager.ts) usa círculo/cilindros geométricos verdes em vez das arenas 3D reais da ROM (grama, água, caverna, ginásio), câmera cinemática de turnos e efeitos visuais de golpes/Poké Ball.
 - **Progresso (parcial):** [battleArena.ts](../src/engine/battleArena.ts) cria arena procedural estilizada (chão, plataformas, luzes) e partículas 3D para `fire`, `water`, `grass`, `dark` e `normal` (demais tipos usam o efeito `normal`). `SceneManager.playAttackEffect(type)` é chamado em `main.ts` ao escolher um golpe. Testes em `battleArena.test.ts`; `npm test && npm run build` passaram. Efeito dispara antes do cálculo do turno, sem sincronizar com a animação do Pokémon.
 - **Próximo passo:** Extrair os modelos de arena de batalha da ROM (grama, água, caverna, ginásio), implementar câmera dinâmica por turno, efeito de Poké Ball e estilos para os demais tipos. Só fechar após isso.
+
+## P-015 Bundle do cliente embute as tabelas de batalha completas
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** após migrar `PokemonInstance` para `core/dex`, `npm run build` gera `dist/assets/index-*.js` com `1.81 MB` (`295 kB` gzip), contra `724 kB` (`175 kB` gzip) antes, porque `species.json`, `moves.json` e `learnsets.json` são importados estaticamente.
+- **Próximo passo:** carregar as tabelas sob demanda (`import()`/fetch de `public/`) ou gerar uma variante enxuta só com os campos usados em runtime, mantendo `src/core/` puro.

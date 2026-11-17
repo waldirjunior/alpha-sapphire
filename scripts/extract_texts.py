@@ -10,6 +10,10 @@ import sys
 from pathlib import Path
 
 
+# Glifos privados Gen 6 com equivalente Unicode (sem eles "Nidoran♀"/"Nidoran♂" colidem, A-012).
+PRIVATE_GLYPHS = {0xE08E: "♂", 0xE08F: "♀"}
+
+
 def decode_gen6_text(blob: bytes) -> list[str]:
     if len(blob) < 16:
         return []
@@ -45,6 +49,8 @@ def decode_gen6_text(blob: bytes) -> list[str]:
                 chars.append("\n")
             elif c == 0x000A:
                 chars.append("\n")
+            elif c in PRIVATE_GLYPHS:
+                chars.append(PRIVATE_GLYPHS[c])
             elif 32 <= c < 0xE000 and c != 0xBDFF:
                 chars.append(chr(c))
             idx += 1

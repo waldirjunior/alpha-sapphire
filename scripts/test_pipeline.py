@@ -35,6 +35,18 @@ from extract_texts import decode_gen6_text
 from unpack_garc import decompress_lz11
 
 
+def encode_single_line(codes: list[int]) -> bytes:
+    key = 0x7C89
+    encoded: list[int] = []
+    for code in [*codes, 0]:
+        encoded.append(code ^ key)
+        key = ((key << 3) | (key >> 13)) & 0xFFFF
+    char_bytes = struct.pack(f"<{len(encoded)}H", *encoded)
+    sec_header = struct.pack("<I", len(char_bytes)) + struct.pack("<IHH", 12, len(encoded), 0)
+    header = struct.pack("<HHIII", 1, 1, 16 + len(sec_header) + len(char_bytes), 0, len(sec_header) + len(char_bytes))
+    return header + sec_header + char_bytes
+
+
 class PipelineParsersTest(unittest.TestCase):
     def test_decompress_lz11_literal_only(self) -> None:
         # 4 bytes descomprimidos: b"ABCD", flag byte 0x00 = 8 literais
@@ -73,6 +85,10 @@ class PipelineParsersTest(unittest.TestCase):
         blob = header + sec_header + char_bytes
 
         self.assertEqual(decode_gen6_text(blob), ["Hi"])
+
+    def test_decode_gen6_text_maps_gender_glyphs(self) -> None:
+        self.assertEqual(decode_gen6_text(encode_single_line([0x4E, 0xE08F])), ["N♀"])
+        self.assertEqual(decode_gen6_text(encode_single_line([0x4E, 0xE08E])), ["N♂"])
 
 
 def build_personal(stats: tuple[int, ...], form_index: int = 0, form_count: int = 1, tm_bits: tuple[int, ...] = ()) -> bytes:
