@@ -50,6 +50,8 @@ def main() -> int:
         "oldale_town": "0004.bin",
         "route_103": "0001.bin",
         "route_102": "0010.bin",
+        "route_102_west": "0009.bin",
+        "petalburg_city": "0008.bin",
     }
 
     for map_id, gr_name in targets.items():

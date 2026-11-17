@@ -54,6 +54,23 @@ describe('emulator parity suite (Alpha Sapphire Gen VI)', () => {
     state = movePlayer(state, 'left', MAPS);
     expect(state.player.mapId).toBe('route_102');
     expect(state.player.pos).toEqual({ x: 37, z: 21 });
+
+    // Cruza Route 102 -> Route 102 (Oeste) -> Petalburg City
+    state = {
+      ...state,
+      player: { ...state.player, pos: { x: 2, z: 16 } },
+    };
+    state = movePlayer(state, 'left', MAPS);
+    expect(state.player.mapId).toBe('route_102_west');
+    expect(state.player.pos).toEqual({ x: 37, z: 16 });
+
+    state = {
+      ...state,
+      player: { ...state.player, pos: { x: 2, z: 16 } },
+    };
+    state = movePlayer(state, 'left', MAPS);
+    expect(state.player.mapId).toBe('petalburg_city');
+    expect(state.player.pos).toEqual({ x: 37, z: 16 });
   });
 
   it('matches Gen VI Lv.5 starter stats, type chart, and damage bounds', () => {

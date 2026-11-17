@@ -3,8 +3,10 @@ import littlerootTexts from '../texts/littleroot_town.json';
 import oldaleTexts from '../texts/oldale_town.json';
 import littlerootTown from './littleroot_town.json';
 import oldaleTown from './oldale_town.json';
+import petalburgCity from './petalburg_city.json';
 import route101 from './route_101.json';
 import route102 from './route_102.json';
+import route102West from './route_102_west.json';
 import route103 from './route_103.json';
 
 export const MAPS: Record<string, MapDefinition> = {
@@ -62,5 +64,21 @@ export const MAPS: Record<string, MapDefinition> = {
   route_102: {
     ...route102,
     modelUrl: '/assets/maps/route_102/route_102.glb',
+  },
+  route_102_west: {
+    ...route102West,
+    modelUrl: '/assets/maps/route_102_west/route_102_west.glb',
+  },
+  petalburg_city: {
+    ...petalburgCity,
+    modelUrl: '/assets/maps/petalburg_city/petalburg_city.glb',
+    interactables: [
+      {
+        id: 'petalburg_gym_sign',
+        pos: { x: 18, z: 14 },
+        kind: 'sign',
+        text: 'Petalburg City Pokémon Gym — Líder: Norman',
+      },
+    ],
   },
 };

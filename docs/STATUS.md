@@ -12,7 +12,7 @@ Atualizado em 2026-11-16 (verificação local na VPS).
   - [src/core/types.ts](../src/core/types.ts) e [src/core/gameState.ts](../src/core/gameState.ts): estado inicial com `spawnPos`, `isWalkable`, `isTallGrass`, `interact`, movimentação e transição por `warp`.
   - [src/core/battle.ts](../src/core/battle.ts): encontros selvagens ponderados, captura com `throwPokeball`, ganho de XP/nível e motor de batalha por turnos Gen VI determinístico.
   - [src/core/save.ts](../src/core/save.ts): serialização e validação de save (`serializeSave`, `deserializeSave`) para persistência em `localStorage`.
-  - [src/data/maps/index.ts](../src/data/maps/index.ts): mapas reais `40x40` (`littleroot_town.json`, `route_101.json`, `oldale_town.json`, `route_102.json`, `route_103.json`) com `.glb` + `.png`s em `public/assets/maps/` e diálogos reais em `src/data/texts/`.
+  - [src/data/maps/index.ts](../src/data/maps/index.ts): mapas reais `40x40` (`littleroot_town.json`, `route_101.json`, `oldale_town.json`, `route_102.json`, `route_102_west.json`, `route_103.json`, `petalburg_city.json`) com `.glb` + `.png`s em `public/assets/maps/` e diálogos reais em `src/data/texts/`.
   - [src/data/pokemon/](../src/data/pokemon/species.ts): iniciais de Hoenn (`Treecko`, `Torchic`, `Mudkip`) e encontros reais da `Route 101` (`Poochyena`, `Zigzagoon`, `Wurmple`), com `.glb` + `.png`s em `public/assets/pokemon/`.
   - [src/engine/SceneManager.ts](../src/engine/SceneManager.ts): cena Three.js carregando `.glb` de mapas, protagonista Brendan e arena de batalha 3D (`syncBattle`) via `GLTFLoader`.
   - [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts): suíte de paridade contra o comportamento esperado da ROM original.

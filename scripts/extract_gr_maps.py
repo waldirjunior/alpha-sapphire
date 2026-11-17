@@ -136,6 +136,38 @@ def main() -> int:
                     {"from": {"x": 38, "z": z}, "targetMapId": "oldale_town", "targetPos": {"x": 2, "z": z}}
                     for z in (20, 21, 22)
                 ],
+                *[
+                    {"from": {"x": 1, "z": z}, "targetMapId": "route_102_west", "targetPos": {"x": 37, "z": z}}
+                    for z in (12, 13, 14, 16, 17, 18, 19, 20)
+                ],
+            ],
+        },
+        {
+            "gr": "0009.bin",
+            "id": "route_102_west",
+            "name": "Route 102 (Oeste)",
+            "spawnPos": {"x": 35, "z": 16},
+            "warps": [
+                *[
+                    {"from": {"x": 38, "z": z}, "targetMapId": "route_102", "targetPos": {"x": 2, "z": z}}
+                    for z in (12, 13, 14, 16, 17, 18, 19, 20)
+                ],
+                *[
+                    {"from": {"x": 1, "z": z}, "targetMapId": "petalburg_city", "targetPos": {"x": 37, "z": z}}
+                    for z in (14, 15, 16, 17, 18)
+                ],
+            ],
+        },
+        {
+            "gr": "0008.bin",
+            "id": "petalburg_city",
+            "name": "Petalburg City",
+            "spawnPos": {"x": 20, "z": 16},
+            "warps": [
+                *[
+                    {"from": {"x": 38, "z": z}, "targetMapId": "route_102_west", "targetPos": {"x": 2, "z": z}}
+                    for z in (14, 15, 16, 17, 18)
+                ],
             ],
         },
         {
