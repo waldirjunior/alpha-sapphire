@@ -95,7 +95,8 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-014 Cenários 3D reais de batalha, partículas de golpes e câmera dinâmica ORAS
 
-- **Estado:** aberta
+- **Estado:** em andamento
 - **Data:** 2026-11-17
 - **Evidência:** `buildBattleArena()` em [SceneManager.ts](../src/engine/SceneManager.ts) usa círculo/cilindros geométricos verdes em vez das arenas 3D reais da ROM (grama, água, caverna, ginásio), câmera cinemática de turnos e efeitos visuais de golpes/Poké Ball.
-- **Próximo passo:** Extrair os modelos de arena de batalha da ROM, implementar câmera dinâmica por turno e efeitos visuais básicos por tipo de golpe.
+- **Progresso (parcial):** [battleArena.ts](../src/engine/battleArena.ts) cria arena procedural estilizada (chão, plataformas, luzes) e partículas 3D para `fire`, `water`, `grass`, `dark` e `normal` (demais tipos usam o efeito `normal`). `SceneManager.playAttackEffect(type)` é chamado em `main.ts` ao escolher um golpe. Testes em `battleArena.test.ts`; `npm test && npm run build` passaram. Efeito dispara antes do cálculo do turno, sem sincronizar com a animação do Pokémon.
+- **Próximo passo:** Extrair os modelos de arena de batalha da ROM (grama, água, caverna, ginásio), implementar câmera dinâmica por turno, efeito de Poké Ball e estilos para os demais tipos. Só fechar após isso.

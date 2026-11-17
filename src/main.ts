@@ -133,6 +133,7 @@ function renderBattle(): void {
       btn.textContent = `${move.name} (${move.type})`;
       btn.onclick = () => {
         if (!activeBattle) return;
+        sceneManager.playAttackEffect(move.type);
         activeBattle = executeBattleTurn(activeBattle, idx);
         party[activePartyIndex] = activeBattle.player;
         renderBattle();

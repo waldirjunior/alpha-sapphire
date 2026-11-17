@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BattleState } from '../core/battle';
+import type { PokemonType } from '../data/pokemon/species';
+import { createBattleArena, type BattleArena } from './battleArena';
 import type { Direction, GameState, MapDefinition } from '../core/types';
 
 const ORAS_TILE_UNITS = 18;
@@ -54,6 +56,7 @@ export class SceneManager {
   private terrainGroup: THREE.Group;
   private entitiesGroup: THREE.Group;
   private battleGroup: THREE.Group;
+  private battleArena!: BattleArena;
   private battlePlayerSlot: THREE.Group;
   private battleEnemySlot: THREE.Group;
   private gltfLoader = new GLTFLoader();
@@ -311,19 +314,15 @@ export class SceneManager {
   }
 
   private buildBattleArena(): void {
-    const groundGeo = new THREE.CircleGeometry(6.5, 32);
-    const groundMat = new THREE.MeshStandardMaterial({ color: '#166534' });
-    const ground = new THREE.Mesh(groundGeo, groundMat);
-    ground.rotation.x = -Math.PI / 2;
-    this.battleGroup.add(ground);
+    this.battleArena = createBattleArena();
+    this.battleGroup.add(this.battleArena.group);
+  }
 
-    const padGeo = new THREE.CylinderGeometry(1.1, 1.2, 0.12, 24);
-    const padMat = new THREE.MeshStandardMaterial({ color: '#4ade80' });
-    const playerPad = new THREE.Mesh(padGeo, padMat);
-    playerPad.position.set(-1.6, 0.06, 1.4);
-    const enemyPad = new THREE.Mesh(padGeo, padMat);
-    enemyPad.position.set(1.6, 0.06, -1.4);
-    this.battleGroup.add(playerPad, enemyPad);
+  public playAttackEffect(type: PokemonType): void {
+    if (!this.inBattle) return;
+    const from = this.battlePlayerSlot.position.clone().setY(1);
+    const to = this.battleEnemySlot.position.clone().setY(1);
+    this.battleArena.effects.play(type, from, to);
   }
 
   private loadCharacterModel(url: string, target: THREE.Group, isPlayer = false): void {
@@ -475,6 +474,7 @@ export class SceneManager {
       for (const mixer of this.battleMixers) {
         mixer.update(dt);
       }
+      this.battleArena.effects.update(dt);
     }
     this.renderer.render(this.scene, this.camera);
   }
