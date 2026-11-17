@@ -66,3 +66,45 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   - `ZO sec3` = tabela de encontros da zona, **idêntica** ao blob correspondente em `a/0/1/3/0537.bin` (`EN` + 536 ponteiros `u32`).
   - Entrada de encontro ORAS = `<BBH`: `levelMin u8`, `levelMax u8`, `specForm u16` (espécie `&0x7FF`, forma `>>11`). Slots zerados (`species=0`) separam sub-tabelas (grama, surf, pesca etc.) — o particionamento exato por tipo segue a refinar no uso.
   - NPC: `model` = índice em `a/0/2/1`, `script` = índice de script da zona, `sightRange`/`faceDirection`/`degrees` (÷18) permitem linha de visão estilo ORAS.
+
+## A-010 Tabelas de batalha ORAS: personal com SPE antes de SPA/SPD, golpes em mini-pack `WD` e tipos no `DllBattle.cro`
+
+- **Data:** 2026-11-17
+- **Contexto:** Extração de personal, golpes, tipos, learnsets e TM/HM para `src/data/battle/` ([battle-tables.md](features/pipeline-rom/battle-tables.md), `P-010`). Numerado `A-010` porque `A-008`/`A-009` já existem no checkout principal.
+- **Erro potencial:** (1) Ler os 6 stats como HP/ATK/DEF/SPA/SPD/SPE troca Velocidade com Ataque Especial (Treecko viraria SPA 70). (2) Tratar `a/1/8/9` como um arquivo por golpe (layout XY): no ORAS é um único `WD` mini-pack com 622 entradas. (3) Procurar a tabela de tipos em GARC: ela está em `RomFS/DllBattle.cro @0xDB428`. (4) Ler a lista de TMs do `code.bin` em sequência: HM06 e HM07 ficam intercalados (índices 97 e 106).
+- **Regra:** Use [scripts/extract_battle_tables.py](../scripts/extract_battle_tables.py); a ordem dos stats no arquivo é HP, ATK, DEF, SPE, SPA, SPD. Formas alternativas (`personal 722+`) se resolvem pelo `formStatsIndex @0x1C` da espécie base, não pelo índice. Valide sempre contra Treecko (40/45/35/70/65/55) e Mega Sceptile. Só números de mecânica e nomes curtos vão para o Git; textos descritivos ficam fora.
+
+## A-011 Consumo das tabelas de batalha no `core/`: tipos duplicados em monotipos e precisão `101`
+
+- **Data:** 2026-11-17
+- **Contexto:** Integração de `src/data/battle/*.json` em [src/core/typeChart.ts](../src/core/typeChart.ts), [dex.ts](../src/core/dex.ts) e [learnsets.ts](../src/core/learnsets.ts), substituindo o `TYPE_CHART` placeholder de `battle.ts`. Complementa `A-010`.
+- **Erro potencial:** (1) A ROM grava monotipos com os dois slots iguais (Treecko = `[Grass, Grass]`); multiplicar a efetividade por slot eleva ao quadrado (Fire→Treecko ×4). (2) Golpes que nunca erram têm `accuracy = 101` (ex.: Disarming Voice), não `100`; o placeholder em `data/pokemon/species.ts` divergia e foi corrigido pelo teste de paridade.
+- **Regra:** Deduplique os tipos ao montar `DexSpecies` e em `getTypeEffectivenessAgainst`. Trate `accuracy === 101` como acerto garantido ao implementar precisão (`P-010`). Mantenha o teste "placeholder data parity" em `battleData.test.ts`: qualquer valor escrito à mão em `data/pokemon/` precisa bater com a ROM. `types.json` é validado na carga contra a ordem `ELEMENTAL_TYPES`.
+
+## A-012 Campos de efeito ORAS: `healing` com sinal, tóxico via `turnMax`, glifos ♀/♂ privados
+
+- **Data:** 2026-11-17
+- **Contexto:** Simulação de PP/precisão/status/efeitos sobre `src/data/battle/moves.json` ([moveExecution.ts](../src/core/moveExecution.ts), [statusConditions.ts](../src/core/statusConditions.ts)) e slugs de espécie em [dex.ts](../src/core/dex.ts). Complementa `A-010`/`A-011`.
+- **Erro potencial:** (1) Ler `healing @0x13` sem sinal: Struggle tem `231`, que é `−25` = recuo de 1/4 do HP máximo, não cura. (2) Procurar um id próprio para tóxico: a ROM usa `inflict = 5` (veneno) com `turnMax = 15` (Toxic, Poison Fang); veneno comum tem `turnMax = 0`. (3) Sono usa `turnMin..turnMax = 2..4` como contador de tentativas (1–3 turnos dormindo e age ao acordar). (4) O decodificador de texto descartava `0xE08E`/`0xE08F` (♂/♀), fazendo os dois Nidoran virarem `"Nidoran"` e colidirem no slug.
+- **Regra:** Use `DexMove.healPercent` (já convertido para `s8`) e `recoilPercent` com sinal; tóxico = `statusKindForMove`. `decode_gen6_text` mapeia `PRIVATE_GLYPHS`; `dex.ts` aborta a carga se dois slugs de espécie colidirem. Saves sem `stages`/`currentPp` (pré-migração) são rejeitados por `deserializeSave` e o jogo recomeça.
+
+## A-013 XP Gen VI usa fórmula plana; `player`/`enemy` do `BattleState` espelham o time
+
+- **Data:** 2026-11-17
+- **Contexto:** Críticos, XP/level-up e batalhas multi-Pokémon ([experience.ts](../src/core/experience.ts), [levelUp.ts](../src/core/levelUp.ts), [battleParty.ts](../src/core/battleParty.ts)). Complementa `A-012`.
+- **Erro potencial:** (1) Aplicar a fórmula escalonada da Gen V/VII: a Gen VI usa `floor(a·b·L / (7·s))` (`a = 1.5` treinador, `b = baseExp`, `s` = participantes de pé). (2) A curva `medium_slow` é negativa no nível 1 (`−54`): nível 1 vale sempre 0. (3) Atualizar `state.player` sem atualizar `playerParty[playerActive]` dessincroniza o time (XP, PP e HP somem ao trocar). (4) Sortear crítico dentro de `calculateDamage` muda o consumo de RNG de chamadas que só querem o dano; o sorteio fica em `moveExecution` e o dano recebe `{ critical }`.
+- **Regra:** Toda mutação de combatente passa por `withPokemon` (ou `updateActivePlayer` fora do core). `PokemonInstance.totalExp` é a fonte de verdade; `xp`/`nextLevelXp` são só progresso da barra. Saves sem `totalExp` são rejeitados. Estágios de crítico vêm de `DexMove.critStage` (`1` = alta taxa, `6` = Frost Breath/Storm Throw).
+
+## A-014 Gen VI dá XP integral a cada participante; evolução e naturezas na ROM
+
+- **Data:** 2026-11-17
+- **Contexto:** IV/EV/natureza, Exp. Share, Lucky Egg e evolução ([statSpread.ts](../src/core/statSpread.ts), [evolution.ts](../src/core/evolution.ts), [battle_progression_parsers.py](../scripts/battle_progression_parsers.py)). **Corrige `A-013`**, que dividia a XP entre participantes.
+- **Erro:** `A-013` aplicou `s` = número de participantes (regra Gen I–V). Na Gen VI `s = 1` para quem lutou e `s = 2` para quem não lutou com Exp. Share ligado; não há divisão. Também: (1) natureza multiplicada em ponto flutuante (`0.9 × 50`) pode errar o `floor`; (2) a ROM não tem tabela de modificadores de natureza, só os nomes (`a/0/7/3/0051`); (3) evolução Gen 6 é `8 × 6` bytes por espécie em `a/1/9/2` sem byte de forma (diferente da Gen 7 com 8 bytes).
+- **Regra:** `expYield` recebe `participated`/`holdsLuckyEgg`; naturezas usam `applyNature` com décimos inteiros; modificadores vêm da regra `n÷5`/`n mod 5` documentada em `battle-tables.md`. Valide stats contra o exemplo Garchomp Lv.78 Adamant da Bulbapedia (289/278/193/135/171/171). Evolução só é checada para quem subiu de nível na batalha (`BattleState.leveledUp`) e roda ao fechar a batalha. Saves sem `ivs`/`evs`/`nature` são rejeitados.
+
+## A-015 Tabelas de batalha não podem ser resolvidas no import; `public/assets/` é ignorado
+
+- **Data:** 2026-11-17
+- **Contexto:** `P-015` / [ADR-004](features/pipeline-rom/adrs/ADR-004-tabelas-de-batalha-sob-demanda.md) e geração de selvagens ([wildPokemon.ts](../src/core/wildPokemon.ts)).
+- **Erro potencial:** (1) Mover dados versionados para `public/assets/` os tira do Git (a pasta é ignorada por conter assets da ROM). (2) Qualquer constante de módulo que chame `getSpeciesById`/`getMoveById`/`getTypeMultiplier` (ex.: `STRUGGLE`, `SPECIES = { treecko: ... }`) quebra com "Tabelas de batalha não carregadas" porque roda antes de `loadBattleTables`. (3) `src/data/zones/*.json` só existe no checkout principal (não versionado ainda); importar estaticamente quebraria o build em worktrees.
+- **Regra:** Derive índices com `fromTables(build)` e exponha espécies/golpes por getter ou função. Testes dependem de `vitest.config.ts` → `src/core/testing/setupBattleTables.ts`. Zonas entram por `import.meta.glob` (vazio = fallback `MAP_ENCOUNTERS`). Pokémon gerados usam `generatePokemon(species, level, rng)`; `createPokemonInstance` sem opções continua com IV 0 / natureza neutra para fixtures determinísticas.
