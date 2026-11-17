@@ -13,5 +13,6 @@ Cada feature ou módulo do projeto possui sua própria pasta em `docs/features/<
 | [pipeline-rom](pipeline-rom/README.md) | Extração da ROM `.3ds` (`RomFS`/`ExeFS`) e conversão para `.json` e `.glb` | Fase 1 (planejado) |
 | [core-jogo](core-jogo/README.md) | Lógica pura de jogo (`src/core/`): estado, grid, colisões, warps e batalha | Ativo (vertical slice básico) |
 | [engine-3d](engine-3d/README.md) | Renderização Three.js (`src/engine/`): cena, câmera, iluminação e `.glb` | Ativo (placeholder + `GLTFLoader`) |
-| [batalha](batalha/README.md) | Encontros selvagens e motor de batalha por turnos (`src/core/battle.ts`) | Em andamento (Fase 3) |
-| [validacao-emulador](validacao-emulador/README.md) | Testes comparativos contra emulador (`Azahar`/`Citra`), `src/ai/` e evidências do TCC | Planejado (Fase 2–3) |
+| [batalha](batalha/README.md) | Encontros selvagens e motor de batalha por turnos (`src/core/battle.ts`) | Ativo (Fase 3) |
+| [multiplayer-salas](multiplayer-salas/README.md) | Estado autoritativo de salas multiplayer (`src/core/room.ts`) | Em andamento (Fase 4) |
+| [validacao-emulador](validacao-emulador/README.md) | Testes comparativos contra emulador (`Azahar`/`Citra`), `src/ai/` e evidências do TCC | Ativo (`emulatorParity.test.ts`) |
