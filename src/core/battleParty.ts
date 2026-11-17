@@ -1,8 +1,10 @@
-import { withdrawFromBattle, type PokemonInstance } from './battlePokemon';
+import { refreshStats, withdrawFromBattle, type PokemonInstance } from './battlePokemon';
 import { expYield } from './experience';
 import { gainExperience } from './levelUp';
+import { addEvs } from './statSpread';
 
 export const MAX_PARTY_SIZE = 6;
+const LUCKY_EGG = 'Lucky Egg';
 
 export type BattleStatus = 'ongoing' | 'victory' | 'defeat' | 'fled' | 'caught';
 export type BattleSide = 'player' | 'enemy';
@@ -25,6 +27,10 @@ export interface BattleState {
   /** Jogador precisa escolher substituto após desmaio (troca forçada, sem ação inimiga). */
   pendingSwitch: boolean;
   pendingMoves: PendingMoveLearn[];
+  /** Exp. Share (item-chave Gen VI): quem não lutou recebe metade da XP e os EVs. */
+  expShare: boolean;
+  /** Índices do time que subiram de nível nesta batalha (candidatos à evolução ao final). */
+  leveledUp: number[];
   turn: number;
   status: BattleStatus;
   log: string[];
@@ -98,19 +104,44 @@ function sendNextEnemy(state: BattleState, nextIndex: number): BattleState {
   };
 }
 
+interface ExpRecipient {
+  index: number;
+  participated: boolean;
+}
+
+function expRecipients(state: BattleState): ExpRecipient[] {
+  return state.playerParty.flatMap((member, index) => {
+    if (member.currentHp === 0) return [];
+    const participated = state.participants.includes(index);
+    return participated || state.expShare ? [{ index, participated }] : [];
+  });
+}
+
+/** XP + EVs (Gen VI: Exp. Share também concede EVs); stats recalculados na hora. */
+function rewardMember(state: BattleState, recipient: ExpRecipient): BattleState {
+  const member = state.playerParty[recipient.index];
+  if (!member) return state;
+  const amount = expYield(state.enemy.species, state.enemy.level, {
+    isTrainerBattle: state.isTrainer === true,
+    participated: recipient.participated,
+    holdsLuckyEgg: member.heldItem === LUCKY_EGG,
+  });
+  const trained = refreshStats({ ...member, evs: addEvs(member.evs, state.enemy.species.evYield) });
+  const result = gainExperience(trained, amount);
+  const isActive = recipient.index === state.playerActive;
+  const learned = result.pendingMoves.map((moveId) => ({ partyIndex: recipient.index, moveId }));
+  const next = {
+    ...state,
+    playerParty: replaceAt(state.playerParty, recipient.index, result.pokemon),
+    player: isActive ? result.pokemon : state.player,
+    pendingMoves: [...state.pendingMoves, ...learned],
+    leveledUp: result.levelsGained.length > 0 && !state.leveledUp.includes(recipient.index) ? [...state.leveledUp, recipient.index] : state.leveledUp,
+  };
+  return appendLog(next, [`${member.species.name} ganhou ${amount} XP!`, ...result.messages]);
+}
+
 function distributeExp(state: BattleState): BattleState {
-  const earners = state.participants.filter((idx) => (state.playerParty[idx]?.currentHp ?? 0) > 0);
-  const context = { isTrainerBattle: state.isTrainer === true, participants: earners.length };
-  const amount = expYield(state.enemy.species, state.enemy.level, context);
-  return earners.reduce((current, idx) => {
-    const member = current.playerParty[idx];
-    if (!member) return current;
-    const result = gainExperience(member, amount);
-    const party = replaceAt(current.playerParty, idx, result.pokemon);
-    const pendingMoves = [...current.pendingMoves, ...result.pendingMoves.map((moveId) => ({ partyIndex: idx, moveId }))];
-    const next = { ...current, playerParty: party, player: idx === current.playerActive ? result.pokemon : current.player, pendingMoves };
-    return appendLog(next, [`${member.species.name} ganhou ${amount} XP!`, ...result.messages]);
-  }, state);
+  return expRecipients(state).reduce(rewardMember, state);
 }
 
 function resolveEnemyFaint(state: BattleState): BattleState {

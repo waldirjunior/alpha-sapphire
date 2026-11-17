@@ -25,6 +25,8 @@ export interface DexSpecies {
   eggGroups: readonly string[];
   catchRate: number;
   baseExp: number;
+  baseFriendship: number;
+  evYield: DexBaseStats;
   tms: readonly number[];
   hms: readonly number[];
 }
@@ -81,6 +83,8 @@ interface RawSpecies {
   eggGroups: readonly string[];
   catchRate: number;
   baseExp: number;
+  baseFriendship: number;
+  evYield: DexBaseStats;
   tms: readonly number[];
   hms: readonly number[];
 }

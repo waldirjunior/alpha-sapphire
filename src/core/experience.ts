@@ -57,13 +57,18 @@ export function levelForTotalExp(rate: GrowthRate, totalExp: number): number {
 
 export interface ExpYieldContext {
   isTrainerBattle: boolean;
-  /** Pokémon do time que participaram contra o derrotado e seguem de pé (s da fórmula). */
-  participants: number;
+  /** Gen VI: participantes recebem XP integral (s = 1); com Exp. Share ligado, quem não lutou recebe metade (s = 2). A-014. */
+  participated: boolean;
+  holdsLuckyEgg: boolean;
 }
 
-/** Gen VI: floor(a·b·L / (7·s)); Lucky Egg, troca e Exp. Share ficam fora (P-010). */
+const LUCKY_EGG_BONUS = 1.5;
+const NON_PARTICIPANT_SHARE = 2;
+
+/** Gen VI: floor(a·b·e·L / (7·s)); bônus de troca fica fora (sem troca no jogo, P-010). */
 export function expYield(defeated: DexSpecies, defeatedLevel: number, context: ExpYieldContext): number {
   const trainerBonus = context.isTrainerBattle ? TRAINER_BONUS : 1;
-  const share = Math.max(1, context.participants);
-  return Math.max(1, Math.floor((trainerBonus * defeated.baseExp * defeatedLevel) / (FLAT_FORMULA_DIVISOR * share)));
+  const eggBonus = context.holdsLuckyEgg ? LUCKY_EGG_BONUS : 1;
+  const share = context.participated ? 1 : NON_PARTICIPANT_SHARE;
+  return Math.max(1, Math.floor((trainerBonus * eggBonus * defeated.baseExp * defeatedLevel) / (FLAT_FORMULA_DIVISOR * share)));
 }

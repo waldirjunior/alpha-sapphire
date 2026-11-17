@@ -1,6 +1,7 @@
 import { getMoveById, type DexMove, type DexSpecies } from './dex';
 import { MAX_LEVEL, toGrowthRate, totalExpForLevel } from './experience';
 import { getDefaultMoveset } from './learnsets';
+import { calculateStats, validateSpread, ZERO_SPREAD, type BattleStats, type StatSpread } from './statSpread';
 import { NEUTRAL_STAGES, type StatStages } from './statStages';
 
 export interface BattleMove extends DexMove {
@@ -36,14 +37,24 @@ export interface PokemonInstance {
   moves: BattleMove[];
   status: MajorStatus | null;
   stages: StatStages;
+  ivs: StatSpread;
+  evs: StatSpread;
+  nature: number;
+  friendship: number;
+  /** Valor de personalidade (Wurmple usa (PV >> 16) % 10 para decidir a evolução). */
+  personality: number;
+  heldItem: string | null;
+}
+
+export interface PokemonCreationOptions {
+  ivs?: StatSpread;
+  evs?: StatSpread;
+  nature?: number;
+  personality?: number;
+  heldItem?: string | null;
 }
 
 const MIN_LEVEL = 1;
-
-function calcStat(base: number, level: number, isHp: boolean): number {
-  const scaled = Math.floor((2 * base * level) / 100);
-  return isHp ? scaled + level + 10 : scaled + 5;
-}
 
 export function toBattleMove(move: DexMove): BattleMove {
   return { ...move, currentPp: move.pp, maxPp: move.pp };
@@ -56,27 +67,32 @@ export function expProgress(species: DexSpecies, level: number, totalExp: number
   return { xp: totalExp - floor, nextLevelXp };
 }
 
-export function computeStats(species: DexSpecies, level: number): Pick<PokemonInstance, 'maxHp' | 'attack' | 'defense' | 'spAtk' | 'spDef' | 'speed'> {
-  const { hp, atk, def, spa, spd, spe } = species.baseStats;
-  return {
-    maxHp: calcStat(hp, level, true),
-    attack: calcStat(atk, level, false),
-    defense: calcStat(def, level, false),
-    spAtk: calcStat(spa, level, false),
-    spDef: calcStat(spd, level, false),
-    speed: calcStat(spe, level, false),
-  };
+export function computeStats(pokemon: Pick<PokemonInstance, 'species' | 'level' | 'ivs' | 'evs' | 'nature'>): BattleStats {
+  return calculateStats(pokemon.species.baseStats, pokemon.level, pokemon.ivs, pokemon.evs, pokemon.nature);
+}
+
+/** Recalcula stats (nível/EV/espécie) preservando o dano já sofrido. */
+export function refreshStats(pokemon: PokemonInstance): PokemonInstance {
+  const stats = computeStats(pokemon);
+  const hpDelta = stats.maxHp - pokemon.maxHp;
+  return { ...pokemon, ...stats, currentHp: Math.max(0, Math.min(stats.maxHp, pokemon.currentHp + Math.max(0, hpDelta))) };
 }
 
 export function createPokemonInstance(
   species: DexSpecies,
   level: number,
-  moveIds: readonly number[] = getDefaultMoveset(species, level)
+  moveIds: readonly number[] = getDefaultMoveset(species, level),
+  options: PokemonCreationOptions = {}
 ): PokemonInstance {
   if (level < MIN_LEVEL || level > MAX_LEVEL) {
     throw new RangeError(`Nível inválido para ${species.name}: ${level} (esperado ${MIN_LEVEL}..${MAX_LEVEL}).`);
   }
-  const stats = computeStats(species, level);
+  const ivs = options.ivs ?? ZERO_SPREAD;
+  const evs = options.evs ?? ZERO_SPREAD;
+  validateSpread(ivs, 'IV');
+  validateSpread(evs, 'EV');
+  const nature = options.nature ?? 0;
+  const stats = computeStats({ species, level, ivs, evs, nature });
   const totalExp = totalExpForLevel(toGrowthRate(species.growthRate), level);
   return {
     species,
@@ -89,6 +105,12 @@ export function createPokemonInstance(
     moves: moveIds.map((id) => toBattleMove(getMoveById(id))),
     status: null,
     stages: NEUTRAL_STAGES,
+    ivs,
+    evs,
+    nature,
+    friendship: species.baseFriendship,
+    personality: options.personality ?? 0,
+    heldItem: options.heldItem ?? null,
   };
 }
 

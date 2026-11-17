@@ -2,6 +2,7 @@ import { addBagItem, consumePokeball, createInitialBag, usePotion } from './core
 import {
   type BattleState,
   createPokemonInstance,
+  evolveAfterBattle,
   executeBattleTurn,
   healParty,
   rollWildEncounter,
@@ -10,6 +11,7 @@ import {
   startWildBattle,
   switchActivePokemon,
   throwPokeball,
+  timeOfDayFromHour,
   updateActivePlayer,
 } from './core/battle';
 import {
@@ -237,6 +239,9 @@ function renderBattle(): void {
           [`defeated_trainer:${activeTrainerId}`]: true,
         },
       };
+    }
+    if (activeBattle && activeBattle.status !== 'defeat') {
+      party = evolveAfterBattle(party, activeBattle.leveledUp, timeOfDayFromHour(new Date().getHours())).party;
     }
     if (activeBattle?.status === 'defeat') {
       party[0] = createPokemonInstance(SPECIES[starterId], 5);

@@ -65,11 +65,13 @@ describe('experience curves and yield', () => {
     expect(levelForTotalExp('medium_slow', 179)).toBe(6);
   });
 
-  it('uses the flat formula with trainer bonus and participant split', () => {
+  it('uses the Gen VI flat formula with trainer, Lucky Egg and Exp. Share factors', () => {
     const poochyena = getSpeciesById('poochyena');
-    expect(expYield(poochyena, 5, { isTrainerBattle: false, participants: 1 })).toBe(40);
-    expect(expYield(poochyena, 5, { isTrainerBattle: true, participants: 1 })).toBe(60);
-    expect(expYield(poochyena, 5, { isTrainerBattle: false, participants: 2 })).toBe(20);
+    const base = { isTrainerBattle: false, participated: true, holdsLuckyEgg: false };
+    expect(expYield(poochyena, 5, base)).toBe(40);
+    expect(expYield(poochyena, 5, { ...base, isTrainerBattle: true })).toBe(60);
+    expect(expYield(poochyena, 5, { ...base, holdsLuckyEgg: true })).toBe(60);
+    expect(expYield(poochyena, 5, { ...base, participated: false })).toBe(20);
   });
 
   it('starts instances at the curve floor for their level', () => {
@@ -132,7 +134,7 @@ describe('multi-Pokémon trainer battles', () => {
     expect(executeBattleTurn(switched, 0, always(0.5)).status).toBe('defeat');
   });
 
-  it('keeps playerParty in sync with the active Pokémon and splits XP between participants', () => {
+  it('keeps playerParty in sync and gives every Gen VI participant the full XP (A-014)', () => {
     const lead = pokemon('treecko', 30, 'Pound');
     const bench = pokemon('torchic', 30, 'Scratch');
     let battle = startWildBattle([lead, bench], pokemon('wurmple', 2, 'String Shot'));
@@ -140,7 +142,7 @@ describe('multi-Pokémon trainer battles', () => {
     expect(battle.participants).toEqual([0, 1]);
     battle = executeBattleTurn(battle, 0, always(0.5));
     expect(battle.status).toBe('victory');
-    const share = expYield(getSpeciesById('wurmple'), 2, { isTrainerBattle: false, participants: 2 });
+    const share = expYield(getSpeciesById('wurmple'), 2, { isTrainerBattle: false, participated: true, holdsLuckyEgg: false });
     expect(battle.playerParty[0]?.totalExp).toBe(lead.totalExp + share);
     expect(battle.playerParty[1]?.totalExp).toBe(bench.totalExp + share);
     expect(battle.player).toBe(battle.playerParty[battle.playerActive]);

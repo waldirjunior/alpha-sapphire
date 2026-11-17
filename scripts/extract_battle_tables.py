@@ -7,7 +7,8 @@ Fontes (layout validado contra pk3DS; ver docs/features/pipeline-rom/battle-tabl
   levelup   a/1/9/1 (um arquivo por entrada de personal, pares <hh> terminados em -1)
   types     DllBattle.cro @0xDB428 (18x18 bytes, multiplicador x4)
   TM/HM     code.bin, logo após a assinatura D4 00 AE 02 AF 02 B0 02
-  nomes     a/0/7/3 (gametext EN): 0014 golpes, 0018 tipos, 0037 habilidades, 0098 espécies
+  evolução  a/1/9/2 (um arquivo por entrada de personal, 8 × <method u16, argument u16, species u16>)
+  nomes     a/0/7/3 (gametext EN): 0014 golpes, 0018 tipos, 0037 habilidades, 0051 naturezas, 0098 espécies, 0114 itens
 
 Uso:
   python3 scripts/extract_battle_tables.py --garc-root rom/extracted/garc \\
@@ -22,6 +23,7 @@ import struct
 import sys
 from pathlib import Path
 
+from battle_progression_parsers import annotate_evolution, build_natures, parse_evolution_set
 from extract_texts import decode_gen6_text
 
 PERSONAL_SIZE = 0x50
@@ -230,6 +232,8 @@ def main() -> int:
         "types": read_names(text_dir, 18),
         "abilities": read_names(text_dir, 37),
         "species": read_names(text_dir, 98),
+        "natures": read_names(text_dir, 51),
+        "items": read_names(text_dir, 114),
     }
     personal_files = sorted((args.garc_root / "a_1_9_5").glob("*.bin"))
     personal = parse_personal_table(personal_files[-1].read_bytes())
@@ -246,6 +250,12 @@ def main() -> int:
         {"personalIndex": i, "levelUp": parse_learnset(f.read_bytes())} for i, f in enumerate(learnset_files)
     ])
     write_json(args.out_dir / "machines.json", {"tmMoves": tm_moves["tms"], "hmMoves": tm_moves["hms"]})
+    evolution_files = sorted((args.garc_root / "a_1_9_2").glob("*.bin"))
+    write_json(args.out_dir / "evolutions.json", [
+        {"personalIndex": i, "evolutions": [annotate_evolution(e, names["items"], names["moves"]) for e in parse_evolution_set(f.read_bytes())]}
+        for i, f in enumerate(evolution_files)
+    ])
+    write_json(args.out_dir / "natures.json", build_natures(names["natures"]))
     print(f"species={len(personal)} moves={len(move_blobs)} learnsets={len(learnset_files)} -> {args.out_dir}")
     return 0
 

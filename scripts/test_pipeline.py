@@ -12,6 +12,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from battle_progression_parsers import annotate_evolution, build_natures, parse_evolution_set
 from extract_battle_tables import (
     PERSONAL_SIZE,
     TM_SIGNATURE,
@@ -164,6 +165,35 @@ class BattleTablesTest(unittest.TestCase):
         self.assertEqual(len(machines["tms"]), 100)
         self.assertEqual(machines["tms"][91:93], [1091, 1098])
         self.assertEqual(machines["hms"], [1092, 1093, 1094, 1095, 1096, 1097, 1106])
+
+
+class ProgressionParsersTest(unittest.TestCase):
+    def test_parse_evolution_set_skips_empty_slots(self) -> None:
+        blob = struct.pack("<3H", 4, 16, 253) + struct.pack("<3H", 8, 83, 135) + bytes(36)
+        self.assertEqual(parse_evolution_set(blob), [
+            {"method": "level", "argument": 16, "species": 253},
+            {"method": "use_item", "argument": 83, "species": 135},
+        ])
+
+    def test_parse_evolution_set_rejects_unknown_method_and_size(self) -> None:
+        with self.assertRaisesRegex(ValueError, "Método de evolução desconhecido: 99"):
+            parse_evolution_set(struct.pack("<3H", 99, 0, 1) + bytes(42))
+        with self.assertRaisesRegex(ValueError, "esperado 48"):
+            parse_evolution_set(bytes(40))
+
+    def test_annotate_evolution_names_items_and_moves(self) -> None:
+        items = ["None", "Fire Stone"]
+        moves = ["—", "Pound"]
+        self.assertEqual(annotate_evolution({"method": "use_item", "argument": 1, "species": 136}, items, moves)["itemName"], "Fire Stone")
+        self.assertEqual(annotate_evolution({"method": "level_knows_move", "argument": 1, "species": 2}, items, moves)["moveName"], "Pound")
+        self.assertNotIn("itemName", annotate_evolution({"method": "level", "argument": 16, "species": 253}, items, moves))
+
+    def test_build_natures_uses_canonical_index_order(self) -> None:
+        natures = build_natures([f"N{i}" for i in range(26)])
+        self.assertEqual(len(natures), 25)
+        self.assertEqual((natures[3]["increased"], natures[3]["decreased"]), ("atk", "spa"))
+        self.assertEqual((natures[10]["increased"], natures[10]["decreased"]), ("spe", "atk"))
+        self.assertIsNone(natures[12]["increased"])
 
 
 def build_glb(materials: list[dict[str, object]]) -> bytes:

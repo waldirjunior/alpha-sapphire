@@ -15,6 +15,7 @@ export {
 export type { BattleAction, BattleState, BattleStatus, PendingMoveLearn } from './battleTurn';
 export { calculateDamage, getTypeEffectiveness } from './damage';
 export { gainExperience, replaceMove } from './levelUp';
+export { evolveAfterBattle, timeOfDayFromHour, useEvolutionItem, type TimeOfDay } from './evolution';
 
 const ENCOUNTER_RATE = 0.2;
 
@@ -58,7 +59,17 @@ function leadIndex(party: readonly PokemonInstance[], owner: string): number {
   return index;
 }
 
-function createBattle(playerInput: PartyInput, enemyInput: PartyInput, firstLine: (enemy: PokemonInstance) => string, trainerName?: string): BattleState {
+export interface BattleOptions {
+  expShare?: boolean;
+}
+
+function createBattle(
+  playerInput: PartyInput,
+  enemyInput: PartyInput,
+  firstLine: (enemy: PokemonInstance) => string,
+  options: BattleOptions & { trainerName?: string }
+): BattleState {
+  const { trainerName } = options;
   const playerParty = toParty(playerInput, 'jogador');
   const enemyParty = toParty(enemyInput, trainerName ?? 'selvagem');
   const playerActive = leadIndex(playerParty, 'jogador');
@@ -76,6 +87,8 @@ function createBattle(playerInput: PartyInput, enemyInput: PartyInput, firstLine
     participants: [playerActive],
     pendingSwitch: false,
     pendingMoves: [],
+    expShare: options.expShare ?? false,
+    leveledUp: [],
     turn: 1,
     status: 'ongoing',
     log: [firstLine(enemy)],
@@ -84,13 +97,13 @@ function createBattle(playerInput: PartyInput, enemyInput: PartyInput, firstLine
 }
 
 /** Aceita um Pokémon ou o time inteiro (até 6); o primeiro de pé entra em campo. */
-export function startWildBattle(player: PartyInput, enemy: PokemonInstance): BattleState {
-  return createBattle(player, enemy, (wild) => `Um ${wild.species.name} selvagem (Lv.${wild.level}) apareceu!`);
+export function startWildBattle(player: PartyInput, enemy: PokemonInstance, options: BattleOptions = {}): BattleState {
+  return createBattle(player, enemy, (wild) => `Um ${wild.species.name} selvagem (Lv.${wild.level}) apareceu!`, options);
 }
 
-export function startTrainerBattle(player: PartyInput, enemy: PartyInput, trainerName: string): BattleState {
+export function startTrainerBattle(player: PartyInput, enemy: PartyInput, trainerName: string, options: BattleOptions = {}): BattleState {
   const intro = (lead: PokemonInstance) => `${trainerName} desafiou você! Ele enviou ${lead.species.name} (Lv.${lead.level})!`;
-  return createBattle(player, enemy, intro, trainerName);
+  return createBattle(player, enemy, intro, { ...options, trainerName });
 }
 
 export function runFromBattle(state: BattleState): BattleState {

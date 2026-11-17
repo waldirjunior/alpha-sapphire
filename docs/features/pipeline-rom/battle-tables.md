@@ -23,7 +23,9 @@ python3 scripts/extract_battle_tables.py --garc-root $R/garc --romfs $R/RomFS --
 | Level-up | `a/1/9/1/NNNN.bin` (826, um por índice personal) | pares `<hh>` (golpe, nível) terminados por `u32 0xFFFFFFFF` |
 | Tipos | `RomFS/DllBattle.cro` @`0xDB428` | 18×18 `u8`, linha = atacante, coluna = defensor; `0/2/4/8` = ×0/×½/×1/×2 |
 | TM/HM | `ExeFS/code.bin` (descomprimido), após assinatura `D4 00 AE 02 AF 02 B0 02` (achada em `0x4A67E6`, dados em `0x4A67EE`) | 107 `u16`: TM01–92, HM01–05, HM06, TM93–100, HM07 |
-| Nomes | `a/0/7/3` | `0014` golpes, `0018` tipos, `0037` habilidades, `0098` espécies |
+| Evolução | `a/1/9/2/NNNN.bin` (826, um por índice personal) | 8 × `<method u16, argument u16, species u16>` (48 B); `method` = índice em `EVOLUTION_METHODS` (`battle_progression_parsers.py`, ordem do pk3DS `EvolutionEditor6`), `argument` = nível, item, golpe, espécie ou tipo conforme o método |
+| Naturezas | nomes em `a/0/7/3/0051`; modificadores pela regra canônica Gen III+ | natureza `n` aumenta `[atk,def,spe,spa,spd][n÷5]` e reduz `[...][n mod 5]` (Bulbapedia "Nature"); a ROM não traz a tabela de modificadores como dado |
+| Nomes | `a/0/7/3` | `0014` golpes, `0018` tipos, `0037` habilidades, `0051` naturezas, `0098` espécies, `0114` itens |
 
 ### Personal (`0x50`)
 
@@ -58,6 +60,8 @@ Um registro por linha para diffs legíveis.
 - `types.json` — `{types[18], effectiveness[atacante][defensor]}`.
 - `learnsets.json` — `[{personalIndex, levelUp: [{level, move}]}]`.
 - `machines.json` — `{tmMoves[100], hmMoves[7]}` (IDs de golpe).
+- `evolutions.json` — `[{personalIndex, evolutions: [{method, argument, species, itemName?, moveName?}]}]`.
+- `natures.json` — 25 `{id, name, increased, decreased}`.
 
 ## Validação (oráculo Bulbapedia/pokemondb)
 
@@ -65,10 +69,11 @@ Um registro por linha para diffs legíveis.
 - Mega Sceptile (254 forma 1): 70/110/75/145/145/85, Grass/Dragon, Lightning Rod. Primal/Mega Rayquaza (384 forma 1): Delta Stream, ATK/SPA 180.
 - Tackle 50/100/35, Thunderbolt 90/100/15, Dragon Ascent 120/100/5.
 - Fire→Grass ×2, Dragon→Fairy ×0, Electric→Ground ×0, Steel→Steel ×½.
+- Treecko → Grovyle Lv.16; Eevee: Water/Thunder/Fire Stone, amizade de dia/noite, Moss/Ice Rock, Sylveon; Wurmple por personalidade.
 - TM01 = Hone Claws, HM01–07 = Cut, Fly, Surf, Strength, Waterfall, Rock Smash, Dive.
 
 Testes com fixtures sintéticas: `BattleTablesTest` em [scripts/test_pipeline.py](../../../scripts/test_pipeline.py).
 
 ## Fora do escopo
 
-Egg moves (`a/1/9/0`), evoluções (`a/1/9/2`), mega evoluções (`a/1/9/3`), tutores (`0x38–0x4F`) e itens (`a/1/9/7`). Consumo em `src/core/`: `typeChart.ts`, `dex.ts`, `learnsets.ts` e a simulação (`battleTurn.ts`, `moveExecution.ts`, `statusConditions.ts`; ver `A-011`/`A-012`). Efeitos ainda não simulados estão listados em `P-010`.
+Egg moves (`a/1/9/0`), mega evoluções (`a/1/9/3`), tutores (`0x38–0x4F`) e itens (`a/1/9/7`). Consumo em `src/core/`: `typeChart.ts`, `dex.ts`, `learnsets.ts` e a simulação (`battleTurn.ts`, `moveExecution.ts`, `statusConditions.ts`; ver `A-011`/`A-012`). Efeitos ainda não simulados estão listados em `P-010`.

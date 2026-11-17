@@ -1,4 +1,4 @@
-import { computeStats, expProgress, toBattleMove, type PokemonInstance } from './battlePokemon';
+import { expProgress, refreshStats, toBattleMove, type PokemonInstance } from './battlePokemon';
 import { getMoveById } from './dex';
 import { levelForTotalExp, MAX_LEVEL, toGrowthRate, totalExpForLevel } from './experience';
 import { getMovesLearnedAtLevel } from './learnsets';
@@ -31,12 +31,10 @@ export function gainExperience(pokemon: PokemonInstance, amount: number): Experi
 }
 
 function applyLevel(pokemon: PokemonInstance, level: number): PokemonInstance {
-  const stats = computeStats(pokemon.species, level);
-  const hpGain = Math.max(0, stats.maxHp - pokemon.maxHp);
-  return { ...pokemon, ...stats, level, currentHp: Math.min(stats.maxHp, pokemon.currentHp + hpGain) };
+  return refreshStats({ ...pokemon, level });
 }
 
-function learnLevelUpMoves(
+export function learnLevelUpMoves(
   pokemon: PokemonInstance,
   levels: readonly number[]
 ): Pick<ExperienceResult, 'pokemon' | 'learnedMoves' | 'pendingMoves' | 'messages'> {
