@@ -4,7 +4,144 @@ Continuação de [script-format.md](script-format.md), em 2026-11-17.
 Escopo inicial: Fase 1/P-013. A continuação abaixo inclui o primeiro runner
 puro da Fase 2, ainda sem integração ao comportamento ativo do jogo.
 
-## Estado atual: todas as zonas e primeiro runner
+## VM Pawn e abertura real — continuação de P-013
+
+Em 2026-11-17, o caminho `src/core/amxRunner.ts` passou a executar as **instruções
+reais** dos JSONs, sem reescrevê-las como `ScriptCommand[]`. O runner normalizado
+anterior permanece compatível; suas assinaturas não são a ABI da VM.
+[ADR-003](../core-jogo/adrs/ADR-003-vm-pawn-e-efeitos-do-host.md) e
+[PRD-003](../core-jogo/prds/PRD-003-execucao-amx-da-abertura.md) delimitam esta etapa.
+
+### Inventário reproduzível e fontes
+
+`src/data/zone_scripts/opening-memory.json` contém `additionalDirectNatives`:
+**82 nomes adicionais** aos nove normalizados, considerando sec1/sec2 das zonas
+6/223/225/227. `inventory` registra cada nome/hash/aridade e offsets reais por
+programa, inclusive os nomes já suportados. São 89 nomes diretos distintos;
+a suíte confere todas as suas aridades contra o registro explícito da VM.
+Isso é cobertura de declaração, **não cobertura de execução de todos os ramos**.
+
+A fixture inclui dados AMX iniciais e `stackTop=stp-dat` de 19 programas:
+zonas 6/23/223–227 (dois programas cada) e globais 15/47/57/69/78. Não duplica
+as instruções: os testes importam os disassemblies versionados. O gerador
+rejeita SHA-256 diferente do disassembly e aridades conflitantes, preservando
+células, sem exportar executáveis ou assets binários. Exceção de fixtures reais
+solicitada nesta tarefa; as regressões sintéticas continuam independentes da ROM.
+
+```bash
+python3 -B -m scripts.extract_opening_memory --rom-root "$CHECKOUT/rom/extracted"
+```
+
+Observações: os quartos/relógio também envolvem 224/226 e o global 47; Route 101
+é 23. Littleroot/map cases 1–4 chamam `GlobalCall(9880..9883)`, no global 78.
+Não se deduz o episódio inteiro apenas das quatro zonas inicialmente citadas.
+
+### Contrato de execução e conclusão
+
+`createAmxState(bundle, programId, scriptId, world)` carrega dados iniciais,
+seletor de dispatch e pilha. `runAmx` executa com orçamento finito até `completed`
+ou `await-input`; `resumeAmx` exige resposta do tipo pendente. Todas as transições
+clonam estado/memória antes das mutações internas, sem I/O, DOM ou Three.js.
+Há células signed-32, frames/argumentos, `call/proc/ret/retn`, saltos, `casetbl`,
+memória byte/cell e `SYSREQ.N`. Opcode não implementado falha com
+`UnsupportedAmxOpcodeError`; memória desalinhada, gap heap/stack, stack overflow,
+assinatura inválida, global ausente/ambíguo e orçamento excedido falham por nome.
+Não é uma implementação de todos os opcodes AMX nem uma prova diferencial da VM.
+
+`GlobalCall` exige candidato único **entre os globais fornecidos no bundle**,
+cria outra memória/pilha e compartilha o mundo. Parâmetros pai/filho são buffers
+por invocação copiados na entrada/retorno, uma inferência das APIs pareadas.
+Não se passa ponteiro de memória de um programa como se pertencesse a outro.
+
+Efeitos externos são **pedidos tipados**, nunca retornos de sucesso automáticos.
+`awaiting={kind:'native',effect:{channel,name,args}}` conserva células em ordem
+ABI; o host executa/completa o efeito e envia `native-result` com célula signed-32
+explícita e, se necessário, escritas em endereços alocados da VM corrente.
+Não há código executável vindo do host. `HALT 12` após `_Suspend` produz pedido
+`{kind:'ticks',remaining}` consumido somente por ticks externos, sem relógio.
+O protocolo é conservador/serializado: não reproduz concorrência de animações.
+
+### Nativas de estado: assinatura e semântica da projeção
+
+Aridades são observadas nos `SYSREQ.N`; tipos/efeitos abaixo são **inferidos** dos
+nomes, empilhamento e fluxo, não validados contra o emulador. O mundo inicial
+é fornecido pelo chamador, incluindo zona, atores e metadados dos Pokémon.
+
+| Nativa(s) | Células em ordem ABI | Efeito/retorno no modelo |
+| --- | --- | --- |
+| `CommandNOP` | nenhuma | Retorna 0 sem efeito, explicitamente |
+| `FlagGet`, `FlagSet`, `FlagReset` | id | Consulta 0/1, seta ou limpa flag; setters retornam 0 |
+| `WorkGet`, `WorkSet` | id / id,value | Consulta (ausente=0) ou grava célula signed-32; setter retorna 0 |
+| `GlobalGetChildParam`, `GlobalSetChildParam` | slot / slot,value | Lê/grava buffer da próxima chamada global |
+| `GlobalGetParentParam`, `GlobalSetParentParam` | slot / slot,value | Lê/grava buffer recebido; cópia de volta ao pai no retorno |
+| `GlobalCall` | scriptId | Dispatch global único, executado pela VM; retorna PRI do filho |
+| `PlayerGetSex`, `PlayerGetZoneID` | nenhuma | Retorna código 0/1 ou zona fornecida no mundo |
+| `PlayerGetReturnDir` | nenhuma | Direção do ator 255 nesta projeção |
+| `MdlGetDirDisp`, `MdlSetDirDisp` | actor / actor,direction | Consulta/atualiza direção bruta, sem conversão para Three.js |
+| `MdlSetVisible` | actor,visible | Atualiza visibilidade booleana |
+| `MdlSetGPos` | **x,y,z,actor** | Atualiza posição bruta; não usa a ordem do runner normalizado |
+| `MdlGetGPosX`, `MdlGetGPosZ` | actor | Retorna posição como célula float32; unidades são inferidas, sem escala gráfica |
+| `MdlGetMoveCode`, `MdlChangeMoveCode` | actor / actor,code | Consulta/atualiza código de movimento, não interpreta ACMD |
+| `ItemAddCheck`, `ItemAdd` | item,count | Testa/adiciona quantidade, retorna 0/1; limite adotado de 999 por item |
+| `PokePartyGetCount` | excludeEgg | Conta party; não zero exclui ovos (inferência ainda sem oráculo) |
+| `PokePartyAdd` | handle,mode | Modo 0: copia Pokémon fornecido para party se houver vaga (máximo 6), retorna 0/1; outro modo falha |
+| `BoxAddPoke` | handle | Copia Pokémon fornecido para box e retorna 1; capacidade é responsabilidade do host |
+| `PokePartyRecoverAll` | nenhuma | Restaura HP máximo e limpa status na projeção; não modela PP |
+| `ZukanGetOpenFlag`, `ZukanSetOpenFlag` | id / id,value | Consulta/grava booleano da Pokédex |
+| `WarpSetID` | **warpId** | Registra ID do próximo warp; não altera zona/posição automaticamente |
+| `MsgWinCloseNo`, `MsgWinAllClose` | window / nenhuma | Limpa a projeção da janela de diálogo única; não emula múltiplas janelas 3DS |
+| `CheckWinAllSuspend` | nenhuma | Retorna 1: sob este protocolo, o host já concluiu o pedido de diálogo antes do retorno |
+| `_Suspend` | ticks | Agenda ticks consumidos no próximo `HALT 12` |
+| `floatround` | floatBits,mode | 0=nearest, 1=floor, 2=ceil, 3=trunc; valida modo/float finito |
+
+Atores/handles não fornecidos falham explicitamente. Os retornos dos setters e
+operações de party são convenções desta projeção quando o script não os observa;
+não são prova da representação dos objetos C++ do jogo. `_CallPoke3Select` pede
+seleção ao host, que deve fornecer o handle/células de saída correspondentes a
+Pokémon previamente descrito em `world.pokemon`; a VM não inventa stats de espécie.
+
+### Nativas externas: pedidos com completion do host
+
+Cada nome abaixo tem aridade explícita no registro de `amxEffects.ts`;
+`inventory` fornece os offsets/aridades observados. Todas preservam argumentos
+sem adivinhar estruturas/ponteiros e pausam no canal indicado. Queries também
+exigem retorno do host: por exemplo, não se presume que uma câmera terminou.
+
+| Canal | Nativas e serviço solicitado ao host |
+| --- | --- |
+| `dialogue` | `TalkMdlMsg_Seq` (19 células, abre projeção bruta), `LastKeyWait`, `_ABKeyWait`: texto/conclusão de leitura/tecla |
+| `choice` | `YesNoWin_Seq` (4), `_CallPoke3Select` (1), `CallPokePartyNameInput` (5): escolha/seleção/nome; o retorno bruto dirige o próprio branch Pawn |
+| `movement` | `MdlAcmdInit`, `MdlAcmdSet`, `MdlAcmdSetEnd`, `MdlAcmdUpdate`, `MdlAcmdMakeMoveEx`, `MdlCanUseTurnAcmd`, `MdlIsHalfSitSkelPreset`, `MdlSpMotionUpdate`: criação/consulta/conclusão de movimento, sem interpretar ABI ACMD |
+| `camera` | `EVCameraBegin`, `EVCameraEnd`, `EVCameraIsEndFrame`, `EVCameraSetDstParam`, `EVCameraSetFrameParam`, `EVCameraSetGameCameraParam`, `EVCameraSetInitParam`, `EVCameraSetSlideParam`: parâmetros/transição/consulta de câmera |
+| `fade` | `FadeIsEnd`, `FadeRequestOut`, `_FadeRequestIn`: fade e consulta de conclusão |
+| `audio` | `SEPlay`, `SEIsPlaying`, `MEPlay`, `MEIsFinished`, `MEReturnBGM`, `BGMChangeNowMap`, `VoicePlay`, `VoiceIsEnd`: áudio e consultas de reprodução |
+| `field` | `_FieldMapBlockIsLoading`, `_MapChangeCore`, `_FieldClose`, `BGParamPosChange`, `PlaceNameSetNotCloseFlag`, `ContactEncountStart`, `ContactEncountIsActive`, `ContactEncountEnd`: carregamento/transição/encontro do campo |
+| `actor` | `_TalkMdlStartInit`, `_TalkMdlEndInit`, `TalkMdlClearEye`, `TalkMdlClearEyeToEye`, `TalkMdlSetEye`, `TalkMdlSetEyeToEye`, `TalkMdlSetTalkMotion`, `MdlSetWaitAnimeReq`, `MdlAdd`, `MdlDel`, `_MdlProperties`, `MdlParamPosChange`, `BuildMdlEventAnimeInvStart`, `BuildMdlEventAnimeIsEnd`, `BuildMdlEventAnimeSetEnd`, `BuildMdlEventAnimeStart`, `BuildMdlEventAnimeStop`, `BuildMdlGetHandleByGPos`, `MdlInterestViewClear`, `MdlInterestViewSet`, `MdlInterestViewSetMode`, `ChangeFace`, `GetDirAddValueGridX`, `GetDirAddValueGridZ`, `CalcVecToDir`: ações/consultas de modelos, olhar, animação e direção |
+| `words` | `_WordSetRegister`, `WordSetItemName`, `WordSetItemPocketName`, `WordSetItemWazaName`, `WordSetTemotiMonsNickName`: registro/formatação de palavras |
+| `pokemon` | `BoxIsFull`, `PokePartySetDefaultName`, `PokeMemorySet`, `_CallWildBattleWithoutField`, `RecordAdd`: consultas/metadados/batalha delegados, sem simular resultado |
+| `ui` | `SetKeyWaitMark`, `VanishKeyWaitMark`, `IsKeyTrigger`, `PlayerSetFieldMenu`, `MsgIsLoaded`, `MsgLoad`, `MsgRelease`, `MsgSwap`, `PocketGetID`, `ItemIsMegaStone`, `FieldMenuPopPage`, `FieldMenuPushPage`, `SpMotionDelete`, `SpMotionLoadIsEnd`, `SpMotionPlay`, `SpMotionReqLoad`, `SpMotionSetup`: UI, banco de mensagens e recursos da apresentação |
+
+Qualquer nome fora dos registros continua lançando `UnsupportedScriptNativeError`.
+Uma solicitação pendente **não significa que o renderer já implementa o serviço**.
+Não há fallback que classifique automaticamente uma nativa nova como efeito.
+
+### Evidência de execução e limites
+
+Testes reais: 223/sec1/case1 (sexo 0) e 225/sec1/case1 (sexo 1) terminam com
+ator 7 em (8,3,14)/(16,3,14); 223/sec2/case8 faz SE/texto de 19 células/tecla,
+fecha a janela e termina após respostas explícitas; 227/sec2/case1 reposiciona
+player e NPC antes de pedir `MdlAcmdInit(1)`; 6/sec2/case1 entra no global 78;
+global47/cases10581 e10582 e 23/sec2/case8 chegam a pedido externo explícito.
+Os mundos iniciais e as respostas do host nos testes são cenários controlados,
+**não snapshots do emulador**. Não há alegação de abertura gráfica completa,
+interpretação de ACMD, concorrência original ou validação de todos os ramos.
+
+Verificação: **61 testes Vitest (22 novos), 47 Python**, `npm run build`.
+Regressões incluem gap heap/stack, células não finitas, aridade, nomes herdados
+como `constructor`, orçamento, ticks, escolhas e buffers pai/filho. P-013 continua
+aberta para completar o host/renderer, validar ABI e cenários contra o jogo original.
+
+## Estado anterior: todas as zonas e primeiro runner
 
 Continuação em 2026-11-17, Fases 1–2/P-013 e core-jogo/PRD-002/RF-04.
 

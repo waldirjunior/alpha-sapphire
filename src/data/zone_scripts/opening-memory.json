@@ -1,0 +1,8266 @@
+{
+ "images": {
+  "zone:0006:entities": {
+   "sha256": "e0c246a97d669f1d2b21e9c5ac81d627d42211a105293c1cc34ef283c68d3556",
+   "data": [
+    4294967295
+   ],
+   "stackTop": 4100
+  },
+  "zone:0006:map": {
+   "sha256": "9cdc3422c051abf674bdc683c84014f38daa8b796d8a45d0e9700db22f7cc016",
+   "data": [
+    19,
+    1,
+    1,
+    17,
+    0,
+    1,
+    1,
+    9,
+    1,
+    57,
+    9,
+    1,
+    7,
+    2,
+    1,
+    6,
+    0,
+    1,
+    6,
+    1,
+    1,
+    6,
+    5,
+    1,
+    6,
+    4,
+    1,
+    5,
+    3,
+    1,
+    5,
+    2,
+    1,
+    143,
+    9,
+    1,
+    1,
+    9,
+    1,
+    232,
+    0,
+    1,
+    232,
+    1,
+    1,
+    232,
+    3,
+    1,
+    232,
+    2,
+    1,
+    7,
+    0,
+    1,
+    250,
+    0,
+    1,
+    148,
+    9,
+    1,
+    149,
+    9,
+    1,
+    151,
+    9,
+    1,
+    152,
+    9,
+    1,
+    150,
+    9,
+    1,
+    1,
+    9,
+    1,
+    153,
+    9,
+    1,
+    1,
+    9,
+    1,
+    4294967295,
+    0,
+    0,
+    1,
+    16514,
+    0,
+    2,
+    16496,
+    3,
+    5,
+    16496,
+    7,
+    3,
+    16496,
+    9,
+    4,
+    16496,
+    11,
+    6,
+    16631,
+    1,
+    7,
+    16631,
+    4,
+    8,
+    16631,
+    7,
+    4294967295,
+    14,
+    3,
+    4,
+    14,
+    5,
+    2,
+    14,
+    0,
+    5,
+    14,
+    2,
+    4,
+    14,
+    4,
+    2,
+    14,
+    0,
+    5,
+    0,
+    1156269479,
+    1134617905,
+    1164248169,
+    1155912104,
+    1108622704,
+    1162484784,
+    1106667110,
+    3221225472,
+    1114636288,
+    1065353216,
+    0,
+    1156304949,
+    1135543843,
+    1164423175,
+    1155912106,
+    1108622600,
+    1162484784,
+    1106667110,
+    3221225472,
+    1119092736,
+    1065353216,
+    0,
+    1156263842,
+    1132503777,
+    1163773329,
+    1155218475,
+    1111307132,
+    1162728750,
+    1106247680,
+    0,
+    0,
+    0,
+    0,
+    1156138394,
+    1130894374,
+    1163647969,
+    1155218472,
+    1111307936,
+    1162728741,
+    1106247680,
+    0,
+    1123024896,
+    1065353216
+   ],
+   "stackTop": 4780
+  },
+  "zone:0023:entities": {
+   "sha256": "121ecb7cc6bcf7aae8dffbf30dacc9649954f01a8f029ce19e434d03c38cc54f",
+   "data": [
+    4294967295
+   ],
+   "stackTop": 4100
+  },
+  "zone:0023:map": {
+   "sha256": "383587bce4c5291e8e36d95f957a5c1e19c86c8c6e486b1e0e5e4624ff9c6929",
+   "data": [
+    19,
+    0,
+    1,
+    19,
+    3,
+    1,
+    1,
+    9,
+    1,
+    57,
+    9,
+    1,
+    6,
+    0,
+    1,
+    6,
+    1,
+    1,
+    6,
+    3,
+    1,
+    6,
+    2,
+    1,
+    6,
+    4,
+    1,
+    143,
+    9,
+    1,
+    1,
+    9,
+    1,
+    233,
+    6,
+    1,
+    7,
+    0,
+    1,
+    250,
+    0,
+    1,
+    148,
+    9,
+    1,
+    149,
+    9,
+    1,
+    151,
+    9,
+    1,
+    152,
+    9,
+    1,
+    150,
+    9,
+    1,
+    1,
+    9,
+    1,
+    153,
+    9,
+    1,
+    1,
+    9,
+    1,
+    7,
+    1,
+    1,
+    4294967295,
+    0,
+    0,
+    14,
+    3,
+    4,
+    14,
+    5,
+    1,
+    14,
+    0,
+    6,
+    14,
+    3,
+    4,
+    14,
+    7,
+    1,
+    14,
+    1,
+    1,
+    14,
+    6,
+    1,
+    14,
+    2,
+    3,
+    14,
+    4,
+    1,
+    14,
+    0,
+    1,
+    14,
+    5,
+    1,
+    14,
+    3,
+    3,
+    14,
+    7,
+    1,
+    14,
+    1,
+    1,
+    14,
+    6,
+    1,
+    14,
+    2,
+    3,
+    14,
+    4,
+    1,
+    14,
+    0,
+    1,
+    14,
+    5,
+    1,
+    14,
+    3,
+    3,
+    14,
+    7,
+    1,
+    14,
+    1,
+    1,
+    14,
+    6,
+    1,
+    14,
+    2,
+    4,
+    30,
+    3,
+    1,
+    14,
+    3,
+    6,
+    14,
+    5,
+    1,
+    14,
+    0,
+    6,
+    14,
+    3,
+    4,
+    14,
+    7,
+    1,
+    14,
+    1,
+    1,
+    14,
+    6,
+    1,
+    14,
+    2,
+    3,
+    14,
+    4,
+    1,
+    14,
+    0,
+    1,
+    14,
+    5,
+    1,
+    14,
+    3,
+    3,
+    14,
+    7,
+    1,
+    14,
+    1,
+    1,
+    14,
+    6,
+    1,
+    14,
+    2,
+    3,
+    14,
+    4,
+    1,
+    14,
+    0,
+    1,
+    14,
+    5,
+    1,
+    14,
+    3,
+    3,
+    14,
+    7,
+    1,
+    14,
+    1,
+    1,
+    14,
+    6,
+    1,
+    14,
+    2,
+    3,
+    1,
+    16502,
+    1,
+    11,
+    16631,
+    2,
+    12,
+    16631,
+    5,
+    13,
+    16631,
+    8,
+    4294967295,
+    19,
+    1,
+    7,
+    14,
+    0,
+    2,
+    25,
+    2,
+    3,
+    19,
+    1,
+    7,
+    20,
+    3,
+    4,
+    20,
+    5,
+    1,
+    20,
+    0,
+    6,
+    20,
+    3,
+    4,
+    20,
+    7,
+    1,
+    20,
+    1,
+    1,
+    20,
+    6,
+    1,
+    20,
+    2,
+    4,
+    30,
+    3,
+    1,
+    20,
+    3,
+    6,
+    20,
+    5,
+    1,
+    20,
+    0,
+    6,
+    20,
+    3,
+    4,
+    20,
+    7,
+    1,
+    20,
+    1,
+    1,
+    20,
+    6,
+    1,
+    20,
+    2,
+    3,
+    20,
+    3,
+    6,
+    20,
+    5,
+    1,
+    20,
+    0,
+    6,
+    20,
+    3,
+    4,
+    20,
+    7,
+    1,
+    20,
+    1,
+    1,
+    20,
+    6,
+    1,
+    20,
+    2,
+    2
+   ],
+   "stackTop": 5372
+  },
+  "zone:0223:entities": {
+   "sha256": "f263b4679f3d4a130c379cf65ca85eda4fdccb4a8383dc008f17c0d8b80bf9ef",
+   "data": [
+    4294967295
+   ],
+   "stackTop": 4100
+  },
+  "zone:0223:map": {
+   "sha256": "bf4b9184954a2a41efdbf5230853ab302e20f2e29d6c606f208a6673295cbad5",
+   "data": [
+    4294967295,
+    0,
+    0,
+    1,
+    16514,
+    1,
+    2,
+    16514,
+    3,
+    3,
+    16497,
+    1,
+    4,
+    16497,
+    3,
+    5,
+    16497,
+    6,
+    9,
+    16497,
+    8,
+    6,
+    16497,
+    10,
+    4294967295
+   ],
+   "stackTop": 4196
+  },
+  "zone:0224:entities": {
+   "sha256": "91ab285164978c348b861399556851ed95f71b62192edda24553a6bc3944af0a",
+   "data": [
+    4294967295
+   ],
+   "stackTop": 4100
+  },
+  "zone:0224:map": {
+   "sha256": "7560b014ef6f89b2fb1404add0119cdbd7857898171d0f11b2bb647e8911e858",
+   "data": [
+    4294967295,
+    0,
+    0,
+    1,
+    16498,
+    1,
+    2,
+    16498,
+    3,
+    3,
+    16498,
+    5,
+    4294967295
+   ],
+   "stackTop": 4148
+  },
+  "zone:0225:entities": {
+   "sha256": "3ce37fe3fbb690caa23549ed7f7428293294fcd575603d4587f262acb872efe8",
+   "data": [
+    4294967295
+   ],
+   "stackTop": 4100
+  },
+  "zone:0225:map": {
+   "sha256": "8cf320adbc9676a9497b3c83b6aa09f7218f3fe617a67787be8f5a9d2c68e4e7",
+   "data": [
+    4294967295,
+    0,
+    0,
+    1,
+    16514,
+    1,
+    2,
+    16514,
+    3,
+    3,
+    16499,
+    1,
+    4,
+    16499,
+    3,
+    5,
+    16499,
+    6,
+    9,
+    16499,
+    8,
+    6,
+    16499,
+    10,
+    4294967295
+   ],
+   "stackTop": 4196
+  },
+  "zone:0226:entities": {
+   "sha256": "c2b38d856d5eb5df31867fa267ccc31b4a31ce84adb72c64d727d4062dffdc5f",
+   "data": [
+    4294967295
+   ],
+   "stackTop": 4100
+  },
+  "zone:0226:map": {
+   "sha256": "401d624b6e9a92bf8f0009cee7c77d45f8c01082e9c03781be8c7bf01ad15b29",
+   "data": [
+    4294967295,
+    0,
+    0,
+    1,
+    16500,
+    1,
+    2,
+    16500,
+    3,
+    3,
+    16500,
+    5,
+    4294967295
+   ],
+   "stackTop": 4148
+  },
+  "zone:0227:entities": {
+   "sha256": "50c67083884939442c908628a7ec976b86668e1198f065c9f88acf3acaa58e77",
+   "data": [
+    4294967295
+   ],
+   "stackTop": 4100
+  },
+  "zone:0227:map": {
+   "sha256": "81b2bf4e73f266aef75451bb89b374bbb1768975a4a7c32eb738f0fce8d8f900",
+   "data": [
+    1,
+    9,
+    1,
+    57,
+    9,
+    1,
+    6,
+    1,
+    1,
+    143,
+    9,
+    1,
+    1,
+    9,
+    1,
+    232,
+    2,
+    1,
+    233,
+    3,
+    1,
+    7,
+    0,
+    1,
+    250,
+    0,
+    1,
+    148,
+    9,
+    1,
+    149,
+    9,
+    1,
+    151,
+    9,
+    1,
+    152,
+    9,
+    1,
+    150,
+    9,
+    1,
+    1,
+    9,
+    1,
+    153,
+    9,
+    1,
+    1,
+    9,
+    1,
+    4294967295,
+    0,
+    0,
+    1,
+    16501,
+    1,
+    4,
+    16501,
+    3,
+    4294967295,
+    122,
+    101,
+    110,
+    0,
+    122,
+    101,
+    110,
+    0
+   ],
+   "stackTop": 4372
+  },
+  "global:0015": {
+   "sha256": "1afe5094eff0b1d737dc46fb358979f1b87b04d70d5b8396a9683c9ee49f4789",
+   "data": [
+    7,
+    0,
+    1,
+    250,
+    0,
+    1,
+    148,
+    9,
+    1,
+    149,
+    9,
+    1,
+    151,
+    9,
+    1,
+    152,
+    9,
+    1,
+    150,
+    9,
+    1,
+    1,
+    9,
+    1,
+    153,
+    9,
+    1,
+    1,
+    9,
+    1,
+    4294967295,
+    0,
+    0
+   ],
+   "stackTop": 4228
+  },
+  "global:0047": {
+   "sha256": "a4674be463f7f03251eb23665b0a6b5ec291248aeac64b86705aad0451705a77",
+   "data": [
+    19,
+    0,
+    1,
+    19,
+    3,
+    1,
+    19,
+    2,
+    1,
+    19,
+    5,
+    1,
+    19,
+    4,
+    1,
+    19,
+    0,
+    1,
+    19,
+    3,
+    1,
+    19,
+    2,
+    1,
+    13,
+    0,
+    1,
+    6,
+    0,
+    1,
+    6,
+    1,
+    1,
+    6,
+    3,
+    1,
+    6,
+    2,
+    1,
+    1,
+    9,
+    1,
+    57,
+    9,
+    1,
+    1,
+    9,
+    1,
+    230,
+    9,
+    1,
+    6,
+    0,
+    1,
+    6,
+    1,
+    1,
+    6,
+    3,
+    1,
+    6,
+    2,
+    1,
+    6,
+    7,
+    1,
+    6,
+    6,
+    1,
+    5,
+    0,
+    1,
+    143,
+    9,
+    1,
+    1,
+    9,
+    1,
+    232,
+    0,
+    1,
+    232,
+    3,
+    1,
+    232,
+    2,
+    1,
+    232,
+    7,
+    1,
+    232,
+    6,
+    1,
+    233,
+    0,
+    1,
+    233,
+    1,
+    1,
+    233,
+    3,
+    1,
+    233,
+    2,
+    1,
+    7,
+    0,
+    1,
+    250,
+    0,
+    1,
+    148,
+    9,
+    1,
+    149,
+    9,
+    1,
+    151,
+    9,
+    1,
+    152,
+    9,
+    1,
+    150,
+    9,
+    1,
+    1,
+    9,
+    1,
+    153,
+    9,
+    1,
+    1,
+    9,
+    1,
+    7,
+    1,
+    1,
+    4294967295,
+    0,
+    0,
+    6,
+    4,
+    1,
+    6,
+    5,
+    1,
+    6,
+    6,
+    1,
+    6,
+    7,
+    1,
+    19,
+    0,
+    2,
+    19,
+    2,
+    2,
+    19,
+    3,
+    2,
+    44,
+    9,
+    1,
+    233,
+    2,
+    1,
+    19,
+    2,
+    4,
+    233,
+    0,
+    1,
+    19,
+    0,
+    5,
+    233,
+    3,
+    1,
+    19,
+    3,
+    4,
+    233,
+    0,
+    1,
+    44,
+    9,
+    1,
+    233,
+    0,
+    1,
+    19,
+    0,
+    3,
+    233,
+    3,
+    1,
+    19,
+    3,
+    2,
+    233,
+    0,
+    1,
+    233,
+    3,
+    1,
+    19,
+    3,
+    5,
+    233,
+    0,
+    1,
+    19,
+    3,
+    4,
+    19,
+    2,
+    4,
+    19,
+    1,
+    2,
+    19,
+    1,
+    2,
+    19,
+    3,
+    3,
+    19,
+    2,
+    3,
+    19,
+    4,
+    1,
+    19,
+    2,
+    3,
+    19,
+    1,
+    1,
+    19,
+    5,
+    1,
+    19,
+    3,
+    3,
+    19,
+    1,
+    1,
+    235,
+    9,
+    1,
+    234,
+    9,
+    1,
+    237,
+    9,
+    1,
+    237,
+    9,
+    1,
+    13,
+    1,
+    4,
+    13,
+    6,
+    3,
+    13,
+    1,
+    3,
+    6,
+    7,
+    1,
+    13,
+    7,
+    3,
+    13,
+    1,
+    3,
+    6,
+    6,
+    1,
+    13,
+    0,
+    3,
+    13,
+    5,
+    3,
+    6,
+    2,
+    1,
+    13,
+    0,
+    3,
+    13,
+    4,
+    3,
+    6,
+    3,
+    1,
+    13,
+    3,
+    2,
+    6,
+    0,
+    1,
+    13,
+    2,
+    2,
+    6,
+    0,
+    1,
+    13,
+    0,
+    6,
+    13,
+    5,
+    2,
+    6,
+    3,
+    1,
+    13,
+    0,
+    6,
+    13,
+    4,
+    2,
+    6,
+    2,
+    1,
+    13,
+    2,
+    8,
+    13,
+    1,
+    6,
+    13,
+    3,
+    8,
+    13,
+    1,
+    6,
+    13,
+    0,
+    1,
+    13,
+    2,
+    8,
+    13,
+    1,
+    6,
+    13,
+    0,
+    1,
+    13,
+    3,
+    8,
+    13,
+    1,
+    6
+   ],
+   "stackTop": 5536
+  },
+  "global:0057": {
+   "sha256": "9cf659175749c7b0d7bd6985da74dc037e4839145b0a09ad6cafead9a55b4b4c",
+   "data": [
+    231,
+    9,
+    1,
+    243,
+    9,
+    1,
+    4294967295,
+    0,
+    0
+   ],
+   "stackTop": 4132
+  },
+  "global:0069": {
+   "sha256": "3e378e94b6d039148c740608524016cb2e8650e6cee2685596c7dfa66950092b",
+   "data": [
+    19,
+    0,
+    1,
+    19,
+    5,
+    1,
+    19,
+    7,
+    1,
+    6,
+    1,
+    1,
+    6,
+    3,
+    1,
+    6,
+    2,
+    1,
+    143,
+    9,
+    1,
+    1,
+    9,
+    1,
+    7,
+    0,
+    1,
+    250,
+    0,
+    1,
+    148,
+    9,
+    1,
+    149,
+    9,
+    1,
+    151,
+    9,
+    1,
+    152,
+    9,
+    1,
+    150,
+    9,
+    1,
+    1,
+    9,
+    1,
+    153,
+    9,
+    1,
+    1,
+    9,
+    1,
+    7,
+    1,
+    1,
+    4294967295,
+    0,
+    0,
+    0,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    45,
+    60,
+    4294967295,
+    0,
+    1,
+    7,
+    2,
+    8,
+    3,
+    10,
+    4,
+    9,
+    5,
+    11,
+    0,
+    12,
+    1,
+    7,
+    2,
+    8,
+    3,
+    9,
+    4,
+    10,
+    5,
+    11,
+    6,
+    12
+   ],
+   "stackTop": 4476
+  },
+  "global:0078": {
+   "sha256": "37703c484363634000755bde0fd4e6fb1c962d94eda2a362cddedf452789d92a",
+   "data": [
+    19,
+    0,
+    1,
+    13,
+    0,
+    1,
+    6,
+    3,
+    1,
+    6,
+    2,
+    1,
+    1,
+    9,
+    1,
+    57,
+    9,
+    1,
+    6,
+    0,
+    1,
+    6,
+    3,
+    1,
+    6,
+    2,
+    1,
+    5,
+    7,
+    1,
+    5,
+    6,
+    1,
+    143,
+    9,
+    1,
+    1,
+    9,
+    1,
+    7,
+    1,
+    1,
+    4294967295,
+    0,
+    0,
+    19,
+    3,
+    4,
+    19,
+    2,
+    4,
+    19,
+    2,
+    4,
+    43,
+    2,
+    1,
+    19,
+    3,
+    4,
+    43,
+    3,
+    1,
+    19,
+    2,
+    5,
+    19,
+    3,
+    5,
+    19,
+    2,
+    1,
+    19,
+    0,
+    1,
+    19,
+    3,
+    1,
+    19,
+    0,
+    1,
+    19,
+    3,
+    2,
+    19,
+    5,
+    4,
+    19,
+    0,
+    7,
+    44,
+    9,
+    2,
+    19,
+    5,
+    1,
+    19,
+    5,
+    4,
+    19,
+    0,
+    7,
+    19,
+    2,
+    2,
+    19,
+    4,
+    4,
+    19,
+    0,
+    7,
+    44,
+    9,
+    2,
+    19,
+    4,
+    1,
+    19,
+    4,
+    4,
+    19,
+    0,
+    7,
+    19,
+    1,
+    2,
+    6,
+    6,
+    1,
+    13,
+    1,
+    9,
+    13,
+    2,
+    5,
+    13,
+    3,
+    5,
+    13,
+    0,
+    2,
+    13,
+    0,
+    3,
+    13,
+    2,
+    5,
+    13,
+    0,
+    1,
+    13,
+    3,
+    5,
+    13,
+    0,
+    1
+   ],
+   "stackTop": 4720
+  }
+ },
+ "inventory": {
+  "zone:0006:entities": [
+   {
+    "name": "BoxIsFull",
+    "hash": "6ae30210",
+    "arity": 0,
+    "offsets": [
+     728
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeSetEnd",
+    "hash": "19a639e6",
+    "arity": 2,
+    "offsets": [
+     596
+    ]
+   },
+   {
+    "name": "BuildMdlGetHandleByGPos",
+    "hash": "c0fe70b5",
+    "arity": 2,
+    "offsets": [
+     572
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     436
+    ]
+   },
+   {
+    "name": "FlagGet",
+    "hash": "133daa6a",
+    "arity": 1,
+    "offsets": [
+     684,
+     752,
+     776,
+     800
+    ]
+   },
+   {
+    "name": "FlagReset",
+    "hash": "accbbbd7",
+    "arity": 1,
+    "offsets": [
+     1496,
+     1640,
+     1760,
+     1940
+    ]
+   },
+   {
+    "name": "FlagSet",
+    "hash": "13413496",
+    "arity": 1,
+    "offsets": [
+     1452,
+     1468,
+     1904
+    ]
+   },
+   {
+    "name": "MdlParamPosChange",
+    "hash": "70a52046",
+    "arity": 5,
+    "offsets": [
+     1540,
+     1580,
+     1728,
+     1804,
+     1844
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     88,
+     820,
+     1316
+    ]
+   },
+   {
+    "name": "PokePartyGetCount",
+    "hash": "081c2508",
+    "arity": 1,
+    "offsets": [
+     708
+    ]
+   },
+   {
+    "name": "WorkGet",
+    "hash": "8e50f765",
+    "arity": 1,
+    "offsets": [
+     120,
+     216,
+     532,
+     636,
+     660,
+     1340,
+     1364,
+     1408,
+     1432
+    ]
+   },
+   {
+    "name": "WorkSet",
+    "hash": "8e55f629",
+    "arity": 2,
+    "offsets": [
+     1076,
+     1180,
+     1276,
+     1924,
+     1960
+    ]
+   },
+   {
+    "name": "_MdlProperties",
+    "hash": "b32fa207",
+    "arity": 2,
+    "offsets": [
+     56
+    ]
+   }
+  ],
+  "zone:0006:map": [
+   {
+    "name": "BuildMdlEventAnimeInvStart",
+    "hash": "3055247a",
+    "arity": 4,
+    "offsets": [
+     9252,
+     9844,
+     9876
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeIsEnd",
+    "hash": "0ad9d8d8",
+    "arity": 2,
+    "offsets": [
+     3332
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeStart",
+    "hash": "3528848f",
+    "arity": 3,
+    "offsets": [
+     9184,
+     9676
+    ]
+   },
+   {
+    "name": "BuildMdlGetHandleByGPos",
+    "hash": "c0fe70b5",
+    "arity": 2,
+    "offsets": [
+     9152,
+     9540,
+     9572
+    ]
+   },
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     2908
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     116,
+     4108
+    ]
+   },
+   {
+    "name": "EVCameraBegin",
+    "hash": "d2be92ab",
+    "arity": 0,
+    "offsets": [
+     5208,
+     7824,
+     7932,
+     8208,
+     8416,
+     8772,
+     9324
+    ]
+   },
+   {
+    "name": "EVCameraEnd",
+    "hash": "491dd15b",
+    "arity": 1,
+    "offsets": [
+     5388,
+     9368
+    ]
+   },
+   {
+    "name": "EVCameraIsEndFrame",
+    "hash": "ae0ae11e",
+    "arity": 0,
+    "offsets": [
+     256,
+     5252
+    ]
+   },
+   {
+    "name": "EVCameraSetDstParam",
+    "hash": "3e91bf6c",
+    "arity": 9,
+    "offsets": [
+     4740,
+     7784
+    ]
+   },
+   {
+    "name": "EVCameraSetFrameParam",
+    "hash": "c63b48da",
+    "arity": 4,
+    "offsets": [
+     5196,
+     7812,
+     7920,
+     8196,
+     8404,
+     8760,
+     9312
+    ]
+   },
+   {
+    "name": "EVCameraSetGameCameraParam",
+    "hash": "db16cbce",
+    "arity": 0,
+    "offsets": [
+     9284
+    ]
+   },
+   {
+    "name": "EVCameraSetInitParam",
+    "hash": "e5a627ed",
+    "arity": 0,
+    "offsets": [
+     4356,
+     7728
+    ]
+   },
+   {
+    "name": "EVCameraSetSlideParam",
+    "hash": "8ac7e782",
+    "arity": 9,
+    "offsets": [
+     5072,
+     7892,
+     8168,
+     8376,
+     8732
+    ]
+   },
+   {
+    "name": "FadeIsEnd",
+    "hash": "b295378d",
+    "arity": 0,
+    "offsets": [
+     1536
+    ]
+   },
+   {
+    "name": "FadeRequestOut",
+    "hash": "85f49a2f",
+    "arity": 3,
+    "offsets": [
+     6248,
+     7644,
+     8676
+    ]
+   },
+   {
+    "name": "FlagReset",
+    "hash": "accbbbd7",
+    "arity": 1,
+    "offsets": [
+     7672
+    ]
+   },
+   {
+    "name": "FlagSet",
+    "hash": "13413496",
+    "arity": 1,
+    "offsets": [
+     5812,
+     6292
+    ]
+   },
+   {
+    "name": "GlobalCall",
+    "hash": "74d78dad",
+    "arity": 1,
+    "offsets": [
+     6324,
+     6352,
+     6380,
+     6408,
+     6436
+    ]
+   },
+   {
+    "name": "IsKeyTrigger",
+    "hash": "e2540353",
+    "arity": 3,
+    "offsets": [
+     5300,
+     5472
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     804,
+     952,
+     1140,
+     1352
+    ]
+   },
+   {
+    "name": "MdlAcmdInit",
+    "hash": "194f0128",
+    "arity": 1,
+    "offsets": [
+     2984,
+     7968,
+     8036,
+     8432,
+     8880,
+     9004
+    ]
+   },
+   {
+    "name": "MdlAcmdMakeMoveEx",
+    "hash": "8e23b028",
+    "arity": 7,
+    "offsets": [
+     8008,
+     8076,
+     8472,
+     8920,
+     9044
+    ]
+   },
+   {
+    "name": "MdlAcmdSet",
+    "hash": "f0882c66",
+    "arity": 4,
+    "offsets": [
+     3184
+    ]
+   },
+   {
+    "name": "MdlAcmdSetEnd",
+    "hash": "7d6b7345",
+    "arity": 0,
+    "offsets": [
+     3208,
+     8020,
+     8088,
+     8484,
+     9084
+    ]
+   },
+   {
+    "name": "MdlAcmdUpdate",
+    "hash": "15f86e59",
+    "arity": 1,
+    "offsets": [
+     3244
+    ]
+   },
+   {
+    "name": "MdlAdd",
+    "hash": "d7d3ceee",
+    "arity": 1,
+    "offsets": [
+     7688
+    ]
+   },
+   {
+    "name": "MdlCanUseTurnAcmd",
+    "hash": "c569fc48",
+    "arity": 1,
+    "offsets": [
+     1908
+    ]
+   },
+   {
+    "name": "MdlDel",
+    "hash": "d7d30480",
+    "arity": 1,
+    "offsets": [
+     9416,
+     9792
+    ]
+   },
+   {
+    "name": "MdlGetDirDisp",
+    "hash": "8e7eebec",
+    "arity": 1,
+    "offsets": [
+     1888
+    ]
+   },
+   {
+    "name": "MdlGetMoveCode",
+    "hash": "a5d96b8f",
+    "arity": 1,
+    "offsets": [
+     2292,
+     2644
+    ]
+   },
+   {
+    "name": "MdlIsHalfSitSkelPreset",
+    "hash": "46916846",
+    "arity": 1,
+    "offsets": [
+     1760,
+     2552
+    ]
+   },
+   {
+    "name": "MdlSetGPos",
+    "hash": "4114a564",
+    "arity": 4,
+    "offsets": [
+     7716
+    ]
+   },
+   {
+    "name": "MdlSetWaitAnimeReq",
+    "hash": "153a0918",
+    "arity": 1,
+    "offsets": [
+     3408
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     1504
+    ]
+   },
+   {
+    "name": "PlayerGetReturnDir",
+    "hash": "25818e0c",
+    "arity": 0,
+    "offsets": [
+     1716
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     1296,
+     5880,
+     8788,
+     9460,
+     10160,
+     10300
+    ]
+   },
+   {
+    "name": "SEIsPlaying",
+    "hash": "9d75386e",
+    "arity": 1,
+    "offsets": [
+     3564
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     768,
+     1476,
+     1616,
+     9776
+    ]
+   },
+   {
+    "name": "SetKeyWaitMark",
+    "hash": "d04413ad",
+    "arity": 0,
+    "offsets": [
+     1432
+    ]
+   },
+   {
+    "name": "TalkMdlClearEye",
+    "hash": "1e8094d5",
+    "arity": 1,
+    "offsets": [
+     9128
+    ]
+   },
+   {
+    "name": "TalkMdlClearEyeToEye",
+    "hash": "403d1b99",
+    "arity": 1,
+    "offsets": [
+     2516,
+     7428
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     2840
+    ]
+   },
+   {
+    "name": "TalkMdlSetEye",
+    "hash": "703b3ef8",
+    "arity": 3,
+    "offsets": [
+     8248
+    ]
+   },
+   {
+    "name": "TalkMdlSetEyeToEye",
+    "hash": "66dfbcea",
+    "arity": 1,
+    "offsets": [
+     2152,
+     2176,
+     7312
+    ]
+   },
+   {
+    "name": "TalkMdlSetTalkMotion",
+    "hash": "4d855abd",
+    "arity": 1,
+    "offsets": [
+     2384
+    ]
+   },
+   {
+    "name": "VanishKeyWaitMark",
+    "hash": "4016ed32",
+    "arity": 0,
+    "offsets": [
+     1456
+    ]
+   },
+   {
+    "name": "WorkGet",
+    "hash": "8e50f765",
+    "arity": 1,
+    "offsets": [
+     868,
+     1052,
+     1252,
+     1696,
+     2424,
+     2452,
+     6708
+    ]
+   },
+   {
+    "name": "WorkSet",
+    "hash": "8e55f629",
+    "arity": 2,
+    "offsets": [
+     896,
+     1004,
+     1080,
+     1192,
+     1228,
+     1404,
+     5832,
+     5852,
+     6480,
+     6560,
+     6640,
+     6800,
+     7448
+    ]
+   },
+   {
+    "name": "_ABKeyWait",
+    "hash": "c7de8c7c",
+    "arity": 0,
+    "offsets": [
+     1444
+    ]
+   },
+   {
+    "name": "_FadeRequestIn",
+    "hash": "7b2fec69",
+    "arity": 2,
+    "offsets": [
+     160
+    ]
+   },
+   {
+    "name": "_FieldMapBlockIsLoading",
+    "hash": "4190ecec",
+    "arity": 0,
+    "offsets": [
+     88
+    ]
+   },
+   {
+    "name": "_MapChangeCore",
+    "hash": "21d6ffb6",
+    "arity": 9,
+    "offsets": [
+     3672
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   },
+   {
+    "name": "_TalkMdlEndInit",
+    "hash": "6671d88f",
+    "arity": 2,
+    "offsets": [
+     2476
+    ]
+   },
+   {
+    "name": "_TalkMdlStartInit",
+    "hash": "df9f03b4",
+    "arity": 4,
+    "offsets": [
+     1812
+    ]
+   },
+   {
+    "name": "_WordSetRegister",
+    "hash": "b25ed5e2",
+    "arity": 3,
+    "offsets": [
+     200
+    ]
+   },
+   {
+    "name": "floatround",
+    "hash": "df08852e",
+    "arity": 2,
+    "offsets": [
+     4724,
+     5056,
+     5124,
+     5176
+    ]
+   }
+  ],
+  "zone:0023:entities": [
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     100
+    ]
+   },
+   {
+    "name": "MdlParamPosChange",
+    "hash": "70a52046",
+    "arity": 5,
+    "offsets": [
+     352
+    ]
+   },
+   {
+    "name": "MdlSetDirDisp",
+    "hash": "8cf20b38",
+    "arity": 2,
+    "offsets": [
+     264
+    ]
+   },
+   {
+    "name": "MdlSetGPos",
+    "hash": "4114a564",
+    "arity": 4,
+    "offsets": [
+     244
+    ]
+   },
+   {
+    "name": "WorkGet",
+    "hash": "8e50f765",
+    "arity": 1,
+    "offsets": [
+     196,
+     300
+    ]
+   }
+  ],
+  "zone:0023:map": [
+   {
+    "name": "BGMChangeNowMap",
+    "hash": "997492a8",
+    "arity": 2,
+    "offsets": [
+     15228
+    ]
+   },
+   {
+    "name": "BoxAddPoke",
+    "hash": "a4dd5437",
+    "arity": 1,
+    "offsets": [
+     15812
+    ]
+   },
+   {
+    "name": "CalcVecToDir",
+    "hash": "78178241",
+    "arity": 2,
+    "offsets": [
+     3804
+    ]
+   },
+   {
+    "name": "CallPokePartyNameInput",
+    "hash": "9ca582f8",
+    "arity": 5,
+    "offsets": [
+     16976
+    ]
+   },
+   {
+    "name": "ChangeFace",
+    "hash": "fc264f03",
+    "arity": 2,
+    "offsets": [
+     5508,
+     5708,
+     6592,
+     7728,
+     8064,
+     12840
+    ]
+   },
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     3240
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     116,
+     5044,
+     15752,
+     16780,
+     16804
+    ]
+   },
+   {
+    "name": "ContactEncountEnd",
+    "hash": "aff52ef1",
+    "arity": 0,
+    "offsets": [
+     10356
+    ]
+   },
+   {
+    "name": "ContactEncountIsActive",
+    "hash": "d1df42d4",
+    "arity": 0,
+    "offsets": [
+     11924
+    ]
+   },
+   {
+    "name": "ContactEncountStart",
+    "hash": "ae0e6742",
+    "arity": 8,
+    "offsets": [
+     10608
+    ]
+   },
+   {
+    "name": "EVCameraBegin",
+    "hash": "d2be92ab",
+    "arity": 0,
+    "offsets": [
+     5616,
+     5944,
+     6252,
+     6424,
+     6776,
+     7696,
+     7968,
+     9172,
+     10040,
+     10716,
+     11040,
+     11708,
+     12948,
+     13556,
+     14376
+    ]
+   },
+   {
+    "name": "EVCameraEnd",
+    "hash": "491dd15b",
+    "arity": 1,
+    "offsets": [
+     6820,
+     10068,
+     11736,
+     14404
+    ]
+   },
+   {
+    "name": "EVCameraIsEndFrame",
+    "hash": "ae0ae11e",
+    "arity": 0,
+    "offsets": [
+     288
+    ]
+   },
+   {
+    "name": "EVCameraSetDstParam",
+    "hash": "3e91bf6c",
+    "arity": 9,
+    "offsets": [
+     5576,
+     5904,
+     7656,
+     9132,
+     10676,
+     12908,
+     13516
+    ]
+   },
+   {
+    "name": "EVCameraSetFrameParam",
+    "hash": "c63b48da",
+    "arity": 4,
+    "offsets": [
+     5604,
+     5932,
+     6240,
+     6412,
+     6764,
+     7684,
+     7956,
+     9160,
+     10028,
+     10704,
+     11028,
+     11696,
+     12936,
+     13544,
+     14364
+    ]
+   },
+   {
+    "name": "EVCameraSetGameCameraParam",
+    "hash": "db16cbce",
+    "arity": 0,
+    "offsets": [
+     6736,
+     10000,
+     11668,
+     14336
+    ]
+   },
+   {
+    "name": "EVCameraSetInitParam",
+    "hash": "e5a627ed",
+    "arity": 0,
+    "offsets": [
+     5520,
+     5848,
+     7600,
+     9076,
+     10620,
+     12852,
+     13460
+    ]
+   },
+   {
+    "name": "EVCameraSetSlideParam",
+    "hash": "8ac7e782",
+    "arity": 9,
+    "offsets": [
+     6212,
+     6384,
+     7928,
+     11000
+    ]
+   },
+   {
+    "name": "FadeIsEnd",
+    "hash": "b295378d",
+    "arity": 0,
+    "offsets": [
+     1764
+    ]
+   },
+   {
+    "name": "FadeRequestOut",
+    "hash": "85f49a2f",
+    "arity": 3,
+    "offsets": [
+     5412,
+     5824,
+     8464,
+     12808,
+     13388,
+     14312,
+     16928
+    ]
+   },
+   {
+    "name": "FieldMenuPopPage",
+    "hash": "755882af",
+    "arity": 0,
+    "offsets": [
+     9560,
+     16728
+    ]
+   },
+   {
+    "name": "FieldMenuPushPage",
+    "hash": "410cbed4",
+    "arity": 1,
+    "offsets": [
+     344
+    ]
+   },
+   {
+    "name": "FlagGet",
+    "hash": "133daa6a",
+    "arity": 1,
+    "offsets": [
+     12200,
+     12224
+    ]
+   },
+   {
+    "name": "FlagReset",
+    "hash": "accbbbd7",
+    "arity": 1,
+    "offsets": [
+     5440,
+     6280,
+     6508,
+     7316,
+     7360,
+     8608,
+     8976,
+     12296,
+     12312,
+     12460,
+     12476,
+     12560,
+     12576,
+     13700,
+     14892,
+     15208
+    ]
+   },
+   {
+    "name": "FlagSet",
+    "hash": "13413496",
+    "arity": 1,
+    "offsets": [
+     6296,
+     6524,
+     8540,
+     8556,
+     8572,
+     8624,
+     9488,
+     10152,
+     13716,
+     14876,
+     16416,
+     16460,
+     16492,
+     16588,
+     16620,
+     16664,
+     16696
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     1052,
+     1272,
+     1484
+    ]
+   },
+   {
+    "name": "MEIsFinished",
+    "hash": "c2dc77a4",
+    "arity": 1,
+    "offsets": [
+     1672
+    ]
+   },
+   {
+    "name": "MEPlay",
+    "hash": "e53555d8",
+    "arity": 1,
+    "offsets": [
+     15600,
+     15832
+    ]
+   },
+   {
+    "name": "MEReturnBGM",
+    "hash": "184d321e",
+    "arity": 0,
+    "offsets": [
+     1692
+    ]
+   },
+   {
+    "name": "MdlAcmdInit",
+    "hash": "194f0128",
+    "arity": 1,
+    "offsets": [
+     3316,
+     6016,
+     9240,
+     9876,
+     10732,
+     11136
+    ]
+   },
+   {
+    "name": "MdlAcmdMakeMoveEx",
+    "hash": "8e23b028",
+    "arity": 7,
+    "offsets": [
+     6056,
+     9280,
+     9916,
+     10772,
+     11176
+    ]
+   },
+   {
+    "name": "MdlAcmdSet",
+    "hash": "f0882c66",
+    "arity": 4,
+    "offsets": [
+     3516
+    ]
+   },
+   {
+    "name": "MdlAcmdSetEnd",
+    "hash": "7d6b7345",
+    "arity": 0,
+    "offsets": [
+     3540,
+     6068,
+     9292,
+     9928,
+     10784,
+     11188
+    ]
+   },
+   {
+    "name": "MdlAcmdUpdate",
+    "hash": "15f86e59",
+    "arity": 1,
+    "offsets": [
+     3576
+    ]
+   },
+   {
+    "name": "MdlAdd",
+    "hash": "d7d3ceee",
+    "arity": 1,
+    "offsets": [
+     5456,
+     5472,
+     6328,
+     6556,
+     7424,
+     8992,
+     12328,
+     12344,
+     12360,
+     12492,
+     12508,
+     12524,
+     12592,
+     12608,
+     12624,
+     13748,
+     14924
+    ]
+   },
+   {
+    "name": "MdlCanUseTurnAcmd",
+    "hash": "c569fc48",
+    "arity": 1,
+    "offsets": [
+     2240
+    ]
+   },
+   {
+    "name": "MdlDel",
+    "hash": "d7d30480",
+    "arity": 1,
+    "offsets": [
+     6312,
+     6540,
+     7376,
+     7392,
+     7408,
+     13732,
+     14908,
+     14940,
+     16432,
+     16476,
+     16604,
+     16680
+    ]
+   },
+   {
+    "name": "MdlGetDirDisp",
+    "hash": "8e7eebec",
+    "arity": 1,
+    "offsets": [
+     2220
+    ]
+   },
+   {
+    "name": "MdlGetGPosX",
+    "hash": "43c551e8",
+    "arity": 1,
+    "offsets": [
+     3656,
+     3704,
+     9204
+    ]
+   },
+   {
+    "name": "MdlGetGPosZ",
+    "hash": "43c551ea",
+    "arity": 1,
+    "offsets": [
+     3680,
+     3728
+    ]
+   },
+   {
+    "name": "MdlGetMoveCode",
+    "hash": "a5d96b8f",
+    "arity": 1,
+    "offsets": [
+     2624,
+     2976
+    ]
+   },
+   {
+    "name": "MdlInterestViewClear",
+    "hash": "8c8590ab",
+    "arity": 1,
+    "offsets": [
+     8044
+    ]
+   },
+   {
+    "name": "MdlInterestViewSet",
+    "hash": "df9bb8bc",
+    "arity": 4,
+    "offsets": [
+     7588
+    ]
+   },
+   {
+    "name": "MdlInterestViewSetMode",
+    "hash": "ba4b3cdd",
+    "arity": 2,
+    "offsets": [
+     7556
+    ]
+   },
+   {
+    "name": "MdlIsHalfSitSkelPreset",
+    "hash": "46916846",
+    "arity": 1,
+    "offsets": [
+     2092,
+     2884
+    ]
+   },
+   {
+    "name": "MdlSetDirDisp",
+    "hash": "8cf20b38",
+    "arity": 2,
+    "offsets": [
+     7516,
+     7536,
+     10116,
+     13448,
+     14988,
+     15036,
+     15136,
+     15192
+    ]
+   },
+   {
+    "name": "MdlSetGPos",
+    "hash": "4114a564",
+    "arity": 4,
+    "offsets": [
+     7468,
+     7496,
+     9020,
+     10096,
+     13428,
+     14968,
+     15016,
+     15116,
+     15172
+    ]
+   },
+   {
+    "name": "MdlSetWaitAnimeReq",
+    "hash": "153a0918",
+    "arity": 1,
+    "offsets": [
+     4136
+    ]
+   },
+   {
+    "name": "MdlSpMotionUpdate",
+    "hash": "90278065",
+    "arity": 1,
+    "offsets": [
+     4060
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     1636
+    ]
+   },
+   {
+    "name": "PlaceNameSetNotCloseFlag",
+    "hash": "ac7bf1a3",
+    "arity": 1,
+    "offsets": [
+     5236
+    ]
+   },
+   {
+    "name": "PlayerGetReturnDir",
+    "hash": "25818e0c",
+    "arity": 0,
+    "offsets": [
+     2048
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     596,
+     1428,
+     4616,
+     10168,
+     12176
+    ]
+   },
+   {
+    "name": "PokeMemorySet",
+    "hash": "2367b782",
+    "arity": 3,
+    "offsets": [
+     15776
+    ]
+   },
+   {
+    "name": "PokePartyAdd",
+    "hash": "1b0b8b06",
+    "arity": 2,
+    "offsets": [
+     7300,
+     15580
+    ]
+   },
+   {
+    "name": "PokePartyGetCount",
+    "hash": "081c2508",
+    "arity": 1,
+    "offsets": [
+     7760,
+     15540,
+     15724,
+     16764
+    ]
+   },
+   {
+    "name": "PokePartyRecoverAll",
+    "hash": "68a9df44",
+    "arity": 0,
+    "offsets": [
+     7840
+    ]
+   },
+   {
+    "name": "PokePartySetDefaultName",
+    "hash": "8a23e4e7",
+    "arity": 1,
+    "offsets": [
+     17232,
+     17320
+    ]
+   },
+   {
+    "name": "RecordAdd",
+    "hash": "cd2b9f5c",
+    "arity": 2,
+    "offsets": [
+     17148
+    ]
+   },
+   {
+    "name": "SEIsPlaying",
+    "hash": "9d75386e",
+    "arity": 1,
+    "offsets": [
+     4400
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     1016,
+     1608,
+     1948,
+     9524
+    ]
+   },
+   {
+    "name": "SetKeyWaitMark",
+    "hash": "d04413ad",
+    "arity": 0,
+    "offsets": [
+     1564
+    ]
+   },
+   {
+    "name": "SpMotionDelete",
+    "hash": "41cc633a",
+    "arity": 0,
+    "offsets": [
+     6616,
+     13684
+    ]
+   },
+   {
+    "name": "SpMotionLoadIsEnd",
+    "hash": "ce136bce",
+    "arity": 0,
+    "offsets": [
+     3964
+    ]
+   },
+   {
+    "name": "SpMotionPlay",
+    "hash": "a3086615",
+    "arity": 3,
+    "offsets": [
+     6448,
+     13656
+    ]
+   },
+   {
+    "name": "SpMotionReqLoad",
+    "hash": "6d15bab5",
+    "arity": 1,
+    "offsets": [
+     5676,
+     13008
+    ]
+   },
+   {
+    "name": "SpMotionSetup",
+    "hash": "7ef9603e",
+    "arity": 0,
+    "offsets": [
+     3984
+    ]
+   },
+   {
+    "name": "TalkMdlClearEye",
+    "hash": "1e8094d5",
+    "arity": 1,
+    "offsets": [
+     4216
+    ]
+   },
+   {
+    "name": "TalkMdlClearEyeToEye",
+    "hash": "403d1b99",
+    "arity": 1,
+    "offsets": [
+     2848
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     3172
+    ]
+   },
+   {
+    "name": "TalkMdlSetEye",
+    "hash": "703b3ef8",
+    "arity": 3,
+    "offsets": [
+     4188
+    ]
+   },
+   {
+    "name": "TalkMdlSetEyeToEye",
+    "hash": "66dfbcea",
+    "arity": 1,
+    "offsets": [
+     2484,
+     2508
+    ]
+   },
+   {
+    "name": "TalkMdlSetTalkMotion",
+    "hash": "4d855abd",
+    "arity": 1,
+    "offsets": [
+     2716
+    ]
+   },
+   {
+    "name": "VanishKeyWaitMark",
+    "hash": "4016ed32",
+    "arity": 0,
+    "offsets": [
+     1588
+    ]
+   },
+   {
+    "name": "VoiceIsEnd",
+    "hash": "467ed999",
+    "arity": 0,
+    "offsets": [
+     4480
+    ]
+   },
+   {
+    "name": "VoicePlay",
+    "hash": "70be961c",
+    "arity": 2,
+    "offsets": [
+     5272,
+     5800,
+     5980,
+     6128,
+     13276,
+     13356
+    ]
+   },
+   {
+    "name": "WarpSetID",
+    "hash": "ebd459b9",
+    "arity": 1,
+    "offsets": [
+     10200,
+     10224
+    ]
+   },
+   {
+    "name": "WordSetTemotiMonsNickName",
+    "hash": "a9ba4f61",
+    "arity": 2,
+    "offsets": [
+     17068
+    ]
+   },
+   {
+    "name": "WorkGet",
+    "hash": "8e50f765",
+    "arity": 1,
+    "offsets": [
+     1188,
+     1384,
+     1888,
+     2028,
+     2756,
+     2784,
+     7276,
+     10460,
+     11792,
+     14448,
+     14544,
+     14588,
+     17032
+    ]
+   },
+   {
+    "name": "WorkSet",
+    "hash": "8e55f629",
+    "arity": 2,
+    "offsets": [
+     1104,
+     1140,
+     1216,
+     1324,
+     1360,
+     1536,
+     6724,
+     8524,
+     8592,
+     8644,
+     10136,
+     10440,
+     11756,
+     12052,
+     12096,
+     12140,
+     16512,
+     16640,
+     16716
+    ]
+   },
+   {
+    "name": "YesNoWin_Seq",
+    "hash": "0511b06e",
+    "arity": 4,
+    "offsets": [
+     1860
+    ]
+   },
+   {
+    "name": "_ABKeyWait",
+    "hash": "c7de8c7c",
+    "arity": 0,
+    "offsets": [
+     1576
+    ]
+   },
+   {
+    "name": "_CallPoke3Select",
+    "hash": "30191933",
+    "arity": 1,
+    "offsets": [
+     7256,
+     14432,
+     14528,
+     14572
+    ]
+   },
+   {
+    "name": "_CallWildBattleWithoutField",
+    "hash": "bcf84ded",
+    "arity": 4,
+    "offsets": [
+     7344
+    ]
+   },
+   {
+    "name": "_FadeRequestIn",
+    "hash": "7b2fec69",
+    "arity": 2,
+    "offsets": [
+     160
+    ]
+   },
+   {
+    "name": "_FieldClose",
+    "hash": "43c27227",
+    "arity": 2,
+    "offsets": [
+     7240
+    ]
+   },
+   {
+    "name": "_FieldMapBlockIsLoading",
+    "hash": "4190ecec",
+    "arity": 0,
+    "offsets": [
+     88
+    ]
+   },
+   {
+    "name": "_MapChangeCore",
+    "hash": "21d6ffb6",
+    "arity": 9,
+    "offsets": [
+     4588
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   },
+   {
+    "name": "_TalkMdlEndInit",
+    "hash": "6671d88f",
+    "arity": 2,
+    "offsets": [
+     2808
+    ]
+   },
+   {
+    "name": "_TalkMdlStartInit",
+    "hash": "df9f03b4",
+    "arity": 4,
+    "offsets": [
+     2144
+    ]
+   },
+   {
+    "name": "_WordSetRegister",
+    "hash": "b25ed5e2",
+    "arity": 3,
+    "offsets": [
+     200,
+     232
+    ]
+   }
+  ],
+  "zone:0223:entities": [
+   {
+    "name": "BGParamPosChange",
+    "hash": "859f8aba",
+    "arity": 4,
+    "offsets": [
+     804,
+     912
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     100
+    ]
+   },
+   {
+    "name": "MdlChangeMoveCode",
+    "hash": "97085025",
+    "arity": 2,
+    "offsets": [
+     568,
+     636
+    ]
+   },
+   {
+    "name": "MdlSetDirDisp",
+    "hash": "8cf20b38",
+    "arity": 2,
+    "offsets": [
+     332,
+     404,
+     476,
+     548,
+     616,
+     704,
+     776
+    ]
+   },
+   {
+    "name": "MdlSetGPos",
+    "hash": "4114a564",
+    "arity": 4,
+    "offsets": [
+     312,
+     384,
+     456,
+     528,
+     596,
+     684,
+     756
+    ]
+   },
+   {
+    "name": "MdlSetVisible",
+    "hash": "c34ad2ab",
+    "arity": 2,
+    "offsets": [
+     656
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     252,
+     864
+    ]
+   },
+   {
+    "name": "WorkGet",
+    "hash": "8e50f765",
+    "arity": 1,
+    "offsets": [
+     208,
+     232
+    ]
+   }
+  ],
+  "zone:0223:map": [
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     380
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     664
+    ]
+   },
+   {
+    "name": "GlobalCall",
+    "hash": "74d78dad",
+    "arity": 1,
+    "offsets": [
+     824,
+     852,
+     880,
+     908,
+     936,
+     964,
+     1024,
+     1048,
+     1188
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     1144
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     180
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     992
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     212
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     312
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   }
+  ],
+  "zone:0224:entities": [
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     100
+    ]
+   },
+   {
+    "name": "FlagSet",
+    "hash": "13413496",
+    "arity": 1,
+    "offsets": [
+     192
+    ]
+   }
+  ],
+  "zone:0224:map": [
+   {
+    "name": "BuildMdlEventAnimeInvStart",
+    "hash": "3055247a",
+    "arity": 4,
+    "offsets": [
+     1276
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeIsEnd",
+    "hash": "0ad9d8d8",
+    "arity": 2,
+    "offsets": [
+     468
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeStart",
+    "hash": "3528848f",
+    "arity": 3,
+    "offsets": [
+     1100,
+     1168
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeStop",
+    "hash": "bfeacf25",
+    "arity": 2,
+    "offsets": [
+     1140,
+     1244,
+     1316
+    ]
+   },
+   {
+    "name": "BuildMdlGetHandleByGPos",
+    "hash": "c0fe70b5",
+    "arity": 2,
+    "offsets": [
+     1068
+    ]
+   },
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     380
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     692
+    ]
+   },
+   {
+    "name": "GetDirAddValueGridX",
+    "hash": "27aa5023",
+    "arity": 2,
+    "offsets": [
+     976
+    ]
+   },
+   {
+    "name": "GetDirAddValueGridZ",
+    "hash": "27aa5021",
+    "arity": 2,
+    "offsets": [
+     1032
+    ]
+   },
+   {
+    "name": "GlobalCall",
+    "hash": "74d78dad",
+    "arity": 1,
+    "offsets": [
+     828,
+     856,
+     884
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     1208,
+     1384,
+     1464
+    ]
+   },
+   {
+    "name": "MdlGetDirDisp",
+    "hash": "8e7eebec",
+    "arity": 1,
+    "offsets": [
+     928
+    ]
+   },
+   {
+    "name": "MdlGetGPosX",
+    "hash": "43c551e8",
+    "arity": 1,
+    "offsets": [
+     952
+    ]
+   },
+   {
+    "name": "MdlGetGPosZ",
+    "hash": "43c551ea",
+    "arity": 1,
+    "offsets": [
+     1008
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     180
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     212
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     312
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   }
+  ],
+  "zone:0225:entities": [
+   {
+    "name": "BGParamPosChange",
+    "hash": "859f8aba",
+    "arity": 4,
+    "offsets": [
+     588,
+     908
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     100
+    ]
+   },
+   {
+    "name": "MdlChangeMoveCode",
+    "hash": "97085025",
+    "arity": 2,
+    "offsets": [
+     352,
+     420
+    ]
+   },
+   {
+    "name": "MdlSetDirDisp",
+    "hash": "8cf20b38",
+    "arity": 2,
+    "offsets": [
+     332,
+     400,
+     488,
+     560,
+     660,
+     732,
+     804
+    ]
+   },
+   {
+    "name": "MdlSetGPos",
+    "hash": "4114a564",
+    "arity": 4,
+    "offsets": [
+     312,
+     380,
+     468,
+     540,
+     640,
+     712,
+     784
+    ]
+   },
+   {
+    "name": "MdlSetVisible",
+    "hash": "c34ad2ab",
+    "arity": 2,
+    "offsets": [
+     440
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     252,
+     864
+    ]
+   },
+   {
+    "name": "WorkGet",
+    "hash": "8e50f765",
+    "arity": 1,
+    "offsets": [
+     208,
+     232
+    ]
+   }
+  ],
+  "zone:0225:map": [
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     380
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     664
+    ]
+   },
+   {
+    "name": "GlobalCall",
+    "hash": "74d78dad",
+    "arity": 1,
+    "offsets": [
+     824,
+     852,
+     880,
+     908,
+     936,
+     964,
+     1024,
+     1048,
+     1188
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     1144
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     180
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     992
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     212
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     312
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   }
+  ],
+  "zone:0226:entities": [
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     100
+    ]
+   },
+   {
+    "name": "FlagSet",
+    "hash": "13413496",
+    "arity": 1,
+    "offsets": [
+     192
+    ]
+   }
+  ],
+  "zone:0226:map": [
+   {
+    "name": "BuildMdlEventAnimeInvStart",
+    "hash": "3055247a",
+    "arity": 4,
+    "offsets": [
+     1276
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeIsEnd",
+    "hash": "0ad9d8d8",
+    "arity": 2,
+    "offsets": [
+     468
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeStart",
+    "hash": "3528848f",
+    "arity": 3,
+    "offsets": [
+     1100,
+     1168
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeStop",
+    "hash": "bfeacf25",
+    "arity": 2,
+    "offsets": [
+     1140,
+     1244,
+     1316
+    ]
+   },
+   {
+    "name": "BuildMdlGetHandleByGPos",
+    "hash": "c0fe70b5",
+    "arity": 2,
+    "offsets": [
+     1068
+    ]
+   },
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     380
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     692
+    ]
+   },
+   {
+    "name": "GetDirAddValueGridX",
+    "hash": "27aa5023",
+    "arity": 2,
+    "offsets": [
+     976
+    ]
+   },
+   {
+    "name": "GetDirAddValueGridZ",
+    "hash": "27aa5021",
+    "arity": 2,
+    "offsets": [
+     1032
+    ]
+   },
+   {
+    "name": "GlobalCall",
+    "hash": "74d78dad",
+    "arity": 1,
+    "offsets": [
+     828,
+     856,
+     884
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     1208,
+     1384,
+     1464
+    ]
+   },
+   {
+    "name": "MdlGetDirDisp",
+    "hash": "8e7eebec",
+    "arity": 1,
+    "offsets": [
+     928
+    ]
+   },
+   {
+    "name": "MdlGetGPosX",
+    "hash": "43c551e8",
+    "arity": 1,
+    "offsets": [
+     952
+    ]
+   },
+   {
+    "name": "MdlGetGPosZ",
+    "hash": "43c551ea",
+    "arity": 1,
+    "offsets": [
+     1008
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     180
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     212
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     312
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   }
+  ],
+  "zone:0227:entities": [
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     100
+    ]
+   }
+  ],
+  "zone:0227:map": [
+   {
+    "name": "CallPokePartyNameInput",
+    "hash": "9ca582f8",
+    "arity": 5,
+    "offsets": [
+     6960
+    ]
+   },
+   {
+    "name": "ChangeFace",
+    "hash": "fc264f03",
+    "arity": 2,
+    "offsets": [
+     6500,
+     6700,
+     7424,
+     7536,
+     9476,
+     9916,
+     10044,
+     10172,
+     10568,
+     10624,
+     10776
+    ]
+   },
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     3160
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     116,
+     5460
+    ]
+   },
+   {
+    "name": "EVCameraBegin",
+    "hash": "d2be92ab",
+    "arity": 0,
+    "offsets": [
+     6028,
+     6136,
+     7068,
+     7652,
+     9176,
+     9352,
+     9760,
+     9868,
+     10336,
+     10924
+    ]
+   },
+   {
+    "name": "EVCameraEnd",
+    "hash": "491dd15b",
+    "arity": 1,
+    "offsets": [
+     7680,
+     10952
+    ]
+   },
+   {
+    "name": "EVCameraIsEndFrame",
+    "hash": "ae0ae11e",
+    "arity": 0,
+    "offsets": [
+     288
+    ]
+   },
+   {
+    "name": "EVCameraSetDstParam",
+    "hash": "3e91bf6c",
+    "arity": 9,
+    "offsets": [
+     5988,
+     7028,
+     9136
+    ]
+   },
+   {
+    "name": "EVCameraSetFrameParam",
+    "hash": "c63b48da",
+    "arity": 4,
+    "offsets": [
+     6016,
+     6124,
+     7056,
+     7640,
+     9164,
+     9340,
+     9748,
+     9856,
+     10324,
+     10912
+    ]
+   },
+   {
+    "name": "EVCameraSetGameCameraParam",
+    "hash": "db16cbce",
+    "arity": 0,
+    "offsets": [
+     7612,
+     10884
+    ]
+   },
+   {
+    "name": "EVCameraSetInitParam",
+    "hash": "e5a627ed",
+    "arity": 0,
+    "offsets": [
+     5932,
+     6972,
+     9080
+    ]
+   },
+   {
+    "name": "EVCameraSetSlideParam",
+    "hash": "8ac7e782",
+    "arity": 9,
+    "offsets": [
+     6096,
+     9312,
+     9720,
+     9828,
+     10296
+    ]
+   },
+   {
+    "name": "FadeIsEnd",
+    "hash": "b295378d",
+    "arity": 0,
+    "offsets": [
+     1684
+    ]
+   },
+   {
+    "name": "FadeRequestOut",
+    "hash": "85f49a2f",
+    "arity": 3,
+    "offsets": [
+     6912,
+     9056
+    ]
+   },
+   {
+    "name": "FlagGet",
+    "hash": "133daa6a",
+    "arity": 1,
+    "offsets": [
+     7844,
+     8008
+    ]
+   },
+   {
+    "name": "FlagReset",
+    "hash": "accbbbd7",
+    "arity": 1,
+    "offsets": [
+     7732,
+     7748
+    ]
+   },
+   {
+    "name": "FlagSet",
+    "hash": "13413496",
+    "arity": 1,
+    "offsets": [
+     7936,
+     11060,
+     11096
+    ]
+   },
+   {
+    "name": "GlobalCall",
+    "hash": "74d78dad",
+    "arity": 1,
+    "offsets": [
+     8132,
+     8804
+    ]
+   },
+   {
+    "name": "GlobalSetChildParam",
+    "hash": "2ba0cb46",
+    "arity": 2,
+    "offsets": [
+     8116,
+     8788
+    ]
+   },
+   {
+    "name": "ItemAdd",
+    "hash": "8d631ffe",
+    "arity": 2,
+    "offsets": [
+     4972
+    ]
+   },
+   {
+    "name": "ItemAddCheck",
+    "hash": "a5135fde",
+    "arity": 2,
+    "offsets": [
+     4024
+    ]
+   },
+   {
+    "name": "ItemIsMegaStone",
+    "hash": "88fa8586",
+    "arity": 1,
+    "offsets": [
+     4232
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     1192,
+     1404,
+     4920,
+     5208,
+     8712,
+     11252,
+     11332,
+     11412,
+     11492
+    ]
+   },
+   {
+    "name": "MEIsFinished",
+    "hash": "c2dc77a4",
+    "arity": 1,
+    "offsets": [
+     1592
+    ]
+   },
+   {
+    "name": "MEPlay",
+    "hash": "e53555d8",
+    "arity": 1,
+    "offsets": [
+     5012,
+     6580,
+     9592
+    ]
+   },
+   {
+    "name": "MEReturnBGM",
+    "hash": "184d321e",
+    "arity": 0,
+    "offsets": [
+     1612
+    ]
+   },
+   {
+    "name": "MdlAcmdInit",
+    "hash": "194f0128",
+    "arity": 1,
+    "offsets": [
+     3236,
+     5676,
+     5744,
+     8980,
+     10188
+    ]
+   },
+   {
+    "name": "MdlAcmdMakeMoveEx",
+    "hash": "8e23b028",
+    "arity": 7,
+    "offsets": [
+     5716,
+     5784,
+     9020,
+     10228
+    ]
+   },
+   {
+    "name": "MdlAcmdSet",
+    "hash": "f0882c66",
+    "arity": 4,
+    "offsets": [
+     3436
+    ]
+   },
+   {
+    "name": "MdlAcmdSetEnd",
+    "hash": "7d6b7345",
+    "arity": 0,
+    "offsets": [
+     3460,
+     5728,
+     5796,
+     9032,
+     10240
+    ]
+   },
+   {
+    "name": "MdlAcmdUpdate",
+    "hash": "15f86e59",
+    "arity": 1,
+    "offsets": [
+     3496
+    ]
+   },
+   {
+    "name": "MdlCanUseTurnAcmd",
+    "hash": "c569fc48",
+    "arity": 1,
+    "offsets": [
+     2160
+    ]
+   },
+   {
+    "name": "MdlGetDirDisp",
+    "hash": "8e7eebec",
+    "arity": 1,
+    "offsets": [
+     2140
+    ]
+   },
+   {
+    "name": "MdlGetMoveCode",
+    "hash": "a5d96b8f",
+    "arity": 1,
+    "offsets": [
+     2544,
+     2896
+    ]
+   },
+   {
+    "name": "MdlIsHalfSitSkelPreset",
+    "hash": "46916846",
+    "arity": 1,
+    "offsets": [
+     2012,
+     2804
+    ]
+   },
+   {
+    "name": "MdlSetDirDisp",
+    "hash": "8cf20b38",
+    "arity": 2,
+    "offsets": [
+     9208
+    ]
+   },
+   {
+    "name": "MdlSetGPos",
+    "hash": "4114a564",
+    "arity": 4,
+    "offsets": [
+     5632,
+     5660
+    ]
+   },
+   {
+    "name": "MdlSetWaitAnimeReq",
+    "hash": "153a0918",
+    "arity": 1,
+    "offsets": [
+     3572
+    ]
+   },
+   {
+    "name": "MsgIsLoaded",
+    "hash": "cb54950c",
+    "arity": 1,
+    "offsets": [
+     3880
+    ]
+   },
+   {
+    "name": "MsgLoad",
+    "hash": "f845bdff",
+    "arity": 2,
+    "offsets": [
+     3980
+    ]
+   },
+   {
+    "name": "MsgRelease",
+    "hash": "b9964356",
+    "arity": 0,
+    "offsets": [
+     4108
+    ]
+   },
+   {
+    "name": "MsgSwap",
+    "hash": "f4890926",
+    "arity": 0,
+    "offsets": [
+     3960,
+     4120
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     1556
+    ]
+   },
+   {
+    "name": "PlayerGetReturnDir",
+    "hash": "25818e0c",
+    "arity": 0,
+    "offsets": [
+     1968
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     568,
+     1348,
+     8280,
+     8836
+    ]
+   },
+   {
+    "name": "PlayerSetFieldMenu",
+    "hash": "e37091e6",
+    "arity": 2,
+    "offsets": [
+     7768,
+     11080
+    ]
+   },
+   {
+    "name": "PocketGetID",
+    "hash": "f9238461",
+    "arity": 1,
+    "offsets": [
+     4284,
+     4452,
+     4820
+    ]
+   },
+   {
+    "name": "SEIsPlaying",
+    "hash": "9d75386e",
+    "arity": 1,
+    "offsets": [
+     3792
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     1528,
+     1868,
+     8560
+    ]
+   },
+   {
+    "name": "SetKeyWaitMark",
+    "hash": "d04413ad",
+    "arity": 0,
+    "offsets": [
+     1484
+    ]
+   },
+   {
+    "name": "TalkMdlClearEye",
+    "hash": "1e8094d5",
+    "arity": 1,
+    "offsets": [
+     3652,
+     10968
+    ]
+   },
+   {
+    "name": "TalkMdlClearEyeToEye",
+    "hash": "403d1b99",
+    "arity": 1,
+    "offsets": [
+     2768,
+     10984
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     3092
+    ]
+   },
+   {
+    "name": "TalkMdlSetEye",
+    "hash": "703b3ef8",
+    "arity": 3,
+    "offsets": [
+     3624,
+     10376
+    ]
+   },
+   {
+    "name": "TalkMdlSetEyeToEye",
+    "hash": "66dfbcea",
+    "arity": 1,
+    "offsets": [
+     2404,
+     2428,
+     10480
+    ]
+   },
+   {
+    "name": "TalkMdlSetTalkMotion",
+    "hash": "4d855abd",
+    "arity": 1,
+    "offsets": [
+     2636
+    ]
+   },
+   {
+    "name": "VanishKeyWaitMark",
+    "hash": "4016ed32",
+    "arity": 0,
+    "offsets": [
+     1508
+    ]
+   },
+   {
+    "name": "WarpSetID",
+    "hash": "ebd459b9",
+    "arity": 1,
+    "offsets": [
+     11124,
+     11148
+    ]
+   },
+   {
+    "name": "WordSetItemName",
+    "hash": "2654de74",
+    "arity": 3,
+    "offsets": [
+     4508,
+     4604,
+     4680,
+     4800,
+     5132
+    ]
+   },
+   {
+    "name": "WordSetItemPocketName",
+    "hash": "b5f607fa",
+    "arity": 2,
+    "offsets": [
+     4844
+    ]
+   },
+   {
+    "name": "WordSetItemWazaName",
+    "hash": "a8214d87",
+    "arity": 2,
+    "offsets": [
+     4528
+    ]
+   },
+   {
+    "name": "WorkGet",
+    "hash": "8e50f765",
+    "arity": 1,
+    "offsets": [
+     1108,
+     1304,
+     1808,
+     1948,
+     2676,
+     2704,
+     6156,
+     7804,
+     8036,
+     8060
+    ]
+   },
+   {
+    "name": "WorkSet",
+    "hash": "8e55f629",
+    "arity": 2,
+    "offsets": [
+     1136,
+     1244,
+     1280,
+     1456,
+     7716,
+     11004,
+     11024,
+     11044
+    ]
+   },
+   {
+    "name": "YesNoWin_Seq",
+    "hash": "0511b06e",
+    "arity": 4,
+    "offsets": [
+     1780
+    ]
+   },
+   {
+    "name": "ZukanGetOpenFlag",
+    "hash": "db3559b3",
+    "arity": 1,
+    "offsets": [
+     8236
+    ]
+   },
+   {
+    "name": "ZukanSetOpenFlag",
+    "hash": "23665ddf",
+    "arity": 2,
+    "offsets": [
+     8760
+    ]
+   },
+   {
+    "name": "_ABKeyWait",
+    "hash": "c7de8c7c",
+    "arity": 0,
+    "offsets": [
+     1496
+    ]
+   },
+   {
+    "name": "_FadeRequestIn",
+    "hash": "7b2fec69",
+    "arity": 2,
+    "offsets": [
+     160
+    ]
+   },
+   {
+    "name": "_FieldMapBlockIsLoading",
+    "hash": "4190ecec",
+    "arity": 0,
+    "offsets": [
+     88
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   },
+   {
+    "name": "_TalkMdlEndInit",
+    "hash": "6671d88f",
+    "arity": 2,
+    "offsets": [
+     2728
+    ]
+   },
+   {
+    "name": "_TalkMdlStartInit",
+    "hash": "df9f03b4",
+    "arity": 4,
+    "offsets": [
+     2064
+    ]
+   },
+   {
+    "name": "_WordSetRegister",
+    "hash": "b25ed5e2",
+    "arity": 3,
+    "offsets": [
+     200,
+     232
+    ]
+   }
+  ],
+  "global:0015": [
+   {
+    "name": "BoxAddPoke",
+    "hash": "a4dd5437",
+    "arity": 1,
+    "offsets": [
+     3828
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeInvStart",
+    "hash": "3055247a",
+    "arity": 4,
+    "offsets": [
+     3536
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeIsEnd",
+    "hash": "0ad9d8d8",
+    "arity": 2,
+    "offsets": [
+     2596
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeSetEnd",
+    "hash": "19a639e6",
+    "arity": 2,
+    "offsets": [
+     3452
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeStart",
+    "hash": "3528848f",
+    "arity": 3,
+    "offsets": [
+     3336
+    ]
+   },
+   {
+    "name": "BuildMdlGetHandleByGPos",
+    "hash": "c0fe70b5",
+    "arity": 2,
+    "offsets": [
+     3284,
+     3428
+    ]
+   },
+   {
+    "name": "CallPC",
+    "hash": "82fa01a3",
+    "arity": 1,
+    "offsets": [
+     3408
+    ]
+   },
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     2172
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     116,
+     2988
+    ]
+   },
+   {
+    "name": "FadeIsEnd",
+    "hash": "b295378d",
+    "arity": 0,
+    "offsets": [
+     696
+    ]
+   },
+   {
+    "name": "FadeRequestOut",
+    "hash": "85f49a2f",
+    "arity": 3,
+    "offsets": [
+     3380,
+     5324
+    ]
+   },
+   {
+    "name": "GetDirAddValueGridX",
+    "hash": "27aa5023",
+    "arity": 2,
+    "offsets": [
+     3208
+    ]
+   },
+   {
+    "name": "GetDirAddValueGridZ",
+    "hash": "27aa5021",
+    "arity": 2,
+    "offsets": [
+     3248
+    ]
+   },
+   {
+    "name": "GlobalGetParentParam",
+    "hash": "78e0cf3a",
+    "arity": 1,
+    "offsets": [
+     3592,
+     3616
+    ]
+   },
+   {
+    "name": "GlobalSetParentParam",
+    "hash": "cdd73846",
+    "arity": 2,
+    "offsets": [
+     3800,
+     4032,
+     4064,
+     4116,
+     4144
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     3976,
+     5440
+    ]
+   },
+   {
+    "name": "MEIsFinished",
+    "hash": "c2dc77a4",
+    "arity": 1,
+    "offsets": [
+     604
+    ]
+   },
+   {
+    "name": "MEPlay",
+    "hash": "e53555d8",
+    "arity": 1,
+    "offsets": [
+     552,
+     3724,
+     3908
+    ]
+   },
+   {
+    "name": "MEReturnBGM",
+    "hash": "184d321e",
+    "arity": 0,
+    "offsets": [
+     624
+    ]
+   },
+   {
+    "name": "MdlAcmdInit",
+    "hash": "194f0128",
+    "arity": 1,
+    "offsets": [
+     2248
+    ]
+   },
+   {
+    "name": "MdlAcmdSet",
+    "hash": "f0882c66",
+    "arity": 4,
+    "offsets": [
+     2448
+    ]
+   },
+   {
+    "name": "MdlAcmdSetEnd",
+    "hash": "7d6b7345",
+    "arity": 0,
+    "offsets": [
+     2472
+    ]
+   },
+   {
+    "name": "MdlAcmdUpdate",
+    "hash": "15f86e59",
+    "arity": 1,
+    "offsets": [
+     2508
+    ]
+   },
+   {
+    "name": "MdlCanUseTurnAcmd",
+    "hash": "c569fc48",
+    "arity": 1,
+    "offsets": [
+     1172
+    ]
+   },
+   {
+    "name": "MdlGetDirDisp",
+    "hash": "8e7eebec",
+    "arity": 1,
+    "offsets": [
+     1152,
+     3176
+    ]
+   },
+   {
+    "name": "MdlGetGPosDirX",
+    "hash": "447cf41f",
+    "arity": 3,
+    "offsets": [
+     5096
+    ]
+   },
+   {
+    "name": "MdlGetGPosDirZ",
+    "hash": "447cf41d",
+    "arity": 3,
+    "offsets": [
+     5128
+    ]
+   },
+   {
+    "name": "MdlGetGPosX",
+    "hash": "43c551e8",
+    "arity": 1,
+    "offsets": [
+     3128
+    ]
+   },
+   {
+    "name": "MdlGetGPosZ",
+    "hash": "43c551ea",
+    "arity": 1,
+    "offsets": [
+     3152
+    ]
+   },
+   {
+    "name": "MdlGetMoveCode",
+    "hash": "a5d96b8f",
+    "arity": 1,
+    "offsets": [
+     1556,
+     1908
+    ]
+   },
+   {
+    "name": "MdlIsHalfSitSkelPreset",
+    "hash": "46916846",
+    "arity": 1,
+    "offsets": [
+     1024,
+     1816
+    ]
+   },
+   {
+    "name": "MdlSetDirDisp",
+    "hash": "8cf20b38",
+    "arity": 2,
+    "offsets": [
+     5180
+    ]
+   },
+   {
+    "name": "MdlSetGPos",
+    "hash": "4114a564",
+    "arity": 4,
+    "offsets": [
+     5160
+    ]
+   },
+   {
+    "name": "MdlSetWaitAnimeReq",
+    "hash": "153a0918",
+    "arity": 1,
+    "offsets": [
+     2672
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     524
+    ]
+   },
+   {
+    "name": "PlayerGetReturnDir",
+    "hash": "25818e0c",
+    "arity": 0,
+    "offsets": [
+     980
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     5044
+    ]
+   },
+   {
+    "name": "PokeAddTableGetMonsNo",
+    "hash": "b7c88eac",
+    "arity": 1,
+    "offsets": [
+     3640
+    ]
+   },
+   {
+    "name": "PokePartyAdd",
+    "hash": "1b0b8b06",
+    "arity": 2,
+    "offsets": [
+     3668
+    ]
+   },
+   {
+    "name": "PokePartyRecoverAll",
+    "hash": "68a9df44",
+    "arity": 0,
+    "offsets": [
+     5348
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     496,
+     880,
+     3308,
+     3504,
+     4204,
+     4484,
+     4564,
+     4940
+    ]
+   },
+   {
+    "name": "SetKeyWaitMark",
+    "hash": "d04413ad",
+    "arity": 0,
+    "offsets": [
+     452
+    ]
+   },
+   {
+    "name": "SetTimerIcon",
+    "hash": "c94c62f4",
+    "arity": 0,
+    "offsets": [
+     4296,
+     4856
+    ]
+   },
+   {
+    "name": "TalkMdlClearEyeToEye",
+    "hash": "403d1b99",
+    "arity": 1,
+    "offsets": [
+     1780
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     2104
+    ]
+   },
+   {
+    "name": "TalkMdlSetEyeToEye",
+    "hash": "66dfbcea",
+    "arity": 1,
+    "offsets": [
+     1416,
+     1440
+    ]
+   },
+   {
+    "name": "TalkMdlSetTalkMotion",
+    "hash": "4d855abd",
+    "arity": 1,
+    "offsets": [
+     1648
+    ]
+   },
+   {
+    "name": "VanishKeyWaitMark",
+    "hash": "4016ed32",
+    "arity": 0,
+    "offsets": [
+     476
+    ]
+   },
+   {
+    "name": "VanishTimerIcon",
+    "hash": "6e1b803f",
+    "arity": 0,
+    "offsets": [
+     4372,
+     4920
+    ]
+   },
+   {
+    "name": "WordSetBoxTrayName",
+    "hash": "88862ba6",
+    "arity": 2,
+    "offsets": [
+     3888
+    ]
+   },
+   {
+    "name": "WorkGet",
+    "hash": "8e50f765",
+    "arity": 1,
+    "offsets": [
+     820,
+     960,
+     1688,
+     1716
+    ]
+   },
+   {
+    "name": "YesNoWin_Seq",
+    "hash": "0511b06e",
+    "arity": 4,
+    "offsets": [
+     792
+    ]
+   },
+   {
+    "name": "_ABKeyWait",
+    "hash": "c7de8c7c",
+    "arity": 0,
+    "offsets": [
+     464
+    ]
+   },
+   {
+    "name": "_FadeRequestIn",
+    "hash": "7b2fec69",
+    "arity": 2,
+    "offsets": [
+     160
+    ]
+   },
+   {
+    "name": "_FieldMapBlockIsLoading",
+    "hash": "4190ecec",
+    "arity": 0,
+    "offsets": [
+     88
+    ]
+   },
+   {
+    "name": "_IsReportLock",
+    "hash": "97ea4344",
+    "arity": 0,
+    "offsets": [
+     4172,
+     4804
+    ]
+   },
+   {
+    "name": "_ReportStart",
+    "hash": "c5e7859b",
+    "arity": 0,
+    "offsets": [
+     4320,
+     4868
+    ]
+   },
+   {
+    "name": "_ReportWait",
+    "hash": "1b6e915e",
+    "arity": 0,
+    "offsets": [
+     4336,
+     4884
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   },
+   {
+    "name": "_TalkMdlEndInit",
+    "hash": "6671d88f",
+    "arity": 2,
+    "offsets": [
+     1740
+    ]
+   },
+   {
+    "name": "_TalkMdlStartInit",
+    "hash": "df9f03b4",
+    "arity": 4,
+    "offsets": [
+     1076
+    ]
+   },
+   {
+    "name": "_WordSetRegister",
+    "hash": "b25ed5e2",
+    "arity": 3,
+    "offsets": [
+     200,
+     232
+    ]
+   }
+  ],
+  "global:0047": [
+   {
+    "name": "BGMChangeNowMap",
+    "hash": "997492a8",
+    "arity": 2,
+    "offsets": [
+     46396
+    ]
+   },
+   {
+    "name": "BGMEndEvent",
+    "hash": "897d72c7",
+    "arity": 2,
+    "offsets": [
+     22928,
+     29444,
+     31772
+    ]
+   },
+   {
+    "name": "BGMStartEvent",
+    "hash": "6bb7fc1a",
+    "arity": 2,
+    "offsets": [
+     22456,
+     25228,
+     31116
+    ]
+   },
+   {
+    "name": "BadgeGetFlag",
+    "hash": "06bbcaed",
+    "arity": 1,
+    "offsets": [
+     13008
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeInvStart",
+    "hash": "3055247a",
+    "arity": 4,
+    "offsets": [
+     11140,
+     22980,
+     44276
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeIsEnd",
+    "hash": "0ad9d8d8",
+    "arity": 2,
+    "offsets": [
+     4568
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeStart",
+    "hash": "3528848f",
+    "arity": 3,
+    "offsets": [
+     10996,
+     11064,
+     21996,
+     22064,
+     44024,
+     44092
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeStop",
+    "hash": "bfeacf25",
+    "arity": 2,
+    "offsets": [
+     11036,
+     11108,
+     11180,
+     22036,
+     22948,
+     23020,
+     44064,
+     44244,
+     44316
+    ]
+   },
+   {
+    "name": "BuildMdlGetHandleByGPos",
+    "hash": "c0fe70b5",
+    "arity": 2,
+    "offsets": [
+     10892,
+     10924,
+     21820,
+     21880,
+     43972
+    ]
+   },
+   {
+    "name": "CalcVecToDir",
+    "hash": "78178241",
+    "arity": 2,
+    "offsets": [
+     4400
+    ]
+   },
+   {
+    "name": "CallApplicationDemo",
+    "hash": "b38d54cb",
+    "arity": 9,
+    "offsets": [
+     2224
+    ]
+   },
+   {
+    "name": "ChangeFace",
+    "hash": "fc264f03",
+    "arity": 2,
+    "offsets": [
+     25288,
+     25372,
+     25812,
+     26184,
+     26308,
+     26724,
+     26836,
+     26960,
+     26996,
+     27104,
+     27244,
+     27424,
+     27508,
+     27892,
+     28400,
+     28480,
+     28724,
+     28864,
+     28988,
+     29112,
+     34920,
+     35700,
+     36272,
+     36308,
+     37592,
+     37860,
+     38564
+    ]
+   },
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     3836
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     392,
+     500,
+     7468,
+     45224
+    ]
+   },
+   {
+    "name": "CreateSenarioTVProgram",
+    "hash": "1a718213",
+    "arity": 0,
+    "offsets": [
+     44832,
+     46428
+    ]
+   },
+   {
+    "name": "EVCameraBegin",
+    "hash": "d2be92ab",
+    "arity": 0,
+    "offsets": [
+     11800,
+     12588,
+     15788,
+     16172,
+     16548,
+     17920,
+     20612,
+     20764,
+     24340,
+     24588,
+     25104,
+     25564,
+     26056,
+     26164,
+     26492,
+     26600,
+     27296,
+     27700,
+     28124,
+     28232,
+     28576,
+     28688,
+     29164,
+     33500,
+     33608,
+     33984,
+     34092,
+     37824,
+     38528,
+     43388,
+     43464
+    ]
+   },
+   {
+    "name": "EVCameraEnd",
+    "hash": "491dd15b",
+    "arity": 1,
+    "offsets": [
+     19800,
+     20792,
+     29496,
+     32028,
+     32348,
+     39108,
+     40496,
+     43492
+    ]
+   },
+   {
+    "name": "EVCameraIsEndFrame",
+    "hash": "ae0ae11e",
+    "arity": 0,
+    "offsets": [
+     640
+    ]
+   },
+   {
+    "name": "EVCameraSetDstParam",
+    "hash": "3e91bf6c",
+    "arity": 9,
+    "offsets": [
+     11760,
+     12548,
+     15656,
+     15720,
+     20480,
+     20544,
+     24208,
+     24272,
+     33460,
+     33944,
+     43256,
+     43320
+    ]
+   },
+   {
+    "name": "EVCameraSetFrameParam",
+    "hash": "c63b48da",
+    "arity": 4,
+    "offsets": [
+     11788,
+     12576,
+     15776,
+     16160,
+     16536,
+     17908,
+     20600,
+     20752,
+     24328,
+     24576,
+     25092,
+     25552,
+     26044,
+     26152,
+     26480,
+     26588,
+     27284,
+     27688,
+     28112,
+     28220,
+     28564,
+     28676,
+     29152,
+     33488,
+     33596,
+     33972,
+     34080,
+     37812,
+     38516,
+     43376,
+     43452
+    ]
+   },
+   {
+    "name": "EVCameraSetGameCameraParam",
+    "hash": "db16cbce",
+    "arity": 0,
+    "offsets": [
+     17880,
+     20724,
+     27256,
+     29124,
+     43424
+    ]
+   },
+   {
+    "name": "EVCameraSetInitParam",
+    "hash": "e5a627ed",
+    "arity": 0,
+    "offsets": [
+     11464,
+     12252,
+     15588,
+     20392,
+     24120,
+     33404,
+     33888,
+     43188
+    ]
+   },
+   {
+    "name": "EVCameraSetSlideParam",
+    "hash": "8ac7e782",
+    "arity": 9,
+    "offsets": [
+     15984,
+     16104,
+     16416,
+     16480,
+     24456,
+     24520,
+     24972,
+     25036,
+     25524,
+     26016,
+     26124,
+     26452,
+     26560,
+     27660,
+     28084,
+     28192,
+     28536,
+     28648,
+     33568,
+     34052,
+     37784,
+     38488
+    ]
+   },
+   {
+    "name": "FadeIsEnd",
+    "hash": "b295378d",
+    "arity": 0,
+    "offsets": [
+     2464
+    ]
+   },
+   {
+    "name": "FadeRequestOut",
+    "hash": "85f49a2f",
+    "arity": 3,
+    "offsets": [
+     13628,
+     14096,
+     14456,
+     20636,
+     39080,
+     41960,
+     45248
+    ]
+   },
+   {
+    "name": "FlagGet",
+    "hash": "133daa6a",
+    "arity": 1,
+    "offsets": [
+     12672,
+     13036,
+     13400,
+     19904,
+     42480
+    ]
+   },
+   {
+    "name": "FlagReset",
+    "hash": "accbbbd7",
+    "arity": 1,
+    "offsets": [
+     40904,
+     40960,
+     44748,
+     44772,
+     45036,
+     45168,
+     45336,
+     45352,
+     45768,
+     45784,
+     45940,
+     45964,
+     46028,
+     46064,
+     46100,
+     46136,
+     46152,
+     46268,
+     46300,
+     46332,
+     46376,
+     47136
+    ]
+   },
+   {
+    "name": "FlagSet",
+    "hash": "13413496",
+    "arity": 1,
+    "offsets": [
+     12920,
+     13176,
+     19868,
+     29460,
+     40936,
+     40992,
+     42296,
+     42364,
+     42428,
+     42572,
+     44988,
+     45020,
+     45120,
+     45152,
+     45752,
+     46168,
+     46284,
+     46316,
+     46544,
+     46604,
+     46780,
+     46812,
+     46844,
+     46932,
+     46964,
+     46996,
+     47152,
+     47168
+    ]
+   },
+   {
+    "name": "GetDirAddValueGridX",
+    "hash": "27aa5023",
+    "arity": 2,
+    "offsets": [
+     43880
+    ]
+   },
+   {
+    "name": "GetDirAddValueGridZ",
+    "hash": "27aa5021",
+    "arity": 2,
+    "offsets": [
+     43936
+    ]
+   },
+   {
+    "name": "GetHour",
+    "hash": "8d711d46",
+    "arity": 0,
+    "offsets": [
+     20856
+    ]
+   },
+   {
+    "name": "GetMinute",
+    "hash": "b5977d74",
+    "arity": 0,
+    "offsets": [
+     20876
+    ]
+   },
+   {
+    "name": "ItemAdd",
+    "hash": "8d631ffe",
+    "arity": 2,
+    "offsets": [
+     6148
+    ]
+   },
+   {
+    "name": "ItemAddCheck",
+    "hash": "a5135fde",
+    "arity": 2,
+    "offsets": [
+     5200
+    ]
+   },
+   {
+    "name": "ItemIsMegaStone",
+    "hash": "88fa8586",
+    "arity": 1,
+    "offsets": [
+     5408
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     1500,
+     1688,
+     1892,
+     2108,
+     6096,
+     6384,
+     12956,
+     13212,
+     13760,
+     14228,
+     14588,
+     41260,
+     43044,
+     43412,
+     43768,
+     44144,
+     44208,
+     44576
+    ]
+   },
+   {
+    "name": "MEIsFinished",
+    "hash": "c2dc77a4",
+    "arity": 1,
+    "offsets": [
+     2372
+    ]
+   },
+   {
+    "name": "MEPlay",
+    "hash": "e53555d8",
+    "arity": 1,
+    "offsets": [
+     6188,
+     13660,
+     14128,
+     14488
+    ]
+   },
+   {
+    "name": "MEReturnBGM",
+    "hash": "184d321e",
+    "arity": 0,
+    "offsets": [
+     2392
+    ]
+   },
+   {
+    "name": "MdlAcmdInit",
+    "hash": "194f0128",
+    "arity": 1,
+    "offsets": [
+     3912,
+     8392,
+     8708,
+     17108,
+     17176,
+     17312,
+     17380,
+     18136,
+     18220,
+     18596,
+     18956,
+     19040,
+     19416,
+     22244
+    ]
+   },
+   {
+    "name": "MdlAcmdMakeMoveEx",
+    "hash": "8e23b028",
+    "arity": 7,
+    "offsets": [
+     8464,
+     8512,
+     9792,
+     17148,
+     17216,
+     17352,
+     17420,
+     18176,
+     18260,
+     18636,
+     18996,
+     19080,
+     19456,
+     22284
+    ]
+   },
+   {
+    "name": "MdlAcmdSet",
+    "hash": "f0882c66",
+    "arity": 4,
+    "offsets": [
+     4112
+    ]
+   },
+   {
+    "name": "MdlAcmdSetEnd",
+    "hash": "7d6b7345",
+    "arity": 0,
+    "offsets": [
+     4136,
+     8552,
+     9804,
+     17160,
+     17228,
+     17364,
+     17432,
+     18188,
+     18272,
+     18648,
+     19008,
+     19092,
+     19468,
+     22296
+    ]
+   },
+   {
+    "name": "MdlAcmdUpdate",
+    "hash": "15f86e59",
+    "arity": 1,
+    "offsets": [
+     4172
+    ]
+   },
+   {
+    "name": "MdlAdd",
+    "hash": "d7d3ceee",
+    "arity": 1,
+    "offsets": [
+     21048
+    ]
+   },
+   {
+    "name": "MdlCanUseTurnAcmd",
+    "hash": "c569fc48",
+    "arity": 1,
+    "offsets": [
+     2836
+    ]
+   },
+   {
+    "name": "MdlChangeMoveCode",
+    "hash": "97085025",
+    "arity": 2,
+    "offsets": [
+     33372,
+     33392,
+     33856,
+     33876,
+     37968,
+     38672
+    ]
+   },
+   {
+    "name": "MdlDel",
+    "hash": "d7d30480",
+    "arity": 1,
+    "offsets": [
+     16680,
+     16696,
+     18324,
+     18736,
+     19144,
+     19556,
+     21648,
+     29404,
+     45004,
+     45136,
+     46560,
+     46620,
+     46796,
+     46828,
+     46860,
+     46948,
+     46980,
+     47012
+    ]
+   },
+   {
+    "name": "MdlGetDirDisp",
+    "hash": "8e7eebec",
+    "arity": 1,
+    "offsets": [
+     2816,
+     43832
+    ]
+   },
+   {
+    "name": "MdlGetGPosX",
+    "hash": "43c551e8",
+    "arity": 1,
+    "offsets": [
+     4252,
+     4300,
+     8620,
+     43856
+    ]
+   },
+   {
+    "name": "MdlGetGPosZ",
+    "hash": "43c551ea",
+    "arity": 1,
+    "offsets": [
+     4276,
+     4324,
+     8688,
+     43912
+    ]
+   },
+   {
+    "name": "MdlGetMoveCode",
+    "hash": "a5d96b8f",
+    "arity": 1,
+    "offsets": [
+     3220,
+     3572
+    ]
+   },
+   {
+    "name": "MdlGetPosX",
+    "hash": "abf39925",
+    "arity": 1,
+    "offsets": [
+     6696,
+     11216,
+     11344
+    ]
+   },
+   {
+    "name": "MdlGetPosY",
+    "hash": "abf39924",
+    "arity": 1,
+    "offsets": [
+     6748,
+     8648,
+     11240,
+     11368
+    ]
+   },
+   {
+    "name": "MdlGetPosZ",
+    "hash": "abf39927",
+    "arity": 1,
+    "offsets": [
+     6800,
+     11292,
+     11420
+    ]
+   },
+   {
+    "name": "MdlInterestViewClear",
+    "hash": "8c8590ab",
+    "arity": 1,
+    "offsets": [
+     6912,
+     25792,
+     27908
+    ]
+   },
+   {
+    "name": "MdlInterestViewSet",
+    "hash": "df9bb8bc",
+    "arity": 4,
+    "offsets": [
+     6880,
+     25468,
+     25676,
+     27604,
+     27812
+    ]
+   },
+   {
+    "name": "MdlInterestViewSetMode",
+    "hash": "ba4b3cdd",
+    "arity": 2,
+    "offsets": [
+     6852,
+     25392,
+     25600,
+     27528,
+     27736
+    ]
+   },
+   {
+    "name": "MdlIsHalfSitSkelPreset",
+    "hash": "46916846",
+    "arity": 1,
+    "offsets": [
+     2688,
+     3480
+    ]
+   },
+   {
+    "name": "MdlSetDirDisp",
+    "hash": "8cf20b38",
+    "arity": 2,
+    "offsets": [
+     16756,
+     16804,
+     16860,
+     16908,
+     33208,
+     33256,
+     33304,
+     33352,
+     33692,
+     33740,
+     33788,
+     33836
+    ]
+   },
+   {
+    "name": "MdlSetGPos",
+    "hash": "4114a564",
+    "arity": 4,
+    "offsets": [
+     16736,
+     16784,
+     16840,
+     16888,
+     33188,
+     33236,
+     33284,
+     33332,
+     33672,
+     33720,
+     33768,
+     33816
+    ]
+   },
+   {
+    "name": "MdlSetVisible",
+    "hash": "c34ad2ab",
+    "arity": 2,
+    "offsets": [
+     15820,
+     15840,
+     17060,
+     17080,
+     30896,
+     32408,
+     33112,
+     39160,
+     40300,
+     46880,
+     47032
+    ]
+   },
+   {
+    "name": "MdlSetWaitAnimeReq",
+    "hash": "153a0918",
+    "arity": 1,
+    "offsets": [
+     4644
+    ]
+   },
+   {
+    "name": "MsgIsLoaded",
+    "hash": "cb54950c",
+    "arity": 1,
+    "offsets": [
+     4996
+    ]
+   },
+   {
+    "name": "MsgLoad",
+    "hash": "f845bdff",
+    "arity": 2,
+    "offsets": [
+     5156
+    ]
+   },
+   {
+    "name": "MsgRelease",
+    "hash": "b9964356",
+    "arity": 0,
+    "offsets": [
+     5284
+    ]
+   },
+   {
+    "name": "MsgSwap",
+    "hash": "f4890926",
+    "arity": 0,
+    "offsets": [
+     5136,
+     5296
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     2336
+    ]
+   },
+   {
+    "name": "PlayerGetReturnDir",
+    "hash": "25818e0c",
+    "arity": 0,
+    "offsets": [
+     2644
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     920,
+     2052,
+     6432,
+     7736,
+     7996,
+     8132,
+     8408,
+     8724,
+     9984,
+     10856,
+     11884,
+     14832,
+     15572,
+     20408,
+     21784,
+     23844,
+     24136,
+     33144,
+     40540,
+     40688,
+     40836,
+     41308,
+     41472,
+     41588,
+     41784,
+     42064,
+     42220,
+     43544,
+     44368,
+     44716,
+     44896,
+     45368,
+     45564,
+     45908,
+     46492,
+     46720
+    ]
+   },
+   {
+    "name": "PlayerGetZoneID",
+    "hash": "c09a6c30",
+    "arity": 0,
+    "offsets": [
+     7764,
+     7860,
+     40856,
+     43088,
+     43524,
+     44348
+    ]
+   },
+   {
+    "name": "PocketGetID",
+    "hash": "f9238461",
+    "arity": 1,
+    "offsets": [
+     5460,
+     5628,
+     5996
+    ]
+   },
+   {
+    "name": "PokeDiarySet",
+    "hash": "97ab735c",
+    "arity": 4,
+    "offsets": [
+     46252
+    ]
+   },
+   {
+    "name": "PokePartyGetCount",
+    "hash": "081c2508",
+    "arity": 1,
+    "offsets": [
+     64
+    ]
+   },
+   {
+    "name": "PokePartyGetParam",
+    "hash": "e5ab2cfa",
+    "arity": 3,
+    "offsets": [
+     124,
+     156,
+     244,
+     46220
+    ]
+   },
+   {
+    "name": "PokePartyRecoverAll",
+    "hash": "68a9df44",
+    "arity": 0,
+    "offsets": [
+     13692,
+     14160,
+     14520,
+     44620,
+     45812
+    ]
+   },
+   {
+    "name": "RecordAdd",
+    "hash": "cd2b9f5c",
+    "arity": 2,
+    "offsets": [
+     13828,
+     14296,
+     14656
+    ]
+   },
+   {
+    "name": "RomGetVersion",
+    "hash": "4a3e2a96",
+    "arity": 0,
+    "offsets": [
+     12836
+    ]
+   },
+   {
+    "name": "SEIsPlaying",
+    "hash": "9d75386e",
+    "arity": 1,
+    "offsets": [
+     4828
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     2308,
+     2544,
+     18308,
+     18720,
+     19128,
+     19540,
+     20692,
+     21012,
+     21632,
+     29388,
+     30916,
+     32368,
+     40320,
+     41980,
+     45268
+    ]
+   },
+   {
+    "name": "SetKeyWaitMark",
+    "hash": "d04413ad",
+    "arity": 0,
+    "offsets": [
+     2264
+    ]
+   },
+   {
+    "name": "SkyboxEventTimeReset",
+    "hash": "3535660a",
+    "arity": 0,
+    "offsets": [
+     20672
+    ]
+   },
+   {
+    "name": "SkyboxEventTimeSet",
+    "hash": "add9e647",
+    "arity": 2,
+    "offsets": [
+     33092
+    ]
+   },
+   {
+    "name": "TalkMdlClearEye",
+    "hash": "1e8094d5",
+    "arity": 1,
+    "offsets": [
+     4688,
+     18664,
+     19484,
+     20236,
+     20252,
+     24072,
+     29208,
+     37704,
+     37840,
+     37948,
+     38096,
+     38408,
+     38544,
+     38652,
+     38800
+    ]
+   },
+   {
+    "name": "TalkMdlClearEyeToEye",
+    "hash": "403d1b99",
+    "arity": 1,
+    "offsets": [
+     3444,
+     17628,
+     21404,
+     23460
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     3768
+    ]
+   },
+   {
+    "name": "TalkMdlSetEye",
+    "hash": "703b3ef8",
+    "arity": 3,
+    "offsets": [
+     18408,
+     19228,
+     20036,
+     20104,
+     23676,
+     34532,
+     34696,
+     34860,
+     34900,
+     35308,
+     35332,
+     35496,
+     35892,
+     36252,
+     36516,
+     36756,
+     37104,
+     37268,
+     37432,
+     37616,
+     37728,
+     38432
+    ]
+   },
+   {
+    "name": "TalkMdlSetEyeToEye",
+    "hash": "66dfbcea",
+    "arity": 1,
+    "offsets": [
+     3080,
+     3104,
+     16652,
+     21272,
+     23344
+    ]
+   },
+   {
+    "name": "TalkMdlSetTalkMotion",
+    "hash": "4d855abd",
+    "arity": 1,
+    "offsets": [
+     3312
+    ]
+   },
+   {
+    "name": "VanishKeyWaitMark",
+    "hash": "4016ed32",
+    "arity": 0,
+    "offsets": [
+     2288
+    ]
+   },
+   {
+    "name": "VoiceIsEnd",
+    "hash": "467ed999",
+    "arity": 0,
+    "offsets": [
+     4908
+    ]
+   },
+   {
+    "name": "VoicePlay",
+    "hash": "70be961c",
+    "arity": 2,
+    "offsets": [
+     1840,
+     17540,
+     17796,
+     18444,
+     19264
+    ]
+   },
+   {
+    "name": "WordSetItemName",
+    "hash": "2654de74",
+    "arity": 3,
+    "offsets": [
+     5684,
+     5780,
+     5856,
+     5976,
+     6308
+    ]
+   },
+   {
+    "name": "WordSetItemPocketName",
+    "hash": "b5f607fa",
+    "arity": 2,
+    "offsets": [
+     6020
+    ]
+   },
+   {
+    "name": "WordSetItemWazaName",
+    "hash": "a8214d87",
+    "arity": 2,
+    "offsets": [
+     5704
+    ]
+   },
+   {
+    "name": "WordSetNumber",
+    "hash": "6089524b",
+    "arity": 4,
+    "offsets": [
+     20908,
+     20936
+    ]
+   },
+   {
+    "name": "WorkGet",
+    "hash": "8e50f765",
+    "arity": 1,
+    "offsets": [
+     1416,
+     1600,
+     1800,
+     2008,
+     2624,
+     3352,
+     3380,
+     6464,
+     6560,
+     8164,
+     8260,
+     13268,
+     13328,
+     13352,
+     13376,
+     14788,
+     14812,
+     14856,
+     15360,
+     40816,
+     42608,
+     42760
+    ]
+   },
+   {
+    "name": "WorkSet",
+    "hash": "8e55f629",
+    "arity": 2,
+    "offsets": [
+     1332,
+     1368,
+     1444,
+     1552,
+     1628,
+     1740,
+     1776,
+     1944,
+     1984,
+     2160,
+     13808,
+     14276,
+     14636,
+     19852,
+     21688,
+     23480,
+     23500,
+     24092,
+     29480,
+     41364,
+     41412,
+     41640,
+     41660,
+     41704,
+     41724,
+     42280,
+     42348,
+     42412,
+     44640,
+     44660,
+     44680,
+     44700,
+     44820,
+     44952,
+     44972,
+     45084,
+     45104,
+     45320,
+     45404,
+     45468,
+     45620,
+     45668,
+     45716,
+     45736,
+     45832,
+     45852,
+     45872,
+     45892,
+     46012,
+     46048,
+     46084,
+     46120,
+     46416,
+     46668,
+     46688,
+     47080,
+     47100,
+     47120
+    ]
+   },
+   {
+    "name": "ZukanSetFlag",
+    "hash": "1ff7b97b",
+    "arity": 4,
+    "offsets": [
+     46360
+    ]
+   },
+   {
+    "name": "_ABKeyWait",
+    "hash": "c7de8c7c",
+    "arity": 0,
+    "offsets": [
+     2276
+    ]
+   },
+   {
+    "name": "_FadeRequestIn",
+    "hash": "7b2fec69",
+    "arity": 2,
+    "offsets": [
+     544
+    ]
+   },
+   {
+    "name": "_FieldMapBlockIsLoading",
+    "hash": "4190ecec",
+    "arity": 0,
+    "offsets": [
+     472
+    ]
+   },
+   {
+    "name": "_MapChangeCore",
+    "hash": "21d6ffb6",
+    "arity": 9,
+    "offsets": [
+     5112
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   },
+   {
+    "name": "_TalkMdlEndInit",
+    "hash": "6671d88f",
+    "arity": 2,
+    "offsets": [
+     3404
+    ]
+   },
+   {
+    "name": "_TalkMdlStartInit",
+    "hash": "df9f03b4",
+    "arity": 4,
+    "offsets": [
+     2740
+    ]
+   },
+   {
+    "name": "_WordSetRegister",
+    "hash": "b25ed5e2",
+    "arity": 3,
+    "offsets": [
+     584
+    ]
+   },
+   {
+    "name": "float",
+    "hash": "0473be4e",
+    "arity": 1,
+    "offsets": [
+     11480,
+     11500,
+     11540,
+     11580,
+     11620,
+     11660,
+     11700,
+     11740,
+     12268,
+     12288,
+     12328,
+     12368,
+     12408,
+     12448,
+     12488,
+     12528,
+     25408,
+     25428,
+     25448,
+     25616,
+     25636,
+     25656,
+     27544,
+     27564,
+     27584,
+     27752,
+     27772,
+     27792
+    ]
+   },
+   {
+    "name": "floatadd",
+    "hash": "c894e12b",
+    "arity": 2,
+    "offsets": [
+     6724,
+     6776,
+     6828,
+     11268,
+     11320,
+     11396,
+     11448,
+     11936,
+     11972,
+     12012,
+     12096,
+     12132,
+     12172
+    ]
+   },
+   {
+    "name": "floatround",
+    "hash": "df08852e",
+    "arity": 2,
+    "offsets": [
+     8664,
+     11524,
+     11564,
+     11604,
+     11644,
+     11684,
+     11724,
+     12312,
+     12352,
+     12392,
+     12432,
+     12472,
+     12512
+    ]
+   },
+   {
+    "name": "floatsub",
+    "hash": "c89872d8",
+    "arity": 2,
+    "offsets": [
+     12048,
+     12208
+    ]
+   }
+  ],
+  "global:0057": [
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     552
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     2632
+    ]
+   },
+   {
+    "name": "FlagSet",
+    "hash": "13413496",
+    "arity": 1,
+    "offsets": [
+     2088,
+     2104
+    ]
+   },
+   {
+    "name": "ItemAdd",
+    "hash": "8d631ffe",
+    "arity": 2,
+    "offsets": [
+     1248
+    ]
+   },
+   {
+    "name": "ItemAddCheck",
+    "hash": "a5135fde",
+    "arity": 2,
+    "offsets": [
+     2016
+    ]
+   },
+   {
+    "name": "ItemIsMegaStone",
+    "hash": "88fa8586",
+    "arity": 1,
+    "offsets": [
+     2368
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     1724,
+     1856
+    ]
+   },
+   {
+    "name": "MEIsFinished",
+    "hash": "c2dc77a4",
+    "arity": 1,
+    "offsets": [
+     292
+    ]
+   },
+   {
+    "name": "MEPlay",
+    "hash": "e53555d8",
+    "arity": 1,
+    "offsets": [
+     2060
+    ]
+   },
+   {
+    "name": "MEReturnBGM",
+    "hash": "184d321e",
+    "arity": 0,
+    "offsets": [
+     312
+    ]
+   },
+   {
+    "name": "MdlAcmdInit",
+    "hash": "194f0128",
+    "arity": 1,
+    "offsets": [
+     628
+    ]
+   },
+   {
+    "name": "MdlAcmdSet",
+    "hash": "f0882c66",
+    "arity": 4,
+    "offsets": [
+     828
+    ]
+   },
+   {
+    "name": "MdlAcmdSetEnd",
+    "hash": "7d6b7345",
+    "arity": 0,
+    "offsets": [
+     852
+    ]
+   },
+   {
+    "name": "MdlAcmdUpdate",
+    "hash": "15f86e59",
+    "arity": 1,
+    "offsets": [
+     888
+    ]
+   },
+   {
+    "name": "MdlDelByFlag",
+    "hash": "3c0c83c5",
+    "arity": 1,
+    "offsets": [
+     1540,
+     1600
+    ]
+   },
+   {
+    "name": "MdlGetDirDisp",
+    "hash": "8e7eebec",
+    "arity": 1,
+    "offsets": [
+     2040
+    ]
+   },
+   {
+    "name": "MsgIsLoaded",
+    "hash": "cb54950c",
+    "arity": 1,
+    "offsets": [
+     1080
+    ]
+   },
+   {
+    "name": "MsgLoad",
+    "hash": "f845bdff",
+    "arity": 2,
+    "offsets": [
+     1972
+    ]
+   },
+   {
+    "name": "MsgRelease",
+    "hash": "b9964356",
+    "arity": 0,
+    "offsets": [
+     2244
+    ]
+   },
+   {
+    "name": "MsgSwap",
+    "hash": "f4890926",
+    "arity": 0,
+    "offsets": [
+     1952,
+     2256
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     256
+    ]
+   },
+   {
+    "name": "PlayerGetForm",
+    "hash": "8d363aff",
+    "arity": 0,
+    "offsets": [
+     1276
+    ]
+   },
+   {
+    "name": "PlayerGetZoneID",
+    "hash": "c09a6c30",
+    "arity": 0,
+    "offsets": [
+     2708
+    ]
+   },
+   {
+    "name": "PocketGetID",
+    "hash": "f9238461",
+    "arity": 1,
+    "offsets": [
+     1660,
+     2420
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     228,
+     384
+    ]
+   },
+   {
+    "name": "SetKeyWaitMark",
+    "hash": "d04413ad",
+    "arity": 0,
+    "offsets": [
+     184
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     484
+    ]
+   },
+   {
+    "name": "VanishKeyWaitMark",
+    "hash": "4016ed32",
+    "arity": 0,
+    "offsets": [
+     208
+    ]
+   },
+   {
+    "name": "WordSetItemName",
+    "hash": "2654de74",
+    "arity": 3,
+    "offsets": [
+     1188,
+     1640,
+     1816
+    ]
+   },
+   {
+    "name": "WordSetItemPocketName",
+    "hash": "b5f607fa",
+    "arity": 2,
+    "offsets": [
+     1684
+    ]
+   },
+   {
+    "name": "WorkSet",
+    "hash": "8e55f629",
+    "arity": 2,
+    "offsets": [
+     1764,
+     1896
+    ]
+   },
+   {
+    "name": "_ABKeyWait",
+    "hash": "c7de8c7c",
+    "arity": 0,
+    "offsets": [
+     196
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   },
+   {
+    "name": "_WordSetRegister",
+    "hash": "b25ed5e2",
+    "arity": 3,
+    "offsets": [
+     64
+    ]
+   }
+  ],
+  "global:0069": [
+   {
+    "name": "Assert_",
+    "hash": "ec163e7d",
+    "arity": 2,
+    "offsets": [
+     4524
+    ]
+   },
+   {
+    "name": "CalcVecToDir",
+    "hash": "78178241",
+    "arity": 2,
+    "offsets": [
+     3192
+    ]
+   },
+   {
+    "name": "CallFieldCaptureDemoSimplePoke",
+    "hash": "9c9e9d6e",
+    "arity": 7,
+    "offsets": [
+     992
+    ]
+   },
+   {
+    "name": "CallPokePartyNameInput",
+    "hash": "9ca582f8",
+    "arity": 5,
+    "offsets": [
+     9016
+    ]
+   },
+   {
+    "name": "CallPokeSelect",
+    "hash": "d208edaf",
+    "arity": 4,
+    "offsets": [
+     9452
+    ]
+   },
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     2628
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     4208,
+     4748,
+     4796,
+     4916,
+     4960
+    ]
+   },
+   {
+    "name": "FieldMenuChangePagePlayNavi",
+    "hash": "d25ed9fe",
+    "arity": 0,
+    "offsets": [
+     9732
+    ]
+   },
+   {
+    "name": "FieldMenuPopPage",
+    "hash": "755882af",
+    "arity": 0,
+    "offsets": [
+     7036,
+     8672
+    ]
+   },
+   {
+    "name": "FieldMenuPushPage",
+    "hash": "410cbed4",
+    "arity": 1,
+    "offsets": [
+     56
+    ]
+   },
+   {
+    "name": "FlagGet",
+    "hash": "133daa6a",
+    "arity": 1,
+    "offsets": [
+     6836,
+     7296
+    ]
+   },
+   {
+    "name": "FlagReset",
+    "hash": "accbbbd7",
+    "arity": 1,
+    "offsets": [
+     8624
+    ]
+   },
+   {
+    "name": "FlagSet",
+    "hash": "13413496",
+    "arity": 1,
+    "offsets": [
+     8608,
+     8904
+    ]
+   },
+   {
+    "name": "GlobalCall",
+    "hash": "74d78dad",
+    "arity": 1,
+    "offsets": [
+     8816
+    ]
+   },
+   {
+    "name": "GlobalGetChildParam",
+    "hash": "9e1f7cda",
+    "arity": 1,
+    "offsets": [
+     8832
+    ]
+   },
+   {
+    "name": "GlobalSetChildParam",
+    "hash": "2ba0cb46",
+    "arity": 2,
+    "offsets": [
+     8752,
+     8780,
+     8800
+    ]
+   },
+   {
+    "name": "LastKeyWait",
+    "hash": "358b0372",
+    "arity": 0,
+    "offsets": [
+     888,
+     5076,
+     6952,
+     7364,
+     11332
+    ]
+   },
+   {
+    "name": "ListMenuAdd",
+    "hash": "7903fd3e",
+    "arity": 3,
+    "offsets": [
+     5816,
+     5848,
+     10048
+    ]
+   },
+   {
+    "name": "ListMenuInit_Seq",
+    "hash": "75321ba3",
+    "arity": 6,
+    "offsets": [
+     3820
+    ]
+   },
+   {
+    "name": "ListMenuStart_Seq",
+    "hash": "5cb69d67",
+    "arity": 0,
+    "offsets": [
+     3900
+    ]
+   },
+   {
+    "name": "MEIsFinished",
+    "hash": "c2dc77a4",
+    "arity": 1,
+    "offsets": [
+     1140
+    ]
+   },
+   {
+    "name": "MEPlay",
+    "hash": "e53555d8",
+    "arity": 1,
+    "offsets": [
+     6492,
+     11244
+    ]
+   },
+   {
+    "name": "MEReturnBGM",
+    "hash": "184d321e",
+    "arity": 0,
+    "offsets": [
+     1160
+    ]
+   },
+   {
+    "name": "MdlAcmdInit",
+    "hash": "194f0128",
+    "arity": 1,
+    "offsets": [
+     2704,
+     7776,
+     8396
+    ]
+   },
+   {
+    "name": "MdlAcmdMakeMoveEx",
+    "hash": "8e23b028",
+    "arity": 7,
+    "offsets": [
+     7816,
+     8436
+    ]
+   },
+   {
+    "name": "MdlAcmdSet",
+    "hash": "f0882c66",
+    "arity": 4,
+    "offsets": [
+     2904
+    ]
+   },
+   {
+    "name": "MdlAcmdSetEnd",
+    "hash": "7d6b7345",
+    "arity": 0,
+    "offsets": [
+     2928,
+     7828,
+     8448
+    ]
+   },
+   {
+    "name": "MdlAcmdUpdate",
+    "hash": "15f86e59",
+    "arity": 1,
+    "offsets": [
+     2964
+    ]
+   },
+   {
+    "name": "MdlCanUseTurnAcmd",
+    "hash": "c569fc48",
+    "arity": 1,
+    "offsets": [
+     1628
+    ]
+   },
+   {
+    "name": "MdlDel",
+    "hash": "d7d30480",
+    "arity": 1,
+    "offsets": [
+     8640
+    ]
+   },
+   {
+    "name": "MdlGetDirDisp",
+    "hash": "8e7eebec",
+    "arity": 1,
+    "offsets": [
+     1608
+    ]
+   },
+   {
+    "name": "MdlGetGPosX",
+    "hash": "43c551e8",
+    "arity": 1,
+    "offsets": [
+     3044,
+     3092
+    ]
+   },
+   {
+    "name": "MdlGetGPosZ",
+    "hash": "43c551ea",
+    "arity": 1,
+    "offsets": [
+     3068,
+     3116,
+     7632
+    ]
+   },
+   {
+    "name": "MdlGetMoveCode",
+    "hash": "a5d96b8f",
+    "arity": 1,
+    "offsets": [
+     2012,
+     2364
+    ]
+   },
+   {
+    "name": "MdlIsHalfSitSkelPreset",
+    "hash": "46916846",
+    "arity": 1,
+    "offsets": [
+     1480,
+     2272
+    ]
+   },
+   {
+    "name": "MdlSetWaitAnimeReq",
+    "hash": "153a0918",
+    "arity": 1,
+    "offsets": [
+     3348
+    ]
+   },
+   {
+    "name": "MsgIsLoaded",
+    "hash": "cb54950c",
+    "arity": 1,
+    "offsets": [
+     3708
+    ]
+   },
+   {
+    "name": "MsgLoad",
+    "hash": "f845bdff",
+    "arity": 2,
+    "offsets": [
+     4472
+    ]
+   },
+   {
+    "name": "MsgRelease",
+    "hash": "b9964356",
+    "arity": 0,
+    "offsets": [
+     4616
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     1104
+    ]
+   },
+   {
+    "name": "PlayerGetReturnDir",
+    "hash": "25818e0c",
+    "arity": 0,
+    "offsets": [
+     1436
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     8724
+    ]
+   },
+   {
+    "name": "PlayerGetZoneID",
+    "hash": "c09a6c30",
+    "arity": 0,
+    "offsets": [
+     7168,
+     7604
+    ]
+   },
+   {
+    "name": "PokePartyChangeFormNo",
+    "hash": "136f8362",
+    "arity": 2,
+    "offsets": [
+     10292,
+     10672,
+     11184
+    ]
+   },
+   {
+    "name": "PokePartyGetCount",
+    "hash": "081c2508",
+    "arity": 1,
+    "offsets": [
+     5392,
+     5532,
+     8708,
+     8984
+    ]
+   },
+   {
+    "name": "PokePartyGetParam",
+    "hash": "e5ab2cfa",
+    "arity": 3,
+    "offsets": [
+     5264,
+     5332,
+     9568,
+     9828,
+     10544,
+     10576
+    ]
+   },
+   {
+    "name": "PokePartyGetWazaCount",
+    "hash": "53acc97d",
+    "arity": 1,
+    "offsets": [
+     6264,
+     10712
+    ]
+   },
+   {
+    "name": "PokePartyGetWazaID",
+    "hash": "a82f5777",
+    "arity": 2,
+    "offsets": [
+     6324,
+     10976
+    ]
+   },
+   {
+    "name": "PokePartySetWaza",
+    "hash": "13cad614",
+    "arity": 3,
+    "offsets": [
+     6420,
+     6604,
+     11356
+    ]
+   },
+   {
+    "name": "RecordAdd",
+    "hash": "cd2b9f5c",
+    "arity": 2,
+    "offsets": [
+     9064
+    ]
+   },
+   {
+    "name": "SEIsPlaying",
+    "hash": "9d75386e",
+    "arity": 1,
+    "offsets": [
+     3540
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     1076,
+     1336,
+     8528
+    ]
+   },
+   {
+    "name": "SetKeyWaitMark",
+    "hash": "d04413ad",
+    "arity": 0,
+    "offsets": [
+     1032
+    ]
+   },
+   {
+    "name": "TalkMdlClearEye",
+    "hash": "1e8094d5",
+    "arity": 1,
+    "offsets": [
+     7512,
+     8236,
+     8252
+    ]
+   },
+   {
+    "name": "TalkMdlClearEyeToEye",
+    "hash": "403d1b99",
+    "arity": 1,
+    "offsets": [
+     2236
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     2560
+    ]
+   },
+   {
+    "name": "TalkMdlSetEye",
+    "hash": "703b3ef8",
+    "arity": 3,
+    "offsets": [
+     3400,
+     7940
+    ]
+   },
+   {
+    "name": "TalkMdlSetEyeToEye",
+    "hash": "66dfbcea",
+    "arity": 1,
+    "offsets": [
+     1872,
+     1896
+    ]
+   },
+   {
+    "name": "TalkMdlSetTalkMotion",
+    "hash": "4d855abd",
+    "arity": 1,
+    "offsets": [
+     2104
+    ]
+   },
+   {
+    "name": "VanishKeyWaitMark",
+    "hash": "4016ed32",
+    "arity": 0,
+    "offsets": [
+     1056
+    ]
+   },
+   {
+    "name": "VoiceIsEnd",
+    "hash": "467ed999",
+    "arity": 0,
+    "offsets": [
+     3620
+    ]
+   },
+   {
+    "name": "VoicePlay",
+    "hash": "70be961c",
+    "arity": 2,
+    "offsets": [
+     10484
+    ]
+   },
+   {
+    "name": "WordSetTemotiMonsNickName",
+    "hash": "a9ba4f61",
+    "arity": 2,
+    "offsets": [
+     9720
+    ]
+   },
+   {
+    "name": "WordSetWazaName",
+    "hash": "40d8edf6",
+    "arity": 2,
+    "offsets": [
+     6360,
+     6512,
+     10784,
+     10996,
+     11264
+    ]
+   },
+   {
+    "name": "WorkGet",
+    "hash": "8e50f765",
+    "arity": 1,
+    "offsets": [
+     804,
+     1276,
+     1416,
+     2144,
+     2172,
+     3928,
+     6752,
+     9036,
+     9484,
+     10908,
+     10932
+    ]
+   },
+   {
+    "name": "WorkSet",
+    "hash": "8e55f629",
+    "arity": 2,
+    "offsets": [
+     832,
+     940,
+     8592
+    ]
+   },
+   {
+    "name": "YesNoWin_Seq",
+    "hash": "0511b06e",
+    "arity": 4,
+    "offsets": [
+     1248
+    ]
+   },
+   {
+    "name": "_ABKeyWait",
+    "hash": "c7de8c7c",
+    "arity": 0,
+    "offsets": [
+     1044
+    ]
+   },
+   {
+    "name": "_CallWazaApps",
+    "hash": "a4883690",
+    "arity": 1,
+    "offsets": [
+     220
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   },
+   {
+    "name": "_TalkMdlEndInit",
+    "hash": "6671d88f",
+    "arity": 2,
+    "offsets": [
+     2196
+    ]
+   },
+   {
+    "name": "_TalkMdlStartInit",
+    "hash": "df9f03b4",
+    "arity": 4,
+    "offsets": [
+     1532
+    ]
+   }
+  ],
+  "global:0078": [
+   {
+    "name": "BGMEndEvent",
+    "hash": "897d72c7",
+    "arity": 2,
+    "offsets": [
+     9580
+    ]
+   },
+   {
+    "name": "BGMStartEvent",
+    "hash": "6bb7fc1a",
+    "arity": 2,
+    "offsets": [
+     8188
+    ]
+   },
+   {
+    "name": "BootYutakaEffect",
+    "hash": "080600bc",
+    "arity": 3,
+    "offsets": [
+     13728
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeInvStart",
+    "hash": "3055247a",
+    "arity": 4,
+    "offsets": [
+     3360,
+     3392,
+     3976,
+     4008,
+     14248
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeIsEnd",
+    "hash": "0ad9d8d8",
+    "arity": 2,
+    "offsets": [
+     1840
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeSetEnd",
+    "hash": "19a639e6",
+    "arity": 2,
+    "offsets": [
+     3124,
+     3460,
+     3740,
+     4076
+    ]
+   },
+   {
+    "name": "BuildMdlEventAnimeStart",
+    "hash": "3528848f",
+    "arity": 3,
+    "offsets": [
+     3076,
+     3692,
+     6408,
+     14092
+    ]
+   },
+   {
+    "name": "BuildMdlGetHandleByGPos",
+    "hash": "c0fe70b5",
+    "arity": 2,
+    "offsets": [
+     2972,
+     3004,
+     3252,
+     3284,
+     3588,
+     3620,
+     3868,
+     3900,
+     6316,
+     6348,
+     13700
+    ]
+   },
+   {
+    "name": "CalcVecToDir",
+    "hash": "78178241",
+    "arity": 2,
+    "offsets": [
+     1672
+    ]
+   },
+   {
+    "name": "CallFieldNotCaptureDemo",
+    "hash": "07109d9e",
+    "arity": 3,
+    "offsets": [
+     748
+    ]
+   },
+   {
+    "name": "ChangeFace",
+    "hash": "fc264f03",
+    "arity": 2,
+    "offsets": [
+     2844,
+     2872,
+     11480,
+     11812,
+     11848
+    ]
+   },
+   {
+    "name": "CheckWinAllSuspend",
+    "hash": "c8e7fb61",
+    "arity": 0,
+    "offsets": [
+     1108
+    ]
+   },
+   {
+    "name": "CommandNOP",
+    "hash": "590f52ee",
+    "arity": 0,
+    "offsets": [
+     116,
+     2700
+    ]
+   },
+   {
+    "name": "EVCameraBegin",
+    "hash": "d2be92ab",
+    "arity": 0,
+    "offsets": [
+     4480,
+     4708,
+     5336,
+     5748,
+     5916,
+     7020,
+     7160,
+     7492,
+     7600,
+     7736,
+     7844,
+     10204,
+     10312,
+     10632,
+     11012,
+     11432,
+     11780,
+     12500,
+     12772,
+     13836,
+     14028,
+     14516,
+     15188
+    ]
+   },
+   {
+    "name": "EVCameraEnd",
+    "hash": "491dd15b",
+    "arity": 1,
+    "offsets": [
+     6284,
+     9748,
+     12032,
+     12988,
+     15256
+    ]
+   },
+   {
+    "name": "EVCameraIsEndFrame",
+    "hash": "ae0ae11e",
+    "arity": 0,
+    "offsets": [
+     256
+    ]
+   },
+   {
+    "name": "EVCameraSetDstParam",
+    "hash": "3e91bf6c",
+    "arity": 9,
+    "offsets": [
+     4348,
+     4412,
+     6980,
+     7452,
+     10164,
+     12368,
+     12432,
+     13796
+    ]
+   },
+   {
+    "name": "EVCameraSetFrameParam",
+    "hash": "c63b48da",
+    "arity": 4,
+    "offsets": [
+     4468,
+     4696,
+     5324,
+     5736,
+     5904,
+     7008,
+     7148,
+     7480,
+     7588,
+     7724,
+     7832,
+     10192,
+     10300,
+     10620,
+     11000,
+     11420,
+     11768,
+     12488,
+     12760,
+     13824,
+     14016,
+     14504,
+     15176
+    ]
+   },
+   {
+    "name": "EVCameraSetGameCameraParam",
+    "hash": "db16cbce",
+    "arity": 0,
+    "offsets": [
+     5876
+    ]
+   },
+   {
+    "name": "EVCameraSetInitParam",
+    "hash": "e5a627ed",
+    "arity": 0,
+    "offsets": [
+     4280,
+     6924,
+     7396,
+     7640,
+     10108,
+     12300,
+     13740
+    ]
+   },
+   {
+    "name": "EVCameraSetSlideParam",
+    "hash": "8ac7e782",
+    "arity": 9,
+    "offsets": [
+     4576,
+     4640,
+     5204,
+     5268,
+     5616,
+     5680,
+     7120,
+     7560,
+     7696,
+     7804,
+     10272,
+     10592,
+     10836,
+     10944,
+     11300,
+     11364,
+     11648,
+     11712,
+     12640,
+     12704,
+     13988,
+     14476,
+     15148
+    ]
+   },
+   {
+    "name": "FadeIsEnd",
+    "hash": "b295378d",
+    "arity": 0,
+    "offsets": [
+     892
+    ]
+   },
+   {
+    "name": "FadeRequestOut",
+    "hash": "85f49a2f",
+    "arity": 3,
+    "offsets": [
+     5092,
+     6724,
+     7200,
+     9544,
+     12812,
+     15228
+    ]
+   },
+   {
+    "name": "FlagGet",
+    "hash": "133daa6a",
+    "arity": 1,
+    "offsets": [
+     15488
+    ]
+   },
+   {
+    "name": "FlagReset",
+    "hash": "accbbbd7",
+    "arity": 1,
+    "offsets": [
+     15472
+    ]
+   },
+   {
+    "name": "FlagSet",
+    "hash": "13413496",
+    "arity": 1,
+    "offsets": [
+     6684,
+     6700,
+     9632,
+     9664,
+     11968,
+     15392,
+     15408,
+     15516
+    ]
+   },
+   {
+    "name": "IsYutakaEffectFinished",
+    "hash": "5aad8296",
+    "arity": 0,
+    "offsets": [
+     2248
+    ]
+   },
+   {
+    "name": "MdlAcmdInit",
+    "hash": "194f0128",
+    "arity": 1,
+    "offsets": [
+     1184,
+     13880,
+     14148,
+     14352,
+     14560
+    ]
+   },
+   {
+    "name": "MdlAcmdMakeMoveEx",
+    "hash": "8e23b028",
+    "arity": 7,
+    "offsets": [
+     13920,
+     14188,
+     14392,
+     14600
+    ]
+   },
+   {
+    "name": "MdlAcmdSet",
+    "hash": "f0882c66",
+    "arity": 4,
+    "offsets": [
+     1384
+    ]
+   },
+   {
+    "name": "MdlAcmdSetEnd",
+    "hash": "7d6b7345",
+    "arity": 0,
+    "offsets": [
+     1408,
+     13932,
+     14200,
+     14404,
+     14612
+    ]
+   },
+   {
+    "name": "MdlAcmdUpdate",
+    "hash": "15f86e59",
+    "arity": 1,
+    "offsets": [
+     1444
+    ]
+   },
+   {
+    "name": "MdlDel",
+    "hash": "d7d30480",
+    "arity": 1,
+    "offsets": [
+     6508,
+     9648,
+     9680,
+     11984,
+     15424,
+     15440,
+     15456
+    ]
+   },
+   {
+    "name": "MdlGetGPosX",
+    "hash": "43c551e8",
+    "arity": 1,
+    "offsets": [
+     1524,
+     1572
+    ]
+   },
+   {
+    "name": "MdlGetGPosZ",
+    "hash": "43c551ea",
+    "arity": 1,
+    "offsets": [
+     1548,
+     1596
+    ]
+   },
+   {
+    "name": "MdlGetPosX",
+    "hash": "abf39925",
+    "arity": 1,
+    "offsets": [
+     2328
+    ]
+   },
+   {
+    "name": "MdlGetPosY",
+    "hash": "abf39924",
+    "arity": 1,
+    "offsets": [
+     2380
+    ]
+   },
+   {
+    "name": "MdlGetPosZ",
+    "hash": "abf39927",
+    "arity": 1,
+    "offsets": [
+     2432
+    ]
+   },
+   {
+    "name": "MdlInterestViewClear",
+    "hash": "8c8590ab",
+    "arity": 1,
+    "offsets": [
+     2544
+    ]
+   },
+   {
+    "name": "MdlInterestViewSet",
+    "hash": "df9bb8bc",
+    "arity": 4,
+    "offsets": [
+     2512,
+     4268
+    ]
+   },
+   {
+    "name": "MdlInterestViewSetMode",
+    "hash": "ba4b3cdd",
+    "arity": 2,
+    "offsets": [
+     2484,
+     4192
+    ]
+   },
+   {
+    "name": "MdlSetDirDisp",
+    "hash": "8cf20b38",
+    "arity": 2,
+    "offsets": [
+     7628,
+     9716,
+     10076,
+     10096,
+     13320,
+     13388,
+     13472,
+     13556,
+     13640
+    ]
+   },
+   {
+    "name": "MdlSetGPos",
+    "hash": "4114a564",
+    "arity": 4,
+    "offsets": [
+     7356,
+     7384,
+     9936,
+     9964,
+     10000,
+     10028,
+     13300,
+     13368,
+     13452,
+     13536,
+     13620
+    ]
+   },
+   {
+    "name": "MdlSetVisible",
+    "hash": "c34ad2ab",
+    "arity": 2,
+    "offsets": [
+     7892,
+     7984,
+     9836,
+     9856,
+     9876,
+     13036,
+     13056,
+     13076,
+     13272,
+     13340,
+     14132,
+     15560
+    ]
+   },
+   {
+    "name": "MsgWinCloseNo",
+    "hash": "f01eeee0",
+    "arity": 1,
+    "offsets": [
+     860
+    ]
+   },
+   {
+    "name": "PlayerGetSex",
+    "hash": "59008363",
+    "arity": 0,
+    "offsets": [
+     536,
+     2808,
+     2932,
+     3212,
+     3548,
+     3828,
+     4164,
+     7312,
+     9892
+    ]
+   },
+   {
+    "name": "RomGetVersion",
+    "hash": "4a3e2a96",
+    "arity": 0,
+    "offsets": [
+     12868
+    ]
+   },
+   {
+    "name": "SEIsPlaying",
+    "hash": "9d75386e",
+    "arity": 1,
+    "offsets": [
+     2028
+    ]
+   },
+   {
+    "name": "SEPlay",
+    "hash": "6393be9a",
+    "arity": 1,
+    "offsets": [
+     832,
+     6492,
+     6744
+    ]
+   },
+   {
+    "name": "SetEndYutakaEffect",
+    "hash": "08dfc6f7",
+    "arity": 0,
+    "offsets": [
+     15528
+    ]
+   },
+   {
+    "name": "SetKeyWaitMark",
+    "hash": "d04413ad",
+    "arity": 0,
+    "offsets": [
+     788
+    ]
+   },
+   {
+    "name": "SkyboxEventTimeReset",
+    "hash": "3535660a",
+    "arity": 0,
+    "offsets": [
+     13000
+    ]
+   },
+   {
+    "name": "SkyboxEventTimeSet",
+    "hash": "add9e647",
+    "arity": 2,
+    "offsets": [
+     9816
+    ]
+   },
+   {
+    "name": "TalkMdlClearEye",
+    "hash": "1e8094d5",
+    "arity": 1,
+    "offsets": [
+     9696
+    ]
+   },
+   {
+    "name": "TalkMdlClearEyeToEye",
+    "hash": "403d1b99",
+    "arity": 1,
+    "offsets": [
+     5864
+    ]
+   },
+   {
+    "name": "TalkMdlMsg_Seq",
+    "hash": "9adf1616",
+    "arity": 19,
+    "offsets": [
+     1040
+    ]
+   },
+   {
+    "name": "TalkMdlSetEye",
+    "hash": "703b3ef8",
+    "arity": 3,
+    "offsets": [
+     7964
+    ]
+   },
+   {
+    "name": "TalkMdlSetEyeToEye",
+    "hash": "66dfbcea",
+    "arity": 1,
+    "offsets": [
+     5364
+    ]
+   },
+   {
+    "name": "VanishKeyWaitMark",
+    "hash": "4016ed32",
+    "arity": 0,
+    "offsets": [
+     812
+    ]
+   },
+   {
+    "name": "VoiceIsEnd",
+    "hash": "467ed999",
+    "arity": 0,
+    "offsets": [
+     2108
+    ]
+   },
+   {
+    "name": "VoicePlay",
+    "hash": "70be961c",
+    "arity": 2,
+    "offsets": [
+     8612
+    ]
+   },
+   {
+    "name": "WorkSet",
+    "hash": "8e55f629",
+    "arity": 2,
+    "offsets": [
+     6668,
+     7232,
+     9616,
+     12972,
+     13108,
+     13172,
+     15276,
+     15296
+    ]
+   },
+   {
+    "name": "_ABKeyWait",
+    "hash": "c7de8c7c",
+    "arity": 0,
+    "offsets": [
+     800
+    ]
+   },
+   {
+    "name": "_FadeRequestIn",
+    "hash": "7b2fec69",
+    "arity": 2,
+    "offsets": [
+     160
+    ]
+   },
+   {
+    "name": "_FieldMapBlockIsLoading",
+    "hash": "4190ecec",
+    "arity": 0,
+    "offsets": [
+     88
+    ]
+   },
+   {
+    "name": "_MapChangeCore",
+    "hash": "21d6ffb6",
+    "arity": 9,
+    "offsets": [
+     2216
+    ]
+   },
+   {
+    "name": "_Suspend",
+    "hash": "0b13a389",
+    "arity": 1,
+    "offsets": [
+     12
+    ]
+   },
+   {
+    "name": "_WordSetRegister",
+    "hash": "b25ed5e2",
+    "arity": 3,
+    "offsets": [
+     200
+    ]
+   },
+   {
+    "name": "float",
+    "hash": "0473be4e",
+    "arity": 1,
+    "offsets": [
+     4208,
+     4228,
+     4248
+    ]
+   },
+   {
+    "name": "floatadd",
+    "hash": "c894e12b",
+    "arity": 2,
+    "offsets": [
+     2356,
+     2408,
+     2460
+    ]
+   }
+  ]
+ },
+ "normalizedNativeNames": [
+  "CommandNOP",
+  "MdlSetDirDisp",
+  "MdlSetGPos",
+  "MdlSetVisible",
+  "MsgWinAllClose",
+  "TalkMdlMsg_Seq",
+  "WarpSetID",
+  "_ABKeyWait",
+  "_Suspend"
+ ],
+ "additionalDirectNatives": [
+  "BGParamPosChange",
+  "BoxIsFull",
+  "BuildMdlEventAnimeInvStart",
+  "BuildMdlEventAnimeIsEnd",
+  "BuildMdlEventAnimeSetEnd",
+  "BuildMdlEventAnimeStart",
+  "BuildMdlGetHandleByGPos",
+  "CallPokePartyNameInput",
+  "ChangeFace",
+  "CheckWinAllSuspend",
+  "EVCameraBegin",
+  "EVCameraEnd",
+  "EVCameraIsEndFrame",
+  "EVCameraSetDstParam",
+  "EVCameraSetFrameParam",
+  "EVCameraSetGameCameraParam",
+  "EVCameraSetInitParam",
+  "EVCameraSetSlideParam",
+  "FadeIsEnd",
+  "FadeRequestOut",
+  "FlagGet",
+  "FlagReset",
+  "FlagSet",
+  "GlobalCall",
+  "GlobalSetChildParam",
+  "IsKeyTrigger",
+  "ItemAdd",
+  "ItemAddCheck",
+  "ItemIsMegaStone",
+  "LastKeyWait",
+  "MEIsFinished",
+  "MEPlay",
+  "MEReturnBGM",
+  "MdlAcmdInit",
+  "MdlAcmdMakeMoveEx",
+  "MdlAcmdSet",
+  "MdlAcmdSetEnd",
+  "MdlAcmdUpdate",
+  "MdlAdd",
+  "MdlCanUseTurnAcmd",
+  "MdlChangeMoveCode",
+  "MdlDel",
+  "MdlGetDirDisp",
+  "MdlGetMoveCode",
+  "MdlIsHalfSitSkelPreset",
+  "MdlParamPosChange",
+  "MdlSetWaitAnimeReq",
+  "MsgIsLoaded",
+  "MsgLoad",
+  "MsgRelease",
+  "MsgSwap",
+  "MsgWinCloseNo",
+  "PlayerGetReturnDir",
+  "PlayerGetSex",
+  "PlayerSetFieldMenu",
+  "PocketGetID",
+  "PokePartyGetCount",
+  "SEIsPlaying",
+  "SEPlay",
+  "SetKeyWaitMark",
+  "TalkMdlClearEye",
+  "TalkMdlClearEyeToEye",
+  "TalkMdlSetEye",
+  "TalkMdlSetEyeToEye",
+  "TalkMdlSetTalkMotion",
+  "VanishKeyWaitMark",
+  "WordSetItemName",
+  "WordSetItemPocketName",
+  "WordSetItemWazaName",
+  "WorkGet",
+  "WorkSet",
+  "YesNoWin_Seq",
+  "ZukanGetOpenFlag",
+  "ZukanSetOpenFlag",
+  "_FadeRequestIn",
+  "_FieldMapBlockIsLoading",
+  "_MapChangeCore",
+  "_MdlProperties",
+  "_TalkMdlEndInit",
+  "_TalkMdlStartInit",
+  "_WordSetRegister",
+  "floatround"
+ ]
+}
