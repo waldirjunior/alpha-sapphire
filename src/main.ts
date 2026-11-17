@@ -28,10 +28,25 @@ if (!app) {
 
 const sceneManager = new SceneManager(app);
 let state = createInitialState('littleroot_town', MAPS);
-let starter = createPokemonInstance(SPECIES.torchic, 5);
+let starterId: 'treecko' | 'torchic' | 'mudkip' = 'torchic';
+let starter = createPokemonInstance(SPECIES[starterId], 5);
 let activeBattle: BattleState | null = null;
 
+const starterButtons = document.querySelectorAll<HTMLButtonElement>('#starter-bar button[data-starter]');
+starterButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    if (activeBattle) return;
+    const id = btn.dataset.starter;
+    if (id !== 'treecko' && id !== 'torchic' && id !== 'mudkip') return;
+    starterId = id;
+    starter = createPokemonInstance(SPECIES[starterId], 5);
+    starterButtons.forEach((b) => b.classList.toggle('active', b.dataset.starter === starterId));
+    btn.blur();
+  });
+});
+
 function renderBattle(): void {
+  sceneManager.syncBattle(activeBattle);
   if (!battleOverlay || !battleEnemy || !battlePlayer || !battleLog || !battleActions) return;
   if (!activeBattle) {
     battleOverlay.classList.remove('open');
@@ -73,7 +88,7 @@ function renderBattle(): void {
   closeBtn.textContent = 'Voltar ao mapa';
   closeBtn.onclick = () => {
     if (activeBattle?.status === 'defeat') {
-      starter = createPokemonInstance(SPECIES.torchic, 5);
+      starter = createPokemonInstance(SPECIES[starterId], 5);
       state = createInitialState('littleroot_town', MAPS);
     }
     activeBattle = null;

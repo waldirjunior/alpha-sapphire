@@ -30,7 +30,26 @@
         border: 1px solid rgba(56, 189, 248, 0.35);
         font-size: 13px;
         line-height: 1.5;
-        pointer-events: none;
+        pointer-events: auto;
+      }
+      #starter-bar {
+        margin-top: 6px;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+      #starter-bar button {
+        padding: 3px 8px;
+        border-radius: 6px;
+        border: 1px solid rgba(56, 189, 248, 0.5);
+        background: #1e293b;
+        color: #f8fafc;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      #starter-bar button.active {
+        background: #0284c7;
+        border-color: #38bdf8;
       }
       #hud strong {
         color: #38bdf8;
@@ -58,22 +77,24 @@
         display: none;
         position: fixed;
         inset: 0;
-        background: rgba(2, 6, 23, 0.86);
-        align-items: center;
+        pointer-events: none;
+        align-items: flex-end;
         justify-content: center;
+        padding-bottom: 20px;
         z-index: 20;
       }
       #battle-overlay.open {
         display: flex;
       }
       #battle-card {
-        width: min(560px, calc(100% - 32px));
-        padding: 20px;
+        pointer-events: auto;
+        width: min(620px, calc(100% - 32px));
+        padding: 16px 20px;
         border-radius: 12px;
-        background: #0f172a;
+        background: rgba(15, 23, 42, 0.9);
         border: 2px solid #f59e0b;
         display: grid;
-        gap: 14px;
+        gap: 10px;
       }
       .battle-row {
         display: flex;
@@ -115,6 +136,12 @@
       <div><strong>Alpha Sapphire Web (Three.js)</strong> — v0.1.0</div>
       <div id="hud-pos">Mapa: littleroot_town | Pos: (20, 14)</div>
       <div>Controles: WASD/Setas para mover · Espaço/Enter para interagir</div>
+      <div id="starter-bar">
+        <span>Inicial:</span>
+        <button data-starter="treecko">Treecko</button>
+        <button data-starter="torchic" class="active">Torchic</button>
+        <button data-starter="mudkip">Mudkip</button>
+      </div>
     </div>
     <div id="dialogue-box" role="dialog" aria-live="polite"></div>
     <div id="battle-overlay" role="dialog" aria-modal="true">

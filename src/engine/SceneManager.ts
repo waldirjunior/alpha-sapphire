@@ -1,8 +1,10 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import type { BattleState } from '../core/battle';
 import type { Direction, GameState, MapDefinition } from '../core/types';
 
 const ORAS_TILE_UNITS = 18;
+const POKEMON_SCALE = 1 / 25;
 const FACING_YAW: Record<Direction, number> = {
   down: 0,
   up: Math.PI,
@@ -16,8 +18,13 @@ export class SceneManager {
   private renderer: THREE.WebGLRenderer;
   private playerRoot: THREE.Group;
   private mapGroup: THREE.Group;
+  private battleGroup: THREE.Group;
+  private battlePlayerSlot: THREE.Group;
+  private battleEnemySlot: THREE.Group;
   private gltfLoader = new GLTFLoader();
   private currentMapId = '';
+  private currentBattleKey = '';
+  private inBattle = false;
 
   constructor(container: HTMLElement) {
     this.scene = new THREE.Scene();
@@ -53,6 +60,18 @@ export class SceneManager {
     this.playerRoot.add(placeholder);
     this.scene.add(this.playerRoot);
     this.loadPlayerModel();
+
+    this.battleGroup = new THREE.Group();
+    this.battleGroup.visible = false;
+    this.battlePlayerSlot = new THREE.Group();
+    this.battlePlayerSlot.position.set(-1.6, 0, 1.4);
+    this.battlePlayerSlot.rotation.y = Math.PI * 0.75;
+    this.battleEnemySlot = new THREE.Group();
+    this.battleEnemySlot.position.set(1.6, 0, -1.4);
+    this.battleEnemySlot.rotation.y = -Math.PI * 0.25;
+    this.buildBattleArena();
+    this.battleGroup.add(this.battlePlayerSlot, this.battleEnemySlot);
+    this.scene.add(this.battleGroup);
 
     window.addEventListener('resize', () => this.onResize(container));
   }
@@ -140,13 +159,76 @@ export class SceneManager {
     this.playerRoot.position.z = state.player.pos.z;
     this.playerRoot.rotation.y = FACING_YAW[state.player.facing];
 
-    // Câmera inclinada estilo ORAS
-    this.camera.position.set(
-      state.player.pos.x,
-      9,
-      state.player.pos.z + 8
+    if (!this.inBattle) {
+      // Câmera inclinada estilo ORAS
+      this.camera.position.set(
+        state.player.pos.x,
+        9,
+        state.player.pos.z + 8
+      );
+      this.camera.lookAt(state.player.pos.x, 0.5, state.player.pos.z);
+    }
+  }
+
+  public syncBattle(battle: BattleState | null): void {
+    const active = battle !== null;
+    this.inBattle = active;
+    this.mapGroup.visible = !active;
+    this.playerRoot.visible = !active;
+    this.battleGroup.visible = active;
+
+    if (!battle) {
+      this.currentBattleKey = '';
+      return;
+    }
+
+    this.camera.position.set(-3.6, 2.5, 4.4);
+    this.camera.lookAt(0.4, 0.8, -0.4);
+
+    const key = `${battle.player.species.id}:${battle.enemy.species.id}`;
+    if (this.currentBattleKey === key) return;
+    this.currentBattleKey = key;
+
+    this.loadPokemonModel(battle.player.species.id, this.battlePlayerSlot);
+    this.loadPokemonModel(battle.enemy.species.id, this.battleEnemySlot);
+  }
+
+  private buildBattleArena(): void {
+    const groundGeo = new THREE.CircleGeometry(6.5, 32);
+    const groundMat = new THREE.MeshStandardMaterial({ color: '#166534' });
+    const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI / 2;
+    this.battleGroup.add(ground);
+
+    const padGeo = new THREE.CylinderGeometry(1.1, 1.2, 0.12, 24);
+    const padMat = new THREE.MeshStandardMaterial({ color: '#4ade80' });
+    const playerPad = new THREE.Mesh(padGeo, padMat);
+    playerPad.position.set(-1.6, 0.06, 1.4);
+    const enemyPad = new THREE.Mesh(padGeo, padMat);
+    enemyPad.position.set(1.6, 0.06, -1.4);
+    this.battleGroup.add(playerPad, enemyPad);
+  }
+
+  private loadPokemonModel(speciesId: string, target: THREE.Group): void {
+    target.clear();
+    this.gltfLoader.load(
+      `/assets/pokemon/${speciesId}/${speciesId}.glb`,
+      (gltf) => {
+        const model = gltf.scene;
+        model.scale.setScalar(POKEMON_SCALE);
+        target.clear();
+        target.add(model);
+      },
+      undefined,
+      () => {
+        const fallback = new THREE.Mesh(
+          new THREE.SphereGeometry(0.5, 16, 12),
+          new THREE.MeshStandardMaterial({ color: '#f59e0b' })
+        );
+        fallback.position.y = 0.5;
+        target.add(fallback);
+      }
     );
-    this.camera.lookAt(state.player.pos.x, 0.5, state.player.pos.z);
   }
 
   private loadPlayerModel(): void {
