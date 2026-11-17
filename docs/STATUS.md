@@ -22,6 +22,14 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   - [src/main.ts](../src/main.ts): bootstrap que carrega as tabelas de batalha e importa [src/game.ts](../src/game.ts): loop de renderização, teclado, caixa de diálogo, menu estilo 3DS (`Time`, `Mochila`, `Pokédex`, `Salvar`), HUD de batalha 3D com barras de HP coloridas, time de até 6 Pokémon e auto-save em `localStorage`.
 - Diretórios planejados ainda não criados: `src/ai/`.
 
+## Mapas por zona (2026-11-17, branch `zone-maps` sobre main `13c3279`)
+
+- [build_zone_maps.py](../scripts/build_zone_maps.py) e [formato](features/pipeline-rom/maps-format.md): 431 matrizes MM fisicamente decodificadas (409 básicas/22 estendidas), 422 referenciadas por ZoneData. `mapArea` não indexa os retângulos sec1; o recorte correto vem de zoneIds na sec0 (4W×4H, células 10×10 tiles). Não há sec2 no corpus.
+- `src/data/maps_v2/`: 536 mapas/1.480.000 tiles, 846 GRs compostos via `parse_gr_grid`, 911 warps com destinos existentes, 2.904 NPCs e 9.150 entradas de encontro. Escala 18 unidades/tile comprovada pelos 911 centros de warp; NPCs já estão em tiles. Route 102 agora é 80×40 e Route 103 120×40.
+- Dez referências antigas: 16.000 tiles comparados por camada, zero diferenças de colisão/terreno e zero omissões. `_validation.json` preserva 48 warps e 48 targets off-region (todos da zona 0) e quatro NPCs off-map, sem correções artificiais.
+- Spawn fica marcado `spawnDerived=true`, com política determinística; não é spawn canônico de init/save. Sem mudanças no loader/core/renderer nem conversão 3D. Semântica residual de flags/array auxiliar e futura integração permanecem em P-017, no limite aprovado pelo coordenador.
+- Verificação: 13 regressões sintéticas novas; **107 testes Python, 134 Vitest (17 arquivos) e build canônico passando**. JSONs estruturais, sem dumps binários; A-023/PRD-003/ADR-005 registram evidência, reprodução e limites.
+
 ## Investigação de scripts ORAS (2026-11-17, Mac/worktree `zone-scripts-re`)
 
 - [Formato documentado](features/pipeline-rom/script-format.md): 1.072 scripts de zonas e 85 entradas de `a/0/2/9` são Pawn/AMX v10, com células de 32 bits compactadas. Semântica de chamadas nativas e runner ainda pendentes (P-013/A-016).

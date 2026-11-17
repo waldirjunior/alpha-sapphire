@@ -25,6 +25,7 @@
    - `ZoneData.ParentMap` (`@0x1C & 0x3FF`) → nome da localização na metlist `a_0_7_3/0090`.
 4. **Conversão para JSON e `.glb` (Web):**
    - `scripts/extract_gr_maps.py` gera `src/data/maps/*.json` (`collisions`, `terrain`, `warps`, `spawnPos`).
+   - Continuação de 2026-11-17: [build_zone_maps.py](../../scripts/build_zone_maps.py) gera 536 mapas paralelos em `src/data/maps_v2/`, compondo GRs pelos zoneIds da MM (não por `mapArea` nem pelos retângulos sec1). Escala 18 unidades/tile, dez referências/16.000 tiles por camada sem diferenças; [maps-format.md](../features/pipeline-rom/maps-format.md), A-023/ADR-005 e P-017 distinguem layout físico, campos não comprovados e spawn derivado de spawn canônico.
    - `scripts/extract_texts.py` decodifica textos Gen 6 (`XOR 0x7C89`) para `src/data/texts/*.json`.
    - `scripts/convert_gr_to_glb.py` usa `SpicaExport` (`.NET 8` + `SPICA` sem `System.Drawing`) + `assimp` (`5.2`) para gerar `<mapa>.glb` + `.png`s em `public/assets/maps/<mapa>/` (escala ORAS `1 / 18` por tile).
    - O mesmo `SpicaExport` + `assimp` converte personagens (`a/0/2/1/0314.bin` → `public/assets/characters/brendan/brendan.glb`).

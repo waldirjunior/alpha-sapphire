@@ -11,6 +11,7 @@ Responsável por extrair as partições proprietárias (`RomFS`, `ExeFS`) da ROM
 - [script-disassembly.md](script-disassembly.md) — disassembly das 536 zonas/85 globais, 615 nomes nativos, vínculos derivados dos ZOs e primeiro runner puro de chamadas normalizadas (P-013/A-017/A-018).
 - [animations-format.md](animations-format.md) — formato GF1, índices de batalha PB/PK, expressões BCH, conversão individual e integração serial por manifesto nos GLBs texturizados (`P-012`, `A-020`, `A-021`).
 - [native-models-manifest.json](native-models-manifest.json) — cobertura dos 544 modelos MM e das 39 espécies selecionadas por encontros/starters/lendários, mapeamento PC/PB/GF1, resultados por modelo e validação amostral (`AN-E9`, `A-022`).
+- [maps-format.md](maps-format.md) — layout completo observado das 431 MM, grid de zonas, escala e geração dos 536 mapas `maps_v2`; [PRD-003](prds/PRD-003-mapas-por-zona.md), [ADR-005](adrs/ADR-005-recorte-de-mapas-por-zone-grid.md), A-023/P-017.
 - Referência TCC: [docs/tcc/01-pipeline-rom.md](../../tcc/01-pipeline-rom.md).
 
 ## Estado atual
