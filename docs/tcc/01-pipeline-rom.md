@@ -23,6 +23,7 @@
    - `scripts/extract_texts.py` decodifica textos Gen 6 (`XOR 0x7C89`) para `src/data/texts/*.json`.
    - `scripts/convert_gr_to_glb.py` usa `SpicaExport` (`.NET 8` + `SPICA` sem `System.Drawing`) + `assimp` (`5.2`) para gerar `<mapa>.glb` + `.png`s em `public/assets/maps/<mapa>/` (escala ORAS `1 / 18` por tile).
    - O mesmo `SpicaExport` + `assimp` converte personagens (`a/0/2/1/0314.bin` → `public/assets/characters/brendan/brendan.glb`).
+   - `scripts/extract_pokemon_glb.py` varre a tabela `FATB` de `a/0/0/8` (`PC\x02\x00` modelo + `+2` `PT\x01\x00` texturas) e gera `.glb` + `.png`s dos iniciais e Pokémon da Route 101 em `public/assets/pokemon/<especie>/`.
 
 ## 3. Regra de Segurança no Repositório
 Arquivos proprietários da ROM (`rom/`, `RomFS/`, `ExeFS/`, `public/assets/`, `*.3ds`, `*.cia`, `*.cxi`, `*.7z`) ficam **sempre no `.gitignore`** e nunca sobem para o GitHub. Apenas o motor, scripts de conversão, schemas, JSONs estruturais e documentação são versionados.

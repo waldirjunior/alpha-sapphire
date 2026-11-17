@@ -21,5 +21,5 @@ Criar cenários determinísticos executados em `src/core/` e comparados com esta
 
 ## 4. Critérios de Aceite
 
-- [ ] Scripts em `src/ai/` executando cenários de comparação sem depender de emulador ativo no CI unitário (usando golden snapshots versionados).
-- [ ] Evidências documentadas em `docs/tcc/` a cada fase concluída.
+- [x] Scripts em `src/ai/` executando cenários de comparação sem depender de emulador ativo no CI unitário (usando golden snapshots versionados).
+- [x] Evidências documentadas em `docs/tcc/` a cada fase concluída.
