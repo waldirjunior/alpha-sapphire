@@ -62,6 +62,8 @@ export interface PlayerState {
   mapId: string;
   pos: GridPosition;
   facing: Direction;
+  gender?: 'male' | 'female';
+  playerName?: string;
 }
 
 export interface GameState {

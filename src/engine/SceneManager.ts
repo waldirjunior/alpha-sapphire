@@ -66,6 +66,7 @@ export class SceneManager {
   private lastPlayerPos = { mapId: '', x: -1, z: -1 };
   private currentMapId = '';
   private currentBattleKey = '';
+  private currentPlayerGender: 'male' | 'female' = 'male';
   private inBattle = false;
 
   constructor(container: HTMLElement) {
@@ -118,9 +119,13 @@ export class SceneManager {
     this.scene.add(this.battleGroup);
 
     window.addEventListener('resize', () => this.onResize(container));
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(() => this.onResize(container)).observe(container);
+    }
   }
 
   private onResize(container: HTMLElement): void {
+    if (container.clientWidth <= 0 || container.clientHeight <= 0) return;
     this.camera.aspect = container.clientWidth / container.clientHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(container.clientWidth, container.clientHeight);
@@ -226,6 +231,16 @@ export class SceneManager {
   }
 
   public sync(state: GameState, maps: Record<string, MapDefinition>): void {
+    const desiredGender = state.player.gender ?? 'male';
+    if (this.currentPlayerGender !== desiredGender) {
+      this.currentPlayerGender = desiredGender;
+      const modelUrl =
+        desiredGender === 'female'
+          ? '/assets/characters/may/may.glb'
+          : '/assets/characters/brendan/brendan.glb';
+      this.loadCharacterModel(modelUrl, this.playerRoot, true);
+    }
+
     const map = maps[state.player.mapId];
     if (!map) return;
 

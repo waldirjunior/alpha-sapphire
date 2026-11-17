@@ -200,4 +200,28 @@ describe('gameState', () => {
     state = { ...state, storyFlags: { ...state.storyFlags, 'defeated_trainer:trainer_calvin': true } };
     expect(findTriggeredTrainer(state, trainerMaps)).toBeNull();
   });
+
+  it('enters and exits Littleroot and Oldale building interiors through open door tiles', () => {
+    // Enter brendan_house at (14, 11) from (14, 12)
+    let state = createInitialState('littleroot_town', EXTRACTED_MAPS);
+    state = { ...state, player: { ...state.player, pos: { x: 14, z: 12 }, facing: 'up' } };
+    state = movePlayer(state, 'up', EXTRACTED_MAPS);
+    expect(state.player.mapId).toBe('brendan_house');
+
+    // Exit brendan_house back to littleroot_town
+    state = { ...state, player: { ...state.player, pos: { x: 4, z: 6 }, facing: 'down' } };
+    state = movePlayer(state, 'down', EXTRACTED_MAPS);
+    expect(state.player.mapId).toBe('littleroot_town');
+
+    // Enter birch_lab at (16, 23) from (16, 24)
+    state = { ...state, player: { ...state.player, pos: { x: 16, z: 24 }, facing: 'up' } };
+    state = movePlayer(state, 'up', EXTRACTED_MAPS);
+    expect(state.player.mapId).toBe('birch_lab');
+
+    // Enter oldale_pokecenter at (13, 15) from (13, 16)
+    state = createInitialState('oldale_town', EXTRACTED_MAPS);
+    state = { ...state, player: { ...state.player, pos: { x: 13, z: 16 }, facing: 'up' } };
+    state = movePlayer(state, 'up', EXTRACTED_MAPS);
+    expect(state.player.mapId).toBe('oldale_pokecenter');
+  });
 });

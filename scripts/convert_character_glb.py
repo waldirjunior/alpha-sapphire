@@ -113,6 +113,13 @@ if armature:
 
     armature.animation_data.action = idle_action
 
+# Remove peças trocáveis duplicadas (sw_parts02..05), mantendo apenas a peça padrão (sw_parts01)
+for obj in list(bpy.data.objects):
+    if obj.type == 'MESH' and any(
+        tag in obj.name for tag in ("sw_parts02", "sw_parts03", "sw_parts04", "sw_parts05")
+    ):
+        bpy.data.objects.remove(obj, do_unlink=True)
+
 bpy.ops.export_scene.gltf(
     filepath=out_glb,
     export_format='GLB',
@@ -163,8 +170,8 @@ def main() -> int:
     args = parser.parse_args()
 
     targets = {
-        "brendan": "0314.bin",
-        "may": "0315.bin",
+        "brendan": "0315.bin",
+        "may": "0314.bin",
         "npc": "0045.bin",
     }
 

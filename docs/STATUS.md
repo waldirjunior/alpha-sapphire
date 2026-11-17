@@ -5,7 +5,7 @@ Atualizado em 2026-11-17 (verificação local na VPS).
 ## Estado do Código e Build
 
 - Branch atual: `main`.
-- `npm test` (`vitest run`): **passando** (`6` arquivos, `23` testes: `6` em [src/core/gameState.test.ts](../src/core/gameState.test.ts), `5` em [src/core/bag.test.ts](../src/core/bag.test.ts), `6` em [src/core/battle.test.ts](../src/core/battle.test.ts), `2` em [src/core/save.test.ts](../src/core/save.test.ts), `1` em [src/core/room.test.ts](../src/core/room.test.ts) e `3` em [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts)).
+- `npm test` (`vitest run`): **passando** (`6` arquivos, `24` testes: `7` em [src/core/gameState.test.ts](../src/core/gameState.test.ts), `5` em [src/core/bag.test.ts](../src/core/bag.test.ts), `6` em [src/core/battle.test.ts](../src/core/battle.test.ts), `2` em [src/core/save.test.ts](../src/core/save.test.ts), `1` em [src/core/room.test.ts](../src/core/room.test.ts) e `3` em [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts)).
 - `python3 -m unittest scripts/test_pipeline.py`: **passando** (`3` testes com fixtures sintéticas para `decompress_lz11`, `parse_gr_grid` e `decode_gen6_text`).
 - `npm run build` (`tsc && vite build`): **passando** (`dist/index.html` e bundle JS gerados sem erros de TypeScript).
 - Módulos existentes:

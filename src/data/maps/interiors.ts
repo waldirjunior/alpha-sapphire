@@ -31,8 +31,8 @@ export const INTERIOR_MAPS: Record<string, MapDefinition> = {
     spawnPos: { x: 4, z: 6 },
     collisions: HOUSE_COLLISIONS,
     warps: [
-      { from: { x: 4, z: 7 }, targetMapId: 'littleroot_town', targetPos: { x: 13, z: 13 } },
-      { from: { x: 5, z: 7 }, targetMapId: 'littleroot_town', targetPos: { x: 13, z: 13 } },
+      { from: { x: 4, z: 7 }, targetMapId: 'littleroot_town', targetPos: { x: 14, z: 12 } },
+      { from: { x: 5, z: 7 }, targetMapId: 'littleroot_town', targetPos: { x: 14, z: 12 } },
     ],
     interactables: [
       {
@@ -61,8 +61,8 @@ export const INTERIOR_MAPS: Record<string, MapDefinition> = {
     spawnPos: { x: 5, z: 8 },
     collisions: LAB_COLLISIONS,
     warps: [
-      { from: { x: 5, z: 9 }, targetMapId: 'littleroot_town', targetPos: { x: 16, z: 25 } },
-      { from: { x: 6, z: 9 }, targetMapId: 'littleroot_town', targetPos: { x: 16, z: 25 } },
+      { from: { x: 5, z: 9 }, targetMapId: 'littleroot_town', targetPos: { x: 16, z: 24 } },
+      { from: { x: 6, z: 9 }, targetMapId: 'littleroot_town', targetPos: { x: 16, z: 24 } },
     ],
     interactables: [
       {
@@ -91,8 +91,8 @@ export const INTERIOR_MAPS: Record<string, MapDefinition> = {
     spawnPos: { x: 4, z: 6 },
     collisions: POKECENTER_COLLISIONS,
     warps: [
-      { from: { x: 4, z: 7 }, targetMapId: 'oldale_town', targetPos: { x: 16, z: 19 } },
-      { from: { x: 5, z: 7 }, targetMapId: 'oldale_town', targetPos: { x: 16, z: 19 } },
+      { from: { x: 4, z: 7 }, targetMapId: 'oldale_town', targetPos: { x: 13, z: 16 } },
+      { from: { x: 5, z: 7 }, targetMapId: 'oldale_town', targetPos: { x: 13, z: 16 } },
     ],
     interactables: [
       {
@@ -101,6 +101,49 @@ export const INTERIOR_MAPS: Record<string, MapDefinition> = {
         kind: 'npc',
         npcModel: 'npc',
         text: 'Enfermeira Joy: Seus Pokémon foram restaurados com energia máxima!',
+      },
+    ],
+  },
+  may_house: {
+    id: 'may_house',
+    name: 'Casa da Vizinha (Littleroot)',
+    width: 10,
+    height: 8,
+    spawnPos: { x: 4, z: 6 },
+    collisions: HOUSE_COLLISIONS,
+    warps: [
+      { from: { x: 4, z: 7 }, targetMapId: 'littleroot_town', targetPos: { x: 25, z: 12 } },
+      { from: { x: 5, z: 7 }, targetMapId: 'littleroot_town', targetPos: { x: 25, z: 12 } },
+    ],
+    interactables: [
+      {
+        id: 'may_house_mom',
+        pos: { x: 4, z: 3 },
+        kind: 'npc',
+        npcModel: 'npc',
+        text: 'Vizinha: A May subiu para pesquisar Pokémon na Route 103!',
+      },
+    ],
+  },
+  oldale_mart: {
+    id: 'oldale_mart',
+    name: 'Poké Mart (Oldale)',
+    width: 10,
+    height: 8,
+    spawnPos: { x: 4, z: 6 },
+    collisions: POKECENTER_COLLISIONS,
+    warps: [
+      { from: { x: 4, z: 7 }, targetMapId: 'oldale_town', targetPos: { x: 26, z: 15 } },
+      { from: { x: 5, z: 7 }, targetMapId: 'oldale_town', targetPos: { x: 26, z: 15 } },
+    ],
+    interactables: [
+      {
+        id: 'oldale_mart_clerk',
+        pos: { x: 3, z: 3 },
+        kind: 'npc',
+        npcModel: 'npc',
+        text: 'Atendente do Mart: Aqui está uma amostra grátis de Poké Ball e Potion!',
+        setFlag: 'oldale_mart_sample',
       },
     ],
   },

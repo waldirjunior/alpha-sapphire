@@ -37,6 +37,8 @@ const dsPanel = document.getElementById('ds-panel');
 const dsTabButtons = document.querySelectorAll<HTMLButtonElement>('#ds-tabs button[data-tab]');
 const saveGameBtn = document.getElementById('btn-save-game');
 const starterBar = document.getElementById('starter-bar');
+const introOverlay = document.getElementById('intro-overlay');
+const introCard = document.getElementById('intro-card');
 
 if (starterBar && new URLSearchParams(window.location.search).get('debug') === '1') {
   starterBar.classList.add('debug-open');
@@ -62,6 +64,9 @@ let caughtCount = saved?.caughtCount ?? 0;
 let activeBattle: BattleState | null = null;
 let activeTrainerId: string | null = null;
 let openDsTab: 'party' | 'bag' | 'pokedex' | null = null;
+let activeBagPocket: 'items' | 'balls' | 'key' = 'items';
+let introStep: 'birch' | 'truck' | null = state.storyFlags.intro_completed ? null : 'birch';
+let pendingGender: 'male' | 'female' = state.player.gender ?? 'male';
 
 function createHpBarMarkup(currentHp: number, maxHp: number): string {
   const ratio = maxHp > 0 ? Math.max(0, Math.min(1, currentHp / maxHp)) : 0;
@@ -85,6 +90,8 @@ resetBtn?.addEventListener('click', () => {
   party = [createPokemonInstance(SPECIES[starterId], 5)];
   bag = createInitialBag();
   caughtCount = 0;
+  introStep = 'birch';
+  renderIntro();
   syncUi();
   resetBtn.blur();
 });
@@ -222,7 +229,8 @@ function renderBattle(): void {
     activeTrainerId = null;
     persistSave();
     renderBattle();
-    syncUi();
+    renderIntro();
+  syncUi();
   };
   battleActions.appendChild(closeBtn);
 }
@@ -242,36 +250,74 @@ function renderDsPanel(): void {
   dsPanel.innerHTML = '';
 
   if (openDsTab === 'party') {
-    party.forEach((member, idx) => {
-      const row = document.createElement('div');
-      row.className = 'ds-item';
+    const grid = document.createElement('div');
+    grid.className = 'oras-party-grid';
+    for (let idx = 0; idx < 6; idx++) {
+      const member = party[idx];
+      const card = document.createElement('div');
+      card.className = `oras-party-card${idx === 0 ? ' lead' : ''}`;
+      if (!member) {
+        card.innerHTML = `<div style="color:#64748b">Slot ${idx + 1} — Vazio</div>`;
+        grid.appendChild(card);
+        continue;
+      }
+      const xpPct = member.nextLevelXp > 0 ? Math.min(100, Math.round((member.xp / member.nextLevelXp) * 100)) : 0;
       const info = document.createElement('div');
-      info.innerHTML = `<strong>${member.species.name}</strong> Lv.${member.level} (${member.currentHp}/${member.maxHp} HP)${createHpBarMarkup(member.currentHp, member.maxHp)}`;
-      row.appendChild(info);
+      info.innerHTML = `<div><strong>${member.species.name}</strong> <span style="color:#93c5fd">Lv.${member.level}</span></div>
+        <div style="font-size:11px;color:#cbd5e1">${member.currentHp}/${member.maxHp} HP · ${member.species.types.join('/')}</div>
+        ${createHpBarMarkup(member.currentHp, member.maxHp)}
+        <div style="font-size:10px;color:#60a5fa;margin-top:2px">EXP ${xpPct}%</div>`;
+      card.appendChild(info);
 
       if (member.currentHp < member.maxHp && bag.potions > 0) {
         const healBtn = document.createElement('button');
-        healBtn.textContent = 'Potion';
+        healBtn.textContent = 'Usar Potion';
         healBtn.onclick = () => {
           const res = usePotion(bag, member);
           if (!res.used) return;
           bag = res.bag;
           party[idx] = res.pokemon;
-          syncUi();
+          renderIntro();
+  syncUi();
         };
-        row.appendChild(healBtn);
+        card.appendChild(healBtn);
       }
-      dsPanel.appendChild(row);
-    });
+      grid.appendChild(card);
+    }
+    dsPanel.appendChild(grid);
     return;
   }
 
   if (openDsTab === 'bag') {
-    const items = [
-      { label: 'Poké Ball', count: bag.pokeballs, desc: 'Captura Pokémon selvagens em batalha.' },
-      { label: 'Potion', count: bag.potions, desc: 'Restaura 20 HP (use em Time ou Batalha).' },
+    const pocketBar = document.createElement('div');
+    pocketBar.className = 'oras-bag-tabs';
+    const pockets: Array<{ id: 'items' | 'balls' | 'key'; label: string }> = [
+      { id: 'items', label: 'Itens' },
+      { id: 'balls', label: 'Poké Balls' },
+      { id: 'key', label: 'Itens-Chave' },
     ];
-    for (const item of items) {
+    for (const pocket of pockets) {
+      const pBtn = document.createElement('button');
+      pBtn.textContent = pocket.label;
+      if (activeBagPocket === pocket.id) pBtn.classList.add('active');
+      pBtn.onclick = () => {
+        activeBagPocket = pocket.id;
+        renderDsPanel();
+      };
+      pocketBar.appendChild(pBtn);
+    }
+    dsPanel.appendChild(pocketBar);
+
+    const list =
+      activeBagPocket === 'items'
+        ? [{ label: 'Potion', count: bag.potions, desc: 'Restaura 20 HP de um Pokémon.' }]
+        : activeBagPocket === 'balls'
+          ? [{ label: 'Poké Ball', count: bag.pokeballs, desc: 'Captura Pokémon selvagens em batalha.' }]
+          : bag.keyItems.length
+            ? bag.keyItems.map((k) => ({ label: k, count: 1, desc: 'Item-chave de aventura.' }))
+            : [{ label: 'PokéNav Plus', count: 1, desc: 'Equipado na tela inferior do 3DS.' }];
+
+    for (const item of list) {
       const row = document.createElement('div');
       row.className = 'ds-item';
       row.innerHTML = `<div><strong>${item.label}</strong><div style="color:#94a3b8">${item.desc}</div></div><span>x${item.count}</span>`;
@@ -280,13 +326,108 @@ function renderDsPanel(): void {
     return;
   }
 
+  const dexGrid = document.createElement('div');
+  dexGrid.className = 'oras-dex-grid';
   const ownedIds = new Set(party.map((p) => p.species.id));
   for (const sp of Object.values(SPECIES)) {
-    const row = document.createElement('div');
-    row.className = 'ds-item';
     const hasIt = ownedIds.has(sp.id);
-    row.innerHTML = `<span>#${sp.dexNumber} ${sp.name} (${sp.types.join('/')})</span><span>${hasIt ? 'Registrado' : '—'}</span>`;
-    dsPanel.appendChild(row);
+    const cell = document.createElement('div');
+    cell.className = `ds-item${hasIt ? ' caught' : ''}`;
+    cell.innerHTML = `<div><strong>#${sp.dexNumber} ${sp.name}</strong><div style="color:#94a3b8">${sp.types.join('/')}</div></div><span>${hasIt ? 'Registrado' : '---'}</span>`;
+    dexGrid.appendChild(cell);
+  }
+  dsPanel.appendChild(dexGrid);
+}
+
+function renderIntro(): void {
+  if (!introOverlay || !introCard) return;
+  if (!introStep) {
+    introOverlay.classList.remove('open');
+    return;
+  }
+
+  introOverlay.classList.add('open');
+  introCard.classList.remove('truck-shaking');
+
+  if (introStep === 'birch') {
+    const defaultName = pendingGender === 'female' ? 'May' : 'Brendan';
+    introCard.innerHTML = `
+      <div style="color:#38bdf8;font-weight:700;font-size:15px">Prof. Birch — Boas-vindas a Hoenn</div>
+      <div style="line-height:1.5;font-size:14px">
+        Olá! Que bom ver você por aqui! Bem-vindo ao incrível mundo dos Pokémon!
+        Antes de chegarmos a Littleroot Town, conte-me sobre você:
+      </div>
+      <div class="intro-genders">
+        <button type="button" class="intro-gender-btn${pendingGender === 'male' ? ' active' : ''}" data-gender="male">Garoto (Brendan)</button>
+        <button type="button" class="intro-gender-btn${pendingGender === 'female' ? ' active' : ''}" data-gender="female">Garota (May)</button>
+      </div>
+      <input id="intro-name" type="text" maxlength="12" value="${defaultName}" placeholder="Seu nome" />
+      <button type="button" id="intro-next" class="intro-primary-btn">Confirmar e embarcar no caminhão</button>
+    `;
+
+    introCard.querySelectorAll<HTMLButtonElement>('[data-gender]').forEach((btn) => {
+      btn.onclick = () => {
+        const g = btn.dataset.gender;
+        if (g !== 'male' && g !== 'female') return;
+        pendingGender = g;
+        renderIntro();
+      };
+    });
+
+    const nextBtn = document.getElementById('intro-next');
+    const nameInput = document.getElementById('intro-name') as HTMLInputElement | null;
+    if (nextBtn) {
+      nextBtn.onclick = () => {
+        const chosenName = nameInput?.value.trim() || defaultName;
+        state = {
+          ...state,
+          player: {
+            ...state.player,
+            gender: pendingGender,
+            playerName: chosenName,
+          },
+        };
+        introStep = 'truck';
+        renderIntro();
+      };
+    }
+    return;
+  }
+
+  introCard.classList.add('truck-shaking');
+  introCard.innerHTML = `
+    <div style="color:#f59e0b;font-weight:700;font-size:15px">Caminhão de Mudança — Rumo a Littleroot Town</div>
+    <div style="line-height:1.6;font-size:14px;color:#e2e8f0">
+      <em>Vroom... Clack-clack...</em><br/>
+      As caixas da mudança balançam enquanto o caminhão entra em Hoenn.<br/>
+      <strong>O caminhão parou!</strong> A porta traseira se abriu em frente à sua nova casa!
+    </div>
+    <button type="button" id="intro-finish" class="intro-primary-btn">Sair do caminhão</button>
+  `;
+  const finishBtn = document.getElementById('intro-finish');
+  if (finishBtn) {
+    finishBtn.onclick = () => {
+      introStep = null;
+      state = {
+        ...state,
+        player: {
+          ...state.player,
+          mapId: 'littleroot_town',
+          pos: { x: 14, z: 14 },
+          facing: 'up',
+        },
+        storyFlags: {
+          ...state.storyFlags,
+          intro_completed: true,
+        },
+        activeDialogue: {
+          sourceId: 'mom_arrival',
+          text: `Mãe: ${state.player.playerName ?? 'Querido(a)'}, chegamos a Littleroot Town! Entre em casa pela porta logo à frente para descansar e falar comigo!`,
+        },
+      };
+      renderIntro();
+      syncUi();
+    };
   }
 }
 
@@ -315,9 +456,8 @@ function syncUi(): void {
   renderDsPanel();
   if (hudPos) {
     const mapName = MAPS[state.player.mapId]?.name ?? state.player.mapId;
-    const lead = party[0];
-    const leadLabel = lead ? `${lead.species.name} Lv.${lead.level}` : 'Nenhum';
-    hudPos.textContent = `Mapa: ${mapName} | Pos: (${state.player.pos.x}, ${state.player.pos.z}) | Time: ${party.length}/6 (${leadLabel}) | Capturados: ${caughtCount} | Mochila: ${bag.pokeballs} Balls, ${bag.potions} Potions`;
+    const playerName = state.player.playerName ?? 'Brendan';
+    hudPos.textContent = `${mapName} · ${playerName} (${state.player.pos.x}, ${state.player.pos.z})`;
   }
   if (dialogueBox) {
     if (state.activeDialogue) {
@@ -330,6 +470,7 @@ function syncUi(): void {
   }
 }
 
+renderIntro();
 syncUi();
 
 const KEY_TO_DIR: Record<string, Direction> = {
@@ -344,7 +485,7 @@ const KEY_TO_DIR: Record<string, Direction> = {
 };
 
 window.addEventListener('keydown', (event) => {
-  if (activeBattle) return;
+  if (activeBattle || introStep) return;
 
   if (event.code === 'Space' || event.code === 'Enter') {
     event.preventDefault();
@@ -384,7 +525,8 @@ window.addEventListener('keydown', (event) => {
         }
       }
     }
-    syncUi();
+    renderIntro();
+  syncUi();
     return;
   }
 
@@ -406,7 +548,8 @@ window.addEventListener('keydown', (event) => {
           text: triggeredTrainer.text,
         },
       };
-      syncUi();
+      renderIntro();
+  syncUi();
       return;
     }
   }
@@ -424,6 +567,7 @@ window.addEventListener('keydown', (event) => {
     }
   }
 
+  renderIntro();
   syncUi();
 });
 

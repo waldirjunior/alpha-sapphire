@@ -11,15 +11,31 @@ import route102 from './route_102.json';
 import route102West from './route_102_west.json';
 import route103 from './route_103.json';
 
+function openDoors(collisions: number[][], doors: Array<{ x: number; z: number }>): number[][] {
+  const copy = collisions.map((row) => [...row]);
+  for (const door of doors) {
+    if (copy[door.z]) {
+      copy[door.z][door.x] = 0;
+    }
+  }
+  return copy;
+}
+
 export const MAPS: Record<string, MapDefinition> = {
   ...INTERIOR_MAPS,
   littleroot_town: {
     ...littlerootTown,
+    collisions: openDoors(littlerootTown.collisions, [
+      { x: 14, z: 11 },
+      { x: 25, z: 11 },
+      { x: 16, z: 23 },
+    ]),
     modelUrl: '/assets/maps/littleroot_town/littleroot_town.glb',
     warps: [
       ...littlerootTown.warps,
-      { from: { x: 13, z: 12 }, targetMapId: 'brendan_house', targetPos: { x: 4, z: 6 } },
-      { from: { x: 16, z: 24 }, targetMapId: 'birch_lab', targetPos: { x: 5, z: 8 } },
+      { from: { x: 14, z: 11 }, targetMapId: 'brendan_house', targetPos: { x: 4, z: 6 } },
+      { from: { x: 25, z: 11 }, targetMapId: 'may_house', targetPos: { x: 4, z: 6 } },
+      { from: { x: 16, z: 23 }, targetMapId: 'birch_lab', targetPos: { x: 5, z: 8 } },
     ],
     interactables: [
       {
@@ -37,7 +53,7 @@ export const MAPS: Record<string, MapDefinition> = {
       },
       {
         id: 'mom_npc',
-        pos: { x: 14, z: 12 },
+        pos: { x: 15, z: 12 },
         kind: 'npc',
         npcModel: 'npc',
         text: littlerootTexts.lines[0] ?? 'Don’t push yourself too hard, honey!',
@@ -83,10 +99,15 @@ export const MAPS: Record<string, MapDefinition> = {
   },
   oldale_town: {
     ...oldaleTown,
+    collisions: openDoors(oldaleTown.collisions, [
+      { x: 13, z: 15 },
+      { x: 26, z: 14 },
+    ]),
     modelUrl: '/assets/maps/oldale_town/oldale_town.glb',
     warps: [
       ...oldaleTown.warps,
-      { from: { x: 16, z: 18 }, targetMapId: 'oldale_pokecenter', targetPos: { x: 4, z: 6 } },
+      { from: { x: 13, z: 15 }, targetMapId: 'oldale_pokecenter', targetPos: { x: 4, z: 6 } },
+      { from: { x: 26, z: 14 }, targetMapId: 'oldale_mart', targetPos: { x: 4, z: 6 } },
     ],
     interactables: [
       {

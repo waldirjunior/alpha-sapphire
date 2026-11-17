@@ -60,10 +60,10 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-009 Interiores, eventos de história, itens e inventário ausentes
 
-- **Estado:** em andamento
+- **Estado:** fechada
 - **Data:** 2026-11-17
-- **Evidência:** Implementados [src/core/bag.ts](../src/core/bag.ts), `requiredFlag`/`altText` em [gameState.ts](../src/core/gameState.ts), `findTriggeredTrainer` (linha de visão + flag `defeated_trainer:<id>`) em `gameState.ts`, interiores iniciais ([interiors.ts](../src/data/maps/interiors.ts)), Rival May na Route 103 e Youngster Calvin na Route 102 com `sightRange`, além de botão `Potion` e consumo de `Poké Ball` em [src/main.ts](../src/main.ts). Falta apenas a cutscene inicial do caminhão de mudança.
-- **Próximo passo:** Integrar sequência inicial do caminhão de mudança (`intro_completed`) ou seguir para fidelidade visual PICA200 (`P-007`) e áudio (`P-008`).
+- **Evidência:** Intro do Prof. Birch (escolha de sexo Brendan/May + nome) e cena do caminhão de mudança implementadas em [index.html](../index.html) e [src/main.ts](../src/main.ts); portas reais abertas e conectadas em [index.ts](../src/data/maps/index.ts) para 5 interiores ([interiors.ts](../src/data/maps/interiors.ts): `brendan_house`, `may_house`, `birch_lab`, `oldale_pokecenter`, `oldale_mart`), validadas em [gameState.test.ts](../src/core/gameState.test.ts); inventário ([bag.ts](../src/core/bag.ts)) e treinadores com linha de visão (`findTriggeredTrainer`) integrados.
+- **Próximo passo:** Concluído para o arco inicial; expandir diálogos/itens extras conforme novas rotas forem abertas.
 
 ## P-010 Mecânicas avançadas de batalha Gen VI (PP, precisão, status, treinadores multi-Pokémon)
 
@@ -74,7 +74,7 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-011 HUD de desenvolvimento em vez de menus estilo Nintendo 3DS
 
-- **Estado:** fechada
+- **Estado:** em andamento
 - **Data:** 2026-11-17
-- **Evidência:** Em [index.html](../index.html) e [src/main.ts](../src/main.ts), a barra de debug (`#starter-bar`) foi ocultada por padrão (exibida apenas com `?debug=1`), substituída pelo menu estilo 3DS (`#ds-menu`: `Time`, `Mochila`, `Pokédex`, `Salvar`), uso de `Potion` fora da batalha e barras de HP coloridas (`createHpBarMarkup`).
-- **Próximo passo:** Concluído.
+- **Evidência:** Reaberta após feedback do usuário: a versão inicial (`#ds-menu` com 4 abas simples no topo) ainda não reproduz o layout real da tela inferior do Nintendo 3DS / Alpha Sapphire (PlayNav, cards de Equipe, categorias de Mochila e grade de Pokédex).
+- **Próximo passo:** Reconstruir layout dual-screen estilo Nintendo 3DS com tela superior limpa e tela inferior estilo PlayNav/ORAS ([engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md)).
