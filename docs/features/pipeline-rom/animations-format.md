@@ -448,3 +448,137 @@ O merge não copia a geometria desses probes e preserva a skin do GLB-base,
 mas não reconstitui o bone perdido no pipeline existente. Não houve
 comparação visual, validação de looping/emulador ou reprodução de expressões;
 `P-012` permanece em andamento.
+
+## Cobertura ampla por manifesto (AN-E9)
+
+[build_native_manifest.py](../../../scripts/build_native_manifest.py) gera
+[native-models-manifest.json](native-models-manifest.json) sem caminhos de
+máquina. O manifesto inclui todos os **544** diretórios `mm_NNNN`, inclusive
+quando não existe motion utilizável. Os caminhos são relativos ao checkout
+passado em `--root`; o checkout de dados pode ser diferente do worktree que
+contém scripts e manifesto.
+
+### Espécie, modelo e pack de batalha
+
+O slot 0 de `a/0/0/8` contém a tabela que evita varrer/descomprimir todos os
+modelos e evita adivinhar espécie pelo nome de desenvolvimento. Para os
+registros utilizados, o layout derivado é:
+
+| Campo | Offset no registro | Leitura |
+| --- | --- | --- |
+| Primeiro ordinal de modelo | 0 | u16 little-endian |
+| Quantidade de modelos | 2 | u8 |
+| Flags (significado não decodificado aqui) | 3 | u8 |
+
+O registro da espécie fica em `4*(species-1)`. Para variante ordinal `v`,
+o modelo PC está em `3+8*(first_model+v)` e o PB em `PC+5`. Cada job confere
+as assinaturas PC/PB, lê o tag real do BCH e registra offsets do registro,
+ordinal/variante, slots, seção GF1, hash do pack, índices presentes e frames
+selecionados. Exemplos conferidos localmente:
+
+- Espécie 252: `first=349, count=1, flags=1` → PC 2795/PB 2800,
+  tag `pm0252_00`.
+- Espécie 422: primeiro modelo `pm0422_11`, não `pm0422_00`.
+- Espécie 650: primeiro modelo `pm0720_00`; espécie 692: `first=969` →
+  PC 7755/PB 7760, tag `pm0756_00`. Logo, tag interno não é uma chave
+  universal de National Dex. Não houve identificação visual desses modelos.
+
+A indexação foi ancorada em espécies conhecidas (incluindo 1, 2, 3, 72,
+98, 129, 252–254, 382 e 383) e as assinaturas/tags foram conferidas nos
+41 modelos selecionados. O restante do arquivo do slot 0 e a semântica das
+flags ficam fora desta investigação. Ver `A-012`.
+
+### Política e escopo da seleção
+
+- Personagens: um clipe por modelo para priorizar cobertura e limitar CPU:
+  índice 2 quando tem mais de um frame; caso contrário, o primeiro índice
+  esparso com mais de um frame. Nome `overworld_NNN`, sem inferir idle/walk.
+  Todos os outros IDs presentes permanecem inventariados no manifesto.
+- Pokémon: os cinco índices semânticos disponíveis de `BATTLE_CLIPS`; os
+  ausentes ficam registrados em `unavailable`, sem fallback procedural.
+- Encontros: união de todas as espécies positivas dos JSONs das zonas
+  **6, 7 e 23–30**, com caminho/hash por arquivo e lista de espécies por
+  zona em `scope.zones`. Isso inclui Route 104–107 conforme os IDs pedidos,
+  não apenas Route 101–103; não implica disponibilidade pré-National Dex
+  nem validação de método de encontro. Espécie zero é excluída.
+- A união dos encontros tem 28 espécies: 72, 98, 118, 129, 183, 184, 261,
+  263, 265, 270, 276, 278, 279, 280, 283, 284, 320, 341, 422, 441, 506,
+  519, 535, 540, 570, 574, 592 e 692.
+- Somam-se starters/evoluções 252–260 e lendários 382/383: **39 espécies**.
+  Além do primeiro modelo de cada espécie, entram as segundas variantes
+  dos dois lendários de capa: **41 modelos Pokémon**, tags `_00`/`_51`
+  lidos do arquivo, sem atribuir significado às flags da tabela.
+
+### Execução e relatório
+
+```bash
+python3 -B scripts/build_native_manifest.py --root "$ROOT" \
+  --output docs/features/pipeline-rom/native-models-manifest.json
+nice -n 10 python3 -B scripts/native_model_batch.py --root "$ROOT" \
+  --manifest docs/features/pipeline-rom/native-models-manifest.json \
+  --spica-dll "$TOOLS/SpicaExport/bin/Release/net8.0/SPICA.dll" \
+  --blender "$HOME/Applications/Blender3.4.app/Contents/MacOS/Blender" --jobs 2
+python3 -B scripts/validate_native_manifest.py --root "$ROOT" \
+  --manifest docs/features/pipeline-rom/native-models-manifest.json --sample 10
+```
+
+O gerador reinicializa o inventário; não o execute sobre um relatório em
+andamento. O executor só tenta jobs `ready`, com no máximo dois processos
+de conversão e logs individuais ao lado das saídas em
+`rom/extracted/models/clips_merged/`. Outputs e logs existentes não são
+sobrescritos. Cada conclusão atualiza status/erro/returncode/log no JSON;
+falha de um modelo não impede os seguintes e a execução retorna código 1
+quando há falhas. O relatório final usa escrita atômica e prioriza a causa
+real do log, não apenas o `CalledProcessError` externo. Logs integrais são
+locais/ignorados; mensagens versionadas usam `$ROOT`/`$WORKTREE`/`$TEMP`.
+
+O inventário inicial tem 585 entradas: 544 personagens e 41 Pokémon.
+Dos personagens, 177 não têm seção de motion, 9 só têm poses de um frame e
+358 têm ao menos um clipe selecionável; todos os 41 Pokémon têm PC/PB e
+GLB-base disponíveis. Ausência de seção/pose estática é distinta de falha
+em exportar um pack existente. Não se fabricam animações para preencher
+essas categorias.
+
+O validador escolhe dez saídas deterministicamente, equilibrando os dois
+tipos e espaçando os índices. Confere preservação do BIN e campos do GLB,
+imagens embutidas, todos os accessors float32 finitos, alvos em joints,
+índices e durações nativas e timestamps estritamente crescentes. Guarda
+hashes/métricas por amostra no próprio manifesto. É validação estrutural,
+não visual, de emulador, de looping ou de expressões.
+
+### Resultado observado do lote
+
+Execução autorizada com `nice 10` e dois jobs, sem alterar bases, `src/`
+ou ferramentas compartilhadas; diretório de saída conferido como ignorado.
+
+| Tipo | Inventariados | Integrados | Sem seção GF1 | Só poses estáticas | Falhas de conversão |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| MM | 544 | 348 | 177 | 9 | 10 |
+| Pokémon | 41 | 40 | 0 | 0 | 1 |
+| Total | 585 | 388 | 177 | 9 | 11 |
+
+São **544 clipes nativos**: 348 overworld e 196 Pokémon, em 388 GLBs novos.
+O executor retornou **1**, corretamente, porque 11 conversões falharam;
+não houve jobs deixados `ready` nem outputs parciais dessas falhas.
+
+- MM0024–0033: o GLB-base tem **zero skins** e o import COLLADA não produz
+  action (`Native animation missing after COLLADA import`). A existência
+  do pack GF1 não torna esse modelo-base um ator esqueletal animável.
+- Taillow #276, tag `pm0276_00`: falha no primeiro clipe (índice 0), em
+  `SPICA...DAEExporter.EvaluatePose`, com `InvalidDataException: Segment
+  scale compensation has a zero parent scale`. O guard não foi removido;
+  investigar fonte/compensação de escala antes de uma nova tentativa.
+- #129: GF1 não possui `special`/`faint` solicitados; #535 não possui
+  `physical`/`faint`. Cada um recebeu somente três clipes disponíveis;
+  as ausências estão no campo `unavailable`.
+
+As dez amostras estruturais passaram: MM0034, MM0172, MM0263, MM0350,
+MM0543 e Pokémon #72, #256, #279, #383 variante 1 e #692. Os 30 clipes
+nativos dessas amostras possuem valores variáveis; preservação do BIN,
+accessors/bufferViews originais, demais campos-base, imagens embutidas,
+valores finitos e tempos foram conferidos. Hashes e contagens estão em
+`models[].validation`; a lista e modo da amostragem estão em `validation`.
+A verificação passou com 42 testes Python, 32 Vitest e build; o aviso
+preexistente de bundle Vite >500 kB permanece. Paridade visual/emulador,
+looping, expressões e seleção dos clipes no jogo continuam fora do que foi
+validado e `P-012` segue em andamento.

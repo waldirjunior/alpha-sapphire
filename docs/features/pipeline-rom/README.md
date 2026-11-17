@@ -7,6 +7,7 @@ Responsável por extrair as partições proprietárias (`RomFS`, `ExeFS`) da ROM
 - [prds/](prds/README.md) — requisitos e critérios de aceite do pipeline.
 - [adrs/](adrs/README.md) — decisões arquiteturais e de isolamento proprietário.
 - [animations-format.md](animations-format.md) — formato GF1, índices de batalha PB/PK, expressões BCH, conversão individual e integração serial por manifesto nos GLBs texturizados (`P-012`, `A-010`, `A-011`).
+- [native-models-manifest.json](native-models-manifest.json) — cobertura dos 544 modelos MM e das 39 espécies selecionadas por encontros/starters/lendários, mapeamento PC/PB/GF1, resultados por modelo e validação amostral (`AN-E9`, `A-012`).
 - Referência TCC: [docs/tcc/01-pipeline-rom.md](../../tcc/01-pipeline-rom.md).
 
 ## Estado atual
