@@ -74,7 +74,7 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-011 HUD de desenvolvimento em vez de menus estilo Nintendo 3DS
 
-- **Estado:** aberta
+- **Estado:** fechada
 - **Data:** 2026-11-17
-- **Evidência:** A barra superior atual expõe controles de debug (`Treecko / Torchic / Mudkip / Resetar Save`) em vez de menus de jogo (Party, Bag, Pokédex, Mapa, Save).
-- **Próximo passo:** Construir UI estilo tela inferior do 3DS ([engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md)).
+- **Evidência:** Em [index.html](../index.html) e [src/main.ts](../src/main.ts), a barra de debug (`#starter-bar`) foi ocultada por padrão (exibida apenas com `?debug=1`), substituída pelo menu estilo 3DS (`#ds-menu`: `Time`, `Mochila`, `Pokédex`, `Salvar`), uso de `Potion` fora da batalha e barras de HP coloridas (`createHpBarMarkup`).
+- **Próximo passo:** Concluído.

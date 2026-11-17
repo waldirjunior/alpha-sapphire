@@ -33,6 +33,14 @@ const battleEnemy = document.getElementById('battle-enemy');
 const battlePlayer = document.getElementById('battle-player');
 const battleLog = document.getElementById('battle-log');
 const battleActions = document.getElementById('battle-actions');
+const dsPanel = document.getElementById('ds-panel');
+const dsTabButtons = document.querySelectorAll<HTMLButtonElement>('#ds-tabs button[data-tab]');
+const saveGameBtn = document.getElementById('btn-save-game');
+const starterBar = document.getElementById('starter-bar');
+
+if (starterBar && new URLSearchParams(window.location.search).get('debug') === '1') {
+  starterBar.classList.add('debug-open');
+}
 
 if (!app) {
   throw new Error('Elemento #app não encontrado');
@@ -53,6 +61,14 @@ let activePartyIndex = 0;
 let caughtCount = saved?.caughtCount ?? 0;
 let activeBattle: BattleState | null = null;
 let activeTrainerId: string | null = null;
+let openDsTab: 'party' | 'bag' | 'pokedex' | null = null;
+
+function createHpBarMarkup(currentHp: number, maxHp: number): string {
+  const ratio = maxHp > 0 ? Math.max(0, Math.min(1, currentHp / maxHp)) : 0;
+  const pct = Math.round(ratio * 100);
+  const color = ratio > 0.5 ? '#22c55e' : ratio > 0.2 ? '#eab308' : '#ef4444';
+  return `<div class="hp-bar-track"><div class="hp-bar-fill" style="width:${pct}%;background:${color}"></div></div>`;
+}
 
 function persistSave(): void {
   window.localStorage.setItem(
@@ -99,8 +115,8 @@ function renderBattle(): void {
   battleOverlay.classList.add('open');
   const b = activeBattle;
   const enemyPrefix = b.isTrainer && b.trainerName ? `${b.trainerName}: ` : 'Selvagem: ';
-  battleEnemy.textContent = `${enemyPrefix}${b.enemy.species.name} (Lv.${b.enemy.level}) — HP ${b.enemy.currentHp}/${b.enemy.maxHp}`;
-  battlePlayer.textContent = `Seu Pokémon: ${b.player.species.name} (Lv.${b.player.level}) — HP ${b.player.currentHp}/${b.player.maxHp}`;
+  battleEnemy.innerHTML = `<span>${enemyPrefix}${b.enemy.species.name} (Lv.${b.enemy.level}) — HP ${b.enemy.currentHp}/${b.enemy.maxHp}</span>${createHpBarMarkup(b.enemy.currentHp, b.enemy.maxHp)}`;
+  battlePlayer.innerHTML = `<span>Seu Pokémon: ${b.player.species.name} (Lv.${b.player.level}) — HP ${b.player.currentHp}/${b.player.maxHp}</span>${createHpBarMarkup(b.player.currentHp, b.player.maxHp)}`;
   battleLog.innerHTML = b.log.slice(-4).map((line) => `<div>${line}</div>`).join('');
   battleActions.innerHTML = '';
 
@@ -211,9 +227,92 @@ function renderBattle(): void {
   battleActions.appendChild(closeBtn);
 }
 
+function renderDsPanel(): void {
+  dsTabButtons.forEach((btn) =>
+    btn.classList.toggle('active', btn.dataset.tab === openDsTab)
+  );
+  if (!dsPanel) return;
+  if (!openDsTab || activeBattle) {
+    dsPanel.classList.remove('open');
+    dsPanel.innerHTML = '';
+    return;
+  }
+
+  dsPanel.classList.add('open');
+  dsPanel.innerHTML = '';
+
+  if (openDsTab === 'party') {
+    party.forEach((member, idx) => {
+      const row = document.createElement('div');
+      row.className = 'ds-item';
+      const info = document.createElement('div');
+      info.innerHTML = `<strong>${member.species.name}</strong> Lv.${member.level} (${member.currentHp}/${member.maxHp} HP)${createHpBarMarkup(member.currentHp, member.maxHp)}`;
+      row.appendChild(info);
+
+      if (member.currentHp < member.maxHp && bag.potions > 0) {
+        const healBtn = document.createElement('button');
+        healBtn.textContent = 'Potion';
+        healBtn.onclick = () => {
+          const res = usePotion(bag, member);
+          if (!res.used) return;
+          bag = res.bag;
+          party[idx] = res.pokemon;
+          syncUi();
+        };
+        row.appendChild(healBtn);
+      }
+      dsPanel.appendChild(row);
+    });
+    return;
+  }
+
+  if (openDsTab === 'bag') {
+    const items = [
+      { label: 'Poké Ball', count: bag.pokeballs, desc: 'Captura Pokémon selvagens em batalha.' },
+      { label: 'Potion', count: bag.potions, desc: 'Restaura 20 HP (use em Time ou Batalha).' },
+    ];
+    for (const item of items) {
+      const row = document.createElement('div');
+      row.className = 'ds-item';
+      row.innerHTML = `<div><strong>${item.label}</strong><div style="color:#94a3b8">${item.desc}</div></div><span>x${item.count}</span>`;
+      dsPanel.appendChild(row);
+    }
+    return;
+  }
+
+  const ownedIds = new Set(party.map((p) => p.species.id));
+  for (const sp of Object.values(SPECIES)) {
+    const row = document.createElement('div');
+    row.className = 'ds-item';
+    const hasIt = ownedIds.has(sp.id);
+    row.innerHTML = `<span>#${sp.dexNumber} ${sp.name} (${sp.types.join('/')})</span><span>${hasIt ? 'Registrado' : '—'}</span>`;
+    dsPanel.appendChild(row);
+  }
+}
+
+dsTabButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    if (tab !== 'party' && tab !== 'bag' && tab !== 'pokedex') return;
+    openDsTab = openDsTab === tab ? null : tab;
+    renderDsPanel();
+    btn.blur();
+  });
+});
+
+saveGameBtn?.addEventListener('click', () => {
+  persistSave();
+  saveGameBtn.textContent = 'Salvo!';
+  window.setTimeout(() => {
+    saveGameBtn.textContent = 'Salvar';
+  }, 1200);
+  saveGameBtn.blur();
+});
+
 function syncUi(): void {
   sceneManager.sync(state, MAPS);
   persistSave();
+  renderDsPanel();
   if (hudPos) {
     const mapName = MAPS[state.player.mapId]?.name ?? state.player.mapId;
     const lead = party[0];

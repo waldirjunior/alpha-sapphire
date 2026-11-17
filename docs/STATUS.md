@@ -18,7 +18,7 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   - [src/data/pokemon/](../src/data/pokemon/species.ts): iniciais (`Treecko`, `Torchic`, `Mudkip`) e encontros da `Route 101`/`Route 102` (`Poochyena`, `Zigzagoon`, `Wurmple`, `Lotad`, `Ralts`), com `.glb` animado (`idle`, `skins: 1`) + `.png`s em `public/assets/pokemon/`.
   - [src/engine/SceneManager.ts](../src/engine/SceneManager.ts): cena Three.js carregando `.glb` de mapas, personagens (`brendan.glb`, `may.glb`, `npc.glb`) com interpolação suave de movimento e animações esqueléticas `idle`/`walk`, e arena de batalha 3D (`syncBattle` com `battleMixers`) via `GLTFLoader`.
   - [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts): suíte de paridade contra o comportamento esperado da ROM original.
-  - [src/main.ts](../src/main.ts): loop de renderização, teclado, caixa de diálogo, HUD de batalha 3D, time de até 6 Pokémon e auto-save em `localStorage`.
+  - [src/main.ts](../src/main.ts): loop de renderização, teclado, caixa de diálogo, menu estilo 3DS (`Time`, `Mochila`, `Pokédex`, `Salvar`), HUD de batalha 3D com barras de HP coloridas, time de até 6 Pokémon e auto-save em `localStorage`.
 - Diretórios planejados ainda não criados: `src/ai/`.
 
 ## Estado da ROM e Ambiente na VPS

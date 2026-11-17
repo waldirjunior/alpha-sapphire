@@ -1,7 +1,7 @@
 # PRD-004 — Interface Estilo Nintendo 3DS (Menus, Party, Bag, Pokédex)
 
 - **Módulo:** [engine-3d](../README.md)
-- **Estado:** Planejado (Fase 2–3 do [ROADMAP.md](../../../ROADMAP.md))
+- **Estado:** Concluído (Fase 2–3 do [ROADMAP.md](../../../ROADMAP.md))
 - **Data:** 2026-11-17
 - **Pendências relacionadas:** `P-011`
 
@@ -17,6 +17,6 @@ O HUD atual exibe controles de desenvolvimento (`Inicial: Treecko / Torchic / Mu
 
 ## 3. Critérios de Aceite
 
-- [ ] Jogador consegue abrir Party, Bag, Pokédex e Save pelo menu sem controles de debug expostos por padrão.
-- [ ] Layout responsivo e legível em desktop e mobile.
-- [ ] `npm test && npm run build` passando.
+- [x] Jogador consegue abrir Time (Party), Mochila (Bag), Pokédex e Salvar pelo menu (`#ds-menu`) com controles de debug ocultos por padrão (`?debug=1`).
+- [x] Layout responsivo com barras de HP coloridas na batalha e no menu de equipe.
+- [x] `npm test && npm run build` passando.
