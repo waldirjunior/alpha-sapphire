@@ -85,10 +85,13 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-012 Animações nativas da ROM (tabela overworld `0xef` em `a/0/2/1` e golpes em `a/0/0/8`)
 
-- **Estado:** aberta
+- **Estado:** em andamento
 - **Data:** 2026-11-17
-- **Evidência:** As animações atuais (`idle` e `walk` dos personagens; `idle` dos Pokémon) são geradas proceduralmente no Blender sobre o esqueleto real da ROM porque o pacote de motion overworld (`a/0/2/1` seção 1, cabeçalho `0xef`) difere do formato `GFMotionPack` suportado pelo SPICA, e os Pokémon ainda não exportam clipes de ataque/dano/vitória de `a/0/0/8`.
-- **Próximo passo:** Mapear o formato binário das animações overworld (`0xef`) e exportar todos os clipes de batalha dos Pokémon (`idle`, `attack`, `hit`, `faint`) + expressões faciais.
+- **Evidência inicial:** As animações atuais (`idle` e `walk` dos personagens; `idle` dos Pokémon) são geradas proceduralmente no Blender sobre o esqueleto real da ROM. O motion overworld foi inicialmente tratado como formato desconhecido (`0xef`) e os Pokémon ainda não exportavam clipes de ataque/dano/vitória de `a/0/0/8`.
+- **Investigação:** [Formato nativo, offsets, hashes e comandos](features/pipeline-rom/animations-format.md) (`AN-E1`–`AN-E7`, `A-008`) refutam a ausência de suporte no SPICA: `0xef` é N=239 de `GFL.GF1MotionPack`; o wrapper usava incorretamente GFL2 e silenciava o erro. Brendan/May possuem 12/11 clipes esparsos presentes. Em `a/0/0/8`, PB seção 0 contém GF1 de batalha e PK contém ações `kw*`; os BCHs seguintes incluem visibilidade e expressões por UV de Eye/LIris/RIris. No PB de Bulbasaur: índices 0/1 wait, 8 físico, 12 especial, 16 dano, 17 queda, com nomes corroborados pelos BCHs.
+- **Entrega parcial:** [native_motions.py](../scripts/native_motions.py) lista índices originais e converte um clipe por chamada via GF1 → DAE → Blender → GLB. Brendan índice 2: 1 skin, 150 canais, 14/30 s; Bulbasaur PB índice 3: 1 skin, 195 canais, 15/30 s; ambos com accessors finitos e canais variáveis. Nenhum asset final ou `src/` alterado.
+- **Não verificado:** Paridade visual/looping, significado dos IDs overworld, bones Feeler ausentes no import de Bulbasaur e sincronização das expressões. O conversor entrega animação esquelética, não importa PT nem exporta os BCHs de material/visibilidade; outputs são probes, não substitutos diretos dos assets finais.
+- **Próximo passo:** Validar clipes contra emulador, resolver os avisos de importação, integrar ao pipeline existente sem perder materiais/filtro sw_parts e transportar as expressões UV/visibilidade sincronizadas. Só então substituir os clipes procedurais e fechar a pendência.
 
 ## P-013 Motor de scripts e eventos completos da história da ROM
 

@@ -21,6 +21,14 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   - [src/main.ts](../src/main.ts): loop de renderização, teclado, caixa de diálogo, menu estilo 3DS (`Time`, `Mochila`, `Pokédex`, `Salvar`), HUD de batalha 3D com barras de HP coloridas, time de até 6 Pokémon e auto-save em `localStorage`.
 - Diretórios planejados ainda não criados: `src/ai/`.
 
+## Investigação local de animações (macOS, 2026-11-17)
+
+- Worktree `anim-0xef-re`, base `b060a9b`; os registros anteriores de VPS acima/abaixo são históricos e não foram revalidados nesta investigação.
+- `P-012`: [formato nativo documentado](features/pipeline-rom/animations-format.md), incluindo offsets/hashes (`AN-E1`–`AN-E7`). `0xef` é N=239 de `GF1MotionPack`, já suportado pelo SPICA GFL; o wrapper local usava GFL2 incorretamente. `PB` contém batalha, `PK` interações, e expressões ficam em BCHs separados de material/visibilidade.
+- [native_motions.py](../scripts/native_motions.py) converte um clipe esquelético por chamada, sem mudar ferramentas compartilhadas, `src/` ou assets finais. Brendan 2 e Bulbasaur PB 3 geraram GLBs com skin, canais variáveis e accessors finitos; paridade visual e expressões não foram verificadas/integradas.
+- Ambiente observado: Python 3.12.3, .NET SDK 8.0.428 em `~/.dotnet/dotnet`, Blender 3.4.1 em `~/Applications/Blender3.4.app`. SPICA fonte em `/Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/_tools/SPICA`, commit `82acbd63695e4ef8b95a92ce884f25ec1044788f` com patches locais existentes de exportação. ROM extraída no checkout principal irmão de `_tools/`, ausente no worktree.
+- Verificação neste worktree: `npm ci --offline`; `npm test` (8 arquivos / 32 testes) e `npm run build` passaram; Vite manteve aviso de bundle >500 kB. A suíte Python passou com 15 testes (7 nativos + 8 existentes); o ataque Bulbasaur PB 8 foi exportado com 195 canais e duração 50/30 s após regressão reproduzida de perda do último frame. Detalhes em [animations-format.md](features/pipeline-rom/animations-format.md). Avisos CA1416, IOR/NumPy e bones ausentes do Blender foram registrados, sem reivindicação de fidelidade visual.
+
 ## Estado da ROM e Ambiente na VPS
 
 - Pasta [rom/](../rom/) ignorada pelo [.gitignore](../.gitignore#L8) e contendo:

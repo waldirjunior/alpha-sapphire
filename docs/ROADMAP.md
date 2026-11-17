@@ -32,6 +32,7 @@ Planejamento em fases para sair do protótipo placeholder atual até a reconstru
 - **Critérios de pronto:**
   - `src/data/` carregando mapas, textos e áudios reais (`P-004` concluída, `P-008` aberta).
   - Personagens com rig e animações `idle`/`walk` sem T-pose (`P-006`).
+  - Fidelidade de animações nativas (`P-012`): formato GF1 e slots PB/PK [mapeados](features/pipeline-rom/animations-format.md), com conversão individual comprovada; integração, expressões e paridade visual ainda pendentes.
   - Materiais multi-textura PICA200, interiores e UI estilo 3DS (`P-007`, `P-009`, `P-011`).
 
 ## Fase 3 — Sistemas de Jogo, Tabelas e Validação contra Emulador (Meses 9–14)
