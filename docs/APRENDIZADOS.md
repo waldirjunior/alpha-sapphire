@@ -481,3 +481,18 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Regra:** Cobrir também o loader de produção com um módulo JSON sintético no formato real; a tipagem genérica do glob não valida o schema de origem. StoryText local e GameText legado têm envelopes diferentes.
 - **Evidência:** A regressão falhou recebendo `{file:'0023', lines:[...]}` onde se esperava um array; passou após ler `.lines`. No navegador, o loader de produção resolveu seletor 1 → arquivo 23 → 2.848 strings. `MsgIsLoaded`, `MsgSwap` e `MsgRelease` foram reconferidos no CRO em `0x5202c`, `0x5d1bc` e `0x51be0`; slot ausente não recebe sucesso implícito.
 - **Limite:** O probe do loader não executa um ramo ROM de diálogo auxiliar nem prova paridade no emulador. Bancos ausentes, words/formatação e outros caminhos continuam em P-013.
+
+## A-059 Mesmo nome de cidade não identifica o corredor real
+
+- **Data:**2026-11-18; PRD-011/P-017.
+- **Contexto:** Verdanturf até Mauville e possível acesso terrestre a Slateport.
+- **Erro evitado:** Supor44→15 ou usar34 por compartilhar o nome Route110; converter portais recíprocos com larguras diferentes em continuidade física presumida.
+- **Regra:** Cruzar zones.json, zoneIds MM e destinos ZO. O caminho é11→44→445→15, seguido de445→33→14. Só11/44 é contatoMM6;445 é hall de Mauville/MM347,15 é pátio/MM14 e33 é Route110 terrestre/MM21.34/MM22 é ciclismo. Portais445↔33 têm width7/5 e33↔14 width5/3: preservar, não inventar alinhamento lateral nem offset.
+- **Evidência:** Regressão percorre até33 com todos os atores visíveis e confere os quatro pares445↔15. Nenhuma ponte, colisão ou tabela de encontros alterada. Staging seletivo reproduziu80 assets de mapa/áudio ausentes e corrigiu a presença para zero ausentes,46 zonas/100GRs/100atores e BGMs c02/c03/r_c/t04; dry-run UV limpo. Aceite visual continua separado.
+
+## A-060 Progresso pós-evento inclui work e remoções, não só hide-flag
+
+- **Data:**2026-11-18; PRD-011/P-013.
+- **Erro reproduzido:** A tentativa de caminhar11→44→445→15→445→33→14 falhou no último trecho. NPCs9–13 de33, hide-flag660, bloqueiamz114..116; ocultar661/532 isoladamente não libera o sul.
+- **Regra:** Não contornar o grupo com nova borda. Conferir o bloco real e separar estado base de fixture pós-evento rotulada, preservando também os writes de work e os tombstones por zona. O estado inicial permanece bloqueado.
+- **Evidência:** Programa33/map SHA9492e0f2e9f8bfef75e6657ffa991d3fbbc97ec101ace80b69cc550b062f4ef6 conforme disassembly: WorkSet16526=2@7368, FlagSet660@7384, MdlDel11/12/9/13/10@7400/7416/7432/7448/7464. Fixture7360..7475 com halt sintético7476 termina na VM existente, persiste/restaura progresso e alcança14 sem mutar mapas. Quatro regressões novas,320 Vitest/150 Python sem skips/build passaram sobre3dbfd21. Não executa a função inteira nem prova a campanha; Playwright ainda pendente.
