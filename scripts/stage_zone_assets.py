@@ -72,6 +72,14 @@ def stage_characters(models: Path, public: Path, ids: set[int]) -> list[int]:
     return missing
 
 
+def stage_audio(source: Path, public: Path, entries: list[dict], roots: tuple) -> list[str]:
+    tracks = sorted({entry['bgmName'] for entry in entries
+                     if entry['zone'] in roots and entry['hasMp3'] and entry['bgmName']})
+    for name in tracks:
+        write_new(public / f'assets/audio/{name}.mp3', (source / f'{name}.mp3').read_bytes())
+    return tracks
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description='Copia apenas assets convertidos do slice e destinos diretos; não converte ROM.')
     parser.add_argument('--models-dir', type=Path, required=True)
@@ -79,6 +87,7 @@ def main() -> None:
     parser.add_argument('--maps-dir', type=Path, default=Path('src/data/maps_v2'))
     parser.add_argument('--zones', type=int, nargs='+', default=SLICE)
     parser.add_argument('--include-neighbors', action='store_true')
+    parser.add_argument('--audio-dir', type=Path)
     args = parser.parse_args()
     maps = {int(path.stem): json.loads(path.read_text()) for path in args.maps_dir.glob('[0-9][0-9][0-9][0-9].json')}
     neighbors = json.loads((args.maps_dir / '_neighbors.json').read_text())['zones'] if args.include_neighbors else None
@@ -89,7 +98,10 @@ def main() -> None:
         copy_gr(args.models_dir / name / f'{name}.glb', args.public_dir / f'assets/maps/{name}/{name}.glb')
     actors = {npc['model'] for zone in selected for npc in maps[zone]['npcs']}
     missing = stage_characters(args.models_dir, args.public_dir, actors)
-    print(json.dumps({'zones': selected, 'grs': sorted(grs), 'characters': len(actors) - len(missing), 'missingCharacters': missing}))
+    tracks = stage_audio(args.audio_dir, args.public_dir,
+                         json.loads((args.maps_dir.parent / 'zone_audio.json').read_text()), tuple(args.zones)) if args.audio_dir else []
+    print(json.dumps({'zones': selected, 'grs': sorted(grs), 'characters': len(actors) - len(missing),
+                      'missingCharacters': missing, 'audio': tracks}))
 
 
 if __name__ == '__main__':

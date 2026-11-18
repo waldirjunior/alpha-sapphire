@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 from scripts.glb_native_clips import decode_glb, encode_glb
-from scripts.stage_zone_assets import copy_character, select_slice
+from scripts.stage_zone_assets import copy_character, select_slice, stage_audio
 
 
 class StageZoneAssetsTests(unittest.TestCase):
@@ -18,6 +18,17 @@ class StageZoneAssetsTests(unittest.TestCase):
         graph = {'zone_0006': {'neighbors': [{'targetMapId': 'zone_0007'}]},
                  'zone_0007': {'neighbors': [{'targetMapId': 'zone_0008'}]}}
         self.assertEqual(select_slice(maps, (6,), graph), [6, 7, 223])
+
+    def test_stages_only_audio_declared_for_requested_zones(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            audio = root / 'audio'
+            audio.mkdir()
+            (audio / 'bgm_route.mp3').write_bytes(b'synthetic mp3')
+            entries = [{'zone': 27, 'bgmName': 'bgm_route', 'hasMp3': True},
+                       {'zone': 16, 'bgmName': 'not-selected', 'hasMp3': True}]
+            self.assertEqual(stage_audio(audio, root / 'public', entries, (27,)), ['bgm_route'])
+            self.assertEqual((root / 'public/assets/audio/bgm_route.mp3').read_bytes(), b'synthetic mp3')
 
     def test_character_embeds_external_images_without_changing_geometry(self):
         with tempfile.TemporaryDirectory() as folder:

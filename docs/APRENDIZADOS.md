@@ -327,3 +327,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro potencial:** Copiar apenas raízes e destinos de warp deixa sem GLB os chunks que o renderer já compõe de Route105/115/116 ao abrir27/16. Percorrer vizinhos recursivamente, por outro lado, copiaria o mundo todo.
 - **Regra:** --zones escolhe raízes; --include-neighbors acrescenta só um salto do grafo dessas raízes, além dos destinos ZO diretos. Não expandir novamente a partir do resultado. Validar assets e manter os IDs especiais em fallback, sem inventar máscaras de bits.
 - **Evidência:** Fixture de seleção falhou com a API anterior e agora seleciona6/7/223 sem alcançar o vizinho8 de7. O plano13/27/82/26/16 selecionou29 zonas/53 GRs/57 atores, seis IDs especiais sem modelo; public acumulado validou74 GRs e68 atores com zero violações texCoord. Playwright permanece aceite separado.
+
+## A-044 HTTP200 do Vite não garante que o asset de áudio exista
+
+- **Data:** 2026-11-17.
+- **Contexto:** Playwright do PRD-008 na main b5e3efc chegou a Rustboro em306 passos, mas gerou erros repetidos Unable to decode audio data.
+- **Erro reproduzido:** zone_audio.hasMp3 refere-se à extração local, não ao public. As BGMs r_b/d_01/c_02 existiam em rom/extracted/audio/mp3, mas faltavam no staging; o fallback SPA devolvia HTML200, sem HTTP404 e sem consoleErrors, enquanto pageErrors acumulava falhas do decoder. Auditar apenas status HTTP ou console não detectaria o defeito.
+- **Regra:** Ao expandir o slice, copiar também as BGMs nativas das raízes usando --audio-dir. Não inventar música, silenciar rejeições ou falsificar hasMp3. Conferir pageerror e decodificação além da presença/HTTP; um asset200 ainda pode ser HTML. Melhorias genéricas de fallback/erros do player fora das zonas staged permanecem no escopo P-008.
+- **Evidência:** Fixture sintética falhou antes de stage_audio e agora garante seleção por zona, sem copiar faixa de raiz não solicitada. Os três MP3s reais foram staged com write_new idempotente; repetição completa dos306 passos encerrou com consoleErrors=[], pageErrors=[], missing=[], sem interceptar áudio. 215 Vitest/139 Python sem skips/build passaram; oito capturas locais e encontros das cinco zonas foram conferidos, com limitações visuais e de história preservadas.
