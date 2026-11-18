@@ -199,3 +199,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Contexto:** Música de batalha, fanfarra e jingles para `P-008` ([battleAudio.ts](../src/core/battleAudio.ts), [audio-format.md](features/pipeline-rom/audio-format.md)). Complementa `A-023`.
 - **Erro potencial:** (1) Usar os `STRM_BGM_VS_*` sem sufixo `_SG`: são resquícios do XY e todos apontam para `bgm_xy_vs_trainer_pss`. (2) Tratar `WIN1/WIN2/WIN3` como vitória selvagem/treinador/ginásio como fato lido da ROM: é a ordem dos rótulos, sem tabela que confirme. (3) Validar áudio só por teste unitário: o `AudioContext` só existe em browser e exige gesto do usuário.
 - **Regra:** Use apenas `STRM_BGM_VS_*_SG` e `STRM_ME_*` (sons 100–124 e 211+). Para validar no browser, rode o dev server no worktree com `public/` do checkout principal (symlink temporário), injete um save via `import('/src/core/battlePokemon.ts')` no Playwright e verifique `document.body.dataset.bgm`, as requisições `/assets/audio/*.mp3` e o console. Confirmar WIN1–3 contra o jogo original antes de tratar como regra fechada.
+
+## A-028 Contato de zone-grid não resolve ligações entre matrizes
+
+- **Data:** 2026-11-17
+- **Contexto:** Corredor contínuo, engine-3d/PRD-006/ADR-004, P-017. Renumerado de `A-027` no merge (colisão com `audio-zones`).
+- **Erro reproduzido:** Comparar retângulos entre MM1 e MM2 inventa contatos: 6/23/7/25 estão na MM1 e 13/24 na MM2. Alinhar cegamente Oldale e Route102 pela largura também deixa duas colunas GR bloqueadas no caminho.
+- **Regra:** Derivar contatos intra-MM dos owners ortogonais e spans de 10 tiles. Ligações externas devem ter proveniência explícita: a ponte 7↔24 aprovada é inferred=true, com colunas caminháveis 1/78 e offset78; grids originais não são alterados. Coordenadas locais são convertidas a um referencial mundial estável para a câmera/chunks, sem fade nem limpeza de cena a cada troca de zona.
+- **Evidência:** Grafo de 58 zonas/90 bordas; regressões com passo mundial unitário e seleção de encontros por ID exato. 159 Vitest e build passaram; stage de 35 GRs/51 atores com UV fix antes da cópia. Validação Playwright na main ainda pendente nesta etapa.

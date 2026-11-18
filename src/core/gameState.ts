@@ -1,5 +1,15 @@
 import type { Direction, GameState, GridPosition, Interactable, MapDefinition } from './types';
 import { DIRECTION_DELTAS, stepPosition, stepWarp } from './warps';
+import { boundaryTarget, stepBoundary } from './boundaries';
+import type { BoundaryLink } from './types';
+
+function crossBoundary(state: GameState, direction: Direction, maps: Record<string, MapDefinition>, link: BoundaryLink): GameState {
+  const target = maps[link.targetMapId];
+  const pos = boundaryTarget(state.player.pos, link);
+  const walkable = target && isWalkable(maps[state.player.mapId], state.player.pos) && isWalkable(target, pos);
+  return { ...state, player: { ...state.player, facing: direction,
+    ...(walkable ? { mapId: target.id, pos } : {}) } };
+}
 
 export function createInitialState(
   startMapId = 'littleroot_town',
@@ -46,6 +56,8 @@ export function movePlayer(
 
   const nextPos = stepPosition(state.player.pos, direction);
   const warp = stepWarp(state, direction, currentMap);
+  const boundary = !warp && stepBoundary(state.player.pos, direction, currentMap);
+  if (boundary) return crossBoundary(state, direction, maps, boundary);
 
   if ((!warp && !isWalkable(currentMap, nextPos)) || (warp && !maps[warp.targetMapId])) {
     return {

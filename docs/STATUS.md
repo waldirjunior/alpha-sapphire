@@ -22,6 +22,13 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   - [src/main.ts](../src/main.ts): bootstrap que carrega as tabelas de batalha e importa [src/game.ts](../src/game.ts): loop de renderização, teclado, caixa de diálogo, menu estilo 3DS (`Time`, `Mochila`, `Pokédex`, `Salvar`), HUD de batalha 3D com barras de HP coloridas, time de até 6 Pokémon e auto-save em `localStorage`.
 - Diretórios planejados ainda não criados: `src/ai/`.
 
+## Corredor contínuo (2026-11-17, implementação sobre main b09a93b)
+
+- `_neighbors.json`: 58 zonas/90 bordas dirigidas derivadas do contato MM, com ponte 7↔24 explicitamente inferred=true, aprovada pelo coordenador; não se alega extração da conexão entre MM1 e MM2. Padding permanece bloqueado; passo entre x=1 de Oldale e x=78 de Route102 mede um tile mundial.
+- Core mantém colisão/direção e coordenadas locais; engine conserva chunks/atores e usa origens mundiais estáveis. Repositório só pré-carrega um salto de vizinhos; encontros vêm diretamente de zones/NNN_*.json por ID exato.
+- Staging ampliado: 23 zonas (slice + destinos diretos), 35 GRs, 51 atores; glb_uv_fix aplicado antes da cópia e os 7 testes UV passaram apontando ao public principal, sem skips.
+- Testes de borda, grafo e cache passam; Playwright no checkout principal **ainda pendente**, aguardando avanço da main pelo coordenador conforme PRD-006/ADR-004. Nenhuma caminhada completa declarada pronta nesta etapa.
+
 ## Integração maps_v2 no runtime (2026-11-17, zone-maps sobre main 5d9a3b6)
 
 - `getZoneMap` lazy em `src/data/maps_v2/`: cache/retry/adapter, bootstrap zone_0006 e destino carregado antes da transição. SpawnDerived preservado; `?maps=legacy` mantém os mapas antigos e save v1, enquanto o modo novo usa namespace v2 sem migrar/apagar saves existentes.
