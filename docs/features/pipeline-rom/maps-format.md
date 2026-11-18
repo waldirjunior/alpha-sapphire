@@ -436,7 +436,7 @@ controles são explicitamente diagnósticos. Craft Anything indisponível na
 listagem MCP e CLI ausente; leitura de código/JSON e instrumentação local,
 sem executar código da ROM. P-017 e aceite visual permanecem abertos.
 
-## Fonte nativa dos atributos de movimento (PRD-015, A-082–A-085)
+## Fonte nativa dos atributos de movimento (PRD-015, A-082–A-087)
 
 A análise estática de2026-11-18 recuperou classe alta por `LSR24`
 (code403558/40356c/4038cc), low12 (402e60) e predicados de bits0/1 com sentinelas.
@@ -453,21 +453,34 @@ herdado da base3013f14 não comprova esse contrato de camadas sobrepostas.
 Field64be0 projeta vetores para6d/e. O contexto dos gates foi identificado:
 owner+164 recebe PlayerGrid (construtora1b394, vtable10723c), base FieldUnit.
 +24 é modo corrente, +25 pendente; setters88090/a6b18 e tabela141fe4 antecedem
-commit8e494. Modos1/2 têm callbacks distintos, mas enum Mach/Acro/foot/input não
-fechado. Escritor a47c4 grava0f em+14 após pedir5d; não prova quatro direções.
+commit8e494. A-090/A-091 liga modo1→51→CycleMachStop e modo2→58→CycleDirtStop
+por registro/RTTI; input/item e nome comercial Acro não fechados. Escritor
+a47c4 grava0f em+14 após5d/CycleDirtWheelieJump, não quatro direções provadas.
 
 6f exige modo2, estados0e..11 e queries; instancia EventDanielSteppingStone.
 Import1664→SkatePipe1428 fornece direção;14d4/1430 solicitam ação62 até contador2.
-code3fae48→CRS19c7c4→Field3a0c4 agenda comando/direção emator+8fc; ainda não foi
-fechado o executor, deslocamento/tick ou completion. Não inferir slide/dois tiles.
-Ledges64528→e6224 usam decoder72/73/74/75 e normal/oposta, mas produzem resultado
-intermediário5/1d/24, seguido de outros gates: sem regra completa nos quatro
-sentidos e sem generalizar75020021 do ADR-008.
+A fila3a0c4 e consumidor401f0 usam o mesmo controladorator+8fc, ligados por
+CRS19c7c4/19c7e4 e code3fae48/3f852c. Registro3d9d4/vtable10a4d0 fecha o
+executor62/CycleDirtDanielSteppingJump:4b224→81b3c com distância-param1/tipo5/
+limite8, atualizador83028 e estágio final3a0bc. Não garante dois deslocamentos
+concluídos, clock nativo ou passagem irrestrita de6f; input e sequência abertos.
 
-**Resultado parcial/inconclusivo para implementação:** runtime, parser, grids
-e grounding preservados nesta continuação.362 Vitest/56 arquivos,186 Python
-sem skips/build passam; nenhum novo red-green/Playwright de regra não provada.
-SHA, offsets/VA, aliases rejeitados e comandos reproduzíveis no
+Ledges64528→e6224 chegam a resultado5/1d/24. A continuação28113e3 segue5 até
+25/ActionCmdJump2G16F num ramo modo0: registro3ca4c, etapas41310→83028→3a0bc,
+distância-param2 no grid/tipo1/limite16 cardinal, pose física+e8 atualizada
+após destino lógico+bc. Tabelas586ea4/586eb4 dão75→sul,73→oeste,72→leste,
+74→norte. **Isso não fundamenta abrir73020021 em52 oeste→leste.**
+
+Outros gates permanecem: callbacks, máscara4e067c→4de148/e811c, landing e
+seletor global+fc8. Outro ramo solicitaaa/ActionCmdBehindJump, usa4df9b8/81670
+e ainda não foi provado equivalente. A máscara intermediária2/4/8/10 não é o
+low12 da célula. Não generalizar75020021 do ADR-008 só pelo executor comum.
+
+**Resultado parcial/inconclusivo para implementação:** runtime, parser, grids,
+colisões,75020021 e grounding preservados.362 Vitest/56 arquivos,186 Python
+sem skips/build passam novamente; nenhum novo red-green/Playwright de regra
+não provada. Cinco SHA, RTTI, imports e parâmetros conferidos; offsets/VA,
+aliases rejeitados e comandos reproduzíveis no
 [PRD-015](../engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md).
-P-017 permanece aberta: enums/input, flag20, seleção GR/altura e aceitação/efeito
-completos do passo/salto antes de declarar corredor conectado.
+P-017 permanece aberta: primeiro aceitação/landing/aa, depois input/Daniel;
+flag20 e seleção GR/altura por último. Corredor conectado não entregue.

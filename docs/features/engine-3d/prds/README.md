@@ -17,4 +17,4 @@
 | [PRD-012](PRD-012-corredor-mauville-fallarbor-meteor-falls.md) | Mauville–Fallarbor–entrada de Meteor Falls | 1023 passos main; base bloqueada/fixture derivada, loop e visual pendentes | 2026-11-18 |
 | [PRD-013](PRD-013-bondinho-mt-chimney-lavaridge.md) | Bondinho de Mt. Chimney, Jagged Pass e Lavaridge | 452 passos main809b814; nav condicional validada, visual/natural pendentes | 2026-11-18 |
 | [PRD-014](PRD-014-trechos-leste-mauville-lilycove.md) | Trechos leste de Mauville e acesso parcial a Lilycove | Main665aca4:375+139+85+175 passos separados,22 capturas/zero erros; corredor conectado/Surf/visual abertos | 2026-11-18 |
-| [PRD-015](PRD-015-permissoes-nativas-de-movimento.md) | Leitores e condições nativas das permissões | PlayerGrid/fila e pedido62 recuperados; enums/camada/efeito inconclusivos, nenhuma regra nova (A-084/A-085) | 2026-11-18 |
+| [PRD-015](PRD-015-permissoes-nativas-de-movimento.md) | Leitores e condições nativas das permissões | Executores25/62 e famílias Mach/Dirt recuperados;73 aponta oeste, aceitação/input ainda abertos, nenhuma regra nova (A-090/A-091) | 2026-11-18 |

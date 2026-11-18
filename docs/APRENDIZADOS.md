@@ -924,3 +924,46 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   runtime; repetir A/B do mesmo código ou remover terreno no harness não
   constitui correção nem paridade. Nesta entrega,12 capturas preservaram
   os três oclusores e o ledge84,Y21→20.5; nenhum gancho foi publicado.
+
+## A-090 Normal de ledge precisa do vetor, não da intenção do corredor
+
+- **Data:**2026-11-18; PRD-015/P-017, base28113e3; complementa A-083/A-085.
+- **Erro evitado:** traduzir decoder73→2 como leste porque a fronteira desejada
+  está à direita. As tabelas code586ea4/586eb4 dão direção2=(-1,0), oeste;
+  75→1=(0,+1),72→3=(+1,0),74→0=(0,-1). No ramo e6224 com último argumento0,
+  a saída recebe a normal após consultas. Abrir73 em52 oeste→leste contrariaria
+  essa evidência, mesmo que um executor aceite as quatro direções por parâmetro.
+- **Evidência nova:**645f0 aplica deslocamento8f3a8 antes da consulta de célula;
+  77310→64410 transforma resultado-base2 em5; PlayerGrid1b17c/a76e0 encaminha
+  um ramo modo0 a a29e0, que solicita25. Registro3ca4c/vtable108fc4 fecha
+  ActionCmdJump2G16F, etapas41310→83028→3a0bc. Consumidor401f0 lê o comando da
+  filaator+8fc por importCRS19c7e4/code3f852c. Inicialização usa parâmetro de
+  distância2, tipo1 e limite16 cardinal; atualizador aplica X/Z e altura.
+- **Regra:** separar direção normal, direção de entrada e oposta; preservar o
+  teste negativo52 oeste→leste. Identificar o executor não fecha os callbacks,
+  máscara residual/e811c, landing ou ramoaa/ActionCmdBehindJump. Não generalizar
+  75020021 nem abrir células enquanto esses gates não corresponderem ao core.
+
+## A-091 Executor e família de bike não são binding de input nem relógio
+
+- **Data:**2026-11-18; PRD-015/P-017, continuação de A-087/A-088; renumerado de A-086/A-087 no merge (colisão).
+- **Evidência:** callback modo1→51→vtable109844/ActionCmdCycleMachStop;
+  modo2→58→1097fc/ActionCmdCycleDirtStop. Estado+14=0f em a47c4 vem após5d,
+  registrado como ActionCmdCycleDirtWheelieJump. São famílias nativas Mach/Dirt;
+  isso não prova item/menu, Acro como nome comercial ou os estados0e–11 completos.
+- **Executor62:** registro3d9d4/vtable10a4d0 identifica
+  ActionCmdCycleDirtDanielSteppingJump. Etapas4b224→83028→3a0bc; parâmetros de
+  81b3c são distância1, tipo5 e limite8. Há ramo específico de tipo5 na
+  atualização de posição/altura. Duas solicitações Daniel ainda não garantem
+  dois deslocamentos concluídos; limite8 não prova8 frames em tempo real.
+- **Erro evitado:** confundir destino lógico+bc, escrito na inicialização,
+  com pose física+e8, atualizada durante o salto e reprojetada ao terminar.
+  Não equiparar a máscara intermediária2/4/8/10 ao low12 do permission word.
+  Import anônimo usa patch no literal stub+4;19c47c resolve8f3a8, enquanto
+  19c478 é início do stub, não um patch válido.
+- **Resultado:** runtime, parser, mapas, colisões, grounding e75020021 intactos;
+  362 Vitest/56 arquivos,186 Python sem skips/build passaram novamente. Cinco
+  SHA, seis RTTI, dois imports e parâmetros reconferidos pela receita do
+  [PRD-015](features/engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md).
+  Entrega parcial sem novo red-green/Playwright; aceitação/input continuam
+  abertos. Flag20 e seleção GR/altura ficam depois, sem descartar a pendência.

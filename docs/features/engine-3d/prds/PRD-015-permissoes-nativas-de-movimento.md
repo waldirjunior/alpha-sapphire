@@ -1,12 +1,13 @@
 # PRD-015 — Leitores e condições nativas das permissões de movimento
 
 - **Data:** 2026-11-18.
-- **Fase:** 2; P-017/P-013; A-082–A-085; continuação do PRD-014.
-- **Bases:** investigação inicial em `202d74b`; continuação A-087/A-088 em
-  `3013f14`, mesmo worktree `eastern-lilycove` autorizado.
-- **Estado:** duas passadas estáticas entregues; **inconclusivas para implementar
-  uma regra completa de movimento**. Nenhum runtime, colisão ou mapa alterado
-  nesta continuação; grounding primário herdado da base preservado.
+- **Fase:** 2; P-017/P-013; A-082–A-091; continuação do PRD-014.
+- **Bases:** investigação inicial em `202d74b`; A-087/A-088 em `3013f14`;
+  A-090/A-091 em `ffd1154` (renumerados no merge), mesmo worktree
+  `eastern-lilycove` autorizado.
+- **Estado:** executor de salto por grid e executor62 recuperados; **aceitação
+  completa ainda inconclusiva para implementar movimento**. Nenhum runtime,
+  colisão ou mapa alterado; grounding primário herdado preservado.
 
 ## Objetivo e decisão
 
@@ -290,6 +291,142 @@ As classes72/73/74/75 compartilham decoder e esse caminho intermediário, mas
 **isso não prova a mesma transição de salto parametrizada nos quatro sentidos**.
 A regra anterior75020021 permanece restrita ao ADR-008, sem generalização.
 
+## Continuação A-090/A-091: executor recuperado, aceitação ainda aberta
+
+Esta passada prioriza ledges sobre bike/input e comando62; flag20 e seleção
+GR/altura ficam por último. São observações e derivações estáticas, não uma
+execução do jogo. Classes, comandos, resultados e offsets são hexadecimais;
+distâncias e limites de contador são decimais. Os limites das duas passadas
+anteriores permanecem históricos; os avanços abaixo substituem a lacuna de
+executor, não todos os seus gates.
+
+### Direção normal: 73 aponta para oeste, não para leste
+
+code `0x3f1824` e `0x4dc6d0` indexam duas tabelas de oito `i16`:
+
+- `0x586ea4`, deltaX: `[0,0,-1,1,-1,1,-1,1]`.
+- `0x586eb4`, deltaZ: `[-1,1,0,0,-1,-1,1,1]`.
+
+Combinadas com o decoder `0x402e6c`, elas fecham a normal numérica deste ramo:
+
+| Classe alta | Direção decodificada | Delta X/Z | Sentido no grid extraído |
+| --- | --- | --- | --- |
+| 75 | 1 | `(0,+1)` | Sul |
+| 73 | 2 | `(-1,0)` | Oeste |
+| 72 | 3 | `(+1,0)` | Leste |
+| 74 | 0 | `(0,-1)` | Norte |
+
+Isso não inventaria palavras72/74 nos mapas. No ramo seguido de `0xe6224`,
+último argumento0, a direção de saída recebe a normal, após os testes da
+tripla direcional e da consulta vizinha. Não confundir esse ramo com aquele
+que admite comparação com a direção oposta.
+
+**Consequência para Route123/zone52:** `73020021` não fundamenta liberar a
+barreira de `x=78` ao avançar oeste→leste desde a chegada oeste. Sua normal
+neste ramo é oeste. Um futuro teste de quatro sentidos deve preservar esse
+caso negativo, mesmo que feche uma travessia no sentido inverso. Não prometer
+que uma regra lateral nativa abrirá o corredor por52.
+
+### Do resultado5 à alteração das posições do ator
+
+A cadeia recuperada já ultrapassa o agendamento:
+
+1. Field `0x645f0` copia a posição lógica `ator+0xbc`; `0x646cc` aplica os
+   deltas de entrada por `0x8f3a8` antes da consulta `0x646e8→4dcaec`.
+   O atributo devolvido é consultado na célula seguinte, não simplesmente
+   copiado do getter corrente `modelo+0x148`.
+2. `0x77310` chama `0x64410` em `0x773c0/0x774b8`. Para a tentativa normal,
+   fornece resultado-base2; sucesso do ramo de ledge o transforma em5 e
+   escreve direção/vetor no descritor de saída.
+3. O tick de PlayerGrid chama `0xa2088` em `0x1b17c` e encaminha o resultado
+   para `0xa76e0` em `0x1b128`. Com modo corrente0, um ramo seleciona
+   `0xa29e0`; resultado5 chega a `0xa2aa0..0xa2abc`, solicita comando25hex
+   por `0x7764c`, com a direção de saída, e grava estado `+0x14=1`.
+4. O registro de comandos usa uma referência BSS representada como `0x310`
+   pelo parser, não uma função nesse offset. Em `0x3ca38..0x3ca4c`, a entrada
+   no deslocamento `0x94 = 0x25*4` recebe vtable `0x108fc4` e três etapas:
+   **`0x41310 → 0x83028 → 0x3a0bc`**. RTTI: typeinfo `0xfe900`, nome
+   `0x103d6c`, `ActionCmdJump2G16F`.
+5. O consumidor real é `0x401f0`: lê comando `u16` em `controlador+8`, busca
+   a entrada, usa `controlador+0xc` como etapa e chama seus ponteiros.
+   Retorno1 continua;2 aguarda;3 ou fim das etapas conclui. CRS patch
+   `0x19c7e4` importa Field segmento0/offset `0x40070`, arquivo `0x401f0`;
+   code `0x3f852c` o chama com `ator+0x8fc`. É o controlador escrito pela fila
+   `0x3a0c4`, não outro objeto com offsets iguais.
+6. `0x41310` recebe direção em `controlador+0xa` e chama `0x81b3c` com
+   distância2, tipo1 e limite16 para direções0–3 (`0x82220` retorna0).
+   `0x81b3c` guarda origem a partir de `ator+0xe8`, calcula destino lógico
+   a partir de `ator+0xbc` por `3f1824(direção,pose,2)` e o resolve por
+   `0x4dc514`. O import CRS `0x19c47c` liga o offset à rotina Field `0x8f3a8`.
+   `3f12d8` escreve o destino lógico em `ator+0xbc` já na inicialização.
+7. `0x83028→0x83030` recupera origem/destino, incrementa contador, interpola
+   X/Z e aplica offset vertical da tabela `0xf5670`. `3f179c` escreve a pose
+   física em `ator+0xe8`. Ao atingir o limite, zera o offset, atualiza flags,
+   chama `3f2dfc/3f37f8` e avança a etapa. `3f37f8` projeta novamente o destino
+   lógico e escreve a pose física. O estágio final `0x3a0bc` retorna3.
+
+Portanto, **há execução parametrizada por direção e distância de duas
+unidades de grid nesse ramo**, não apenas um nome RTTI ou pedido de ação.
+Destino lógico e pose física mudam em momentos diferentes. Limite de contador
+não comprova FPS, duração em segundos ou paridade da animação no navegador.
+
+### Por que ainda não generalizar o runtime
+
+- `0x64410` consulta callbacks virtuais do objeto `+0x1a0` e dos quatro
+  objetos `+0x1a8` do contexto global antes do ramo de ledge. Seu resultado
+  ainda depende da máscara de consultas/colisões, não só da classe alta.
+- A máscara `0x2` limpa por `0x64568` pertence a **esse resultado intermediário**,
+  não ao permission word. code `0x4e067c→0x4de148` combina footprint e
+  consultas: OR `0x2` após `4dd318` ou representação inválida; OR `0x4` após
+  `3f3498`; OR `0x8` após `4dc514/3f4920`; OR `0x10` em falhas de posição.
+  Não converter
+  esses bits em flags baixos da célula ou em gates de NPC já reproduzidos.
+- Se restarem flags, `0x645a8→0xe811c` pode recusar. Esse caminho exige
+  checks do objeto global `+0x100`, inclusive byte `+0xfc8==1`, testa posições
+  deslocadas e volta a `0x645f0`; o sucesso final exige máscara zero. O
+  retorno padrão em `0xe84f0` é0. A correspondência integral com colisão,
+  landing, atores e estado do core ainda não foi recuperada.
+- Mesmo em modo0, a seleção em `0xa775c` também pode chamar `0xa5990`.
+  Seu resultado5 chega a `0xa5c10..0xa5cd0`: prepara vetores, solicita
+  comando **aahex** com direção9 e grava `+0x14=1`. Registro `0x3f614`,
+  deslocamento `0x2a8`, vtable `0x109290`: RTTI `ActionCmdBehindJump`.
+  Inicialização `0x4513c` consulta `4df9b8` e chama `0x81670`, não `0x81b3c`.
+  A equivalência desse caminho e o significado do seletor global não estão
+  fechados; não chamá-lo de input analógico provado só por usar vetores.
+
+O executor de grid está identificado, mas **faltam condições completas de
+entrada e aterrissagem**. Preservados runtime, parser, mapas, colisões e a
+regra exata75020021 anterior. Não criar fixture de modo presumido, abrir73
+para leste ou implementar só a aparência de salto.
+
+### Modos Mach/Dirt e executor62, sem inventar input
+
+A tabela também liga os modos1/2 às famílias nativas de comando:
+
+| Modo/callback | Comando e registro | Vtable/typeinfo/nome RTTI |
+| --- | --- | --- |
+| 1 / `a5014` | 51hex; store `3d5f8`, offset144 | `109844/fecd8/104b01`: `ActionCmdCycleMachStop` |
+| 2 / `a4ee8` | 58hex; store `3d77c`, offset160 | `1097fc/fecb4/104a89`: `ActionCmdCycleDirtStop` |
+
+Isso fecha **CycleMach/CycleDirt como famílias nativas**, não o binding de
+item/menu/input nem o nome comercial Acro para Dirt. O estado `+0x14=0x0f`
+escrito em `0xa47c4` vem após comando5d; registro `0x3d8b0`, vtable
+`0x109e60`, RTTI `ActionCmdCycleDirtWheelieJump`. Não é prova de que0e–11
+sejam quatro direções ou de qual botão inicia cada estado.
+
+Comando62hex: store `0x3d9d4` no offset `0x188`, vtable `0x10a4d0`, typeinfo
+`0xff0e8`, nome `0x105a69`, **`ActionCmdCycleDirtDanielSteppingJump`**. Suas
+etapas são `0x4b224 → 0x83028 → 0x3a0bc`. A inicialização passa distância1,
+tipo5 e limite8 a `0x81b3c`; o atualizador comum tem ramos específicos para
+esse tipo5, incluindo tabela vertical `0xf6ec4`. Assim, no caminho de grid,
+o executor calcula destino a uma unidade e atualiza o salto por solicitação
+aceita; não é prova de slide ilimitado ou de equivalência entre representações.
+
+Continuam desconhecidos input/item, enum completo `+0x14`, aceitação e tempo
+real da sequência Daniel. Duas solicitações do evento não garantem duas
+translações concluídas ou travessia irrestrita de6f. Não implementar bike,
+SteppingStone ou fixture que force estado0e–11 a partir apenas desses nomes.
+
 ## Reprodução estática
 
 A partir da raiz do worktree, com `ROM_ROOT` apontando para `rom/extracted`
@@ -371,6 +508,67 @@ for module, spans in [
 PY
 ```
 
+Para conferir direção, registro e parâmetros dos executores A-090/A-091:
+
+```bash
+ROM_ROOT="/caminho/local/rom/extracted" /tmp/events-abi-venv/bin/python - <<'PY'
+import hashlib, os, re, struct
+from pathlib import Path
+from capstone import Cs, CS_ARCH_ARM, CS_MODE_ARM
+from scripts.cro_native_abi import CroImage
+root = Path(os.environ['ROM_ROOT'])
+for name in ['DllField.cro', 'static.crs', 'DllFieldEventSkatePipe.cro',
+             'DllFieldEventSlopeSlip.cro']:
+    print(name, hashlib.sha256((root/'RomFS'/name).read_bytes()).hexdigest())
+code = (root/'ExeFS/code.bin').read_bytes()
+print('code.bin', hashlib.sha256(code).hexdigest())
+assert struct.unpack_from('<8h', code, 0x486ea4) == (0,0,-1,1,-1,1,-1,1)
+assert struct.unpack_from('<8h', code, 0x486eb4) == (-1,1,0,0,-1,-1,1,1)
+field = CroImage((root/'RomFS/DllField.cro').read_bytes()).relocated()
+u32 = lambda pos: struct.unpack_from('<I', field, pos)[0]
+for vt, expected in [
+    (0x108fc4, b'N5field6mmodel18ActionCmdJump2G16FE'),
+    (0x109844, b'N5field6mmodel22ActionCmdCycleMachStopE'),
+    (0x1097fc, b'N5field6mmodel22ActionCmdCycleDirtStopE'),
+    (0x109e60, b'N5field6mmodel29ActionCmdCycleDirtWheelieJumpE'),
+    (0x10a4d0, b'N5field6mmodel36ActionCmdCycleDirtDanielSteppingJumpE'),
+    (0x109290, b'N5field6mmodel19ActionCmdBehindJumpE'),
+]:
+    pos = u32(u32(vt-4)+4)
+    assert field[pos:field.index(0, pos)] == expected
+    print('RTTI', hex(vt), expected.decode())
+crs = CroImage((root/'RomFS/static.crs').read_bytes())
+for patch, offset in [(0x19c7e4,0x40070), (0x19c47c,0x8f228)]:
+    assert crs.anonymous_import_at(patch) == ('DllField',0,offset)
+    print('import', hex(patch), hex(offset+0x180))
+cs = Cs(CS_ARCH_ARM, CS_MODE_ARM)
+for addr, value in [(0x3ca38,0x108fc4), (0x3ca3c,0x41310),
+                    (0x3c8f8,0x83028), (0x3c1bc,0x3a0bc),
+                    (0x3d9bc,0x10a4d0), (0x3d9c0,0x4b224),
+                    (0x3d5e4,0x109844), (0x3d768,0x1097fc)]:
+    row = next(cs.disasm(field[addr:addr+4], addr))
+    match = re.search(r'\[pc, #(-?0x[\da-f]+|-?\d+)\]', row.op_str)
+    assert row.mnemonic == 'ldr' and match
+    assert u32(addr+8+int(match[1],0)) == value
+for addr, mnemonic, operands in [
+    (0x3ca4c, 'str', 'r0,[r7,#0x94]'),
+    (0x3d5f8, 'str', 'r0,[r1,#0x144]'),
+    (0x3d77c, 'str', 'r0,[r1,#0x160]'),
+    (0x3d9d4, 'str', 'r0,[r1,#0x188]'),
+    (0x4134c, 'mov', 'r2,#2'), (0x41348, 'mov', 'r3,#1'),
+    (0x4b248, 'mov', 'r2,#1'), (0x4b244, 'mov', 'r3,#5'),
+    (0x4b238, 'mov', 'r0,#8'),
+]:
+    row = next(cs.disasm(field[addr:addr+4], addr))
+    assert (row.mnemonic,row.op_str.replace(' ','')) == (mnemonic,operands)
+print('Direções, imports, RTTI, registros e parâmetros confirmados')
+PY
+```
+
+Os asserts conferem bytes e ligações, não simulam o jogo nem substituem a
+análise dos gates. O patch de import fica no literal `stub+4`, não no início
+da instrução `B/BL`; passar `0x19c478` como patch dá falso negativo.
+
 Artefatos locais, não versionados: `/tmp/native-permissions-{scan,xrefs,findings}.json`,
 `/tmp/native-permissions-continuation.json`, `/tmp/native-state-writers.json` e
 helpers `/tmp/native-query.py`, `/tmp/native-state-writers.py`,
@@ -393,11 +591,25 @@ procedimento e conclusões versionados aqui não dependem da permanência de `/t
   O aceite parcial anterior e suas22 capturas não são reclassificados como
   evidência nativa/visual desta frente. Não foi necessária janela na main.
 
-**P-017, dono core/engine, aberta:** ownership do contexto, fila e commit de modo
-foram recuperados. Faltam a ligação modo1/2→input/item/bike, o enum completo do
-estado `+0x14`, consumidor do flag20, ownership GR/altura, execução do comando62
-e aceitação/efeito completo dos ledges nos quatro sentidos. Também não foram
-fechados passo, tick, gear, camada e natureza da barreira01000021.
+- A-090/A-091 sobre28113e3: **362 Vitest/56 arquivos,186 Python sem skips e
+  build passaram novamente**, com avisos herdados AMX/bundle. A receita nova
+  confirmou cinco SHA, seis RTTI, dois imports, registros e parâmetros dos
+  executores. Somente documentação; nenhum teste novo ou aceite visual alegado.
+
+**P-017, dono core/engine, aberta:** executor25 de duas unidades no ramo de
+grid e executor62 de uma unidade foram recuperados, assim como as famílias
+CycleMach/CycleDirt dos modos1/2. Isso não fecha uma regra implementável.
+
+1. Primeiro, fechar seletor global/`+0xfc8`, callbacks e máscara de aceitação,
+   posições de origem/landing e caminho `aa→4513c→4df9b8/81670`. Não confundir
+   o executor25 compartilhado com equivalência de todos os ramos, inclusive
+   resultados1d/24. Preservar o negativo oeste→leste para73 em52.
+2. Depois, ligar modos1/2 a input/item, recuperar todo o enum `+0x14` e os
+   gates/completion da sequência Daniel; não inferir duas travessias de6f
+   do contador de pedidos ou do limite do atualizador.
+3. Por último, retomar flag20 e seleção GR/altura, sem inventar política de
+   sobreposição. Barreira01000021 e clock/gear permanecem sem contrato completo.
+
 Só depois de uma regra completa: teste falhando, menor implementação e
 Playwright visível com estado explícito equivalente. Corredor conectado,
 Surf/bike, multicamada e paridade permanecem abertos.
