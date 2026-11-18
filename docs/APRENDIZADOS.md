@@ -287,3 +287,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro potencial:** Confundir warp de navegação com `_MapChangeCore`, ou chamar uma fixture sintética de cutscene real. `networkidle` antigo também permitia enviar seta enquanto os imports lazy pós-transição ainda carregavam.
 - **Regra:** Distinguir evidências: texto do NPC veio do AMX real; o warp do smoke veio de nove células sintéticas executadas pela VM e engine reais. Aguardar explicitamente programas/textos do destino antes da próxima tecla. Manter as lacunas naturais da ROM documentadas, sem respostas inventadas para `float`, queries de atores ou globais ausentes.
 - **Evidência:** Fixture do Playwright chamou `_MapChangeCore(225,7,0,18,1,0,0,0,0)` e mudou a zona/posição renderizada. Três screenshots inspecionados, zero pageerror; 195 Vitest e build passam. Paridade/cutscene completa continua em P-013.
+
+## A-039 Capturar movimento, política de material e limite visual separadamente
+
+- **Data:** 2026-11-17
+- **Contexto:** Fechamento da validação de adoção nativa na main ac4054d, após A-033. Renumerado de `A-034` no merge (colisão com `events-layer`).
+- **Regra:** Observar clipe/tempo/ossos sem substituir animações ou relógio; conferir materiais e inspecionar imagens, não apenas requisições HTTP. Passar no transporte nativo não comprova paridade de texturas, combiners, expressões, escala ou timing de impacto.
+- **Evidência:** Playwright visível/Chromium 149.0.7827.55 em porta 5187, save isolado/seed 7 na Route 101 (zone_0023, 13,4): Torchic Lv5 contra Zigzagoon Lv2, Scratch → damage → Growl/special, Ember → damage → faint. Physical de 2,4 s/228 canais, 45 ossos alterados entre amostras t≈0,367 e 1,082 s; idle retomado e faint mantido. Zero pageerror, console error, warning ou HTTP>=400; OPAQUE permaneceu alphaTest=0 e os corpos reapareceram sem intervenção diagnóstica de material. Seis PNGs inspecionados e report.json ignorados em `rom/native_runtime_validation/final/` do principal; observador em `/tmp/playwright-test-native-battle.js`.
+- **Limite:** Cores/atlas dos olhos Pokémon e texturas do overworld ainda são visualmente incorretos (P-007/P-017/P-019); o teste não é uma comparação com emulador. O recorte indevido de A-033 está corrigido/revalidado, mas a fidelidade completa não foi declarada.
