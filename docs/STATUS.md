@@ -9,6 +9,32 @@ Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo s
 - Chromium visível, servidores separados5197/5198 e assets idênticos:12 checkpoints/34 capturas inspecionadas, zero page/console/HTTP/request errors ou warnings. Corpo inteiro em83 sem alterar skin; terreno e avatar recuperados em39/84/385/71. Passo core84(38,29)→(38,31) verificouY21→20.5 e câmera relativa em30 renders. Não é caminhada/campanha natural nem emulador.
 - Telhado6(14,16), paredes445(78,48)/15(2,20), camada secundária/actor.y, warps elevados, células null e paridade continuam P-017. Nenhum shader, depth, alpha, clip ou colisão alterado. Fonte, guardas e tabela em [maps-format](features/pipeline-rom/maps-format.md#grounding-pela-superfície-física-primária-a-080a-081); report/data-audit/contact sheets ignorados em `rom/ground-height-validation/` no principal. Reprodutores `/tmp/playwright-test-ground-height-fix.js`, `/tmp/ground-height-servers.mjs`, `/tmp/audit-ground-height-data.py`, `/tmp/analyze-ground-height-fix.py`.
 
+## PRD-015: executores de salto e direção lateral (2026-11-18)
+
+- A-086/A-087, base28113e3: resultado5 chega ao comando25 no ramo de grid;
+  registro3ca4c/vtable108fc4 (`ActionCmdJump2G16F`) liga as etapas
+  41310→83028→3a0bc. Consumidor401f0, importCRS19c7e4 e code3f852c fecham a
+  ligação comator+8fc. Distância-param2, tipo1 e limite16 cardinal; destino
+  lógico+bc muda antes da pose física+e8, atualizada até o término. Não é só
+  um pedido de ação nem prova de FPS/paridade.
+- Tabelas code586ea4/586eb4 fecham75→sul,73→oeste,72→leste,74→norte nesse ramo.
+  **73020021 não fundamenta abrir52 de oeste para leste**; preservar esse
+  negativo. Aceitação ainda depende de callbacks, máscara de colisão/e811c e
+  seletor global+fc8. Outro ramo pedeaa/ActionCmdBehindJump e consulta4df9b8;
+  equivalência com25 e contrato completo de landing permanecem abertos.
+- Modos1/2 ligados a famílias CycleMach/CycleDirt via comandos51/58 e RTTI.
+  Comando62 é `ActionCmdCycleDirtDanielSteppingJump`:4b224→81b3c com
+  distância-param1, tipo5 e limite8, atualizado por83028. Não prova input/item,
+  Acro como nome comercial, duas travessias completas ou slide irrestrito.
+- **Entrega estática parcial, somente documentação:** runtime, parser, mapas,
+  grounding, colisões e75020021 preservados.362 Vitest/56 arquivos,186 Python
+  sem skips e build passaram novamente, com avisos herdados; nova receita
+  confirma cinco SHA, seis RTTI, dois imports, registros e parâmetros. Sem
+  red-green/Playwright novo, emulador ou execução da ROM. [PRD-015](features/engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md)
+  registra offsets e limites; P-017/corredor conectado continuam abertos.
+  Próximo: aceitação/landing e caminhoaa; depois input/Daniel; flag20 e
+  seleção GR/altura por último, sem política de camada inventada.
+
 ## Continuação PRD-015: estados e efeitos nativos (2026-11-18)
 
 - A-084/A-085, base3013f14: ownership do contexto fechado por alocação9dbcc→construtora1b394→owner+164 e RTTI PlayerGrid/base FieldUnit. O predicadoe613c é slot virtual14hex em10723c/10a830. Modo corrente+24 recebe pendente+25 após callback da tabela141fe4 e gate+694; setters88090/a6b18, sentinela14hex. Modos1/2 inicializam seletores1b/1a e ator+59=2/3; **enum Mach/Acro/foot e input ainda não provados**. Escritor a47c4 gravaestado0f após solicitar comando5d, não prova quatro direções.
