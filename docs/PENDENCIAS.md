@@ -116,6 +116,8 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-013 Motor de scripts e eventos completos da história da ROM
 
+- **PRD-013/A-072,2026-11-18:** Bondinho384↔385 é AMX: work16699=1, RecordAdd175, CallApplicationDemo11/12 e _MapChangeCore. Recortes reais pós-demo confirmados na VM; fixture explicitamente não executa filme/embarque/RecordAdd, apenas WorkSet e map-change. Gate666 comprovado no global0028@21804/Meteor71. Entities385 real desloca funcionário1 para24,57,18 antes de liberar saída; imagens entities384/385 promovidas por SHA e teste do host restaura o work antes do init. **Aberto, dono events-layer:** resolver binding ambíguo NPC0/script2 entre entities/map e demonstrar ramos, prédio/demo, contador175 e retorno natural; não escolher candidato ou simular completion. Imagens map não promovidas, campanha e aceite main pendentes.
+
 - **Estado:** aberta
 - **Data:** 2026-11-17
 - **Evidência:** A introdução (Birch + caminhão) e os primeiros interiores foram montados manualmente para o vertical slice inicial; faltam cutscenes com movimento coreografado de NPCs, resgate real do Prof. Birch escolhendo a Poké Ball da mochila no chão, entrega de Pokédex/Running Shoes, e todo o restante da campanha de Hoenn até a Liga Pokémon.
@@ -154,6 +156,8 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Próximo passo:** Triar `npm audit`, identificar alcance e atualizar dependências em trabalho dedicado com testes/build. Não executar `npm audit fix --force` nem alterar controles de segurança para destravar o pipeline de scripts.
 
 ## P-017 Semântica residual MM e integração dos mapas por zona
+
+- **PRD-013/ADR-008/A-073,2026-11-18:** Jagged84 travava emz30 mesmo sem NPCs. Palavra nativa0x75020021 aparece541 vezes nos223 GRs staged pesquisados; vizinhança e geometrias corroboram queda ao sul. Regra estrita derivada adiciona salto de dois tiles ao sul com aterrissagem livre e bloqueia subida/lateral, sem mudar grid. Regeneração:816 southLedges/28 zonas, todos os outros campos idênticos. Regressão após transporte explícito/init real385 percorre83→84→39→9 com os NPCs.340 Vitest/160 Python sem skips/build passam; Playwright main ainda pendente. **Aberto, dono core/engine:** validar no emulador, resolver variantes0000/6400/classes laterais, salto/altura visual e física multicamada. Imagens planas/sobrepostas não provam altura de todas as células; não generalizar bitfield. Negativos Meteor71→42/72/73 continuam; loop antigo e oclusão não estão fechados.
 
 - **Estado:** aberta
 - **Data:** 2026-11-17

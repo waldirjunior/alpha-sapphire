@@ -18,7 +18,7 @@ BLOCKED_LOW_BYTES = {0x21}
 TALL_GRASS_VALUE = 0x20004004
 
 
-def parse_gr_grid(gr_path: Path) -> tuple[int, int, list[list[int]], list[list[int]]]:
+def read_gr_permissions(gr_path: Path) -> tuple[int, int, list[list[int]]]:
     blob = gr_path.read_bytes()
     if len(blob) < 16 or blob[:2] != b"GR":
         raise ValueError(f"Arquivo GR inválido: {gr_path}")
@@ -31,25 +31,21 @@ def parse_gr_grid(gr_path: Path) -> tuple[int, int, list[list[int]], list[list[i
     sec0 = blob[sec0_off:sec1_off]
     width, height = struct.unpack_from("<HH", sec0, 0)
 
-    collisions: list[list[int]] = []
-    terrain: list[list[int]] = []
-    for z in range(height):
-        c_row: list[int] = []
-        t_row: list[int] = []
-        for x in range(width):
-            val = struct.unpack_from("<I", sec0, 4 + (z * width + x) * 4)[0]
-            if val == TALL_GRASS_VALUE:
-                c_row.append(0)
-                t_row.append(2)
-            elif (val & 0xFF) in BLOCKED_LOW_BYTES:
-                c_row.append(1)
-                t_row.append(1)
-            else:
-                c_row.append(0)
-                t_row.append(0)
-        collisions.append(c_row)
-        terrain.append(t_row)
+    permissions = [[struct.unpack_from('<I', sec0, 4 + (z * width + x) * 4)[0]
+                    for x in range(width)] for z in range(height)]
+    return width, height, permissions
 
+
+def collision_layers(permissions: list[list[int]]) -> tuple[list[list[int]], list[list[int]]]:
+    collisions = [[int((value & 0xFF) in BLOCKED_LOW_BYTES) for value in row] for row in permissions]
+    terrain = [[2 if value == TALL_GRASS_VALUE else blocked for value, blocked in zip(row, collision_row)]
+               for row, collision_row in zip(permissions, collisions)]
+    return collisions, terrain
+
+
+def parse_gr_grid(gr_path: Path) -> tuple[int, int, list[list[int]], list[list[int]]]:
+    width, height, permissions = read_gr_permissions(gr_path)
+    collisions, terrain = collision_layers(permissions)
     return width, height, collisions, terrain
 
 

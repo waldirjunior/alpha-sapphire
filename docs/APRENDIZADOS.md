@@ -667,3 +667,20 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Limite:** igualdade de ranges não prova o shader vertex original nem
   correspondência por vértice. As três diferenças não recebem correção RGB
   nesta entrega; exigem rastrear o export/skin sem apagar as variações nativas.
+
+## A-072 Um transporte de evento precisa do work e do init de chegada, não de um portal inventado
+
+- **Data:**2026-11-18; PRD-013/P-013/P-017.
+ Renumerado de `A-069` no merge (colisão com `pica-materials`).
+- **Erro reproduzido:**384/385 só possuem ZO de saída para39/83. A chegada385(23,18) fica presa se o funcionário1 continua em21,26; removê-lo ou deslocar o jogador esconderia o init ausente.
+- **Evidência:** mapa384/função3592 e385/3620 usam work16699=1, RecordAdd175, demo11/12 e helper2904/_MapChangeCore. VM dos recortes pós-demo confirmou385,23,57,18,1,0,0,1,0 e384,21,57,11,3,0,0,1,0. Entities385/script1 lê16699 e MdlSetGPos move NPC1 para24,57,18. Teste do ZoneEvents restaura o work antes do init e mantém jogador23,18/NPC visível. Gate666 em39 é FlagSet666 real global0028@21804, chamado por Meteor71; não é RockSmash.
+- **Regra:** Preservar nove células/altura/facing/flags, work e init real; promover imagem entities por SHA somente na saída ignorada. Separar fixture pós-demo do embarque/filme/contador/campanha. NPC0/script2 segue ambíguo entre entities/map; não escolher candidato por conveniência. Somente duas imagens entities adicionadas ao manifesto existente; map não promovido. Biblioteca e script inteiro não foram executados pela fixture.
+
+## A-073 Colisão binária não substitui ledge direcional nem a prioridade do ZO
+
+- **Data:**2026-11-18; PRD-013/core-ADR-008/P-017.
+ Renumerado de `A-070` no merge (colisão com `pica-materials`).
+- **Erro reproduzido:**84 desde38,5 parava emz29 mesmo sem NPCs; toda palavra terminada em21 era reduzida a bloqueio, perdendo o ledge. Um diagnóstico que exigia parar sobre38,112 também produziu falso negativo: esse tile é bloqueado, mas é ZO real acessível desdez111.
+- **Evidência estática:**223 GRs staged,541 palavras exatas0x75020021 em13 zonas, norte livre541/sul526. Raycast com nodes/escala1/18/offset19.5 confirma GR291(33,30)21→20.5, GR31(26,7)2→1.5, GR72(8,18)3→2 e GR78(2,28)2→1.5. Variantes0000/6400 e classes72/73 foram distinguidas, não abertas. Não é prova de execução no emulador ou ABI nativa.
+- **Regra:** Metadado derivado southLedges só para palavra75020021/ownership real; manter colisão1. Core salta dois tiles ao sul, impede subida/lateral, confere bounds e NPCs no ledge/aterrissagem, respeita diálogo/ZO e é imutável. Não liberar todos os low bytes21 nem criar ponte. Semântica das variantes, animação/altura e multicamada continuam pendentes.
+- **Verificação:** regressões core/adapter e composição Python falharam antes e passam depois.28 JSONs receberam816 pontos; todos os demais campos comparados à base357692a estão idênticos. Caminho385→83→84→39→9 passa com NPCs nativos após init real; diagnóstico sem metadado segue bloqueado.340 Vitest/52 arquivos,160 Python sem skips/build passaram; main/Playwright ainda pendentes. Meteor71→42/72/73 continua bloqueado.

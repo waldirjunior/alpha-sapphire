@@ -9,3 +9,4 @@
 | [ADR-005](ADR-005-abi-cro-e-init-nao-bloqueante.md) | ABI por CRO e init não bloqueante | Aceito (P-013 aberta) | 2026-11-17 |
 | [ADR-006](ADR-006-hide-flags-e-remocao-persistente.md) | Hide-flags e remoção persistente de atores | Aceito; limites P-013/P-017 | 2026-11-18 |
 | [ADR-007](ADR-007-dispatch-natural-de-cenas.md) | Dispatch natural de cenas AMX | Aceito; implementação em andamento | 2026-11-17 |
+| [ADR-008](ADR-008-ledges-sul-por-permissao-gr.md) | Ledges ao sul por palavra GR exata, sem abrir o grid | Aceito; regressões locais passam, main pendente | 2026-11-18 |

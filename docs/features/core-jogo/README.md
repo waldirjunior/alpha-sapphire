@@ -12,9 +12,10 @@ Lógica pura e determinística do jogo em `src/core/` (`types.ts`, `gameState.ts
 - [ADR-005](adrs/ADR-005-abi-cro-e-init-nao-bloqueante.md) e [PRD-004](prds/PRD-004-abi-e-recursos-locais-de-eventos.md) — ABI evidenciada no CRO, mensagens/warp, recursos privados locais e init opaco sem bloquear navegação nem sobrescrever chegada. Inclui comandos de geração e limites do smoke sintético de warp.
 - [ADR-006](adrs/ADR-006-hide-flags-e-remocao-persistente.md) — MdlDel real na VM, tombstones por zona no save e hide-flags ligadas a storyFlags; não equivale a executar a missão Peeko.
 - [ADR-007](adrs/ADR-007-dispatch-natural-de-cenas.md) e [PRD-005](prds/PRD-005-warp-natural-da-rom.md) — seleção por exports e works reais, warp natural 6→227 validado com save preparado, serviços de câmera/fade/giro e correção do envelope GameText. Não comprova campanha desde New Game nem paridade integral.
+- [ADR-008](adrs/ADR-008-ledges-sul-por-permissao-gr.md) — salto unidirecional ao sul derivado da palavra GR0x75020021, sem abrir o grid; regressões core/parser/host passam, Playwright main pendente no PRD-013 da engine.
 - Referência TCC: [docs/tcc/00-arquitetura.md](../../tcc/00-arquitetura.md).
 
 ## Estado atual
 
 - Implementado em [src/core/gameState.ts](../../../src/core/gameState.ts): `createInitialState`, `isWalkable` e `movePlayer` (colisão e `warp`).
-- Coberto por `2` testes unitários em [src/core/gameState.test.ts](../../../src/core/gameState.test.ts).
+- Movimento/colisão/warp e ledges têm regressões em [gameState.test.ts](../../../src/core/gameState.test.ts) e [ledges.test.ts](../../../src/core/ledges.test.ts), sem WebGL ou binários da ROM.
