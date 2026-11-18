@@ -900,3 +900,34 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   [PRD-015](features/engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md).
   Entrega parcial sem novo red-green/Playwright; aceitação/input continuam
   abertos. Flag20 e seleção GR/altura ficam depois, sem descartar a pendência.
+
+## A-088 Fallback e endpoint não são aceitação de landing
+
+- **Data:**2026-11-18; PRD-015/P-017, baseffd1154; refina A-085–A-087.
+- **Evidência:** máscara zero em64594 já devolve o resultado corrente; e811c
+  retorna0/0f/10, não5. Busca alternativas laterais, não valida um ledge5.
+  Callback default107820/FieldUniqueSequenceNone tem slot24→2ad5c que retorna0;
+  fábricas31b40/31d30 também selecionam CROs específicos, não assumir None.
+- **Landing:**4de148 usa footprint150/151 e interseção3f3498→3f1a00 com flags,
+  altura e geometria. Não foi fechado destino+2 livre só por NPC visível.
+  aa tem etapas4513c→48eb4→3a0bc;4df9b8 calcula endpoint2, mas81670/tick usam
+  vetores/velocidade/pose e podem terminar antes do limite16.
+- **Regra:** não substituir esses contratos por colisão booleana do core nem
+  generalizar75020021 pelo endpoint comum. Fonte e receita no PRD-015;
+  runtime preservado e sem novo red-green/Playwright por regra ainda parcial.
+
+## A-089 Campo com mesmo offset não prova ownership ou input
+
+- **Data:**2026-11-18; PRD-015/P-017, continuação da A-087.
+- **Evidência:**9d09c guarda objeto1438hex emglobal+100; construtoraa0488 chama
+  1d634 emobjeto+e50. O alias subobjeto+178 é global100+fc8: inicializado0 em
+  1d6f0 por alias16c+c e escrito em1cf74. a0448 passa o parâmetro7 do modelo;
+  pacote com três parâmetros fornece baixo8 do primeiro, caso contrário0.
+- **Erro evitado:** chamarfc8 de enum de botões/bike, fixar1 sem ler o perfil,
+  ou atribuir o STRB code12267c ao mesmo objeto só porque usa offsetfc8.
+  Busca por stores imediatos não encontra todos os aliases e não prova ausência.
+- **Regra:** rastrear alocação, subobjetos e argumento antes de nomear estado.
+  Perfil7 efetivo, seletores dos callbacks e contrato de landing/pose ainda
+  faltam; input/item/+14/Daniel e depois flag20/GR continuam abertos.
+  362 Vitest/56 arquivos,186 Python sem skips/build e receita estática de15
+  instruções/callback/tick/alias passaram nesta entrega documental parcial.

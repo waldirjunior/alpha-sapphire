@@ -161,6 +161,24 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 - **Grounding primário implementado, A-080/A-081/engine ADR-006 (2026-11-18):** seção física2 `coll`, não mesh visual, gera groundHeights por célula nos536 mapas, com846 GRs validados e demais campos idênticos. Player/NPCs usam Y local; follow mantém eyeY=playerY+9. A/B real de código/JSON antes0372885/depois em12 checkpoints/34 capturas recupera corpo/terreno em39/83/84/385/71, incluindo passo core84(38,29)→(38,31),Y21→20.5 e câmera relativa.351 Vitest/55 arquivos, build e186 Python sem skips com GLB_MAPS_DIR do principal passaram. Corpo de83 aparece inteiro sem correção de skin; o residual anterior não foi reproduzido no fluxo normal de render. **Continuam abertos:** telhado6(14,16), paredes445(78,48)/15(2,20), pisos secundários/actor.y/warps elevados,539 células transitáveis sem altura única e clock/interpolação/hop nativos. Primária e seção8 não são fundidas:15(2,20) dá0/7.5. Auditoria registra705 warps concordantes com ZO,25 desconhecidos e133 diferenças no recorte, não paridade global. Null conserva consulta desconhecida e fallback visual anterior0; nenhum max/min-hit, transparência ou alteração de colisão. Detalhes em [maps-format](features/pipeline-rom/maps-format.md#grounding-pela-superfície-física-primária-a-080a-081), evidências locais em `rom/ground-height-validation/`. P-017 e aceite visual global permanecem abertos.
 
+- **PRD-015/A-088/A-089,2026-11-18, aberta, dono core/engine, baseffd1154:**
+  e811c retorna0/0f/10 como fallback; não autoriza5, que já retorna com máscara
+  zero em64594. Default107820/FieldUniqueSequenceNone→slot24/2ad5c retorna0,
+  mas faltam seletores efetivos dos callbacks de cada mapa. Produtor defc8
+  fechado emglobal100+e50+178: a0448 obtém parâmetro7 do modelo e1cf74 grava
+  baixo8 do primeiro parâmetro quando há três entradas, ou0. **Falta fechar
+  qual pacote7 é carregado e o contrato no core**, não fixarfc8=1 por hipótese.
+  Landing consulta footprint150/151 e atores via3f3498/3f1a00 com flags/altura/
+  geometria; não foi fechado um teste separado de destino+2 livre de NPC.
+  aa fecha4513c→48eb4→3a0bc e endpoint2 por4df9b8;81670/tick usam velocidade/
+  pose e podem terminar antes do contador16. **Ainda não implementável como
+  equivalência atômica de25.** Próximo: perfil7/seletores e landing/pose;
+  depois input/item/+14/Daniel; flag20 e seleção GR/altura por último.
+  Runtime/mapas/colisão/grounding/75020021 intactos; negativo52 oeste→leste
+  preservado.362 Vitest/56 arquivos,186 Python sem skips/build passaram;
+  receita estática nova conferida, sem red-green/Playwright de regra nova.
+  Fonte e limites no [PRD-015](features/engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md).
+
 - **PRD-015/A-086/A-087,2026-11-18, aberta, dono core/engine, base28113e3:**
   executor25 recuperado: resultado5→a29e0→25, registro3ca4c/vtable108fc4
   `ActionCmdJump2G16F`, etapas41310→83028→3a0bc, consumidor401f0 via
