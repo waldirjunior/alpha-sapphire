@@ -1,12 +1,21 @@
 # Status
 
-Atualizado em 2026-11-17 (host verificado no worktree; registros de VPS abaixo são históricos).
+Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
 ## Extensão Petalburg–Rustboro (2026-11-17, zone-maps)
 
 - PRD-008/A-042: IDs confirmados13→27→82→26→16 (Petalburg, Route104 sul, Woods, Route104 norte, Rustboro). Zona25 é Route103. MM4 já deriva26↔16 automaticamente; portais82 permanecem ZO reais. Nova ponte13↔27 explicitamente inferred=true liga(1,z) a(76,z), z46..50, offset76, sem mudar colisões/atores. O encaixe entre MM2/MM3 não é dado ROM extraído.
 - Staging reproduzível com `--zones 13 27 82 26 16 --include-neighbors`:29 zonas/53 GRs/57 atores existentes, seis IDs especiais em fallback. Inclui somente destinos ZO diretos e um salto de vizinhos visuais das raízes; nenhum conversor/binário no Git. Public acumulado:74 GRs/68 atores, zero violações texCoord.
 - Regressões antes/depois cobrem ponte, cinco lanes/retorno, flags de visibilidade, caminho com NPCs e igualdade dos encounters nativos. **215 Vitest,138 Python sem skips e build passaram**. Playwright na main ainda pendente; não se declara caminhada executada nesta revisão.
+
+## P-019: ChangeFace dinâmico por ator (2026-11-18)
+
+- Base4f42e54, worktree anim-0xef-re; [PRD-009](features/engine-3d/prds/PRD-009-expressoes-bch-no-runtime.md), A-046–A-048 e [evidência](features/pipeline-rom/face-expressions.md). O import static.crs/0x19c7ac resolve de volta para DllField/0x389b8; lookup do ID, getter de estado e setter de frame recuperados estaticamente. Nome C++/protótipo virtual e fluxo observado no emulador seguem desconhecidos.
+- ChangeFace guarda expressão pura no ator, replica casts uint16/uint8, fallback0 fora0..7 e no-op para ator ausente. Projeção por ID alcança NPC/player sem mover spawn/borda; refresh preserva expressão e save valida o campo opcional. Nenhuma lógica de batalha mudou.
+- Promoção exporta somente oito frames da evidência nos mesmos cinco GLBs corrigidos. Todos os102 SHA/URLs e demais metadados permanecem iguais, exceto faceAnimations nas cinco entradas. Renderer clona material/textura por ator, aplica offset-base menos translação DccMaya, conserva UVs/skin/clipes/samplers e descarta só clones; seleção anterior à carga é mantida.
+- Playwright visível149.0.7827.55, Vite isolado5194 com código do worktree e publicDir do principal: **AMX sintético**, VM/ZoneEvents/projeção/SceneManager reais, dois NPCs MM0180. Frames0→10→0 mostraram olhos abertos→fechados→abertos; três PNGs inspecionados, pose/UVs fixos, segundo ator intacto e PNG inicial/restaurado idêntico por SHA. Zero pageerror/console error/warning/HTTP>=400. Evidências ignoradas no principal em rom/face_expression_validation/dynamic/; não houve mudança de fontes na main nem cutscene ROM exercitada.
+- **249 Vitest/40 arquivos, build e147 testes Python passaram**, com um skip pré-existente em test_glb_uv_fix.py por assets públicos ausentes no worktree. Aviso herdado de chunks >500kB mantido. Sem dependências novas, binários ou screenshots no Git; Craft Anything continuou indisponível.
+- **Piscada automática pendente:** rotina estática usa frames10/0, contador fechado2 e espera helper(60)+60, com ramos4/8; clock/contrato do helper e condições completas não provados. Não foi inventado timer nem frame. P-019 continua aberta para timing, ramo natural AMX, outros materiais/wrap/combiners e emulador; pés continuam limitação de geometria.
 
 ## P-019: orientação-base da face e paletas BCH (2026-11-17)
 

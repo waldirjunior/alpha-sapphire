@@ -1,9 +1,21 @@
 import { describe, expect, it } from 'vitest';
-import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
+import { characterFaceAnimations, characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import { listRosterSpecies } from '../data/pokemon/species';
 import catalog from '../data/nativeAssets.json';
 
 describe('native asset catalog', () => {
+  it('limits material palettes to the five corrected immutable GLBs and their aliases', () => {
+    for (const model of ['0180', '0181', '0212', '0314', '0315']) {
+      const profiles = characterFaceAnimations(`/assets/characters/mm_${model}.glb`);
+      expect(profiles).toHaveLength(1);
+      expect(profiles[0].frames.map(frame => frame.frame)).toEqual([0, 10, 20, 30, 40, 50, 60, 70]);
+    }
+    expect(characterFaceAnimations('/assets/characters/brendan/brendan.glb'))
+      .toBe(characterFaceAnimations('/assets/characters/mm_0315.glb'));
+    expect(characterFaceAnimations('/assets/native/characters/mm_0180-846abfc5891a.glb')).toEqual([]);
+    expect(characterFaceAnimations('/assets/characters/mm_0045.glb')).toEqual([]);
+  });
+
   it('uses the promoted species URL rather than guessing an internal model tag', () => {
     expect(pokemonModelUrl('clauncher')).toMatch(/^\/assets\/native\/pokemon\/clauncher-[a-f0-9]{12}\.glb$/);
   });

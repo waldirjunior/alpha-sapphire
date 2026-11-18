@@ -7,7 +7,7 @@ import json
 import re
 from pathlib import Path
 
-from character_face_uv import normalize_character_faces
+from character_face_uv import normalize_character_faces, supported_face
 from glb_native_clips import decode_glb
 from native_motions import motion_slots, package_sections
 from validate_native_manifest import validate_model, verify_float_accessors
@@ -87,6 +87,12 @@ def character_urls(model_id: int) -> list[str]:
             *(f'/assets/characters/{alias}/{alias}.glb' for alias, value in ALIASES.items() if value == model_id)]
 
 
+def face_animations(evidence: dict | None) -> list[dict]:
+    return [{'material': face['material'], 'frames': copy.deepcopy(face['palette'])}
+            for face in (evidence or {}).get('faces', []) if supported_face(face)
+            and [entry['frame'] for entry in face['palette']] == list(range(0, 71, 10))]
+
+
 def promote_model(root: Path, model: dict, names: dict, catalog: dict,
                   face_evidence: dict | None = None) -> None:
     native = model['status'] == 'merged'
@@ -102,9 +108,12 @@ def promote_model(root: Path, model: dict, names: dict, catalog: dict,
         for canonical in character_urls(model['model_id']):
             catalog['characters'][canonical] = url
     scene, _ = decode_glb(source.read_bytes())
-    catalog['models'].append({'id': model['id'], 'url': url, 'sha256': digest, 'native': native,
-                             'source': str(source.relative_to(root)),
-                             'clips': [clip['name'] for clip in scene.get('animations', [])]})
+    entry = {'id': model['id'], 'url': url, 'sha256': digest, 'native': native,
+             'source': str(source.relative_to(root)),
+             'clips': [clip['name'] for clip in scene.get('animations', [])]}
+    if animations := face_animations(face_evidence):
+        entry['faceAnimations'] = animations
+    catalog['models'].append(entry)
 
 
 def promote(root: Path, manifest: dict, face_evidence: list[dict] | None = None) -> dict:

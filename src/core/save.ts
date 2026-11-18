@@ -46,6 +46,9 @@ function isValidBattleMove(value: unknown): boolean {
 function isValidGameState(value: unknown): value is GameState {
   if (!isObjectRecord(value)) return false;
   if (!isObjectRecord(value.player)) return false;
+  const expression = value.player.faceExpression;
+  if (expression !== undefined && (typeof expression !== 'number' ||
+    !Number.isInteger(expression) || expression < 0 || expression > 7)) return false;
   return (
     typeof value.player.mapId === 'string' &&
     isObjectRecord(value.player.pos) &&

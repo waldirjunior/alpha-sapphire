@@ -5,6 +5,21 @@ import { SPECIES } from '../data/pokemon/species';
 import { deserializeSave, serializeSave } from './save';
 
 describe('save serialization', () => {
+  it.each([-1, 8, 0.5, '1', null])('rejects unsupported face expression %s from persisted state', expression => {
+    const state = createInitialState('route_101');
+    const invalid = { ...state, player: { ...state.player, faceExpression: expression } };
+    const party = [createPokemonInstance(SPECIES.torchic, 5)];
+    expect(deserializeSave(JSON.stringify({ version: 1, state: invalid, party, caughtCount: 0 }))).toBeNull();
+  });
+
+  it.each([0, 7])('round-trips supported face expression %s', faceExpression => {
+    const state = createInitialState('route_101');
+    state.player.faceExpression = faceExpression;
+    const party = [createPokemonInstance(SPECIES.torchic, 5)];
+    expect(deserializeSave(serializeSave({ version: 1, state, party, caughtCount: 0 }))?.state.player.faceExpression)
+      .toBe(faceExpression);
+  });
+
   it('round-trips game state, party, and caught count', () => {
     const state = createInitialState('route_101');
     const party = [

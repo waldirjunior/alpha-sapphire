@@ -344,3 +344,54 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Regra:** Separar slot do transform de textura, fonte de coordenadas e stream glTF. Nos cinco casos suportados, MaterialTexCoord1Trans usa TextureSources[1]=0. O switch estático chamado por ChangeFace recebe expressão uint8 e escolhe floats 0,10,…,70, correspondentes às posições da paleta; isso não prova uma animação contínua de piscar. TalkMdlSetEye resolve dois atores e um modo, não é evidência de seleção de célula. Visibilidade de ator/mesh não cria topologia.
 - **Evidência:** DllField.cro/ChangeFace em 0x51ac0 → stub 0x28f8 → import anônimo |static|/0x2f80e8; switch virtual 0x3f80e8 e constantes em 0x3f81a0. Nos MM0314/0315/0180, seção 2 contém material eye01 de 70 frames e nenhum clip de visibilidade. SHA/offsets, leitor SPICA e distinção observado/derivado estão no [relatório](features/pipeline-rom/face-expressions.md).
 - **Limite:** O nome/protótipo do stub final 0x19c7a8 e a ligação completa ao estado de expressão do ator não foram recuperados. Ausência do elemento examinado em outros MM não prova ausência de expressões; grupos PB/PK de Pokémon são outro layout.
+
+## A-046 Um stub do executável pode importar de volta o CRO
+
+- **Data:** 2026-11-18.
+- **Contexto:** P-019/PRD-009, continuação sobre 4f42e54 de A-045.
+- **Descoberta:** O literal static.crs/0x19c7ac importa DllField,
+  segmento0/offset0x38838, que vira arquivo0x389b8 ao somar a base0x180.
+  Esse setter usa objeto de estado+0x1fc, slot virtual0xcc/canal0 e o float
+  escolhido pelo switch. O getter static/0x4e3d8c consulta ator+0xa18 com
+  chave ator+0x96c; o lookup0x4e366c compara o u16 do registro+0xc com o ID.
+- **Regra:** Resolver a tabela de imports pelo endereço do patch, distinguindo
+  endereço virtual, offset de segmento e offset de arquivo. Não encerrar o
+  rastreio num stub nem confundir ID do ator com speaker ou nome de modelo.
+- **Evidência:** CroImage.anonymous_import_at e regressão sintética; hashes,
+  offsets e reprodução no [relatório](features/pipeline-rom/face-expressions.md).
+  O vínculo ator→estado→frame foi recuperado estaticamente; nome C++ e
+  observação no emulador continuam desconhecidos. A-045 é o snapshot anterior.
+
+## A-047 Expressão é estado por instância, não alteração da geometria
+
+- **Data:** 2026-11-18.
+- **Contexto:** P-019, dispatch ChangeFace, projeção AMX e material de cinco
+  GLBs corrigidos em A-044.
+- **Erro reproduzido:** A VM anterior parava em ChangeFace como efeito opaco;
+  o player autoritativo não recebia expressão quando a projeção de posição
+  era bloqueada. O novo campo também exigiu validação no save.
+- **Regra:** Manter expressão0..7 no ator puro, replicar casts/fallback0 da
+  nativa e transportar por ID. Guardar seleção enquanto carrega o GLB;
+  clonar material e textura, não UV. Aplicar offset-base menos translação
+  BCH DccMaya somente nos materiais/URLs evidenciados. Descartar só clones.
+- **Evidência:** Testes falharam antes e passaram após dispatch/projeção/export
+  da paleta e validação do save; regressões cobrem oito frames, ator ausente,
+  isolamento, restauração e descarte. Playwright real de VM/host/engine com
+  AMX sintético mostrou MM0180 aberto→fechado→aberto (frames0/10/0), com
+  câmera/pose/UVs fixos, segundo ator intacto e PNG inicial/restaurado com o
+  mesmo SHA. Três capturas inspecionadas em rom/face_expression_validation/dynamic/
+  no principal; zero erros/warnings/HTTP>=400. Não é cutscene ROM/emulador.
+
+## A-048 Contador de update não define uma duração em segundos
+
+- **Data:** 2026-11-18.
+- **Contexto:** Rotina de piscada DllField/0x38850–0x389ac e setup0x80a5c.
+- **Observado:** Estado+0x27c habilita o caminho; o setter de ChangeFace grava
+  esse byte como frame==0. O update aplica frame10, espera dois updates e
+  aplica0. A espera é helper(60)+60, com caminhos curtos4/8 e byte0x27d.
+- **Regra:** Separar paleta, gatilho e clock. Nem70 frames do BCH nem dois
+  updates autorizam assumir30/60fps ou inventar um timer de idle. O contrato
+  do helper e a frequência/condições do update ainda precisam ser provados.
+- **Consequência:** Seleção explícita implementada, piscada automática
+  explicitamente pendente; P-019 permanece aberta para isso, ramos naturais,
+  cobertura de outros materiais e paridade. Pés ausentes não foram inventados.

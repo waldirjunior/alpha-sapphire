@@ -140,7 +140,8 @@ export class ZoneEvents {
     const player = this.ports.state().player;
     const origin = this.ports.map().romOrigin ?? { x: 0, z: 0 };
     this.world.actors[255] = { x: player.pos.x + origin.x, y: 0, z: player.pos.z + origin.z,
-      direction: directionCell(player.facing), visible: true, moveCode: 0 };
+      direction: directionCell(player.facing), visible: true, moveCode: 0,
+      faceExpression: this.world.actors[255]?.faceExpression ?? player.faceExpression };
   }
 
   private async start(id: string, scriptId: number): Promise<void> {

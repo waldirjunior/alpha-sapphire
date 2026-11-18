@@ -29,6 +29,29 @@ class CroImage:
             raise ValueError(f'Endereço CRO fora do segmento: {segment}/{offset:#x}')
         return self.segments[segment][0] + offset
 
+    def anonymous_imports(self):
+        offset, count = struct.unpack_from('<II', self.blob, 0xF0)
+        for index in range(count):
+            name, _, _, table, entries = struct.unpack_from('<IIIII', self.blob, offset + index * 20)
+            module = self.blob[name:self.blob.index(0, name)].decode('ascii')
+            for entry in range(entries):
+                symbol, head = struct.unpack_from('<II', self.blob, table + entry * 8)
+                yield module, symbol, head
+
+    def import_patch_addresses(self, head):
+        for offset in range(head, len(self.blob) - 11, 12):
+            patch, info, _ = struct.unpack_from('<III', self.blob, offset)
+            yield self.segment_address(patch & 15, patch >> 4)
+            if info & 0xFF00:
+                return
+        raise ValueError(f'Lista de patches CRO sem terminador: {head:#x}')
+
+    def anonymous_import_at(self, address):
+        for module, symbol, head in self.anonymous_imports():
+            if address in self.import_patch_addresses(head):
+                return module, symbol & 15, symbol >> 4
+        raise ValueError(f'Import anônimo CRO não encontrado: {address:#x}')
+
     def native(self, name):
         needle = name.encode('ascii') + b'\0'
         matches = [(patch, self.references[patch + 4]) for patch, target in self.references.items()

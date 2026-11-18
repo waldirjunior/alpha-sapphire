@@ -40,7 +40,7 @@ export function projectEventActors(map: MapDefinition, world: AmxWorld): MapDefi
   return { ...map, npcs: map.npcs?.map(npc => {
     const actor = world.actors[npcActorId(npc)];
     return actor ? { ...npc, pos: { x: actor.x - origin.x, z: actor.z - origin.z },
-      facing: romFacing(actor.direction), visible: actor.visible } : npc;
+      facing: romFacing(actor.direction), visible: actor.visible, faceExpression: actor.faceExpression } : npc;
   }) };
 }
 
@@ -50,10 +50,12 @@ export function mapEntryReason(state: GameState, map: MapDefinition, direction: 
 
 export function projectEventPlayer(state: GameState, map: MapDefinition, world: AmxWorld, applyPlayer: boolean): GameState {
   const player = world.actors[255];
-  if (!applyPlayer || !player) return state;
+  if (!player) return state;
+  if (!applyPlayer) return player.faceExpression === state.player.faceExpression ? state :
+    { ...state, player: { ...state.player, faceExpression: player.faceExpression } };
   const origin = map.romOrigin ?? { x: 0, z: 0 };
   return { ...state, player: { ...state.player, pos: { x: player.x - origin.x, z: player.z - origin.z },
-    facing: romFacing(player.direction) ?? state.player.facing } };
+    facing: romFacing(player.direction) ?? state.player.facing, faceExpression: player.faceExpression } };
 }
 
 export function facingNpc(player: PlayerState, map: MapDefinition): MapNpc | undefined {

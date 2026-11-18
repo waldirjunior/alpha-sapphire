@@ -44,3 +44,18 @@ clipes e materiais. O renderer continua consumindo glTF comum; não transporta
 ainda o estado dinâmico de expressão/visibilidade. A/B com assets publicados
 valida a orientação-base de três personagens, não a paleta inteira nem
 paridade com o emulador. Ver [evidência](../../pipeline-rom/face-expressions.md).
+
+## Continuação P-019 — estado de expressão (2026-11-18)
+
+PRD-009/A-046–A-048 estendem a fronteira já existente: ChangeFace guarda um
+índice puro0..7 no ator AMX identificado, com casts/fallback0 evidenciados.
+Projeção transporta a expressão sem acoplar o core a Three.js; posição de
+spawn/borda continua autoritativa. O engine recebe paletas do catálogo,
+clona material/textura por instância e aplica a translação DccMaya do frame
+selecionado. Não altera UV, skin ou lógica de batalha.
+
+A/B com AMX sintético e GLB real comprovou a seleção explícita de dois estados
+no mesmo NPC e isolamento de outra instância. Isso não comprova fluxo natural
+ROM nem paridade temporal. A rotina nativa de piscada foi localizada, mas o
+clock/helper e todas as condições ainda não: não há timer automático no host.
+P-019 permanece aberta para timing, cobertura residual e emulador.

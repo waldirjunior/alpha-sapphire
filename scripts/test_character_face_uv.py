@@ -38,6 +38,35 @@ def mirrored_face_fixture():
 
 
 class CharacterFaceUvTests(unittest.TestCase):
+    def test_promotion_exports_only_the_eight_observed_material_frames(self):
+        from unittest.mock import patch
+        from promote_native_assets import promote_model
+        blob, evidence = mirrored_face_fixture()
+        palette = [{'id': i, 'frame': i * 10, 'translation': [-(i % 4) / 4, -0.5 if i >= 4 else 0]}
+                   for i in range(8)]
+        evidence['faces'][0]['palette'] = palette
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / 'source.glb'
+            source.write_bytes(blob)
+            catalog = {'characters': {}, 'models': [], 'unavailable': []}
+            model = {'id': 'character/mm_0315', 'kind': 'character', 'model_id': 315, 'status': 'merged'}
+            with patch('promote_native_assets.model_source', return_value=source):
+                promote_model(root, model, {}, catalog, evidence)
+            self.assertEqual(catalog['models'][0]['faceAnimations'],
+                             [{'material': 'synthetic_face', 'frames': palette}])
+            self.assertEqual(source.read_bytes(), blob)
+
+    def test_runtime_palette_does_not_extrapolate_incomplete_or_unsupported_evidence(self):
+        from promote_native_assets import face_animations
+        _, evidence = mirrored_face_fixture()
+        self.assertEqual(face_animations(None), [])
+        self.assertEqual(face_animations(evidence), [])
+        evidence['faces'][0]['palette'] = [{'id': i, 'frame': i * 10, 'translation': [0, 0]}
+                                         for i in range(8)]
+        evidence['faces'][0]['uv_source'] = 1
+        self.assertEqual(face_animations(evidence), [])
+
     def test_restores_original_bch_face_without_touching_shared_body_accessor(self):
         blob, evidence = mirrored_face_fixture()
         corrected = normalize_character_faces(blob, evidence)

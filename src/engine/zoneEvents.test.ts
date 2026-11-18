@@ -50,6 +50,21 @@ function fixture(calls: readonly [string, number[]][]) {
 }
 
 describe('ciclo de vida do host de zonas', () => {
+  it('transporta ChangeFace sem confirmação cosmética e preserva expressão ao atualizar player', async () => {
+    const f = fixture([['ChangeFace', [7, 1]], ['ChangeFace', [255, 3]], ['LastKeyWait', []], ['ChangeFace', [7, 0]]]);
+    const events = new ZoneEvents(f.ports, async () => f.assets);
+    await events.enter();
+    await events.interact(f.npc());
+    expect(f.npc().faceExpression).toBe(1);
+    expect(f.worlds.at(-1)?.actors[255].faceExpression).toBe(3);
+    expect(events.pendingEffect).toBeNull();
+    expect(events.canAdvance).toBe(true);
+    await events.advance();
+    expect(f.npc().faceExpression).toBe(0);
+    expect(f.worlds.at(-1)?.actors[255].faceExpression).toBe(3);
+    expect(f.ports.report).not.toHaveBeenCalled();
+  });
+
   it('preserva chegada contínua 7→24 e libera input enquanto init permanece opaco', async () => {
     const f = fixture([]);
     f.programs.bundle = { ...f.programs.bundle, 'zone:0006:entities': image([

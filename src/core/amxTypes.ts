@@ -16,7 +16,7 @@ export interface AmxMachine {
   stk: number; hea: number; stp: number; memory: Record<number, number>;
   childParams: Record<number, number>; parentParams: Record<number, number>;
 }
-export interface AmxActor { x: number; y: number; z: number; direction: number; visible: boolean; moveCode: number }
+export interface AmxActor { x: number; y: number; z: number; direction: number; visible: boolean; moveCode: number; faceExpression?: number }
 export interface AmxPokemon {
   handle: number; species: number; hp: number; maxHp: number; isEgg: boolean; nickname: string; status: number;
 }

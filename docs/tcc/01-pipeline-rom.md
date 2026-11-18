@@ -43,7 +43,12 @@
      inalterado explicava o rosto invertido. A promoção restaura a orientação
      somente em cinco casos com proveniência e clona UV compartilhado; não
      muda skin/clipes nem inventa pés. [CRO/paleta e A/B](../features/pipeline-rom/face-expressions.md)
-     separam essa correção-base de expressão dinâmica ainda não implementada.
+     separam essa correção-base da seleção dinâmica por ator acrescentada em
+     PRD-009/A-046–A-048: a promoção exporta os oito frames evidenciados sem
+     mudar SHA/URLs dos GLBs; VM/projeção/engine aplicam o estado isolado por
+     instância. A/B de NPC com AMX sintético confirmou0→10→0 e restauração
+     idêntica por SHA; piscada automática depende de clock/condições ainda
+     não comprovados, e isso não representa ramo natural ROM/emulador.
      [PRD-007](../features/engine-3d/prds/PRD-007-animacoes-nativas-no-runtime.md)
      registra comandos, falhas e limites; GLBs e screenshots continuam ignorados.
    - Áudio: `vgmstream-cli` decodifica `RomFS/sound/*.bcstm` para `.wav` e `ffmpeg` (`libmp3lame`) gera `.mp3` em `rom/extracted/audio/mp3/`.

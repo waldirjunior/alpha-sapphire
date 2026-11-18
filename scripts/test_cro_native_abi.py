@@ -18,6 +18,18 @@ def synthetic_cro():
 
 
 class CroNativeAbiTests(unittest.TestCase):
+    def test_anonymous_import_resolves_module_segment_and_offset_by_patch(self):
+        blob = synthetic_cro()
+        struct.pack_into('<II', blob, 0xF0, 0x340, 1)
+        struct.pack_into('<IIIII', blob, 0x340, 0x380, 0, 0, 0x360, 1)
+        blob[0x380:0x389] = b'DllField\0'
+        struct.pack_into('<II', blob, 0x360, 0x388380, 0x390)
+        struct.pack_into('<III', blob, 0x390, 0x400, 0xFF02, 0)
+        image = CroImage(blob)
+        self.assertEqual(image.anonymous_import_at(0x1C0), ('DllField', 0, 0x38838))
+        with self.assertRaisesRegex(ValueError, '0x1c4'):
+            image.anonymous_import_at(0x1C4)
+
     def test_name_and_function_are_adjacent_relocations(self):
         image = CroImage(synthetic_cro())
         self.assertEqual(image.native('Example'), (0x2A0, 0x184))
