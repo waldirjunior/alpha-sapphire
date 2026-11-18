@@ -1,5 +1,7 @@
 import type { MapDefinition } from '../../core/types';
 import { adaptZoneMap, type ZoneMapSource } from './adapter';
+import { getZoneEncounters } from './encounters';
+import { zonePlacement } from './neighbors';
 
 export type ZoneMapLoader = (zoneId: number | string) => Promise<MapDefinition>;
 
@@ -9,7 +11,10 @@ export function zoneMapId(zoneId: number | string): string {
   return id;
 }
 
-export function createZoneMapLoader(files: Record<string, () => Promise<ZoneMapSource>>): ZoneMapLoader {
+export function createZoneMapLoader(
+  files: Record<string, () => Promise<ZoneMapSource>>,
+  enrich: (source: ZoneMapSource, map: MapDefinition) => Promise<MapDefinition> = async (_source, map) => map
+): ZoneMapLoader {
   const cache = new Map<string, Promise<MapDefinition>>();
   return async (zoneId) => {
     const id = zoneMapId(zoneId);
@@ -19,7 +24,7 @@ export function createZoneMapLoader(files: Record<string, () => Promise<ZoneMapS
     if (!load) throw new Error(`JSON da zona ${id} não encontrado`);
     const pending = load().then((source) => {
       if (source.id !== id) throw new Error(`JSON da zona ${id} contém ${source.id}`);
-      return adaptZoneMap(source);
+      return enrich(source, adaptZoneMap(source));
     });
     cache.set(id, pending);
     pending.catch(() => cache.delete(id));
@@ -28,5 +33,6 @@ export function createZoneMapLoader(files: Record<string, () => Promise<ZoneMapS
 }
 
 export const getZoneMap = createZoneMapLoader(
-  import.meta.glob<ZoneMapSource>('./[0-9][0-9][0-9][0-9].json', { import: 'default' })
+  import.meta.glob<ZoneMapSource>('./[0-9][0-9][0-9][0-9].json', { import: 'default' }),
+  async (source, map) => ({ ...map, ...zonePlacement(source.id), encounters: await getZoneEncounters(source.zone) })
 );

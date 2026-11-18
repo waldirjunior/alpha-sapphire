@@ -11,6 +11,7 @@ from scripts.extract_texts import decode_gen6_text
 from scripts.extract_zones import parse_zo_sections, parse_entities, parse_encounters
 from scripts.map_matrix import EMPTY, parse_matrix, zone_bounds
 from scripts.zone_map_validation import validation_report
+from scripts.build_zone_neighbors import build_neighbors
 from scripts.zone_map_builder import compose_tiles, matrix_chunks, convert_warps, local_npcs, select_spawn, compare_tiles
 
 REFERENCE_GRS = {'littleroot_town': 6, 'route_101': 5, 'oldale_town': 4, 'route_102': 10,
@@ -89,6 +90,8 @@ def main() -> int:
     maps = [build_zone_map(zone, zones, matrices, bounds, args.garc_root / 'a_0_3_9', cache) for zone in zones]
     comparisons = compare_references(maps, args.reference_dir)
     write_maps(args.out_dir, maps, validation_report(maps, matrices, comparisons))
+    (args.out_dir / '_neighbors.json').write_text(json.dumps(
+        build_neighbors({m['zone']: m for m in maps}), separators=(',', ':')) + '\n')
     print(f'{len(maps)} zonas, {sum(len(m["warps"]) for m in maps)} warps, {len(cache)} GRs, {len(comparisons)} comparações')
     return 0
 

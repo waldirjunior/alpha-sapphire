@@ -54,7 +54,19 @@ export interface MapNpc {
   spawnFlag: number;
 }
 
+export interface BoundaryLink {
+  targetMapId: string;
+  direction: Direction;
+  from: GridPosition;
+  length: number;
+  offset: GridPosition;
+  inferred: boolean;
+}
+
 export interface MapDefinition {
+  boundaries?: readonly BoundaryLink[];
+  worldOrigin?: GridPosition;
+  continuousRegion?: string;
   zoneId?: number;
   spawnDerived?: boolean;
   spawnPolicy?: string;
