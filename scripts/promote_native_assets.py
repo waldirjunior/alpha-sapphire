@@ -7,6 +7,7 @@ import json
 import re
 from pathlib import Path
 
+from character_face_uv import normalize_character_faces
 from glb_native_clips import decode_glb
 from native_motions import motion_slots, package_sections
 from validate_native_manifest import validate_model, verify_float_accessors
@@ -46,8 +47,11 @@ def prepare_pose_jobs(root: Path, manifest: dict) -> list[dict]:
     return jobs
 
 
-def publish_asset(root: Path, source: Path, kind: str, name: str) -> tuple[str, str]:
+def publish_asset(root: Path, source: Path, kind: str, name: str,
+                  face_evidence: dict | None = None) -> tuple[str, str]:
     blob = source.read_bytes()
+    if kind == 'characters':
+        blob = normalize_character_faces(blob, face_evidence)
     scene, binary = decode_glb(blob)
     verify_float_accessors(scene, binary)
     digest = hashlib.sha256(blob).hexdigest()
@@ -83,14 +87,15 @@ def character_urls(model_id: int) -> list[str]:
             *(f'/assets/characters/{alias}/{alias}.glb' for alias, value in ALIASES.items() if value == model_id)]
 
 
-def promote_model(root: Path, model: dict, names: dict, catalog: dict) -> None:
+def promote_model(root: Path, model: dict, names: dict, catalog: dict,
+                  face_evidence: dict | None = None) -> None:
     native = model['status'] == 'merged'
     if not native:
         catalog['unavailable'].append({'id': model['id'], 'reason': model.get('error', model['status'])})
     source = model_source(root, model)
     name = pokemon_slug(model, names) if model['kind'] == 'pokemon' else f"mm_{model['model_id']:04d}"
     kind = 'pokemon' if model['kind'] == 'pokemon' else 'characters'
-    url, digest = publish_asset(root, source, kind, name)
+    url, digest = publish_asset(root, source, kind, name, face_evidence)
     if kind == 'pokemon':
         catalog['pokemon'][name] = url
     else:
@@ -102,14 +107,15 @@ def promote_model(root: Path, model: dict, names: dict, catalog: dict) -> None:
                              'clips': [clip['name'] for clip in scene.get('animations', [])]})
 
 
-def promote(root: Path, manifest: dict) -> dict:
+def promote(root: Path, manifest: dict, face_evidence: list[dict] | None = None) -> dict:
+    faces = {row['id']: row for row in face_evidence or []}
     wanted = character_ids(root)
     species = json.loads((root / 'src/data/battle/species.json').read_text())
     names = {row['species']: row['name'] for row in species if row['form'] == 0}
     catalog: dict = {'pokemon': {}, 'characters': {}, 'models': [], 'unavailable': []}
     for model in manifest['models']:
         if model['kind'] != 'character' or model['model_id'] in wanted:
-            promote_model(root, model, names, catalog)
+            promote_model(root, model, names, catalog, faces.get(model['id']))
     known = {model['model_id'] for model in manifest['models'] if model['kind'] == 'character'}
     catalog['unavailable'].extend({'id': f'character/mm_{model:04d}', 'reason': 'Unmapped ROM actor model id'}
                                   for model in sorted(wanted - known))
@@ -120,6 +126,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description='Promote slice-native GLBs to immutable ignored public assets.')
     parser.add_argument('--root', required=True, type=Path)
     parser.add_argument('--manifest', required=True, type=Path)
+    parser.add_argument('--face-evidence', type=Path, default=Path(__file__).resolve().parents[1] /
+                        'docs/features/pipeline-rom/character-face-evidence.json')
     destination = parser.add_mutually_exclusive_group(required=True)
     destination.add_argument('--catalog', type=Path)
     destination.add_argument('--pose-manifest', type=Path)
@@ -130,7 +138,8 @@ def main() -> None:
         args.pose_manifest.write_text(json.dumps({'models': jobs}, indent=2) + '\n', encoding='utf-8')
         print(json.dumps({'pose_jobs': len(jobs)}))
         return
-    catalog = promote(args.root.resolve(), manifest)
+    face_evidence = json.loads(args.face_evidence.read_text()) if args.face_evidence else None
+    catalog = promote(args.root.resolve(), manifest, face_evidence)
     args.catalog.write_text(json.dumps(catalog, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({'pokemon': len(catalog['pokemon']), 'character_urls': len(catalog['characters']),
                       'models': len(catalog['models']), 'unavailable': catalog['unavailable']}))

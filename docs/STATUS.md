@@ -8,6 +8,15 @@ Atualizado em 2026-11-17 (host verificado no worktree; registros de VPS abaixo s
 - Staging reproduzível com `--zones 13 27 82 26 16 --include-neighbors`:29 zonas/53 GRs/57 atores existentes, seis IDs especiais em fallback. Inclui somente destinos ZO diretos e um salto de vizinhos visuais das raízes; nenhum conversor/binário no Git. Public acumulado:74 GRs/68 atores, zero violações texCoord.
 - Regressões antes/depois cobrem ponte, cinco lanes/retorno, flags de visibilidade, caminho com NPCs e igualdade dos encounters nativos. **215 Vitest,138 Python sem skips e build passaram**. Playwright na main ainda pendente; não se declara caminhada executada nesta revisão.
 
+## P-019: orientação-base da face e paletas BCH (2026-11-17)
+
+- Continuação em `anim-0xef-re`, main 942fdb3 → 61fd0c6; [relatório](features/pipeline-rom/face-expressions.md), A-044/A-045 e PRD-007. Nenhuma mudança nova em core/engine; a correção é offline e o catálogo aponta aos outputs novos.
+- [61 MM inspecionados](features/pipeline-rom/character-face-evidence.json): 12 paletas MaterialTexCoord1Trans na seção 2, cinco casos de 70 frames suportados. MM0180/0181/0212/0314/0315 receberam V original BCH, não remap de UV0/UV1. RGBA das faces é idêntico à fonte; a inversão V sem inversão da imagem explicava o rosto/célula incorretos.
+- Cinco URLs imutáveis novas em `public/assets/native/`, ignoradas e sem sobrescrever assets; 97/102 entradas do catálogo ficam idênticas. Nos cinco casos, imagens/materiais/samplers/nodes/skins/animações, accessors anteriores e prefixo BIN estão preservados; UV compartilhado com outro material é clonado.
+- Playwright visível/Chromium 149.0.7827.55, principal em porta 5187, catálogo novo por interceptação de dados: A/B real de Brendan/May/Wally com pose/câmera/luz fixas, sem mutar UV no navegador. Seis capturas inspecionadas e zero pageerror/HTTP>=400; relatório e imagens ignorados em `rom/face_expression_validation/final/`. Isso não é uma caminhada/cutscene nem paridade com emulador.
+- CRO ChangeFace e paleta eye01 correlacionam ID uint8 com frames 0,10,…,70; TalkMdlSetEye e visibilidade são caminhos distintos. Nome/protótipo do stub final, estado dinâmico/piscada, demais materiais e wrap/combiners continuam desconhecidos/não implementados. Pés ausentes continuam limitação de geometria, sem malha sintetizada.
+- Python 3.12.3, .NET SDK 8.0.428 (`~/.dotnet/dotnet`), SPICA.dll já existente no checkout `_tools/SpicaExport/bin/Release/net8.0`, Capstone 5.0.3 (`/tmp/events-abi-venv`). Nenhuma dependência adicionada; Craft Anything continuou indisponível. **211 Vitest/38 arquivos, build e 142 testes Python (um skip pré-existente por assets públicos ausentes no worktree) passaram** sobre 61fd0c6. O build mantém o aviso conhecido de chunks >500 kB.
+
 ## Host de eventos AMX (2026-11-17, worktree `events-layer`)
 
 - Continuação sobre `main 6ae4d58`, com rebase no worktree dedicado; o checkout

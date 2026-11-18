@@ -50,9 +50,9 @@
     "/assets/characters/mm_0124.glb": "/assets/native/characters/mm_0124-b313831fd7c2.glb",
     "/assets/characters/mm_0125.glb": "/assets/native/characters/mm_0125-b313831fd7c2.glb",
     "/assets/characters/mm_0179.glb": "/assets/native/characters/mm_0179-0d02d53fd4a3.glb",
-    "/assets/characters/mm_0180.glb": "/assets/native/characters/mm_0180-846abfc5891a.glb",
-    "/assets/characters/mm_0181.glb": "/assets/native/characters/mm_0181-00c25fbd14bc.glb",
-    "/assets/characters/mm_0212.glb": "/assets/native/characters/mm_0212-7f7feeaea4a4.glb",
+    "/assets/characters/mm_0180.glb": "/assets/native/characters/mm_0180-dd6b6a2e504c.glb",
+    "/assets/characters/mm_0181.glb": "/assets/native/characters/mm_0181-6f08749256d7.glb",
+    "/assets/characters/mm_0212.glb": "/assets/native/characters/mm_0212-ac27329bbeb3.glb",
     "/assets/characters/mm_0218.glb": "/assets/native/characters/mm_0218-fd0c0b77a9d0.glb",
     "/assets/characters/mm_0219.glb": "/assets/native/characters/mm_0219-808cec0681ab.glb",
     "/assets/characters/mm_0220.glb": "/assets/native/characters/mm_0220-ff7bc3069a7a.glb",
@@ -96,10 +96,10 @@
     "/assets/characters/mm_0306.glb": "/assets/native/characters/mm_0306-0a663933716c.glb",
     "/assets/characters/mm_0307.glb": "/assets/native/characters/mm_0307-afbd2e91a801.glb",
     "/assets/characters/mm_0312.glb": "/assets/native/characters/mm_0312-b313831fd7c2.glb",
-    "/assets/characters/mm_0314.glb": "/assets/native/characters/mm_0314-29b54e385d73.glb",
-    "/assets/characters/may/may.glb": "/assets/native/characters/mm_0314-29b54e385d73.glb",
-    "/assets/characters/mm_0315.glb": "/assets/native/characters/mm_0315-b1bf2efcd952.glb",
-    "/assets/characters/brendan/brendan.glb": "/assets/native/characters/mm_0315-b1bf2efcd952.glb",
+    "/assets/characters/mm_0314.glb": "/assets/native/characters/mm_0314-d5918ea6dc77.glb",
+    "/assets/characters/may/may.glb": "/assets/native/characters/mm_0314-d5918ea6dc77.glb",
+    "/assets/characters/mm_0315.glb": "/assets/native/characters/mm_0315-0e785f6fc374.glb",
+    "/assets/characters/brendan/brendan.glb": "/assets/native/characters/mm_0315-0e785f6fc374.glb",
     "/assets/characters/mm_0318.glb": "/assets/native/characters/mm_0318-8460c67d980f.glb",
     "/assets/characters/mm_0319.glb": "/assets/native/characters/mm_0319-9b8a9b6c38e1.glb",
     "/assets/characters/mm_0322.glb": "/assets/native/characters/mm_0322-3485956cba79.glb",
@@ -169,8 +169,8 @@
     },
     {
       "id": "character/mm_0180",
-      "url": "/assets/native/characters/mm_0180-846abfc5891a.glb",
-      "sha256": "846abfc5891a2bcc6c405e0184db1e34a56e0645c6b0f070155755ca8237ceea",
+      "url": "/assets/native/characters/mm_0180-dd6b6a2e504c.glb",
+      "sha256": "dd6b6a2e504c3b7f33da892f744fb748379788bf40854cb3eb93345552962f8f",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0180.glb",
       "clips": [
@@ -182,8 +182,8 @@
     },
     {
       "id": "character/mm_0181",
-      "url": "/assets/native/characters/mm_0181-00c25fbd14bc.glb",
-      "sha256": "00c25fbd14bcfb75afe8ba076e3e4417b9edcecfd99e6a839fded835ea8e9dd3",
+      "url": "/assets/native/characters/mm_0181-6f08749256d7.glb",
+      "sha256": "6f08749256d7b037076de684c3eca309fe1b529fb4225fb4121350463b54bf83",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0181.glb",
       "clips": [
@@ -195,8 +195,8 @@
     },
     {
       "id": "character/mm_0212",
-      "url": "/assets/native/characters/mm_0212-7f7feeaea4a4.glb",
-      "sha256": "7f7feeaea4a456513486b89cff4c7e33e1365fec8d467a647018a4a44591a6f8",
+      "url": "/assets/native/characters/mm_0212-ac27329bbeb3.glb",
+      "sha256": "ac27329bbeb3143aaf291de33c2086c91787dbf54b1bc7c27584942851ee7238",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0212.glb",
       "clips": [
@@ -762,8 +762,8 @@
     },
     {
       "id": "character/mm_0314",
-      "url": "/assets/native/characters/mm_0314-29b54e385d73.glb",
-      "sha256": "29b54e385d73286623feaf2b9dcecfab3c42f3daa289643a087a138ddc52ab64",
+      "url": "/assets/native/characters/mm_0314-d5918ea6dc77.glb",
+      "sha256": "d5918ea6dc77c43ce3d366d35c0b110c7abbaff8da8f692e4ff45b117d7ad4f5",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0314.glb",
       "clips": [
@@ -775,8 +775,8 @@
     },
     {
       "id": "character/mm_0315",
-      "url": "/assets/native/characters/mm_0315-b1bf2efcd952.glb",
-      "sha256": "b1bf2efcd952dfb8ce351fd1a814dd5b50d4f8b15f8a1fa7e51b0e3330b5f44f",
+      "url": "/assets/native/characters/mm_0315-0e785f6fc374.glb",
+      "sha256": "0e785f6fc374d47579bd477f9d0efb6c6c804d05c952a6bc0a67561ec3458dd0",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0315.glb",
       "clips": [

@@ -240,6 +240,12 @@ a ação esquelética. No segundo grupo, os BCHs lidos têm um registro de
 animação e zero elementos. Essa é a localização das expressões,
 não uma implementação de reprodução de material em glTF.
 
+P-019/A-042/A-043 [separam esses grupos da paleta overworld](face-expressions.md):
+a seção 2 dos MM amostrados contém `eye01`, enquanto ChangeFace seleciona
+posições 0/10/…/70. A orientação-base da face foi corrigida em cinco GLBs
+comparando V com o BCH e RGBA com a imagem; não é remap de canal nem
+reprodução dinâmica desses BCHs.
+
 PK slot 9: N=37, 20 clipes presentes, 50 bones. Mesma organização externa,
 mas com grupos de **26** ações: visibilidade 2–27, materiais 28–53 e
 54–79, auxiliares 80–105. Nomes observados: `kw01_wait01`,

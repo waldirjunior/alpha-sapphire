@@ -327,3 +327,20 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro potencial:** Copiar apenas raízes e destinos de warp deixa sem GLB os chunks que o renderer já compõe de Route105/115/116 ao abrir27/16. Percorrer vizinhos recursivamente, por outro lado, copiaria o mundo todo.
 - **Regra:** --zones escolhe raízes; --include-neighbors acrescenta só um salto do grafo dessas raízes, além dos destinos ZO diretos. Não expandir novamente a partir do resultado. Validar assets e manter os IDs especiais em fallback, sem inventar máscaras de bits.
 - **Evidência:** Fixture de seleção falhou com a API anterior e agora seleciona6/7/223 sem alcançar o vizinho8 de7. O plano13/27/82/26/16 selecionou29 zonas/53 GRs/57 atores, seis IDs especiais sem modelo; public acumulado validou74 GRs e68 atores com zero violações texCoord. Playwright permanece aceite separado.
+
+## A-044 UV0 e UV1 idênticos não descartam inversão de V
+
+- **Data:** 2026-11-17.
+- **Contexto:** P-019, continuação da auditoria A-031 sobre main 942fdb3, atualizada para 61fd0c6 antes do fechamento. A-040/A-041 foram preservados da main. Renumerado de `A-042` no merge (colisão com `zone-maps`).
+- **Erro reproduzido:** O rosto de Brendan estava inteiro invertido, não apenas com olhos fechados. O BCH contém V=0,507449–0,995244; o GLB contém 1−V, mas a imagem RGBA é idêntica à original. Os dois canais exportados sofreram a mesma inversão, logo trocar o índice não ajuda.
+- **Regra:** Comparar valores e orientação com o BCH e a imagem, não somente índices. Restaurar V apenas com material/transformação e SHA de fonte comprovados; clonar accessors compartilhados, preservar BIN-base/skin/clipes e publicar nova URL imutável. Não aplicar flip global nem deslocamento arbitrário de meia célula.
+- **Evidência:** [Levantamento](features/pipeline-rom/character-face-evidence.json) de 61 MM encontrou 12 paletas no canal examinado; cinco casos de 70 frames foram normalizados: 0180/0181/0212/0314/0315. Fixture determinística falhou com V=0,125 em vez de 0,875 no comportamento legado de cópia; seis regressões passam com a correção. Imagens, samplers, materiais, nodes, skins, animações e prefixo BIN permanecem idênticos nos cinco GLBs; 97/102 entradas do catálogo não mudaram. Playwright A/B carregou os assets novos de Brendan/May/Wally: seis capturas inspecionadas, rosto orientado e olhos abertos, zero pageerror/HTTP>=400. [Relatório](features/pipeline-rom/face-expressions.md).
+- **Limite:** A correção é de orientação-base, não reprodução de expressões, wrap/combiners, piscada ou paridade com emulador. Pés ausentes continuam limitação do asset, sem malha inventada.
+
+## A-045 TexCoord de material e nativa Eye não identificam sozinhos um canal UV
+
+- **Data:** 2026-11-17.
+- **Contexto:** P-019, CRO/expressões BCH. Renumerado de `A-043` no merge (colisão com `zone-maps`).
+- **Regra:** Separar slot do transform de textura, fonte de coordenadas e stream glTF. Nos cinco casos suportados, MaterialTexCoord1Trans usa TextureSources[1]=0. O switch estático chamado por ChangeFace recebe expressão uint8 e escolhe floats 0,10,…,70, correspondentes às posições da paleta; isso não prova uma animação contínua de piscar. TalkMdlSetEye resolve dois atores e um modo, não é evidência de seleção de célula. Visibilidade de ator/mesh não cria topologia.
+- **Evidência:** DllField.cro/ChangeFace em 0x51ac0 → stub 0x28f8 → import anônimo |static|/0x2f80e8; switch virtual 0x3f80e8 e constantes em 0x3f81a0. Nos MM0314/0315/0180, seção 2 contém material eye01 de 70 frames e nenhum clip de visibilidade. SHA/offsets, leitor SPICA e distinção observado/derivado estão no [relatório](features/pipeline-rom/face-expressions.md).
+- **Limite:** O nome/protótipo do stub final 0x19c7a8 e a ligação completa ao estado de expressão do ator não foram recuperados. Ausência do elemento examinado em outros MM não prova ausência de expressões; grupos PB/PK de Pokémon são outro layout.
