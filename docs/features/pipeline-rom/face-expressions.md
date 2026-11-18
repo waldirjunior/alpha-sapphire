@@ -177,17 +177,117 @@ worktree. A suíte inclui as seis regressões sintéticas desta correção, sem
 ROM ou WebGL. A-040/A-041 foram incorporados da main; os aprendizados desta
 investigação usam A-042/A-043.
 
+## Continuação dinâmica: ator, estado e frame (2026-11-18)
+
+A-046–A-048 e [PRD-009](../engine-3d/prds/PRD-009-expressoes-bch-no-runtime.md)
+continuam a base 4f42e54. Craft Anything permaneceu indisponível na descoberta
+MCP e o executável não estava instalado; as evidências abaixo são leituras
+estáticas locais, não observações do jogo original em execução.
+
+### Observado nos binários
+
+Além do SHA de DllField acima:
+
+- `static.crs`: `b1976b7f480ffdeaa03cc842515472a89cc6e186d58d5022f64374a3b921005c`.
+- `code.bin`: `b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16`.
+
+| Etapa | Evidência |
+| --- | --- |
+| Wrapper `0x51ac0–0x51af8` | `uxth` no ator, máscara `0xff` na expressão; lookup, chamada somente se ator existe e retorno0. |
+| Import `DllField:0x22b4` | `\|static\|`, segmento0/offset `0x3e366c`; endereço virtual `0x4e366c`. |
+| Lookup `0x4e366c–0x4e36f4` | Percorre registros de tamanho `0xab0`, testa flag de atividade e compara o u16 de registro+`0xc` com o ID recebido. Não lê o speaker do diálogo. |
+| Switch `0x3f80e8` | Resolve estado via `0x4e3d8c` e escolhe floats0/10/…/70; uint8 fora0..7 segue fallback0. |
+| Getter `0x4e3d8c–0x4e3dc4` | Testa flag2, consulta objeto em ator+`0xa18`, método virtual+`0x20`, com chave ator+`0x96c`. |
+| Import `static.crs:0x19c7ac` | O stub `code.bin:0x19c7a8` importa **DllField**, segmento0/offset `0x38838`; o segmento começa em arquivo `0x180`, portanto destino `0x389b8`. |
+| Setter `DllField:0x389b8–0x38a38` | Exige bytes de prontidão em estado+`0x270/0x271`; aplica s0 ao objeto em estado+`0x1fc`, método virtual+`0xcc`, canal0; grava estado+`0x27c = (frame==0)`. |
+
+A ligação **ID do ator → registro → estado → objeto/frame** foi recuperada.
+O nome C++/protótipo do método virtual ainda não foi recuperado; interpretar
+esse caminho como aplicação da paleta é uma derivação do fluxo, dos oito
+valores e do BCH. Não se declara observação desse fluxo no emulador.
+
+O leitor versionado agora resolve imports anônimos por endereço do patch,
+com regressão sintética; não usa proximidade de strings:
+
+```python
+from pathlib import Path
+from scripts.cro_native_abi import CroImage
+
+romfs = Path("/caminho/local/rom/extracted/RomFS")
+crs = CroImage((romfs / "static.crs").read_bytes())
+dll = CroImage((romfs / "DllField.cro").read_bytes())
+module, segment, offset = crs.anonymous_import_at(0x19c7ac)
+print(module, hex(dll.segment_address(segment, offset)))
+# DllField 0x389b8
+```
+
+### Implementado no host web
+
+- `ChangeFace` deixa de ser efeito cosmético opaco: a VM guarda expressão no
+  ator resolvido, replica casts/fallback0 e não inventa ator quando o lookup
+  falha. A transição mantém a imutabilidade do estado recebido.
+- A projeção transporta a expressão pelo ID da entidade. O player recebe a
+  expressão mesmo quando spawn/borda impedem projetar sua posição; refresh
+  de player não apaga a expressão. Saves validam o campo opcional0..7.
+- A promoção exporta `faceAnimations` somente para os mesmos cinco modelos
+  corrigidos e paletas completas0/10/…/70. Os cinco SHA/URLs publicados e
+  todas as demais entradas permanecem iguais; nenhum GLB foi regravado.
+- `CharacterExpressions` seleciona material por nome exato da evidência,
+  nunca por uma heurística ampla de nome de olho. Clona material e textura
+  por instância e aplica a matriz DccMaya: offset-base **menos** translação
+  BCH. Preserva sampler, canal UV, imagem, corpo, skin, clipes e UVs.
+- Expressão solicitada antes da carga é aplicada ao modelo carregado;
+  descarte libera apenas clones e esquece a seleção da entidade descartada.
+  Valores diretos fora0..7 são rejeitados pelo engine; fallback uint8 da
+  nativa é normalizado no core, antes da projeção.
+
+### Piscada: frames observados, clock ainda pendente
+
+O update `DllField:0x38850–0x389ac` testa os mesmos bytes de prontidão e
+`estado+0x27c`. Quando o contador em `+0x274` chega a zero, aplica **frame10**
+pelo mesmo slot virtual+`0xcc` e grava2 em `+0x278`; dois updates depois aplica
+**frame0**. Os floats10/0 estão em `0x389b0/0x389b4`. O setup
+`0x80a5c–0x80bc8` inicializa espera como `helper(60)+60` e contador fechado0.
+O update também possui caminhos de intervalos4/8 e outro byte em `+0x27d`.
+A expressão explícita não-zero desliga `+0x27c`; frame0 volta a habilitá-lo.
+
+Isso evidencia uma máquina de piscada e seus frames, mas **não** o clock do
+update, o contrato do helper nem todas as condições de ativação. Não converter
+contadores para ms/fps por suposição, nem usar o número70 como duração de
+piscada. **Piscada idle automática não foi implementada**; permanece pendente
+até evidenciar a base temporal e as condições completas.
+
+### A/B Playwright e verificação
+
+- Código do worktree, base4f42e54, Vite isolado em **5194** via API com
+  `publicDir` apontado ao `public/` principal. A porta5187 já servia código
+  antigo e não foi alterada; a tentativa inicial foi descartada ao detectar
+  ausência do export novo. Não houve integração nem escrita de fontes na main.
+- Chromium visível149.0.7827.55; cenário **AMX sintético** com duas entidades
+  NPC MM0180 e `ZoneEvents`/VM/projeção/`SceneManager` reais. Script chama
+  `ChangeFace(7,0)`, espera tecla, `ChangeFace(7,1)`, espera tecla e restaura0.
+  Não é ramo natural de história nem código da ROM executado.
+- GLB `/assets/native/characters/mm_0180-dd6b6a2e504c.glb`, material
+  `rstr0010_00_face`, câmera/luz/pose fixas. Três PNGs inspecionados mostram
+  olhos abertos → fechados → abertos. UVs e pose ficaram idênticos; a textura
+  do segundo ator continuou com offset0 e não é compartilhada com a primeira.
+- Frames0/10 usam offsets `(0,0)`/`(0.25,0)`. PNG inicial/restaurado têm SHA
+  `f9bde6cbf5c2455aace722221bbf7cb515e4380dbcd73071b032787eb1b31735`;
+  frame10 tem SHA `b495417ecf21a45be2ad7262cb59805a1c031d38147eae4dee45e3c860706aa7`.
+- Zero pageerror, console error, warning ou HTTP>=400 no A/B final; GLBs200.
+  Relatório e PNGs ignorados no principal em
+  `rom/face_expression_validation/dynamic/`; harness temporário
+  `/tmp/playwright-test-dynamic-face.js`. Não há mutação de UV pelo navegador.
+- Verificação canônica atual e limites estão em [STATUS](../../STATUS.md).
+  Regressões reproduziram a pausa opaca anterior, a falta de projeção da
+  expressão, a falta de exportação de paleta e valores inválidos do save.
+
 ## Limites e continuação
 
-A reprodução dinâmica da paleta de expressão e o comportamento automático de
-piscar ainda não estão implementados. O nome/protótipo do stub final e sua
-ligação completa ao estado do ator continuam desconhecidos; valores do CRO
-coincidirem com os frames BCH não substitui observar esse fluxo no emulador.
-As paletas de 10/30 frames, outros canais, wrap/combiners, visibilidade PB/PK
-e a aparência de outros materiais precisam de validação própria. Não aplicar
-flip global a cenas ou espécies não verificadas. As texturas não faciais ainda
-podem estar incorretas, como mostram as capturas de May.
-
-Os pés continuam ausentes no GLB-base; nenhuma alteração de UV, alpha, pose
-ou visibilidade os reconstruirá. A-042/A-043 e P-019 mantêm essas fronteiras;
-o A/B não é paridade com emulador nem validação da paleta inteira.
+A seleção explícita é implementada para os cinco GLBs corrigidos, mas não
+valida a paleta inteira no emulador. Próximos passos: clock/condições de
+piscada, ramo natural AMX, paletas10/30, outros canais e materiais,
+wrap/combiners e visibilidade PB/PK. As texturas não faciais ainda podem estar
+incorretas. Os pés continuam ausentes no GLB-base e não foram reconstruídos.
+P-019 permanece aberta; orientação, seleção, temporização e paridade são
+critérios separados.

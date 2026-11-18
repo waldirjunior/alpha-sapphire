@@ -352,3 +352,54 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro reproduzido:** zone_audio.hasMp3 refere-se à extração local, não ao public. As BGMs r_b/d_01/c_02 existiam em rom/extracted/audio/mp3, mas faltavam no staging; o fallback SPA devolvia HTML200, sem HTTP404 e sem consoleErrors, enquanto pageErrors acumulava falhas do decoder. Auditar apenas status HTTP ou console não detectaria o defeito.
 - **Regra:** Ao expandir o slice, copiar também as BGMs nativas das raízes usando --audio-dir. Não inventar música, silenciar rejeições ou falsificar hasMp3. Conferir pageerror e decodificação além da presença/HTTP; um asset200 ainda pode ser HTML. Melhorias genéricas de fallback/erros do player fora das zonas staged permanecem no escopo P-008.
 - **Evidência:** Fixture sintética falhou antes de stage_audio e agora garante seleção por zona, sem copiar faixa de raiz não solicitada. Os três MP3s reais foram staged com write_new idempotente; repetição completa dos306 passos encerrou com consoleErrors=[], pageErrors=[], missing=[], sem interceptar áudio. 215 Vitest/139 Python sem skips/build passaram; oito capturas locais e encontros das cinco zonas foram conferidos, com limitações visuais e de história preservadas.
+
+## A-047 Um stub do executável pode importar de volta o CRO
+
+- **Data:** 2026-11-18.
+- **Contexto:** P-019/PRD-009, continuação sobre 4f42e54 de A-045. Renumerado de `A-046` no merge (colisão com `zone-maps`).
+- **Descoberta:** O literal static.crs/0x19c7ac importa DllField,
+  segmento0/offset0x38838, que vira arquivo0x389b8 ao somar a base0x180.
+  Esse setter usa objeto de estado+0x1fc, slot virtual0xcc/canal0 e o float
+  escolhido pelo switch. O getter static/0x4e3d8c consulta ator+0xa18 com
+  chave ator+0x96c; o lookup0x4e366c compara o u16 do registro+0xc com o ID.
+- **Regra:** Resolver a tabela de imports pelo endereço do patch, distinguindo
+  endereço virtual, offset de segmento e offset de arquivo. Não encerrar o
+  rastreio num stub nem confundir ID do ator com speaker ou nome de modelo.
+- **Evidência:** CroImage.anonymous_import_at e regressão sintética; hashes,
+  offsets e reprodução no [relatório](features/pipeline-rom/face-expressions.md).
+  O vínculo ator→estado→frame foi recuperado estaticamente; nome C++ e
+  observação no emulador continuam desconhecidos. A-045 é o snapshot anterior.
+
+## A-048 Expressão é estado por instância, não alteração da geometria
+
+- **Data:** 2026-11-18.
+- **Contexto:** P-019, dispatch ChangeFace, projeção AMX e material de cinco
+  GLBs corrigidos em A-044. Renumerado de `A-047` no merge.
+- **Erro reproduzido:** A VM anterior parava em ChangeFace como efeito opaco;
+  o player autoritativo não recebia expressão quando a projeção de posição
+  era bloqueada. O novo campo também exigiu validação no save.
+- **Regra:** Manter expressão0..7 no ator puro, replicar casts/fallback0 da
+  nativa e transportar por ID. Guardar seleção enquanto carrega o GLB;
+  clonar material e textura, não UV. Aplicar offset-base menos translação
+  BCH DccMaya somente nos materiais/URLs evidenciados. Descartar só clones.
+- **Evidência:** Testes falharam antes e passaram após dispatch/projeção/export
+  da paleta e validação do save; regressões cobrem oito frames, ator ausente,
+  isolamento, restauração e descarte. Playwright real de VM/host/engine com
+  AMX sintético mostrou MM0180 aberto→fechado→aberto (frames0/10/0), com
+  câmera/pose/UVs fixos, segundo ator intacto e PNG inicial/restaurado com o
+  mesmo SHA. Três capturas inspecionadas em rom/face_expression_validation/dynamic/
+  no principal; zero erros/warnings/HTTP>=400. Não é cutscene ROM/emulador.
+
+## A-049 Contador de update não define uma duração em segundos
+
+- **Data:** 2026-11-18.
+- **Contexto:** Rotina de piscada DllField/0x38850–0x389ac e setup0x80a5c. Renumerado de `A-048` no merge.
+- **Observado:** Estado+0x27c habilita o caminho; o setter de ChangeFace grava
+  esse byte como frame==0. O update aplica frame10, espera dois updates e
+  aplica0. A espera é helper(60)+60, com caminhos curtos4/8 e byte0x27d.
+- **Regra:** Separar paleta, gatilho e clock. Nem70 frames do BCH nem dois
+  updates autorizam assumir30/60fps ou inventar um timer de idle. O contrato
+  do helper e a frequência/condições do update ainda precisam ser provados.
+- **Consequência:** Seleção explícita implementada, piscada automática
+  explicitamente pendente; P-019 permanece aberta para isso, ramos naturais,
+  cobertura de outros materiais e paridade. Pés ausentes não foram inventados.

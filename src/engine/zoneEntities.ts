@@ -8,6 +8,19 @@ export const FACING_YAW: Record<Direction, number> = {
 };
 
 type ActorLoader = (url: string, target: THREE.Group) => void;
+type ExpressionPort = { set(target: THREE.Object3D, expression?: number): void };
+
+export function syncMapEntities(map: MapDefinition, group: THREE.Group, expressions: ExpressionPort): void {
+  for (const npc of map.npcs ?? []) {
+    const root = group.getObjectByName(npc.id);
+    if (!root) continue;
+    const pos = worldPosition(npc.pos, map);
+    root.position.set(pos.x, 0, pos.z);
+    root.rotation.y = FACING_YAW[npc.facing ?? 'down'];
+    root.visible = npc.visible !== false;
+    expressions.set(root, npc.faceExpression);
+  }
+}
 
 function addNpc(group: THREE.Group, pos: GridPosition, modelUrl: string, facing: Direction | undefined, load: ActorLoader, id?: string): void {
   const root = new THREE.Group();

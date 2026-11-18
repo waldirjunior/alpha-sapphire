@@ -20,6 +20,34 @@ function syntheticBundle(calls: readonly { name: string; args: number[] }[], suf
 const execute = (bundle: AmxBundle, world: AmxWorld) => runAmx(bundle, createAmxState(bundle, 'synthetic', 0, world));
 
 describe('nativas de estado Pawn', () => {
+  it.each([0, 1, 2, 3, 4, 5, 6, 7])('ChangeFace aplica expressão %s somente ao ator resolvido', expression => {
+    const world = createAmxWorld();
+    world.actors[7] = { x: 1, y: 0, z: 2, direction: 0, visible: true, moveCode: 0 };
+    world.actors[8] = { ...world.actors[7] };
+    const result = execute(syntheticBundle([{ name: 'ChangeFace', args: [7, expression] }]), world);
+    expect(result.status).toBe('completed');
+    expect(result.world.actors[7]).toHaveProperty('faceExpression', expression);
+    expect(result.world.actors[8]).not.toHaveProperty('faceExpression');
+    expect(world.actors[7]).not.toHaveProperty('faceExpression');
+    expect(result.world.effects).toEqual([]);
+    expect(result.machines[0].pri).toBe(0);
+  });
+
+  it.each([[65543, 257, 1], [7, 8, 0], [7, 255, 0], [7, 256, 0]])(
+    'ChangeFace replica casts uint16/uint8 e fallback zero (%s,%s)', (id, expression, expected) => {
+      const world = createAmxWorld();
+      world.actors[7] = { x: 1, y: 0, z: 2, direction: 0, visible: true, moveCode: 0 };
+      const result = execute(syntheticBundle([{ name: 'ChangeFace', args: [id, expression] }]), world);
+      expect(result.status).toBe('completed');
+      expect(result.world.actors[7]).toHaveProperty('faceExpression', expected);
+    });
+
+  it('ChangeFace para ator não encontrado é no-op, sem tratar argumento como speaker', () => {
+    const world = createAmxWorld();
+    const result = execute(syntheticBundle([{ name: 'ChangeFace', args: [1234, 1] }]), world);
+    expect(result.status).toBe('completed');
+    expect(result.world.actors).toEqual({});
+  });
   it.each([[104, 179, 6815923], [-1, 2, -65534], [65536, -1, -1]])('empacota construção (%s,%s) sem consultar ator', (x, z, handle) => {
     const world = createAmxWorld();
     const result = execute(syntheticBundle([{ name: 'BuildMdlGetHandleByGPos', args: [x, z] }]), world);

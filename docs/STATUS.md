@@ -1,6 +1,6 @@
 # Status
 
-Atualizado em 2026-11-17 (host verificado no worktree; registros de VPS abaixo são históricos).
+Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
 ## Extensão Petalburg–Rustboro (2026-11-17, zone-maps)
 
@@ -10,6 +10,15 @@ Atualizado em 2026-11-17 (host verificado no worktree; registros de VPS abaixo s
 - **Playwright visível na main b5e3efc/porta5200:306 passos**, saindo de13(39,54), ponte13(1,48)→27(76,48)/left, retorno(1,48)/right e nova ida; portal27(37,17)/up→82(28,64)/up, portal82(26,20)/up→26(33,44)/up, borda26(49,0)/up→16(49,79)/up e caminhada até16(47,65). Bordas sem fade e vetor mundial unitário; encontros das cinco zonas comparados no browser com os JSONs nativos. Fixture inicial em Petalburg e PRNG distinto0.9..1 evitam batalhas aleatórias; não é prova de disparo selvagem nem de cutscene de história.
 - Primeira rodada chegou ao destino, mas encontrou MP3s ausentes: Vite retornava HTML200, causando erros de decode (A-044). Staging seletivo `--audio-dir` incluiu as faixas nativas já extraídas `bgm_sg_r_b`, `bgm_sg_d_01`, `bgm_sg_c_02`, sem conversor nem silenciar eventos. Rodada completa repetida: **consoleErrors=[], pageErrors=[], missing=[]**. Permanecem dois avisos init AMX BuildMdlEventAnimeSetEnd, sem bloquear movimento; solicitações de áudio corresponderam às faixas esperadas.
 - Evidências locais: `/tmp/rustboro-results.json`, `/tmp/playwright-test-rustboro.js`, capturas `/tmp/rustboro-00-petalburg-start.png`, `01-zone_0027.png`, `02-zone_0013.png`, `03-zone_0027.png`, `04-zone_0082.png`, `05-zone_0026.png`, `06-zone_0016.png`, `07-rustboro-center.png` (mesmo prefixo `/tmp/rustboro-`). Imagens das cinco zonas inspecionadas: sem tela preta ou difusa ausente; cartões de folhagem/combiners, esferas de fallback e marcadores vermelhos de warp continuam visíveis. Não há alegação de paridade gráfica, flags ou eventos da história.
+
+## P-019: ChangeFace dinâmico por ator (2026-11-18)
+
+- Base4f42e54, worktree anim-0xef-re; [PRD-009](features/engine-3d/prds/PRD-009-expressoes-bch-no-runtime.md), A-046–A-048 e [evidência](features/pipeline-rom/face-expressions.md). O import static.crs/0x19c7ac resolve de volta para DllField/0x389b8; lookup do ID, getter de estado e setter de frame recuperados estaticamente. Nome C++/protótipo virtual e fluxo observado no emulador seguem desconhecidos.
+- ChangeFace guarda expressão pura no ator, replica casts uint16/uint8, fallback0 fora0..7 e no-op para ator ausente. Projeção por ID alcança NPC/player sem mover spawn/borda; refresh preserva expressão e save valida o campo opcional. Nenhuma lógica de batalha mudou.
+- Promoção exporta somente oito frames da evidência nos mesmos cinco GLBs corrigidos. Todos os102 SHA/URLs e demais metadados permanecem iguais, exceto faceAnimations nas cinco entradas. Renderer clona material/textura por ator, aplica offset-base menos translação DccMaya, conserva UVs/skin/clipes/samplers e descarta só clones; seleção anterior à carga é mantida.
+- Playwright visível149.0.7827.55, Vite isolado5194 com código do worktree e publicDir do principal: **AMX sintético**, VM/ZoneEvents/projeção/SceneManager reais, dois NPCs MM0180. Frames0→10→0 mostraram olhos abertos→fechados→abertos; três PNGs inspecionados, pose/UVs fixos, segundo ator intacto e PNG inicial/restaurado idêntico por SHA. Zero pageerror/console error/warning/HTTP>=400. Evidências ignoradas no principal em rom/face_expression_validation/dynamic/; não houve mudança de fontes na main nem cutscene ROM exercitada.
+- **249 Vitest/40 arquivos, build e147 testes Python passaram**, com um skip pré-existente em test_glb_uv_fix.py por assets públicos ausentes no worktree. Aviso herdado de chunks >500kB mantido. Sem dependências novas, binários ou screenshots no Git; Craft Anything continuou indisponível.
+- **Piscada automática pendente:** rotina estática usa frames10/0, contador fechado2 e espera helper(60)+60, com ramos4/8; clock/contrato do helper e condições completas não provados. Não foi inventado timer nem frame. P-019 continua aberta para timing, ramo natural AMX, outros materiais/wrap/combiners e emulador; pés continuam limitação de geometria.
 
 ## P-019: orientação-base da face e paletas BCH (2026-11-17)
 

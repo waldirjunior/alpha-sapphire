@@ -178,6 +178,77 @@
         "walk",
         "overworld_002",
         "overworld_000"
+      ],
+      "faceAnimations": [
+        {
+          "material": "rstr0010_00_face",
+          "frames": [
+            {
+              "id": 0,
+              "frame": 0,
+              "translation": [
+                0,
+                0
+              ]
+            },
+            {
+              "id": 1,
+              "frame": 10,
+              "translation": [
+                -0.25,
+                0
+              ]
+            },
+            {
+              "id": 2,
+              "frame": 20,
+              "translation": [
+                -0.5,
+                0
+              ]
+            },
+            {
+              "id": 3,
+              "frame": 30,
+              "translation": [
+                -0.75,
+                0
+              ]
+            },
+            {
+              "id": 4,
+              "frame": 40,
+              "translation": [
+                0,
+                -0.5
+              ]
+            },
+            {
+              "id": 5,
+              "frame": 50,
+              "translation": [
+                -0.25,
+                -0.5
+              ]
+            },
+            {
+              "id": 6,
+              "frame": 60,
+              "translation": [
+                -0.5,
+                -0.5
+              ]
+            },
+            {
+              "id": 7,
+              "frame": 70,
+              "translation": [
+                -0.75,
+                -0.5
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -191,6 +262,77 @@
         "walk",
         "overworld_002",
         "overworld_000"
+      ],
+      "faceAnimations": [
+        {
+          "material": "rstr0011_00_face",
+          "frames": [
+            {
+              "id": 0,
+              "frame": 0,
+              "translation": [
+                0,
+                0
+              ]
+            },
+            {
+              "id": 1,
+              "frame": 10,
+              "translation": [
+                -0.25,
+                0
+              ]
+            },
+            {
+              "id": 2,
+              "frame": 20,
+              "translation": [
+                -0.5,
+                0
+              ]
+            },
+            {
+              "id": 3,
+              "frame": 30,
+              "translation": [
+                -0.75,
+                0
+              ]
+            },
+            {
+              "id": 4,
+              "frame": 40,
+              "translation": [
+                0,
+                -0.5
+              ]
+            },
+            {
+              "id": 5,
+              "frame": 50,
+              "translation": [
+                -0.25,
+                -0.5
+              ]
+            },
+            {
+              "id": 6,
+              "frame": 60,
+              "translation": [
+                -0.5,
+                -0.5
+              ]
+            },
+            {
+              "id": 7,
+              "frame": 70,
+              "translation": [
+                -0.75,
+                -0.5
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -204,6 +346,77 @@
         "walk",
         "overworld_002",
         "overworld_000"
+      ],
+      "faceAnimations": [
+        {
+          "material": "rstr0042_00_fi_face",
+          "frames": [
+            {
+              "id": 0,
+              "frame": 0,
+              "translation": [
+                0,
+                0
+              ]
+            },
+            {
+              "id": 1,
+              "frame": 10,
+              "translation": [
+                -0.25,
+                0
+              ]
+            },
+            {
+              "id": 2,
+              "frame": 20,
+              "translation": [
+                -0.5,
+                0
+              ]
+            },
+            {
+              "id": 3,
+              "frame": 30,
+              "translation": [
+                -0.75,
+                0
+              ]
+            },
+            {
+              "id": 4,
+              "frame": 40,
+              "translation": [
+                0,
+                -0.5
+              ]
+            },
+            {
+              "id": 5,
+              "frame": 50,
+              "translation": [
+                -0.25,
+                -0.5
+              ]
+            },
+            {
+              "id": 6,
+              "frame": 60,
+              "translation": [
+                -0.5,
+                -0.5
+              ]
+            },
+            {
+              "id": 7,
+              "frame": 70,
+              "translation": [
+                -0.75,
+                -0.5
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -771,6 +984,77 @@
         "walk",
         "overworld_002",
         "overworld_000"
+      ],
+      "faceAnimations": [
+        {
+          "material": "rstr0001_00_face",
+          "frames": [
+            {
+              "id": 0,
+              "frame": 0,
+              "translation": [
+                0,
+                0
+              ]
+            },
+            {
+              "id": 1,
+              "frame": 10,
+              "translation": [
+                -0.25,
+                0
+              ]
+            },
+            {
+              "id": 2,
+              "frame": 20,
+              "translation": [
+                -0.5,
+                0
+              ]
+            },
+            {
+              "id": 3,
+              "frame": 30,
+              "translation": [
+                -0.75,
+                0
+              ]
+            },
+            {
+              "id": 4,
+              "frame": 40,
+              "translation": [
+                0,
+                -0.5
+              ]
+            },
+            {
+              "id": 5,
+              "frame": 50,
+              "translation": [
+                -0.25,
+                -0.5
+              ]
+            },
+            {
+              "id": 6,
+              "frame": 60,
+              "translation": [
+                -0.5,
+                -0.5
+              ]
+            },
+            {
+              "id": 7,
+              "frame": 70,
+              "translation": [
+                -0.75,
+                -0.5
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -784,6 +1068,77 @@
         "walk",
         "overworld_002",
         "overworld_000"
+      ],
+      "faceAnimations": [
+        {
+          "material": "rstr0002_00_fi_face",
+          "frames": [
+            {
+              "id": 0,
+              "frame": 0,
+              "translation": [
+                0,
+                0
+              ]
+            },
+            {
+              "id": 1,
+              "frame": 10,
+              "translation": [
+                -0.25,
+                0
+              ]
+            },
+            {
+              "id": 2,
+              "frame": 20,
+              "translation": [
+                -0.5,
+                0
+              ]
+            },
+            {
+              "id": 3,
+              "frame": 30,
+              "translation": [
+                -0.75,
+                0
+              ]
+            },
+            {
+              "id": 4,
+              "frame": 40,
+              "translation": [
+                0,
+                -0.5
+              ]
+            },
+            {
+              "id": 5,
+              "frame": 50,
+              "translation": [
+                -0.25,
+                -0.5
+              ]
+            },
+            {
+              "id": 6,
+              "frame": 60,
+              "translation": [
+                -0.5,
+                -0.5
+              ]
+            },
+            {
+              "id": 7,
+              "frame": 70,
+              "translation": [
+                -0.75,
+                -0.5
+              ]
+            }
+          ]
+        }
       ]
     },
     {

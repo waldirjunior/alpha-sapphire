@@ -45,6 +45,7 @@ export interface Interactable {
 }
 
 export interface MapNpc {
+  faceExpression?: number;
   visible?: boolean;
   id: string;
   pos: GridPosition;
@@ -99,6 +100,7 @@ export interface ActiveDialogue {
 }
 
 export interface PlayerState {
+  faceExpression?: number;
   id: string;
   mapId: string;
   pos: GridPosition;

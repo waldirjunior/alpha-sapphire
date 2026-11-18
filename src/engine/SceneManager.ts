@@ -5,7 +5,8 @@ import type { PokemonType } from '../data/pokemon/species';
 import { createBattleArena, type BattleArena } from './battleArena';
 import type { GameState, MapDefinition } from '../core/types';
 import { loadZoneTerrain } from './zoneTerrain';
-import { appendMapEntities, FACING_YAW } from './zoneEntities';
+import { appendMapEntities, syncMapEntities, FACING_YAW } from './zoneEntities';
+import { CharacterExpressions } from './characterExpressions';
 import { ContinuousTerrain } from './continuousTerrain';
 import { worldPosition } from '../core/boundaries';
 import { NativeAnimationController, characterClip, type CharacterAnimController } from './nativeAnimation';
@@ -70,6 +71,7 @@ export class SceneManager {
   private clock = new THREE.Clock();
   private playerAnim: CharacterAnimController | null = null;
   private entityMixers: THREE.AnimationMixer[] = [];
+  private readonly characterExpressions = new CharacterExpressions();
   private battleActors = new Map<THREE.Group, NativeAnimationController>();
   private battleLoads: Promise<void>[] = [];
   private battleLoadVersion = 0;
@@ -194,6 +196,7 @@ export class SceneManager {
   }
 
   private resetEntities(): void {
+    this.characterExpressions.clear(this.entitiesGroup);
     this.entitiesGroup.clear();
     for (const mixer of this.entityMixers) mixer.stopAllAction();
     this.entityMixers = [];
@@ -274,14 +277,8 @@ export class SceneManager {
       z: state.player.pos.z,
     };
 
-    for (const npc of map.npcs ?? []) {
-      const root = this.entitiesGroup.getObjectByName(npc.id);
-      if (!root) continue;
-      const npcPos = worldPosition(npc.pos, map);
-      root.position.set(npcPos.x, 0, npcPos.z);
-      root.rotation.y = FACING_YAW[npc.facing ?? 'down'];
-      root.visible = npc.visible !== false;
-    }
+    syncMapEntities(map, this.entitiesGroup, this.characterExpressions);
+    this.characterExpressions.set(this.playerRoot, state.player.faceExpression);
     const target = worldPosition(state.player.pos, map);
     this.playerTargetPos.set(target.x, 0, target.z);
     const continuous = previousRegion && previousRegion === map.continuousRegion &&
@@ -357,6 +354,7 @@ export class SceneManager {
         const model = gltf.scene;
         model.scale.setScalar(1 / ORAS_TILE_UNITS);
         fixOrasMaterials(model);
+        this.characterExpressions.bind(target, model, characterModelUrl(url));
         target.clear();
         target.add(model);
 

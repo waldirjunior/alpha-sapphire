@@ -134,5 +134,9 @@ promoção é idempotente e registra SHA-256, fonte, clipes e razões de ausênc
 - **Limite visual:** as cinco faces têm orientação-base corrigida, mas outros
   materiais, cores Pokémon e texturas overworld ainda podem estar incorretos.
   P-007/P-017/P-019 seguem abertas para a fidelidade residual; não foi
-  demonstrada paridade com emulador, nem resolvidos combiners, expressões
-  dinâmicas ou impacto nativo.
+  demonstrada paridade com emulador, nem resolvidos combiners ou impacto nativo.
+  PRD-009/A-046–A-048 acrescentam seleção explícita ChangeFace por ator nos cinco
+  materiais corrigidos, com A/B de NPC e AMX sintético validado no engine real;
+  piscada automática permanece pendente de clock/helper/condições nativas.
+  Verificação sobre4f42e54: 249 Vitest/40 arquivos, build e147 Python, com um
+  skip pré-existente por assets públicos ausentes no worktree.

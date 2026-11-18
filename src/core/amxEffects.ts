@@ -21,7 +21,7 @@ const groups: Readonly<Record<AmxEffectChannel, Readonly<Record<string, number>>
     MdlAdd: 1, MdlDel: 1, _MdlProperties: 2, MdlParamPosChange: 5,
     BuildMdlEventAnimeInvStart: 4, BuildMdlEventAnimeIsEnd: 2, BuildMdlEventAnimeSetEnd: 2,
     BuildMdlEventAnimeStart: 3, BuildMdlEventAnimeStop: 2,
-    MdlInterestViewClear: 1, MdlInterestViewSet: 4, MdlInterestViewSetMode: 2, ChangeFace: 2,
+    MdlInterestViewClear: 1, MdlInterestViewSet: 4, MdlInterestViewSetMode: 2,
     GetDirAddValueGridX: 2, GetDirAddValueGridZ: 2, CalcVecToDir: 2 },
   words: { _WordSetRegister: 3, WordSetItemName: 3, WordSetItemPocketName: 2, WordSetItemWazaName: 2,
     WordSetTemotiMonsNickName: 2 },

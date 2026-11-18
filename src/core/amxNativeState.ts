@@ -13,7 +13,14 @@ function addItem(world: AmxWorld, [id, count]: readonly number[], mutate: boolea
   if (mutate) world.bag[id] = total;
   return 1;
 }
+function changeFace(world: AmxWorld, [id, expression]: readonly number[]): number {
+  const target = world.actors[id & 0xffff];
+  const value = expression & 0xff;
+  if (target) target.faceExpression = value <= 7 ? value : 0;
+  return 0;
+}
 export const stateNatives: Readonly<Record<string, AmxNativeDefinition>> = {
+  ChangeFace: { arity: 2, execute: changeFace },
   CommandNOP: { arity: 0, execute: () => 0 },
   BuildMdlGetHandleByGPos: { arity: 2, execute: (_w, [x, z]) => ((x << 16) + z) | 0 },
   FlagGet: { arity: 1, execute: (w, [id]) => Number(w.flags[id] ?? false) },

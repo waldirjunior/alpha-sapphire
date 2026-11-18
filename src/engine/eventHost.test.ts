@@ -32,6 +32,19 @@ describe('host de eventos AMX', () => {
     expect(projectEventPlayer(state, map, world, false)).toBe(state);
     expect(projectEventPlayer(state, map, world, true).player).toMatchObject({ pos: { x: 24, z: 19 }, facing: 'left' });
   });
+  it('projeta expressão por identidade sem mover player autoritativo nem alterar a origem', () => {
+    const map: MapDefinition = { id: 'zone_0006', name: 'Town', width: 8, height: 8, collisions: [], warps: [],
+      npcs: [{ id: 'zone_0006:npc:7', model: 180, modelUrl: '', script: 1, spawnFlag: 0, pos: { x: 1, z: 1 } }] };
+    const state = { player: { id: 'p', mapId: map.id, pos: { x: 3, z: 4 }, facing: 'right' as const }, storyFlags: {} };
+    const world = createAmxWorld();
+    world.actors[7] = { x: 1, y: 0, z: 1, direction: 0, visible: true, moveCode: 0, faceExpression: 1 };
+    world.actors[255] = { ...world.actors[7], x: 99, faceExpression: 3 };
+    expect(projectEventActors(map, world).npcs?.[0].faceExpression).toBe(1);
+    expect(projectEventPlayer(state, map, world, false).player).toEqual({ ...state.player, faceExpression: 3 });
+    expect(map.npcs?.[0].faceExpression).toBeUndefined();
+    expect(state.player).not.toHaveProperty('faceExpression');
+  });
+
   it('resolve o primeiro argumento de TalkMdlMsg sem confundir com ponteiro ou speaker', () => {
     expect(classifyEventRequest(pending('TalkMdlMsg_Seq', [1, 0, -1, ...Array<number>(16).fill(0)]), ['zero', 'ROM real']))
       .toEqual({ kind: 'text', text: 'ROM real' });
