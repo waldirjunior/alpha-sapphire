@@ -686,3 +686,48 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Verificação:** regressões core/adapter e composição Python falharam antes e passam depois.28 JSONs receberam816 pontos; todos os demais campos comparados à base357692a estão idênticos. Caminho385→83→84→39→9 passa com NPCs nativos após init real; diagnóstico sem metadado segue bloqueado.340 Vitest/52 arquivos,160 Python sem skips/build passaram; main/Playwright ainda pendentes. Meteor71→42/72/73 continua bloqueado.
 - **Aceite posterior main809b814:**452 passos visíveis até9(20,21), com115 até o gate37,266 até o gate666 e278 até384. Fixtures rotuladas: quatro tombstones derivados, recorte real666 e pós-demo WorkSet/_MapChangeCore; init385 restaura16699=1 e move funcionário sem ocultá-lo. Oito saltos sul e duas tentativas de subida bloqueadas; reload preserva posição,666,16699 e tombstones. Nove zonas com encontros nativos,21 capturas inspecionadas e quatro arrays de erro vazios;345 Vitest/169 Python sem skips/build passam. Relatório/script em `/tmp/chimney-results.json` e `/tmp/playwright-test-chimney.js`.
 - **Limite visual observado:** Jagged84 mostra céu/avatar sem terreno em38,5/38,29/38,31;385/39/9 e outros pontos escondem o avatar,83 mostra corpo parcialmente enterrado. Zero recursos faltantes não prova renderização/altura. Causa não diagnosticada; manter P-013/P-017/P-019 e investigar câmera/geometria/camadas sem inventar altura/colisão. Transporte/campanha natural e animação de salto continuam abertos.
+
+## A-074 Costuras de cor exigem contexto de triângulo, não só posição/UV
+
+- **Data:** 2026-11-18; continuação P-007, sucede A-071.
+- **Observado:** as diferenças COLOR_0 de MM0180/MM0181 sobrevivem ao filtro
+  de índices usados. O DAE regenerado contém variações RGB que os GLBs staged
+  haviam reduzido a branco; assimp6.0 preserva essas variações ao converter
+  esse DAE atual. Isso não identifica sozinho a versão/etapa histórica que
+  perdeu a cor nos assets existentes.
+- **Erro evitado:** escolher a primeira cor nativa para vértices coincidentes.
+  Há vértices de posição, UV e normal iguais com RGB diferentes nas costuras.
+  A correspondência simples deixou oito vértices ambíguos em MM0180.
+- **Regra:** exigir correspondência única por vértice ou por triângulo inteiro,
+  consistente em todas as faces incidentes do vértice exportado. Se o GLB
+  fundiu cores incompatíveis, não pintar nem dividir geometria por tentativa.
+  Preservar alpha; clonar COLOR_0 e manter BIN/accessors antigos intactos.
+- **Evidência:** sete fixtures sintéticas red-green; restaurados12/11/15
+  vértices em MM0180/MM0181/MM0319, três URLs novas e seis A/Bs inspecionados.
+  Auditoria336 GLBs/4.547 materiais sem diffs de range comparáveis restantes.
+  Range igual continua sem provar shader/iluminação. Proof usa hash dos dados
+  DAE sem timestamps de criação, além de SHA de pack/ferramentas/entrada.
+
+## A-075 LightSetIndex e referência de shader não são os valores da luz
+
+- **Data:** 2026-11-18; investigação RGB P-007.
+- **Observado:** os336 BCHs de modelo auditados não contêm luzes, cenas nem
+  shaders embutidos; alguns atores contêm LUTs. O RGB frequente multiplica
+  Texture0/PrimaryColor pelo resultado FragmentPrimaryColor, que no gerador
+  SPICA inclui emission, ambiente e luzes reais. Normais fixas para cima de
+  solo/madeira/telhado GR0006 permanecem no GLB.
+- **Erro evitado:** tratar LightSet0/DefaultShader como luz branca, substituir
+  FragmentPrimaryColor por branco/unlit ou atribuir dessaturação ao UV já
+  corrigido sem medir os inputs originais.
+- **Regra:** recuperar shader externo, ambiente e binding antes de mapear RGB,
+  LUT/toon, projeção ou multi-textura. RTTI não é uma native AMX nem prova de
+  dispatch; não ajustar exposição/saturação por aparência.
+- **Evidência delimitada:** DllField SHA registrado em pica-materials.md;
+  PseudoLightingListener name0x1003db/typeinfo0xfdee8/vtable0x1077e8 liga ao
+  callback0x2ee38; EffectCycleLight name0x100ec0/vtable0x10822c inclui métodos
+  0xde718/0xde388. O rastreio não recupera os valores de LightSet0. P-007 segue
+  aberta; nenhum shader/clock/constante foi inventado.
+- **Validação visual:** caminhada real de32 passos por teclado, repetida em
+  Littleroot com o mesmo save inicial derivado, mostrou V/alpha acumulados
+  antes/depois em oito capturas. Não é correção de iluminação nem progresso
+  natural ou paridade com emulador; oclusão do avatar sob telhado permanece.

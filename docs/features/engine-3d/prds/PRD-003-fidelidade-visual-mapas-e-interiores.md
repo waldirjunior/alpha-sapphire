@@ -37,3 +37,25 @@ não valida caminhada natural ou equivalência no emulador.
 RF-01/RF-02 permanecem parciais: iluminação fragmentária, RGB, LUTs/toon,
 projeção e múltiplas texturas não recebem implementação especulativa.
 Interiores e o aceite visual integral continuam abertos em P-007/P-009.
+
+### Continuação A-074/A-075
+
+Auditoria ampliada aos336 GLBs staged:4.547 materiais/329 URLs imutáveis,
+216 GRs/3.817 materiais com V restaurado e4.158 perfis alpha. Os três diffs
+COLOR_0 foram resolvidos com fonte BCH/DAE, posição/UV e contexto único de
+triângulo nas costuras:38 vértices em MM0180/MM0181/MM0319, sem mudar alpha,
+índices, geometria, skin ou clipes. Sete regressões sintéticas; seis close-ups
+A/B inspecionados com pose/câmera idênticas.
+
+A caminhada por teclado em Littleroot repete32 passos por fase com save
+inicial derivado pós-intro. Oito capturas inspecionadas comparam antes de
+P-007 com aliases atuais, comprovando a melhora de V/alpha acumulada, não
+nova iluminação nem progresso natural. Zero erros de página/console/rede/HTTP;
+três avisos P-013 BuildMdlEventAnimeSetEnd por fase. Telhado ainda oculta o
+avatar em(14,16). 333 Vitest/build/175 Python sem skips passaram.
+
+Os336 BCHs de modelo não fornecem luzes/cenas/shaders externos referidos por
+LightSet0/DefaultShader. A investigação CRO delimita callback0x2ee38 de
+PseudoLightingListener e métodos EffectCycleLight, mas não recupera os
+valores/binding do ambiente. RF-01/RF-02 continuam parciais: nenhum shader,
+exposição, LUT/toon, lightmap ou multi-textura foi inferido por aparência.

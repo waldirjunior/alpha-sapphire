@@ -76,10 +76,9 @@ preserving texture names and source identity per material/model.
 Vertex-color records include presence, component type, normalization, and
 RGBA minimum/maximum values. COLOR_0 exists in 4,290 materials, with no
 unknown encoding. The inspector handles fixed float24 colors as well as
-buffer colors; `GetVertices` alone does not apply fixed colors. Three range
-differences remain: MM0180/MM0181 body and MM0319 head (A-071). They require
-per-vertex/skin investigation in the exporter, not automatic RGB replacement.
-Matching ranges do not prove shader equivalence.
+buffer colors; `GetVertices` alone does not apply fixed colors. The initial
+three differences (A-071) are resolved by the guarded DAE correspondence
+below. Matching ranges alone still do not prove shader equivalence.
 
 All outputs pass structural preservation and idempotence checks. The audit
 was repeated against existing published URLs without collisions. No Pokémon,
@@ -103,6 +102,72 @@ projection, or LUT dispatch. RTTI strings containing “Lighting” are not
 classified as AMX natives or shader evidence. Craft Anything discovery and
 CLI remain unavailable; static analysis uses local readers and Capstone
 5.0.3 without executing ROM code.
+
+## COLOR_0 follow-up: source values, not a lighting approximation
+
+The extended staged inventory contains 336 GLBs (237 GRs and 99 characters),
+4,547 materials, and 248 deduplicated states. It publishes 329 immutable
+URLs, restores V in 216 GRs / 3,817 materials, and maps 4,158 static-alpha
+profiles. The additional maps were already staged locally; no geometry,
+collision, actor mapping, or Pokémon catalog entry was introduced here.
+
+`pica_vertex_colors.py` restores only uniquely identified source RGB values:
+
+- Regenerate DAE from the matching MM pack with the existing SpicaExport.
+  Record native-pack, exporter/assembly, original DAE, and semantic-reference
+  SHA-256 values. The embedded proof hashes parsed geometry, not DAE creation
+  timestamps, so identical inputs produce identical published GLBs.
+- Match every target vertex by position (tolerance 0.001 native units) and
+  UV0 (0.000002), accepting the already evidenced original/mirrored V forms
+  without modifying either. Conflicting candidates do not authorize a guess.
+- MM0180/MM0181 contain coincident position/UV/**normal** vertices with
+  different colors. Match complete source triangles and require one color
+  assignment consistent across every incident face of each exported vertex.
+  A merged vertex needing two colors is unsupported; no topology is invented.
+- Require unchanged alpha. Clamp only float rounding within 0.000001 of the
+  glTF [0,1] limits. Append float32 COLOR_0 accessors instead of rewriting
+  shared/original accessors or BIN data. Keep other attributes, indices,
+  nodes, skins, animations, materials, and the existing alpha profiles intact.
+- Restore 12 body vertices in MM0180, 11 in MM0181, and 15 head vertices in
+  MM0319: 38 vertices in three new immutable files. No comparable range
+  differences remain. This is source-data restoration, not RGB shader parity.
+
+Seven synthetic GLB/DAE regressions cover a color seam, conflicting colors,
+separate DAE indices, missing correspondence, alpha preservation, shared
+accessors, SHA guards, original/mirrored V, and idempotence. Unknown color
+paths remain unchanged; range equality never authorizes a replacement.
+
+## RGB/lighting boundary after the follow-up
+
+**Observed:** all 336 inspected model BCH containers have zero lights,
+scenes, and embedded shaders; some actor packs contain LUT resources.
+`LightSetIndex=0` and `0@DefaultShader` are references, not definitions of
+light directions, ambient values, shader uniforms, or scene exposure.
+GR0006 ground/wood/roof fixed upward normals survive in the staged GLB;
+missing fixed normals are not the demonstrated cause of its dark shading.
+
+The frequent native RGB chain is Texture0 × PrimaryColor followed by
+Previous × FragmentPrimaryColor. SPICA's fragment generator computes the
+latter from emission, material/scene ambient, and actual lights; reflection
+LUTs contribute to other actor paths. A plain texture, a second vertex-color
+multiply, unlit output, or a lightmap is not an equivalent replacement.
+The current Three.js PBR/tone-mapping path remains approximate and unchanged.
+A role for LUTs does not establish a toon shader or its runtime parameters.
+
+The bounded DllField relocation/disassembly follow-up identifies RTTI
+`PseudoLightingListener` (name 0x1003db, typeinfo 0xfdee8, vtable 0x1077e8,
+callback 0x2ee38) and `mmodel::EffectCycleLight` (name 0x100ec0, typeinfo
+0xfe2b8, vtable 0x10822c; methods include 0xde718/0xde388). These are not AMX
+native registrations. Their presence and callback arithmetic do not recover
+the GR light-set contents or DefaultShader dispatch. No ROM code was run.
+
+**Unknown/next evidence:** locate the external shader program and scene
+light/environment resources, trace their values through the callback and
+model binding, and compare the resulting fragment inputs with an emulator
+or native renderer. Projection, Texture1/Texture2, PreviousBuffer, runtime
+constant mutation, fog, and LUT dispatch remain explicit P-007 gaps. No
+brightness, saturation, color-space, unlit, or generic multi-texture fix was
+applied based on appearance.
 
 ## Reproduction
 
@@ -145,3 +210,32 @@ Verification: 328 Vitest tests in 49 files, build, and 168 Python tests pass
 without skips. Python uses `GLB_MAPS_DIR` from the main public assets.
 The inherited chunk-size warning and explicit AMX camera non-parity
 message remain. No proprietary binary or screenshot is committed.
+
+Follow-up on port 5196: six additional fixed-pose COLOR_0 A/B images of
+MM0180/MM0181/MM0319 were inspected, using the previous and new published
+files with identical camera, native standing clip, pose time zero, and
+lighting. The pixel differences are localized and subtle; this is not a
+claim that actor RGB fidelity or the source exporter's historic failure
+has been fully explained. Browser page/console/network/HTTP checks are clean.
+
+A second visible scenario drives the actual game with keyboard input:
+32 identical steps per phase in Littleroot, from an explicitly initialized
+post-intro save at (20,14), through (27,15)/(14,16), back to (20,14). All eight
+captures were inspected. The before phase disables the P-007 catalog; the
+after phase uses current immutable aliases. Houses, signs, foliage cutouts,
+and atlas borders improve during traversal. This validates the accumulated
+V/alpha corrections, **not** a new lighting/RGB correction or natural story
+progression. The roof still occludes the avatar at (14,16); camera/height and
+emulator parity remain open. No runtime position, flag, collision, or camera
+was patched while walking. There are zero page/console errors, HTTP failures,
+or failed requests before teardown. The existing P-013
+`BuildMdlEventAnimeSetEnd(6553770,0)` warning appears three times per phase,
+without blocking movement; it is not silently classified as parity.
+
+Evidence and both reports remain local under
+`rom/pica-rgb-validation/{browser,walk}/` in the main checkout. The scripts
+are `/tmp/playwright-test-pica-rgb.js` and
+`/tmp/playwright-test-pica-walk.js`. Current verification: 333 Vitest tests
+in 50 files,
+build, and 175 Python tests without skips (`GLB_MAPS_DIR` points to main).
+No engine shader, lighting, Pokémon, or proprietary tracked binary changed.
