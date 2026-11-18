@@ -1,7 +1,7 @@
 # ADR-005 — Eventos de batalha e apresentação nativa
 
 - Data: 2026-11-17
-- Estado: aceito; validação visual do runtime pendente.
+- Estado: aceito; transporte nativo validado na main ac4054d, paridade pendente.
 - Escopo: P-012, [PRD-007](../prds/PRD-007-animacoes-nativas-no-runtime.md).
 
 ## Contexto

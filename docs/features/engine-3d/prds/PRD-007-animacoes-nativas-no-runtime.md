@@ -1,6 +1,6 @@
 # PRD-007 — Animações nativas no runtime
 
-- Estado: implementado; Playwright no checkout principal pendente.
+- Estado: implementado; reprodução nativa validada na main ac4054d, paridade pendente.
 - Escopo: fase 2, P-012 e investigação P-019.
 
 ## Resultado
@@ -103,5 +103,16 @@ promoção é idempotente e registra SHA-256, fonte, clipes e razões de ausênc
 - A captura revelou recorte indevido dos corpos, também presente com mixers
   parados; diagnóstico em `rest_probe/` confirmou a influência de alphaTest.
   A-033 registra a correção restrita aos Pokémon e a regressão OPAQUE/MASK/BLEND;
-  **186 Vitest e build passaram**. **Pendente:** repetir a validação na main
-  após integrar essa correção. Cores/combiners/atlas continuam sem paridade.
+  **186 Vitest/34 arquivos e build passaram**.
+- **Revalidado na main ac4054d**, Chromium visível 149.0.7827.55/porta 5187:
+  mesmos clipes, physical com 45 ossos alterados entre t≈0,367 e 1,082 s,
+  retomada de idle e faint mantido. OPAQUE permaneceu alphaTest=0 e os corpos
+  reapareceram sem intervenção diagnóstica de material. Zero pageerror, console
+  error, warning ou HTTP>=400. As seis capturas finais inspecionadas e
+  `report.json` estão em `rom/native_runtime_validation/final/` do principal,
+  ignorados. `route101-before.png`, `route101-physical-a.png` e
+  `route101-physical-b.png` mostram a mudança de pose; `route101-after.png`
+  mostra a queda mantida. A-034 registra o fechamento da captura.
+- **Limite visual:** texturas/cores Pokémon (incluindo olhos) e do overworld
+  continuam incorretas. P-007/P-017/P-019 seguem abertas; não foi demonstrada
+  paridade com emulador, nem resolvidos combiners, expressões ou impacto nativo.
