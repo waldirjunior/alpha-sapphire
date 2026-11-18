@@ -4,6 +4,7 @@
 const DEFAULT_VOLUME = 0.6;
 const DEFAULT_FADE_SECONDS = 0.4;
 const UNLOCK_EVENTS = ['keydown', 'pointerdown'] as const;
+const JINGLE_DUCK_LEVEL = 0.15;
 
 interface PlayingTrack {
   url: string;
@@ -61,6 +62,27 @@ export class BgmPlayer {
     if (request !== this.requestId || this.requestedUrl !== url) return;
     this.fadeOutCurrent();
     this.current = this.startTrack(url, buffer, loop);
+  }
+
+  /** Toca um jingle (ME) uma vez, abaixando a BGM atual até ele terminar. */
+  async playJingle(url: string): Promise<void> {
+    if (!this.context || this.context.state !== 'running') return;
+    const buffer = await this.loadTrack(url);
+    const context = this.context;
+    const ducked = this.current;
+    ducked?.gain.gain.setTargetAtTime(JINGLE_DUCK_LEVEL, context.currentTime, 0.05);
+    const source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(this.master ?? context.destination);
+    source.onended = () => {
+      if (this.current === ducked) ducked?.gain.gain.setTargetAtTime(1, context.currentTime, 0.1);
+    };
+    source.start();
+  }
+
+  /** URL da faixa em reprodução (diagnóstico/validação em browser). */
+  get currentUrl(): string | null {
+    return this.current?.url ?? null;
   }
 
   stop(): void {
