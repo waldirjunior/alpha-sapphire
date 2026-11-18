@@ -12,4 +12,4 @@
 | [PRD-008](PRD-008-corredor-petalburg-rustboro.md) | Corredor Petalburg–Route104–Woods–Rustboro | Validado;306 passos Playwright main sem erros | 2026-11-17 |
 | [PRD-009](PRD-009-expressoes-bch-no-runtime.md) | ChangeFace e seleção de expressão BCH por ator | Seleção e A/B implementados; piscada automática pendente de clock | 2026-11-18 |
 | [PRD-010](PRD-010-corredor-rustboro-verdanturf.md) | Corredor Rustboro–Route116–Rusturf–Verdanturf | Validado;325 passos main, fixture pós-evento explícita | 2026-11-18 |
-| [PRD-011](PRD-011-corredor-verdanturf-mauville-slateport.md) | Verdanturf–Mauville e acesso pós-evento a Slateport | Testes/staging concluídos; Playwright main pendente | 2026-11-18 |
+| [PRD-011](PRD-011-corredor-verdanturf-mauville-slateport.md) | Verdanturf–Mauville e acesso pós-evento a Slateport | Validado;748 passos main, fixture explícita e limites de oclusão | 2026-11-18 |
