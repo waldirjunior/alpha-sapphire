@@ -667,3 +667,48 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Limite:** igualdade de ranges não prova o shader vertex original nem
   correspondência por vértice. As três diferenças não recebem correção RGB
   nesta entrega; exigem rastrear o export/skin sem apagar as variações nativas.
+
+## A-074 Costuras de cor exigem contexto de triângulo, não só posição/UV
+
+- **Data:** 2026-11-18; continuação P-007, sucede A-071.
+- **Observado:** as diferenças COLOR_0 de MM0180/MM0181 sobrevivem ao filtro
+  de índices usados. O DAE regenerado contém variações RGB que os GLBs staged
+  haviam reduzido a branco; assimp6.0 preserva essas variações ao converter
+  esse DAE atual. Isso não identifica sozinho a versão/etapa histórica que
+  perdeu a cor nos assets existentes.
+- **Erro evitado:** escolher a primeira cor nativa para vértices coincidentes.
+  Há vértices de posição, UV e normal iguais com RGB diferentes nas costuras.
+  A correspondência simples deixou oito vértices ambíguos em MM0180.
+- **Regra:** exigir correspondência única por vértice ou por triângulo inteiro,
+  consistente em todas as faces incidentes do vértice exportado. Se o GLB
+  fundiu cores incompatíveis, não pintar nem dividir geometria por tentativa.
+  Preservar alpha; clonar COLOR_0 e manter BIN/accessors antigos intactos.
+- **Evidência:** sete fixtures sintéticas red-green; restaurados12/11/15
+  vértices em MM0180/MM0181/MM0319, três URLs novas e seis A/Bs inspecionados.
+  Auditoria336 GLBs/4.547 materiais sem diffs de range comparáveis restantes.
+  Range igual continua sem provar shader/iluminação. Proof usa hash dos dados
+  DAE sem timestamps de criação, além de SHA de pack/ferramentas/entrada.
+
+## A-075 LightSetIndex e referência de shader não são os valores da luz
+
+- **Data:** 2026-11-18; investigação RGB P-007.
+- **Observado:** os336 BCHs de modelo auditados não contêm luzes, cenas nem
+  shaders embutidos; alguns atores contêm LUTs. O RGB frequente multiplica
+  Texture0/PrimaryColor pelo resultado FragmentPrimaryColor, que no gerador
+  SPICA inclui emission, ambiente e luzes reais. Normais fixas para cima de
+  solo/madeira/telhado GR0006 permanecem no GLB.
+- **Erro evitado:** tratar LightSet0/DefaultShader como luz branca, substituir
+  FragmentPrimaryColor por branco/unlit ou atribuir dessaturação ao UV já
+  corrigido sem medir os inputs originais.
+- **Regra:** recuperar shader externo, ambiente e binding antes de mapear RGB,
+  LUT/toon, projeção ou multi-textura. RTTI não é uma native AMX nem prova de
+  dispatch; não ajustar exposição/saturação por aparência.
+- **Evidência delimitada:** DllField SHA registrado em pica-materials.md;
+  PseudoLightingListener name0x1003db/typeinfo0xfdee8/vtable0x1077e8 liga ao
+  callback0x2ee38; EffectCycleLight name0x100ec0/vtable0x10822c inclui métodos
+  0xde718/0xde388. O rastreio não recupera os valores de LightSet0. P-007 segue
+  aberta; nenhum shader/clock/constante foi inventado.
+- **Validação visual:** caminhada real de32 passos por teclado, repetida em
+  Littleroot com o mesmo save inicial derivado, mostrou V/alpha acumulados
+  antes/depois em oito capturas. Não é correção de iluminação nem progresso
+  natural ou paridade com emulador; oclusão do avatar sob telhado permanece.

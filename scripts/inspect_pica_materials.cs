@@ -33,6 +33,8 @@ object Inspect(string file)
     else scenes.Add(H3D.Open(ModelSection(blob)));
     return new {
         source = file, sha256 = Convert.ToHexString(SHA256.HashData(blob)).ToLowerInvariant(),
+        resourceCounts = new {lights = scenes.Sum(s => s.Lights.Count), scenes = scenes.Sum(s => s.Scenes.Count),
+            shaders = scenes.Sum(s => s.Shaders.Count), luts = scenes.Sum(s => s.LUTs.Count)},
         textures = scenes.SelectMany(scene => scene.Textures).Select(texture => new {texture.Name, texture.Width, texture.Height,
             rgba_sha256 = Convert.ToHexString(SHA256.HashData(texture.ToRGBA())).ToLowerInvariant()}),
         models = scenes.SelectMany(scene => scene.Models).Select(model => new {

@@ -6,7 +6,6 @@ import hashlib
 import io
 import json
 import re
-import struct
 import subprocess
 import tempfile
 from pathlib import Path
@@ -16,7 +15,8 @@ from PIL import Image
 
 from convert_gr_to_glb import _contains_whole_name
 from glb_native_clips import decode_glb, encode_glb
-from pica_materials import alpha_profile, float_values, normalize_pica_materials, position_uvs, uv_orientation
+from pica_materials import alpha_profile, normalize_pica_materials, position_uvs, uv_orientation
+from pica_vertex_colors import color_alphas, color_bounds, color_vectors, normalize_dae_colors
 
 
 def sha(blob: bytes) -> str:
@@ -68,34 +68,6 @@ def identity_base(native: dict, slot: int) -> bool:
     return (native['TextureSources'][slot] == 0 and coord['MappingType'] == 'UvCoordinateMap'
             and coord['Scale'] == {'X': 1, 'Y': 1} and coord['Rotation'] == 0
             and coord['Translation'] == {'X': 0, 'Y': 0})
-
-
-def color_vectors(scene: dict, binary: bytes, index: int) -> list | None:
-    accessor = scene['accessors'][index]
-    if accessor['type'] not in ('VEC3', 'VEC4') or 'sparse' in accessor:
-        return None
-    channels = int(accessor['type'][-1])
-    if accessor['componentType'] == 5126:
-        rows = float_values(scene, binary, index, channels)
-    elif accessor.get('normalized') and accessor['componentType'] in (5121, 5123):
-        fmt, width, maximum = ('B', 1, 255) if accessor['componentType'] == 5121 else ('H', 2, 65535)
-        view = scene['bufferViews'][accessor['bufferView']]
-        start = view.get('byteOffset', 0) + accessor.get('byteOffset', 0)
-        rows = [tuple(x/maximum for x in struct.unpack_from('<'+fmt*channels, binary,
-                start+i*view.get('byteStride', channels*width))) for i in range(accessor['count'])]
-    else:
-        return None
-    return [list(row) + ([1.0] if channels == 3 else []) for row in rows]
-
-
-def color_alphas(scene: dict, binary: bytes, index: int) -> list[float] | None:
-    rows = color_vectors(scene, binary, index)
-    return [row[3] for row in rows] if rows is not None else None
-
-
-def color_bounds(rows: list) -> tuple:
-    return ([min(row[i] for row in rows) for i in range(4)],
-            [max(row[i] for row in rows) for i in range(4)]) if rows else (None, None)
 
 
 def vertex_color_audit(scene: dict, binary: bytes, model: dict) -> list[dict]:
@@ -226,11 +198,19 @@ def self_contained(blob: bytes, source: Path) -> bytes:
     return encode_glb(scene, binary)
 
 
+def mesh_layout(mesh: dict) -> dict:
+    primitives = [{**p, 'attributes': {k: v for k, v in p['attributes'].items() if k not in ('TEXCOORD_0', 'COLOR_0')}}
+                  for p in mesh['primitives']]
+    return {**mesh, 'primitives': primitives}
+
+
 def verify_preservation(before: bytes, after: bytes, evidence: dict) -> None:
     source, binary = decode_glb(before)
     output, payload = decode_glb(after)
     if payload[:len(binary)] != binary or output['accessors'][:len(source['accessors'])] != source['accessors']:
         raise ValueError('PICA correction changed original BIN/accessors')
+    if [mesh_layout(m) for m in source['meshes']] != [mesh_layout(m) for m in output['meshes']]:
+        raise ValueError('PICA correction changed geometry/topology or other vertex attributes')
     for key in ('nodes', 'skins', 'animations', 'textures', 'samplers'):
         if source.get(key) != output.get(key):
             raise ValueError(f'PICA correction changed {key}')
@@ -238,7 +218,12 @@ def verify_preservation(before: bytes, after: bytes, evidence: dict) -> None:
         raise ValueError('PICA material correction is not idempotent')
 
 
-def inspect_target(root: Path, target: dict, records: dict, choices: dict, publish: bool) -> dict:
+def color_ranges_differ(row: dict) -> bool:
+    return (row['native_min'] is not None and row['glb_min'] is not None and
+            any(abs(a-b) > 1e-5 for a, b in zip(row['native_min']+row['native_max'], row['glb_min']+row['glb_max'])))
+
+
+def inspect_target(root: Path, target: dict, records: dict, choices: dict, publish: bool, spica: Path) -> dict:
     native = records[str(target['native'])]
     archive = choices.get(target['id'])
     extra = records[str(root/'rom/extracted/garc/a_0_1_4'/archive)] if archive else None
@@ -249,13 +234,21 @@ def inspect_target(root: Path, target: dict, records: dict, choices: dict, publi
     scene, binary = decode_glb(blob)
     evidence = {'glb_sha256': sha(blob), 'materials': [material_evidence(scene, binary, target['source'], native['models'][0], m, textures, target['kind']) for m in scene.get('materials', [])]}
     changed = normalize_pica_materials(blob, evidence)
+    colors = vertex_color_audit(scene, binary, native['models'][0])
+    color_proof = None
+    if target['kind'] == 'character' and any(color_ranges_differ(row) for row in colors):
+        changed, color_proof = normalize_dae_colors(changed, target['native'], spica, root/'rom/pica-material-validation')
     verify_preservation(blob, changed, evidence)
     result = {'id': target['id'], 'source_url': target['url'], 'source_sha256': sha(blob),
               'native_pack': str(target['native'].relative_to(root)), 'native_sha256': native['sha256'],
               'texture_archive': archive, 'texture_archive_sha256': extra['sha256'] if extra else None,
-              'materials': evidence['materials'], 'vertex_colors': vertex_color_audit(scene, binary, native['models'][0]),
+              'materials': evidence['materials'], 'vertex_colors': colors, 'native_resources': native['resourceCounts'],
               'changed': changed != blob,
               'preserved': True, 'idempotent': True}
+    if color_proof:
+        after_scene, after_binary = decode_glb(changed)
+        result.update(vertex_color_correction=color_proof,
+                      vertex_colors_after=vertex_color_audit(after_scene, after_binary, native['models'][0]))
     if changed != blob and publish:
         published = self_contained(changed, target['source'])
         digest = sha(published)
@@ -290,7 +283,10 @@ def coverage_report(rows: list[dict], tools: dict) -> dict:
         'models': len(rows), 'changed': sum(r['changed'] for r in rows), 'materials': len(materials),
         'uv_models': sum(any(restored(m) for m in r['materials']) for r in rows),
         'uv_materials': sum(bool(restored(m)) for m in materials),
-        'alpha_materials': sum(m.get('alpha') is not None for m in materials), 'native_states': len(states)}}
+        'alpha_materials': sum(m.get('alpha') is not None for m in materials), 'native_states': len(states),
+        'color_models': sum(any(m['status'] == 'restored' for m in r.get('vertex_color_correction', {}).get('materials', [])) for r in rows),
+        'color_materials': sum(m['status'] == 'restored' for r in rows for m in r.get('vertex_color_correction', {}).get('materials', [])),
+        'remaining_color_ranges': sum(color_ranges_differ(c) for r in rows for c in r.get('vertex_colors_after', r.get('vertex_colors', [])))}}
 
 
 def main() -> None:
@@ -304,7 +300,7 @@ def main() -> None:
     args = parser.parse_args()
     selected = targets(args.root, args.catalog, args.ids)
     native, choices, tools = native_inventory(args.root, selected, args.spica_dll)
-    rows = [inspect_target(args.root, row, native, choices, args.runtime_catalog is not None) for row in selected]
+    rows = [inspect_target(args.root, row, native, choices, args.runtime_catalog is not None, args.spica_dll) for row in selected]
     report = coverage_report(rows, tools)
     args.output.write_text(json.dumps(report, indent=2)+'\n')
     if args.runtime_catalog:

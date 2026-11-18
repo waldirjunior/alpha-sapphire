@@ -2,6 +2,14 @@
 
 Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## P-007: COLOR_0 comprovado e limite de iluminação (2026-11-18)
+
+- A-074/A-075: os três diffs de cor foram rastreados até valores por vértice no BCH/DAE. MM0180/MM0181 têm costuras com posição/UV/normal coincidentes e cores diferentes; contexto de triângulo resolve a correspondência sem dividir ou inventar geometria. Restaurados38 vértices (12/11/15) em três novos GLBs imutáveis, alpha preservado e accessors clonados.
+- [Auditoria atual](features/pipeline-rom/pica-material-coverage.json):336 GLBs/4.547 materiais/248 estados,329 URLs;216 GRs/3.817 materiais com V restaurado e4.158 perfis alpha. Inclui14 GRs já staged localmente desde o snapshot anterior. Zero diffs de range comparáveis após correção; isso não prova paridade RGB por shader.
+- Os336 BCHs de modelo não incluem luzes/cenas/shaders; referências LightSetIndex0/DefaultShader não fornecem seus parâmetros externos. RTTI/vtables de PseudoLightingListener e EffectCycleLight delimitados no CRO, sem recuperar o binding/valores da luz. Nenhuma troca para unlit, correção de exposição/saturação, lightmap ou combiner especulativo.
+- Chromium visível5196: seis capturas COLOR_0 com pose/câmera fixas e oito capturas de caminhada real por teclado em Littleroot inspecionadas.32 passos por fase, estado inicial derivado pós-intro idêntico, sem mutação durante a caminhada. Antes desativa aliases P-007, depois usa catálogo atual: evidencia V/alpha acumulados, não nova iluminação nem progresso natural/emulador. Telhado ainda oculta avatar em(14,16).
+- Zero page/consoleErrors/HTTP>=400/requestFailures antes do teardown; três warnings herdados BuildMdlEventAnimeSetEnd por fase de caminhada (P-013), sem bloqueio de input. Evidências em `rom/pica-rgb-validation/{browser,walk}/` no principal. 333 Vitest/50 arquivos, build e175 Python sem skips passaram; warning de chunks permanece. Nenhum binário/screenshot, regra core, Pokémon ou shader alterado.
+
 ## Mauville–Fallarbor e entrada de Meteor Falls (2026-11-18)
 
 - PRD-012/A-066–A-068 sobrec9be392: caminho físico15→445→37→39→85→38→36→40→10→41→71. Route113 precede Fallarbor10, Route114 liga Meteor; contatos MM7/MM8 e ZO existentes, sem ponte nova, colisão ou encontro alterado. Loop71→42→16 ainda bloqueado em P-017.
