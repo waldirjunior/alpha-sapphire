@@ -5,11 +5,13 @@ from __future__ import annotations
 import os
 import re
 import signal
+import socket
 import subprocess
 import sys
 import time
 from pathlib import Path
 
+from scripts.azahar_rpc import PORT as RPC_PORT
 from scripts.azahar_rpc import AzaharRpc, RpcError
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,9 +43,12 @@ def emulator_home() -> Path:
 
 
 def azahar_app() -> Path:
-    """Pacote Azahar.app no macOS; executável ou AppImage nas demais plataformas."""
-    name = "azahar-macos-arm64-2126.2/Azahar.app" if sys.platform == "darwin" else "azahar.AppImage"
-    app = Path(os.environ.get("AZAHAR_APP", main_checkout().parent / "_tools" / "azahar" / name))
+    """Pacote Azahar.app no macOS; AppRun extraído ou AppImage nas demais plataformas."""
+    tools = main_checkout().parent / "_tools" / "azahar"
+    candidates = ([tools / "azahar-macos-arm64-2126.2" / "Azahar.app"] if sys.platform == "darwin"
+                  else [tools / "squashfs-root" / "AppRun", tools / "azahar.AppImage"])
+    env_app = os.environ.get("AZAHAR_APP")
+    app = Path(env_app) if env_app else next((path for path in candidates if path.exists()), candidates[-1])
     if not app.exists():
         raise FileNotFoundError(f"Azahar não encontrado em {app}; instale-o ou aponte AZAHAR_APP (docs/features/validacao-emulador/setup-emulador.md)")
     return app
@@ -95,45 +100,69 @@ def launch_command(app: Path, home: Path, args: list[str]) -> list[str]:
     return ["open", "-n", "-g", "-a", str(app), *env, "--stdout", log, "--stderr", log, "--args", *args]
 
 
-def launch(app: Path, home: Path, args: list[str]) -> None:
+class EmulatorProcess:
+    """Emulador lançado por esta sessão, com o jeito certo de encerrá-lo em cada plataforma."""
+
+    def __init__(self, child: subprocess.Popen[bytes] | None):
+        # No macOS o processo nasce do `open`, sem filho direto; nas demais plataformas é líder de um grupo próprio.
+        self._child = child
+
+    def _signal(self, signum: int) -> None:
+        if self._child is None:
+            subprocess.run(["pkill", f"-{signum}", "-x", "azahar"], check=False)
+        elif self._child.poll() is None:
+            os.killpg(self._child.pid, signum)
+
+    def _alive(self) -> bool:
+        if self._child is None:
+            return subprocess.run(["pgrep", "-x", "azahar"], capture_output=True).returncode == 0
+        return self._child.poll() is None
+
+    def stop(self, grace_seconds: float = 10.0) -> None:
+        self._signal(signal.SIGTERM)
+        deadline = time.monotonic() + grace_seconds
+        while self._alive() and time.monotonic() < deadline:
+            time.sleep(0.2)
+        if self._alive():
+            self._signal(signal.SIGKILL)
+
+
+def launch(app: Path, home: Path, args: list[str]) -> EmulatorProcess:
     if sys.platform == "darwin":
         subprocess.run(launch_command(app, home, args), check=True)
-        return
+        return EmulatorProcess(None)
     with open(home / "session.log", "w") as log:
-        subprocess.Popen([str(app), *args], cwd=home, env={**os.environ, **profile_env(home)},
-                         stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+        child = subprocess.Popen([str(app), *args], cwd=home, env={**os.environ, **profile_env(home)},
+                                 stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+    return EmulatorProcess(child)
 
 
-def running_emulators() -> set[int]:
-    # Nome exato do processo: um padrão solto casaria com o próprio `python -m scripts.azahar_oracle`.
-    found = subprocess.run(["pgrep", "-x", "azahar"], capture_output=True, text=True).stdout.split()
-    return {int(pid) for pid in found}
-
-
-def stop_emulators(grace_seconds: float = 10.0) -> None:
-    for pid in running_emulators():
-        os.kill(pid, signal.SIGTERM)
-    deadline = time.monotonic() + grace_seconds
-    while running_emulators() and time.monotonic() < deadline:
-        time.sleep(0.2)
-    for pid in running_emulators():
-        os.kill(pid, signal.SIGKILL)
+def rpc_port_in_use() -> bool:
+    """O RPC usa porta fixa: se ela está ocupada, já existe um jogo rodando em outro Azahar."""
+    probe = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        probe.bind(("0.0.0.0", RPC_PORT))
+        return False
+    except OSError:
+        return True
+    finally:
+        probe.close()
 
 
 def config_path(home: Path) -> Path:
     return home / "config" / "azahar-emu" / "qt-config.ini"
 
 
-def generate_profile(home: Path, timeout: float = 30.0) -> Path:
+def generate_profile(home: Path, timeout: float = 60.0) -> Path:
     """Abre o Azahar sem jogo só para ele gravar o qt-config.ini padrão dentro do perfil isolado."""
     config = config_path(home)
     if not config.is_file():
-        launch(azahar_app(), home, [])
+        emulator = launch(azahar_app(), home, [])
         deadline = time.monotonic() + timeout
         while not config.is_file() and time.monotonic() < deadline:
             time.sleep(0.5)
         time.sleep(2)
-        stop_emulators()
+        emulator.stop()
     if not config.is_file():
         raise RuntimeError(f"Azahar não gravou {config} em {timeout:.0f}s; veja {home / 'session.log'}")
     return config
@@ -155,15 +184,16 @@ def save_path(home: Path) -> Path:
 class AzaharSession:
     """Processo do emulador rodando o cartucho, com RPC já apontado para o processo do jogo."""
 
-    def __init__(self, movie: bytes | None = None, speed_percent: int = 100, boot_timeout: float = 90.0):
+    def __init__(self, movie: bytes | None = None, speed_percent: int = 100, boot_timeout: float | None = None):
         self.home = emulator_home()
-        if running_emulators():
-            raise RuntimeError("Já existe um Azahar em execução; o RPC usa porta fixa e aceita uma sessão por vez")
+        if rpc_port_in_use():
+            raise RuntimeError(f"Porta RPC {RPC_PORT} ocupada: já existe um Azahar com jogo rodando; encerre-o antes")
         profile_env(self.home)
         configure_profile(self.home, {("Renderer", "frame_limit"): str(speed_percent)})
-        launch(azahar_app(), self.home, [*self._movie_args(movie), str(cartridge_path())])
+        self._emulator = launch(azahar_app(), self.home, [*self._movie_args(movie), str(cartridge_path())])
         self.rpc = AzaharRpc()
-        self._attach(boot_timeout)
+        # Renderização por software em servidor sem GPU demora bem mais para chegar ao primeiro frame.
+        self._attach(boot_timeout or float(os.environ.get("ALPHA_EMULATOR_BOOT_TIMEOUT", "90")))
 
     def _movie_args(self, movie: bytes | None) -> list[str]:
         if movie is None:
@@ -189,7 +219,7 @@ class AzaharSession:
 
     def close(self) -> None:
         self.rpc.close()
-        stop_emulators()
+        self._emulator.stop()
 
     def __enter__(self) -> "AzaharSession":
         return self

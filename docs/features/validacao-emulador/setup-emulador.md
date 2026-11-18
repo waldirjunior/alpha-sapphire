@@ -2,7 +2,7 @@
 
 O Azahar roda a ROM original e responde a três perguntas que o port precisa: **como a tela fica** (captura de frame), **o que está na memória** (posição, flags) e **o que acontece com uma sequência de botões** (filme de entrada). Tudo é dirigido por script, sem teclado nem mouse.
 
-Verificado em macOS 26 (Apple Silicon) com Azahar 2126.2. Os passos de Linux seguem o mesmo desenho, mas **ainda não foram executados**: a primeira sessão em Linux deve confirmar ou corrigir esta página.
+Verificado em macOS 26 (Apple Silicon) e em Linux Ubuntu 24.04 (`x86_64`, headless via `xvfb-run` e Mesa OpenGL por software `llvmpipe`) com Azahar 2126.2.
 
 ## 1. Instalar o Azahar 2126.2
 
@@ -17,18 +17,40 @@ shasum -a 256 azahar-macos-arm64-2126.2.zip   # c24dec2bd5111b7d79513d686c5aece6
 unzip -q azahar-macos-arm64-2126.2.zip && cd -
 ```
 
-Linux (x86_64):
+Linux (`x86_64`):
 
 ```bash
 mkdir -p ../_tools/azahar && cd ../_tools/azahar
 curl -LO https://github.com/azahar-emu/azahar/releases/download/2126.2/azahar.AppImage
 sha256sum azahar.AppImage                     # af037f8b775198f636b14bcfe63fb401b02246ebfefe1025bb905ce042556960
-chmod +x azahar.AppImage && cd -
+chmod +x azahar.AppImage
 ```
 
-Em servidor sem tela o Azahar precisa de um display e de um driver gráfico: `sudo apt install xvfb mesa-vulkan-drivers libfuse2` e rode os comandos abaixo com `xvfb-run -a` na frente. Se o Vulkan por software não subir, troque o renderer para OpenGL no perfil (`[Renderer] graphics_api=1`).
+Em Ubuntu 24.04 mínimo/headless (servidor ou container sem tela nem FUSE), instale as dependências gráficas, XCB e SquashFS:
 
-Instalado em outro lugar? Aponte `AZAHAR_APP` para o `Azahar.app` (macOS) ou para o executável (Linux).
+```bash
+sudo apt update && sudo apt install -y xvfb xauth mesa-vulkan-drivers libgl1-mesa-dri libegl1 libopengl0 libgl1 \
+  libharfbuzz0b libfreetype6 libglib2.0-0t64 libfontconfig1 libdbus-1-3 libasound2t64 \
+  libxkbcommon-x11-0 libx11-xcb1 libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 \
+  libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 \
+  libxcb-xinerama0 libxcb-xkb1 libsm6 libice6 squashfs-tools
+```
+
+Se não houver `/dev/fuse` (onde `./azahar.AppImage --appimage-extract` falha com código 126), extraia o sistema de arquivos diretamente do offset de fim do ELF (`944632`) dentro de `../_tools/azahar`:
+
+```bash
+unsquashfs -q -o 944632 -d squashfs-root azahar.AppImage
+cd -
+```
+
+O launcher `scripts/azahar_session.py` procura automaticamente `../_tools/azahar/squashfs-root/AppRun` antes de `azahar.AppImage` (ou use `AZAHAR_APP` para apontar outro caminho, como `Azahar.app` no macOS ou o executável no Linux).
+
+Em servidor sem tela, rode os comandos abaixo com `xvfb-run -a` e defina `ALPHA_EMULATOR_BOOT_TIMEOUT=300` para acomodar a renderização por software (`llvmpipe`):
+
+```bash
+ALPHA_EMULATOR_BOOT_TIMEOUT=300 xvfb-run -a python3 -m scripts.azahar_oracle init
+ALPHA_EMULATOR_BOOT_TIMEOUT=300 xvfb-run -a python3 -m scripts.azahar_oracle check
+```
 
 ## 2. Colocar o cartucho
 
@@ -85,9 +107,10 @@ with AzaharSession(movie=movie, speed_percent=400) as session:
     png = session.rpc.screenshot_png()
 ```
 
-## Armadilhas já pagas (A-097)
+## Armadilhas já pagas (A-097, A-098)
 
 - **Abrir o binário do pacote direto no macOS** mostra um aviso modal e o jogo nunca inicia. O launcher usa `open -n -g -a Azahar.app --args …`.
+- **AppImage sem FUSE e nome de processo no Linux**: em container sem `/dev/fuse`, `--appimage-extract` falha com código 126; extraia com `unsquashfs -q -o 944632 -d squashfs-root azahar.AppImage`. O processo sobe como `AppRun.wrapped` em vez de `azahar`, então `EmulatorProcess` encerra pelo process group (`os.killpg`) e `rpc_port_in_use()` verifica conflito pela porta UDP 45987.
 - **`--movie-play` não funciona na 2126.2**: o getopt da CLI de compressão captura a opção longa. Use `-p`.
 - **Os diretórios XDG precisam existir antes do primeiro boot no macOS**, senão o Azahar grava em `~/Library/Application Support/Azahar`. O launcher os cria.
 - **O RPC só existe com um jogo rodando** e precisa de `enable_rpc_server=true` no perfil.

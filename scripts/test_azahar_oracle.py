@@ -1,4 +1,7 @@
+import socket
 import struct
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -6,8 +9,9 @@ from pathlib import Path
 from scripts.azahar_movie import (AZAHAR_REVISION, HEADER_SIZE, Step, build_movie, button_mask, encode_inputs, hold,
                                   pad_updates, press, tap, wait)
 from scripts.azahar_movies import MOVIES
-from scripts.azahar_rpc import HEADER, PROCESS_LIST, READ_MEMORY, decode_reply, encode_request, parse_process_list
-from scripts.azahar_session import PROFILE_SETTINGS, apply_settings, launch_command, save_path
+from scripts.azahar_rpc import HEADER, PORT as RPC_PORT, PROCESS_LIST, READ_MEMORY, decode_reply, encode_request, parse_process_list
+from scripts.azahar_session import (PROFILE_SETTINGS, EmulatorProcess, apply_settings, launch_command, rpc_port_in_use,
+                                    save_path)
 
 ORAS = 0x000400000011C500
 INI = "[Debugging]\nenable_rpc_server=false\nenable_rpc_server\\default=true\n[System]\ninit_clock=0\ninit_clock\\default=true\n[UI]\ntheme=dark\n"
@@ -103,6 +107,24 @@ class LaunchTest(unittest.TestCase):
 
     def test_save_lives_under_the_title_id_of_the_cartridge(self) -> None:
         self.assertTrue(str(save_path(Path("/p"))).endswith("title/00040000/0011c500/data/00000001/main"))
+
+    def test_emulator_process_stops_a_spawned_process_group(self) -> None:
+        child = subprocess.Popen([sys.executable, "-c", "import time; time.sleep(30)"], start_new_session=True)
+        try:
+            EmulatorProcess(child).stop(grace_seconds=2.0)
+            self.assertIsNotNone(child.poll())
+        finally:
+            if child.poll() is None:
+                child.kill()
+                child.wait()
+
+    def test_rpc_port_in_use_detects_bound_udp_socket(self) -> None:
+        if rpc_port_in_use():
+            self.skipTest(f"Porta RPC {RPC_PORT} já está em uso fora do teste")
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            sock.bind(("0.0.0.0", RPC_PORT))
+            self.assertTrue(rpc_port_in_use())
+        self.assertFalse(rpc_port_in_use())
 
 
 if __name__ == "__main__":

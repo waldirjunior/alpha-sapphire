@@ -2,7 +2,7 @@
 
 Retrato do estado verificado. **Edite as linhas; não acrescente seções nem relatos de entrega** — o relato vai para o PRD da frente. O tamanho deste arquivo é limitado por `src/docsContract.test.ts`. Histórico até 2026-11-18: [historico/STATUS-ate-2026-11-18.md](historico/STATUS-ate-2026-11-18.md).
 
-Verificado em 2026-11-18 na `main`, macOS. Todo trabalho anterior está na `main`; as branches de worker já estavam integradas e foram removidas.
+Verificado em 2026-11-18 na `main`, macOS e Linux (headless via Xvfb). Todo trabalho anterior está na `main`; as branches de worker já estavam integradas e foram removidas.
 
 ## Placar
 
@@ -10,7 +10,7 @@ Verificado em 2026-11-18 na `main`, macOS. Todo trabalho anterior está na `main
 | --- | --- | --- |
 | Testes unitários (Vitest) | 418 em 64 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | 95,9% linhas, 85,6% branches (catraca em 95/85) | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 207 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
+| Testes do pipeline e do oráculo (Python) | 209 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
 | Jogo real no browser (smoke) | 5 de 5 fluxos | `npm run test:e2e` |
 | Cenários visuais | 25 de 25 estáveis; **2 de 25 aceitos** sem defeito conhecido | `npm run test:e2e`, galeria em `rom/visual-report/index.html` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |

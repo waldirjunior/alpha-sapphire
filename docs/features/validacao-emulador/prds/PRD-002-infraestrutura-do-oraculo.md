@@ -20,8 +20,9 @@ Responder por script, sem interação humana: como o original aparece em um pont
 - Cliente RPC próprio (`scripts/azahar_rpc.py`): leitura e escrita de memória do processo do jogo e captura de frame em PNG.
 - Gerador de filme de entrada (`scripts/azahar_movie.py`): botões e toque, determinístico desde o boot.
 - Roteiros `boot_to_title` e `mash_to_name_entry` (`scripts/azahar_movies.py`).
-- 16 testes unitários das partes puras (`scripts/test_azahar_oracle.py`), sem emulador.
+- 18 testes unitários das partes puras (`scripts/test_azahar_oracle.py`), sem emulador.
 - Tutorial de instalação: [setup-emulador.md](../setup-emulador.md).
+- Suporte e validação em Linux headless (Ubuntu 24.04 `x86_64` com `xvfb-run` e Mesa `llvmpipe`: `init` em 16,8 s e `check` em 56 s), com controle de grupo de processos (`EmulatorProcess`), detecção de instância ativa pela porta UDP 45987 (`rpc_port_in_use`), resolução automática de `squashfs-root/AppRun` e timeout configurável via `ALPHA_EMULATOR_BOOT_TIMEOUT`.
 
 Evidência observada: `check` inicia o jogo (processo `sango-2`, título `000400000011C500`), lê `0x00100000` e salva um frame do vídeo de abertura; `mash_to_name_entry` a 400% atravessa título, fala do Prof. Birch e escolha de gênero e chega ao teclado de nome aos ~190 s emulados.
 
@@ -47,7 +48,7 @@ Cada passo é uma sessão curta. Faça em ordem; a verificação diz quando acab
 
 ## 5. Limites conhecidos
 
-- Linux não foi verificado; ver o tutorial.
+- Em Linux sem GPU (Mesa `llvmpipe`), o boot até o primeiro frame leva ~55 s; use `ALPHA_EMULATOR_BOOT_TIMEOUT=300` e `xvfb-run -a`.
 - Uma sessão do emulador por vez (porta RPC fixa).
 - O instante de captura é estimado por tempo de parede; a entrada é exata.
 - Estado de história do save editado é o de início de jogo: serve para câmera, escala, terreno e movimento, não para NPCs que dependem de progresso.
