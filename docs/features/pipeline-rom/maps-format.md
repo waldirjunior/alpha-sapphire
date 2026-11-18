@@ -269,6 +269,87 @@ regressões em [ADR-008](../core-jogo/adrs/ADR-008-ledges-sul-por-permissao-gr.m
 e [PRD-013](../engine-3d/prds/PRD-013-bondinho-mt-chimney-lavaridge.md).
 Animação/altura/multicamada e validação no emulador continuam P-017.
 
+## Grounding pela superfície física primária (A-080/A-081)
+
+Implementação sobre0372885, 2026-11-18; ver [engine ADR-006](../engine-3d/adrs/ADR-006-altura-por-celula-coll-gr.md).
+A-078/A-079 foram usados na main durante este trabalho; o diagnóstico anterior
+continua histórico abaixo, não descreve o novo runtime.
+
+**Observado:** além da seção visual BCH, o GR contém uma seção2 `coll`.
+O inventário nativo contou857 seções primárias e34 adicionais no índice8;
+os quatro arquivos0436–0439 não são GRs com esse formato. A geração dos
+mapas usa846 GRs e todos passam pelas guardas de `scripts/gr_ground.py`.
+O cabeçalho1/3/2/1/2,16 ranges uint32(start,count) a0x2a0 e vértices float4
+homogêneos/w1 a0x320 delimitam triângulos até term emu32@4+16. Ranges
+contíguos, divisibilidade por3, bounds, term e números finitos são validados;
+outro formato não é interpretado por aproximação. A colisão reconhecida por
+pk3DS/Ohana e a concordância espacial/altimétrica corroboram o payload;
+isso não recupera a ABI nativa de seleção de camada.
+
+Amostra-se o centro `(tile−19.5)×18` com coordenadas baricêntricas e Y/18,
+não uma interseção com o GLB visual. Triângulos duplicados pelos ranges são
+deduplicados. Ausência ou alturas distintas na mesma célula ficam null;
+tolerância numérica0.0001 tile e arredondamento6 casas não escolhem topo,
+piso inferior ou hit mais próximo. A seção8 não é fundida à primária.
+Cada JSON recebe groundHeights e source.groundHeightPolicy
+`gr-coll2-cell-center-unique-v1`; todos os demais campos dos536 mapas,
+vizinhos e relatório de validação foram preservados. A segunda geração foi
+idêntica nos538 JSONs, incluindo os dois índices. O recorte/máscara de
+zona também se aplica à altura. São772007 células conhecidas,707993 null;
+entre transitáveis,318424 conhecidas e539 null. Dos863 warps no recorte,
+705 concordam com ZO em tolerância0.15,25 são desconhecidos e133 diferem,
+incluindo pisos secundários e offsets/rampas não resolvidos.
+
+`groundHeight` é puro e consulta posição local, sem confundir romOrigin ou
+worldOrigin com altura. `groundedWorldPosition` mantém X/Z e deriva Y;
+null continua desconhecido e conserva apenas o fallback visual anterior0.
+Player/NPCs/interactables usam a mesma projeção. O player estende o damp
+exponencial de apresentação X/Z já existente para Y, sem novo timer.
+Isso não prova o clock original, a curva nativa ou o hop de ledge.
+A câmera follow mantém eyeY=playerY+9 e targetY=playerY+0.5, sem mudar
+ângulo, FOV, clipping ou câmera AMX ativa. Não há alteração de skins,
+binds, clipes, shaders, alpha/depth, renderOrder ou colisões 2D.
+
+### A/B publicado no runtime
+
+Chromium visível e servidores separados5197/5198, código/JSON reais antes
+e depois com os mesmos assets locais.12 checkpoints,24 casos e34 capturas
+inspecionadas; zero erros de página/console/HTTP, requests falhos ou warnings.
+Pose nativa fixa, sem init/VM/campanha; não equivale a caminhada natural ou
+emulador. As capturas actor-only removem terreno apenas como diagnóstico,
+nunca no produto. O passo adicional usa repo.move/core real e30 renders.
+
+| Checkpoint | PlayerY antes→depois | Follow eyeY depois | Observação |
+| --- | --- | --- | --- |
+| 6(20,14) / 6(14,16) | 0→0 | 9 | Controle; telhado continua oclusor em14,16 |
+| 445(78,48) / 445(22,61) | 0→0 | 9 | Paredes/visão externa não são defeito de altura |
+| 39(79,65) | 0→2 | 11 | Corpo recuperado, sem oclusor no raio central |
+| 385(23,18) | 0→3.150827 | 12.150827 | Avatar na plataforma física do bondinho |
+| 83(31,61) | 0→1 | 10 | Corpo inteiro; nenhum fix de skin foi necessário |
+| 84(38,5) | 0→27 | 36 | Terreno reaparece; câmera não fica sob ele |
+| 84(38,29) | 0→21 | 30 | Piso superior correto |
+| 84(38,31) | 0→20.5 | 29.5 | Piso inferior correto no mesmo GR291 |
+| 15(2,20) | 0→0 | 9 | Paredes continuam ocluindo; seção adicional dá7.5 |
+| 71(57,35) | 0→3 | 12 | Piso primário, não superfície visual superior20.5743 |
+
+O passo84(38,29)→(38,31) passou pela regra de ledge do core; playerY
+21→20.5 sem overshoot, eyeY−playerY=9 em todos os30 renders e alvo20.5.
+O residual de corpo parcial em83 dos controles antigos não foi reproduzido
+com grounding correto e render normal; não se afirma ausência de todo bug
+skinned. Telhados/paredes de6/445/15 são oclusão separada comprovada pelo
+controle actor-only, não motivo para alterar depth ou transparência.
+
+Evidências ignoradas no principal: `rom/ground-height-validation/report.json`,
+`data-audit.json` com hashes dos846 GRs, PNGs e contact sheets. Reprodutores:
+`/tmp/ground-height-servers.mjs`, `/tmp/playwright-test-ground-height-fix.js`,
+`/tmp/audit-ground-height-data.py`, `/tmp/analyze-ground-height-fix.py` e
+`/tmp/verify-ground-idempotence.py`. Regressão red-green inclui NPC antesY0
+vs esperado27 e câmera antesY9 vs esperado36; fixtures independem da ROM.
+351 Vitest/55 arquivos, build e186 Python sem skips com GLB_MAPS_DIR do
+principal passaram; bundle warning herdado. P-017 continua aberta para
+células null, camadas secundárias/actor.y/warps elevados, clock e hop
+nativos, oclusão de prédios e validação natural/emulador.
+
 ## Diagnóstico de altura e oclusão do avatar (A-076/A-077)
 
 Base `287de78`, Chromium visível em5197, 2026-11-18. O diagnóstico usa o

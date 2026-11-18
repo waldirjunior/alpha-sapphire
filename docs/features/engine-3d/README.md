@@ -20,6 +20,8 @@ Camada de renderização WebGL com Three.js em `src/engine/` (`SceneManager.ts`)
 - [PRD-014](prds/PRD-014-trechos-leste-mauville-lilycove.md) — leste por118/119/Fortree/120/121 até Lilycove; grafo confirmado, mas119/120 e ramal123 permanecem fisicamente bloqueados.11 regressões separam checkpoints independentes, bloqueio670 e fixture do bloco real50; nenhuma regra6x/73 ou Surf inventado. Stage60zonas/139GRs/111atores/BGMs/UV verificado; main665aca4 validada em375+139+85+175 passos por segmentos independentes, dez zonas com encontros nativos,22 capturas inspecionadas, zero erros e dois avisos AMX suspensos. Fixture670/reload/reentrada preservados;356 Vitest/176 Python sem skips/build passam. Oclusão severa em445/45/18 e47, sem terreno em46; sem corredor conectado, Surf ou aceite visual.
 - Referência TCC: [docs/tcc/00-arquitetura.md](../../tcc/00-arquitetura.md).
 
+- [ADR-006](adrs/ADR-006-altura-por-celula-coll-gr.md), A-080/A-081/P-017: alturas por célula derivadas dos triângulos físicos da seção2 GR, player/NPCs no piso e câmera relativa ao pé. A/B de12 checkpoints/34 capturas recupera corpo e terreno em39/83/84/385/71; telhados/paredes6/445/15 e pisos secundários continuam separados e abertos. Não usa max-hit visual nem altera skins/materiais.
+
 ## Estado atual
 
 - [SceneManager.ts](../../../src/engine/SceneManager.ts) consome GameState/MapDefinition sem mutar o core, com modelos de mapa/personagens e animações idle/walk. [zoneTerrain.ts](../../../src/engine/zoneTerrain.ts) compõe GRs de maps_v2; NPCs usam mm_NNNN ou npc.glb. O grid geométrico permanece como fallback quando faltam assets locais. Bootstrap e seleção legacy ficam no repositório de mapas, não inline no engine.

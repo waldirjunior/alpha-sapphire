@@ -2,6 +2,13 @@
 
 Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## Grounding da superfície física primária (2026-11-18)
+
+- A-080/A-081/engine ADR-006, base0372885: parser da seção2 `coll` GR, independente do BCH visual, amostra centros de células por triângulo físico.846 GRs/536 mapas gerados; só groundHeights e source.groundHeightPolicy adicionados, com preservação dos demais campos e índices.318424 células transitáveis têm altura conhecida;539 ficam desconhecidas, sem selecionar telhado ou fundir pisos.
+- Player/NPCs projetados no Y local; câmera eyeY=playerY+9/targetY=playerY+0.5. A interpolação X/Z existente também transporta Y; sem novo timer nem prova de clock nativo. Eventos de câmera e batalha preservados.351 Vitest/55 arquivos, build e186 Python sem skips com GLB_MAPS_DIR do principal passaram; warning herdado de bundle e vulnerabilidades npm P-016 não alterados.
+- Chromium visível, servidores separados5197/5198 e assets idênticos:12 checkpoints/34 capturas inspecionadas, zero page/console/HTTP/request errors ou warnings. Corpo inteiro em83 sem alterar skin; terreno e avatar recuperados em39/84/385/71. Passo core84(38,29)→(38,31) verificouY21→20.5 e câmera relativa em30 renders. Não é caminhada/campanha natural nem emulador.
+- Telhado6(14,16), paredes445(78,48)/15(2,20), camada secundária/actor.y, warps elevados, células null e paridade continuam P-017. Nenhum shader, depth, alpha, clip ou colisão alterado. Fonte, guardas e tabela em [maps-format](features/pipeline-rom/maps-format.md#grounding-pela-superfície-física-primária-a-080a-081); report/data-audit/contact sheets ignorados em `rom/ground-height-validation/` no principal. Reprodutores `/tmp/playwright-test-ground-height-fix.js`, `/tmp/ground-height-servers.mjs`, `/tmp/audit-ground-height-data.py`, `/tmp/analyze-ground-height-fix.py`.
+
 ## Diagnóstico de grounding/oclusão do avatar (2026-11-18)
 
 - A-076/A-077/P-017, base287de78:14 checkpoints/94 screenshots Chromium visível, SceneManager real com pose fixa, sem VM/init. Bounds CPU, raycasts verticais/câmera→ator, flags de materiais e ZOs correlacionados. Player/NPCsY0 e followY9 absoluto não acompanham terreno2/4/27; Jagged varia27→21→20.5 no mesmo GR. ZOs confirmam altura nos pontos83/84/71. GLB do player não tem origem central que explique esses desvios (Y mínimo0.08593/máximo1.83514).

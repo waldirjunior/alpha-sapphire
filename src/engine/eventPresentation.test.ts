@@ -46,6 +46,16 @@ describe('serviços de apresentação AMX', () => {
     presentation.follow();
     expect(camera.position.toArray()).toEqual([0, 9, 8]);
   });
+  it('mantém eye e target relativos ao pé em um terreno elevado sem alterar o ângulo', () => {
+    const camera = new PerspectiveCamera(45);
+    const target = { x: 38, y: 27.5, z: 5 };
+    const presentation = new EventPresentation(camera, { style: { opacity: '1' } }, () => target, () => null);
+    presentation.follow();
+    expect(camera.position.toArray()).toEqual([38, 36, 13]);
+    target.y = 21.5;
+    presentation.follow();
+    expect(camera.position.toArray()).toEqual([38, 30, 13]);
+  });
   it('projeta fade no canvas e reset cancela a apresentação', async () => {
     const { presentation, canvas } = fixture(() => Promise.resolve());
     await presentation.request({ channel: 'fade', name: 'FadeRequestOut', args: [0, 0, 2] }, map, () => true);

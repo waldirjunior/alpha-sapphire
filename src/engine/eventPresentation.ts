@@ -25,7 +25,7 @@ export class EventPresentation {
   follow(): void {
     if (this.motion.active) return;
     const target = this.followTarget();
-    this.camera.position.set(target.x, 9, target.z + 8);
+    this.camera.position.set(target.x, target.y + 8.5, target.z + 8);
     this.camera.lookAt(target.x, target.y, target.z);
   }
 

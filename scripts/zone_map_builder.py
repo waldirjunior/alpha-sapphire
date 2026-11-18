@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from scripts.extract_gr_maps import collision_layers, read_gr_permissions
+from scripts.gr_ground import read_gr_ground
 from scripts.map_matrix import EMPTY, GR_TILES, WORLD_UNITS_PER_TILE, owns_tile
 
 
@@ -10,24 +11,26 @@ def gr_grid(gr_id: int, directory: Path, cache: dict) -> tuple:
         if (width, height) != (40, 40):
             raise ValueError(f'GR {gr_id}: grid {(width, height)}, esperado 40x40')
         collisions, terrain = collision_layers(permissions)
-        cache[gr_id] = (width, height, collisions, terrain, permissions)
+        cache[gr_id] = (width, height, collisions, terrain, permissions, read_gr_ground(directory / f'{gr_id:04d}.bin'))
     return cache[gr_id]
 
 
 def compose_row(matrix: dict, zone: int, x0: int, z: int, width: int, directory: Path, cache: dict) -> tuple:
-    collisions, terrain, south_ledge_columns = [], [], []
+    collisions, terrain, south_ledge_columns, ground = [], [], [], []
     for x in range(x0, x0 + width):
         gr_id = matrix['grIds'][(z // GR_TILES) * matrix['width'] + x // GR_TILES]
         if gr_id == EMPTY or not owns_tile(matrix, zone, x, z):
             collisions.append(1)
             terrain.append(1)
+            ground.append(None)
             continue
-        _, _, gr_collisions, gr_terrain, permissions = gr_grid(gr_id, directory, cache)
+        _, _, gr_collisions, gr_terrain, permissions, gr_ground = gr_grid(gr_id, directory, cache)
         collisions.append(gr_collisions[z % GR_TILES][x % GR_TILES])
         terrain.append(gr_terrain[z % GR_TILES][x % GR_TILES])
+        ground.append(gr_ground[z % GR_TILES][x % GR_TILES])
         if permissions[z % GR_TILES][x % GR_TILES] == 0x75020021:
             south_ledge_columns.append(x - x0)
-    return collisions, terrain, south_ledge_columns
+    return collisions, terrain, south_ledge_columns, ground
 
 
 def compose_tiles(matrix: dict, zone: int, bounds: tuple, directory: Path, cache: dict) -> dict:
@@ -35,7 +38,8 @@ def compose_tiles(matrix: dict, zone: int, bounds: tuple, directory: Path, cache
     rows = [compose_row(matrix, zone, x0, z, width, directory, cache) for z in range(z0, z0 + height)]
     ledges = [{'x': x, 'z': z} for z, row in enumerate(rows) for x in row[2]]
     return {'width': width, 'height': height, 'collisions': [row[0] for row in rows],
-            'terrain': [row[1] for row in rows], **({'southLedges': ledges} if ledges else {})}
+            'terrain': [row[1] for row in rows], 'groundHeights': [row[3] for row in rows],
+            **({'southLedges': ledges} if ledges else {})}
 
 
 def matrix_chunks(matrix: dict, bounds: tuple) -> list[dict]:

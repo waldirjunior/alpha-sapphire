@@ -80,5 +80,20 @@ altura/camada, política de oclusão/câmera e isolamento do residual skinned.
 Evidência e limites em [maps-format](../features/pipeline-rom/maps-format.md#diagnóstico-de-altura-e-oclusão-do-avatar-a-076a-077).
 Nenhum binário, screenshot ou mudança de runtime foi versionado.
 
+## Grounding pela colisão física GR (A-080/A-081)
+
+A seção2 `coll`, separada do BCH visual, fornece triângulos físicos. O pipeline
+amostra centros de células, converte Y/18 e gera groundHeights nos536 mapas,
+preservando os demais campos. Ausência ou sobreposição ambígua vira null;
+a seção8 não é fundida nem se escolhe max-hit visual. O helper de consulta
+permanece puro no core; player/NPCs e follow camera consomem essa projeção.
+A interpolação de apresentação existente passa a incluir Y, sem alegar
+clock original. A/B de12 checkpoints/34 capturas recupera os corpos/terreno
+em39/83/84/385/71, mas não resolve telhados/paredes6/445/15, camadas ativas,
+actor.y explícito,539 células transitáveis null ou paridade. A consulta null
+é mantida e o renderer conserva fallback0 nesses casos, não altura provada.
+[ADR-006](../features/engine-3d/adrs/ADR-006-altura-por-celula-coll-gr.md)
+registra o contrato, a fonte e os limites; evidências binárias ficam locais.
+
 ## 3. Regra de Segurança no Repositório
 Arquivos proprietários da ROM (`rom/`, `RomFS/`, `ExeFS/`, `public/assets/`, `*.3ds`, `*.cia`, `*.cxi`, `*.7z`) ficam **sempre no `.gitignore`** e nunca sobem para o GitHub. Apenas o motor, scripts de conversão, schemas, JSONs estruturais e documentação são versionados.

@@ -67,6 +67,14 @@ class ZoneCompositionTests(unittest.TestCase):
         self.assertEqual(result['terrain'][0], [2] * 40 + [1] * 40)
         self.assertEqual(result['collisions'][0], [0] * 40 + [1] * 40)
 
+    def test_composes_physical_heights_with_crop_and_zone_mask(self):
+        matrix = parse_matrix(matrix_blob())
+        base = (40, 40, [[0] * 40 for _ in range(40)], [[0] * 40 for _ in range(40)], [[0] * 40 for _ in range(40)])
+        cache = {3: (*base, [[27] * 40 for _ in range(40)]), 4: (*base, [[7.5] * 40 for _ in range(40)])}
+        result = compose_tiles(matrix, 10, (30, 0, 20, 40), Path('.'), cache)
+        self.assertEqual(result['groundHeights'][0], [27] * 10 + [None] * 10)
+        self.assertEqual(result['collisions'][0], [0] * 10 + [1] * 10)
+
     def test_extracts_exact_south_ledge_permission_without_opening_grid_or_neighbor_zone(self):
         matrix = parse_matrix(matrix_blob())
         values = [0x20000004] * 1600
@@ -87,13 +95,13 @@ class ZoneCompositionTests(unittest.TestCase):
 
     def test_masks_neighbor_zone_even_when_gr_has_walkable_tiles(self):
         matrix = parse_matrix(matrix_blob())
-        grid = (40, 40, [[0] * 40 for _ in range(40)], [[2] * 40 for _ in range(40)], [[0] * 40 for _ in range(40)])
+        grid = (40, 40, [[0] * 40 for _ in range(40)], [[2] * 40 for _ in range(40)], [[0] * 40 for _ in range(40)], [[0] * 40 for _ in range(40)])
         result = compose_tiles(matrix, 10, (0, 0, 80, 40), Path('.'), {3: grid, 4: grid})
         self.assertEqual(result['collisions'][0], [0] * 40 + [1] * 40)
 
     def test_map_area_is_metadata_not_a_region_array_index(self):
         matrix = parse_matrix(matrix_blob())
-        grid = (40, 40, [[0] * 40 for _ in range(40)], [[2] * 40 for _ in range(40)], [[0] * 40 for _ in range(40)])
+        grid = (40, 40, [[0] * 40 for _ in range(40)], [[2] * 40 for _ in range(40)], [[0] * 40 for _ in range(40)], [[0] * 40 for _ in range(40)])
         zones = {10: {'mapMatrix': 1, 'mapArea': 112, 'textFile': 65, 'name': 'Synthetic',
                       'npcs': [], 'warps': [], 'encounters': [], 'sha256': 'synthetic'}}
         result = build_zone_map(10, zones, {1: matrix}, {10: zone_bounds(matrix, 10)}, Path('.'), {3: grid})
