@@ -829,3 +829,48 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   zero erros/requests falhos/warnings; passo core real84(38,29)→(38,31)
   comY21→20.5 em30 renders e câmera relativa preservada. Snapshots sem init
   e campanha não são caminhada natural nem validação no emulador.
+
+## A-084 Colisão secundária não fica sempre na seção8
+
+- **Data:**2026-11-18; P-017/PRD-016/engine ADR-007, base0d745b2.
+- **Observado:** loader DllField/0x1e8cc deriva pisos do número de seções;
+  para7+2N, grids extras são6+i e colisores6+N+i. Inventário:819 GRs com7
+  seções,34 com9 e quatro com11;857 GRs/899 colisores validados.
+- **Erro corrigido:**0436–0439 não são inválidos; possuem três camadas e
+  seção8 é grid, não coll. O parser offline novo reconhece9/10 como colisão.
+  Isso acrescenta o quinto candidato secundário aos133 desvios ZO:
+ 176/warp0,GR439,piso2,Y24. Os outros são15/6,7,8 e444/0.
+- **Regra:** recuperar o agrupamento no consumidor antes de generalizar um
+  índice observado. Não alterar a primária nem promover candidatos ao jogo.
+- **Verificação:** fixtures red-green de índices variáveis,1–4 pisos,
+  corrupção e relatório imutável; auditoria completa reproduzível no PRD.
+
+## A-085 Um candidato de piso não fecha o estado de camada do ator
+
+- **Data:**2026-11-18; P-017/PRD-016.
+- **Observado:** DllField/0x1e52c compara desnível ao Y da consulta, com
+  grids por piso, caches e máscaras;0xe5f20 faz consulta verticalY±250,
+  X/Z quantizados a décimos. Origem do Y, transforms e escolha intramalha
+  ainda não fechados. Não copiar só a comparação de distância para Y0.
+- **Auditoria:**539 null são423 sem hit/116 ambíguos, não falha de bbox;
+ 101 têm algum candidato extra.133 desvios ZO: cinco candidatos/128 não
+  resolvidos;25 outros warps são null e705 concordam em tolerância0.15.
+- **Regra:** `collisions==0` é classificação do exportador, não prova de
+  transitabilidade nativa. Não preencher água/pisos especiais por vizinho,
+  ZO ou max/min-hit. Coincidência não autoriza escolher a camada do ator.
+
+## A-086 Visibilidade booleana não prova dissolve por câmera
+
+- **Data:**2026-11-18; P-017/PRD-016/engine ADR-007.
+- **Observado:** BuildMdlSetVisible/0x4ef74 consulta registro espacial por
+  handle e passa booleano a0x15a54; não recebe distância de câmera. Lookup
+  usa X/Z e raio inicial36. O registry recebe objetos da seção3; não foi
+  demonstrado vínculo com os meshes oclusores da seção1. GR713 não tem
+  registros de seção3; GR6 e713 não possuem piso secundário.
+- **Cobertura:**1157 programas AMX pesquisados,20 chamadas SetVisible;
+  nenhuma direta nos programas locais6/15/445. Não exclui dispatch/global
+  dinâmico nem chamadas indiretas. Ausência de string não prova ausência.
+- **Regra:** não esconder telhados nem trocar câmera/camada por aparência.
+  Controle actor-only pertence ao harness e não é uma correção publicada.
+  Um hash de canvas estrito falhou por quatro pixels remotos na15 com
+  medidas iguais; preservar esse limite, sem alegar paridade de pixels.

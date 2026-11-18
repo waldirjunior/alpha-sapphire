@@ -2,6 +2,7 @@
 
 | ID | Título | Estado | Data |
 | --- | --- | --- | --- |
+| [PRD-016](PRD-016-camadas-fisicas-e-oclusao-nativas.md) | Camadas físicas e oclusão nativas | Auditor offline validado; runtime multicamada/oclusão pendentes | 2026-11-18 |
 | [PRD-001](PRD-001-cena-3d-e-glb-sob-demanda.md) | Cena 3D, Dados de Mapa e Carregamento de `.glb` sob Demanda | Em andamento (Fase 2) | 2026-11-16 |
 | [PRD-002](PRD-002-animacoes-esqueleticas-idle-walk.md) | Animações Esqueléticas (`idle` e `walk`) sem T-Pose | Planejado (Fase 2) | 2026-11-17 |
 | [PRD-003](PRD-003-fidelidade-visual-mapas-e-interiores.md) | Fidelidade Visual de Mapas, Shaders PICA200 e Interiores | Planejado (Fase 2) | 2026-11-17 |

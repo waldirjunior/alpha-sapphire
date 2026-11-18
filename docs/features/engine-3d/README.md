@@ -22,6 +22,8 @@ Camada de renderização WebGL com Three.js em `src/engine/` (`SceneManager.ts`)
 
 - [ADR-006](adrs/ADR-006-altura-por-celula-coll-gr.md), A-080/A-081/P-017: alturas por célula derivadas dos triângulos físicos da seção2 GR, player/NPCs no piso e câmera relativa ao pé. A/B de12 checkpoints/34 capturas recupera corpo e terreno em39/83/84/385/71; telhados/paredes6/445/15 e pisos secundários continuam separados e abertos. Não usa max-hit visual nem altera skins/materiais.
 
+- [PRD-016](prds/PRD-016-camadas-fisicas-e-oclusao-nativas.md)/[ADR-007](adrs/ADR-007-auditar-camadas-sem-inferir-visibilidade.md), A-084–A-086: auditor offline reconhece857 GRs/899 colisores e índices adicionais variáveis. Consulta CRO depende de posição3D/cache; origem do Y e hit intramalha ainda não fechados. Cinco candidatos de camada/128 desvios ZO restantes,539 null preservados. API de visibilidade booleana não prova dissolve; renderer primário e oclusão6/445/15 inalterados.
+
 ## Estado atual
 
 - [SceneManager.ts](../../../src/engine/SceneManager.ts) consome GameState/MapDefinition sem mutar o core, com modelos de mapa/personagens e animações idle/walk. [zoneTerrain.ts](../../../src/engine/zoneTerrain.ts) compõe GRs de maps_v2; NPCs usam mm_NNNN ou npc.glb. O grid geométrico permanece como fallback quando faltam assets locais. Bootstrap e seleção legacy ficam no repositório de mapas, não inline no engine.
