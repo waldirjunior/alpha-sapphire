@@ -4,6 +4,8 @@ import type { AmxInput, AmxState, AmxWorld } from '../core/amxTypes';
 import type { GameState, MapDefinition, MapNpc } from '../core/types';
 import { loadZoneEventPrograms, npcEventProgram, zoneInitProgram, type ZoneEventPrograms } from '../data/zone_scripts/loader';
 import { classifyEventRequest, npcActorId, projectEventActors } from './eventHost';
+import { EventMessageBanks } from './eventMessages';
+import type { EventWarp } from './eventWarp';
 
 interface TextSource { zone: number; lines: string[] }
 const texts = import.meta.glob<TextSource>('../data/texts/zones/*.json', { import: 'default' });
@@ -18,9 +20,10 @@ async function loadZoneEventAssets(zoneId: number): Promise<ZoneEventAssets> {
 interface EventPorts {
   state(): GameState;
   map(): MapDefinition;
-  project(map: MapDefinition, world: AmxWorld): void;
+  project(map: MapDefinition, world: AmxWorld, player: boolean): void;
   dialogue(text: string | null): void;
   frames(count: number): Promise<void>;
+  warp(target: EventWarp, active: () => boolean): Promise<void>;
   report(message: string): void;
   silentAudio(soundId: number): void;
 }
@@ -29,10 +32,15 @@ export class ZoneEvents {
   private world = createAmxWorld();
   private loaded: ZoneEventPrograms | null = null;
   private current: AmxState | null = null;
-  private lines: readonly string[] = [];
+  private messages = new EventMessageBanks([]);
   private waitingKey = false;
-  private completionValue = 0;
+  private presentationPaused = false;
+  private projectPlayer = false;
+  private initializing = false;
+  private pausedInit: { state: AmxState; player: boolean; name: string } | null = null;
+  private completionValue: number | null = 0;
   private executing = false;
+  private pendingEntry = false;
   private generation = 0;
   private activeMap = '';
   private readonly initialMaps = new Map<string, MapDefinition>();
@@ -40,30 +48,44 @@ export class ZoneEvents {
   constructor(private readonly ports: EventPorts,
     private readonly loadAssets: (zoneId: number) => Promise<ZoneEventAssets> = loadZoneEventAssets) {}
 
-  get busy(): boolean { return this.executing || this.current !== null; }
+  get busy(): boolean { return this.executing || (this.current !== null && !this.presentationPaused); }
+  get interactionActive(): boolean { return this.current !== null && !this.initializing; }
+  get canAdvance(): boolean { return this.waitingKey || (this.presentationPaused && this.completionValue !== null); }
+  get pendingEffect(): string | null {
+    const pending = this.current?.awaiting;
+    return this.presentationPaused && pending?.kind === 'native' ? pending.effect.name : null;
+  }
 
   reset(): void {
     this.generation += 1;
     this.world = createAmxWorld();
     this.current = null;
     this.loaded = null;
-    this.lines = [];
+    this.initializing = false;
+    this.pausedInit = null;
+    this.messages = new EventMessageBanks([]);
     this.executing = false;
+    this.pendingEntry = false;
     this.waitingKey = false;
+    this.presentationPaused = false;
     this.completionValue = 0;
     this.activeMap = '';
   }
 
-  async enter(): Promise<void> {
+  async enter(reason: 'spawn' | 'boundary' | 'warp' = 'spawn'): Promise<void> {
     const currentMap = this.ports.map();
     const map = this.initialMaps.get(currentMap.id) ?? currentMap;
     if (map.id === this.activeMap || map.zoneId === undefined || !map.npcs) return;
+    this.projectPlayer = reason === 'warp';
     this.initialMaps.set(map.id, map);
     this.activeMap = map.id;
     this.current = null;
     this.loaded = null;
-    this.lines = [];
+    this.initializing = false;
+    this.pausedInit = null;
+    this.messages = new EventMessageBanks([]);
     this.waitingKey = false;
+    this.presentationPaused = false;
     this.completionValue = 0;
     this.executing = true;
     const generation = ++this.generation;
@@ -71,15 +93,16 @@ export class ZoneEvents {
       const assets = await this.loadAssets(map.zoneId);
       if (generation !== this.generation) return;
       this.loaded = assets.programs;
-      this.lines = assets.lines;
+      this.messages = new EventMessageBanks(assets.lines);
       this.world = { ...this.world, zoneId: map.zoneId, actors: {}, sex: this.ports.state().player.gender === 'female' ? 1 : 0 };
       for (const npc of map.npcs) this.world.actors[npcActorId(npc)] = {
-        x: npc.pos.x, y: 0, z: npc.pos.z, direction: directionCell(npc.facing), visible: true, moveCode: 0,
+        x: npc.pos.x + (map.romOrigin?.x ?? 0), y: 0, z: npc.pos.z + (map.romOrigin?.z ?? 0),
+        direction: directionCell(npc.facing), visible: true, moveCode: 0,
       };
       this.refreshPlayer();
-      this.ports.project(projectEventActors(map, this.world), this.world);
+      this.ports.project(projectEventActors(map, this.world), this.world, this.projectPlayer);
       const id = this.loaded && zoneInitProgram(this.loaded);
-      if (id) await this.start(id, 1);
+      if (id) { this.initializing = true; await this.start(id, 1); }
     } catch (error) {
       if (generation === this.generation) { this.activeMap = ''; this.fail(error); }
     } finally { if (generation === this.generation) this.executing = false; }
@@ -89,22 +112,34 @@ export class ZoneEvents {
     if (this.busy || !this.loaded) return false;
     const id = npcEventProgram(this.loaded, npcActorId(npc), npc.script);
     if (!id) return false;
+    if (this.current) {
+      const name = this.pendingEffect;
+      if (!this.initializing || !name) return false;
+      this.pausedInit = { state: this.current, player: this.projectPlayer, name };
+      this.current = null;
+      this.presentationPaused = false;
+    }
+    this.initializing = false;
+    this.projectPlayer = true;
     this.refreshPlayer();
     await this.start(id, npc.script);
     return true;
   }
 
   async advance(): Promise<void> {
-    if (!this.waitingKey || !this.current || this.executing) return;
+    if (!this.canAdvance || !this.current || this.executing) return;
+    if (this.presentationPaused) this.refreshPlayer();
     this.waitingKey = false;
-    const value = this.completionValue;
+    this.presentationPaused = false;
+    const value = this.completionValue ?? 0;
     this.completionValue = 0;
     await this.drive({ kind: 'native-result', value });
   }
 
   private refreshPlayer(): void {
     const player = this.ports.state().player;
-    this.world.actors[255] = { x: player.pos.x, y: 0, z: player.pos.z,
+    const origin = this.ports.map().romOrigin ?? { x: 0, z: 0 };
+    this.world.actors[255] = { x: player.pos.x + origin.x, y: 0, z: player.pos.z + origin.z,
       direction: directionCell(player.facing), visible: true, moveCode: 0 };
   }
 
@@ -124,19 +159,40 @@ export class ZoneEvents {
         if (requests >= 1000) throw new Error('Evento excede 1000 solicitações do host');
         this.current = runAmx(this.loaded.bundle, this.current);
         this.world = this.current.world;
-        this.ports.project(projectEventActors(this.ports.map(), this.world), this.world);
+        if (!this.pendingEntry) this.ports.project(projectEventActors(this.ports.map(), this.world), this.world, this.projectPlayer);
         if (!this.world.dialogue) this.ports.dialogue(null);
-        if (this.current.status === 'completed') { this.current = null; return; }
+        if (this.current.status === 'completed') { this.current = null; break; }
         const response = await this.serviceRequest(this.current);
         if (!response || generation !== this.generation || !this.current) return;
         this.current = resumeAmx(this.current, response);
       }
     } catch (error) { if (generation === this.generation) this.fail(error); }
     finally { if (generation === this.generation) this.executing = false; }
+    if (this.pendingEntry && !this.current && generation === this.generation) {
+      this.pendingEntry = false;
+      this.activeMap = '';
+      await this.enter('warp');
+    } else if (generation === this.generation && !this.current) this.restoreInit();
+  }
+
+  private restoreInit(): void {
+    const paused = this.pausedInit;
+    if (!paused) return;
+    this.current = { ...paused.state, world: this.world };
+    this.projectPlayer = paused.player;
+    this.initializing = true;
+    this.pausedInit = null;
+    this.deferPresentation(this.current, paused.name);
   }
 
   private async serviceRequest(state: AmxState): Promise<AmxInput | null> {
-    const request = classifyEventRequest(state, this.lines);
+    const generation = this.generation;
+    const effect = state.awaiting?.kind === 'native' ? state.awaiting.effect : undefined;
+    const value = effect && await this.messages.request(effect);
+    if (generation !== this.generation) return null;
+    if (value !== undefined) return { kind: 'native-result', value };
+    const request = classifyEventRequest(state, this.messages.linesFor(effect));
+    if (request.kind === 'warp') return this.changeMap(state, request.target);
     if (request.kind === 'opaque') return this.deferPresentation(state, request.name);
     if (request.kind === 'key' || request.kind === 'text') {
       if (request.kind === 'text') this.ports.dialogue(request.text);
@@ -151,15 +207,27 @@ export class ZoneEvents {
     return { kind: 'native-result', value: request.kind === 'complete' ? request.value : 0 };
   }
 
+  private async changeMap(state: AmxState, target: EventWarp): Promise<AmxInput> {
+    const generation = this.generation;
+    await this.ports.warp(target, () => generation === this.generation);
+    if (generation === this.generation && this.current === state) {
+      this.pendingEntry = true;
+      this.world = { ...state.world, zoneId: target.zoneId, actors: { ...state.world.actors,
+        255: { ...state.world.actors[255], x: target.pos.x, y: target.height, z: target.pos.z,
+          direction: directionCell(target.facing) } } };
+      this.current = { ...state, world: this.world };
+    }
+    return { kind: 'native-result', value: 0 };
+  }
+
   private deferPresentation(state: AmxState, name: string): null {
     const pending = state.awaiting;
-    const cosmeticActor = ['TalkMdlSetEyeToEye', 'TalkMdlClearEyeToEye', 'TalkMdlSetTalkMotion', 'TalkMdlClearEye'].includes(name);
-    if (pending?.kind !== 'native' || !(['movement', 'camera'].includes(pending.effect.channel) || cosmeticActor)) {
-      throw new Error(`Efeito pendente não implementado: ${name}`);
-    }
-    this.completionValue = name === 'MdlAcmdUpdate' ? 1 : 0;
-    this.ports.dialogue(`Apresentação pendente: ${name}. Enter fornece retorno ${this.completionValue} sem reproduzir o efeito (P-013).`);
-    this.waitingKey = true;
+    const cosmeticActor = ['TalkMdlSetEyeToEye', 'TalkMdlClearEyeToEye', 'TalkMdlSetTalkMotion', 'TalkMdlClearEye', 'BuildMdlEventAnimeSetEnd'].includes(name);
+    const approved = pending?.kind === 'native' && (['movement', 'camera'].includes(pending.effect.channel) || cosmeticActor);
+    this.completionValue = approved ? (name === 'MdlAcmdUpdate' ? 1 : 0) : null;
+    this.presentationPaused = true;
+    this.ports.report(`Apresentação pendente: ${name}; script suspenso sem bloquear movimento. ${approved
+      ? `Enter fornece retorno ${this.completionValue} sem reproduzir o efeito` : 'Retorno sem ABI validada; confirmação indisponível'} (P-013).`);
     return null;
   }
 

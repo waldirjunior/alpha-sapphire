@@ -16,6 +16,7 @@ const memory: Readonly<Record<string, { data: number[]; stackTop: number; sha256
 const image = (id: string, program: AmxProgram) => ({ program, data: memory[id].data, stackTop: memory[id].stackTop });
 const bundle: AmxBundle = {
   'zone:0006:map': image('zone:0006:map', zone6.programs.map),
+  'zone:0006:entities': image('zone:0006:entities', zone6.programs.entities),
   'zone:0223:map': image('zone:0223:map', zone223.programs.map),
   'zone:0223:entities': image('zone:0223:entities', zone223.programs.entities),
   'zone:0225:entities': image('zone:0225:entities', zone225.programs.entities),
@@ -27,6 +28,10 @@ const bundle: AmxBundle = {
 const actor = { x: 0, y: 0, z: 0, direction: 0, visible: true, moveCode: 0 };
 
 describe('VM Pawn com disassembly real ORAS', () => {
+  it('init de Littleroot calcula handles de construção e para apenas na animação externa', () => {
+    const result = runAmx(bundle, createAmxState(bundle, 'zone:0006:entities', 1, createAmxWorld()));
+    expect(result.awaiting).toMatchObject({ kind: 'native', effect: { name: 'BuildMdlEventAnimeSetEnd' } });
+  });
   it.each(['zone:0223:entities', 'zone:0225:entities'])('executa init real de %s com WorkGet, stack/call/retn/switch e ABI de posição', id => {
     const world = createAmxWorld(id === 'zone:0223:entities' ? 0 : 1);
     world.vars[16514] = 3;

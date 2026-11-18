@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createAmxWorld } from '../core/amxMemory';
 import type { AmxState } from '../core/amxTypes';
-import { classifyEventRequest, projectEventActors, facingNpc } from './eventHost';
+import { classifyEventRequest, projectEventActors, facingNpc, mapEntryReason, projectEventPlayer } from './eventHost';
 import type { MapDefinition } from '../core/types';
 import { isWalkable } from '../core/gameState';
 
@@ -11,6 +11,27 @@ function pending(name: string, args: number[] = []): AmxState {
 }
 
 describe('host de eventos AMX', () => {
+  it('classifica como borda contínua mesmo quando o portal ROM também é um warp', () => {
+    const map: MapDefinition = { id: 'zone_0007', name: 'Source', width: 40, height: 40, collisions: [],
+      warps: [{ from: { x: 1, z: 20 }, targetMapId: 'zone_0024', targetPos: { x: 79, z: 20 }, faceDirection: 'right' }],
+      boundaries: [{ from: { x: 1, z: 20 }, targetMapId: 'zone_0024', direction: 'left', length: 3,
+        offset: { x: 78, z: 0 }, inferred: true }] };
+    const state = { player: { id: 'p', mapId: map.id, pos: { x: 1, z: 20 }, facing: 'left' as const }, storyFlags: {} };
+    expect(mapEntryReason(state, map, 'left', 'zone_0024')).toBe('boundary');
+    expect(mapEntryReason(state, map, 'left', 'zone_0225')).toBe('warp');
+  });
+
+  it('converte coordenadas ROM sem usar a origem visual contínua e projeta player apenas quando autorizado', () => {
+    const map: MapDefinition = { id: 'zone_0006', name: 'Town', width: 40, height: 40, collisions: [], warps: [],
+      romOrigin: { x: 80, z: 160 }, worldOrigin: { x: 2, z: 80 },
+      npcs: [{ id: 'zone_0006:npc:7', pos: { x: 1, z: 1 }, model: 1, modelUrl: '', script: 1, spawnFlag: 0 }] };
+    const world = createAmxWorld();
+    world.actors[7] = world.actors[255] = { x: 104, y: 0, z: 179, direction: 2, visible: true, moveCode: 0 };
+    const state = { player: { id: 'p', mapId: map.id, pos: { x: 3, z: 4 }, facing: 'right' as const }, storyFlags: {} };
+    expect(projectEventActors(map, world).npcs?.[0].pos).toEqual({ x: 24, z: 19 });
+    expect(projectEventPlayer(state, map, world, false)).toBe(state);
+    expect(projectEventPlayer(state, map, world, true).player).toMatchObject({ pos: { x: 24, z: 19 }, facing: 'left' });
+  });
   it('resolve o primeiro argumento de TalkMdlMsg sem confundir com ponteiro ou speaker', () => {
     expect(classifyEventRequest(pending('TalkMdlMsg_Seq', [1, 0, -1, ...Array<number>(16).fill(0)]), ['zero', 'ROM real']))
       .toEqual({ kind: 'text', text: 'ROM real' });

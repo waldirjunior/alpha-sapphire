@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "croSha256": "9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925",
+  "messageFiles": [
+    260,
+    23,
+    79,
+    458,
+    233,
+    228,
+    231,
+    232,
+    229,
+    461,
+    459,
+    244,
+    251,
+    135,
+    134,
+    252,
+    140,
+    null,
+    10,
+    134,
+    35,
+    97,
+    460,
+    230,
+    58
+  ],
+  "natives": {
+    "BuildMdlGetHandleByGPos": {
+      "table": 1016532,
+      "wrapper": 329496
+    },
+    "MsgLoad": {
+      "table": 1014052,
+      "wrapper": 380768
+    },
+    "MsgSwap": {
+      "table": 1014076,
+      "wrapper": 381372
+    },
+    "MsgIsLoaded": {
+      "table": 1014060,
+      "wrapper": 335916
+    },
+    "MsgRelease": {
+      "table": 1014068,
+      "wrapper": 334816
+    },
+    "_MapChangeCore": {
+      "table": 1013700,
+      "wrapper": 346788
+    }
+  }
+}

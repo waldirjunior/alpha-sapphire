@@ -17,7 +17,7 @@ export interface ZoneMapSource {
     rom: { faceDirection: number; transitionEffect: number } }[];
   npcs: { id: number; model: number; script: number; spawnFlag: number; faceDirection: number; pos: GridPosition }[];
   encounters: ZoneEncounterSlot[];
-  source: { chunks: { grId: number; localTile: GridPosition }[] };
+  source: { originTile?: GridPosition; chunks: { grId: number; localTile: GridPosition }[] };
 }
 
 export function romFacing(value: number): Direction | undefined {
@@ -43,6 +43,7 @@ export function adaptZoneMap(source: ZoneMapSource): MapDefinition {
   return {
     id: source.id, zoneId: source.zone, name: source.name, width: source.width, height: source.height,
     collisions: source.collisions.map((row) => [...row]), terrain: source.terrain.map((row) => [...row]),
+    romOrigin: source.source.originTile ? { ...source.source.originTile } : undefined,
     spawnPos: source.spawnPos ? { ...source.spawnPos } : undefined,
     spawnDerived: source.spawnDerived, spawnPolicy: source.spawnPolicy,
     warps: source.warps.map((warp) => ({ from: { ...warp.from }, targetMapId: warp.targetMapId,

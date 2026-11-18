@@ -1,32 +1,53 @@
 # Status
 
-Atualizado em 2026-11-17 (verificação local na VPS).
+Atualizado em 2026-11-17 (host verificado no worktree; registros de VPS abaixo são históricos).
 
 ## Host de eventos AMX (2026-11-17, worktree `events-layer`)
 
-- Base `main b09a93b`; desenvolvimento isolado, sem trocar branch no checkout principal.
-- Loader lazy por zona/vínculo, validação de SHA das 19 imagens disponíveis,
-  init `entities/case 1`, interação frontal com NPC, texto real StoryText, frames,
-  projeção de posição/direção/visibilidade no SceneManager e colisão de NPC visível.
-- **160 testes Vitest em 25 arquivos e build passando**, incluindo dez regressões
-  sintéticas novas do host/ciclo de vida; aviso Vite >500 kB permanece.
-- Playwright visível com servidor iniciado no checkout principal (5178), código do
-  worktree e `public/` principal: jogador (24,20)/up interagiu com NPC 0/script 14;
-  texto ROM da linha 6 de Littleroot exibido após cinco confirmações cosméticas.
-  Zero pageerror; mensagens tardias de 404 não foram classificadas como resolvidas.
-  Screenshots inspecionados em `/tmp/events-layer-before-npc.png` e
-  `/tmp/events-layer-rom-dialogue.png`, script `/tmp/playwright-test-events.js`.
-- **Recorte aprovado, não paridade:** ACMD/câmera/olhar opacos aguardam Enter com
-  retorno de stub visível; SEPlay silencioso é diagnosticado. Init de zona 6 para
-  em BuildMdlGetHandleByGPos; bancos GameText/MsgLoad, warp AMX/_MapChangeCore,
-  expansão da memória, save/party/bag, gatilhos e callbacks de mapa continuam
-  pendentes em P-013/P-017. Warps de navegação existentes chamam o init do destino.
-  [ADR-004](features/core-jogo/adrs/ADR-004-host-conservador-de-eventos.md) registra
-  política, evidência e próximos passos. Não houve conversão/cópia de assets.
+- Continuação sobre `main 6ae4d58`, com rebase no worktree dedicado; o checkout
+  principal não teve sua branch nem fontes alteradas por esta tarefa.
+- ABI evidenciada no CRO: `BuildMdlGetHandleByGPos` é empacotamento signed-32,
+  não query de cena. MsgLoad usa namespace/seletor e dois slots; `_MapChangeCore`
+  usa zona/x/altura/z/direção/quatro flags, não warpId.
+- Init opaco permanece suspenso e diagnosticado no console, sem `activeDialogue`
+  e sem bloquear setas. Consultas sem retorno validado não aceitam completion.
+  NPC pode executar com init opaco guardado; flags da interação são preservadas
+  ao restaurá-lo. Stubs cosméticos aprovados ainda exigem Enter explícito.
+- Spawn/borda preservam player autoritativo; NPCs continuam sendo projetados.
+  `romOrigin` não é `worldOrigin`. O portal 7→24 é warp e borda inferida ao mesmo
+  tempo: o motivo de entrada usa a ligação do passo, não a ausência de warp.
+- **195 testes Vitest em 35 arquivos, seis testes Python sintéticos de ABI/memória
+  e build passando**. Vite mantém o aviso herdado de chunks >500 kB.
+- StoryText auxiliar usa fetch lazy/cache. Foram gerados 23 bancos e quatro imagens
+  AMX adicionais (7/24 entities/map) somente em `public/assets/` local ignorado,
+  com `git check-ignore -v` confirmado antes da escrita. São **23 imagens locais**
+  disponíveis: 19 legadas + quatro privadas; novos manifestos só contêm metadados.
+- Playwright visível em 5178, código do worktree e assets do `public/` principal:
+  NPC 0/script 14 de Littleroot exibiu texto ROM após cinco confirmações cosméticas,
+  enquanto o init estava suspenso. A chegada 7→24 manteve `(79,20)/right`; a seta
+  seguinte caminhou a `(78,20)/left`, sem textbox de diagnóstico.
+- O teste de warp usa **fixture AMX sintética** nas respostas de rede do Playwright:
+  nove células chamaram `_MapChangeCore` e o engine real mudou para zona 225,
+  `(7,18)/up`, renderizando o interior. Não se declara um ramo completo da ROM
+  exercitado. Zero `pageerror` nos smokes finais; não se afirma resolver todo 404.
+- Screenshots inspecionados: `/tmp/events-abi-rom-dialogue.png`,
+  `/tmp/events-abi-scripted-warp.png`, `/tmp/events-abi-boundary-walking.png`.
+  Scripts temporários: `/tmp/playwright-test-events-abi.js` e
+  `/tmp/playwright-test-boundary-events.js`. O teste aguarda recursos lazy do
+  destino, pois o `networkidle` anterior não representa prontidão do init novo.
+- [ADR-005](features/core-jogo/adrs/ADR-005-abi-cro-e-init-nao-bloqueante.md),
+  [PRD-004](features/core-jogo/prds/PRD-004-abi-e-recursos-locais-de-eventos.md)
+  e A-034–A-038 registram evidência, geração e política atual. IDs a partir de
+  A-034 evitam A-030–A-033 já presentes na main durante a continuação.
+- **P-013/P-017 continuam abertas:** ACMD/câmera, altura/flags do warp, fluxo
+  auxiliar de mensagens no emulador, ramos naturais com matemática/queries de
+  ator ainda não suportadas, callbacks, persistência AMX/save/party/bag e paridade
+  da história. O init de Littleroot agora alcança `BuildMdlEventAnimeSetEnd`;
+  pausá-lo não equivale a reproduzir a animação.
 
-## Estado do Código e Build
+## Registro anterior do código e build
 
-- Branch atual: `main`.
+- Branch deste registro histórico: `main`; verificação atual na seção do host acima.
 - `npm test` (`vitest run`): **passando** (`18` arquivos, `138` testes na branch `audio-zones`; inclui `4` em [src/core/zoneAudio.test.ts](../src/core/zoneAudio.test.ts); contagem anterior: `6` em [src/core/wildPokemon.test.ts](../src/core/wildPokemon.test.ts), `15` em [src/core/battleGrowth.test.ts](../src/core/battleGrowth.test.ts), `16` em [src/core/battleProgression.test.ts](../src/core/battleProgression.test.ts), `22` em [src/core/battleMechanics.test.ts](../src/core/battleMechanics.test.ts), `13` em [src/core/battleData.test.ts](../src/core/battleData.test.ts), `4` em [src/engine/battleArena.test.ts](../src/engine/battleArena.test.ts), `4` em [src/engine/fixOrasMaterials.test.ts](../src/engine/fixOrasMaterials.test.ts), `7` em [src/core/gameState.test.ts](../src/core/gameState.test.ts), `5` em [src/core/bag.test.ts](../src/core/bag.test.ts), `6` em [src/core/battle.test.ts](../src/core/battle.test.ts), `3` em [src/core/save.test.ts](../src/core/save.test.ts), `1` em [src/core/room.test.ts](../src/core/room.test.ts) e `3` em [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts)).
 - `python3 -m unittest scripts/test_pipeline.py`: **passando** (`25` testes com fixtures sintéticas: zona → BGM em `extract_zone_audio.py` (BCSAR sintético, `A-023`), parsers de evolução/natureza (`battle_progression_parsers.py`), `decompress_lz11`, `parse_gr_grid`, `decode_gen6_text` (incl. glifos ♀/♂, `A-012`), conversão de materiais PICA200 em `convert_gr_to_glb.py` (`P-007`) e `8` parsers de tabelas de batalha em `extract_battle_tables.py` (`A-010`)).
 - `npm run build` (`tsc && vite build`): **passando** (bundle inicial `index-*.js` `3.22 kB`; `game-*.js` `741 kB`; tabelas de batalha em chunks sob demanda, [ADR-004](features/pipeline-rom/adrs/ADR-004-tabelas-de-batalha-sob-demanda.md), `P-015` fechada) (`dist/index.html` e bundle JS gerados sem erros de TypeScript).

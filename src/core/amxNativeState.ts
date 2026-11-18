@@ -15,6 +15,7 @@ function addItem(world: AmxWorld, [id, count]: readonly number[], mutate: boolea
 }
 export const stateNatives: Readonly<Record<string, AmxNativeDefinition>> = {
   CommandNOP: { arity: 0, execute: () => 0 },
+  BuildMdlGetHandleByGPos: { arity: 2, execute: (_w, [x, z]) => ((x << 16) + z) | 0 },
   FlagGet: { arity: 1, execute: (w, [id]) => Number(w.flags[id] ?? false) },
   FlagSet: { arity: 1, execute: (w, [id]) => { w.flags[id] = true; return 0; } },
   FlagReset: { arity: 1, execute: (w, [id]) => { w.flags[id] = false; return 0; } },

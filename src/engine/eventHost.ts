@@ -1,10 +1,12 @@
 import type { AmxState, AmxWorld } from '../core/amxTypes';
-import type { MapDefinition, MapNpc, PlayerState } from '../core/types';
+import type { Direction, GameState, MapDefinition, MapNpc, PlayerState } from '../core/types';
+import { stepBoundary } from '../core/boundaries';
 import { romFacing } from '../data/maps_v2/adapter';
+import { decodeEventWarp, type EventWarp } from './eventWarp';
 
 export type EventRequest = { kind: 'text'; text: string } | { kind: 'key' } |
   { kind: 'frames'; count: number } | { kind: 'complete'; value: number } |
-  { kind: 'silent-audio'; soundId: number } |
+  { kind: 'silent-audio'; soundId: number } | { kind: 'warp'; target: EventWarp } |
   { kind: 'opaque'; name: string };
 
 export function classifyEventRequest(state: AmxState, lines: readonly string[]): EventRequest {
@@ -19,6 +21,7 @@ export function classifyEventRequest(state: AmxState, lines: readonly string[]):
   }
   if (name === 'LastKeyWait' || name === '_ABKeyWait') return { kind: 'key' };
   if (name === 'SEPlay') return { kind: 'silent-audio', soundId: args[0] };
+  if (name === '_MapChangeCore') return { kind: 'warp', target: decodeEventWarp(args) };
   if (name === '_FieldMapBlockIsLoading' || name === 'MdlIsHalfSitSkelPreset' || name === 'MdlCanUseTurnAcmd') {
     return { kind: 'complete', value: 0 };
   }
@@ -33,10 +36,24 @@ export function npcActorId(npc: MapNpc): number {
 }
 
 export function projectEventActors(map: MapDefinition, world: AmxWorld): MapDefinition {
+  const origin = map.romOrigin ?? { x: 0, z: 0 };
   return { ...map, npcs: map.npcs?.map(npc => {
     const actor = world.actors[npcActorId(npc)];
-    return actor ? { ...npc, pos: { x: actor.x, z: actor.z }, facing: romFacing(actor.direction), visible: actor.visible } : npc;
+    return actor ? { ...npc, pos: { x: actor.x - origin.x, z: actor.z - origin.z },
+      facing: romFacing(actor.direction), visible: actor.visible } : npc;
   }) };
+}
+
+export function mapEntryReason(state: GameState, map: MapDefinition, direction: Direction, destination: string): 'boundary' | 'warp' {
+  return stepBoundary(state.player.pos, direction, map)?.targetMapId === destination ? 'boundary' : 'warp';
+}
+
+export function projectEventPlayer(state: GameState, map: MapDefinition, world: AmxWorld, applyPlayer: boolean): GameState {
+  const player = world.actors[255];
+  if (!applyPlayer || !player) return state;
+  const origin = map.romOrigin ?? { x: 0, z: 0 };
+  return { ...state, player: { ...state.player, pos: { x: player.x - origin.x, z: player.z - origin.z },
+    facing: romFacing(player.direction) ?? state.player.facing } };
 }
 
 export function facingNpc(player: PlayerState, map: MapDefinition): MapNpc | undefined {
