@@ -1,11 +1,13 @@
 import { createAmxWorld } from '../core/amxMemory';
 import { createAmxState, resumeAmx, runAmx } from '../core/amxRunner';
-import type { AmxInput, AmxState, AmxWorld } from '../core/amxTypes';
+import { readAmxSceneChanges, selectAmxSceneChange } from '../core/amxSceneChanges';
+import type { AmxEffect, AmxInput, AmxState, AmxWorld } from '../core/amxTypes';
 import type { GameState, MapDefinition, MapNpc } from '../core/types';
 import { loadZoneEventPrograms, npcEventProgram, zoneInitProgram, type ZoneEventPrograms } from '../data/zone_scripts/loader';
 import { classifyEventRequest, npcActorId, projectEventActors } from './eventHost';
 import { EventMessageBanks } from './eventMessages';
 import type { EventWarp } from './eventWarp';
+import type { EventActorContext } from './eventTurns';
 
 interface TextSource { zone: number; lines: string[] }
 const texts = import.meta.glob<TextSource>('../data/texts/zones/*.json', { import: 'default' });
@@ -26,6 +28,8 @@ interface EventPorts {
   warp(target: EventWarp, active: () => boolean): Promise<void>;
   report(message: string): void;
   silentAudio(soundId: number): void;
+  presentation?: { reset(): void; directions?(): Readonly<Record<number, number>>;
+    request(effect: AmxEffect, map: MapDefinition, active: () => boolean, context?: EventActorContext): Promise<number | undefined> };
 }
 
 export class ZoneEvents {
@@ -36,11 +40,14 @@ export class ZoneEvents {
   private waitingKey = false;
   private presentationPaused = false;
   private projectPlayer = false;
+  private eventActorId = 0;
   private initializing = false;
-  private pausedInit: { state: AmxState; player: boolean; name: string } | null = null;
+  private pausedInit: { state: AmxState; player: boolean; actorId: number; name: string } | null = null;
   private completionValue: number | null = 0;
   private executing = false;
   private pendingEntry = false;
+  private scenePending = false;
+  private restoredState = false;
   private generation = 0;
   private activeMap = '';
   private readonly initialMaps = new Map<string, MapDefinition>();
@@ -58,6 +65,7 @@ export class ZoneEvents {
 
   reset(): void {
     this.generation += 1;
+    this.ports.presentation?.reset();
     this.world = createAmxWorld();
     this.current = null;
     this.loaded = null;
@@ -66,6 +74,8 @@ export class ZoneEvents {
     this.messages = new EventMessageBanks([]);
     this.executing = false;
     this.pendingEntry = false;
+    this.scenePending = false;
+    this.restoredState = false;
     this.waitingKey = false;
     this.presentationPaused = false;
     this.completionValue = 0;
@@ -77,6 +87,7 @@ export class ZoneEvents {
     const map = this.initialMaps.get(currentMap.id) ?? currentMap;
     if (map.id === this.activeMap || map.zoneId === undefined || !map.npcs) return;
     this.projectPlayer = reason === 'warp';
+    this.scenePending = reason !== 'boundary';
     this.initialMaps.set(map.id, map);
     this.activeMap = map.id;
     this.current = null;
@@ -89,12 +100,16 @@ export class ZoneEvents {
     this.completionValue = 0;
     this.executing = true;
     const generation = ++this.generation;
+    this.ports.presentation?.reset();
     try {
       const assets = await this.loadAssets(map.zoneId);
       if (generation !== this.generation) return;
       this.loaded = assets.programs;
       this.messages = new EventMessageBanks(assets.lines);
-      this.world = { ...this.world, zoneId: map.zoneId, actors: {}, sex: this.ports.state().player.gender === 'female' ? 1 : 0 };
+      const persisted = this.restoredState ? undefined : this.ports.state().romEvents;
+      this.world = { ...this.world, zoneId: map.zoneId, actors: {}, sex: this.ports.state().player.gender === 'female' ? 1 : 0,
+        flags: { ...(persisted?.flags ?? this.world.flags) }, vars: { ...(persisted?.vars ?? this.world.vars) } };
+      this.restoredState = true;
       for (const npc of map.npcs) this.world.actors[npcActorId(npc)] = {
         x: npc.pos.x + (map.romOrigin?.x ?? 0), y: 0, z: npc.pos.z + (map.romOrigin?.z ?? 0),
         direction: directionCell(npc.facing), visible: true, moveCode: 0,
@@ -103,6 +118,7 @@ export class ZoneEvents {
       this.ports.project(projectEventActors(map, this.world), this.world, this.projectPlayer);
       const id = this.loaded && zoneInitProgram(this.loaded);
       if (id) { this.initializing = true; await this.start(id, 1); }
+      else await this.startNaturalScene();
     } catch (error) {
       if (generation === this.generation) { this.activeMap = ''; this.fail(error); }
     } finally { if (generation === this.generation) this.executing = false; }
@@ -115,14 +131,14 @@ export class ZoneEvents {
     if (this.current) {
       const name = this.pendingEffect;
       if (!this.initializing || !name) return false;
-      this.pausedInit = { state: this.current, player: this.projectPlayer, name };
+      this.pausedInit = { state: this.current, player: this.projectPlayer, actorId: this.eventActorId, name };
       this.current = null;
       this.presentationPaused = false;
     }
     this.initializing = false;
     this.projectPlayer = true;
     this.refreshPlayer();
-    await this.start(id, npc.script);
+    await this.start(id, npc.script, npcActorId(npc));
     return true;
   }
 
@@ -143,10 +159,22 @@ export class ZoneEvents {
       direction: directionCell(player.facing), visible: true, moveCode: 0 };
   }
 
-  private async start(id: string, scriptId: number): Promise<void> {
+  private async start(id: string, scriptId: number, actorId = 0): Promise<void> {
     if (!this.loaded) return;
+    this.eventActorId = actorId;
     this.current = createAmxState(this.loaded.bundle, id, scriptId, { ...this.world, effects: [], dialogue: null });
     await this.drive();
+  }
+
+  private syncDirections(): void {
+    const directions = this.ports.presentation?.directions?.();
+    if (!this.current || !directions || !Object.keys(directions).length) return;
+    const actors = { ...this.current.world.actors };
+    for (const [id, direction] of Object.entries(directions)) {
+      const actor = actors[Number(id)];
+      if (actor) actors[Number(id)] = { ...actor, direction };
+    }
+    this.current = { ...this.current, world: { ...this.current.world, actors } };
   }
 
   private async drive(input?: AmxInput): Promise<void> {
@@ -157,6 +185,7 @@ export class ZoneEvents {
       if (input) this.current = resumeAmx(this.current, input);
       for (let requests = 0; this.current && generation === this.generation; requests += 1) {
         if (requests >= 1000) throw new Error('Evento excede 1000 solicitações do host');
+        this.syncDirections();
         this.current = runAmx(this.loaded.bundle, this.current);
         this.world = this.current.world;
         if (!this.pendingEntry) this.ports.project(projectEventActors(this.ports.map(), this.world), this.world, this.projectPlayer);
@@ -172,7 +201,24 @@ export class ZoneEvents {
       this.pendingEntry = false;
       this.activeMap = '';
       await this.enter('warp');
-    } else if (generation === this.generation && !this.current) this.restoreInit();
+    } else if (generation === this.generation && !this.current) {
+      if (this.pausedInit) this.restoreInit();
+      else if (this.scenePending) await this.startNaturalScene();
+    }
+  }
+
+  private async startNaturalScene(): Promise<void> {
+    this.scenePending = false;
+    if (!this.loaded) return;
+    const id = `zone:${String(this.loaded.zoneId).padStart(4, '0')}:map`;
+    if (this.loaded.bundle[id]?.publics?.['1676684628'] === undefined) return;
+    const scriptId = selectAmxSceneChange(readAmxSceneChanges(this.loaded.bundle, id, this.world), this.world.vars);
+    if (scriptId === null) return;
+    this.initializing = true;
+    this.projectPlayer = true;
+    this.ports.report(`Cena AMX natural: zona ${this.loaded.zoneId}, script ${scriptId}`);
+    this.refreshPlayer();
+    await this.start(id, scriptId);
   }
 
   private restoreInit(): void {
@@ -180,6 +226,7 @@ export class ZoneEvents {
     if (!paused) return;
     this.current = { ...paused.state, world: this.world };
     this.projectPlayer = paused.player;
+    this.eventActorId = paused.actorId;
     this.initializing = true;
     this.pausedInit = null;
     this.deferPresentation(this.current, paused.name);
@@ -191,6 +238,10 @@ export class ZoneEvents {
     const value = effect && await this.messages.request(effect);
     if (generation !== this.generation) return null;
     if (value !== undefined) return { kind: 'native-result', value };
+    const presented = effect && await this.ports.presentation?.request(effect, this.ports.map(), () => generation === this.generation,
+      { actorId: this.eventActorId, actors: state.world.actors });
+    if (generation !== this.generation) return null;
+    if (presented !== undefined) return { kind: 'native-result', value: presented };
     const request = classifyEventRequest(state, this.messages.linesFor(effect));
     if (request.kind === 'warp') return this.changeMap(state, request.target);
     if (request.kind === 'opaque') return this.deferPresentation(state, request.name);
@@ -226,7 +277,8 @@ export class ZoneEvents {
     const approved = pending?.kind === 'native' && (['movement', 'camera'].includes(pending.effect.channel) || cosmeticActor);
     this.completionValue = approved ? (name === 'MdlAcmdUpdate' ? 1 : 0) : null;
     this.presentationPaused = true;
-    this.ports.report(`Apresentação pendente: ${name}; script suspenso sem bloquear movimento. ${approved
+    const args = pending?.kind === 'native' ? `(${pending.effect.args.join(',')})` : '';
+    this.ports.report(`Apresentação pendente: ${name}${args}; script suspenso sem bloquear movimento. ${approved
       ? `Enter fornece retorno ${this.completionValue} sem reproduzir o efeito` : 'Retorno sem ABI validada; confirmação indisponível'} (P-013).`);
     return null;
   }

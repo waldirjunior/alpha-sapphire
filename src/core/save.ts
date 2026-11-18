@@ -43,6 +43,17 @@ function isValidBattleMove(value: unknown): boolean {
   );
 }
 
+function isRomCellRecord(value: unknown, validCell: (cell: unknown) => boolean): boolean {
+  return isObjectRecord(value) && !Array.isArray(value) && Object.entries(value).every(([key, cell]) =>
+    /^(0|[1-9]\d*)$/.test(key) && Number(key) <= 0xffff && validCell(cell));
+}
+
+function isValidRomEvents(value: unknown): boolean {
+  return isObjectRecord(value) &&
+    isRomCellRecord(value.flags, cell => typeof cell === 'boolean') &&
+    isRomCellRecord(value.vars, cell => typeof cell === 'number' && Number.isInteger(cell) && cell >= 0 && cell <= 0xffff);
+}
+
 function isValidGameState(value: unknown): value is GameState {
   if (!isObjectRecord(value)) return false;
   if (!isObjectRecord(value.player)) return false;
@@ -51,7 +62,8 @@ function isValidGameState(value: unknown): value is GameState {
     isObjectRecord(value.player.pos) &&
     typeof value.player.pos.x === 'number' &&
     typeof value.player.pos.z === 'number' &&
-    isObjectRecord(value.storyFlags)
+    isObjectRecord(value.storyFlags) &&
+    (!('romEvents' in value) || isValidRomEvents(value.romEvents))
   );
 }
 

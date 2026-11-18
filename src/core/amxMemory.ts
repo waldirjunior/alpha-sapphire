@@ -34,12 +34,13 @@ export function writeByte(machine: AmxMachine, address: number, value: number): 
   const base = address & ~3;
   writeCell(machine, base, (readCell(machine, base) & ~(255 << shift)) | ((value & 255) << shift));
 }
-export function createAmxMachine(id: string, image: AmxImage, scriptId: number): AmxMachine {
+export function createAmxMachine(id: string, image: AmxImage, scriptId: number, args: readonly number[] = [], entryPoint = image.program.entryPoint): AmxMachine {
   const memory = Object.fromEntries(image.data.map((value, index) => [index * 4, value | 0]));
-  const machine: AmxMachine = { programId: id, pc: image.program.entryPoint, pri: 0, alt: 0, frm: 0,
+  const machine: AmxMachine = { programId: id, pc: entryPoint, pri: 0, alt: 0, frm: 0,
     stk: image.stackTop, stp: image.stackTop, hea: image.data.length * 4, memory, childParams: {}, parentParams: {} };
   if (image.program.dispatch) writeCell(machine, image.program.dispatch.selectorAddress, scriptId);
-  pushCell(machine, 0);
+  for (const arg of [...args].reverse()) pushCell(machine, arg);
+  pushCell(machine, args.length * 4);
   pushCell(machine, -1);
   return machine;
 }

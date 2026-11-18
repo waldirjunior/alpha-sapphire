@@ -15,12 +15,14 @@ function addItem(world: AmxWorld, [id, count]: readonly number[], mutate: boolea
 }
 export const stateNatives: Readonly<Record<string, AmxNativeDefinition>> = {
   CommandNOP: { arity: 0, execute: () => 0 },
+  float: { arity: 1, execute: (_w, [value]) => cellFromFloat(value) },
+  floatadd: { arity: 2, execute: (_w, [left, right]) => cellFromFloat(floatFromCell(left) + floatFromCell(right)) },
   BuildMdlGetHandleByGPos: { arity: 2, execute: (_w, [x, z]) => ((x << 16) + z) | 0 },
   FlagGet: { arity: 1, execute: (w, [id]) => Number(w.flags[id] ?? false) },
   FlagSet: { arity: 1, execute: (w, [id]) => { w.flags[id] = true; return 0; } },
   FlagReset: { arity: 1, execute: (w, [id]) => { w.flags[id] = false; return 0; } },
-  WorkGet: { arity: 1, execute: (w, [id]) => w.vars[id] ?? 0 },
-  WorkSet: { arity: 2, execute: (w, [id, value]) => { w.vars[id] = value; return 0; } },
+  WorkGet: { arity: 1, execute: (w, [id]) => (w.vars[id & 0xffff] ?? 0) & 0xffff },
+  WorkSet: { arity: 2, execute: (w, [id, value]) => { w.vars[id & 0xffff] = value & 0xffff; return 0; } },
   GlobalSetChildParam: { arity: 2, execute: (_w, [id, value], m) => { m.childParams[id] = value; return 0; } },
   GlobalGetChildParam: { arity: 1, execute: (_w, [id], m) => m.childParams[id] ?? 0 },
   GlobalSetParentParam: { arity: 2, execute: (_w, [id, value], m) => { m.parentParams[id] = value; return 0; } },

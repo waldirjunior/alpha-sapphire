@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createAmxState, resumeAmx, runAmx } from './amxRunner';
-import { createAmxWorld } from './amxMemory';
+import { cellFromFloat, createAmxWorld, floatFromCell } from './amxMemory';
 import type { AmxBundle, AmxInstruction, AmxWorld } from './amxTypes';
 
 function syntheticBundle(calls: readonly { name: string; args: number[] }[], suffix: AmxInstruction[] = []): AmxBundle {
@@ -20,6 +20,18 @@ function syntheticBundle(calls: readonly { name: string; args: number[] }[], suf
 const execute = (bundle: AmxBundle, world: AmxWorld) => runAmx(bundle, createAmxState(bundle, 'synthetic', 0, world));
 
 describe('nativas de estado Pawn', () => {
+  it.each([[0, 0], [-5, -5], [16777217, 16777216], [2147483647, 2147483648]])('converte inteiro signed %s em float32 %s pela ABI VCVT', (value, expected) => {
+    const result = execute(syntheticBundle([{ name: 'float', args: [value] }]), createAmxWorld());
+    expect(result.status).toBe('completed');
+    expect(floatFromCell(result.machines[0].pri)).toBe(expected);
+    expect(result.world.effects).toEqual([]);
+  });
+  it.each([[1.5, 2.25, 3.75], [16777216, 1, 16777216], [-4, 1.5, -2.5]])('soma células float32 %s + %s = %s pela ABI VADD', (left, right, expected) => {
+    const result = execute(syntheticBundle([{ name: 'floatadd', args: [cellFromFloat(left), cellFromFloat(right)] }]), createAmxWorld());
+    expect(result.status).toBe('completed');
+    expect(floatFromCell(result.machines[0].pri)).toBe(expected);
+    expect(result.world.effects).toEqual([]);
+  });
   it.each([[104, 179, 6815923], [-1, 2, -65534], [65536, -1, -1]])('empacota construção (%s,%s) sem consultar ator', (x, z, handle) => {
     const world = createAmxWorld();
     const result = execute(syntheticBundle([{ name: 'BuildMdlGetHandleByGPos', args: [x, z] }]), world);
@@ -27,6 +39,14 @@ describe('nativas de estado Pawn', () => {
     expect(result.machines[0].pri).toBe(handle);
     expect(result.world.actors).toEqual({});
     expect(result.world.effects).toEqual([]);
+  });
+  it('normaliza índice e valor de work para unsigned-16 como os wrappers CRO', () => {
+    const world = createAmxWorld();
+    const result = execute(syntheticBundle([{ name: 'WorkSet', args: [0x14000, -1] },
+      { name: 'WorkGet', args: [0x14000] }]), world);
+    expect(result.machines[0].pri).toBe(65535);
+    expect(result.world.vars).toEqual({ 16384: 65535 });
+    expect(world.vars).toEqual({});
   });
   it('persiste flags/vars, entrega item/Pokémon por handle, cura e registra warp sem mutar a origem', () => {
     const world = createAmxWorld();

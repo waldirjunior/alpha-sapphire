@@ -1,6 +1,48 @@
 # Status
 
-Atualizado em 2026-11-17 (host verificado no worktree; registros de VPS abaixo são históricos).
+Atualizado em 2026-11-18 (host verificado no worktree; seções anteriores são históricas).
+
+## Warp natural e apresentação AMX (2026-11-18, `events-layer`)
+
+- **264 testes Vitest em 43 arquivos, oito testes Python de ABI/memória e
+  `npm test && npm run build` passando.** Permanece o aviso herdado de chunks
+  maiores que 500 kB; nenhuma dependência nova.
+- Init real da zona 6 e export `GetSceneChangeData` selecionam o script 2 com
+  works preparados `16514=1` e `16496=3`. O script chama o global 9881 e executa
+  `_MapChangeCore(227,14,2,12,0,0,0,1,0)`; a ROM altera `16496` para 4.
+  Isso comprova o ramo com save preparado, **não uma campanha desde New Game**.
+- Playwright visível em 5178 repetiu **6 → 227**, preservando a entrada normal
+  `(19,0)` e mostrando o laboratório em `(14,12)` após o fade. Não houve
+  substituição de programa, memória ou binding, warp manual nem Enter de
+  completion nesse ramo. Zero `pageerror`, requests falhadas ou HTTP de erro.
+- Câmera/fade/espera por terreno usam serviços de apresentação e geração da zona;
+  follow não sobrescreve câmera ativa. Queries não recebem sucesso constante.
+  Eye/target/FOV e giros usam ticks do renderer, sem paridade de FPS/quaternion.
+- ACMD de giro: opcodes 5/6/7/250/251, durações 12/8/4/8/12, repetição byte e
+  parâmetro 9 evidenciados no CRO. `Init(-1)` usa o ator do evento;
+  `Update(-1)` consulta todas as filas. Direção concluída volta imutavelmente à VM.
+  Fila com opcode não suportado permanece opaca, sem executar um prefixo parcial.
+- Outro Playwright, com posição de interação preparada `(24,20)`, executou o
+  script 14/NPC 0 e mostrou texto ROM com **zero confirmações ACMD** e uma
+  confirmação explícita de `TalkMdlSetEyeToEye`, ainda opaco. Não valida progresso
+  de história. O loader GameText foi exercitado separadamente: seletor 1 →
+  arquivo 23 → 2.848 strings, corrigindo o envelope `{file, lines}`; isso não
+  equivale a executar um ramo ROM de GameText. Ambos os probes não tiveram
+  `pageerror` nem falhas de requisição no trecho exercitado.
+- Evidências locais inspecionadas: `/tmp/events-natural-before.png`,
+  `/tmp/events-natural-camera.png`, `/tmp/events-natural-lab.png` e
+  `/tmp/events-real-turn-dialogue.png`. Testes temporários:
+  `/tmp/playwright-test-natural-warp.js` e `/tmp/playwright-test-events-turn.js`.
+  O teste de warp aguarda opacidade 1 no canvas e no app, além do estado/rede.
+- Metadados locais de 6/227 passam a preservar os exports AMX reais; imagens,
+  novos bancos StoryText e binários continuam em assets ignorados, não no Git.
+- [ADR-006](features/core-jogo/adrs/ADR-006-dispatch-natural-de-cenas.md),
+  [PRD-005](features/core-jogo/prds/PRD-005-warp-natural-da-rom.md) e A-040–A-046
+  registram evidência e limites. **P-013 permanece aberta:** deslocamentos ACMD
+  como 19, clipes GF1 de giro, objetos/eye-to-eye, callbacks, ABI de coordenadas
+  de ator, cobertura de bancos/words, save/party/bag, altura/flags de warp e
+  paridade com emulador. Craft Anything indisponível neste ambiente; a evidência
+  ABI veio de análise estática local dos CROs e `code.bin`.
 
 ## Host de eventos AMX (2026-11-17, worktree `events-layer`)
 

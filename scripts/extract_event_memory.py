@@ -12,19 +12,26 @@ def asset_manifest(images):
                        for key, image in sorted(images.items())}}
 
 
+def local_memory_image(program, expected_sha256):
+    image = memory_image(program, expected_sha256)
+    image['publics'] = {str(entry['identifier']): entry['address']
+                        for entry in program['tables']['publics']}
+    return image
+
+
 def selected_images(root, zones, globals_selected, programs):
     images = {}
     for zone in sorted(set(zones)):
         parsed = parse_zone_scripts((root / f'garc/a_0_1_3/{zone:04}.bin').read_bytes())
         decoded = json.loads((programs / f'{zone:04}.json').read_text())['programs']
         for name, program in parsed.items():
-            images[f'zone:{zone:04}:{name}'] = memory_image(program, decoded[name]['sha256'])
+            images[f'zone:{zone:04}:{name}'] = local_memory_image(program, decoded[name]['sha256'])
     if globals_selected:
         parsed = parse_global_scripts((root / 'RomFS/a/0/2/9').read_bytes())
         for index in sorted(set(globals_selected)):
             key = f'global:{index:04}'
             decoded = json.loads((programs / f'global_{index:04}.json').read_text())
-            images[key] = memory_image(parsed[key], decoded['sha256'])
+            images[key] = local_memory_image(parsed[key], decoded['sha256'])
     return images
 
 

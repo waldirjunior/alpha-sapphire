@@ -2,10 +2,19 @@ import { describe, expect, it, vi } from 'vitest';
 import { EventMessageBanks } from './eventMessages';
 import type { AmxEffect } from '../core/amxTypes';
 
+vi.mock('../data/texts/gametext/0023.json', () => ({ default: { file: '0023', lines: ['Auxiliar sintético'] } }));
+
 const effect = (name: string, args: number[] = []): AmxEffect => ({ name, args, channel: 'ui' });
 const talk = (custom: number) => effect('TalkMdlMsg_Seq', [0, ...Array<number>(16).fill(0), custom, 0]);
 
 describe('ABI de bancos MsgLoad', () => {
+  it('carrega lines do envelope GameText pelo loader real, não o envelope como array', async () => {
+    const banks = new EventMessageBanks(['Zona sintética']);
+    await banks.request(effect('MsgLoad', [0, 1]));
+    expect(banks.linesFor(talk(1))).toEqual(['Auxiliar sintético']);
+    expect(banks.linesFor(talk(0))).toEqual(['Zona sintética']);
+    expect(await banks.request(effect('MsgIsLoaded', [1]))).toBe(1);
+  });
   it('resolve seletor pelo CRO e escolhe StoryText/GameText, sem confundir seletor com arquivo', async () => {
     const load = vi.fn(async () => ['Auxiliar']);
     const banks = new EventMessageBanks(['Zona'], load);

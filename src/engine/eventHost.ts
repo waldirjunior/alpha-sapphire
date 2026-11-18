@@ -22,7 +22,7 @@ export function classifyEventRequest(state: AmxState, lines: readonly string[]):
   if (name === 'LastKeyWait' || name === '_ABKeyWait') return { kind: 'key' };
   if (name === 'SEPlay') return { kind: 'silent-audio', soundId: args[0] };
   if (name === '_MapChangeCore') return { kind: 'warp', target: decodeEventWarp(args) };
-  if (name === '_FieldMapBlockIsLoading' || name === 'MdlIsHalfSitSkelPreset' || name === 'MdlCanUseTurnAcmd') {
+  if (name === 'MdlIsHalfSitSkelPreset' || name === 'MdlCanUseTurnAcmd') {
     return { kind: 'complete', value: 0 };
   }
   if (name === '_TalkMdlStartInit' || name === '_TalkMdlEndInit' || name === 'SetKeyWaitMark' || name === 'VanishKeyWaitMark') {
