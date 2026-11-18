@@ -16,3 +16,4 @@ RomFS/
 *.bin
 node_modules
 public/assets/
+__pycache__/
