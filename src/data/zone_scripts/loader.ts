@@ -1,4 +1,6 @@
 import type { AmxBundle, AmxImage, AmxProgram } from '../../core/amxTypes';
+import { createLocalAmxMemoryLoader, type MemoryImage } from './localMemory';
+import localMemory from './local-memory.json';
 
 interface ProgramSource extends AmxProgram { sha256: string }
 interface Binding {
@@ -6,8 +8,8 @@ interface Binding {
   matches: { program: string }[];
 }
 interface ZoneScripts { programs: Record<string, ProgramSource>; bindings: Binding[] }
-interface MemoryImage { sha256: string; data: number[]; stackTop: number }
 interface MemorySource { images: Record<string, MemoryImage> }
+const loadLocalMemory = createLocalAmxMemoryLoader();
 export interface ZoneEventPrograms { bundle: AmxBundle; zone: ZoneScripts; zoneId: number }
 
 const zones = import.meta.glob<ZoneScripts>('./[0-9][0-9][0-9][0-9].json', { import: 'default' });
@@ -29,12 +31,15 @@ async function loadPrograms(zoneId: number): Promise<ZoneEventPrograms | null> {
     throw error;
   });
   const [zone, memory] = await Promise.all([load(), memoryPromise]);
+  const images: Record<string, MemoryImage> = { ...memory.images };
+  await Promise.all(Object.entries(localMemory.images).filter(([id]) => id.startsWith(`zone:${key}:`) || id.startsWith('global:'))
+    .map(async ([id, entry]) => { images[id] = await loadLocalMemory(entry.file, entry.sha256); }));
   const bundle: Record<string, AmxImage> = {};
   for (const [name, program] of Object.entries(zone.programs)) {
     const id = `zone:${key}:${name}`;
-    if (memory.images[id]) bundle[id] = checkedImage(program, memory.images[id]);
+    if (images[id]) bundle[id] = checkedImage(program, images[id]);
   }
-  await Promise.all(Object.entries(memory.images).filter(([id]) => id.startsWith('global:')).map(async ([id, image]) => {
+  await Promise.all(Object.entries(images).filter(([id]) => id.startsWith('global:')).map(async ([id, image]) => {
     const program = await globals[`./global_${id.slice(7)}.json`]();
     bundle[id] = checkedImage(program, image);
   }));

@@ -37,7 +37,7 @@ import { bgmUrl, resolveMapBgm, type ZoneAudioEntry } from './core/zoneAudio';
 import { JINGLES, leveledUpDuring, resolveCurrentMusic } from './core/battleAudio';
 import { MAP_ZONE_IDS } from './data/audio/mapZones';
 import { createGameEvents } from './engine/gameEvents';
-import { facingNpc } from './engine/eventHost';
+import { facingNpc, mapEntryReason } from './engine/eventHost';
 
 const MAPS = zoneMaps.maps;
 const START_MAP_ID = startingMapId(window.location.search);
@@ -570,7 +570,7 @@ function syncUi(): void {
   }
 }
 
-const zoneEvents = createGameEvents(() => state, next => { state = next; }, MAPS, syncUi);
+const zoneEvents = createGameEvents(() => state, next => { state = next; }, MAPS, syncUi, app);
 
 renderIntro();
 syncUi();
@@ -592,7 +592,7 @@ window.addEventListener('keydown', async (event) => {
 
   if (event.code === 'Space' || event.code === 'Enter') {
     event.preventDefault();
-    if (zoneEvents.busy) { await zoneEvents.advance(); return; }
+    if (zoneEvents.busy || zoneEvents.interactionActive) { await zoneEvents.advance(); return; }
     const npc = !state.activeDialogue && facingNpc(state.player, MAPS[state.player.mapId]);
     if (npc) {
       if (!await zoneEvents.interact(npc)) {
@@ -601,6 +601,7 @@ window.addEventListener('keydown', async (event) => {
       }
       return;
     }
+    if (zoneEvents.canAdvance) { await zoneEvents.advance(); return; }
     const wasDialogueOpen = Boolean(state.activeDialogue);
     const prevSourceId = state.activeDialogue?.sourceId;
     const hadLabGift = Boolean(state.storyFlags.visited_birch_lab);
@@ -652,8 +653,9 @@ window.addEventListener('keydown', async (event) => {
   try {
     const next = await zoneMaps.move(state, dir);
     if (next.player.mapId !== previousMapId) {
+      const reason = mapEntryReason(state, MAPS[previousMapId], dir, next.player.mapId);
       await transitionMap(app, warp?.transitionEffect, () => { state = next; syncUi(); });
-      await zoneEvents.enter();
+      await zoneEvents.enter(reason);
     } else state = next;
   } catch (error) {
     console.error('Falha ao carregar zona; movimento não aplicado', error);

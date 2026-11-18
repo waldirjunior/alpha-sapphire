@@ -1,9 +1,12 @@
 import type { GameState, MapDefinition } from '../core/types';
-import { romFacing } from '../data/maps_v2/adapter';
+import { projectEventPlayer } from './eventHost';
 import { ZoneEvents } from './zoneEvents';
+import { zoneMaps } from '../data/maps_v2/runtime';
+import { eventWarpState } from './eventWarp';
+import { transitionMap } from './mapTransition';
 
 export function createGameEvents(getState: () => GameState, setState: (state: GameState) => void,
-  maps: Record<string, MapDefinition>, syncUi: () => void): ZoneEvents {
+  maps: Record<string, MapDefinition>, syncUi: () => void, surface: Parameters<typeof transitionMap>[0]): ZoneEvents {
   const dialogue = (text: string | null, sourceId = 'amx'): void => {
     setState({ ...getState(), activeDialogue: text === null ? undefined : { sourceId, text } });
     syncUi();
@@ -11,21 +14,22 @@ export function createGameEvents(getState: () => GameState, setState: (state: Ga
   return new ZoneEvents({
     state: getState,
     map: () => maps[getState().player.mapId],
-    project: (map, world) => {
+    project: (map, world, player) => {
       maps[map.id] = map;
-      const player = world.actors[255];
-      const state = getState();
-      if (player) setState({ ...state, player: { ...state.player, pos: { x: player.x, z: player.z },
-        facing: romFacing(player.direction) ?? state.player.facing } });
+      setState(projectEventPlayer(getState(), map, world, player));
       syncUi();
     },
     dialogue,
     frames: waitEventFrames,
-    silentAudio: soundId => console.warn(`SEPlay(${soundId}): efeito sonoro não extraído; host em modo silencioso (P-008)`),
-    report: message => {
-      console.warn('Evento AMX interrompido', message);
-      dialogue(`Evento indisponível: ${message}`, 'amx-pending');
+    warp: async (target, active) => {
+      const map = await zoneMaps.load(`zone_${String(target.zoneId).padStart(4, '0')}`);
+      if (!active()) return;
+      const next = eventWarpState(getState(), map, target);
+      console.warn(`_MapChangeCore: altura ${target.height}, flags ${target.flags.join(',')}; host usa solo e fade genérico (P-013)`);
+      await transitionMap(surface, 1, () => { if (active()) { setState(next); syncUi(); } });
     },
+    silentAudio: soundId => console.warn(`SEPlay(${soundId}): efeito sonoro não extraído; host em modo silencioso (P-008)`),
+    report: message => console.warn('Evento AMX pendente', message),
   });
 }
 

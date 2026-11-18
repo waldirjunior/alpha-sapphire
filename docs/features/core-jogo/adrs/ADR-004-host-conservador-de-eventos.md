@@ -4,6 +4,12 @@
 - **Data:** 2026-11-17
 - **Escopo:** Fase 2/P-013, continuação de PRD-003 e ADR-003
 
+> Registro da primeira entrega. A apresentação dos diagnósticos, política de
+> projeção do player, ABI e recursos locais foram atualizados por
+> [ADR-005](ADR-005-abi-cro-e-init-nao-bloqueante.md). Efeito opaco agora fica
+> suspenso no console/estado, sem textbox e sem bloquear movimento; os limites
+> e resultados abaixo descrevem a etapa histórica inicial.
+
 ## Contexto
 
 O runtime usa `maps_v2`, mas as interações antigas não consultavam `MapNpc.script`.

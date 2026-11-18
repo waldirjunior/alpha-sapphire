@@ -4,20 +4,40 @@ Continuação de [script-format.md](script-format.md), em 2026-11-17.
 Escopo inicial: Fase 1/P-013. A continuação abaixo inclui o primeiro runner
 puro da Fase 2, ainda sem integração ao comportamento ativo do jogo.
 
-## Host gráfico conservador — continuação de P-013
+## Host gráfico e ABI por CRO — continuação de P-013
 
-`zone_scripts/loader.ts` e `engine/zoneEvents.ts` agora ligam o disassembly ao
-runtime de NPCs/init, no recorte aprovado de
-[ADR-004](../core-jogo/adrs/ADR-004-host-conservador-de-eventos.md). Só imagens
-presentes em opening-memory e com SHA correspondente são executadas. Texto de
-Littleroot/script 14/linha 6 foi exibido via Playwright após cinco confirmações
-manuais de stubs cosméticos; não houve interpretação de ACMD ou paridade de ROM.
+`zone_scripts/loader.ts` e `engine/zoneEvents.ts` ligam os programas de NPCs/init
+ao engine. [ADR-005](../core-jogo/adrs/ADR-005-abi-cro-e-init-nao-bloqueante.md)
+atualiza a política inicial de ADR-004 e documenta offsets, SHA, instruções,
+tabelas por idioma e comandos reproduzíveis dos extratores.
 
-MsgLoad/seleção de GameText e a ordem dos nove argumentos de _MapChangeCore
-continuam sem contrato host validado. Não transformar WarpSetID de uma célula
-no par zona/warp do runner normalizado. O init de zona 6 encontrou
-BuildMdlGetHandleByGPos e foi interrompido com diagnóstico, sem inventar handle.
-Próxima expansão precisa de memória e ABI evidenciadas por zona/programa.
+- O wrapper de `BuildMdlGetHandleByGPos` calcula `(x << 16) + z`, não consulta
+  objetos. Init real de Littleroot avança até `BuildMdlEventAnimeSetEnd`.
+- `MsgLoad` seleciona GameText/StoryText pela primeira célula e arquivo pelo
+  switch de 25 seletores, não por índice direto. `TalkMdlMsg_Seq.args[17]`
+  seleciona o slot auxiliar; MsgSwap/Release preservam os dois slots.
+- `_MapChangeCore` recebe zona/x/altura/z/direção/quatro booleanos. Coordenadas
+  x/z são tiles, convertidos pelo jogo original com escala 18; altura não recebe
+  essa escala. O engine converte pela origem ROM e diagnostica altura/flags,
+  usando solo/fade genérico. `WarpSetID` continua separado desse contrato.
+- Efeito opaco fica suspenso em diagnóstico, sem textbox nem bloqueio das setas.
+  Query sem retorno validado não aceita Enter; stubs cosméticos aprovados ainda
+  exigem confirmação explícita. NPC pode executar com continuação do init guardada.
+- Spawn/borda preservam player autoritativo; só warp/interação autorizam projeção
+  do ator 255. `romOrigin` é distinto de `worldOrigin`; o portal 7→24 possui warp
+  e borda inferida, portanto a existência de warp não decide essa autorização.
+- Novos bancos e imagens são assets ignorados, carregados por fetch/cache com
+  validação e retry. `host-abi.json`/`local-memory.json` contêm só metadados.
+  Geração local verificada: 23 bancos auxiliares e quatro imagens de 7/24,
+  totalizando 23 imagens com as 19 legadas. Nenhum novo banco/célula da ROM vai
+  ao Git. Consulte os comandos/preflight de ignore em ADR-005.
+
+Verificação: 195 Vitest/35 arquivos, seis testes Python sintéticos de ABI/memória
+e build passando. Chromium exibiu texto do AMX real de Littleroot/script 14 e
+preservou chegada/caminhada 7→24. O warp 6→225 do smoke é **fixture AMX
+sintética** executada pela VM/engine reais, não um ramo completo da história.
+ACMD/câmera, ramos naturais interrompidos por nativas ausentes e mensagens
+auxiliares no emulador permanecem em P-013; não há alegação de paridade.
 
 ## VM Pawn e abertura real — continuação de P-013
 
@@ -104,6 +124,7 @@ nomes, empilhamento e fluxo, não validados contra o emulador. O mundo inicial
 | `PokePartyRecoverAll` | nenhuma | Restaura HP máximo e limpa status na projeção; não modela PP |
 | `ZukanGetOpenFlag`, `ZukanSetOpenFlag` | id / id,value | Consulta/grava booleano da Pokédex |
 | `WarpSetID` | **warpId** | Registra ID do próximo warp; não altera zona/posição automaticamente |
+| `BuildMdlGetHandleByGPos` | x,z | `(x << 16) + z` signed-32, evidenciado no CRO; não é query do renderer (ADR-005) |
 | `MsgWinCloseNo`, `MsgWinAllClose` | window / nenhuma | Limpa a projeção da janela de diálogo única; não emula múltiplas janelas 3DS |
 | `CheckWinAllSuspend` | nenhuma | Retorna 1: sob este protocolo, o host já concluiu o pedido de diálogo antes do retorno |
 | `_Suspend` | ticks | Agenda ticks consumidos no próximo `HALT 12` |
@@ -131,7 +152,7 @@ exigem retorno do host: por exemplo, não se presume que uma câmera terminou.
 | `fade` | `FadeIsEnd`, `FadeRequestOut`, `_FadeRequestIn`: fade e consulta de conclusão |
 | `audio` | `SEPlay`, `SEIsPlaying`, `MEPlay`, `MEIsFinished`, `MEReturnBGM`, `BGMChangeNowMap`, `VoicePlay`, `VoiceIsEnd`: áudio e consultas de reprodução |
 | `field` | `_FieldMapBlockIsLoading`, `_MapChangeCore`, `_FieldClose`, `BGParamPosChange`, `PlaceNameSetNotCloseFlag`, `ContactEncountStart`, `ContactEncountIsActive`, `ContactEncountEnd`: carregamento/transição/encontro do campo |
-| `actor` | `_TalkMdlStartInit`, `_TalkMdlEndInit`, `TalkMdlClearEye`, `TalkMdlClearEyeToEye`, `TalkMdlSetEye`, `TalkMdlSetEyeToEye`, `TalkMdlSetTalkMotion`, `MdlSetWaitAnimeReq`, `MdlAdd`, `MdlDel`, `_MdlProperties`, `MdlParamPosChange`, `BuildMdlEventAnimeInvStart`, `BuildMdlEventAnimeIsEnd`, `BuildMdlEventAnimeSetEnd`, `BuildMdlEventAnimeStart`, `BuildMdlEventAnimeStop`, `BuildMdlGetHandleByGPos`, `MdlInterestViewClear`, `MdlInterestViewSet`, `MdlInterestViewSetMode`, `ChangeFace`, `GetDirAddValueGridX`, `GetDirAddValueGridZ`, `CalcVecToDir`: ações/consultas de modelos, olhar, animação e direção |
+| `actor` | `_TalkMdlStartInit`, `_TalkMdlEndInit`, `TalkMdlClearEye`, `TalkMdlClearEyeToEye`, `TalkMdlSetEye`, `TalkMdlSetEyeToEye`, `TalkMdlSetTalkMotion`, `MdlSetWaitAnimeReq`, `MdlAdd`, `MdlDel`, `_MdlProperties`, `MdlParamPosChange`, `BuildMdlEventAnimeInvStart`, `BuildMdlEventAnimeIsEnd`, `BuildMdlEventAnimeSetEnd`, `BuildMdlEventAnimeStart`, `BuildMdlEventAnimeStop`, `MdlInterestViewClear`, `MdlInterestViewSet`, `MdlInterestViewSetMode`, `ChangeFace`, `GetDirAddValueGridX`, `GetDirAddValueGridZ`, `CalcVecToDir`: ações/consultas de modelos, olhar, animação e direção |
 | `words` | `_WordSetRegister`, `WordSetItemName`, `WordSetItemPocketName`, `WordSetItemWazaName`, `WordSetTemotiMonsNickName`: registro/formatação de palavras |
 | `pokemon` | `BoxIsFull`, `PokePartySetDefaultName`, `PokeMemorySet`, `_CallWildBattleWithoutField`, `RecordAdd`: consultas/metadados/batalha delegados, sem simular resultado |
 | `ui` | `SetKeyWaitMark`, `VanishKeyWaitMark`, `IsKeyTrigger`, `PlayerSetFieldMenu`, `MsgIsLoaded`, `MsgLoad`, `MsgRelease`, `MsgSwap`, `PocketGetID`, `ItemIsMegaStone`, `FieldMenuPopPage`, `FieldMenuPushPage`, `SpMotionDelete`, `SpMotionLoadIsEnd`, `SpMotionPlay`, `SpMotionReqLoad`, `SpMotionSetup`: UI, banco de mensagens e recursos da apresentação |

@@ -247,3 +247,43 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro reproduzido:** O ataque nativo alterou 45 ossos, mas partes dos corpos não apareciam. Parar todos os mixers manteve os buracos, descartando a animação como causa suficiente. Os materiais publicados eram `OPAQUE`; o renderer os convertia para `alphaTest=0,45` pela heurística sem `extras.pica`. O teste sintético recebeu 0,45 quando esperava 0 antes do fix.
 - **Regra:** Pokémon preservam os estados alpha carregados pelo GLTFLoader mesmo sem metadado PICA: OPAQUE permanece sem recorte, MASK mantém seu cutoff e BLEND desliga depthWrite. Não zerar alpha indiscriminadamente nem alterar a heurística dos mapas/personagens. Geometria invisível não comprova geometria ausente; isolar material e mixer antes de atribuir o defeito ao rig.
 - **Evidência:** [fixOrasMaterials.test.ts](../src/engine/fixOrasMaterials.test.ts), 186 Vitest/34 arquivos e build passaram. Comparações locais em `rom/native_runtime_validation/rest_probe/` no principal: bind-rest ainda incompleto e retirada diagnóstica do recorte recuperando os corpos. Cores/combiners/atlas dos olhos continuam em P-007/P-019; não há paridade visual declarada. Revalidação da correção integrada na main ainda pendente.
+
+## A-034 Handle de construção pode ser uma coordenada empacotada
+
+- **Data:** 2026-11-17.
+- **Contexto:** P-013, continuação de A-029 e core-jogo/ADR-005.
+- **Erro reproduzido:** Tratar `BuildMdlGetHandleByGPos` como query de cena fazia a VM pedir um efeito externo, interrompendo init de Littleroot.
+- **Regra:** Seguir relocations do registro nativo até o wrapper, não deduzir semântica pelo nome. Em `DllField.cro/0x50718`, LDRD/ADD/BX calculam `(x << 16) + z` em 32 bits. Overflow e valores negativos fazem parte da operação.
+- **Evidência:** Três regressões signed-32 falharam antes do fix; init real passou a alcançar `BuildMdlEventAnimeSetEnd`. Offsets/SHA e reprodução em [ADR-005](features/core-jogo/adrs/ADR-005-abi-cro-e-init-nao-bloqueante.md).
+
+## A-035 MsgLoad usa namespace e seletor, não índice GameText direto
+
+- **Data:** 2026-11-17.
+- **Contexto:** Bancos auxiliares de mensagem, P-013.
+- **Erro potencial:** Interpretar a segunda célula como arquivo ou mudar a aridade de MsgIsLoaded porque o wrapper ignora o argumento passado pela ROM.
+- **Regra:** Conferir tabelas por idioma e jump table: primeira célula não zero seleciona StoryText; zero seleciona GameText. A segunda escolhe um dos 25 seletores do manifesto; 17 é inválido. `TalkMdlMsg_Seq.args[17]` escolhe o slot auxiliar, não o texto da zona. Preservar swap/release e aridade observada nos scripts.
+- **Evidência:** Parser CRO com fixtures de imediato/literal; manifesto com SHA/offsets; três testes sintéticos de slots/bancos. Não equivale a um fluxo auxiliar completo validado no emulador.
+
+## A-036 Pausa da VM não pode se tornar diálogo nem substituir chegada do core
+
+- **Data:** 2026-11-17.
+- **Contexto:** Regressão de navegação 7→24; atualiza a apresentação de stubs descrita em A-029/ADR-004.
+- **Erro reproduzido:** Diagnóstico em `activeDialogue` bloqueava input; init projetava player em `(78,22)` quando o estado de chegada devia continuar autoritativo. Uma pausa opaca do init também impedia iniciar NPC.
+- **Regra:** Diagnosticar no console/estado pendente, sem textbox; query sem retorno validado não recebe completion. Preservar player de spawn/borda, projetando apenas NPCs; guardar init opaco durante interação e restaurá-lo com o mundo mais recente. Classificar borda pelo passo/destino, não pela ausência de warp: o portal 7→24 possui ambos. Separar `romOrigin` de `worldOrigin`.
+- **Evidência:** Regressões determinísticas de posição/direção, query sem retorno e init/NPC falharam antes do fix. Chromium preservou `(79,20)/right` e caminhou a `(78,20)/left`, com memória real adicional de 7/24, sem textbox de diagnóstico.
+
+## A-037 Novos bancos e memória extraídos são assets locais, não fixtures versionadas
+
+- **Data:** 2026-11-17.
+- **Contexto:** StoryText auxiliar e expansão incremental além das 19 imagens legadas; P-013/ADR-005.
+- **Erro evitado:** Deixar 23 bancos reais novos em `src/data/texts/story` os tornaria elegíveis a staging e ao bundle via glob.
+- **Regra:** Confirmar `git check-ignore -v` antes da geração; gravar em `public/assets/texts/story` e `public/assets/native/amx`. Versionar somente extratores, manifestos de identidade/SHA, adaptadores e testes sintéticos. Fetch lazy compartilha cache em voo, rejeita HTTP/JSON/SHA inválido e remove a falha para permitir retry; nunca fornece memória zerada.
+- **Evidência:** Dois destinos confirmados por `.gitignore:18`; 23 bancos e quatro imagens (7/24 entities/map) somente locais, total de 23 imagens disponíveis. Seis testes Vitest de loaders e dois Python do manifesto/guarda de SHA passam.
+
+## A-038 Smoke do host não comprova ramo de história da ROM
+
+- **Data:** 2026-11-17.
+- **Contexto:** Aceite de mensagens/warp no navegador, P-013.
+- **Erro potencial:** Confundir warp de navegação com `_MapChangeCore`, ou chamar uma fixture sintética de cutscene real. `networkidle` antigo também permitia enviar seta enquanto os imports lazy pós-transição ainda carregavam.
+- **Regra:** Distinguir evidências: texto do NPC veio do AMX real; o warp do smoke veio de nove células sintéticas executadas pela VM e engine reais. Aguardar explicitamente programas/textos do destino antes da próxima tecla. Manter as lacunas naturais da ROM documentadas, sem respostas inventadas para `float`, queries de atores ou globais ausentes.
+- **Evidência:** Fixture do Playwright chamou `_MapChangeCore(225,7,0,18,1,0,0,0,0)` e mudou a zona/posição renderizada. Três screenshots inspecionados, zero pageerror; 195 Vitest e build passam. Paridade/cutscene completa continua em P-013.

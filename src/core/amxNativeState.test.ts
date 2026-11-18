@@ -20,6 +20,14 @@ function syntheticBundle(calls: readonly { name: string; args: number[] }[], suf
 const execute = (bundle: AmxBundle, world: AmxWorld) => runAmx(bundle, createAmxState(bundle, 'synthetic', 0, world));
 
 describe('nativas de estado Pawn', () => {
+  it.each([[104, 179, 6815923], [-1, 2, -65534], [65536, -1, -1]])('empacota construção (%s,%s) sem consultar ator', (x, z, handle) => {
+    const world = createAmxWorld();
+    const result = execute(syntheticBundle([{ name: 'BuildMdlGetHandleByGPos', args: [x, z] }]), world);
+    expect(result.status).toBe('completed');
+    expect(result.machines[0].pri).toBe(handle);
+    expect(result.world.actors).toEqual({});
+    expect(result.world.effects).toEqual([]);
+  });
   it('persiste flags/vars, entrega item/Pokémon por handle, cura e registra warp sem mutar a origem', () => {
     const world = createAmxWorld();
     world.pokemon[100] = { handle: 100, species: 258, hp: 1, maxHp: 20, isEgg: false, nickname: 'Mudkip', status: 3 };

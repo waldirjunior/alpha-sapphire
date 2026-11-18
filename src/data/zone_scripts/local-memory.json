@@ -1,0 +1,20 @@
+{
+  "images": {
+    "zone:0007:entities": {
+      "sha256": "18166edd1726bb3f11a050a4a4086a1c85252677a7151365b2fb797656d0f2ac",
+      "file": "zone_0007_entities.json"
+    },
+    "zone:0007:map": {
+      "sha256": "18de6af1b34953ccfc611d433f9bb597de8fc3d2e855e6c151a69796b41a0791",
+      "file": "zone_0007_map.json"
+    },
+    "zone:0024:entities": {
+      "sha256": "3f8cb3d4a6bd97dc295370d4b250c8f130d8c0d84091d2dc2ca665745ea9fe4c",
+      "file": "zone_0024_entities.json"
+    },
+    "zone:0024:map": {
+      "sha256": "564ad5fb0518ef067a0d0fea9ea00209c963c118b2be4ecd93ac79378710073b",
+      "file": "zone_0024_map.json"
+    }
+  }
+}

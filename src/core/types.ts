@@ -67,6 +67,7 @@ export interface BoundaryLink {
 export interface MapDefinition {
   boundaries?: readonly BoundaryLink[];
   worldOrigin?: GridPosition;
+  romOrigin?: GridPosition;
   continuousRegion?: string;
   zoneId?: number;
   spawnDerived?: boolean;
