@@ -12,6 +12,13 @@ class StageZoneAssetsTests(unittest.TestCase):
                 223: {'warps': [{'targetMapId': 'zone_0300'}]}, 300: {'warps': []}}
         self.assertEqual(select_slice(maps, (6,)), [6, 223])
 
+    def test_includes_only_one_hop_of_visible_neighbors_of_requested_roots(self):
+        maps = {6: {'warps': [{'targetMapId': 'zone_0223'}]}, 7: {'warps': []},
+                8: {'warps': []}, 223: {'warps': []}}
+        graph = {'zone_0006': {'neighbors': [{'targetMapId': 'zone_0007'}]},
+                 'zone_0007': {'neighbors': [{'targetMapId': 'zone_0008'}]}}
+        self.assertEqual(select_slice(maps, (6,), graph), [6, 7, 223])
+
     def test_character_embeds_external_images_without_changing_geometry(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

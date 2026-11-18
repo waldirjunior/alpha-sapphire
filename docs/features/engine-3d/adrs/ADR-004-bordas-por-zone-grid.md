@@ -5,7 +5,7 @@
 - **Requisito:** [PRD-006](../prds/PRD-006-corredor-continuo-hoenn.md)
 
 `build_zone_neighbors.py` varre contatos ortogonais do grid MM (células 10×10),
-agrupa spans contíguos e emite `_neighbors.json`: 58 zonas/90 bordas dirigidas.
+agrupa spans contíguos e emite `_neighbors.json`: 58 zonas/92 bordas dirigidas, incluindo as duas pontes explícitas.
 Cada borda guarda direção, span de origem, offset local→local e inferred.
 Uma BFS posiciona componentes e rejeita ciclos de offsets inconsistentes.
 `build_zone_maps.py` também regenera esse grafo ao gerar os mapas completos.
@@ -15,6 +15,13 @@ inferred=true, aprovada pelo coordenador, com lanes transitáveis comuns e
 padding externo preservado. Não se trata de extração de conexão nativa.
 O offset é 78 tiles e não 80: cada GR possui uma coluna externa bloqueada;
 Oldale (1,z) conecta a Route102 (78,z), z=20..22. Assim o passo mundial mede um.
+
+A extensão [PRD-008](../prds/PRD-008-corredor-petalburg-rustboro.md) adiciona
+somente13↔27 à allowlist de pontes inferidas. Os ZOs recíprocos confirmam a
+conexão e as lanes46..50; os limites transitáveis são13 x=1 e27 x=76, pois o
+padding do segundo ocupa77..79. Offset76 preserva um passo e a lane (A-042).
+Woods82 mantém seus portais nativos para27/26;26↔16 vem da MM4, sem inferência.
+O staging opcional inclui vizinhos visuais de um salto, sem recursão (A-043).
 
 O core mantém posições locais e verifica colisão no destino antes da mudança;
 warps nativos têm prioridade, exceto quando uma ponte inferred=true substitui

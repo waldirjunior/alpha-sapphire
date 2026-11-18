@@ -11,9 +11,11 @@ from scripts.glb_uv_fix import fix_file
 SLICE = (6, 7, 13, 23, 24, 25, *range(223, 232))
 
 
-def select_slice(maps: dict, roots: tuple = SLICE) -> list[int]:
+def select_slice(maps: dict, roots: tuple = SLICE, neighbors: dict | None = None) -> list[int]:
     destinations = {int(warp['targetMapId'][5:]) for zone in roots for warp in maps[zone]['warps']}
-    return sorted(set(roots) | destinations)
+    adjacent = {int(edge['targetMapId'][5:]) for zone in roots
+                for edge in (neighbors or {}).get(f'zone_{zone:04d}', {}).get('neighbors', [])}
+    return sorted(set(roots) | destinations | adjacent)
 
 
 def write_new(path: Path, content: bytes) -> None:
@@ -75,9 +77,12 @@ def main() -> None:
     parser.add_argument('--models-dir', type=Path, required=True)
     parser.add_argument('--public-dir', type=Path, required=True)
     parser.add_argument('--maps-dir', type=Path, default=Path('src/data/maps_v2'))
+    parser.add_argument('--zones', type=int, nargs='+', default=SLICE)
+    parser.add_argument('--include-neighbors', action='store_true')
     args = parser.parse_args()
     maps = {int(path.stem): json.loads(path.read_text()) for path in args.maps_dir.glob('[0-9][0-9][0-9][0-9].json')}
-    selected = select_slice(maps)
+    neighbors = json.loads((args.maps_dir / '_neighbors.json').read_text())['zones'] if args.include_neighbors else None
+    selected = select_slice(maps, tuple(args.zones), neighbors)
     grs = {chunk['grId'] for zone in selected for chunk in maps[zone]['source']['chunks']}
     for index in sorted(grs):
         name = f'gr_{index:04d}'

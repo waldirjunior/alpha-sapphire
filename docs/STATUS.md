@@ -2,6 +2,12 @@
 
 Atualizado em 2026-11-17 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## Extensão Petalburg–Rustboro (2026-11-17, zone-maps)
+
+- PRD-008/A-042: IDs confirmados13→27→82→26→16 (Petalburg, Route104 sul, Woods, Route104 norte, Rustboro). Zona25 é Route103. MM4 já deriva26↔16 automaticamente; portais82 permanecem ZO reais. Nova ponte13↔27 explicitamente inferred=true liga(1,z) a(76,z), z46..50, offset76, sem mudar colisões/atores. O encaixe entre MM2/MM3 não é dado ROM extraído.
+- Staging reproduzível com `--zones 13 27 82 26 16 --include-neighbors`:29 zonas/53 GRs/57 atores existentes, seis IDs especiais em fallback. Inclui somente destinos ZO diretos e um salto de vizinhos visuais das raízes; nenhum conversor/binário no Git. Public acumulado:74 GRs/68 atores, zero violações texCoord.
+- Regressões antes/depois cobrem ponte, cinco lanes/retorno, flags de visibilidade, caminho com NPCs e igualdade dos encounters nativos. **215 Vitest,138 Python sem skips e build passaram**. Playwright na main ainda pendente; não se declara caminhada executada nesta revisão.
+
 ## Host de eventos AMX (2026-11-17, worktree `events-layer`)
 
 - Continuação sobre `main 6ae4d58`, com rebase no worktree dedicado; o checkout

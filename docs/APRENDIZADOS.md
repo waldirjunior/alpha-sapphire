@@ -311,3 +311,19 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro reproduzido:** O remap para o último canal válido tirava o erro de shader, mas UV1 distorcia grama, placas e telhados. A/B do mesmo GLB na main (`/tmp/uv-channel-original.png` e `/tmp/uv-channel-zero.png`) confirmou TEXCOORD_0 correto para a textura difusa; o DAE tem sets0/3 e o assimp compacta para0/1, mas isso sozinho não prova o mapeamento semanticamente correto.
 - **Regra:** Para materiais explicitamente marcados extras.pica=true, usar UV0 em baseColorTexture, migrando também arquivos antes corrigidos para1. Não modificar UVs válidos de materiais genéricos nem outros mapas do material. O staging normaliza origem e destino antes de comparar, sem substituir silenciosamente um GLB de conteúdo diferente. Validar imagem, não apenas índices/shaders.
 - **Evidência:** Regressão sintética falhou com [1,1,1] onde se espera [0,0,0]; agora passa e preserva normalTexture no UV1 e idempotência. Apenas 35 GRs do slice/destinos foram reestagiados, sem conversores. No harness usar PRNG com valores distintos: fixar Math.random em uma constante também faz UUIDs de Three.js colidirem e falseia texturas.
+
+## A-042 Âncora de warp bloqueada não é limite de borda transitável
+
+- **Data:** 2026-11-17.
+- **Contexto:** PRD-008, Petalburg13→Route104 sul27→Woods82→Route104 norte26→Rustboro16. Zona25 é Route103.
+- **Erro reproduzido:** Sem ponte13↔27, o passo left de(1,48) acionava o ZO, perdia a lane e chegava a(77,46)/right, tile bloqueado do destino. Padding da Route104 ocupa77..79, diferente do padding simples de A-040; subtrair sempre uma coluna seria incorreto.
+- **Regra:** Confirmar IDs e ZOs recíprocos antes de unir matrizes. A ponte explicitamente inferida usa extremos realmente transitáveis:13(1,z)↔27(76,z), z46..50, offset76. Preservar colisões e testar ida/retorno, vetor e saída do portal. Manter os dois portais reais da floresta e o contato automático26↔16 na MM4. SpawnFlag não autoriza ocultar ator: isWalkable respeita visible e a VM decide projeção; NPC visível continua bloqueando a chegada.
+- **Evidência:** Regressão Vitest falhou porque stepWarp devolvia o portal em vez de undefined; fixture Python falhou pela ausência da ponte. Ambas passam após estender somente a allowlist de pares inferidos. BFS determinística percorre todo o corredor com os NPCs extraídos intactos; fixtures não dependem de binários da ROM. Encaixe entre MM2/MM3 permanece inferência, não descoberta de coordenadas nativas.
+
+## A-043 Staging do corredor também precisa dos vizinhos visuais imediatos
+
+- **Data:** 2026-11-17.
+- **Contexto:** PRD-008 e renderer de chunks persistentes.
+- **Erro potencial:** Copiar apenas raízes e destinos de warp deixa sem GLB os chunks que o renderer já compõe de Route105/115/116 ao abrir27/16. Percorrer vizinhos recursivamente, por outro lado, copiaria o mundo todo.
+- **Regra:** --zones escolhe raízes; --include-neighbors acrescenta só um salto do grafo dessas raízes, além dos destinos ZO diretos. Não expandir novamente a partir do resultado. Validar assets e manter os IDs especiais em fallback, sem inventar máscaras de bits.
+- **Evidência:** Fixture de seleção falhou com a API anterior e agora seleciona6/7/223 sem alcançar o vizinho8 de7. O plano13/27/82/26/16 selecionou29 zonas/53 GRs/57 atores, seis IDs especiais sem modelo; public acumulado validou74 GRs e68 atores com zero violações texCoord. Playwright permanece aceite separado.

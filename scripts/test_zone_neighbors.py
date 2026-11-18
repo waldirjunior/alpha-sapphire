@@ -23,6 +23,22 @@ class ZoneNeighborTests(unittest.TestCase):
         self.assertEqual(graph['zone_0001']['component'], graph['zone_0002']['component'])
         self.assertEqual(graph['zone_0002']['origin'], {'x': 10, 'z': 0})
 
+    def test_petalburg_bridge_uses_the_walkable_edge_not_the_blocked_warp_anchor(self):
+        a, b = zone(13, 80, 80, 40, 80, matrix=2), zone(27, 80, 80, 80, 80, matrix=3)
+        for item in (a, b):
+            item['collisions'] = [[1] * item['width'] for _ in range(80)]
+        for z in range(46, 51):
+            a['collisions'][z][1] = 0
+            b['collisions'][z][76] = 0
+        graph = build_neighbors({13: a, 27: b})['zones']
+        edge = graph['zone_0013']['neighbors'][0]
+        self.assertTrue(edge['inferred'])
+        self.assertEqual(edge['from'], {'x': 1, 'z': 46})
+        self.assertEqual(edge['offset'], {'x': 76, 'z': 0})
+        self.assertEqual(edge['length'], 5)
+        self.assertEqual(b['collisions'][46][77], 1)
+        self.assertEqual(graph['zone_0027']['origin'], {'x': 4, 'z': 80})
+
     def test_inferred_bridge_joins_walkable_lanes_without_editing_blocked_padding(self):
         a, b = zone(7, 80, 80, 40, 40), zone(24, 120, 120, 80, 40, matrix=2)
         for item in (a, b):

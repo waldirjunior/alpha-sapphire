@@ -9,3 +9,4 @@
 | [PRD-005](PRD-005-mapas-de-zona-no-runtime.md) | Mapas de zona no runtime, chunks, NPCs e warps | Implementado; limites em P-017 | 2026-11-17 |
 | [PRD-006](PRD-006-corredor-continuo-hoenn.md) | Corredor contínuo Littleroot–Petalburg | Validado; 500 passos Playwright na main | 2026-11-17 |
 | [PRD-007](PRD-007-animacoes-nativas-no-runtime.md) | Animações GF1 no runtime e auditoria do atlas | Implementado; Playwright main validado, paridade pendente | 2026-11-17 |
+| [PRD-008](PRD-008-corredor-petalburg-rustboro.md) | Corredor Petalburg–Route104–Woods–Rustboro | Implementado; Playwright main pendente | 2026-11-17 |

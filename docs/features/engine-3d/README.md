@@ -8,6 +8,7 @@ Camada de renderização WebGL com Three.js em `src/engine/` (`SceneManager.ts`)
 - [adrs/](adrs/README.md) — decisões técnicas da camada Three.js.
 - [PRD-005](prds/PRD-005-mapas-de-zona-no-runtime.md) / [ADR-003](adrs/ADR-003-zonas-lazy-e-assets-compostos.md) — bootstrap zone_0006, JSONs lazy, GRs compostos, NPCs mm_NNNN e warps retangulares; fallback explícito `?maps=legacy`.
 - [PRD-007](prds/PRD-007-animacoes-nativas-no-runtime.md) / [ADR-005](adrs/ADR-005-eventos-batalha-e-clipes-nativos.md) — eventos puros de batalha dirigem clipes GF1 em `nativeAnimation.ts`, com catálogo local imutável, fallbacks explícitos e auditoria P-019; Playwright nativo na main ac4054d validado com capturas e estados alpha preservados. Paridade de texturas/combiners/expressões segue pendente.
+- [PRD-008](prds/PRD-008-corredor-petalburg-rustboro.md) / [ADR-004](adrs/ADR-004-bordas-por-zone-grid.md) — extensão até Rustboro: ponte explícita13↔27, portais reais da floresta e contato MM4 entre26/16; A-042/A-043, validação Playwright pendente.
 - Referência TCC: [docs/tcc/00-arquitetura.md](../../tcc/00-arquitetura.md).
 
 ## Estado atual

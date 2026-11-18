@@ -5,6 +5,7 @@ from itertools import groupby
 from pathlib import Path
 
 EMPTY = 65535
+INFERRED_HORIZONTAL_BRIDGES = ((7, 24), (13, 27))
 
 
 def append_pair(links, maps, a, b, direction, point, other_point, length=10, inferred=False):
@@ -42,18 +43,18 @@ def matrix_contacts(maps, links):
                 append_pair(links, maps, a, b, direction, *points)
 
 
-def oldale_bridge(maps, links):
-    if 7 not in maps or 24 not in maps:
+def inferred_horizontal_bridge(maps, links, source, target):
+    if source not in maps or target not in maps:
         return
-    a, b = maps[7], maps[24]
+    a, b = maps[source], maps[target]
     left = min(x for row in a['collisions'] for x, value in enumerate(row) if value == 0)
     right = max(x for row in b['collisions'] for x, value in enumerate(row) if value == 0)
     rows = [z for z in range(min(a['height'], b['height']))
             if a['collisions'][z][left] == b['collisions'][z][right] == 0]
     if not rows:
-        raise ValueError('Ponte inferida 7/24: sem lanes alinhadas transitáveis')
+        raise ValueError(f'Ponte inferida {source}/{target}: sem lanes alinhadas transitáveis')
     for z in rows:
-        append_pair(links, maps, 7, 24, 'left', (left, z), (right, z), length=1, inferred=True)
+        append_pair(links, maps, source, target, 'left', (left, z), (right, z), length=1, inferred=True)
 
 
 def compress_links(links):
@@ -100,12 +101,13 @@ def build_neighbors(maps, bridge=True):
     links = defaultdict(list)
     matrix_contacts(maps, links)
     if bridge:
-        oldale_bridge(maps, links)
+        for source, target in INFERRED_HORIZONTAL_BRIDGES:
+            inferred_horizontal_bridge(maps, links, source, target)
     return {'schemaVersion': 1, 'zones': place_components(maps, links)}
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Gera contatos do zone-grid e ponte inferida Oldale/Route102.')
+    parser = argparse.ArgumentParser(description='Gera contatos do zone-grid e pontes horizontais explicitamente inferidas.')
     parser.add_argument('--maps-dir', type=Path, default=Path('src/data/maps_v2'))
     args = parser.parse_args()
     maps = {int(p.stem): json.loads(p.read_text()) for p in args.maps_dir.glob('[0-9][0-9][0-9][0-9].json')}
