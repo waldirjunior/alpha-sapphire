@@ -998,3 +998,25 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   faltam; input/item/+14/Daniel e depois flag20/GR continuam abertos.
   362 Vitest/56 arquivos,186 Python sem skips/build e receita estática de15
   instruções/callback/tick/alias passaram nesta entrega documental parcial.
+
+## A-094 Validação visual que mora em `/tmp` não protege nada
+
+- **Data:** 2026-11-18; validacao-visual/PRD-001.
+- **Contexto:** cada entrega de corredor ou material foi validada por um script Playwright novo em `/tmp`, com capturas inspecionadas uma vez. Em 2026-11-18 havia 35 desses scripts só no disco temporário da máquina.
+- **Erro:** tratar "N capturas inspecionadas, zero erros de console" como aceite durável. Nada era reexecutado na entrega seguinte, então uma mudança de material, câmera ou altura podia quebrar um ponto já aceito sem aviso; e zero erro de console não diz se a imagem está certa.
+- **Regra:** validação visual só conta se for reexecutável pelo repositório: cenário em `src/visual/scenarios.ts` ou teste em `e2e/`, rodado por `npm run test:e2e`. Defeito visual encontrado vira cenário com defeito conhecido antes de qualquer correção. Nenhum script de validação fica fora do Git.
+
+## A-095 "Limitação do asset" só vale depois de conferir a fonte na ROM
+
+- **Data:** 2026-11-18; P-019.
+- **Contexto:** Brendan e May renderizam sem pés. Registros anteriores (P-019, A-031, A-044, A-049 e relatos de entrega) concluíram que "os pés não existem como geometria" e proibiram reconstruí-los, medindo apenas o GLB já convertido.
+- **Erro:** o GLB é saída do nosso conversor, não a fonte. O BCH da ROM tem a malha `sw_parts02` com os tênis; `scripts/convert_character_glb.py` a apaga junto com `sw_parts03..05` por supor que eram duplicatas de `sw_parts01`. A conclusão errada foi copiada de documento em documento e bloqueou a correção.
+- **Regra:** antes de registrar que algo "não existe no asset", liste o que o arquivo original declara (meshes, nós, materiais, texturas, ossos) e compare com a saída convertida. Diferença entre os dois é defeito do pipeline. Um filtro que descarta partes do modelo precisa citar a evidência do que está descartando.
+
+## A-096 STATUS como diário e leitura obrigatória extensa fazem a sessão parar antes de entregar
+
+- **Data:** 2026-11-18.
+- **Contexto:** `STATUS.md` chegou a 482 linhas de relatos de entrega e o conjunto de leitura obrigatória (STATUS, ROADMAP, PENDENCIAS, APRENDIZADOS, features, tcc) a cerca de 140 mil tokens. Não havia documento dizendo o objetivo final nem a próxima tarefa; a regra em vigor aceitava só disassembly como prova.
+- **Erro:** as sessões gastavam a maior parte do contexto lendo histórico, não encontravam uma próxima ação definida e encerravam com "entrega documental" ou "inconclusivo". Duas frentes (PRD-015 e PRD-016) acumularam várias sessões seguidas sem mudança de runtime.
+- **Regra:** [VISAO.md](VISAO.md) guarda objetivo, evidência e continuidade; [STATUS.md](STATUS.md) é um retrato de tamanho limitado por teste; [ROADMAP.md](ROADMAP.md) tem uma fila ordenada com verificação por item; relatos de entrega vão para o PRD da frente. Pendências e aprendizados são consultados por título, sob demanda.
+

@@ -10,4 +10,5 @@ Responsável por `src/ai/` e pela suíte de testes comparativos que valida o com
 
 ## Estado atual
 
-- Diretório `src/ai/` ainda não criado (planejado a partir da Fase 2/3, após `pipeline-rom` e vertical slice).
+- `src/ai/emulatorParity.test.ts` fixa valores esperados escritos à mão (rota dos mapas legados, stats de inicial Lv. 5, tabela de tipos, slogans das cidades). Nenhum deles foi capturado de um emulador.
+- Nenhum emulador está instalado nem há capturas de referência: a paridade visual e de fluxo ainda não foi medida (P-021, item 2 da fila do [ROADMAP](../../ROADMAP.md)).

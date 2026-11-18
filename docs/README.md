@@ -1,19 +1,15 @@
 # Documentação — alpha-sapphire
 
-Índice central da documentação operacional, arquitetural e de produto do projeto.
+## Comece aqui
 
-## Governança e Continuidade
+1. [VISAO.md](VISAO.md) — objetivo do port, definição de pronto, escada de evidência e regra de continuidade.
+2. [STATUS.md](STATUS.md) — placar e limites atuais (retrato, tamanho limitado).
+3. [ROADMAP.md](ROADMAP.md) — fila de execução e fases.
 
-- [STATUS.md](STATUS.md) — estado atual verificado do código, testes, ROM e ferramentas na VPS.
-- [ROADMAP.md](ROADMAP.md) — planejamento macro em fases e critérios de pronto.
-- [PENDENCIAS.md](PENDENCIAS.md) — lacunas abertas (`P-NNN`), evidências e próximos passos.
-- [APRENDIZADOS.md](APRENDIZADOS.md) — erros e regras operacionais (`A-NNN`) que não devem se repetir.
+## Consulta sob demanda
 
-## Features e Módulos (`prds/` e `adrs/` por módulo)
-
-- [features/](features/README.md) — índice de módulos ([pipeline-rom](features/pipeline-rom/README.md), [core-jogo](features/core-jogo/README.md), [engine-3d](features/engine-3d/README.md)), cada um com seu `README.md`, `prds/` e `adrs/`.
-
-## TCC
-
-- [tcc/00-arquitetura.md](tcc/00-arquitetura.md) — visão de arquitetura para o livro do TCC.
-- [tcc/01-pipeline-rom.md](tcc/01-pipeline-rom.md) — referência inicial do pipeline de extração 3DS → Web.
+- [PENDENCIAS.md](PENDENCIAS.md) — lacunas abertas (`P-NNN`). Liste com `grep -n '^## P-' docs/PENDENCIAS.md`.
+- [APRENDIZADOS.md](APRENDIZADOS.md) — erros e regras já descobertos (`A-NNN`). Liste com `grep -n '^## A-' docs/APRENDIZADOS.md`.
+- [features/](features/README.md) — um diretório por módulo, com `README.md`, `prds/` e `adrs/`. O relato de cada entrega fica no PRD da frente.
+- [tcc/](tcc/00-arquitetura.md) — base técnica para o livro do TCC.
+- [historico/](historico/) — STATUS e ROADMAP anteriores a 2026-11-18, com os relatos de entrega da época.

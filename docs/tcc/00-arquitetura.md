@@ -7,12 +7,14 @@ Reconstruir a experiência de **Pokémon Alpha Sapphire** para navegador web uti
 - **Fluxo guiado por IA** para extração de dados, implementação incremental, testes comparativos contra emulador e documentação contínua para o TCC.
 
 ## 2. Estrutura de Pastas
-- `src/core/`: Estado do jogo (`gameState.ts`), motor de batalha (`battle.ts`) e serialização de save (`save.ts`), 100% puros sem dependência de DOM/Three.js.
-- `src/engine/`: Renderização Three.js (`SceneManager.ts`), carregamento sob demanda de `.glb` (mapas, protagonista Brendan e arena de batalha 3D), câmera e iluminação.
-- `src/data/`: Mapas `40×40` (`maps/`), diálogos decodificados (`texts/`) e tabelas de espécies/encontros (`pokemon/`) em JSON/TypeScript.
-- `src/ai/`: Suíte de paridade contra o comportamento esperado da ROM original (`emulatorParity.test.ts`).
-- `scripts/`: Pipeline offline em Python para extração de `RomFS`, `GARC`, `GR`, textos Gen 6 e conversão `.glb` via `SpicaExport` + `assimp`.
-- `docs/tcc/`: Registros técnicos e decisões de arquitetura para o livro do TCC.
+- `scripts/`: pipeline offline em Python para extração de `RomFS`, `GARC`, `GR`, textos, scripts AMX e tabelas, e conversão para `.glb` via `SpicaExport` + Blender.
+- `src/core/`: lógica pura sem DOM nem Three.js — estado e movimento em grade (`gameState.ts`), warps, bordas e ledges, motor de batalha (`battle*.ts`), save (`save.ts`) e a VM Pawn/AMX dos eventos (`amx*.ts`).
+- `src/engine/`: apresentação Three.js — `SceneManager.ts`, terreno por zona e contínuo, atores, animações nativas, materiais PICA, host de eventos e áudio.
+- `src/data/`: dados gerados pelo pipeline — 536 mapas por zona (`maps_v2/`), scripts desmontados (`zone_scripts/`), textos (`texts/`), encontros (`zones/`) e tabelas de batalha (`battle/`).
+- `src/game.ts`, `src/main.ts`: bootstrap e host de entrada, HUD, menus, batalha e save.
+- `src/visual/`, `e2e/`: validação visual por cenário e smoke do jogo real ([validacao-visual](../features/validacao-visual/README.md)).
+- `src/ai/`: valores esperados do original para testes de paridade.
+- `docs/tcc/`: registros técnicos e decisões de arquitetura para o livro do TCC.
 
 ## 3. Eventos puros e apresentação de batalha
 
