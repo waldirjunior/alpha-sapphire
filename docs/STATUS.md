@@ -2,6 +2,14 @@
 
 Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## Mauville–Fallarbor e entrada de Meteor Falls (2026-11-18)
+
+- PRD-012/A-066–A-068 sobrec9be392: caminho físico15→445→37→39→85→38→36→40→10→41→71. Route113 precede Fallarbor10, Route114 liga Meteor; contatos MM7/MM8 e ZO existentes, sem ponte nova, colisão ou encontro alterado. Loop71→42→16 ainda bloqueado em P-017.
+- Base chegou a37(27,117), mas quatro objetos8204/IDs2–5/script10050/spawnFlag0 bloqueiam o norte. global0046 SHA c63af4251dc7406fd89126af85cbef598c889312f303d117b51ba7547c50a362 resolve10050→5324→3984:29 funções alcançáveis, CallIwakudakiEffect@4276, sem FlagSet/MdlDel nesse grafo AMX. Efeito@5576 é10051; FlagSet2724@6792/7208 pertence a10054/10055, não prova de flag por pedra. Persistência interna do efeito na ROM não comprovada.
+- Fixture autorizada é **derivada pós-RockSmash/não-natural**: só tombstones37:2..5, persistência/projeção existentes, sem executar10050 ou o efeito, sem editar posição/flags/colisão. Caminha pelos mapas nativos até71(57,35). Teste sem NPCs em71 continua sem alcançar42/72/73; alturas ZO54/-126 preservadas, causa de permissões/altura desconhecida, não atribuída a cutscene.
+- Stage59 zonas/151 GRs/104 atores existentes,20 códigos especiais em fallback, BGMs c_02/d_01/d_05/r_b/r_c/r_e/t_05. Probe de mapas/MP3s zero ausentes;223 GLBs públicos de mapa válidos/zero violações, dry-run UV público sem remaps. Outputs ignorados, nenhum binário versionado.
+- **328 Vitest/49 arquivos,159 Python sem skips e build passaram**; aviso de chunk >500kB herdado. Playwright main pendente: caminhada base até as pedras, tentativa bloqueada e fase derivada claramente rotulada até Fallarbor/Meteor, com encontros, capturas e auditoria de erros. Não declarar RockSmash natural ou o loop fechado.
+
 ## Verdanturf–Mauville e acesso condicional a Slateport (2026-11-18)
 
 - PRD-011/A-061/A-062, base3dbfd21:11→44→445→15; hall445 antes do pátio15. Contato MM6 entre11/44; demais ligações ZO preservadas, sem ponte ou grafo modificado. Continuação445→33→14 usa Route110 terrestre33, não variante34; retângulos recíprocos7/5 e5/3 não justificam continuidade lateral presumida.

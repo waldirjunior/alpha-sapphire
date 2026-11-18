@@ -589,3 +589,26 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   the real SceneManager, not a ROM script route or emulator comparison.
   Existing movement interpolation/crossfades are web presentation policies,
   not newly proven native timing; feet remain an asset-geometry limitation.
+
+## A-066 Contato entre zonas não prova passabilidade entre todos os seus lados
+
+- **Data:**2026-11-18; PRD-012/P-017, basec9be392.
+- **Contexto:** Mauville até Fallarbor e possível loop por Meteor Falls.
+- **Erro evitado:** Ordenar rotas pelo nome, escolher o menor caminho do grafo ou ignorar a diferença entre as variantes de Route111/112.
+- **Regra:** Cruzar contatos MM/ZO com caminhada real sob colisões/atores. A rota física é15→445→37→39→85→38→36→40→10→41→71. Route11340 vem antes de Fallarbor10; Route11441 vem depois.37/39 são MM7;38/36/40/10/41 pertencem à MM8.35/MM23 não substitui automaticamente essa sequência.
+- **Evidência:** Regressão inicial falhou em37→39. Diagnóstico isolando somente os quatro objetos de campo permite o percurso acima;38→40 é contato MM8 mas não é atravessável desde7,17, exigindo38→36→40. Nenhuma ponte inferida, colisão ou encontro alterado.
+
+## A-067 Um objeto com spawnFlag zero não vira uma hide-flag de história
+
+- **Data:**2026-11-18; PRD-012/P-013/P-017.
+- **Erro reproduzido:** IDs2–5 de37, model8204, script10050 e spawnFlag0 bloqueiam o norte. Reutilizar uma flag arbitrária ou chamar o pós-estado de execução real de RockSmash seria falso.
+- **Regra:** Investigar o grafo real e separar estado base, efeito nativo e fixture derivada. No AMX global0046 SHA c63af4251dc7406fd89126af85cbef598c889312f303d117b51ba7547c50a362,10050→5324→3984 alcança29 funções; CallIwakudakiEffect@4276 segue checks249/confirmação/demo37.5576 é do caso10051. Nenhum MdlDel no programa; FlagSet2724@6792/7208 pertence a10054/10055, fora do grafo10050. Isso não descreve o interior do efeito CRO nem prova a persistência ROM por pedra.
+- **Decisão autorizada:** Fixture derivada pós-RockSmash/não-natural popula só tombstones37:2..5 pelo mecanismo existente. Preserva posição, flags, colisões e origem; não executa10050, demo, batalha/recompensa ou efeito. O aceite deve provar primeiro o bloqueio por teclado e só depois o percurso condicional, sem fabricar suporte de campo em produção.
+
+## A-068 Entrada de uma caverna composta não garante acesso às outras saídas
+
+- **Data:**2026-11-18; PRD-012/P-017.
+- **Erro evitado:** Prometer o loop Meteor71→Route11542→Rustboro16 só porque os warps existem, ou atribuir o bloqueio a uma cutscene sem evidência.
+- **Evidência:**71/MM32 usa GRs260–263. Desde57,35, o core não alcança42/72/73 mesmo sem NPCs; remover grupos637/638/639 não resolve esse diagnóstico. Os ZO preservam rom.z54 para41 e-126 para42, com alturas também distintas nas saídas internas.
+- **Regra:** Preservar permissões/alturas e registrar a causa como desconhecida até investigar. O aceite atual termina na entrada71 após Fallarbor, com fixture de RockSmash rotulada; o loop fica bloqueado em P-017. Não abrir tiles, criar ponte ou warp extra para esconder a lacuna.
+- **Verificação pré-browser:**328 Vitest/49 arquivos,159 Python sem skips/build; stage59 zonas/151GRs/104atores/sete BGMs,20 códigos sem modelo físico correspondente em fallback, zero mapas/MP3s ausentes e223 GLBs de mapa válidos. Dry-run UV público sem remaps; Playwright main pendente.
