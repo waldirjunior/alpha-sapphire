@@ -1,4 +1,5 @@
 import type { Direction, GameState, GridPosition, Interactable, MapDefinition } from './types';
+import { DIRECTION_DELTAS, stepPosition, stepWarp } from './warps';
 
 export function createInitialState(
   startMapId = 'littleroot_town',
@@ -18,13 +19,6 @@ export function createInitialState(
     },
   };
 }
-
-const DIRECTION_DELTAS: Record<Direction, GridPosition> = {
-  up: { x: 0, z: -1 },
-  down: { x: 0, z: 1 },
-  left: { x: -1, z: 0 },
-  right: { x: 1, z: 0 },
-};
 
 export function isWalkable(map: MapDefinition, pos: GridPosition): boolean {
   if (pos.x < 0 || pos.z < 0 || pos.x >= map.width || pos.z >= map.height) {
@@ -50,22 +44,15 @@ export function movePlayer(
   const currentMap = maps[state.player.mapId];
   if (!currentMap) return state;
 
-  const delta = DIRECTION_DELTAS[direction];
-  const nextPos: GridPosition = {
-    x: state.player.pos.x + delta.x,
-    z: state.player.pos.z + delta.z,
-  };
+  const nextPos = stepPosition(state.player.pos, direction);
+  const warp = stepWarp(state, direction, currentMap);
 
-  if (!isWalkable(currentMap, nextPos)) {
+  if ((!warp && !isWalkable(currentMap, nextPos)) || (warp && !maps[warp.targetMapId])) {
     return {
       ...state,
       player: { ...state.player, facing: direction },
     };
   }
-
-  const warp = currentMap.warps.find(
-    (w) => w.from.x === nextPos.x && w.from.z === nextPos.z
-  );
 
   if (warp && maps[warp.targetMapId]) {
     if (warp.requiredFlag && !state.storyFlags[warp.requiredFlag]) {
@@ -84,7 +71,7 @@ export function movePlayer(
         ...state.player,
         mapId: warp.targetMapId,
         pos: { ...warp.targetPos },
-        facing: direction,
+        facing: warp.faceDirection ?? direction,
       },
     };
   }

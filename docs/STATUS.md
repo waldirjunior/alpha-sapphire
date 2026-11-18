@@ -22,6 +22,14 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   - [src/main.ts](../src/main.ts): bootstrap que carrega as tabelas de batalha e importa [src/game.ts](../src/game.ts): loop de renderização, teclado, caixa de diálogo, menu estilo 3DS (`Time`, `Mochila`, `Pokédex`, `Salvar`), HUD de batalha 3D com barras de HP coloridas, time de até 6 Pokémon e auto-save em `localStorage`.
 - Diretórios planejados ainda não criados: `src/ai/`.
 
+## Integração maps_v2 no runtime (2026-11-17, zone-maps sobre main 5d9a3b6)
+
+- `getZoneMap` lazy em `src/data/maps_v2/`: cache/retry/adapter, bootstrap zone_0006 e destino carregado antes da transição. SpawnDerived preservado; `?maps=legacy` mantém os mapas antigos e save v1, enquanto o modo novo usa namespace v2 sem migrar/apagar saves existentes.
+- Engine posiciona chunks GR por offset e renderiza NPCs mm_NNNN com fallback npc.glb; core respeita retângulos de warp, portas no GR bloqueado e orientação básica. Efeitos diferentes de zero recebem fade genérico 120+120ms; não é ABI cinematográfica validada. BGM/encounters usam a zona atual.
+- Staging no checkout principal: **15 zonas, 25 GRs com texturas, 42 atores**; 15 IDs especiais sem asset mm correspondente mantêm fallback. Nenhum conversor ou cópia dos 800+ mapas, nenhum asset no Git.
+- **150 Vitest (23 arquivos), 113 Python e build**; smoke visível em Chromium instalado, servidor deste worktree, assets reais do public principal servidos por interceptação Playwright devido à ausência de public local: 6→223→6, posição (15,18)/up, somente JSONs 0006/0223 carregados e zero pageerror. Screenshots temporários `/tmp/zone-maps-house.png` e `/tmp/zone-maps-town.png` foram inspecionados; isso não prova paridade no emulador.
+- [PRD-005](features/engine-3d/prds/PRD-005-mapas-de-zona-no-runtime.md), [ADR-003](features/engine-3d/adrs/ADR-003-zonas-lazy-e-assets-compostos.md), A-025/P-017 registram limites: spawn/init/VM, diálogos, spawnFlag, IDs especiais e bordas contínuas sem warp ZO ainda não ligados.
+
 ## Mapas por zona (2026-11-17, branch `zone-maps` sobre main `13c3279`)
 
 - [build_zone_maps.py](../scripts/build_zone_maps.py) e [formato](features/pipeline-rom/maps-format.md): 431 matrizes MM fisicamente decodificadas (409 básicas/22 estendidas), 422 referenciadas por ZoneData. `mapArea` não indexa os retângulos sec1; o recorte correto vem de zoneIds na sec0 (4W×4H, células 10×10 tiles). Não há sec2 no corpus.

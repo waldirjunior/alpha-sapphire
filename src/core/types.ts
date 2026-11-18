@@ -1,3 +1,5 @@
+import type { ZoneEncounterSlot } from './wildPokemon';
+
 export type Direction = 'up' | 'down' | 'left' | 'right';
 
 export interface GridPosition {
@@ -9,6 +11,10 @@ export interface WarpPoint {
   from: GridPosition;
   targetMapId: string;
   targetPos: GridPosition;
+  width?: number;
+  height?: number;
+  faceDirection?: Direction;
+  transitionEffect?: number;
   requiredFlag?: string;
   blockedMessage?: string;
 }
@@ -38,7 +44,23 @@ export interface Interactable {
   trainer?: TrainerSpec;
 }
 
+export interface MapNpc {
+  id: string;
+  pos: GridPosition;
+  modelUrl: string;
+  facing?: Direction;
+  model: number;
+  script: number;
+  spawnFlag: number;
+}
+
 export interface MapDefinition {
+  zoneId?: number;
+  spawnDerived?: boolean;
+  spawnPolicy?: string;
+  npcs?: MapNpc[];
+  encounters?: readonly ZoneEncounterSlot[];
+  modelChunks?: { modelUrl: string; offset: GridPosition }[];
   id: string;
   name: string;
   width: number;

@@ -3,7 +3,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BattleState } from '../core/battle';
 import type { PokemonType } from '../data/pokemon/species';
 import { createBattleArena, type BattleArena } from './battleArena';
-import type { Direction, GameState, MapDefinition } from '../core/types';
+import type { Direction, GameState, GridPosition, MapDefinition } from '../core/types';
+import { createWarpMarkers, loadZoneTerrain } from './zoneTerrain';
 
 const ORAS_TILE_UNITS = 18;
 const POKEMON_SCALE = 1 / 25;
@@ -78,6 +79,7 @@ export class SceneManager {
   private playerTargetPos = new THREE.Vector3();
   private lastPlayerPos = { mapId: '', x: -1, z: -1 };
   private currentMapId = '';
+  private mapLoadVersion = 0;
   private currentBattleKey = '';
   private currentPlayerGender: 'male' | 'female' = 'male';
   private inBattle = false;
@@ -200,22 +202,15 @@ export class SceneManager {
     }
     this.entityMixers = [];
 
-    const warpGeo = new THREE.BoxGeometry(0.88, 0.06, 0.88);
-    const warpColor = !map.modelUrl ? '#dc2626' : '#f59e0b';
-    const warpMat = new THREE.MeshStandardMaterial({ color: warpColor, transparent: true, opacity: 0.78 });
-    for (const warp of map.warps) {
-      const marker = new THREE.Mesh(warpGeo, warpMat);
-      marker.position.set(warp.from.x, 0.03, warp.from.z);
-      this.entitiesGroup.add(marker);
-    }
+    this.entitiesGroup.add(createWarpMarkers(map));
 
-    if (!map.interactables?.length) return;
+    for (const npc of map.npcs ?? []) this.buildNpc(npc.pos, npc.modelUrl, npc.facing);
     const postGeo = new THREE.BoxGeometry(0.14, 0.55, 0.14);
     const boardGeo = new THREE.BoxGeometry(0.7, 0.45, 0.12);
     const woodMat = new THREE.MeshStandardMaterial({ color: '#92400e' });
     const boardMat = new THREE.MeshStandardMaterial({ color: '#fef3c7' });
 
-    for (const item of map.interactables) {
+    for (const item of map.interactables ?? []) {
       if (item.kind === 'sign') {
         const signGroup = new THREE.Group();
         const post = new THREE.Mesh(postGeo, woodMat);
@@ -228,22 +223,21 @@ export class SceneManager {
         continue;
       }
 
-      const npcGroup = new THREE.Group();
-      npcGroup.position.set(item.pos.x, 0, item.pos.z);
-      const fallback = new THREE.Mesh(
-        new THREE.CapsuleGeometry(0.3, 0.5, 4, 8),
-        new THREE.MeshStandardMaterial({ color: '#f43f5e' })
-      );
-      fallback.position.y = 0.55;
-      npcGroup.add(fallback);
-      this.entitiesGroup.add(npcGroup);
-
-      const modelPath =
-        item.npcModel === 'may'
-          ? '/assets/characters/may/may.glb'
-          : '/assets/characters/npc/npc.glb';
-      this.loadCharacterModel(modelPath, npcGroup);
+      const modelPath = item.npcModel === 'may' ? '/assets/characters/may/may.glb' : '/assets/characters/npc/npc.glb';
+      this.buildNpc(item.pos, modelPath, item.facing);
     }
+  }
+
+  private buildNpc(pos: GridPosition, modelUrl: string, facing?: Direction): void {
+    const root = new THREE.Group();
+    root.position.set(pos.x, 0, pos.z);
+    root.rotation.y = FACING_YAW[facing ?? 'down'];
+    const fallback = new THREE.Mesh(new THREE.CapsuleGeometry(0.3, 0.5, 4, 8),
+      new THREE.MeshStandardMaterial({ color: '#f43f5e' }));
+    fallback.position.y = 0.55;
+    root.add(fallback);
+    this.entitiesGroup.add(root);
+    this.loadCharacterModel(modelUrl, root, false, '/assets/characters/npc/npc.glb');
   }
 
   public sync(state: GameState, maps: Record<string, MapDefinition>): void {
@@ -262,9 +256,17 @@ export class SceneManager {
 
     if (this.currentMapId !== map.id) {
       this.currentMapId = map.id;
+      const version = ++this.mapLoadVersion;
       this.buildTerrainPlaceholder(map);
       this.buildEntities(map);
-      if (map.modelUrl) {
+      if (map.modelChunks?.length) {
+        void loadZoneTerrain(map.modelChunks, (url) => this.gltfLoader.loadAsync(url), fixOrasMaterials)
+          .then((root) => {
+            if (this.mapLoadVersion !== version) return;
+            this.terrainGroup.clear();
+            this.terrainGroup.add(root);
+          }).catch((error: unknown) => console.warn(`Terreno ${map.id} indisponível; mantendo grid`, error));
+      } else if (map.modelUrl) {
         this.loadMapModels(map);
       }
     }
@@ -338,10 +340,11 @@ export class SceneManager {
     this.battleArena.effects.play(type, from, to);
   }
 
-  private loadCharacterModel(url: string, target: THREE.Group, isPlayer = false): void {
+  private loadCharacterModel(url: string, target: THREE.Group, isPlayer = false, fallbackUrl?: string): void {
     this.gltfLoader.load(
       url,
       (gltf) => {
+        if (!isPlayer && target.parent !== this.entitiesGroup) return;
         const model = gltf.scene;
         model.scale.setScalar(1 / ORAS_TILE_UNITS);
         fixOrasMaterials(model);
@@ -368,6 +371,9 @@ export class SceneManager {
       },
       undefined,
       () => {
+        if (fallbackUrl && fallbackUrl !== url && target.parent === this.entitiesGroup) {
+          this.loadCharacterModel(fallbackUrl, target);
+        }
         // Mantém placeholder geométrico caso o .glb não exista localmente.
       }
     );

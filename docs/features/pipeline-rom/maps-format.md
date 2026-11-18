@@ -2,8 +2,9 @@
 
 Investigação de 2026-11-17, Fases 1–2, [PRD-003](prds/PRD-003-mapas-por-zona.md),
 [ADR-005](adrs/ADR-005-recorte-de-mapas-por-zone-grid.md), A-023 e P-017.
-Os JSONs em `src/data/maps_v2/` são uma saída paralela; não substituem o loader
-ativo de `src/data/maps/` nem implicam paridade de navegação no emulador.
+Os JSONs em `src/data/maps_v2/` foram inicialmente uma saída paralela. A integração
+no jogo está descrita ao final; mapas manuais continuam via `?maps=legacy`, sem
+alegação de paridade de navegação no emulador.
 
 ## Evidência e escopo
 
@@ -170,3 +171,34 @@ Verificação: 13 regressões novas sintéticas, **107 Python** no total,
 **134 Vitest/17 arquivos** e build passaram. Regeneração deve produzir os mesmos
 bytes. P-017 mantém a semântica da grade auxiliar/flags, as anomalias e a futura
 integração/paridade explicitamente abertas; o coordenador aprovou esse limite.
+
+## Integração no jogo (2026-11-17)
+
+[Engine PRD-005](../engine-3d/prds/PRD-005-mapas-de-zona-no-runtime.md) e
+[ADR-003](../engine-3d/adrs/ADR-003-zonas-lazy-e-assets-compostos.md) documentam
+`getZoneMap`, bootstrap zone_0006 e o modo `?maps=legacy`. O modo novo usa a chave
+`alpha_sapphire_web_save_v2`; o antigo mantém v1, sem apagar/migrar seus dados.
+O payload de save permanece version=1. O loader só importa JSONs numéricos e
+carrega o destino antes do warp; não faz download recursivo de todas as zonas.
+
+Staging reproduzível, após conferir que public/assets é ignorado pelo Git:
+
+```bash
+python3 -B -m scripts.stage_zone_assets \
+  --models-dir "$CHECKOUT/rom/extracted/models" \
+  --public-dir "$CHECKOUT/public"
+```
+
+O slice e destinos diretos incluem 15 zonas (33 é o destino adicional), 25 GRs:
+1–6, 9–10, 183–190 e 506–514, com texturas; 42 atores foram disponibilizados em
+assets/characters/mm_NNNN.glb, preferindo clips_merged. Texturas externas dos
+atores são embutidas sem mudar o BIN de geometria; assets diferentes existentes
+não são sobrescritos. Quinze IDs sem correspondente mm usam npc/npc.glb; não se
+mascaram os bits altos por inferência. Nenhum conversor ou asset binário no Git.
+
+Smoke visível no Chromium instalado verificou 6→223→6, chegada (15,18)/up e
+somente JSONs 0006/0223 carregados, sem pageerror. No worktree sem public, o
+Playwright serviu os assets reais do checkout principal por interceptação;
+screenshots temporários foram inspecionados, não versionados. 150 Vitest/113
+Python e build passaram. Flags/diálogos/VM, IDs especiais, bordas contínuas sem
+warp ZO, transições exatas e paridade permanecem em P-013/P-017 (A-025).

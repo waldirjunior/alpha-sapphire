@@ -19,11 +19,14 @@ import {
   findTriggeredTrainer,
   interact,
   isTallGrass,
-  movePlayer,
 } from './core/gameState';
 import { deserializeSave, serializeSave } from './core/save';
 import type { Direction } from './core/types';
-import { MAPS } from './data/maps';
+import { zoneMaps, startingMapId, saveStorageKey } from './data/maps_v2/runtime';
+import { stepWarp } from './core/warps';
+import { transitionMap } from './engine/mapTransition';
+import { grassTableFromZone } from './core/wildPokemon';
+
 import { getSpeciesByDex } from './core/dex';
 import { buildZoneEncounterTables, generatePokemon, resolveEncounterTable, type ZoneEncounterSource } from './core/wildPokemon';
 import { MAP_ENCOUNTERS, type WildEncounterEntry } from './data/pokemon/route101';
@@ -32,6 +35,10 @@ import { SceneManager } from './engine/SceneManager';
 import { BgmPlayer } from './engine/audioPlayer';
 import { bgmUrl, resolveMapBgm, type ZoneAudioEntry } from './core/zoneAudio';
 import { MAP_ZONE_IDS } from './data/audio/mapZones';
+
+const MAPS = zoneMaps.maps;
+const START_MAP_ID = startingMapId(window.location.search);
+let moving = false;
 
 // Zonas extraídas da ROM (src/data/zones/*.json, A-009) são opcionais: sem elas vale MAP_ENCOUNTERS.
 const ZONE_FILES = import.meta.glob<ZoneEncounterSource>('./data/zones/*.json', { import: 'default' });
@@ -74,14 +81,14 @@ if (!app) {
   throw new Error('Elemento #app não encontrado');
 }
 
-const SAVE_STORAGE_KEY = 'alpha_sapphire_web_save_v1';
+const SAVE_STORAGE_KEY = saveStorageKey(window.location.search);
 const saved = (() => {
   const raw = window.localStorage.getItem(SAVE_STORAGE_KEY);
   return raw ? deserializeSave(raw) : null;
 })();
 
 const sceneManager = new SceneManager(app);
-let state = saved?.state ?? createInitialState('littleroot_town', MAPS);
+let state = saved?.state ?? createInitialState(START_MAP_ID, MAPS);
 let starterId: 'treecko' | 'torchic' | 'mudkip' = 'torchic';
 let party = saved?.party ?? [createPokemonInstance(SPECIES[starterId], 5)];
 let bag = saved?.bag ?? createInitialBag();
@@ -109,9 +116,9 @@ function persistSave(): void {
 }
 
 function startNewGame(): void {
-  if (activeBattle) return;
+  if (activeBattle || moving) return;
   window.localStorage.removeItem(SAVE_STORAGE_KEY);
-  state = createInitialState('littleroot_town', MAPS);
+  state = createInitialState(START_MAP_ID, MAPS);
   party = [createPokemonInstance(SPECIES[starterId], 5)];
   bag = createInitialBag();
   caughtCount = 0;
@@ -267,7 +274,7 @@ function renderBattle(): void {
     }
     if (activeBattle?.status === 'defeat') {
       party[0] = createPokemonInstance(SPECIES[starterId], 5);
-      state = createInitialState('littleroot_town', MAPS);
+      state = createInitialState(START_MAP_ID, MAPS);
     }
     activeBattle = null;
     activeTrainerId = null;
@@ -456,8 +463,8 @@ function renderIntro(): void {
         ...state,
         player: {
           ...state.player,
-          mapId: 'littleroot_town',
-          pos: { x: 14, z: 14 },
+          mapId: START_MAP_ID,
+          pos: { ...createInitialState(START_MAP_ID, MAPS).player.pos },
           facing: 'up',
         },
         storyFlags: {
@@ -503,7 +510,9 @@ let bgmMapId: string | null = null;
 function syncBgm(mapId: string): void {
   if (mapId === bgmMapId) return;
   bgmMapId = mapId;
-  const track = resolveMapBgm(mapId, MAP_ZONE_IDS, zoneAudio);
+  const zoneId = MAPS[mapId]?.zoneId;
+  const mapZones = zoneId === undefined ? MAP_ZONE_IDS : { ...MAP_ZONE_IDS, [mapId]: zoneId };
+  const track = resolveMapBgm(mapId, mapZones, zoneAudio);
   if (track) void bgmPlayer.play(bgmUrl(import.meta.env.BASE_URL, track));
   else bgmPlayer.stop();
 }
@@ -549,8 +558,8 @@ const KEY_TO_DIR: Record<string, Direction> = {
   KeyD: 'right',
 };
 
-window.addEventListener('keydown', (event) => {
-  if (activeBattle || introStep) return;
+window.addEventListener('keydown', async (event) => {
+  if (activeBattle || introStep || moving) return;
 
   if (event.code === 'Space' || event.code === 'Enter') {
     event.preventDefault();
@@ -596,9 +605,24 @@ window.addEventListener('keydown', (event) => {
   const dir = KEY_TO_DIR[event.code];
   if (!dir) return;
 
+  event.preventDefault();
   const prevPos = state.player.pos;
-  state = movePlayer(state, dir, MAPS);
-  const moved = prevPos.x !== state.player.pos.x || prevPos.z !== state.player.pos.z;
+  const previousMapId = state.player.mapId;
+  const warp = stepWarp(state, dir, MAPS[state.player.mapId]);
+  moving = true;
+  try {
+    const next = await zoneMaps.move(state, dir);
+    if (next.player.mapId !== previousMapId) {
+      await transitionMap(app, warp?.transitionEffect, () => { state = next; syncUi(); });
+    } else state = next;
+  } catch (error) {
+    console.error('Falha ao carregar zona; movimento não aplicado', error);
+    if (hudPos) hudPos.textContent = 'Falha ao carregar zona. Tente novamente.';
+    return;
+  } finally {
+    moving = false;
+  }
+  const moved = previousMapId !== state.player.mapId || prevPos.x !== state.player.pos.x || prevPos.z !== state.player.pos.z;
   const currentMap = MAPS[state.player.mapId];
 
   if (moved) {
@@ -618,7 +642,9 @@ window.addEventListener('keydown', (event) => {
   }
 
   if (moved && currentMap && isTallGrass(currentMap, state.player.pos)) {
-    const table = resolveEncounterTable(state.player.mapId, zoneEncounterTables, MAP_ENCOUNTERS);
+    const table = currentMap.encounters
+      ? grassTableFromZone({ name: currentMap.name, encounters: currentMap.encounters }, resolveRosterSpeciesId)
+      : resolveEncounterTable(state.player.mapId, zoneEncounterTables, MAP_ENCOUNTERS);
     const encounter = table ? rollWildEncounter(table) : null;
     const wildSpecies = encounter ? findRosterSpecies(encounter.speciesId) : undefined;
     if (encounter && wildSpecies && party.some((p) => p.currentHp > 0)) {

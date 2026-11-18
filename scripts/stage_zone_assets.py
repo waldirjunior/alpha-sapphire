@@ -1,0 +1,87 @@
+import argparse
+import base64
+import json
+import mimetypes
+from pathlib import Path
+from urllib.parse import unquote
+
+from scripts.glb_native_clips import decode_glb, encode_glb
+
+SLICE = (6, 7, 23, 24, 25, *range(223, 232))
+
+
+def select_slice(maps: dict, roots: tuple = SLICE) -> list[int]:
+    destinations = {int(warp['targetMapId'][5:]) for zone in roots for warp in maps[zone]['warps']}
+    return sorted(set(roots) | destinations)
+
+
+def write_new(path: Path, content: bytes) -> None:
+    if path.exists():
+        if path.read_bytes() != content:
+            raise ValueError(f'Asset já existe com conteúdo diferente: {path}')
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(content)
+
+
+def image_file(model: Path, uri: str) -> Path:
+    image = (model.parent / unquote(uri)).resolve()
+    image.relative_to(model.parent.resolve())
+    return image
+
+
+def copy_gr(source: Path, target: Path) -> None:
+    blob = source.read_bytes()
+    scene, _ = decode_glb(blob)
+    for image in scene.get('images', []):
+        uri = image.get('uri', '')
+        if not uri or uri.startswith('data:'):
+            continue
+        write_new(target.parent / unquote(uri), image_file(source, uri).read_bytes())
+    write_new(target, blob)
+
+
+def copy_character(source: Path, target: Path) -> None:
+    blob = source.read_bytes()
+    scene, binary = decode_glb(blob)
+    external = [image for image in scene.get('images', []) if image.get('uri', '') and not image['uri'].startswith('data:')]
+    for image in external:
+        path = image_file(source, image['uri'])
+        mime = mimetypes.guess_type(path.name)[0] or 'application/octet-stream'
+        image['uri'] = f'data:{mime};base64,' + base64.b64encode(path.read_bytes()).decode('ascii')
+    write_new(target, encode_glb(scene, binary) if external else blob)
+
+
+def stage_characters(models: Path, public: Path, ids: set[int]) -> list[int]:
+    missing = []
+    for index in sorted(ids):
+        name = f'mm_{index:04d}'
+        candidates = [models / directory / name / f'{name}.glb'
+                      for directory in ('clips_merged/characters', 'characters')]
+        source = next((path for path in candidates if path.is_file()), None)
+        if source is None:
+            missing.append(index)
+            continue
+        copy_character(source, public / f'assets/characters/{name}.glb')
+    return missing
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description='Copia apenas assets convertidos do slice e destinos diretos; não converte ROM.')
+    parser.add_argument('--models-dir', type=Path, required=True)
+    parser.add_argument('--public-dir', type=Path, required=True)
+    parser.add_argument('--maps-dir', type=Path, default=Path('src/data/maps_v2'))
+    args = parser.parse_args()
+    maps = {int(path.stem): json.loads(path.read_text()) for path in args.maps_dir.glob('[0-9][0-9][0-9][0-9].json')}
+    selected = select_slice(maps)
+    grs = {chunk['grId'] for zone in selected for chunk in maps[zone]['source']['chunks']}
+    for index in sorted(grs):
+        name = f'gr_{index:04d}'
+        copy_gr(args.models_dir / name / f'{name}.glb', args.public_dir / f'assets/maps/{name}/{name}.glb')
+    actors = {npc['model'] for zone in selected for npc in maps[zone]['npcs']}
+    missing = stage_characters(args.models_dir, args.public_dir, actors)
+    print(json.dumps({'zones': selected, 'grs': sorted(grs), 'characters': len(actors) - len(missing), 'missingCharacters': missing}))
+
+
+if __name__ == '__main__':
+    main()
