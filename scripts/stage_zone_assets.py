@@ -33,6 +33,8 @@ def image_file(model: Path, uri: str) -> Path:
 
 def copy_gr(source: Path, target: Path) -> None:
     fix_file(source)
+    if target.exists():
+        fix_file(target)
     blob = source.read_bytes()
     scene, _ = decode_glb(blob)
     for image in scene.get('images', []):

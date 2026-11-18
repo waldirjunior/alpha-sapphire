@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createInitialState, movePlayer } from './gameState';
 import type { MapDefinition } from './types';
+import { stepWarp } from './warps';
 
 const a: MapDefinition = { id: 'a', name: 'A', width: 2, height: 2,
   collisions: [[0, 0], [0, 0]], spawnPos: { x: 1, z: 1 }, warps: [],
@@ -9,6 +10,13 @@ const a: MapDefinition = { id: 'a', name: 'A', width: 2, height: 2,
 const b: MapDefinition = { ...a, id: 'b', worldOrigin: { x: 2, z: 0 }, boundaries: [] };
 
 describe('continuous boundaries', () => {
+  it.each([[true, 'b', false], [false, 'b', true], [true, 'c', true]] as const)(
+    'overrides only the warp replaced by an inferred bridge (%s, %s)', (inferred, targetMapId, hasWarp) => {
+      const map: MapDefinition = { ...a, boundaries: [{ targetMapId: 'b', direction: 'left',
+        from: { x: 1, z: 0 }, length: 2, offset: { x: 1, z: 0 }, inferred }],
+        warps: [{ from: { x: 0, z: 0 }, width: 1, height: 2, targetMapId, targetPos: { x: 0, z: 0 } }] };
+      expect(Boolean(stepWarp(createInitialState('a', { a: map }), 'left', map))).toBe(hasWarp);
+    });
   it('crosses one world tile without mutating the current state', () => {
     const state = createInitialState('a', { a });
     const before = structuredClone(state);

@@ -1,5 +1,5 @@
 import type { BoundaryLink, Direction, GridPosition, MapDefinition } from './types';
-import { stepPosition } from './warps';
+import { stepPosition } from './gridMovement';
 
 export function stepBoundary(pos: GridPosition, direction: Direction, map: MapDefinition): BoundaryLink | undefined {
   const along = direction === 'left' || direction === 'right' ? 'z' : 'x';

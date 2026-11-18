@@ -11,7 +11,7 @@ it('connects the corridor with unit world steps and reads the exact native zone 
     { zone: 6, pos: { x: 20, z: 0 }, direction: 'up', target: 23 },
     // x=21: o tile (20,39) de Oldale tem um NPC ROM real (spawnFlag 619) que bloqueia a coluna 20
     { zone: 23, pos: { x: 21, z: 0 }, direction: 'up', target: 7 },
-    { zone: 7, pos: { x: 1, z: 21 }, direction: 'left', target: 24 },
+    { zone: 7, pos: { x: 1, z: 22 }, direction: 'left', target: 24 },
     { zone: 24, pos: { x: 0, z: 16 }, direction: 'left', target: 13 },
   ] as const;
   for (const entry of cases) {
@@ -22,6 +22,8 @@ it('connects the corridor with unit world steps and reads the exact native zone 
     expect(next.player.mapId).toBe(`zone_${String(entry.target).padStart(4, '0')}`);
     const end = worldPosition(next.player.pos, maps[next.player.mapId]);
     expect(Math.abs(end.x - start.x) + Math.abs(end.z - start.z)).toBe(1);
+    expect(end).toEqual(entry.direction === 'left' ? { x: start.x - 1, z: start.z } : { x: start.x, z: start.z - 1 });
+    expect(next.player.facing).toBe(entry.direction);
   }
   expect(maps.zone_0023.encounters).toEqual(nativeRoute.encounters);
   expect(maps.zone_0007.boundaries?.find((edge) => edge.targetMapId === 'zone_0024')?.inferred).toBe(true);

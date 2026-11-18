@@ -72,6 +72,16 @@ class UvRemapTest(unittest.TestCase):
         doc = make_doc([3, 4], ["TEXCOORD_0", "TEXCOORD_1"])
         self.assertEqual(self.tex_coords(self.fix(doc)), [1, 1])
 
+    def test_pica_diffuse_uses_raw_uv_zero_and_migrates_previous_remap(self) -> None:
+        doc = make_doc([1, 3, 4], ["TEXCOORD_0", "TEXCOORD_1"])
+        for material in doc["materials"]:
+            material["extras"] = {"pica": True}
+        doc["materials"][0]["normalTexture"] = {"index": 0, "texCoord": 1}
+        fixed = self.fix(doc)
+        self.assertEqual(self.tex_coords(fixed), [0, 0, 0])
+        self.assertEqual(fixed["materials"][0]["normalTexture"]["texCoord"], 1)
+        self.assertEqual(self.fix(fixed), fixed)
+
     def test_valid_texcoord_is_untouched(self) -> None:
         doc = make_doc([0, 1], ["TEXCOORD_0", "TEXCOORD_1"])
         self.assertEqual(self.tex_coords(self.fix(doc)), [0, 1])

@@ -80,7 +80,7 @@ Atualizado em 2026-11-17 (host verificado no worktree; registros de VPS abaixo s
 - `_neighbors.json`: 58 zonas/90 bordas dirigidas derivadas do contato MM, com ponte 7↔24 explicitamente inferred=true, aprovada pelo coordenador; não se alega extração da conexão entre MM1 e MM2. Padding permanece bloqueado; passo entre x=1 de Oldale e x=78 de Route102 mede um tile mundial.
 - Core mantém colisão/direção e coordenadas locais; engine conserva chunks/atores e usa origens mundiais estáveis. Repositório só pré-carrega um salto de vizinhos; encontros vêm diretamente de zones/NNN_*.json por ID exato.
 - Staging ampliado: 23 zonas (slice + destinos diretos), 35 GRs, 51 atores; glb_uv_fix aplicado antes da cópia e os 7 testes UV passaram apontando ao public principal, sem skips.
-- Testes de borda, grafo e cache passam; Playwright no checkout principal **ainda pendente**, aguardando avanço da main pelo coordenador conforme PRD-006/ADR-004. Nenhuma caminhada completa declarada pronta nesta etapa.
+- Correções após Playwright em f4eaffa: ponte inferida agora suprime somente o warp ZO da mesma conexão (antes puxava chegada78,22/left para79,20/right); UV difuso PICA usa canal0, pois A/B revelou distorção no canal1. A-039/A-040 registram regressões e evidência. 211 Vitest/build passaram; Playwright integral no checkout principal **ainda pendente**, aguardando integrar estas correções. Nenhuma caminhada completa declarada pronta nesta etapa.
 
 ## Integração maps_v2 no runtime (2026-11-17, zone-maps sobre main 5d9a3b6)
 
