@@ -1,7 +1,7 @@
 # PRD-012 — Mauville, Fallarbor e entrada de Meteor Falls
 
 - **Data:** 2026-11-18.
-- **Estado:** topologia, regressões e stage concluídos; Playwright main pendente.
+- **Estado:** navegação validada na main e12419b até Meteor sob fixture derivada; loop e aceite visual pendentes.
 - **Fase:** 2; P-013/P-017; A-066–A-068.
 
 ## Resultado e limites do corredor
@@ -78,6 +78,16 @@ portais também têm alturas próprias. Não foi inferido que uma cutscene seja
 a causa: investigar permissões/altura/geometria e os eventos reais em P-017.
 Não abrir tiles nem criar warp ou ponte de conveniência para fechar o loop.
 
+O catálogo interno não deve ser aplainado:71/MM32 tem os dois portais externos
+e três internos, um para72 e dois para73;72/MM33 retorna a71 e tem três
+portais para73;73/MM34 tem dois para71, três para72 e um para74/MM35;
+74 só retorna a73. Nenhuma dessas zonas tem borda MM contínua gerada.
+O binding do trigger0/script1 de71 é ambíguo entre entities/função576,
+map/função4372 e global0033/função128. Não foi executado ou identificado
+como causa do bloqueio; cenas e seus pré-requisitos continuam por resolver.
+O stage de um salto a partir de71 inclui72/73, não o74 de segundo salto;
+não há promessa de passeio ou evento completo nesses andares.
+
 ## Staging e regressões
 
 ```bash
@@ -102,11 +112,47 @@ limites de Meteor Falls, alcance estático de10050 e contatos/encontros nativos.
 **328 Vitest/49 arquivos,159 Python sem skips e build passaram sobrec9be392**;
 Python usa GLB_MAPS_DIR do public principal. Aviso de chunk >500kB herdado.
 
-## Aceite Playwright pendente
+## Aceite Playwright na main e12419b
 
-Após integração na main: caminhar de15 até37(31,66), tentar subir contra a
-pedra e capturar o estado base. Aplicar a fixture derivada explicitamente
-rotulada, recarregar sem deslocar o player e caminhar por39/85/38/36/40 até10,
-depois41 e71. Conferir encontros com os JSONs, BGMs e screenshots; registrar
-consoleErrors/pageErrors/missing/requestFailures. Não declarar o loop71→42,
-RockSmash natural, campanha completa, física vertical ou paridade visual.
+Chromium visível,1280×900, em `http://127.0.0.1:5200`; main permaneceu limpa
+em `e12419b` durante o cenário. Save isolado começa no checkpoint15(17,22),
+não em uma campanha natural desde Littleroot. RNG controlado evita batalhas
+na caminhada; encontros são comparados aos JSONs, não substituídos.
+
+| Fase | Passos acumulados e evidência |
+| --- | --- |
+| Base15→445→37(31,66) | 115; dois ArrowUp realmente bloqueados; piso31,65 é0, quatro atores visíveis/flag0 na projeção,39 inalcançável |
+| Fixture derivada | Somente tombstones37:2..5; posição/flags preservadas, reload confirma31,66 e somente os quatro atores ocultos |
+| Pós-fixture39→85→38→36→40→10 | 656 até Fallarbor10(39,23);676 até o centro10(20,22) |
+| Route114 e entrada de Meteor | 1014 até71(57,35); BGMs e portal nativos, sem salto de posição de conveniência |
+| Componente de entrada71 | 1023 até51,32;42/72/73 continuam inalcançáveis,50,32 é bloqueado e dois ArrowLeft conservam51,32 |
+| Reload final | Posição51,32 e quatro tombstones conservados; não afirma persistência de pedra na ROM |
+
+**Zero consoleErrors/pageErrors/missing/requestFailures**; dez transições,
+comparação de encontros das onze zonas percorridas e16 capturas inspecionadas.
+Nenhum check do cenário foi pulado. Um aviso não-erro de apresentação
+`BuildMdlEventAnimeSetEnd(6553770,0)` continua explícito em P-013; o script
+permanece suspenso sem bloquear movimento, sem simular o efeito com Enter.
+Requisições BGM observadas: c_02/r_c/d_01/r_e/t_05/d_05 no corredor e t_01
+no bootstrap. r_b foi staged para o ramo de retorno, não foi validado como
+reprodução na parte inacessível da caminhada.
+
+### Limites visuais observados, não escondidos pelos checks verdes
+
+O avatar não fica legível ou sofre oclusão severa em445(78,48),37(31,66),
+39(79,65),10(39,23/20,22),41(79,22) e71(57,35/51,32); em36(0,57) há
+oclusão parcial pela árvore. Os screenshots base/pós-fixture das pedras
+mostram terreno, mas não permitem validar visualmente os quatro objetos:
+visibilidade/remoção é comprovada na projeção e no bloqueio por teclado,
+não por uma animação de quebra. Fiery85(50,76) mostra exterior preto/céu e
+silhueta na chegada; bandas claras nas encostas, cartões de folhagem e
+fallbacks persistem.15(17,22),38(7,17) e40(159,22) têm avatar legível.
+Investigar câmera/altura/geometria/materiais em P-017/P-019 sem causa presumida
+ou correção oportunista. Aceite de navegação não fecha o aceite visual.
+
+Evidências locais: `/tmp/fallarbor-results.json`,
+`/tmp/playwright-test-fallarbor.js` e as16 capturas
+`/tmp/fallarbor-00-mauville-checkpoint-base.png` até
+`/tmp/fallarbor-15-meteor-final-reload-DERIVED-state.png`.
+Não declarar o loop71→42→16, RockSmash natural, campanha completa, física
+vertical ou paridade visual concluídos.

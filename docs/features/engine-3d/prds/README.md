@@ -13,4 +13,4 @@
 | [PRD-009](PRD-009-expressoes-bch-no-runtime.md) | ChangeFace e seleção de expressão BCH por ator | Seleção e A/B implementados; piscada automática pendente de clock | 2026-11-18 |
 | [PRD-010](PRD-010-corredor-rustboro-verdanturf.md) | Corredor Rustboro–Route116–Rusturf–Verdanturf | Validado;325 passos main, fixture pós-evento explícita | 2026-11-18 |
 | [PRD-011](PRD-011-corredor-verdanturf-mauville-slateport.md) | Verdanturf–Mauville e acesso pós-evento a Slateport | Validado;748 passos main, fixture explícita e limites de oclusão | 2026-11-18 |
-| [PRD-012](PRD-012-corredor-mauville-fallarbor-meteor-falls.md) | Mauville–Fallarbor–entrada de Meteor Falls | Stage/testes concluídos; fixture derivada, Playwright pendente e loop bloqueado | 2026-11-18 |
+| [PRD-012](PRD-012-corredor-mauville-fallarbor-meteor-falls.md) | Mauville–Fallarbor–entrada de Meteor Falls | 1023 passos main; base bloqueada/fixture derivada, loop e visual pendentes | 2026-11-18 |
