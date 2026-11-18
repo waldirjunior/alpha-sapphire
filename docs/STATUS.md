@@ -24,6 +24,15 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   [ADR-004](features/core-jogo/adrs/ADR-004-host-conservador-de-eventos.md) registra
   política, evidência e próximos passos. Não houve conversão/cópia de assets.
 
+## Adoção GF1 no runtime (2026-11-17, anim-0xef-re sobre main 6ae4d58)
+
+- [PRD-007](features/engine-3d/prds/PRD-007-animacoes-nativas-no-runtime.md): eventos puros de golpe/dano/queda alimentam `NativeAnimationController`; physical/special por categoria, damage, faint com pose final e idle em espera. O host aguarda os clipes antes de adotar o próximo estado, com cancelamento de cargas antigas e bloqueio de input.
+- [Catálogo runtime](../src/data/nativeAssets.json): **102 GLBs locais** em URLs imutáveis de `public/assets/native/`: 40 Pokémon + 56 personagens nativos, seis GLBs-base de fallback (Taillow, MM0122–0125/MM0312). Abrange 41 variantes Pokémon/39 espécies e 64 URLs de personagens/aliases, incluindo os MM já staged pela main atualizada. Dez IDs especiais de ator seguem com NPC fallback explícito. Arquivos proprietários continuam ignorados, não versionados.
+- 56 personagens receberam pose GF1 `overworld_000`, com preservação estrutural validada; 38 poses existentes foram verificadas e 18 anexadas após ampliar o staging, sem sobrescrever outputs. O host prefere `_000` em repouso e `_002` no deslocamento, sem declarar semântica global dos IDs. Magikarp/Tympole/Taillow continuam como limitações explícitas em P-012.
+- P-019: [auditoria de 61 modelos](features/pipeline-rom/native-uv-audit.json) encontrou **zero reparos texCoord** e UV0/UV1 idênticos em todos os pares comparados. Trocar o índice não corrige a célula nessas saídas; expressão de atlas continua aberta. Pés ausentes são limitação dos GLBs-base.
+- **185 Vitest/34 arquivos, 129 testes Python (um skip) e build canônico passaram** após merge da main; aviso conhecido de chunks grandes. O skip pré-existente ocorre porque os assets públicos estão no principal, não neste worktree. Promoção checou floats dos 102 modelos e o plano validou todas as 56 poses existentes.
+- **Pendente:** integração deste branch no checkout principal e Playwright visível na Route 101, com captura do ataque nativo e screenshots. Nenhuma validação visual foi declarada concluída.
+
 ## Estado do Código e Build
 
 - Branch atual: `main`.

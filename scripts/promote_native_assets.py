@@ -9,14 +9,15 @@ from pathlib import Path
 
 from glb_native_clips import decode_glb
 from native_motions import motion_slots, package_sections
-from validate_native_manifest import verify_float_accessors
+from validate_native_manifest import validate_model, verify_float_accessors
 
 ZONE_IDS = (6, 7, *range(23, 31))
 ALIASES = {'brendan': 315, 'may': 314, 'npc': 45}
 
 
 def character_ids(root: Path) -> set[int]:
-    selected = set(ALIASES.values())
+    staged = (root / 'public/assets/characters').glob('mm_[0-9][0-9][0-9][0-9].glb')
+    selected = set(ALIASES.values()) | {int(path.stem[3:]) for path in staged}
     for zone in ZONE_IDS:
         document = json.loads((root / f'src/data/maps_v2/{zone:04d}.json').read_text())
         selected.update(npc['model'] for npc in document['npcs'])
@@ -38,6 +39,9 @@ def prepare_pose_jobs(root: Path, manifest: dict) -> list[dict]:
         job.update(status='ready', base_glb=model['output'], clips={'overworld_000': 0},
                    output=f"rom/extracted/models/runtime_characters/mm_{model['model_id']:04d}.glb")
         job['mapping']['selected_frames'] = {'overworld_000': next(slot['frames'] for slot in slots if slot['index'] == 0)}
+        if (root / job['output']).is_file():
+            job['validation'] = validate_model(root, job)
+            job['status'] = 'merged'
         jobs.append(job)
     return jobs
 

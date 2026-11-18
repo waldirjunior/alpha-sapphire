@@ -215,3 +215,27 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro reproduzido:** O core permitia ocupar o tile de um NPC; regressão sintética recebeu `true` em vez de `false` antes da correção. No browser, assumir que NPC 0 de Littleroot falaria sobre ciência também falhou: script 14, no cenário corrente, escolhe a linha 6 sobre o resgate. Init de zona 6 para em `BuildMdlGetHandleByGPos`; diálogo pede ACMD/olhar antes do texto.
 - **Regra:** Resolver vínculo único e SHA da imagem; não zerar memória de programas sem fixture nem tratar o nome de uma nativa como prova de sua ABI. Só existem 19 imagens iniciais validadas nesta etapa. Responder efeitos cosméticos apenas pela política explícita aprovada: Enter confirma stub visível (ACMD Update=1, setters=0), sem declarar execução. Não inferir GameText/MsgLoad ou zona/warp dos nove argumentos de _MapChangeCore; ampliar por evidência de programa/zona. Manter ausência de imagem, ambiguidade e erro de execução distintos de diálogo ROM.
 - **Evidência:** Dez testes sintéticos novos, 160 Vitest/25 arquivos e build passaram. Playwright visível percorreu o mapa por teclado até (24,20)/up e exibiu o texto ROM de script 14/linha 6 após cinco confirmações; zero pageerror, screenshots `/tmp/events-layer-before-npc.png` e `/tmp/events-layer-rom-dialogue.png` inspecionados. Isso não prova spawn canônico, rota da história ou paridade gráfica; GameText, warp AMX, save/party/bag e expansão da memória permanecem em P-013.
+
+## A-030 Animação deve consumir os eventos resolvidos antes de trocar o estado visual
+
+- **Data:** 2026-11-17
+- **Contexto:** Fase 2/P-012, [PRD-007](features/engine-3d/prds/PRD-007-animacoes-nativas-no-runtime.md).
+- **Erro reproduzido:** O runtime não selecionava golpes/dano/queda a partir da resolução real. Um teste adicional encontrou peso zero no primeiro `idle`: fazer fade-in ao carregar expunha a bind pose antes da pose animada. A promoção também aceitava NaN antes da regressão de floats.
+- **Regra:** Emitir eventos imutáveis no core, sem Three.js; o renderer escolhe a ação pela categoria e aguarda `finished`, não um timeout inventado. Aplicar o idle inicial com peso integral, segurar a pose final de faint e invalidar carregamentos/callbacks ao trocar a cena. Publicar cópias por hash e rejeitar accessors não finitos. Modelos sem clipe nativo preservam o GLB-base e uma razão explícita, sem retirar a espécie dos encontros nem inventar clipes.
+- **Evidência:** [battleEvents.test.ts](../src/core/battleEvents.test.ts), [nativeAnimation.test.ts](../src/engine/nativeAnimation.test.ts), [nativeAssets.test.ts](../src/engine/nativeAssets.test.ts), [test_native_assets.py](../scripts/test_native_assets.py); catálogo de 102 modelos, 96 nativos e seis fallbacks. Após atualizar com main 6ae4d58, 185 Vitest e build passaram; validação visual na main ainda pendente.
+
+## A-031 Um texCoord válido não comprova a célula correta do atlas
+
+- **Data:** 2026-11-17
+- **Contexto:** Investigação P-019 sobre os personagens promovidos ao runtime.
+- **Erro potencial:** Aplicar a correção de canais esparsos de P-018 a uma face que já referencia o canal 0, ou deslocar UVs para ocultar o defeito sem provar a expressão correta.
+- **Regra:** Comparar os valores dos sets, não apenas seus índices. Nos 61 GLBs auditados, os pares UV0/UV1 são idênticos e não há referência inválida; trocar 0 por 1 não muda o atlas. A seleção de célula/expressão permanece em aberto, separada do transporte esquelético e dos BCHs de material/visibilidade não exportados. Pés ausentes nos GLBs-base são limitação de geometria, não algo recuperável por alphaTest ou animação.
+- **Evidência:** [audit_character_uv.py](../scripts/audit_character_uv.py) e [relatório por SHA-256](features/pipeline-rom/native-uv-audit.json); faces MM0315/MM0314/MM0180 comparadas, sem alterar `glb_uv_fix.py`. A regressão sintética confirma que sets iguais e um canal válido não exigem remap.
+
+## A-032 Atualizar com main também exige reconciliar staging e caches derivados
+
+- **Data:** 2026-11-17
+- **Contexto:** Ampliação da promoção nativa após integrar main 6ae4d58.
+- **Erro reproduzido:** O seletor omitia MM0179 já staged no principal; o plano também marcava uma pose existente como `ready`, embora o runner corretamente se recuse a sobrescrevê-la. Dois testes falharam com esses casos antes da correção.
+- **Regra:** Unir atores das zonas/aliases aos MM canônicos já staged, recalcular os frames do índice selecionado e só reutilizar poses existentes após validar estrutura, prefixo-base, skin, canais e tempos. Não tratar mera existência como cache válido nem remover a proteção contra sobrescrita.
+- **Evidência:** [test_native_assets.py](../scripts/test_native_assets.py): sete testes passaram após o fix; suíte Python completa com 129 testes e um skip por assets públicos ausentes no worktree. O plano verificou as 38 poses anteriores e as 18 novas, totalizando 56; catálogo final com 102 modelos e 61 personagens auditados. Assets permanecem ignorados no principal.

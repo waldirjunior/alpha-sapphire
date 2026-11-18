@@ -46,41 +46,62 @@
     "/assets/characters/mm_0045.glb": "/assets/native/characters/mm_0045-f351711ff33b.glb",
     "/assets/characters/npc/npc.glb": "/assets/native/characters/mm_0045-f351711ff33b.glb",
     "/assets/characters/mm_0122.glb": "/assets/native/characters/mm_0122-b313831fd7c2.glb",
+    "/assets/characters/mm_0123.glb": "/assets/native/characters/mm_0123-b313831fd7c2.glb",
+    "/assets/characters/mm_0124.glb": "/assets/native/characters/mm_0124-b313831fd7c2.glb",
+    "/assets/characters/mm_0125.glb": "/assets/native/characters/mm_0125-b313831fd7c2.glb",
     "/assets/characters/mm_0179.glb": "/assets/native/characters/mm_0179-0d02d53fd4a3.glb",
     "/assets/characters/mm_0180.glb": "/assets/native/characters/mm_0180-846abfc5891a.glb",
+    "/assets/characters/mm_0181.glb": "/assets/native/characters/mm_0181-00c25fbd14bc.glb",
     "/assets/characters/mm_0212.glb": "/assets/native/characters/mm_0212-7f7feeaea4a4.glb",
     "/assets/characters/mm_0218.glb": "/assets/native/characters/mm_0218-fd0c0b77a9d0.glb",
     "/assets/characters/mm_0219.glb": "/assets/native/characters/mm_0219-808cec0681ab.glb",
     "/assets/characters/mm_0220.glb": "/assets/native/characters/mm_0220-ff7bc3069a7a.glb",
     "/assets/characters/mm_0221.glb": "/assets/native/characters/mm_0221-16f75732b0e6.glb",
+    "/assets/characters/mm_0223.glb": "/assets/native/characters/mm_0223-48d1738dd6c4.glb",
     "/assets/characters/mm_0225.glb": "/assets/native/characters/mm_0225-1d7a7e443328.glb",
     "/assets/characters/mm_0226.glb": "/assets/native/characters/mm_0226-0b64d13a5229.glb",
+    "/assets/characters/mm_0231.glb": "/assets/native/characters/mm_0231-c29ee1fb909e.glb",
+    "/assets/characters/mm_0236.glb": "/assets/native/characters/mm_0236-c41aacc03800.glb",
     "/assets/characters/mm_0238.glb": "/assets/native/characters/mm_0238-2523243f1098.glb",
     "/assets/characters/mm_0239.glb": "/assets/native/characters/mm_0239-83501ba8fc20.glb",
     "/assets/characters/mm_0242.glb": "/assets/native/characters/mm_0242-6c6fd31924a7.glb",
+    "/assets/characters/mm_0244.glb": "/assets/native/characters/mm_0244-bf9bdba289ec.glb",
+    "/assets/characters/mm_0245.glb": "/assets/native/characters/mm_0245-a2b1da4b79d7.glb",
     "/assets/characters/mm_0246.glb": "/assets/native/characters/mm_0246-665988a33527.glb",
+    "/assets/characters/mm_0252.glb": "/assets/native/characters/mm_0252-dcaebda6edd7.glb",
     "/assets/characters/mm_0254.glb": "/assets/native/characters/mm_0254-e43ac7317198.glb",
     "/assets/characters/mm_0255.glb": "/assets/native/characters/mm_0255-aa60a51f472d.glb",
+    "/assets/characters/mm_0256.glb": "/assets/native/characters/mm_0256-9d5aec72199a.glb",
     "/assets/characters/mm_0259.glb": "/assets/native/characters/mm_0259-a93209c78824.glb",
     "/assets/characters/mm_0266.glb": "/assets/native/characters/mm_0266-7d5b4d0d9970.glb",
     "/assets/characters/mm_0267.glb": "/assets/native/characters/mm_0267-4a36e9493797.glb",
+    "/assets/characters/mm_0270.glb": "/assets/native/characters/mm_0270-a67d30672bde.glb",
     "/assets/characters/mm_0271.glb": "/assets/native/characters/mm_0271-698787ee45a4.glb",
     "/assets/characters/mm_0275.glb": "/assets/native/characters/mm_0275-39084e69d362.glb",
     "/assets/characters/mm_0280.glb": "/assets/native/characters/mm_0280-8d4e031bce9d.glb",
     "/assets/characters/mm_0281.glb": "/assets/native/characters/mm_0281-e09cd97b6e73.glb",
     "/assets/characters/mm_0283.glb": "/assets/native/characters/mm_0283-0b0a2a0cd9bb.glb",
     "/assets/characters/mm_0284.glb": "/assets/native/characters/mm_0284-afc1227e8942.glb",
+    "/assets/characters/mm_0286.glb": "/assets/native/characters/mm_0286-013fd8bfad94.glb",
     "/assets/characters/mm_0287.glb": "/assets/native/characters/mm_0287-2fc5207c8851.glb",
+    "/assets/characters/mm_0288.glb": "/assets/native/characters/mm_0288-fb4379c1d942.glb",
     "/assets/characters/mm_0289.glb": "/assets/native/characters/mm_0289-9cdf235715d2.glb",
     "/assets/characters/mm_0296.glb": "/assets/native/characters/mm_0296-49915c1b2bba.glb",
+    "/assets/characters/mm_0298.glb": "/assets/native/characters/mm_0298-b2b1887b9f69.glb",
     "/assets/characters/mm_0299.glb": "/assets/native/characters/mm_0299-157626c5a39b.glb",
+    "/assets/characters/mm_0301.glb": "/assets/native/characters/mm_0301-a9fc69bd43ab.glb",
+    "/assets/characters/mm_0302.glb": "/assets/native/characters/mm_0302-76411d9a22bc.glb",
+    "/assets/characters/mm_0303.glb": "/assets/native/characters/mm_0303-9a3bc037d50f.glb",
     "/assets/characters/mm_0305.glb": "/assets/native/characters/mm_0305-c73d76cadcaf.glb",
+    "/assets/characters/mm_0306.glb": "/assets/native/characters/mm_0306-0a663933716c.glb",
+    "/assets/characters/mm_0307.glb": "/assets/native/characters/mm_0307-afbd2e91a801.glb",
     "/assets/characters/mm_0312.glb": "/assets/native/characters/mm_0312-b313831fd7c2.glb",
     "/assets/characters/mm_0314.glb": "/assets/native/characters/mm_0314-29b54e385d73.glb",
     "/assets/characters/may/may.glb": "/assets/native/characters/mm_0314-29b54e385d73.glb",
     "/assets/characters/mm_0315.glb": "/assets/native/characters/mm_0315-b1bf2efcd952.glb",
     "/assets/characters/brendan/brendan.glb": "/assets/native/characters/mm_0315-b1bf2efcd952.glb",
     "/assets/characters/mm_0318.glb": "/assets/native/characters/mm_0318-8460c67d980f.glb",
+    "/assets/characters/mm_0319.glb": "/assets/native/characters/mm_0319-9b8a9b6c38e1.glb",
     "/assets/characters/mm_0322.glb": "/assets/native/characters/mm_0322-3485956cba79.glb",
     "/assets/characters/mm_0344.glb": "/assets/native/characters/mm_0344-e522660f3103.glb",
     "/assets/characters/mm_0345.glb": "/assets/native/characters/mm_0345-1c66a3dd3bbe.glb",
@@ -110,6 +131,30 @@
       "clips": []
     },
     {
+      "id": "character/mm_0123",
+      "url": "/assets/native/characters/mm_0123-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0123/mm_0123.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0124",
+      "url": "/assets/native/characters/mm_0124-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0124/mm_0124.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0125",
+      "url": "/assets/native/characters/mm_0125-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0125/mm_0125.glb",
+      "clips": []
+    },
+    {
       "id": "character/mm_0179",
       "url": "/assets/native/characters/mm_0179-0d02d53fd4a3.glb",
       "sha256": "0d02d53fd4a34828b623a919d0516499f0459529931a33ae55f489b2c26a8c3c",
@@ -128,6 +173,19 @@
       "sha256": "846abfc5891a2bcc6c405e0184db1e34a56e0645c6b0f070155755ca8237ceea",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0180.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0181",
+      "url": "/assets/native/characters/mm_0181-00c25fbd14bc.glb",
+      "sha256": "00c25fbd14bcfb75afe8ba076e3e4417b9edcecfd99e6a839fded835ea8e9dd3",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0181.glb",
       "clips": [
         "idle",
         "walk",
@@ -201,6 +259,19 @@
       ]
     },
     {
+      "id": "character/mm_0223",
+      "url": "/assets/native/characters/mm_0223-48d1738dd6c4.glb",
+      "sha256": "48d1738dd6c4ac1931323e57e9dda8d044909513eba510219c94acb84e14ef7f",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0223.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
       "id": "character/mm_0225",
       "url": "/assets/native/characters/mm_0225-1d7a7e443328.glb",
       "sha256": "1d7a7e443328d028c38f190bae650e56d597429a79b8671722d7e9ae39beda46",
@@ -219,6 +290,32 @@
       "sha256": "0b64d13a5229a50b3f86ed85802d7f43ea00eb1adc85a79c5d937f5703fd6e7d",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0226.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0231",
+      "url": "/assets/native/characters/mm_0231-c29ee1fb909e.glb",
+      "sha256": "c29ee1fb909e9f59d1262690eca16c8322d09b24074b2472ff288ae9e774e474",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0231.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0236",
+      "url": "/assets/native/characters/mm_0236-c41aacc03800.glb",
+      "sha256": "c41aacc03800407e3b53a00446a0498a6ca490378dff6f6b897c8203b565bc29",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0236.glb",
       "clips": [
         "idle",
         "walk",
@@ -266,11 +363,50 @@
       ]
     },
     {
+      "id": "character/mm_0244",
+      "url": "/assets/native/characters/mm_0244-bf9bdba289ec.glb",
+      "sha256": "bf9bdba289eca9386a8024ffcda8dd163c72ed68f657879b605095e184d1d43e",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0244.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0245",
+      "url": "/assets/native/characters/mm_0245-a2b1da4b79d7.glb",
+      "sha256": "a2b1da4b79d77530d33c4feebf465fd26140f54b9b930d76d06a2d45f551e43c",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0245.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
       "id": "character/mm_0246",
       "url": "/assets/native/characters/mm_0246-665988a33527.glb",
       "sha256": "665988a33527163bc70cd0f6925075f636bf4fd065287d29adb62a7e036abcd2",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0246.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0252",
+      "url": "/assets/native/characters/mm_0252-dcaebda6edd7.glb",
+      "sha256": "dcaebda6edd7eae0521b86fcce3e3a84959e9b420095841dd678413a3b0cbfdf",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0252.glb",
       "clips": [
         "idle",
         "walk",
@@ -297,6 +433,19 @@
       "sha256": "aa60a51f472d497238c5af1fc8d44e9943a86b5bce42d4b406bb2c83c694d84d",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0255.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0256",
+      "url": "/assets/native/characters/mm_0256-9d5aec72199a.glb",
+      "sha256": "9d5aec72199a2e08c2c1045a1cf0e9247551cd93965b2ecafd087b9353c3562d",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0256.glb",
       "clips": [
         "idle",
         "walk",
@@ -336,6 +485,19 @@
       "sha256": "4a36e949379756e1879bdfa2083d8d6b85e5377b608e988d429b249cd5cd861d",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0267.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0270",
+      "url": "/assets/native/characters/mm_0270-a67d30672bde.glb",
+      "sha256": "a67d30672bde6fd352a69aff3db6b80f6eff25356cf35b9799473c62ee3c535a",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0270.glb",
       "clips": [
         "idle",
         "walk",
@@ -422,11 +584,37 @@
       ]
     },
     {
+      "id": "character/mm_0286",
+      "url": "/assets/native/characters/mm_0286-013fd8bfad94.glb",
+      "sha256": "013fd8bfad945ee4526d182343b02b1095776b48fac3f31ef867976fb936bafe",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0286.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
       "id": "character/mm_0287",
       "url": "/assets/native/characters/mm_0287-2fc5207c8851.glb",
       "sha256": "2fc5207c88519e90425ad2b87facd591d3d31a13ef6006b2664d2fac311c63e2",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0287.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0288",
+      "url": "/assets/native/characters/mm_0288-fb4379c1d942.glb",
+      "sha256": "fb4379c1d942ef3e9c7cf2859b4d365463472add6fa5020bc91613f2cefd561d",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0288.glb",
       "clips": [
         "idle",
         "walk",
@@ -461,6 +649,19 @@
       ]
     },
     {
+      "id": "character/mm_0298",
+      "url": "/assets/native/characters/mm_0298-b2b1887b9f69.glb",
+      "sha256": "b2b1887b9f69b0216bfeb69a7ec55577ca808f16799e548f1a7e1c6caca3dadd",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0298.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
       "id": "character/mm_0299",
       "url": "/assets/native/characters/mm_0299-157626c5a39b.glb",
       "sha256": "157626c5a39b3121ae2ff3d81d2d30b9e417cb8dc963ea9fc26b789cb3aa3efb",
@@ -474,11 +675,76 @@
       ]
     },
     {
+      "id": "character/mm_0301",
+      "url": "/assets/native/characters/mm_0301-a9fc69bd43ab.glb",
+      "sha256": "a9fc69bd43ab5ee3e98e86424af58a09e981f874e4f00be4bd1d90b48b25cb28",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0301.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0302",
+      "url": "/assets/native/characters/mm_0302-76411d9a22bc.glb",
+      "sha256": "76411d9a22bc8c87896fc930823a4d4d4a09a5418b78ad7b8e5ad0ed5ecbe488",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0302.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0303",
+      "url": "/assets/native/characters/mm_0303-9a3bc037d50f.glb",
+      "sha256": "9a3bc037d50f46eaf53e65d6266a337c88ee2470b5a8c99d9598319eaeebbe26",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0303.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
       "id": "character/mm_0305",
       "url": "/assets/native/characters/mm_0305-c73d76cadcaf.glb",
       "sha256": "c73d76cadcaf567c617234765e9c8ee761b0bc02a40fc9d0e5be4f9f80284ac8",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0305.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0306",
+      "url": "/assets/native/characters/mm_0306-0a663933716c.glb",
+      "sha256": "0a663933716c939a0f7605dddfe55092840350bbca61e535e47999327b90c9ef",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0306.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0307",
+      "url": "/assets/native/characters/mm_0307-afbd2e91a801.glb",
+      "sha256": "afbd2e91a8019a14c0cfd8b9b4906bac58e2dca7b6ccb9f8d0cdab1566e722db",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0307.glb",
       "clips": [
         "idle",
         "walk",
@@ -529,6 +795,19 @@
       "clips": [
         "idle",
         "walk",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0319",
+      "url": "/assets/native/characters/mm_0319-9b8a9b6c38e1.glb",
+      "sha256": "9b8a9b6c38e1b84add63082e996063a0e6c2bdc8ae725b34b0fc10ea8ceef9de",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0319.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
         "overworld_000"
       ]
     },
@@ -1167,6 +1446,18 @@
   "unavailable": [
     {
       "id": "character/mm_0122",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0123",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0124",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0125",
       "reason": "MM has only the model section"
     },
     {

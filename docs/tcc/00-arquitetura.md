@@ -13,3 +13,18 @@ Reconstruir a experiência de **Pokémon Alpha Sapphire** para navegador web uti
 - `src/ai/`: Suíte de paridade contra o comportamento esperado da ROM original (`emulatorParity.test.ts`).
 - `scripts/`: Pipeline offline em Python para extração de `RomFS`, `GARC`, `GR`, textos Gen 6 e conversão `.glb` via `SpicaExport` + `assimp`.
 - `docs/tcc/`: Registros técnicos e decisões de arquitetura para o livro do TCC.
+
+## 3. Eventos puros e apresentação de batalha
+
+A [ADR-005 do engine](../features/engine-3d/adrs/ADR-005-eventos-batalha-e-clipes-nativos.md)
+mantém a resolução de dano e ordem dos turnos no core. O resultado contém eventos
+imutáveis de golpe, perda de HP e queda; não contém objetos Three.js. O host
+aguarda a apresentação desses fatos antes de adotar o próximo estado, evitando
+substituir um Pokémon antes de mostrar sua queda. O engine escolhe os clipes
+GF1 pelo catálogo local e categoria do golpe, aguarda o mixer e invalida cargas
+obsoletas quando a cena muda.
+
+Essa fronteira permanece reutilizável sem WebGL no servidor. A implementação
+local ainda não é um protocolo multiplayer nem comprova marcadores de impacto,
+expressões BCH ou paridade temporal. Testes de mixer e eventos são distintos da
+validação Playwright na main e da comparação com emulador (P-012).

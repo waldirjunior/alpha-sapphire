@@ -16,7 +16,7 @@
      - `a/0/1/4`: pacotes `AD` com texturas compartilhadas de cenário (ex.: `0008.bin` para Littleroot/Route 101/Oldale).
      - `a/0/4/0`: matrizes `MM` (`0001.bin` conecta `GR 0006`, `0005`, `0004`).
      - `a/0/7/3` e `a/0/8/1`: textos em inglês (`GameText` e `StoryText`).
-     - `a/0/2/1`: modelos 3D de personagens overworld (`MM\x01\x00` — ex.: `0314.bin` Brendan, `0315.bin` May).
+     - `a/0/2/1`: modelos 3D de personagens overworld (`MM\x01\x00` — ex.: `0315.bin` Brendan, `0314.bin` May).
      - `a/0/0/8`: modelos, texturas e animações 3D dos Pokémon (`8.067` entradas).
      - `a/0/1/3`: dados de zona — `0000–0535` arquivos `ZO` por zona, `0536.bin` tabela-mestre `ZoneData` (536 × `0x38`, layout `ZoneData` do pk3DS) e `0537.bin` pacote de encontros (`EN`).
 3. **Tabela zona → mapa → modelo (`scripts/build_zone_catalog.py` → `src/data/zones.json`):**
@@ -28,9 +28,19 @@
    - Continuação de 2026-11-17: [build_zone_maps.py](../../scripts/build_zone_maps.py) gera 536 mapas paralelos em `src/data/maps_v2/`, compondo GRs pelos zoneIds da MM (não por `mapArea` nem pelos retângulos sec1). Escala 18 unidades/tile, dez referências/16.000 tiles por camada sem diferenças; [maps-format.md](../features/pipeline-rom/maps-format.md), A-023/ADR-005 e P-017 distinguem layout físico, campos não comprovados e spawn derivado de spawn canônico.
    - `scripts/extract_texts.py` decodifica textos Gen 6 (`XOR 0x7C89`) para `src/data/texts/*.json`.
    - `scripts/convert_gr_to_glb.py` usa `SpicaExport` (`.NET 8` + `SPICA` sem `System.Drawing`) + `assimp` (`5.2`) para gerar `<mapa>.glb` + `.png`s em `public/assets/maps/<mapa>/` (escala ORAS `1 / 18` por tile).
-   - O mesmo `SpicaExport` + `assimp` converte personagens (`a/0/2/1/0314.bin` → `public/assets/characters/brendan/brendan.glb`).
+   - O mesmo `SpicaExport` + `assimp` converte personagens (`a/0/2/1/0315.bin` → `public/assets/characters/brendan/brendan.glb`).
    - `scripts/extract_pokemon_glb.py` varre a tabela `FATB` de `a/0/0/8` (`PC\x02\x00` modelo + `+2` `PT\x01\x00` texturas) e gera `.glb` + `.png`s dos iniciais e Pokémon da Route 101 em `public/assets/pokemon/<especie>/`; `--all` extrai todas as espécies/formas detectando o tag `pmNNNN_NN` no blob.
    - `scripts/batch_convert_grs.py` e `scripts/batch_convert_chars.py` convertem em lote os `GR`s do catálogo e os `MM` de `a/0/2/1` para `rom/extracted/models/` (fora do Git), que depois são promovidos a `public/assets/` sob demanda.
+   - GF1: `native_motions.py` e `attach_native_motions.py` anexam canais nativos
+     preservando imagens, materiais, skin e o BIN-base. O catálogo do runtime usa
+     a tabela do slot 0 para identificar espécie/variante, não o tag interno
+     `pmNNNN_NN` (A-022). Personagens usados pelas zonas do slice e pelos MM já
+     staged também recebem poses de índice 0, sem inventar novos clipes.
+   - `promote_native_assets.py` publica cópias locais por SHA-256 sem sobrescrever
+     os modelos anteriores; o catálogo versiona apenas URLs, fontes e metadados.
+     A auditoria P-019 distingue canal inválido de escolha de expressão do atlas.
+     [PRD-007](../features/engine-3d/prds/PRD-007-animacoes-nativas-no-runtime.md)
+     registra comandos, falhas e limites; GLBs e screenshots continuam ignorados.
    - Áudio: `vgmstream-cli` decodifica `RomFS/sound/*.bcstm` para `.wav` e `ffmpeg` (`libmp3lame`) gera `.mp3` em `rom/extracted/audio/mp3/`.
 
 ## 3. Regra de Segurança no Repositório
