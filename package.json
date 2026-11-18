@@ -8,13 +8,22 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:py": "python3 -B -m unittest scripts/test_*.py",
+    "test:e2e": "playwright test",
+    "visual:approve": "playwright test e2e/visual.spec.ts --update-snapshots",
+    "verify": "npm run test:coverage && npm run build && npm run test:py",
+    "verify:full": "npm run verify && npm run test:e2e"
   },
   "dependencies": {
     "three": "^0.170.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "22.10.2",
     "@types/three": "^0.170.0",
+    "@vitest/coverage-v8": "2.1.9",
     "typescript": "^5.6.3",
     "vite": "^6.0.0",
     "vitest": "^2.1.5"

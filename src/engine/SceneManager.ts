@@ -56,6 +56,15 @@ export function fixOrasMaterials(root: THREE.Object3D, preserveGltfAlpha = false
   });
 }
 
+export interface SceneInspection {
+  readonly scene: THREE.Scene;
+  readonly camera: THREE.PerspectiveCamera;
+  readonly renderer: THREE.WebGLRenderer;
+  readonly player: THREE.Object3D;
+  readonly terrain: THREE.Object3D;
+  readonly entities: THREE.Object3D;
+}
+
 export class SceneManager {
   readonly events: EventPresentation;
   private terrainReady: Promise<void> | null = null;
@@ -237,6 +246,12 @@ export class SceneManager {
     this.terrainReady = this.continuousTerrain.sync(visible).catch((error: unknown) => console.error(`Chunks da região ${map.continuousRegion}`, error));
     this.currentMapId = map.id;
     return true;
+  }
+
+  // validacao-visual/ADR-001: o probe mede a cena de produção; duplicar o renderer validaria outra cena.
+  public inspect(): SceneInspection {
+    return { scene: this.scene, camera: this.camera, renderer: this.renderer,
+      player: this.playerRoot, terrain: this.terrainGroup, entities: this.entitiesGroup };
   }
 
   public sync(state: GameState, maps: Record<string, MapDefinition>): void {
