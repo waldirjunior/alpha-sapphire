@@ -731,3 +731,41 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   Littleroot com o mesmo save inicial derivado, mostrou V/alpha acumulados
   antes/depois em oito capturas. Não é correção de iluminação nem progresso
   natural ou paridade com emulador; oclusão do avatar sob telhado permanece.
+
+## A-076 Grid horizontal correto não implica altura visual correta
+
+- **Data:** 2026-11-18; P-017, base287de78.
+- **Observado:** romOrigin/worldOrigin só transportam X/Z; playerTargetPos e
+  NPCs usamY0, projeções AMX descartam actor.y, follow usa eyeY9 absoluto.
+  GRs conservam alturas da geometria:2 nas37/39,4 na9 e27/21/20.5 no mesmo
+  GR de84. ZO confirma486/18=27 em84(38,5),18/18=1 em83(31,61) e54/18=3
+  em71(57,35). Avatar exportado vai de0.08593 a1.83514 emY; recentrar sua
+  origem não corrige erros de vários tiles.
+- **Erro evitado:** tratar movimento/warp correto como grounding ou elevar
+  todos os atores por um offset constante de mapa. Jagged varia por posição.
+- **Regra:** resolver altura e camada transitável, manter X/Z e altura como
+  contratos distintos e acompanhar altura também na câmera. Não interpretar
+  auxiliares MM, palavras GR ou GPos.y sem provar semântica/unidades.
+- **Evidência:**14 checkpoints/94 capturas controladas com SceneManager real,
+  raios/bounds/materiais, ZOs e A/Bs; detalhes em pipeline-rom/maps-format.md.
+  Runtime intocado; terreno recuperado por intervenção não é fix/paridade.
+
+## A-077 Oclusão física, vazio exterior e seleção de chão são problemas distintos
+
+- **Data:** 2026-11-18; P-017, diagnóstico avatar-grounding.
+- **Observado:**445(78,48) e15(2,20) têm chão/ZO em0, mas a câmera vê paredes
+  e partes internas de geometria. Littleroot(14,16) tem chão0 e telhado na
+  linha de visão. Desativar depth no player revela o corpo, mas é overlay,
+  não correção. Alterar near/far ou culling não recupera a cena. A câmera
+  sob o chão27 de84 explica céu; exterior azul de445 não prova asset ausente.
+- **Erro evitado:** escolher maior ray hit como piso:83 oferece chão1 e
+  telhado8.0426;15 oferece chão0 e prédio12.3639. Primeiro hit também pode
+  ser shadow transparente/depthWrite false, não um oclusor opaco.
+- **Regra:** correlacionar ZO, geometria, flags e A/B; recuperar política
+  nativa de camada/oclusão/câmera antes de esconder telhados ou forçar
+  renderOrder. A/Bs de Y ainda deixam corpo parcial em algumas sequências,
+  mesmo com bounds CPU acima do piso; não declarar fix sem isolar o
+  residual de skinning/bindings/ordem de atualização do harness.
+- **Decisão:** nenhuma alteração de runtime, assets, colisão ou shader.
+  Consulta de altura/camada e aceite visual continuam abertos; snapshots
+  controlados sem init/VM não substituem caminhada natural ou emulador.

@@ -2,6 +2,12 @@
 
 Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## Diagnóstico de grounding/oclusão do avatar (2026-11-18)
+
+- A-076/A-077/P-017, base287de78:14 checkpoints/94 screenshots Chromium visível, SceneManager real com pose fixa, sem VM/init. Bounds CPU, raycasts verticais/câmera→ator, flags de materiais e ZOs correlacionados. Player/NPCsY0 e followY9 absoluto não acompanham terreno2/4/27; Jagged varia27→21→20.5 no mesmo GR. ZOs confirmam altura nos pontos83/84/71. GLB do player não tem origem central que explique esses desvios (Y mínimo0.08593/máximo1.83514).
+- Mauville445/15 e telhado6(14,16) têm oclusão física e pisos/ZO0; maior hit escolheria prédio/telhado. Clipping/culling não recuperam a cena; depth-off só sobrepõe avatar à geometria. Elevar ator+câmera recupera o terreno84, não todo o grounding; residual de corpo parcial nas sequências controladas continua sem causa fechada. Detalhes e limites em [maps-format](features/pipeline-rom/maps-format.md#diagnóstico-de-altura-e-oclusão-do-avatar-a-076a-077).
+- **Entrega documental, runtime intocado.** Sem offset, raycast sampler, transparência ou câmera inventados. Relatórios/PNGs ignorados no principal em `rom/avatar-grounding-validation/`; scripts `/tmp/playwright-test-avatar-grounding.js`, `/tmp/avatar-grounding-server.mjs`, `/tmp/analyze-avatar-grounding.py`. Zero page/console/HTTP errors, requestFailures e warnings no harness final, com listeners separados e aborts de teardown excluídos (sem executar AMX, não revalida avisos P-013 herdados).345 Vitest/53 arquivos,14 testes Python de zone_maps e build passam; warning herdado de chunks>500kB. Sem regressão red-green nova porque nenhum comportamento foi corrigido; aceite visual permanece aberto.
+
 ## Bondinho de Mt. Chimney e descida a Lavaridge (2026-11-18)
 
 - PRD-013/A-072/A-073, base357692a e core/ADR-008: cadeia39→384→385→83→84→39→9 confirmada em MM/ZO/AMX, sem ponte nova. Bondinho usa demo11/12, work16699=1 e _MapChangeCore, não ZO entre estações. Gate666 dos atores39/0–2 tem FlagSet real global0028@21804 chamado por Meteor71; fixture recorta só essa flag, sem executar o evento inteiro.

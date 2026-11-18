@@ -59,3 +59,15 @@ LightSet0/DefaultShader. A investigação CRO delimita callback0x2ee38 de
 PseudoLightingListener e métodos EffectCycleLight, mas não recupera os
 valores/binding do ambiente. RF-01/RF-02 continuam parciais: nenhum shader,
 exposição, LUT/toon, lightmap ou multi-textura foi inferido por aparência.
+
+### Grounding e oclusão (A-076/A-077, P-017)
+
+14 checkpoints/94 capturas controladas com SceneManager real delimitam dois
+problemas: player/NPCsY0 e câmeraY9 não acompanham GRs elevados; telhados e
+paredes de6/445/15 também ocluem atores no nível correto. Elevação ZO no ponto
+confirma83=1,84=27 e71=3. Jagged varia27/21/20.5 no mesmo GR; maior ray hit
+escolhe telhado em83 e edifício em15. Near/far/culling/origem central não
+explicam os sintomas; depth-off não é fix. Controle de Y ainda deixa residual
+skinned não resolvido. Nenhum comportamento alterado; RF-01/RF-02 seguem
+parciais até resolver altura/camada e política nativa de câmera/oclusão.
+Tabela, hipóteses e evidências em [maps-format](../../pipeline-rom/maps-format.md#diagnóstico-de-altura-e-oclusão-do-avatar-a-076a-077).

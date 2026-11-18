@@ -68,5 +68,17 @@
      timing. Native000 is a constant posture, not an invented breathing cycle.
    - Áudio: `vgmstream-cli` decodifica `RomFS/sound/*.bcstm` para `.wav` e `ffmpeg` (`libmp3lame`) gera `.mp3` em `rom/extracted/audio/mp3/`.
 
+## Diagnóstico de altura versus fidelidade material (A-076/A-077)
+
+P-017 mostrou que o GR preserva elevação, mas atores/grid/eventos projetam
+apenas X/Z e fixam Y0; câmera follow usa Y9 absoluto. ZOs corroboram alturas
+nos checkpoints83/84/71.14 checkpoints/94 snapshots visíveis separam esse
+achatamento da oclusão por prédios/telhados e do exterior vazio. Não se
+atribuiu esse conjunto a RGB PICA ou a origem central do GLB. Controles de
+Y/depth/câmera não foram promovidos a fix: faltam consulta nativa de
+altura/camada, política de oclusão/câmera e isolamento do residual skinned.
+Evidência e limites em [maps-format](../features/pipeline-rom/maps-format.md#diagnóstico-de-altura-e-oclusão-do-avatar-a-076a-077).
+Nenhum binário, screenshot ou mudança de runtime foi versionado.
+
 ## 3. Regra de Segurança no Repositório
 Arquivos proprietários da ROM (`rom/`, `RomFS/`, `ExeFS/`, `public/assets/`, `*.3ds`, `*.cia`, `*.cxi`, `*.7z`) ficam **sempre no `.gitignore`** e nunca sobem para o GitHub. Apenas o motor, scripts de conversão, schemas, JSONs estruturais e documentação são versionados.

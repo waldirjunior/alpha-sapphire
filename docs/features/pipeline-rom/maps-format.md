@@ -268,3 +268,86 @@ promover0x75000021/0x75640021 ou classes laterais. Detalhes, limites estáticos 
 regressões em [ADR-008](../core-jogo/adrs/ADR-008-ledges-sul-por-permissao-gr.md)
 e [PRD-013](../engine-3d/prds/PRD-013-bondinho-mt-chimney-lavaridge.md).
 Animação/altura/multicamada e validação no emulador continuam P-017.
+
+## Diagnóstico de altura e oclusão do avatar (A-076/A-077)
+
+Base `287de78`, Chromium visível em5197, 2026-11-18. O diagnóstico usa o
+SceneManager real e os assets públicos do principal, mas snapshots controlados
+sem VM/init ou campanha. Nenhuma intervenção abaixo foi publicada no runtime.
+
+**Observado no código:** `GridPosition`, romOrigin e worldOrigin só representam
+X/Z. `zone_map_builder.warp_position` usa os eixos horizontais; o ZO original
+permanece em `warps[].rom`, mas `adaptZoneMap` não promove sua elevação.
+`SceneManager.sync` fixa `playerTargetPos.y=0`; `zoneEntities` fixa NPCs em Y0.
+`projectEventActors/projectEventPlayer` descartam actor.y, e ZoneEvents inicia
+atores e refreshPlayer com y0. O GR conserva Y do GLB: escala1/18, offset apenas
+X/Z. Portanto o terreno elevado não é acompanhado pela projeção dos atores.
+`EventPresentation.follow` usa eyeY9 e targetY0.5 absolutos, não relativos ao chão.
+
+**Medido no browser:** raycasts verticais sobre geometria carregada, bounds
+precisos dos seis meshes skinned, bones, raios câmera→centro/cabeça/pés e flags
+dos materiais. Valores em tiles Three.js; rootY0 e geometria local mínima
+0.0859303/máxima1.835139 são iguais nos14 checkpoints. Esse pequeno vão inferior
+não explica um erro de2–27 tiles nem autoriza recriar pés ou recentrar a malha.
+
+| Zona e posição local | Superfícies verticais observadas | Diagnóstico delimitado |
+| --- | --- | --- |
+|6(20,14)|0 e decal0.02778|Controle plano; sem oclusor no raio central.|
+|6(14,16)|chão0|Telhado entre câmera e ator; não é elevação local errada.|
+|445(78,48)|piso≈0, paredes5.147/6.143|ZO no ponto dá0; `nakaniwa` opaco no raio. Maior hit não é chão.|
+|445(22,61)|piso0, carpet/light0.043/0.056|Borda da geometria expõe background azul; não prova recurso ausente.|
+|37(31,66)|`chip_soil`2|Avatar inteiro abaixo do solo.|
+|39(79,65)|chão2; oclusor adiante5|Altura e encosta na linha de visão coexistem.|
+|385(23,18)|≈0,3,3.1464|Plataforma/níveis sobrepostos; piso frontal≈3.0044 oculta atorY0.|
+|83(31,61)|chão1, limiar1.0408, prédio até8.0426|ZO no ponto18/18=1; max-hit colocaria ator no telhado.|
+|84(38,5)|27|ZO no ponto486/18=27; câmeraY9 fica abaixo do terreno.|
+|84(38,29)/(38,31)|21/20.5|Altura varia dentro do mesmo GR291; offset constante por mapa é incorreto.|
+|9(20,21)|`chip_soil`4|ZO de entradas da cidade72/18=4 corrobora, sem provar toda célula.|
+|15(2,20)|piso0; edifício até12.3639|ZO no ponto0; câmera vê interior/lateral de geometria, não solo errado.|
+|71(57,35)|chão≈3/decal3.0411, face inferior20.5743|ZO no ponto54/18=3; encosta no raio câmera→ator.|
+
+**A/B por hipótese:** baseline; deslocar só ator pelo maior hit voltado para
+cima; deslocar também câmera; frustumCulled=false; near/far0.001/10000 contra
+0.1/250; depthTest=false/renderOrder alto só no player; câmeras reversa e
+superior nos casos6/445/15; ancorar o mínimo exportado em0 nos casos6/37;
+elevação do ZO nos checkpoints que possuem warp exato. Matrizes e pose são
+mantidas estáticas; não são caminhadas, correções de campanha ou emulador.
+
+- Elevar só ator não resolve Jagged: ele sai do enquadramento de uma câmera
+  ainda emY9. Elevar também a câmera recupera o terreno em27/21/20.5. Isso
+  delimita a origem do céu em84, não aprova um sampler de chão genérico.
+- Desativar depth revela o avatar através de pisos/paredes/telhados. Os
+  oclusores relevantes incluem materiais opacos com depthTest/depthWrite true
+  e renderOrder0. Não foi demonstrado bug de ordenação de transparência. Em6,
+  o primeiro hit `shadow1` é transparente/depthWrite false: o primeiro hit de
+  um raio também não basta para classificar visualmente o oclusor.
+- Alterar near/far não recupera ator ou terreno. O centro do avatar está dentro
+  do frustum original. Pequenas diferenças de precisão/Z-fighting existem;
+  não se afirma identidade de pixels. Desativar culling não resolve o problema.
+- Reverter/elevar a câmera mostra o ator em6, mas também revela backsides e
+  vazios dos assets. Não há evidência para substituir o ângulo nativo, tornar
+  telhados transparentes ou desenhar o player através de tudo.
+- Os controles de Y ainda mostram corpo parcialmente ausente em alguns
+  snapshots, mesmo com bounds CPU acima do piso e culling desativado. Uma
+  execução isolada em9 mostrou corpo inteiro, mas a sequência completa não
+  estabilizou esse resultado. Skinning/bindings/ordem de atualização do
+  harness precisam de investigação própria; não atribuir esse residual ao
+  chão nem alegar que o deslocamento experimental corrigiu o runtime.
+
+**Decisão:** nenhum fix de Y/depth/câmera publicado. A causa do achatamento e
+parte da oclusão estão provadas, mas a correção não é um offset pequeno seguro:
+exige resolver altura e camada transitável por posição, preservar altura nos
+contratos de movimento/warp/evento e fazer câmera acompanhar essa altura.
+Native collision/height query e política de oclusão/câmera continuam desconhecidas.
+Não usar maior hit, nome do material, auxiliar MM ou bits GR não decodificados
+como seletor físico. Não abrir colisões, inventar plataformas ou esconder roofs.
+
+Evidência local ignorada no principal: `rom/avatar-grounding-validation/`,
+`report.json` (bounds/raios/materiais/variantes e SHA dos PNGs), `summary.json`
+(correlação ZO e diferenças de clipping) e contact sheets por checkpoint.
+Scripts de reprodução: `/tmp/playwright-test-avatar-grounding.js`,
+`/tmp/avatar-grounding-server.mjs`, `/tmp/analyze-avatar-grounding.py`.
+O script parametriza TARGET_URL, usa browser visível e congela a pose; os
+controles são explicitamente diagnósticos. Craft Anything indisponível na
+listagem MCP e CLI ausente; leitura de código/JSON e instrumentação local,
+sem executar código da ROM. P-017 e aceite visual permanecem abertos.
