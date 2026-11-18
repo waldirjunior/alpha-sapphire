@@ -1,7 +1,7 @@
 # PRD-010 — Corredor Rustboro–Route116–Rusturf–Verdanturf
 
 - **Data:** 2026-11-18.
-- **Estado:** implementação e testes concluídos; aceite Playwright pendente.
+- **Estado:** validado na main9023a3f com fixture pós-evento explícita.
 - **Fase:** 2, navegação extraída da ROM, P-013/P-017.
 
 ## Resultado
@@ -63,13 +63,31 @@ conversor foi executado nem asset proprietário incluído no commit.
 
 ## Critérios e evidência desta revisão
 
-- 226 testes Vitest/41 arquivos e build passaram; aviso de chunks >500kB
-  permanece herdado.
-- 145 testes Python passaram sem skips com `GLB_MAPS_DIR` apontando ao public
-  principal. Sem essa variável, o mesmo run pula um teste por ausência de
-  assets públicos no worktree; essa ausência não foi descrita como sucesso.
-- Regressões cobrem as sete lanes MM4 nos dois sentidos, vetor unitário,
-  portais/facing, igualdade dos encontros nativos e bloqueio sem a flag.
-- Playwright visível ainda não executado nesta revisão. Deve mostrar bloqueio
-  sem 676, abertura por progresso explícito, caminhada até dentro de 11,
-  screenshots de todas as zonas e consoleErrors/pageErrors/missing vazios.
+- Revisão inicial9d89ad1:226 Vitest/145 Python; após integração9023a3f,
+  **260 Vitest/42 arquivos,148 Python sem skips e build passaram**. O aviso
+  herdado de chunks >500kB permanece. Python usa `GLB_MAPS_DIR` do principal;
+  sem assets no worktree, há um skip explícito, não um sucesso presumido.
+- Regressões cobrem sete lanes MM4 nos dois sentidos, vetor unitário,
+  portais/facing, encontros nativos, bloqueio inicial e persistência real.
+- Chromium visível na main9023a3f/5200:325 passos por teclado desde16(47,65)
+  até11(16,22), incluindo retorno ao túnel após reload. Duas tentativas right
+  de75(50,11) foram bloqueadas sem676; BFS não encontrou saída para11.
+- Fixture explícita executou somente75/map6176..6239 na VM real, com stack
+  sintética e halt6240. Persistiu FlagSet676 e MdlDel12/13/14 no save, sem
+  editar posições, colisões ou visibilidade diretamente. Reload manteve o
+  player em50,11 e os três atores ocultos; reentrada75 confirmou remoções.
+- Portais principais:43(62,10)→75(14,20)/up e75(59,27)→11(16,7)/down;
+  retorno11→75(59,27)/up. Contato16→43 em79,16→0,16 sem fade e vetor unitário.
+- Encontros das quatro zonas iguais aos JSONs nativos; contagens0/61/61/0.
+  BGMs observadas c_02/r_b/d_01/t_04. PRNG restrito a0.9..1 evitou batalhas;
+  isso não é prova de disparo selvagem ou conclusão da missão.
+- Onze screenshots inspecionados; consoleErrors/pageErrors/missing e
+  requestFailures vazios. Dois avisos AMX init não bloqueantes permanecem.
+  Não houve frame totalmente preto; o túnel mostra exterior preto, céu na
+  borda de entrada e avatar parcialmente oculto. Altura/oclusão/geometria
+  não foram diagnosticadas neste smoke (P-017/P-019); folhagem/combiners,
+  atores especiais fallback e marcadores de warp também não são paridade.
+
+Evidências locais: `/tmp/verdanturf-results.json` e
+`/tmp/playwright-test-verdanturf.js`. Lista das onze capturas em
+[STATUS](../../../STATUS.md).
