@@ -2,6 +2,12 @@
 
 Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## Camadas físicas e visibilidade: investigação delimitada (2026-11-18)
+
+- Base0d745b2, [PRD-016](features/engine-3d/prds/PRD-016-camadas-fisicas-e-oclusao-nativas.md)/ADR-007/A-084–A-086: parser/auditor offline, sem mudanças em src, mapas ou assets.857 GRs/899 colisores aceitos; índices de colisão adicionais dependem do número de pisos, não são sempre8.133 desvios ZO: cinco candidatos secundários/128 não resolvidos;539 células null:423 sem hit/116 ambíguas,101 com candidato adicional.
+- CRO recupera grids por piso, consulta3D, máscaras/cache e comparação de desnível; origem do Y e contrato intramalha ainda pendentes. BuildMdlSetVisible recebe booleano e consulta registro espacial; não há prova de dissolve, corte por célula ou vínculo aos meshes oclusores. Não publicar seleção/câmera/transparência especulativas. P-017 continua aberta.
+- Verificação:362 Vitest/56 arquivos, build e191 Python sem skips com GLB_MAPS_DIR do principal passaram. Warning de bundle e nove vulnerabilidades npm herdados, sem alterar dependências. Evidências locais ignoradas em rom/ground-layer-validation; relatório inicial do check de hash preservado: quatro pixels remotos diferentes na15 com métricas iguais, sem alegar pixel-paridade.
+
 ## Grounding da superfície física primária (2026-11-18)
 
 - A-080/A-081/engine ADR-006, base0372885: parser da seção2 `coll` GR, independente do BCH visual, amostra centros de células por triângulo físico.846 GRs/536 mapas gerados; só groundHeights e source.groundHeightPolicy adicionados, com preservação dos demais campos e índices.318424 células transitáveis têm altura conhecida;539 ficam desconhecidas, sem selecionar telhado ou fundir pisos.

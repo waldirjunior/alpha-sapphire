@@ -843,3 +843,48 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro evitado:** transformar75→1/73→2 do decoder402e6c em direção permitida, ou nomear6f como lama/rampa/SkatePipe só pela aparência/módulo. Chamadores Fielde6224/e8b10 testam direção fornecida e oposta. O switch7764c recebe entrada em `r1` e escala vetores, sem lineage que o prove como dispatch de permissões; comparação coincidente não basta.
 - **Evidência:** Field64be0 zera componentes `+0x8/+0x10` do vetor para6d/e e recalcula norma/direção; e613c ainda consulta `contexto+0x24` em1/2 e flags/outros estados. Em23cd8..23e50,6f usa `+0x24=2`, `+0x14=0x0e..0x11`, queries e direção válida antes de chamar import165c→DllFieldEventSkatePipe/segmento0+13d8=arquivo1558. A construtora escreve vtable21e8; typeinfo203c aponta string20df: EventDanielSteppingStone. O módulo também contém IceFloor/WaterFlow/KuruKuruPanel; SlopeSlip/MachCycleSlopeSlip tem outro CRO, sem vínculo provado às palavras.
 - **Regra e limite:** provar enum de estado, significado das direções, camada, input e transição completa antes de implementar. Os gates numéricos são fatos locais, não um modelo fiel de bike/ponte/salto. Sem condição completa, preservar colisões e registrar desconhecidos, não criar fixture de estado inventado. Nenhum Playwright novo nesta análise estática;22 capturas PRD-014 continuam históricas e independentes. Corredor conectado,20,6x/73,Surf/bike/camadas seguem abertos. Relatório `/tmp/native-permissions-findings.json`;356 Vitest/176 Python sem skips/build passam.
+
+## A-084 Colisão secundária não fica sempre na seção8
+
+- **Data:**2026-11-18; P-017/PRD-016/engine ADR-007, base0d745b2.
+- **Observado:** loader DllField/0x1e8cc deriva pisos do número de seções;
+  para7+2N, grids extras são6+i e colisores6+N+i. Inventário:819 GRs com7
+  seções,34 com9 e quatro com11;857 GRs/899 colisores validados.
+- **Erro corrigido:**0436–0439 não são inválidos; possuem três camadas e
+  seção8 é grid, não coll. O parser offline novo reconhece9/10 como colisão.
+  Isso acrescenta o quinto candidato secundário aos133 desvios ZO:
+ 176/warp0,GR439,piso2,Y24. Os outros são15/6,7,8 e444/0.
+- **Regra:** recuperar o agrupamento no consumidor antes de generalizar um
+  índice observado. Não alterar a primária nem promover candidatos ao jogo.
+- **Verificação:** fixtures red-green de índices variáveis,1–4 pisos,
+  corrupção e relatório imutável; auditoria completa reproduzível no PRD.
+
+## A-085 Um candidato de piso não fecha o estado de camada do ator
+
+- **Data:**2026-11-18; P-017/PRD-016.
+- **Observado:** DllField/0x1e52c compara desnível ao Y da consulta, com
+  grids por piso, caches e máscaras;0xe5f20 faz consulta verticalY±250,
+  X/Z quantizados a décimos. Origem do Y, transforms e escolha intramalha
+  ainda não fechados. Não copiar só a comparação de distância para Y0.
+- **Auditoria:**539 null são423 sem hit/116 ambíguos, não falha de bbox;
+ 101 têm algum candidato extra.133 desvios ZO: cinco candidatos/128 não
+  resolvidos;25 outros warps são null e705 concordam em tolerância0.15.
+- **Regra:** `collisions==0` é classificação do exportador, não prova de
+  transitabilidade nativa. Não preencher água/pisos especiais por vizinho,
+  ZO ou max/min-hit. Coincidência não autoriza escolher a camada do ator.
+
+## A-086 Visibilidade booleana não prova dissolve por câmera
+
+- **Data:**2026-11-18; P-017/PRD-016/engine ADR-007.
+- **Observado:** BuildMdlSetVisible/0x4ef74 consulta registro espacial por
+  handle e passa booleano a0x15a54; não recebe distância de câmera. Lookup
+  usa X/Z e raio inicial36. O registry recebe objetos da seção3; não foi
+  demonstrado vínculo com os meshes oclusores da seção1. GR713 não tem
+  registros de seção3; GR6 e713 não possuem piso secundário.
+- **Cobertura:**1157 programas AMX pesquisados,20 chamadas SetVisible;
+  nenhuma direta nos programas locais6/15/445. Não exclui dispatch/global
+  dinâmico nem chamadas indiretas. Ausência de string não prova ausência.
+- **Regra:** não esconder telhados nem trocar câmera/camada por aparência.
+  Controle actor-only pertence ao harness e não é uma correção publicada.
+  Um hash de canvas estrito falhou por quatro pixels remotos na15 com
+  medidas iguais; preservar esse limite, sem alegar paridade de pixels.

@@ -8,6 +8,8 @@ Planejamento em fases para sair do protótipo placeholder atual até a reconstru
 
 **P-017/A-076/A-077 (2026-11-18):** diagnóstico separou achatamento dos atoresY0/câmeraY9 sobre GRs elevados de oclusão física por telhados/paredes.14 checkpoints/94 capturas controladas, sem fix especulativo. Altura/camada por posição, política nativa de câmera/oclusão e residual skinned continuam bloqueando o aceite visual; não tratar navegação ou melhora P-007 como resolução. Evidência em [maps-format](features/pipeline-rom/maps-format.md#diagnóstico-de-altura-e-oclusão-do-avatar-a-076a-077).
 
+**P-017/A-084–A-086:** [PRD-016](features/engine-3d/prds/PRD-016-camadas-fisicas-e-oclusao-nativas.md)/engine ADR-007 acrescentam auditoria multicamada e rastreio CRO, sem mudar o runtime primário. Seleção de camada e política nativa de oclusão continuam abertas; cinco coincidências ZO não autorizam escolha automática.
+
 ## Fase 0 — Governança, Planejamento e Ambiente (Meses 1 — Concluída)
 
 **Objetivo:** Estruturar regras de engenharia (`AGENTS.md`, `CLAUDE.md`), rastreabilidade (`PRD`, `ADR`), memória operacional (`APRENDIZADOS.md`, `PENDENCIAS.md`, `STATUS.md`) e isolar o desenvolvimento em worktree.

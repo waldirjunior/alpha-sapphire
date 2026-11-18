@@ -277,7 +277,10 @@ continua histórico abaixo, não descreve o novo runtime.
 
 **Observado:** além da seção visual BCH, o GR contém uma seção2 `coll`.
 O inventário nativo contou857 seções primárias e34 adicionais no índice8;
-os quatro arquivos0436–0439 não são GRs com esse formato. A geração dos
+o diagnóstico preliminar excluiu0436–0439 por procurar coll fixo na seção8.
+A-084 corrige essa exclusão: são GRs de três camadas, com grids7/8 e
+colisores9/10; o inventário completo contém857 GRs/899 colisores físicos.
+Ver [PRD-016](../engine-3d/prds/PRD-016-camadas-fisicas-e-oclusao-nativas.md). A geração dos
 mapas usa846 GRs e todos passam pelas guardas de `scripts/gr_ground.py`.
 O cabeçalho1/3/2/1/2,16 ranges uint32(start,count) a0x2a0 e vértices float4
 homogêneos/w1 a0x320 delimitam triângulos até term emu32@4+16. Ranges

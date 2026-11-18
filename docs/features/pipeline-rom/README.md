@@ -20,6 +20,8 @@ Responsável por extrair as partições proprietárias (`RomFS`, `ExeFS`) da ROM
 - [maps-format.md](maps-format.md) — layout completo observado das 431 MM, grid de zonas, escala e geração dos 536 mapas `maps_v2`; [PRD-003](prds/PRD-003-mapas-por-zona.md), [ADR-005](adrs/ADR-005-recorte-de-mapas-por-zone-grid.md), A-024/P-017.
 - Referência TCC: [docs/tcc/01-pipeline-rom.md](../../tcc/01-pipeline-rom.md).
 
+- P-017/A-084–A-086: `scripts/gr_layers.py`/`audit_ground_layers.py` validam857 GRs/899 colisores sem alimentar o runtime. Coll adicional depende do número de pisos;0436–0439 usam9/10, não8. [PRD-016](../engine-3d/prds/PRD-016-camadas-fisicas-e-oclusao-nativas.md) registra offsets CRO, cinco candidatos entre133 desvios ZO e539 null não resolvidos.
+
 ## Estado atual
 
 - ROM `.3ds` (`2.0G`) disponível localmente em `rom/` (ignorada pelo Git).
