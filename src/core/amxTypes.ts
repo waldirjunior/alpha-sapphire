@@ -8,7 +8,7 @@ export interface AmxProgram {
   dispatch: { selectorAddress: number; cases: readonly { value: number; target: number }[] } | null;
 }
 export interface AmxImage {
-  program: AmxProgram; data: readonly number[]; stackTop: number;
+  program: AmxProgram; data: readonly number[]; stackTop: number; publics?: Readonly<Record<string, number>>;
 }
 export type AmxBundle = Readonly<Record<string, AmxImage>>;
 export interface AmxMachine {

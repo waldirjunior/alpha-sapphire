@@ -19,7 +19,7 @@ const cache = new Map<number, Promise<ZoneEventPrograms | null>>();
 
 function checkedImage(program: ProgramSource, memory: MemoryImage): AmxImage {
   if (program.sha256 !== memory.sha256) throw new Error(`Imagem AMX difere do disassembly ${program.sha256}`);
-  return { program, data: memory.data, stackTop: memory.stackTop };
+  return { program, data: memory.data, stackTop: memory.stackTop, publics: memory.publics };
 }
 
 async function loadPrograms(zoneId: number): Promise<ZoneEventPrograms | null> {

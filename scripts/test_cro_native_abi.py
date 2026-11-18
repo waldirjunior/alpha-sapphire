@@ -47,6 +47,26 @@ class CroNativeAbiTests(unittest.TestCase):
         struct.pack_into('<I', blob, 0x1D8, 461)
         self.assertEqual(CroImage(blob).message_files(), [260, 461])
 
+    def test_static_imports_follow_anonymous_batches_and_addends(self):
+        blob = synthetic_cro()
+        struct.pack_into('<II', blob, 0xF0, 0x340, 1)
+        struct.pack_into('<II', blob, 0xF8, 0x360, 2)
+        struct.pack_into('<IIIII', blob, 0x340, 0x3A0, 0, 0, 0x380, 1)
+        blob[0x3A0:0x3A9] = b'|static|\0'
+        struct.pack_into('<II', blob, 0x380, 0x200, 0x360)
+        struct.pack_into('<III', blob, 0x360, 0x40, 2, 4)
+        struct.pack_into('<III', blob, 0x36C, 0x80, 0x102, 8)
+        static = synthetic_cro()
+        struct.pack_into('<I', static, 0x200, 0x100000)
+        crs = CroImage(static)
+        self.assertEqual(CroImage(blob).static_imports(crs), {0x184: 0x100024, 0x188: 0x100028})
+        struct.pack_into('<I', blob, 0x370, 2)
+        with self.assertRaisesRegex(ValueError, 'terminador'):
+            CroImage(blob).static_imports(crs)
+        struct.pack_into('<I', blob, 0x384, 0x3F8)
+        with self.assertRaisesRegex(ValueError, 'batch'):
+            CroImage(blob).static_imports(crs)
+
     def test_missing_or_non_unique_reference_is_rejected(self):
         image = CroImage(synthetic_cro())
         with self.assertRaisesRegex(ValueError, 'Absent.*obtidas 0'):

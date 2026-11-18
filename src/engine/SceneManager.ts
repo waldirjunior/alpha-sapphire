@@ -5,13 +5,14 @@ import type { PokemonType } from '../data/pokemon/species';
 import { createBattleArena, type BattleArena } from './battleArena';
 import type { GameState, MapDefinition } from '../core/types';
 import { loadZoneTerrain } from './zoneTerrain';
-import { appendMapEntities, syncMapEntities, FACING_YAW } from './zoneEntities';
+import { appendMapEntities, eventActorRoot, syncMapEntities, FACING_YAW } from './zoneEntities';
 import { CharacterExpressions } from './characterExpressions';
 import { ContinuousTerrain } from './continuousTerrain';
 import { worldPosition } from '../core/boundaries';
 import { NativeAnimationController, characterClip, type CharacterAnimController } from './nativeAnimation';
 import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import type { BattleEvent } from '../core/battleEvents';
+import { EventPresentation } from './eventPresentation';
 
 const ORAS_TILE_UNITS = 18;
 const POKEMON_SCALE = 1 / 25;
@@ -54,6 +55,8 @@ export function fixOrasMaterials(root: THREE.Object3D, preserveGltfAlpha = false
 }
 
 export class SceneManager {
+  readonly events: EventPresentation;
+  private terrainReady: Promise<void> | null = null;
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private renderer: THREE.WebGLRenderer;
@@ -103,6 +106,10 @@ export class SceneManager {
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.12;
     container.appendChild(this.renderer.domElement);
+    container.style.backgroundColor = '#000';
+    this.events = new EventPresentation(this.camera, this.renderer.domElement,
+      () => ({ x: this.playerRoot.position.x, y: 0.5, z: this.playerRoot.position.z }), () => this.terrainReady,
+      (map, actorId) => eventActorRoot(map, actorId, this.entitiesGroup, this.playerRoot));
 
     const hemi = new THREE.HemisphereLight(0xf0f9ff, 0x365314, 1.05);
     this.scene.add(hemi);
@@ -225,7 +232,7 @@ export class SceneManager {
       this.renderedZones.add(zone.id);
       this.buildEntities(zone, true);
     }
-    void this.continuousTerrain.sync(visible).catch((error: unknown) => console.error(`Chunks da região ${map.continuousRegion}`, error));
+    this.terrainReady = this.continuousTerrain.sync(visible).catch((error: unknown) => console.error(`Chunks da região ${map.continuousRegion}`, error));
     this.currentMapId = map.id;
     return true;
   }
@@ -252,8 +259,9 @@ export class SceneManager {
       const version = ++this.mapLoadVersion;
       this.buildTerrainPlaceholder(map);
       this.buildEntities(map);
+      this.terrainReady = null;
       if (map.modelChunks?.length) {
-        void loadZoneTerrain(map.modelChunks, (url) => this.gltfLoader.loadAsync(url), fixOrasMaterials)
+        this.terrainReady = loadZoneTerrain(map.modelChunks, (url) => this.gltfLoader.loadAsync(url), fixOrasMaterials)
           .then((root) => {
             if (this.mapLoadVersion !== version) return;
             this.terrainGroup.clear();
@@ -286,10 +294,7 @@ export class SceneManager {
     if (mapChanged && !continuous) this.playerRoot.position.copy(this.playerTargetPos);
     this.playerRoot.rotation.y = FACING_YAW[state.player.facing];
 
-    if (!this.inBattle) {
-      this.camera.position.set(this.playerRoot.position.x, 9, this.playerRoot.position.z + 8);
-      this.camera.lookAt(this.playerRoot.position.x, 0.5, this.playerRoot.position.z);
-    }
+    if (!this.inBattle) this.events.follow();
   }
 
   public syncBattle(battle: BattleState | null): void {
@@ -479,9 +484,6 @@ export class SceneManager {
         18,
         dt
       );
-      this.camera.position.set(this.playerRoot.position.x, 9, this.playerRoot.position.z + 8);
-      this.camera.lookAt(this.playerRoot.position.x, 0.5, this.playerRoot.position.z);
-
       this.updatePlayerAnimation();
       this.playerAnim?.mixer.update(dt);
       for (const mixer of this.entityMixers) {
@@ -491,6 +493,7 @@ export class SceneManager {
       for (const actor of this.battleActors.values()) actor.mixer.update(dt);
       this.battleArena.effects.update(dt);
     }
+    if (!this.inBattle) this.events.tick();
     this.renderer.render(this.scene, this.camera);
   }
 }

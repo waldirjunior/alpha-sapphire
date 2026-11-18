@@ -109,7 +109,13 @@ export interface PlayerState {
   playerName?: string;
 }
 
+export interface RomEventState {
+  flags: Record<number, boolean>;
+  vars: Record<number, number>;
+}
+
 export interface GameState {
+  romEvents?: RomEventState;
   player: PlayerState;
   storyFlags: Record<string, boolean>;
   activeDialogue?: ActiveDialogue;

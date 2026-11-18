@@ -2,10 +2,17 @@ import * as THREE from 'three';
 import { worldPosition } from '../core/boundaries';
 import type { Direction, GridPosition, MapDefinition } from '../core/types';
 import { createWarpMarkers } from './zoneTerrain';
+import { npcActorId } from './eventHost';
 
 export const FACING_YAW: Record<Direction, number> = {
   up: Math.PI, down: 0, left: -Math.PI / 2, right: Math.PI / 2,
 };
+
+export function eventActorRoot(map: MapDefinition, actorId: number, npcs: THREE.Group, player: THREE.Object3D): THREE.Object3D | undefined {
+  if (actorId === 255) return player;
+  const npc = map.npcs?.find(candidate => npcActorId(candidate) === actorId);
+  return npc ? npcs.getObjectByName(npc.id) : undefined;
+}
 
 type ActorLoader = (url: string, target: THREE.Group) => void;
 type ExpressionPort = { set(target: THREE.Object3D, expression?: number): void };

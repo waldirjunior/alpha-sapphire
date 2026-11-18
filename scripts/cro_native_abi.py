@@ -11,6 +11,7 @@ class CroImage:
         self.blob = blob
         self.segments = self.table(0xC8, 12)
         self.relocations = self.table(0x128, 12)
+        self.external_relocations = self.table(0xF8, 12)
         self.references = {}
         for patch, info, offset in self.relocations:
             if info & 255 == 2:
@@ -22,7 +23,7 @@ class CroImage:
         offset, count = struct.unpack_from('<II', self.blob, header)
         if offset + count * stride > len(self.blob):
             raise ValueError(f'Tabela CRO fora do arquivo: {offset:#x}/{count}')
-        return [struct.unpack_from('<III', self.blob, offset + i * stride) for i in range(count)]
+        return [struct.unpack_from('<' + 'I' * (stride // 4), self.blob, offset + i * stride) for i in range(count)]
 
     def segment_address(self, segment, offset):
         if segment >= len(self.segments) or offset > self.segments[segment][1]:
@@ -83,6 +84,32 @@ class CroImage:
             return struct.unpack_from('<I', self.blob, target + 8 + (word & 4095))[0]
         return None
 
+    def static_imports(self, crs):
+        targets = {}
+        for name, _, _, anonymous, count in self.table(0xF0, 20):
+            if self.blob[name:name + 9] != b'|static|\0':
+                continue
+            if anonymous + count * 8 > len(self.blob):
+                raise ValueError('Tabela de imports anônimos fora do CRO')
+            for index in range(count):
+                target, batch = struct.unpack_from('<II', self.blob, anonymous + index * 8)
+                targets.update(self.static_import_batch(crs, target, batch))
+        return targets
+
+    def static_import_batch(self, crs, target, batch):
+        relocations = self.external_relocations
+        start = struct.unpack_from('<I', self.blob, 0xF8)[0]
+        if batch < start or batch >= start + len(relocations) * 12 or (batch - start) % 12:
+            raise ValueError(f'Import batch fora da tabela de relocations: {batch:#x}')
+        targets = {}
+        for patch, info, addend in relocations[(batch - start) // 12:]:
+            if info & 255 == 2:
+                address = self.segment_address(patch & 15, patch >> 4)
+                targets[address] = (crs.segment_address(target & 15, target >> 4) + addend) & 0xFFFFFFFF
+            if info & 0xFF00:
+                return targets
+        raise ValueError(f'Import batch sem terminador: {batch:#x}')
+
     def relocated(self):
         result = bytearray(self.blob)
         for patch, target in self.references.items():
@@ -96,17 +123,25 @@ def main():
     parser.add_argument('cro', type=Path)
     parser.add_argument('names', nargs='+')
     parser.add_argument('--bytes', type=lambda value: int(value, 0), default=96)
+    parser.add_argument('--static-crs', type=Path)
     args = parser.parse_args()
     blob = args.cro.read_bytes()
     image = CroImage(blob)
     print(f'SHA256 {hashlib.sha256(blob).hexdigest()}')
+    imports = {}
+    if args.static_crs:
+        static_blob = args.static_crs.read_bytes()
+        print(f'CRS SHA256 {hashlib.sha256(static_blob).hexdigest()}')
+        imports = image.static_imports(CroImage(static_blob))
     from capstone import Cs, CS_ARCH_ARM, CS_MODE_ARM
     disassembler = Cs(CS_ARCH_ARM, CS_MODE_ARM)
     for name in args.names:
         table, wrapper = image.native(name)
         print(f'{name}: tabela={table:#x}, wrapper={wrapper:#x}')
         for row in disassembler.disasm(image.relocated()[wrapper:wrapper + args.bytes], wrapper):
-            print(f'{row.address:08x} {row.mnemonic:10} {row.op_str}')
+            target = imports.get(int(row.op_str[1:], 0) + 4) if row.mnemonic in ('b', 'bl') and row.op_str.startswith('#') else None
+            suffix = f' -> static {target:#x}' if target is not None else ''
+            print(f'{row.address:08x} {row.mnemonic:10} {row.op_str}{suffix}')
 
 
 if __name__ == '__main__':

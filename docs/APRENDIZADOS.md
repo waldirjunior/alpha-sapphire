@@ -418,3 +418,64 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro:** Apagar apenas world.actors deixa o fallback da projeção reapresentar o NPC. Recriar todos os atores na entrada também ressuscita removidos. Persistir flags somente quando player/atores são projetados perde FlagSet posterior ao warp se o save ainda contém false e a entrada restaura esse valor antigo.
 - **Regra:** Remover realmente da VM e manter tombstone por zona/ID; não confundir com MdlSetVisible. Serializar flags true/false e tombstones em chaves amx distintas, restaurar antes do init e persistir mesmo quando a projeção gráfica é suprimida após warp. Não projetar atores antigos no destino. Não inferir MdlAdd ou ressurreição a partir de FlagReset.
 - **Evidência:** Testes cobrem bloco real75, imutabilidade, hide-flag0/676 e reset sem sobrepor visibilidade explícita, save/reload e isolamento do ID7 entre zonas6/7; FlagSet123 após warp substitui false persistido. 226 Vitest e build passaram; Python145 sem skips com GLB_MAPS_DIR do principal. JSONs de mapas/encontros e grafo não foram alterados; apresentação/quest/save de vars/party/bag continuam fora desta correção.
+## A-052 Conversão numérica AMX exige distinguir célula inteira de float32
+
+- **Data:** 2026-11-18.
+- **Contexto:** P-013, avanço da abertura real antes dos serviços gráficos. Renumerado de `A-040` no merge (colisão com main).
+- **Erro:** `float` e `floatadd` interrompiam programas legítimos como nativas não suportadas. Reinterpretar os bits de um inteiro também não implementa a conversão numérica de Pawn.
+- **Regra:** Derivar conversão e arredondamento das instruções nativas, mantendo células signed-32 e operações float32 separadas. Não implementar outras operações apenas por semelhança de nome.
+- **Evidência:** `code.bin` SHA-256 `b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16`, VA `0x50c9cc` (`vcvt.f32.s32`) e `0x50c9fc` (`vadd.f32`). Sete regressões falharam antes do suporte e passaram depois, incluindo `16777217 → 16777216` e arredondamento de soma.
+
+## A-053 Um case existente não prova seleção natural de cena
+
+- **Data:** 2026-11-18.
+- **Contexto:** ADR-007/PRD-005, warp natural desde o init da zona 6. Renumerado de `A-041` no merge (colisão com main).
+- **Erro potencial:** Invocar diretamente o case 2 ou interpretar o primeiro case de cada mapa como init universal.
+- **Regra:** Executar o export `GetSceneChangeData` com argumentos na pilha AMX e deixar a tabela real escolher a cena. O consumidor considera até oito triplas `scriptId, workId, valor`, encerra em `-1`, ignora o marcador 2000 e usa a primeira condição correspondente. Metadados de exports acompanham somente as imagens locais, não uma cópia manual da tabela no motor.
+- **Evidência:** `code.bin`, VA `0x3ff628–0x3ff6c4` e `0x3ff6f4–0x3ff794`; export `1676684628`, endereço AMX `5536` na zona 6. O work `16514 = 0` tem prioridade sobre `16496 = 3`. Com estado preparado `16514 = 1, 16496 = 3`, o init de entidades termina e o export escolhe o case 2 → global 9881. Seis testes sintéticos cobrem pilha, entrypoint, sentinela, ordem e limite.
+- **Limite:** Essa evidência não estabelece a ordem completa dos callbacks de entidades 0/1/2 nem um percurso de história desde New Game.
+
+## A-054 Works ROM e flags manuais de UI não são o mesmo estado
+
+- **Data:** 2026-11-18.
+- **Contexto:** Restauração mínima de condições de cena sem criar atalhos por nome de mapa. Renumerado de `A-042` no merge (colisão com main).
+- **Erro potencial:** Traduzir `intro_completed` para uma fase ROM presumida, aceitar valores signed-32 como conteúdo de work ou restaurar um snapshot antigo a cada entrada de mapa.
+- **Regra:** Persistir flags numéricas e works unsigned-16 em `GameState.romEvents`, separadamente de `storyFlags`. Validar o payload de save e normalizar índice/valor nas nativas. Restaurar o snapshot uma vez após reset; depois preservar writes da VM, inclusive os posteriores ao pedido de warp.
+- **Evidência:** `DllField.cro`, wrappers `WorkGet` em `0x51438` e `WorkSet` em `0x5144c`, com `uxth` nos argumentos; imports resolvidos para VA `0x3fe110` e `0x3fe1bc`. A regressão `WorkSet(0x14000,-1)` falhou com `-1` e passou com work `16384 = 65535`. Sete payloads inválidos passaram indevidamente antes do guard e foram rejeitados depois.
+- **Limite:** O save web não representa ainda todo o estado de save ORAS, inventário ou callbacks.
+
+## A-055 Término de apresentação é estado do host, não retorno constante
+
+- **Data:** 2026-11-18.
+- **Contexto:** Câmera, fade preto e espera por terreno no ramo 9881. Renumerado de `A-043` no merge (colisão com main).
+- **Regra:** Queries de câmera/fade só confirmam término após os frames projetados; reset de zona cancela a apresentação anterior. `_FieldMapBlockIsLoading` só recebe retorno de conclusão depois do promise de terreno. Modos, sentinelas, telas e easing sem implementação continuam opacos.
+- **Evidência:** Wrappers CRO `EVCameraSetSlideParam` em `0x969e0`, `EVCameraBegin` em `0x51a4c`, query em `0x960f8`; `static.crs` SHA-256 `b1976b7f480ffdeaa03cc842515472a89cc6e186d58d5022f64374a3b921005c` resolve os imports para `0x4833b8`, `0x483ee4` e `0x4edb2c`. O consumidor em `0x484114` usa duração unsigned-16 e easing; a projeção deriva de eye/target/FOV. Fade: `code.bin`, VA `0x3bd480`, `0x3bd458` e `0x370774`. Testes determinísticos verificam conclusão, espera real e descarte de geração obsoleta.
+- **Limite:** O renderer interpola eye/target em ticks de render e emite diagnóstico explícito: não reproduz FPS/quaternion da ROM. Apenas modo absoluto, roll zero e easing 0/1 estão implementados. Altura e flags de `_MapChangeCore` continuam com solo/fade genérico; ACMD ainda exige investigação própria.
+
+## A-056 Estado de destino e networkidle não comprovam imagem pós-transição
+
+- **Data:** 2026-11-18.
+- **Contexto:** Playwright do warp natural, complementa A-038 sem substituir a evidência sintética anterior. Renumerado de `A-044` no merge (colisão com main).
+- **Erro:** A primeira captura mostrou canvas preto embora o save já estivesse na zona 227 e a rede estivesse ociosa: a transição visual ainda não tinha terminado.
+- **Regra:** Aguardar também opacidade efetiva do canvas e da superfície de transição, capturar e inspecionar a imagem. Não concluir pelo save, nome do HUD ou ausência de HTTPs pendentes isoladamente.
+- **Evidência:** Playwright visível na porta 5178, sem interceptar programas, memória ou bindings e sem Enter para efeitos: init da zona 6 → seleção real do case 2 → câmera/fades → `_MapChangeCore(227,14,2,12,0,0,0,1,0)`. O work `16496` passou de 3 para 4; o laboratório aparece em `(14,12)`. Três PNGs locais em `/tmp/events-natural-{before,camera,lab}.png` foram inspecionados; zero pageerror e falha HTTP no ramo. O teste espera opacidade 1 antes do PNG final.
+- **Limite:** O estado de entrada foi preparado com os dois works evidenciados, não obtido por uma campanha completa. O rótulo extraído do mapa 227 ainda é “Littleroot Town”; nome do HUD não distingue interior/exterior.
+
+## A-057 ACMD exige seguir a fila até os handlers e distinguir BSS de código
+
+- **Data:** 2026-11-18.
+- **Contexto:** Complementa A-055: o script 14 chega a `MdlAcmdSet(7,1,1,0)`, não apenas aos giros 5/6 encontrados inicialmente. Renumerado de `A-045` no merge (colisão com main).
+- **Erro evitado:** Tratar BSS+`0x310` como endereço de código do CRO ou deduzir o significado de um opcode pela direção observada. Uma relocação achatada perde a distinção entre segmentos.
+- **Regra:** Conferir segmento, registro da fila, descritor e função executada antes de implementar. Concluir pela fila realmente projetada, nunca por retorno constante; opcode desconhecido bloqueia o lote inteiro. `Init(-1)` resolve o ator do evento, enquanto `Update(-1)` consulta todas as filas, não o player 255.
+- **Evidência:** `DllField.cro` SHA-256 `9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925`: registro global no segmento BSS 3, offset `0x310`, preenchido desde `0x3c180` e consumido por `0x401f0`. Giros 5/6/7 chamam `0x8248c` por `0x462ec`/`0x45c30`/`0x45b4c`, com 12/8/4 frames; aliases 250/251 usam 8/12. `0x81244` interpola rotação e confirma direção ao fim. Em `code.bin`, `0x3f8fb0–0x3f9170` consome registros de quatro bytes e repetição byte; estado `+0x9f6 == 3` indica fim. Repetição zero ainda executa uma vez.
+- **Verificação:** Testes sem WebGL cobrem duração, repetição, reset, lote opaco, contexto e projeção imutável à VM. Playwright exibiu texto ROM do NPC 0/script 14 sem Enter de ACMD, restando uma confirmação explícita de eye-to-eye; `/tmp/events-real-turn-dialogue.png` foi inspecionado.
+- **Limite:** O host projeta yaw, sem reproduzir quaternion, FPS ou clipes GF1 157–160. O opcode 19 alcança `0x40690` e depende de máscaras de movimento; não foi implementado por aproximação.
+
+## A-058 Testar apenas o loader injetado não valida o formato do GameText real
+
+- **Data:** 2026-11-18.
+- **Contexto:** `MsgLoad(0,1)` seleciona o arquivo GameText 23 pelo switch CRO já evidenciado, mas a textbox precisa das strings, não do envelope de extração. Renumerado de `A-046` no merge (colisão com main).
+- **Erro:** O glob era tipado como `string[]`, embora os JSONs sejam `{file, lines}`. Os testes anteriores injetavam arrays e não exercitavam esse caminho; o banco carregado era um objeto indexado incorretamente como array.
+- **Regra:** Cobrir também o loader de produção com um módulo JSON sintético no formato real; a tipagem genérica do glob não valida o schema de origem. StoryText local e GameText legado têm envelopes diferentes.
+- **Evidência:** A regressão falhou recebendo `{file:'0023', lines:[...]}` onde se esperava um array; passou após ler `.lines`. No navegador, o loader de produção resolveu seletor 1 → arquivo 23 → 2.848 strings. `MsgIsLoaded`, `MsgSwap` e `MsgRelease` foram reconferidos no CRO em `0x5202c`, `0x5d1bc` e `0x51be0`; slot ausente não recebe sucesso implícito.
+- **Limite:** O probe do loader não executa um ramo ROM de diálogo auxiliar nem prova paridade no emulador. Bancos ausentes, words/formatação e outros caminhos continuam em P-013.

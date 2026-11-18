@@ -19,6 +19,15 @@ describe('memória AMX incremental local', () => {
     await expect(load('synthetic.json', 'different')).rejects.toThrow('SHA');
     expect(request).toHaveBeenCalledTimes(2);
   });
+  it.each([null, [], { 42: -4 }, { 42: 1 }, { invalid: 4 }])('rejeita metadados inválidos de exports: %j', async publics => {
+    const load = createLocalAmxMemoryLoader(async () => new Response(JSON.stringify({ ...image, publics })));
+    await expect(load('invalid-publics.json', 'synthetic')).rejects.toThrow('formato');
+  });
+  it('preserva exports locais sem exigir metadados de imagens legadas', async () => {
+    const withPublics = { ...image, publics: { 42: 8 } };
+    const load = createLocalAmxMemoryLoader(async () => new Response(JSON.stringify(withPublics)));
+    expect(await load('publics.json', 'synthetic')).toEqual(withPublics);
+  });
   it('não inventa memória quando asset está ausente ou inválido', async () => {
     const missing = createLocalAmxMemoryLoader(async () => new Response('', { status: 404 }));
     await expect(missing('missing.json', 'synthetic')).rejects.toThrow('HTTP 404');

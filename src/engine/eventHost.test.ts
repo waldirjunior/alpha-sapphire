@@ -50,7 +50,7 @@ describe('host de eventos AMX', () => {
       .toEqual({ kind: 'text', text: 'ROM real' });
   });
   it('não completa ACMD, câmera ou consultas desconhecidas como sucesso', () => {
-    for (const name of ['MdlAcmdSet', 'EVCameraIsEndFrame', 'SEIsPlaying']) {
+    for (const name of ['MdlAcmdSet', 'EVCameraIsEndFrame', 'SEIsPlaying', '_FieldMapBlockIsLoading']) {
       expect(classifyEventRequest(pending(name), [])).toEqual({ kind: 'opaque', name });
     }
   });

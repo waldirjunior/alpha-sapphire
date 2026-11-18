@@ -570,7 +570,7 @@ function syncUi(): void {
   }
 }
 
-const zoneEvents = createGameEvents(() => state, next => { state = next; }, MAPS, syncUi, app);
+const zoneEvents = createGameEvents(() => state, next => { state = next; }, MAPS, syncUi, app, sceneManager.events);
 
 renderIntro();
 syncUi();

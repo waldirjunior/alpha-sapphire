@@ -3,13 +3,13 @@ import abi from '../data/zone_scripts/host-abi.json';
 import { createStoryTextLoader } from './storyTextLoader';
 
 const loadStoryText = createStoryTextLoader();
-const gameBanks = import.meta.glob<readonly string[]>('../data/texts/gametext/*.json', { import: 'default' });
+const gameBanks = import.meta.glob<{ file: string; lines: readonly string[] }>('../data/texts/gametext/*.json', { import: 'default' });
 
 async function loadMessageBank(story: boolean, file: number): Promise<readonly string[]> {
   if (story) return loadStoryText(file);
   const load = gameBanks[`../data/texts/gametext/${String(file).padStart(4, '0')}.json`];
   if (!load) throw new Error(`MsgLoad: banco gametext/${file} não extraído`);
-  return load();
+  return (await load()).lines;
 }
 
 export class EventMessageBanks {

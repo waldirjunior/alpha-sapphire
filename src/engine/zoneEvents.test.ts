@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { AmxInstruction, AmxWorld } from '../core/amxTypes';
+import type { AmxEffect, AmxInstruction, AmxWorld } from '../core/amxTypes';
 import type { GameState, MapDefinition } from '../core/types';
 import type { ZoneEventPrograms } from '../data/zone_scripts/loader';
 import { ZoneEvents, type ZoneEventAssets } from './zoneEvents';
@@ -53,6 +53,26 @@ function fixture(calls: readonly [string, number[]][]) {
   return { ports, programs, assets, worlds, npc: () => map.npcs![0] };
 }
 
+function withScenes(base: ReturnType<typeof image>, rows: readonly number[][]) {
+  const instructions: AmxInstruction[] = [base.program.instructions[0],
+    { offset: 4, size: 8, mnemonic: 'load.pri', operands: [0] },
+    { offset: 12, size: 4, mnemonic: 'push.pri', operands: [] },
+    { offset: 16, size: 8, mnemonic: 'push.c', operands: [16385] },
+    { offset: 24, size: 12, mnemonic: 'sysreq.n', operands: [], argumentBytes: 8,
+      native: { name: 'WorkSet', hash: 'synthetic' } },
+    ...base.program.instructions.slice(1).map(row => ({ ...row, offset: row.offset + 32 })),
+  ];
+  const last = instructions[instructions.length - 1];
+  const offset = last.offset + last.size;
+  instructions.push({ offset, size: 4, mnemonic: 'proc', operands: [] },
+    { offset: offset + 4, size: 8, mnemonic: 'const.alt', operands: [4] },
+    { offset: offset + 12, size: 8, mnemonic: 'load.s.pri', operands: [12] },
+    { offset: offset + 20, size: 8, mnemonic: 'lidx.b', operands: [2] },
+    { offset: offset + 28, size: 4, mnemonic: 'retn', operands: [] });
+  return { ...base, data: [0, ...rows.flat(), -1], publics: { 1676684628: offset },
+    program: { ...base.program, instructions } };
+}
+
 describe('ciclo de vida do host de zonas', () => {
   it('transporta ChangeFace sem confirmação cosmética e preserva expressão ao atualizar player', async () => {
     const f = fixture([['ChangeFace', [7, 1]], ['ChangeFace', [255, 3]], ['LastKeyWait', []], ['ChangeFace', [7, 0]]]);
@@ -97,6 +117,70 @@ describe('ciclo de vida do host de zonas', () => {
     await reloaded.enter('warp');
     expect(map.npcs?.[0].visible).toBe(true);
     expect(f.worlds.at(-1)?.actors[7]).toBeDefined();
+    expect(f.ports.report).not.toHaveBeenCalled();
+  });
+
+  it('sincroniza giro concluído antes de retomar a VM e fornece o ator do evento', async () => {
+    const f = fixture([['MdlAcmdInit', [7]], ['MdlAcmdSet', [6, 3, 1, 1]], ['MdlAcmdSetEnd', []],
+      ['_Suspend', [8]], ['MdlAcmdUpdate', [7]]]);
+    let ready = false;
+    const directions = vi.fn((): Readonly<Record<number, number>> => {
+      if (!ready) return {};
+      ready = false;
+      return { 7: 3 };
+    });
+    const request = vi.fn(async () => 0);
+    const events = new ZoneEvents({ ...f.ports, frames: vi.fn(async () => { ready = true; }),
+      presentation: { request, reset: vi.fn(), directions } }, async () => f.assets);
+    await events.enter();
+    const before = f.worlds.at(-1);
+    await events.interact(f.npc());
+    expect(f.worlds.at(-1)?.actors[7]).toMatchObject({ x: 2, z: 4, direction: 3, visible: true });
+    expect(before?.actors[7].direction).toBe(0);
+    expect(request).toHaveBeenCalledWith(expect.objectContaining({ name: 'MdlAcmdInit' }),
+      expect.objectContaining({ zoneId: 6 }), expect.any(Function), expect.objectContaining({ actorId: 7 }));
+  });
+  it('restaura o ator do init depois de uma interação com NPC', async () => {
+    const f = fixture([['EVCameraSetInitParam', []]]);
+    f.programs.bundle = { ...f.programs.bundle, 'zone:0006:entities': image([
+      ['BuildMdlEventAnimeSetEnd', [6553770, 0]], ['EVCameraSetInitParam', []],
+    ]) };
+    const request = vi.fn(async (effect: AmxEffect) => effect.name === 'BuildMdlEventAnimeSetEnd' ? undefined : 0);
+    const events = new ZoneEvents({ ...f.ports, presentation: { request, reset: vi.fn() } }, async () => f.assets);
+    await events.enter();
+    await events.interact(f.npc());
+    expect(events.pendingEffect).toBe('BuildMdlEventAnimeSetEnd');
+    await events.advance();
+    expect(request).toHaveBeenNthCalledWith(2, expect.objectContaining({ name: 'EVCameraSetInitParam' }),
+      expect.any(Object), expect.any(Function), expect.objectContaining({ actorId: 7 }));
+    expect(request).toHaveBeenNthCalledWith(3, expect.objectContaining({ name: 'EVCameraSetInitParam' }),
+      expect.any(Object), expect.any(Function), expect.objectContaining({ actorId: 0 }));
+  });
+  it('restaura works do save e executa a cena selecionada pela ROM após o init, uma vez', async () => {
+    const f = fixture([]);
+    f.programs.bundle = { ...f.programs.bundle,
+      'zone:0006:map': withScenes(image([['FlagSet', [124]]]), [[70, 16384, 3]]) };
+    const state = { ...f.ports.state(), romEvents: { flags: { 5: true }, vars: { 16384: 3 } } };
+    const events = new ZoneEvents({ ...f.ports, state: () => state }, async () => f.assets);
+    await events.enter();
+    await events.enter();
+    expect(f.worlds.at(-1)?.vars[16385]).toBe(70);
+    expect(f.worlds.at(-1)?.flags).toMatchObject({ 5: true, 99: true, 124: true });
+    expect(state.romEvents).toEqual({ flags: { 5: true }, vars: { 16384: 3 } });
+    expect(f.ports.report).toHaveBeenCalledTimes(1);
+    expect(events.busy).toBe(false);
+  });
+  it('não inicia cena ao atravessar uma borda contínua nem quando o work não corresponde', async () => {
+    const f = fixture([]);
+    f.programs.bundle = { ...f.programs.bundle, 'zone:0006:map': withScenes(image([]), [[70, 16384, 3]]) };
+    const state = { ...f.ports.state(), romEvents: { flags: {}, vars: { 16384: 3 } } };
+    const events = new ZoneEvents({ ...f.ports, state: () => state }, async () => f.assets);
+    await events.enter('boundary');
+    expect(f.worlds.at(-1)?.vars[16385]).toBeUndefined();
+    events.reset();
+    state.romEvents.vars[16384] = 2;
+    await events.enter();
+    expect(f.worlds.at(-1)?.vars[16385]).toBeUndefined();
     expect(f.ports.report).not.toHaveBeenCalled();
   });
   it('preserva chegada contínua 7→24 e libera input enquanto init permanece opaco', async () => {
@@ -168,6 +252,36 @@ describe('ciclo de vida do host de zonas', () => {
     expect(f.ports.report).not.toHaveBeenCalled();
   });
 
+  it('consome apenas retornos explícitos do serviço de apresentação', async () => {
+    const f = fixture([['EVCameraSetInitParam', []], ['FlagSet', [124]]]);
+    const presentation = { reset: vi.fn(), request: vi.fn(async () => 0) };
+    const events = new ZoneEvents({ ...f.ports, presentation }, async () => f.assets);
+    await events.enter();
+    await events.interact(f.npc());
+    expect(presentation.request).toHaveBeenCalledWith(expect.objectContaining({ name: 'EVCameraSetInitParam' }),
+      expect.objectContaining({ zoneId: 6 }), expect.any(Function), expect.objectContaining({ actorId: 7 }));
+    expect(f.worlds.at(-1)?.flags[124]).toBe(true);
+    expect(events.pendingEffect).toBeNull();
+  });
+  it('descarta conclusão tardia da apresentação após reset', async () => {
+    const f = fixture([['EVCameraIsEndFrame', []], ['FlagSet', [124]]]);
+    let finish = (_value: number) => {};
+    const presentation = { reset: vi.fn(), request: vi.fn(() => new Promise<number>(resolve => { finish = resolve; })) };
+    const events = new ZoneEvents({ ...f.ports, presentation }, async () => f.assets);
+    await events.enter();
+    const interacting = events.interact(f.npc());
+    for (let tick = 0; tick < 10 && !presentation.request.mock.calls.length; tick += 1) await Promise.resolve();
+    expect(presentation.request).toHaveBeenCalledOnce();
+    events.reset();
+    const projections = f.worlds.length;
+    finish(1);
+    await interacting;
+    expect(f.worlds).toHaveLength(projections);
+    expect(f.worlds.at(-1)?.flags[124]).toBeUndefined();
+    expect(events.busy).toBe(false);
+    expect(presentation.reset).toHaveBeenCalledTimes(2);
+  });
+
   it('não confirma ACMD automaticamente; mantém o efeito opaco até Enter explícito', async () => {
     const f = fixture([['MdlAcmdInit', [7]], ['MdlAcmdUpdate', [7]]]);
     const events = new ZoneEvents(f.ports, async () => f.assets);
@@ -175,7 +289,7 @@ describe('ciclo de vida do host de zonas', () => {
     await events.interact(f.npc());
     expect(events.busy).toBe(false);
     expect(events.pendingEffect).toBe('MdlAcmdInit');
-    expect(f.ports.report).toHaveBeenLastCalledWith(expect.stringContaining('MdlAcmdInit'));
+    expect(f.ports.report).toHaveBeenLastCalledWith(expect.stringContaining('MdlAcmdInit(7)'));
     await events.advance();
     expect(events.busy).toBe(false);
     expect(f.ports.report).toHaveBeenLastCalledWith(expect.stringContaining('retorno 1'));

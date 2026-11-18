@@ -35,6 +35,49 @@ Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo s
 - Playwright visível/Chromium 149.0.7827.55, principal em porta 5187, catálogo novo por interceptação de dados: A/B real de Brendan/May/Wally com pose/câmera/luz fixas, sem mutar UV no navegador. Seis capturas inspecionadas e zero pageerror/HTTP>=400; relatório e imagens ignorados em `rom/face_expression_validation/final/`. Isso não é uma caminhada/cutscene nem paridade com emulador.
 - CRO ChangeFace e paleta eye01 correlacionam ID uint8 com frames 0,10,…,70; TalkMdlSetEye e visibilidade são caminhos distintos. Nome/protótipo do stub final, estado dinâmico/piscada, demais materiais e wrap/combiners continuam desconhecidos/não implementados. Pés ausentes continuam limitação de geometria, sem malha sintetizada.
 - Python 3.12.3, .NET SDK 8.0.428 (`~/.dotnet/dotnet`), SPICA.dll já existente no checkout `_tools/SpicaExport/bin/Release/net8.0`, Capstone 5.0.3 (`/tmp/events-abi-venv`). Nenhuma dependência adicionada; Craft Anything continuou indisponível. **211 Vitest/38 arquivos, build e 142 testes Python (um skip pré-existente por assets públicos ausentes no worktree) passaram** sobre 61fd0c6. O build mantém o aviso conhecido de chunks >500 kB.
+Atualizado em 2026-11-18 (host verificado no worktree; seções anteriores são históricas).
+
+## Warp natural e apresentação AMX (2026-11-18, `events-layer`)
+
+- **264 testes Vitest em 43 arquivos, oito testes Python de ABI/memória e
+  `npm test && npm run build` passando.** Permanece o aviso herdado de chunks
+  maiores que 500 kB; nenhuma dependência nova.
+- Init real da zona 6 e export `GetSceneChangeData` selecionam o script 2 com
+  works preparados `16514=1` e `16496=3`. O script chama o global 9881 e executa
+  `_MapChangeCore(227,14,2,12,0,0,0,1,0)`; a ROM altera `16496` para 4.
+  Isso comprova o ramo com save preparado, **não uma campanha desde New Game**.
+- Playwright visível em 5178 repetiu **6 → 227**, preservando a entrada normal
+  `(19,0)` e mostrando o laboratório em `(14,12)` após o fade. Não houve
+  substituição de programa, memória ou binding, warp manual nem Enter de
+  completion nesse ramo. Zero `pageerror`, requests falhadas ou HTTP de erro.
+- Câmera/fade/espera por terreno usam serviços de apresentação e geração da zona;
+  follow não sobrescreve câmera ativa. Queries não recebem sucesso constante.
+  Eye/target/FOV e giros usam ticks do renderer, sem paridade de FPS/quaternion.
+- ACMD de giro: opcodes 5/6/7/250/251, durações 12/8/4/8/12, repetição byte e
+  parâmetro 9 evidenciados no CRO. `Init(-1)` usa o ator do evento;
+  `Update(-1)` consulta todas as filas. Direção concluída volta imutavelmente à VM.
+  Fila com opcode não suportado permanece opaca, sem executar um prefixo parcial.
+- Outro Playwright, com posição de interação preparada `(24,20)`, executou o
+  script 14/NPC 0 e mostrou texto ROM com **zero confirmações ACMD** e uma
+  confirmação explícita de `TalkMdlSetEyeToEye`, ainda opaco. Não valida progresso
+  de história. O loader GameText foi exercitado separadamente: seletor 1 →
+  arquivo 23 → 2.848 strings, corrigindo o envelope `{file, lines}`; isso não
+  equivale a executar um ramo ROM de GameText. Ambos os probes não tiveram
+  `pageerror` nem falhas de requisição no trecho exercitado.
+- Evidências locais inspecionadas: `/tmp/events-natural-before.png`,
+  `/tmp/events-natural-camera.png`, `/tmp/events-natural-lab.png` e
+  `/tmp/events-real-turn-dialogue.png`. Testes temporários:
+  `/tmp/playwright-test-natural-warp.js` e `/tmp/playwright-test-events-turn.js`.
+  O teste de warp aguarda opacidade 1 no canvas e no app, além do estado/rede.
+- Metadados locais de 6/227 passam a preservar os exports AMX reais; imagens,
+  novos bancos StoryText e binários continuam em assets ignorados, não no Git.
+- [ADR-007](features/core-jogo/adrs/ADR-007-dispatch-natural-de-cenas.md),
+  [PRD-005](features/core-jogo/prds/PRD-005-warp-natural-da-rom.md) e A-052–A-058
+  registram evidência e limites. **P-013 permanece aberta:** deslocamentos ACMD
+  como 19, clipes GF1 de giro, objetos/eye-to-eye, callbacks, ABI de coordenadas
+  de ator, cobertura de bancos/words, save/party/bag, altura/flags de warp e
+  paridade com emulador. Craft Anything indisponível neste ambiente; a evidência
+  ABI veio de análise estática local dos CROs e `code.bin`.
 
 ## Host de eventos AMX (2026-11-17, worktree `events-layer`)
 

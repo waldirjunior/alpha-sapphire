@@ -10,6 +10,19 @@ export function createAmxState(bundle: AmxBundle, id: string, scriptId: number, 
     status: 'running', awaiting: null });
 }
 
+export function createAmxPublicState(bundle: AmxBundle, id: string, identifier: number, args: readonly number[], world: AmxWorld): AmxState {
+  const image = Object.hasOwn(bundle, id) ? bundle[id] : undefined;
+  if (!image) amxError('AmxProgramError', `programa ${id} não fornecido`);
+  const entryPoint = image.publics?.[String(identifier)];
+  if (entryPoint === undefined) amxError('AmxProgramError', `${id}: export ${identifier} ausente`);
+  if (!image.program.instructions.some(row => row.offset === entryPoint && row.mnemonic === 'proc')) {
+    amxError('AmxProgramError', `${id}: entrada ${entryPoint} do export ${identifier} sem proc`);
+  }
+  args.forEach(inputCell);
+  return cloneAmxState({ machines: [createAmxMachine(id, image, -1, args, entryPoint)], world,
+    status: 'running', awaiting: null });
+}
+
 const branches: Readonly<Record<string, (pri: number, alt: number) => boolean>> = {
   jump: () => true, jrel: () => true, jzer: p => p === 0, jnz: p => p !== 0,
   jeq: (p, a) => p === a, jneq: (p, a) => p !== a,

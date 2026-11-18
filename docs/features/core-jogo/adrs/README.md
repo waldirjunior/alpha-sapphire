@@ -8,3 +8,4 @@
 | [ADR-004](ADR-004-host-conservador-de-eventos.md) | Host conservador de eventos AMX | Aceito (parcial; apresentação atualizada em ADR-005) | 2026-11-17 |
 | [ADR-005](ADR-005-abi-cro-e-init-nao-bloqueante.md) | ABI por CRO e init não bloqueante | Aceito (P-013 aberta) | 2026-11-17 |
 | [ADR-006](ADR-006-hide-flags-e-remocao-persistente.md) | Hide-flags e remoção persistente de atores | Aceito; limites P-013/P-017 | 2026-11-18 |
+| [ADR-007](ADR-007-dispatch-natural-de-cenas.md) | Dispatch natural de cenas AMX | Aceito; implementação em andamento | 2026-11-17 |

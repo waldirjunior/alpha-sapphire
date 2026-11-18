@@ -5,19 +5,22 @@ import { ZoneEvents } from './zoneEvents';
 import { zoneMaps } from '../data/maps_v2/runtime';
 import { eventWarpState } from './eventWarp';
 import { transitionMap } from './mapTransition';
+import type { EventPresentation } from './eventPresentation';
 
 export function createGameEvents(getState: () => GameState, setState: (state: GameState) => void,
-  maps: Record<string, MapDefinition>, syncUi: () => void, surface: Parameters<typeof transitionMap>[0]): ZoneEvents {
+  maps: Record<string, MapDefinition>, syncUi: () => void, surface: Parameters<typeof transitionMap>[0], presentation: EventPresentation): ZoneEvents {
   const dialogue = (text: string | null, sourceId = 'amx'): void => {
     setState({ ...getState(), activeDialogue: text === null ? undefined : { sourceId, text } });
     syncUi();
   };
   return new ZoneEvents({
     state: getState,
+    presentation,
     map: () => maps[getState().player.mapId],
     project: (map, world, player) => {
       maps[map.id] = map;
-      setState(persistAmxProgress(projectEventPlayer(getState(), map, world, player), world));
+      setState(persistAmxProgress({ ...projectEventPlayer(getState(), map, world, player),
+        romEvents: { flags: { ...world.flags }, vars: { ...world.vars } } }, world));
       syncUi();
     },
     dialogue,
