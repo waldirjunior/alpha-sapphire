@@ -1,0 +1,2091 @@
+{
+  "models": [
+    {
+      "id": "character/mm_0000",
+      "url": "/assets/native/characters/mm_0000-57b2903d4593.glb",
+      "source": "rom/extracted/models/characters/mm_0000/mm_0000.glb",
+      "sha256": "57b2903d4593ea3af8df92de8b053bb70652efa5e4345f4094da0fe2b5b3f274",
+      "status": "normalized",
+      "materials": [
+        "npc_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0045",
+      "url": "/assets/native/characters/mm_0045-660899967e9b.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0045.glb",
+      "sha256": "660899967e9b7c16c3f537ca2e799435b7d7987b3d2376c9ea4f46e57e64db10",
+      "status": "normalized",
+      "materials": [
+        "tr0058_00_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0122",
+      "url": "/assets/native/characters/mm_0122-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0122/mm_0122.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0123",
+      "url": "/assets/native/characters/mm_0123-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0123/mm_0123.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0124",
+      "url": "/assets/native/characters/mm_0124-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0124/mm_0124.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0125",
+      "url": "/assets/native/characters/mm_0125-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0125/mm_0125.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0126",
+      "url": "/assets/native/characters/mm_0126-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0126/mm_0126.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0127",
+      "url": "/assets/native/characters/mm_0127-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0127/mm_0127.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0128",
+      "url": "/assets/native/characters/mm_0128-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0128/mm_0128.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0129",
+      "url": "/assets/native/characters/mm_0129-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0129/mm_0129.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0130",
+      "url": "/assets/native/characters/mm_0130-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0130/mm_0130.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0131",
+      "url": "/assets/native/characters/mm_0131-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0131/mm_0131.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0132",
+      "url": "/assets/native/characters/mm_0132-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0132/mm_0132.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0133",
+      "url": "/assets/native/characters/mm_0133-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0133/mm_0133.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0179",
+      "url": "/assets/native/characters/mm_0179-c18ab2e1f75e.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0179.glb",
+      "sha256": "c18ab2e1f75e9c0fa50b40335255bde384bc2ae1b6b56c1815f3f5cc670fd395",
+      "status": "normalized",
+      "materials": [
+        "rstr0009_00_fi_face",
+        "rstr0009_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0180",
+      "url": "/assets/native/characters/mm_0180-d4aca3a4129d.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0180.glb",
+      "sha256": "d4aca3a4129d5001b637a877a96395a2e662bfa796ea81c5f8b19dafe4d2bcaa",
+      "status": "normalized",
+      "materials": [
+        "rstr0010_00_face",
+        "rstr0010_00_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0181",
+      "url": "/assets/native/characters/mm_0181-bc3666eee589.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0181.glb",
+      "sha256": "bc3666eee5895b4b9aa087a44e77e143e633fe138eea8f16c080eb77a2697e1f",
+      "status": "normalized",
+      "materials": [
+        "rstr0011_00_face",
+        "rstr0011_00_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0182",
+      "url": "/assets/native/characters/mm_0182-69c6f0532712.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0182/mm_0182.glb",
+      "sha256": "69c6f053271227298a9bb1aaab382a81de12914c71f770cc8bf07e79c6f8dcb4",
+      "status": "normalized",
+      "materials": [
+        "rstr0012_00_fi_face",
+        "rstr0012_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0187",
+      "url": "/assets/native/characters/mm_0187-127c5238f925.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0187/mm_0187.glb",
+      "sha256": "127c5238f925aa0b90e952bb95b520fadc875d4ee5071e8f5bce85a334a65eba",
+      "status": "normalized",
+      "materials": [
+        "rstr0017_00_fi_faceMat",
+        "rstr0017_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0189",
+      "url": "/assets/native/characters/mm_0189-2c59a2db4f05.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0189/mm_0189.glb",
+      "sha256": "2c59a2db4f05db8c3cff29f66c939ddfaa695b04bf863bdadac936cb3711b45b",
+      "status": "normalized",
+      "materials": [
+        "rstr0019_00_fi_faceMat",
+        "rstr0019_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0210",
+      "url": "/assets/native/characters/mm_0210-d65e1d9ac3ce.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0210/mm_0210.glb",
+      "sha256": "d65e1d9ac3ce0b6c1a569ce02ef672dc0cb926b7a08e18d482e9158b7ae04910",
+      "status": "normalized",
+      "materials": [
+        "rstr0040_00_fi_face",
+        "rstr0040_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0212",
+      "url": "/assets/native/characters/mm_0212-3797abf4809c.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0212.glb",
+      "sha256": "3797abf4809c47d4c58379f0d1ed5815789fca2d068f276b3b50b3a770546e2a",
+      "status": "normalized",
+      "materials": [
+        "rstr0042_00_fi_face",
+        "rstr0042_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0218",
+      "url": "/assets/native/characters/mm_0218-04f4d7adabea.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0218.glb",
+      "sha256": "04f4d7adabea9c96b013b46cdf8787ead1f8aeb5fb6c2d4a728fbbf0eee88134",
+      "status": "normalized",
+      "materials": [
+        "rstr0101_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0219",
+      "url": "/assets/native/characters/mm_0219-8b67d12a006a.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0219.glb",
+      "sha256": "8b67d12a006a9202ff7ff5a0158d96ec2f1bf9a3e0b96e4825ec590cefbb5d19",
+      "status": "normalized",
+      "materials": [
+        "rstr0102_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0220",
+      "url": "/assets/native/characters/mm_0220-8a15ce63a6d1.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0220.glb",
+      "sha256": "8a15ce63a6d1ea05f06ad16cd96b721fbf24b5d57b85dddfc3a174e036653415",
+      "status": "normalized",
+      "materials": [
+        "rstr0103_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0221",
+      "url": "/assets/native/characters/mm_0221-8dec1f50a9f5.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0221.glb",
+      "sha256": "8dec1f50a9f5fc0da97b7e74660fd1250c71baecd023d77087f4530aed2430f1",
+      "status": "normalized",
+      "materials": [
+        "rstr0104_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0222",
+      "url": "/assets/native/characters/mm_0222-b6aaf0c9be5b.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0222/mm_0222.glb",
+      "sha256": "b6aaf0c9be5bc20ad947e173c2bf7794744fa6e9fc723d4c54fb7d73490e5234",
+      "status": "normalized",
+      "materials": [
+        "rstr0105_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0223",
+      "url": "/assets/native/characters/mm_0223-46e685a45075.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0223.glb",
+      "sha256": "46e685a4507567bc94d3a25ff8da839144f1d94800da3175fd22c31342ff3f18",
+      "status": "normalized",
+      "materials": [
+        "rstr0106_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0225",
+      "url": "/assets/native/characters/mm_0225-648de6104cc0.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0225.glb",
+      "sha256": "648de6104cc087c45685c773f487782ae66e05b22c70fec5fe9ae1cf053b08fe",
+      "status": "normalized",
+      "materials": [
+        "rstr0108_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0226",
+      "url": "/assets/native/characters/mm_0226-0b64d13a5229.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0226.glb",
+      "sha256": "0b64d13a5229a50b3f86ed85802d7f43ea00eb1adc85a79c5d937f5703fd6e7d",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [
+        {
+          "material": "rstr0109_00_fi_headMat",
+          "reason": "Unproven UV orientation: ambiguous"
+        }
+      ],
+      "reason": "Unproven UV orientation: ambiguous",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0231",
+      "url": "/assets/native/characters/mm_0231-16666162bf13.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0231.glb",
+      "sha256": "16666162bf13af04b4cc46ee487e894550e681de88cb92e65debe19708e8eec7",
+      "status": "normalized",
+      "materials": [
+        "rstr0114_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0232",
+      "url": "/assets/native/characters/mm_0232-8412b643e7cb.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0232/mm_0232.glb",
+      "sha256": "8412b643e7cb132df650646debc06615355acca1b8defcc3bcefc3a8db07cb62",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [
+        {
+          "material": "rstr0115_00_fi_headMat",
+          "reason": "Unproven UV orientation: ambiguous"
+        }
+      ],
+      "reason": "Unproven UV orientation: ambiguous",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0233",
+      "url": "/assets/native/characters/mm_0233-9ee2c9e57cdb.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0233/mm_0233.glb",
+      "sha256": "9ee2c9e57cdb39fd88796f023abe4c2b4b45efaf6bfe5e74cb5a7ff0a9ab1245",
+      "status": "normalized",
+      "materials": [
+        "rstr0116_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0234",
+      "url": "/assets/native/characters/mm_0234-fc2c62b10c21.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0234/mm_0234.glb",
+      "sha256": "fc2c62b10c2151c39c0ba1d6db3f5c0bf88e9e87d52a0e8b8ac73f848ca66e36",
+      "status": "normalized",
+      "materials": [
+        "rstr0117_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0235",
+      "url": "/assets/native/characters/mm_0235-523c5b38b463.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0235/mm_0235.glb",
+      "sha256": "523c5b38b46356c36848e34ef726f571db83685b254a7a1ca3a477a613c2343a",
+      "status": "normalized",
+      "materials": [
+        "rstr0118_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0236",
+      "url": "/assets/native/characters/mm_0236-f962c28368ec.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0236.glb",
+      "sha256": "f962c28368ec2d1531130c9ccb33f9c84d1152832cecaac32c3e9c8fe6ff989d",
+      "status": "normalized",
+      "materials": [
+        "rstr0119_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0237",
+      "url": "/assets/native/characters/mm_0237-a196c7b11b8a.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0237/mm_0237.glb",
+      "sha256": "a196c7b11b8a0e9f0d3c2852760aaf2b2e0944dd16a2486b149119f201bc4552",
+      "status": "normalized",
+      "materials": [
+        "rstr0120_00_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0238",
+      "url": "/assets/native/characters/mm_0238-834834e36531.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0238.glb",
+      "sha256": "834834e365315ef249383a72d3be0074090c3aae3b3f9207b255a2d616152074",
+      "status": "normalized",
+      "materials": [
+        "rstr0121_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0239",
+      "url": "/assets/native/characters/mm_0239-1bfab36a9d98.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0239.glb",
+      "sha256": "1bfab36a9d98157de34670f34029b4989c66f85bc3e2f51943c750cc2c044b5c",
+      "status": "normalized",
+      "materials": [
+        "rstr0122_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0241",
+      "url": "/assets/native/characters/mm_0241-014bc8097af3.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0241/mm_0241.glb",
+      "sha256": "014bc8097af33bca51be7a0c99a6e893dbf0c08a74906113baa6434ed813655a",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [
+        {
+          "material": "rstr0124_00_fi_headMat",
+          "reason": "Unproven UV orientation: ambiguous"
+        }
+      ],
+      "reason": "Unproven UV orientation: ambiguous",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0242",
+      "url": "/assets/native/characters/mm_0242-2d76c7fc00c8.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0242.glb",
+      "sha256": "2d76c7fc00c8dba8589ae978d832b00a925ef8f5d23ded3993c10c8d7634280d",
+      "status": "normalized",
+      "materials": [
+        "rstr0125_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0244",
+      "url": "/assets/native/characters/mm_0244-b32f819ed4ed.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0244.glb",
+      "sha256": "b32f819ed4edc845ae685d0174880c61b82014c4b674913e0baf669f6b6fc625",
+      "status": "normalized",
+      "materials": [
+        "rstr0127_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0245",
+      "url": "/assets/native/characters/mm_0245-a2b1da4b79d7.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0245.glb",
+      "sha256": "a2b1da4b79d77530d33c4feebf465fd26140f54b9b930d76d06a2d45f551e43c",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [
+        {
+          "material": "rstr0128_00_fi_headMat",
+          "reason": "Unproven UV orientation: ambiguous"
+        }
+      ],
+      "reason": "Unproven UV orientation: ambiguous",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0246",
+      "url": "/assets/native/characters/mm_0246-32d686ee9c01.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0246.glb",
+      "sha256": "32d686ee9c01f253a2018c9d57dd346e2c0e660c6155ac7aeafc5beafd6f1475",
+      "status": "normalized",
+      "materials": [
+        "rstr0129_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0247",
+      "url": "/assets/native/characters/mm_0247-d6738d393bc6.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0247/mm_0247.glb",
+      "sha256": "d6738d393bc6d164bfcf32aca7d51a9640bffee15888768c6eb55ff282990f80",
+      "status": "normalized",
+      "materials": [
+        "rstr0130_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0249",
+      "url": "/assets/native/characters/mm_0249-fc85a3328cd6.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0249/mm_0249.glb",
+      "sha256": "fc85a3328cd64f88172cc5868efc2fefcd007c4ffcd36609e273ec5ae4c1c020",
+      "status": "normalized",
+      "materials": [
+        "rstr0132_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0252",
+      "url": "/assets/native/characters/mm_0252-a44a5f58b3d2.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0252.glb",
+      "sha256": "a44a5f58b3d2ce9b01a7369aa5f9c8c20269fbfb4479b0e14dd49e4ea086087c",
+      "status": "normalized",
+      "materials": [
+        "rstr0135_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0254",
+      "url": "/assets/native/characters/mm_0254-a1407c07ddc7.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0254.glb",
+      "sha256": "a1407c07ddc72634854995e62aa0d72efe74b1e4e11d645bd7f81a66d3b3160a",
+      "status": "normalized",
+      "materials": [
+        "rstr0137_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0255",
+      "url": "/assets/native/characters/mm_0255-b0a52a3aee3c.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0255.glb",
+      "sha256": "b0a52a3aee3c89f26a365b518994a361d58df228ccd6b718c882ba8e2e05ba1c",
+      "status": "normalized",
+      "materials": [
+        "rstr0138_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0256",
+      "url": "/assets/native/characters/mm_0256-05ae21294bee.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0256.glb",
+      "sha256": "05ae21294beebbd5f0c3c48fab870d055fb3a5145bc4750b28ce00c713686ad4",
+      "status": "normalized",
+      "materials": [
+        "rstr0139_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0257",
+      "url": "/assets/native/characters/mm_0257-97b676a502bc.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0257/mm_0257.glb",
+      "sha256": "97b676a502bc43b255d904dae1dcb54f627c9ed2a91e7cfc6c9481dddae98383",
+      "status": "normalized",
+      "materials": [
+        "rstr0140_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0259",
+      "url": "/assets/native/characters/mm_0259-93d31d6ffc35.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0259.glb",
+      "sha256": "93d31d6ffc350e449c12d7c69a5e0f20fd1e497b3a9e42873898865bdc3f743a",
+      "status": "normalized",
+      "materials": [
+        "rstr0142_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0260",
+      "url": "/assets/native/characters/mm_0260-7d74506b69d3.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0260/mm_0260.glb",
+      "sha256": "7d74506b69d32966ea352ffda74dd2ce3f6c1f3d96fdc694601970ba950aced4",
+      "status": "normalized",
+      "materials": [
+        "rstr0143_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0261",
+      "url": "/assets/native/characters/mm_0261-4c67aab463ca.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0261/mm_0261.glb",
+      "sha256": "4c67aab463ca698efde058f840e2a53caf3b91fe28f4eec8f60e532db4bc0da8",
+      "status": "normalized",
+      "materials": [
+        "rstr0144_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0262",
+      "url": "/assets/native/characters/mm_0262-1d0f03064ed2.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0262/mm_0262.glb",
+      "sha256": "1d0f03064ed29dffe0e29ba6e529f107d23cd6884e77d6f5e109eb9e74264af2",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [
+        {
+          "material": "rstr0145_00_fi_headMat",
+          "reason": "Unproven UV orientation: ambiguous"
+        }
+      ],
+      "reason": "Unproven UV orientation: ambiguous",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0264",
+      "url": "/assets/native/characters/mm_0264-9bc7b8d3362c.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0264/mm_0264.glb",
+      "sha256": "9bc7b8d3362ce7c0257be5569173155c1af2cf3e5037368b603ffd6126d09da7",
+      "status": "normalized",
+      "materials": [
+        "rstr0147_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0265",
+      "url": "/assets/native/characters/mm_0265-0d43b2a7c75a.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0265/mm_0265.glb",
+      "sha256": "0d43b2a7c75ac0e4883377a5cdc387e0febf69d726b6da93e8f02dcfde297299",
+      "status": "normalized",
+      "materials": [
+        "rstr0148_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0266",
+      "url": "/assets/native/characters/mm_0266-c0662141ef3f.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0266.glb",
+      "sha256": "c0662141ef3f8556aa925a27f9523a71f7117f4f7648e5f94cf05fd0c65c5b8f",
+      "status": "normalized",
+      "materials": [
+        "rstr0149_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0267",
+      "url": "/assets/native/characters/mm_0267-5700519ddac0.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0267.glb",
+      "sha256": "5700519ddac0364aa3f4287577afba321f955fd531f6005b3c0b683924328ba0",
+      "status": "normalized",
+      "materials": [
+        "rstr0150_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0270",
+      "url": "/assets/native/characters/mm_0270-a67d30672bde.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0270.glb",
+      "sha256": "a67d30672bde6fd352a69aff3db6b80f6eff25356cf35b9799473c62ee3c535a",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [
+        {
+          "material": "rstr0153_00_fi_headMat",
+          "reason": "Unproven UV orientation: ambiguous"
+        }
+      ],
+      "reason": "Unproven UV orientation: ambiguous",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0271",
+      "url": "/assets/native/characters/mm_0271-c7f6fd4d1902.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0271.glb",
+      "sha256": "c7f6fd4d190293963991460190b50e5fe8ba208bb8da680ed236908f4b2338d9",
+      "status": "normalized",
+      "materials": [
+        "rstr0154_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0275",
+      "url": "/assets/native/characters/mm_0275-10321342a069.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0275.glb",
+      "sha256": "10321342a0691be4fd6b503d7cb6db3e5b711fe6b4287c5bdd78069c7bad5fbf",
+      "status": "normalized",
+      "materials": [
+        "rstr0158_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0276",
+      "url": "/assets/native/characters/mm_0276-0a03a8df9916.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0276/mm_0276.glb",
+      "sha256": "0a03a8df991683caa57662fc85a07efaa40387bb35b9308818b16d0c0872fe67",
+      "status": "normalized",
+      "materials": [
+        "rstr0159_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0277",
+      "url": "/assets/native/characters/mm_0277-c81e944422de.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0277/mm_0277.glb",
+      "sha256": "c81e944422de1e176806213ba5ce858c22eeb97b716f4296683b773ac1bfc7d0",
+      "status": "normalized",
+      "materials": [
+        "rstr0160_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0280",
+      "url": "/assets/native/characters/mm_0280-b3c774562f83.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0280.glb",
+      "sha256": "b3c774562f8335d63a9915c985ee774851270f555dbf1ebeaa80843d02670f1b",
+      "status": "normalized",
+      "materials": [
+        "rstr0163_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0281",
+      "url": "/assets/native/characters/mm_0281-e118eb892d5f.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0281.glb",
+      "sha256": "e118eb892d5f3bd4d754a139fb250974c5e6e1fa60a074214da9b44aeab27760",
+      "status": "normalized",
+      "materials": [
+        "rstr0164_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0283",
+      "url": "/assets/native/characters/mm_0283-d73318715940.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0283.glb",
+      "sha256": "d7331871594087d6c3299381867d3671475052bc0aa1f5fb8d3631eddc0445bc",
+      "status": "normalized",
+      "materials": [
+        "rstr0166_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0284",
+      "url": "/assets/native/characters/mm_0284-8406b22da89f.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0284.glb",
+      "sha256": "8406b22da89f3b30e66ea868910f413561187bf6385e7823735f34aa7e349f6b",
+      "status": "normalized",
+      "materials": [
+        "rstr0167_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0285",
+      "url": "/assets/native/characters/mm_0285-0760c2a86bf8.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0285/mm_0285.glb",
+      "sha256": "0760c2a86bf84eda40f7eceef6b9716abd5c222e8be5335d0ed7b378dbb0ffe5",
+      "status": "normalized",
+      "materials": [
+        "rstr0168_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0286",
+      "url": "/assets/native/characters/mm_0286-2a9f9811c560.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0286.glb",
+      "sha256": "2a9f9811c560080319dcc31f10f9b223a286713137b3afef40d8850dd8cd86f3",
+      "status": "normalized",
+      "materials": [
+        "rstr0169_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0287",
+      "url": "/assets/native/characters/mm_0287-eeec5072a505.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0287.glb",
+      "sha256": "eeec5072a5053c9e12ae5099bc4c8dc81b671eb6f7bc72b724ba9bcf4092dc79",
+      "status": "normalized",
+      "materials": [
+        "rstr0170_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0288",
+      "url": "/assets/native/characters/mm_0288-c724be870081.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0288.glb",
+      "sha256": "c724be870081cc8ea5b4da059c191d936cb34c738e9a30ce7620dad6fa948c11",
+      "status": "normalized",
+      "materials": [
+        "rstr0171_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0289",
+      "url": "/assets/native/characters/mm_0289-0ac8e97fd645.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0289.glb",
+      "sha256": "0ac8e97fd6458dfd75a0487e4a7066e5e1ebf1a0d91ad2d9e784a546ad42e7c1",
+      "status": "normalized",
+      "materials": [
+        "rstr0172_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0296",
+      "url": "/assets/native/characters/mm_0296-f2ca034cae61.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0296.glb",
+      "sha256": "f2ca034cae618b726d5445d54a4d1eb07a8b0b360c0bc4db9d7000558e54b419",
+      "status": "normalized",
+      "materials": [
+        "rstr0179_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0298",
+      "url": "/assets/native/characters/mm_0298-f21d9066e37d.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0298.glb",
+      "sha256": "f21d9066e37dc3f19bd3c52ca5cd59e4d3b04bef387cba71c2941fbbcf97f56f",
+      "status": "normalized",
+      "materials": [
+        "rstr0181_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0299",
+      "url": "/assets/native/characters/mm_0299-11331f49d34d.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0299.glb",
+      "sha256": "11331f49d34ddd941e52b23d03e988d8ff17fcb376e4588c0ac456d00664c6ec",
+      "status": "normalized",
+      "materials": [
+        "rstr0182_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0300",
+      "url": "/assets/native/characters/mm_0300-5c9ff6a30dab.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0300/mm_0300.glb",
+      "sha256": "5c9ff6a30dab3a0497b55aa1de015752839a83531c614b2868d238034d8263ee",
+      "status": "normalized",
+      "materials": [
+        "rstr0183_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0301",
+      "url": "/assets/native/characters/mm_0301-479e7112f3eb.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0301.glb",
+      "sha256": "479e7112f3eb38fe8d389de46697f568aafa6befe183426bd682eb3ac699746d",
+      "status": "normalized",
+      "materials": [
+        "rstr0184_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0302",
+      "url": "/assets/native/characters/mm_0302-2f8792849140.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0302.glb",
+      "sha256": "2f8792849140409d02dd2ff683ab136f3314e76d72c3c6875c705948252eb73d",
+      "status": "normalized",
+      "materials": [
+        "rstr0185_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0303",
+      "url": "/assets/native/characters/mm_0303-73f5880cb5eb.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0303.glb",
+      "sha256": "73f5880cb5eb785ae87be85b42396135ade512dc2d60ca1422e6c7c481773279",
+      "status": "normalized",
+      "materials": [
+        "rstr0186_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0305",
+      "url": "/assets/native/characters/mm_0305-c73d76cadcaf.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0305.glb",
+      "sha256": "c73d76cadcaf567c617234765e9c8ee761b0bc02a40fc9d0e5be4f9f80284ac8",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [
+        {
+          "material": "rstr0188_00_fi_headMat",
+          "reason": "Unproven UV orientation: ambiguous"
+        }
+      ],
+      "reason": "Unproven UV orientation: ambiguous",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0306",
+      "url": "/assets/native/characters/mm_0306-9b3e91b04d40.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0306.glb",
+      "sha256": "9b3e91b04d408459fc18dc3e58b65459f85c4fa70d7137bb75cd020b4b34fe22",
+      "status": "normalized",
+      "materials": [
+        "rstr0189_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0307",
+      "url": "/assets/native/characters/mm_0307-b34108b95099.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0307.glb",
+      "sha256": "b34108b950995376a8ff160b33b855da1d3b8382a3b41f2c447b360f90523b5d",
+      "status": "normalized",
+      "materials": [
+        "rstr0190_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0309",
+      "url": "/assets/native/characters/mm_0309-93753e7e246c.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0309/mm_0309.glb",
+      "sha256": "93753e7e246c31dc1cd3463fb702a28cd1458dcd067199301d667b9b1c3e6cc8",
+      "status": "normalized",
+      "materials": [
+        "rstr0192_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0312",
+      "url": "/assets/native/characters/mm_0312-b313831fd7c2.glb",
+      "source": "rom/extracted/models/characters/mm_0312/mm_0312.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "status": "unchanged",
+      "materials": [],
+      "exclusions": [],
+      "reason": "No native face/head material candidate",
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0314",
+      "url": "/assets/native/characters/mm_0314-6a5e601384ab.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0314.glb",
+      "sha256": "6a5e601384ab124301d4896a27264c70bf44350c42b4a773f61447171537cf55",
+      "status": "normalized",
+      "materials": [
+        "rstr0001_00_face",
+        "rstr0001_00_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0315",
+      "url": "/assets/native/characters/mm_0315-3aa3b5d4c326.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0315.glb",
+      "sha256": "3aa3b5d4c3262988cd1470cfdc9300fae6704b4c3b09e1f5260d3ab189392302",
+      "status": "normalized",
+      "materials": [
+        "rstr0002_00_fi_face",
+        "rstr0002_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0318",
+      "url": "/assets/native/characters/mm_0318-8f8d4fc602da.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0318.glb",
+      "sha256": "8f8d4fc602da5f8260c900e8d69180e069b753bb9fc7a0d6e9dbb6cb7a17e687",
+      "status": "normalized",
+      "materials": [
+        "rstr0009_00_fi_face",
+        "rstr0009_00_fi_head"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0319",
+      "url": "/assets/native/characters/mm_0319-e10b64bdc72e.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0319.glb",
+      "sha256": "e10b64bdc72efc891d0d3c4be0b9c29eac70722a7a48e7a5bd762dea362dc4f6",
+      "status": "normalized",
+      "materials": [
+        "rstr0053_00_fi_faceMat",
+        "rstr0053_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0320",
+      "url": "/assets/native/characters/mm_0320-b08bdce0e21d.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0320/mm_0320.glb",
+      "sha256": "b08bdce0e21d737f53c3b9444000b48a471e8531eb43678f19b2025d6b449e3c",
+      "status": "normalized",
+      "materials": [
+        "rstr0196_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0321",
+      "url": "/assets/native/characters/mm_0321-48754a8e45a7.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0321/mm_0321.glb",
+      "sha256": "48754a8e45a7bcd12ea051592e2e0d1c7489ee564caa86131b52f352107a951b",
+      "status": "normalized",
+      "materials": [
+        "rstr0197_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0322",
+      "url": "/assets/native/characters/mm_0322-5f5525bde229.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0322.glb",
+      "sha256": "5f5525bde22971398a9a7134b4a6d401fce2b4a9df6a4ec263a7dc20dac1b3a7",
+      "status": "normalized",
+      "materials": [
+        "rstr0198_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0333",
+      "url": "/assets/native/characters/mm_0333-ccada447fb28.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0333/mm_0333.glb",
+      "sha256": "ccada447fb285017feb83bf155f7f2864b8957d9c0fe390ed08de32fe9710d8d",
+      "status": "normalized",
+      "materials": [
+        "rstr0209_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0340",
+      "url": "/assets/native/characters/mm_0340-7ff086e557e6.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0340/mm_0340.glb",
+      "sha256": "7ff086e557e61c66d1f6b5a2a582a8260a7e0bc4a4658ff008fd676ee0f11b79",
+      "status": "normalized",
+      "materials": [
+        "rstr0216_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0341",
+      "url": "/assets/native/characters/mm_0341-5728d70a2f18.glb",
+      "source": "rom/extracted/models/clips_merged/characters/mm_0341/mm_0341.glb",
+      "sha256": "5728d70a2f18484bf143f11f182773510d3c19545b9d3cd9c3c2009120d21a62",
+      "status": "normalized",
+      "materials": [
+        "rstr0217_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0344",
+      "url": "/assets/native/characters/mm_0344-b924c255ad10.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0344.glb",
+      "sha256": "b924c255ad104aba119cec316e9c3cc2c49da46ac8efa5a3e320a16565819ee8",
+      "status": "normalized",
+      "materials": [
+        "rstr0122_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0345",
+      "url": "/assets/native/characters/mm_0345-c4ed7a7657a2.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0345.glb",
+      "sha256": "c4ed7a7657a293385d5c1d9f415e39f42f791f4a6d4ccb838c4d74ea13d5ea0f",
+      "status": "normalized",
+      "materials": [
+        "rstr0113_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0346",
+      "url": "/assets/native/characters/mm_0346-f03821c75e28.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0346.glb",
+      "sha256": "f03821c75e2849db3d19f8eac8328a2f373592e96a81de63c25aec06855bede2",
+      "status": "normalized",
+      "materials": [
+        "rstr0112_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    },
+    {
+      "id": "character/mm_0347",
+      "url": "/assets/native/characters/mm_0347-a94fa0add561.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0347.glb",
+      "sha256": "a94fa0add561b7b0742a351791323e42debfc40b6b806ad245f9930271b4b402",
+      "status": "normalized",
+      "materials": [
+        "rstr0110_00_fi_headMat"
+      ],
+      "exclusions": [],
+      "reason": null,
+      "structural_preservation": true,
+      "idempotent": true
+    }
+  ],
+  "zones": [
+    {
+      "zone": 6,
+      "models": [
+        {
+          "model": 122,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 179,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 212,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 221,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 280,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 281,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 289,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 296,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 4153,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        },
+        {
+          "model": 8253,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        }
+      ]
+    },
+    {
+      "zone": 7,
+      "models": [
+        {
+          "model": 122,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 219,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 238,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 299,
+          "status": "normalized",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "zone": 8,
+      "models": [
+        {
+          "model": 221,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 236,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 239,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 283,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 285,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 312,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        }
+      ]
+    },
+    {
+      "zone": 9,
+      "models": [
+        {
+          "model": 0,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 122,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 236,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 271,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 286,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 287,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 4137,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        },
+        {
+          "model": 8253,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        }
+      ]
+    },
+    {
+      "zone": 10,
+      "models": [
+        {
+          "model": 122,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 231,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 286,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 305,
+          "status": "unchanged",
+          "reason": "Unproven UV orientation: ambiguous"
+        },
+        {
+          "model": 4115,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        }
+      ]
+    },
+    {
+      "zone": 11,
+      "models": [
+        {
+          "model": 222,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 223,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 225,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 231,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 285,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 4148,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        },
+        {
+          "model": 8253,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        }
+      ]
+    },
+    {
+      "zone": 12,
+      "models": [
+        {
+          "model": 239,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 284,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 305,
+          "status": "unchanged",
+          "reason": "Unproven UV orientation: ambiguous"
+        },
+        {
+          "model": 8253,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        }
+      ]
+    },
+    {
+      "zone": 13,
+      "models": [
+        {
+          "model": 122,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 123,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 180,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 181,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 221,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 231,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 254,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 284,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 289,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 319,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 8192,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        }
+      ]
+    },
+    {
+      "zone": 14,
+      "models": [
+        {
+          "model": 123,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 124,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 210,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 232,
+          "status": "unchanged",
+          "reason": "Unproven UV orientation: ambiguous"
+        },
+        {
+          "model": 247,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 260,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 261,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 264,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 265,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 284,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 287,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 288,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 296,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 305,
+          "status": "unchanged",
+          "reason": "Unproven UV orientation: ambiguous"
+        },
+        {
+          "model": 306,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 309,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 4155,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        }
+      ]
+    },
+    {
+      "zone": 15,
+      "models": [
+        {
+          "model": 122,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 189,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 225,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 256,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 275,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 276,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 277,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 285,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 286,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 320,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 4149,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        },
+        {
+          "model": 4150,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        },
+        {
+          "model": 4151,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        },
+        {
+          "model": 8193,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        }
+      ]
+    },
+    {
+      "zone": 16,
+      "models": [
+        {
+          "model": 122,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 123,
+          "status": "unchanged",
+          "reason": "No native face/head material candidate"
+        },
+        {
+          "model": 182,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 219,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 221,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 226,
+          "status": "unchanged",
+          "reason": "Unproven UV orientation: ambiguous"
+        },
+        {
+          "model": 260,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 284,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 285,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 288,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 306,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 307,
+          "status": "normalized",
+          "reason": null
+        },
+        {
+          "model": 8192,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        },
+        {
+          "model": 8203,
+          "status": "unmapped",
+          "reason": "No corresponding MM GLB; raw actor ID not remapped"
+        }
+      ]
+    }
+  ],
+  "unavailable": [
+    {
+      "id": "character/mm_0000",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0122",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0123",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0124",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0125",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0126",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0127",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0128",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0129",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0130",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0131",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0132",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0133",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0312",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "pokemon/0276/0",
+      "reason": "Unhandled exception. System.IO.InvalidDataException: Segment scale compensation has a zero parent scale."
+    },
+    {
+      "id": "character/mm_4115",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4133",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4134",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4137",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4141",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4148",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4149",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4150",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4151",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4153",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4155",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4156",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_8192",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_8193",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_8203",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_8253",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_8265",
+      "reason": "Unmapped ROM actor model id"
+    }
+  ],
+  "summary": {
+    "audited_models": 99,
+    "normalized_models": 79,
+    "normalized_materials": 91,
+    "palette_materials": 17,
+    "excluded_materials": 7
+  }
+}

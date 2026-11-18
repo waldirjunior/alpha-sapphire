@@ -9,7 +9,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).parent))
 from audit_character_uv import audit_doc
 from glb_native_clips import encode_glb
-from promote_native_assets import ALIASES, ZONE_IDS, character_ids, publish_asset, prepare_pose_jobs, promote
+from promote_native_assets import ALIASES, character_ids, publish_asset, prepare_pose_jobs, promote
 from test_glb_native_clips import fixture
 
 
@@ -19,12 +19,13 @@ class NativeAssetTests(unittest.TestCase):
             root = Path(directory)
             maps = root / 'src/data/maps_v2'
             maps.mkdir(parents=True)
-            for zone in ZONE_IDS:
+            for zone in (*range(6, 17), *range(23, 31)):
                 (maps / f'{zone:04d}.json').write_text('{"npcs": []}')
+            (maps / '0010.json').write_text('{"npcs": [{"model": 222}]}')
             staged = root / 'public/assets/characters'
             staged.mkdir(parents=True)
             (staged / 'mm_0179.glb').write_bytes(b'fixture')
-            self.assertEqual(character_ids(root), {*ALIASES.values(), 179})
+            self.assertEqual(character_ids(root), {*ALIASES.values(), 179, 222})
 
     def test_pose_plan_reuses_only_validated_existing_outputs(self):
         with tempfile.TemporaryDirectory() as directory:

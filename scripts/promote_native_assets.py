@@ -12,7 +12,7 @@ from glb_native_clips import decode_glb
 from native_motions import motion_slots, package_sections
 from validate_native_manifest import validate_model, verify_float_accessors
 
-ZONE_IDS = (6, 7, *range(23, 31))
+ZONE_IDS = (*range(6, 17), *range(23, 31))
 ALIASES = {'brendan': 315, 'may': 314, 'npc': 45}
 
 
@@ -51,6 +51,8 @@ def publish_asset(root: Path, source: Path, kind: str, name: str,
                   face_evidence: dict | None = None) -> tuple[str, str]:
     blob = source.read_bytes()
     if kind == 'characters':
+        if face_evidence and source.resolve() != (root / face_evidence['source_glb']).resolve():
+            raise ValueError(f"Character source {source} does not match face evidence {face_evidence['source_glb']}")
         blob = normalize_character_faces(blob, face_evidence)
     scene, binary = decode_glb(blob)
     verify_float_accessors(scene, binary)
