@@ -66,6 +66,7 @@ export interface BoundaryLink {
 }
 
 export interface MapDefinition {
+  groundHeights?: (number | null)[][];
   southLedges?: readonly GridPosition[];
   boundaries?: readonly BoundaryLink[];
   worldOrigin?: GridPosition;

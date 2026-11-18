@@ -19,6 +19,8 @@ Camada de renderização WebGL com Three.js em `src/engine/` (`SceneManager.ts`)
 - [PRD-013](prds/PRD-013-bondinho-mt-chimney-lavaridge.md) —39→384→385→83→84→39→9; bondinho por AMX/fixture pós-demo, gate666 real e init por work16699. Ledge sul por palavra75020021 preserva o grid e permite descida unidirecional (core/ADR-008).Main809b814:452 passos até Lavaridge9(20,21), oito saltos sul, bloqueios/fixtures/reload, nove zonas com encontros nativos e zero erros;345 Vitest/169 Python/build passam.21 capturas inspecionadas: Jagged sem terreno visível e oclusão severa em outros pontos. Aceite só de navegação condicional; altura/salto gráfico, demo/campanha natural e paridade permanecem abertos.
 - Referência TCC: [docs/tcc/00-arquitetura.md](../../tcc/00-arquitetura.md).
 
+- [ADR-006](adrs/ADR-006-altura-por-celula-coll-gr.md), A-080/A-081/P-017: alturas por célula derivadas dos triângulos físicos da seção2 GR, player/NPCs no piso e câmera relativa ao pé. A/B de12 checkpoints/34 capturas recupera corpo e terreno em39/83/84/385/71; telhados/paredes6/445/15 e pisos secundários continuam separados e abertos. Não usa max-hit visual nem altera skins/materiais.
+
 ## Estado atual
 
 - [SceneManager.ts](../../../src/engine/SceneManager.ts) consome GameState/MapDefinition sem mutar o core, com modelos de mapa/personagens e animações idle/walk. [zoneTerrain.ts](../../../src/engine/zoneTerrain.ts) compõe GRs de maps_v2; NPCs usam mm_NNNN ou npc.glb. O grid geométrico permanece como fallback quando faltam assets locais. Bootstrap e seleção legacy ficam no repositório de mapas, não inline no engine.

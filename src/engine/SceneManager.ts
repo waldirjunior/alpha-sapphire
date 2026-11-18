@@ -5,10 +5,10 @@ import type { PokemonType } from '../data/pokemon/species';
 import { createBattleArena, type BattleArena } from './battleArena';
 import type { GameState, MapDefinition } from '../core/types';
 import { loadZoneTerrain } from './zoneTerrain';
-import { appendMapEntities, eventActorRoot, syncMapEntities, FACING_YAW } from './zoneEntities';
+import { advanceActorPosition, appendMapEntities, eventActorRoot, syncMapEntities, FACING_YAW } from './zoneEntities';
 import { CharacterExpressions } from './characterExpressions';
 import { ContinuousTerrain } from './continuousTerrain';
-import { worldPosition } from '../core/boundaries';
+import { groundedWorldPosition } from '../core/groundHeight';
 import { applyNativePicaAlpha, picaMaterialModelUrl } from './picaMaterials';
 import { NativeAnimationController } from './nativeAnimation';
 import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
@@ -110,7 +110,7 @@ export class SceneManager {
     container.appendChild(this.renderer.domElement);
     container.style.backgroundColor = '#000';
     this.events = new EventPresentation(this.camera, this.renderer.domElement,
-      () => ({ x: this.playerRoot.position.x, y: 0.5, z: this.playerRoot.position.z }), () => this.terrainReady,
+      () => ({ x: this.playerRoot.position.x, y: this.playerRoot.position.y + 0.5, z: this.playerRoot.position.z }), () => this.terrainReady,
       (map, actorId) => eventActorRoot(map, actorId, this.entitiesGroup, this.playerRoot));
 
     const hemi = new THREE.HemisphereLight(0xf0f9ff, 0x365314, 1.05);
@@ -289,8 +289,8 @@ export class SceneManager {
 
     syncMapEntities(map, this.entitiesGroup, this.characterExpressions);
     this.characterExpressions.set(this.playerRoot, state.player.faceExpression);
-    const target = worldPosition(state.player.pos, map);
-    this.playerTargetPos.set(target.x, 0, target.z);
+    const target = groundedWorldPosition(state.player.pos, map);
+    this.playerTargetPos.set(target.x, target.y, target.z);
     const continuous = previousRegion && previousRegion === map.continuousRegion &&
       this.playerRoot.position.distanceToSquared(this.playerTargetPos) < 2.5;
     if (mapChanged && !continuous) this.playerRoot.position.copy(this.playerTargetPos);
@@ -458,18 +458,7 @@ export class SceneManager {
   public render(): void {
     const dt = Math.min(this.clock.getDelta(), 0.1);
     if (!this.inBattle) {
-      this.playerRoot.position.x = THREE.MathUtils.damp(
-        this.playerRoot.position.x,
-        this.playerTargetPos.x,
-        18,
-        dt
-      );
-      this.playerRoot.position.z = THREE.MathUtils.damp(
-        this.playerRoot.position.z,
-        this.playerTargetPos.z,
-        18,
-        dt
-      );
+      advanceActorPosition(this.playerRoot, this.playerTargetPos, dt);
       this.updatePlayerAnimation();
       this.playerAnim?.mixer.update(dt);
       for (const actor of this.entityActors) actor.mixer.update(dt);

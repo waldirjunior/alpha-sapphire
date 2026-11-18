@@ -58,6 +58,7 @@ def build_zone_map(zone: int, zones: dict, matrices: dict, bounds: dict, gr_dir:
             'source': {'zoSha256': record['sha256'], 'mapArea': record['mapArea'], 'textFile': record['textFile'],
                        'matrixId': record['mapMatrix'], 'matrix': matrix, 'worldUnitsPerTile': 18,
                        'originTile': {'x': rect[0], 'z': rect[1]},
+                       'groundHeightPolicy': 'gr-coll2-cell-center-unique-v1',
                        'boundsPolicy': 'zone-grid' if matrix['zoneIds'] else 'occupied-gr-extent',
                        'chunks': matrix_chunks(matrix, rect)}}
 

@@ -42,6 +42,16 @@ describe('zone map adapter', () => {
     }
   });
 
+  it('copies finite primary ground samples, preserving null instead of inventing a floor', () => {
+    const source = { ...fixture, groundHeights: [[0, null], [27, 20.5]] };
+    const map = adaptZoneMap(source);
+    expect(map.groundHeights).toEqual(source.groundHeights);
+    expect(map.groundHeights?.[0]).not.toBe(source.groundHeights[0]);
+    for (const grid of [[[0]], [[0, null], [NaN, 1]], [[0, null], [Infinity, 1]]]) {
+      expect(() => adaptZoneMap({ ...source, groundHeights: grid })).toThrow(/height|altura/);
+    }
+  });
+
   it('loads only the requested JSON, deduplicates requests and retries failures', async () => {
     const load = vi.fn().mockRejectedValueOnce(new Error('offline')).mockResolvedValue(fixture);
     const unused = vi.fn();

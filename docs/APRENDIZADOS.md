@@ -769,3 +769,44 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Decisão:** nenhuma alteração de runtime, assets, colisão ou shader.
   Consulta de altura/camada e aceite visual continuam abertos; snapshots
   controlados sem init/VM não substituem caminhada natural ou emulador.
+
+## A-080 O GR contém colisão física distinta do BCH visual
+
+- **Data:** 2026-11-18; P-017/engine ADR-006, base0372885.
+- **Observado:** seção2 `coll` dos857 GRs inventariados usa cabeçalho
+  1/3/2/1/2,16 ranges a0x2a0 e triângulos float4/w1 a0x320 até o marcador
+  term emu32@4+16.846 GRs compõem os536 mapas. Ranges repetem triângulos;
+  deduplicar evita repetir trabalho e confundir repetição com outra camada.
+- **Erro evitado:** continuar usando o raycast do BCH e selecionar telhados.
+  A colisão física dá1 em83,3.150827 em385 e27/21/20.5 no GR291, enquanto
+  telhados e plataformas visuais oferecem hits superiores diferentes.
+- **Regra:** amostrar o centro `(tile−19.5)×18` da seção física primária por
+  coordenadas baricêntricas e dividir Y por18; nenhuma escolha max/min-hit.
+  Sem superfície ou com alturas diferentes além de tolerância0.0001 tile,
+  exportar null. Não fundir a seção8: em15(2,20) ela dá7.5 contra chão0.
+- **Evidência:** fixtures sintéticas red-green,846 GRs aceitos pelo parser,
+ 536 JSONs preservados após retirar apenas groundHeights e sua policy.
+  Auditoria:318424 células transitáveis conhecidas/539 desconhecidas;
+ 705 warps concordantes com ZO,25 desconhecidos e133 diferenças dentro do
+  recorte, incluindo camada secundária e offsets/rampas não resolvidos.
+
+## A-081 Corrigir a projeção do piso não resolve a oclusão por prédios
+
+- **Data:** 2026-11-18; P-017/engine ADR-006.
+- **Observado:** player/NPCs agora usam altura da célula local e preservam a
+  projeção X/Z; câmera follow mira playerY+0.5 com eyeY=playerY+9. O corpo
+  inteiro aparece em83 com o renderer normal, sem mudar skin, bind, depth,
+  culling, origem ou clipes. O residual dos controles anteriores não foi
+  reproduzido nesse fluxo; isso não prova ausência de todo defeito skinned.
+- **Erro evitado:** chamar o corpo parcial de83 de bug de skinning sem
+  reproduzi-lo após grounding correto.6(14,16),445(78,48) e15(2,20) mantêm
+  telhado/paredes entre câmera e ator emY0 correto; actor-only mostra corpo
+  íntegro. Não esconder geometria para declarar aceite visual completo.
+- **Regra:** interpolar Y com o mesmo mecanismo de apresentação X/Z já
+  existente, sem novo timer; documentar que coeficiente18 não prova o clock
+  nativo. Preservar câmera AMX ativa e battle camera. Null não vira altura
+  comprovada: a apresentação usa o fallback anterior0 até resolver a camada.
+- **Evidência:** A/B de12 checkpoints/34 capturas visíveis contra0372885,
+  zero erros/requests falhos/warnings; passo core real84(38,29)→(38,31)
+  comY21→20.5 em30 renders e câmera relativa preservada. Snapshots sem init
+  e campanha não são caminhada natural nem validação no emulador.

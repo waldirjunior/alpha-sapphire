@@ -60,6 +60,17 @@ PseudoLightingListener e métodos EffectCycleLight, mas não recupera os
 valores/binding do ambiente. RF-01/RF-02 continuam parciais: nenhum shader,
 exposição, LUT/toon, lightmap ou multi-textura foi inferido por aparência.
 
+### Grounding primário implementado (A-080/A-081, P-017)
+
+A [ADR-006](../adrs/ADR-006-altura-por-celula-coll-gr.md) publica altura por
+célula da seção física2 GR, sem max-hit visual. Player/NPCs e follow camera
+consomem Y;846 GRs/536 mapas preservam os demais campos. A/B12 checkpoints/
+34 capturas recupera39/83/84/385/71 e confirmaY21→20.5 no passo de ledge84.
+351 Vitest/55 arquivos, build e186 Python sem skips passaram. O corpo83 é
+inteiro sem alterar skin; telhados/paredes6/445/15 são oclusão separada.
+Pisos secundários/actor.y,539 células transitáveis null, clock/hop nativos,
+validação natural/emulador e aceite visual global continuam P-017.
+
 ### Grounding e oclusão (A-076/A-077, P-017)
 
 14 checkpoints/94 capturas controladas com SceneManager real delimitam dois
