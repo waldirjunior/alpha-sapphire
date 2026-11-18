@@ -95,6 +95,7 @@ let bag = saved?.bag ?? createInitialBag();
 let activePartyIndex = 0;
 let caughtCount = saved?.caughtCount ?? 0;
 let activeBattle: BattleState | null = null;
+let battleAnimating = false;
 let activeTrainerId: string | null = null;
 let openDsTab: 'party' | 'bag' | 'pokedex' | null = null;
 let activeBagPocket: 'items' | 'balls' | 'key' = 'items';
@@ -163,6 +164,7 @@ function syncPartyFromBattle(): void {
 function renderBattle(): void {
   sceneManager.syncBattle(activeBattle);
   if (!battleOverlay || !battleEnemy || !battlePlayer || !battleLog || !battleActions) return;
+  battleActions.inert = battleAnimating;
   if (!activeBattle) {
     battleOverlay.classList.remove('open');
     return;
@@ -181,12 +183,21 @@ function renderBattle(): void {
       const btn = document.createElement('button');
       btn.textContent = `${move.name} (${move.type}) ${move.currentPp}/${move.maxPp} PP`;
       btn.disabled = move.currentPp === 0 && b.player.moves.some((slot) => slot.currentPp > 0);
-      btn.onclick = () => {
-        if (!activeBattle) return;
+      btn.onclick = async () => {
+        if (!activeBattle || battleAnimating) return;
+        const before = activeBattle;
+        const next = executeBattleTurn(before, idx);
+        battleAnimating = true;
+        battleActions.querySelectorAll('button').forEach((button) => { button.disabled = true; });
         sceneManager.playAttackEffect(move.type);
-        activeBattle = executeBattleTurn(activeBattle, idx);
-        syncPartyFromBattle();
-        renderBattle();
+        try {
+          await sceneManager.playBattleEvents(next.events ?? []);
+          if (activeBattle === before) activeBattle = next;
+        } finally {
+          battleAnimating = false;
+          syncPartyFromBattle();
+          renderBattle();
+        }
       };
       battleActions.appendChild(btn);
     });

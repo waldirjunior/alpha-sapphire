@@ -1,0 +1,1221 @@
+{
+  "pokemon": {
+    "tentacool": "/assets/native/pokemon/tentacool-b2c2908c403e.glb",
+    "krabby": "/assets/native/pokemon/krabby-9c7c4e504e9c.glb",
+    "goldeen": "/assets/native/pokemon/goldeen-04104b4069f2.glb",
+    "magikarp": "/assets/native/pokemon/magikarp-d42682f34c58.glb",
+    "marill": "/assets/native/pokemon/marill-3baadba569d8.glb",
+    "azumarill": "/assets/native/pokemon/azumarill-fae9755f6fe4.glb",
+    "treecko": "/assets/native/pokemon/treecko-eea117f37a57.glb",
+    "grovyle": "/assets/native/pokemon/grovyle-449cd05654e8.glb",
+    "sceptile": "/assets/native/pokemon/sceptile-7f687f6366d6.glb",
+    "torchic": "/assets/native/pokemon/torchic-dd7fbe55c678.glb",
+    "combusken": "/assets/native/pokemon/combusken-5b4efeaecd25.glb",
+    "blaziken": "/assets/native/pokemon/blaziken-928442eb2a25.glb",
+    "mudkip": "/assets/native/pokemon/mudkip-580ef94c18d6.glb",
+    "marshtomp": "/assets/native/pokemon/marshtomp-3e61a71d494e.glb",
+    "swampert": "/assets/native/pokemon/swampert-73166e961138.glb",
+    "poochyena": "/assets/native/pokemon/poochyena-511069c621a6.glb",
+    "zigzagoon": "/assets/native/pokemon/zigzagoon-632b7464ce6b.glb",
+    "wurmple": "/assets/native/pokemon/wurmple-f429b8437a81.glb",
+    "lotad": "/assets/native/pokemon/lotad-05b6f1a5cd89.glb",
+    "taillow": "/assets/native/pokemon/taillow-a961ad701e43.glb",
+    "wingull": "/assets/native/pokemon/wingull-c424e2da84f1.glb",
+    "pelipper": "/assets/native/pokemon/pelipper-4660b580eff8.glb",
+    "ralts": "/assets/native/pokemon/ralts-611ab624a4e4.glb",
+    "surskit": "/assets/native/pokemon/surskit-7eb648805735.glb",
+    "masquerain": "/assets/native/pokemon/masquerain-8c7bfbcf67a8.glb",
+    "wailmer": "/assets/native/pokemon/wailmer-dc6ac56c05bb.glb",
+    "corphish": "/assets/native/pokemon/corphish-f07f4a90b44e.glb",
+    "kyogre": "/assets/native/pokemon/kyogre-4da282750623.glb",
+    "kyogre-1": "/assets/native/pokemon/kyogre-1-86851da92da2.glb",
+    "groudon": "/assets/native/pokemon/groudon-f9f143f2befa.glb",
+    "groudon-1": "/assets/native/pokemon/groudon-1-a912dc489c4f.glb",
+    "shellos": "/assets/native/pokemon/shellos-470e3701b800.glb",
+    "chatot": "/assets/native/pokemon/chatot-97bec3a5907a.glb",
+    "lillipup": "/assets/native/pokemon/lillipup-6a33b165b237.glb",
+    "pidove": "/assets/native/pokemon/pidove-eb5df1e7241a.glb",
+    "tympole": "/assets/native/pokemon/tympole-57a75a8b0ea2.glb",
+    "sewaddle": "/assets/native/pokemon/sewaddle-5f83ddad4479.glb",
+    "zorua": "/assets/native/pokemon/zorua-3e9c7ffc6f55.glb",
+    "gothita": "/assets/native/pokemon/gothita-5ab5c184f231.glb",
+    "frillish": "/assets/native/pokemon/frillish-b9db4015c077.glb",
+    "clauncher": "/assets/native/pokemon/clauncher-975a9026a743.glb"
+  },
+  "characters": {
+    "/assets/characters/mm_0045.glb": "/assets/native/characters/mm_0045-f351711ff33b.glb",
+    "/assets/characters/npc/npc.glb": "/assets/native/characters/mm_0045-f351711ff33b.glb",
+    "/assets/characters/mm_0122.glb": "/assets/native/characters/mm_0122-b313831fd7c2.glb",
+    "/assets/characters/mm_0179.glb": "/assets/native/characters/mm_0179-0d02d53fd4a3.glb",
+    "/assets/characters/mm_0180.glb": "/assets/native/characters/mm_0180-846abfc5891a.glb",
+    "/assets/characters/mm_0212.glb": "/assets/native/characters/mm_0212-7f7feeaea4a4.glb",
+    "/assets/characters/mm_0218.glb": "/assets/native/characters/mm_0218-fd0c0b77a9d0.glb",
+    "/assets/characters/mm_0219.glb": "/assets/native/characters/mm_0219-808cec0681ab.glb",
+    "/assets/characters/mm_0220.glb": "/assets/native/characters/mm_0220-ff7bc3069a7a.glb",
+    "/assets/characters/mm_0221.glb": "/assets/native/characters/mm_0221-16f75732b0e6.glb",
+    "/assets/characters/mm_0225.glb": "/assets/native/characters/mm_0225-1d7a7e443328.glb",
+    "/assets/characters/mm_0226.glb": "/assets/native/characters/mm_0226-0b64d13a5229.glb",
+    "/assets/characters/mm_0238.glb": "/assets/native/characters/mm_0238-2523243f1098.glb",
+    "/assets/characters/mm_0239.glb": "/assets/native/characters/mm_0239-83501ba8fc20.glb",
+    "/assets/characters/mm_0242.glb": "/assets/native/characters/mm_0242-6c6fd31924a7.glb",
+    "/assets/characters/mm_0246.glb": "/assets/native/characters/mm_0246-665988a33527.glb",
+    "/assets/characters/mm_0254.glb": "/assets/native/characters/mm_0254-e43ac7317198.glb",
+    "/assets/characters/mm_0255.glb": "/assets/native/characters/mm_0255-aa60a51f472d.glb",
+    "/assets/characters/mm_0259.glb": "/assets/native/characters/mm_0259-a93209c78824.glb",
+    "/assets/characters/mm_0266.glb": "/assets/native/characters/mm_0266-7d5b4d0d9970.glb",
+    "/assets/characters/mm_0267.glb": "/assets/native/characters/mm_0267-4a36e9493797.glb",
+    "/assets/characters/mm_0271.glb": "/assets/native/characters/mm_0271-698787ee45a4.glb",
+    "/assets/characters/mm_0275.glb": "/assets/native/characters/mm_0275-39084e69d362.glb",
+    "/assets/characters/mm_0280.glb": "/assets/native/characters/mm_0280-8d4e031bce9d.glb",
+    "/assets/characters/mm_0281.glb": "/assets/native/characters/mm_0281-e09cd97b6e73.glb",
+    "/assets/characters/mm_0283.glb": "/assets/native/characters/mm_0283-0b0a2a0cd9bb.glb",
+    "/assets/characters/mm_0284.glb": "/assets/native/characters/mm_0284-afc1227e8942.glb",
+    "/assets/characters/mm_0287.glb": "/assets/native/characters/mm_0287-2fc5207c8851.glb",
+    "/assets/characters/mm_0289.glb": "/assets/native/characters/mm_0289-9cdf235715d2.glb",
+    "/assets/characters/mm_0296.glb": "/assets/native/characters/mm_0296-49915c1b2bba.glb",
+    "/assets/characters/mm_0299.glb": "/assets/native/characters/mm_0299-157626c5a39b.glb",
+    "/assets/characters/mm_0305.glb": "/assets/native/characters/mm_0305-c73d76cadcaf.glb",
+    "/assets/characters/mm_0312.glb": "/assets/native/characters/mm_0312-b313831fd7c2.glb",
+    "/assets/characters/mm_0314.glb": "/assets/native/characters/mm_0314-29b54e385d73.glb",
+    "/assets/characters/may/may.glb": "/assets/native/characters/mm_0314-29b54e385d73.glb",
+    "/assets/characters/mm_0315.glb": "/assets/native/characters/mm_0315-b1bf2efcd952.glb",
+    "/assets/characters/brendan/brendan.glb": "/assets/native/characters/mm_0315-b1bf2efcd952.glb",
+    "/assets/characters/mm_0318.glb": "/assets/native/characters/mm_0318-8460c67d980f.glb",
+    "/assets/characters/mm_0322.glb": "/assets/native/characters/mm_0322-3485956cba79.glb",
+    "/assets/characters/mm_0344.glb": "/assets/native/characters/mm_0344-e522660f3103.glb",
+    "/assets/characters/mm_0345.glb": "/assets/native/characters/mm_0345-1c66a3dd3bbe.glb",
+    "/assets/characters/mm_0346.glb": "/assets/native/characters/mm_0346-fc8092cfcfc7.glb",
+    "/assets/characters/mm_0347.glb": "/assets/native/characters/mm_0347-88335e2e94a6.glb"
+  },
+  "models": [
+    {
+      "id": "character/mm_0045",
+      "url": "/assets/native/characters/mm_0045-f351711ff33b.glb",
+      "sha256": "f351711ff33b9c7227f36071d8d6e8c3d5f82d53a6f46fcaa68a46cd8917059e",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0045.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0122",
+      "url": "/assets/native/characters/mm_0122-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0122/mm_0122.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0179",
+      "url": "/assets/native/characters/mm_0179-0d02d53fd4a3.glb",
+      "sha256": "0d02d53fd4a34828b623a919d0516499f0459529931a33ae55f489b2c26a8c3c",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0179.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0180",
+      "url": "/assets/native/characters/mm_0180-846abfc5891a.glb",
+      "sha256": "846abfc5891a2bcc6c405e0184db1e34a56e0645c6b0f070155755ca8237ceea",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0180.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0212",
+      "url": "/assets/native/characters/mm_0212-7f7feeaea4a4.glb",
+      "sha256": "7f7feeaea4a456513486b89cff4c7e33e1365fec8d467a647018a4a44591a6f8",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0212.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0218",
+      "url": "/assets/native/characters/mm_0218-fd0c0b77a9d0.glb",
+      "sha256": "fd0c0b77a9d076f87883bcb66e3afaa44d2604291c965660db6e99e7d8383032",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0218.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0219",
+      "url": "/assets/native/characters/mm_0219-808cec0681ab.glb",
+      "sha256": "808cec0681ab32e344ba241c7f5eee539b281b1228658e5fb5f3fe418fbeaea7",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0219.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0220",
+      "url": "/assets/native/characters/mm_0220-ff7bc3069a7a.glb",
+      "sha256": "ff7bc3069a7a6706a29aa80d534a7d1ba6560c6b0c24b4ce853d73f811e5f7b9",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0220.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0221",
+      "url": "/assets/native/characters/mm_0221-16f75732b0e6.glb",
+      "sha256": "16f75732b0e68372f13446860f59994b1dc0ba521ab6100bb8db11c3438aabf8",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0221.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0225",
+      "url": "/assets/native/characters/mm_0225-1d7a7e443328.glb",
+      "sha256": "1d7a7e443328d028c38f190bae650e56d597429a79b8671722d7e9ae39beda46",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0225.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0226",
+      "url": "/assets/native/characters/mm_0226-0b64d13a5229.glb",
+      "sha256": "0b64d13a5229a50b3f86ed85802d7f43ea00eb1adc85a79c5d937f5703fd6e7d",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0226.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0238",
+      "url": "/assets/native/characters/mm_0238-2523243f1098.glb",
+      "sha256": "2523243f10984029257271449ba1492ef868d3db48d579dce9fbcc37f5d90025",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0238.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0239",
+      "url": "/assets/native/characters/mm_0239-83501ba8fc20.glb",
+      "sha256": "83501ba8fc20db684070bf2ca5c428d0930e0c9ff389bd612668db3c9eb73a6b",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0239.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0242",
+      "url": "/assets/native/characters/mm_0242-6c6fd31924a7.glb",
+      "sha256": "6c6fd31924a7e42e361aad238a2875b6df4b94a133f538e3bbef58d64f57050b",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0242.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0246",
+      "url": "/assets/native/characters/mm_0246-665988a33527.glb",
+      "sha256": "665988a33527163bc70cd0f6925075f636bf4fd065287d29adb62a7e036abcd2",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0246.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0254",
+      "url": "/assets/native/characters/mm_0254-e43ac7317198.glb",
+      "sha256": "e43ac7317198ad46af60ec848625001e592dd23fa0a3c7cc6be5765fda3e3a27",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0254.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0255",
+      "url": "/assets/native/characters/mm_0255-aa60a51f472d.glb",
+      "sha256": "aa60a51f472d497238c5af1fc8d44e9943a86b5bce42d4b406bb2c83c694d84d",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0255.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0259",
+      "url": "/assets/native/characters/mm_0259-a93209c78824.glb",
+      "sha256": "a93209c78824614bab3e67bca6eff6e628b282142abb2e74fc109e87e558a20f",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0259.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0266",
+      "url": "/assets/native/characters/mm_0266-7d5b4d0d9970.glb",
+      "sha256": "7d5b4d0d99705e9b5f0c886fd82817a4f29f5388e53483d6475addf856bcaa8c",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0266.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0267",
+      "url": "/assets/native/characters/mm_0267-4a36e9493797.glb",
+      "sha256": "4a36e949379756e1879bdfa2083d8d6b85e5377b608e988d429b249cd5cd861d",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0267.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0271",
+      "url": "/assets/native/characters/mm_0271-698787ee45a4.glb",
+      "sha256": "698787ee45a44fa56be1d331986726f350aa394ff6fcbe8cb76c0ccb04fd2ea1",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0271.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0275",
+      "url": "/assets/native/characters/mm_0275-39084e69d362.glb",
+      "sha256": "39084e69d362c70f934900679b5ee679ab349775192c9265220716ccf789ea79",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0275.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0280",
+      "url": "/assets/native/characters/mm_0280-8d4e031bce9d.glb",
+      "sha256": "8d4e031bce9dcaae580ea8f8fd4bbb454dcb537dca3ee6929d4ab8ecb5ec79cb",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0280.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0281",
+      "url": "/assets/native/characters/mm_0281-e09cd97b6e73.glb",
+      "sha256": "e09cd97b6e73b2e75e70699355622d4b0c9b78107984f8ddc7cb0fb0dafe1f01",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0281.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0283",
+      "url": "/assets/native/characters/mm_0283-0b0a2a0cd9bb.glb",
+      "sha256": "0b0a2a0cd9bba5d139dc50ab139bb62a53e5da0b449fa534cf0a6b0f09f5f7cb",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0283.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0284",
+      "url": "/assets/native/characters/mm_0284-afc1227e8942.glb",
+      "sha256": "afc1227e8942e07dbd189109365f6d509739ac25c334d0f4cbd4434e812133ad",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0284.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0287",
+      "url": "/assets/native/characters/mm_0287-2fc5207c8851.glb",
+      "sha256": "2fc5207c88519e90425ad2b87facd591d3d31a13ef6006b2664d2fac311c63e2",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0287.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0289",
+      "url": "/assets/native/characters/mm_0289-9cdf235715d2.glb",
+      "sha256": "9cdf235715d2d18f567597f17fe7a48d173c9607c2a373fa2ce37d56149e5b3c",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0289.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0296",
+      "url": "/assets/native/characters/mm_0296-49915c1b2bba.glb",
+      "sha256": "49915c1b2bba84b7164f12cc98c3438abe7931cda61e31f3d024b5765d2d3443",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0296.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0299",
+      "url": "/assets/native/characters/mm_0299-157626c5a39b.glb",
+      "sha256": "157626c5a39b3121ae2ff3d81d2d30b9e417cb8dc963ea9fc26b789cb3aa3efb",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0299.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0305",
+      "url": "/assets/native/characters/mm_0305-c73d76cadcaf.glb",
+      "sha256": "c73d76cadcaf567c617234765e9c8ee761b0bc02a40fc9d0e5be4f9f80284ac8",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0305.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0312",
+      "url": "/assets/native/characters/mm_0312-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0312/mm_0312.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0314",
+      "url": "/assets/native/characters/mm_0314-29b54e385d73.glb",
+      "sha256": "29b54e385d73286623feaf2b9dcecfab3c42f3daa289643a087a138ddc52ab64",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0314.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0315",
+      "url": "/assets/native/characters/mm_0315-b1bf2efcd952.glb",
+      "sha256": "b1bf2efcd952dfb8ce351fd1a814dd5b50d4f8b15f8a1fa7e51b0e3330b5f44f",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0315.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0318",
+      "url": "/assets/native/characters/mm_0318-8460c67d980f.glb",
+      "sha256": "8460c67d980f08a9526456e8b1d3f2c3f2d9a9ebafc5a7f51030cc3d45cd34de",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0318.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0322",
+      "url": "/assets/native/characters/mm_0322-3485956cba79.glb",
+      "sha256": "3485956cba79545ed2917701ba3a0b26b3c02a5c4de90fdcf48e3e080f4f3515",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0322.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0344",
+      "url": "/assets/native/characters/mm_0344-e522660f3103.glb",
+      "sha256": "e522660f3103a223287d06cf268627cc380a7b0df7b63faf10472371c23af0d3",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0344.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_093",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0345",
+      "url": "/assets/native/characters/mm_0345-1c66a3dd3bbe.glb",
+      "sha256": "1c66a3dd3bbe710f5b4fad0dcd5c9c0d77ebb1c853bb0f2c40ee0858abc6c6b4",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0345.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0346",
+      "url": "/assets/native/characters/mm_0346-fc8092cfcfc7.glb",
+      "sha256": "fc8092cfcfc7684f08d90b77d16760c4750547ab4df20ce913bddabe40bd3f5a",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0346.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0347",
+      "url": "/assets/native/characters/mm_0347-88335e2e94a6.glb",
+      "sha256": "88335e2e94a6e980ff3d8001b050b908c3e1ee5e122357897c361b6aa4ca68ed",
+      "native": true,
+      "source": "rom/extracted/models/runtime_characters/mm_0347.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "id": "pokemon/0072/0",
+      "url": "/assets/native/pokemon/tentacool-b2c2908c403e.glb",
+      "sha256": "b2c2908c403e8700130d902905d04dd76a1c4efe61630baf6b78e4a36c7232e1",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0072_00/pm0072_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0098/0",
+      "url": "/assets/native/pokemon/krabby-9c7c4e504e9c.glb",
+      "sha256": "9c7c4e504e9cc05b3e43389cba10f02c393798a43fd774d0dde5796e22c83316",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0098_00/pm0098_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0118/0",
+      "url": "/assets/native/pokemon/goldeen-04104b4069f2.glb",
+      "sha256": "04104b4069f2c76206212c88d3c3c03ce6da5f58c44bee6e6fae757ff4c7fbba",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0118_00/pm0118_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0129/0",
+      "url": "/assets/native/pokemon/magikarp-d42682f34c58.glb",
+      "sha256": "d42682f34c587b878169d62e9744a54b4449f8e2f609c566e0a268266c3fe36f",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0129_00/pm0129_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "damage"
+      ]
+    },
+    {
+      "id": "pokemon/0183/0",
+      "url": "/assets/native/pokemon/marill-3baadba569d8.glb",
+      "sha256": "3baadba569d867f19d490d518b5e13f199132efc87690c8bfdf0ce4cdc23bde9",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0183_00/pm0183_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0184/0",
+      "url": "/assets/native/pokemon/azumarill-fae9755f6fe4.glb",
+      "sha256": "fae9755f6fe4ac637319a21d2659162bf39e5f17a65b0983256c07e15ee915ac",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0184_00/pm0184_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0252/0",
+      "url": "/assets/native/pokemon/treecko-eea117f37a57.glb",
+      "sha256": "eea117f37a571a0801d0eb69a25ef17b87726b8286b5d374bdb78432f59d35ca",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0252_00/pm0252_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0253/0",
+      "url": "/assets/native/pokemon/grovyle-449cd05654e8.glb",
+      "sha256": "449cd05654e847a1885e3e9625c39cd72f0cdb46dd5053dab1024bb2b71276b5",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0253_00/pm0253_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0254/0",
+      "url": "/assets/native/pokemon/sceptile-7f687f6366d6.glb",
+      "sha256": "7f687f6366d622eac7f5694c0140bb31ca8a87f6011440d4dec19ff4eb18ab25",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0254_00/pm0254_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0255/0",
+      "url": "/assets/native/pokemon/torchic-dd7fbe55c678.glb",
+      "sha256": "dd7fbe55c67820c4c072b24446e1d1d5f171c7c465bce70a5dd3998088185392",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0255_00/pm0255_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0256/0",
+      "url": "/assets/native/pokemon/combusken-5b4efeaecd25.glb",
+      "sha256": "5b4efeaecd256c3b30c732568bbc4409a8c31bf727acf119cb0e4f9eb6453b87",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0256_00/pm0256_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0257/0",
+      "url": "/assets/native/pokemon/blaziken-928442eb2a25.glb",
+      "sha256": "928442eb2a25ad65caea0b4c90f6024a5c5879f3a13618b01e2837f281b7a00c",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0257_00/pm0257_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0258/0",
+      "url": "/assets/native/pokemon/mudkip-580ef94c18d6.glb",
+      "sha256": "580ef94c18d62e325538d005cfab926efc266d3a50bf05b3104163535529e1ba",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0258_00/pm0258_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0259/0",
+      "url": "/assets/native/pokemon/marshtomp-3e61a71d494e.glb",
+      "sha256": "3e61a71d494e8d422dde8beb2efb2a5b5ed3aff3399a8af22b49f923034c8494",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0259_00/pm0259_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0260/0",
+      "url": "/assets/native/pokemon/swampert-73166e961138.glb",
+      "sha256": "73166e961138f679f4930a12575a51897872c88f1a34a68d0a91d35eb05b7f3f",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0260_00/pm0260_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0261/0",
+      "url": "/assets/native/pokemon/poochyena-511069c621a6.glb",
+      "sha256": "511069c621a6de80434f627093bc015f1dbdcc66ae8fd68514a11b333233ad6f",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0261_00/pm0261_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0263/0",
+      "url": "/assets/native/pokemon/zigzagoon-632b7464ce6b.glb",
+      "sha256": "632b7464ce6b9ca5bfbe3e183a5a289cdc2ffaa9d567b3919fe8669a3f4d3b8b",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0263_00/pm0263_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0265/0",
+      "url": "/assets/native/pokemon/wurmple-f429b8437a81.glb",
+      "sha256": "f429b8437a810c86a9a9df76005d3fb4cd6c0ad9c6158ce9ed40ee19dcbaf5c2",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0265_00/pm0265_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0270/0",
+      "url": "/assets/native/pokemon/lotad-05b6f1a5cd89.glb",
+      "sha256": "05b6f1a5cd896365514eb7768d069e95a48de4fd8bfc459a52279cd2ffdef966",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0270_00/pm0270_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0276/0",
+      "url": "/assets/native/pokemon/taillow-a961ad701e43.glb",
+      "sha256": "a961ad701e436358c4dc0206294836f7bf0f0ff2ad8a9ef34f11a9c5b63bd328",
+      "native": false,
+      "source": "rom/extracted/models/pokemon/pm0276_00/pm0276_00.glb",
+      "clips": [
+        "idle"
+      ]
+    },
+    {
+      "id": "pokemon/0278/0",
+      "url": "/assets/native/pokemon/wingull-c424e2da84f1.glb",
+      "sha256": "c424e2da84f106c33006bc15850b2eaf8bea083614119d87e6b3c64d06402c7b",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0278_00/pm0278_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0279/0",
+      "url": "/assets/native/pokemon/pelipper-4660b580eff8.glb",
+      "sha256": "4660b580eff858f524230a032e50ec42418532cedb798770b3586fc488e6c907",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0279_00/pm0279_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0280/0",
+      "url": "/assets/native/pokemon/ralts-611ab624a4e4.glb",
+      "sha256": "611ab624a4e4ea6263635c4507bb571720b15443b30c8b09e68526569842f0d0",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0280_00/pm0280_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0283/0",
+      "url": "/assets/native/pokemon/surskit-7eb648805735.glb",
+      "sha256": "7eb64880573597493bb0108042ba4fd51b069d2035a8b8ca278374b260b954d2",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0283_00/pm0283_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0284/0",
+      "url": "/assets/native/pokemon/masquerain-8c7bfbcf67a8.glb",
+      "sha256": "8c7bfbcf67a80725d3b51ea4e50c8bcf76e08002d370e6df9a4ef0af93d3a487",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0284_00/pm0284_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0320/0",
+      "url": "/assets/native/pokemon/wailmer-dc6ac56c05bb.glb",
+      "sha256": "dc6ac56c05bb028313d6865513ceec2b5d17f740f5dc1b785e0d600326685e2e",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0320_00/pm0320_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0341/0",
+      "url": "/assets/native/pokemon/corphish-f07f4a90b44e.glb",
+      "sha256": "f07f4a90b44e0d934d2bb66a4539aa910c32bcd3d128002630b0264ee7730529",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0341_00/pm0341_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0382/0",
+      "url": "/assets/native/pokemon/kyogre-4da282750623.glb",
+      "sha256": "4da2827506238058dea996060f84c3ea4704f849453b055dedde2cae837681d3",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0382_00/pm0382_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0382/1",
+      "url": "/assets/native/pokemon/kyogre-1-86851da92da2.glb",
+      "sha256": "86851da92da2d0c3396733b8366a29c39136724e766e8d4c6fe8a0cf7f1deb51",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0382_51/pm0382_51.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0383/0",
+      "url": "/assets/native/pokemon/groudon-f9f143f2befa.glb",
+      "sha256": "f9f143f2befa58e23c2ef9212eab5f8badb0865b50745f8b64aebcbd2ad47047",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0383_00/pm0383_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0383/1",
+      "url": "/assets/native/pokemon/groudon-1-a912dc489c4f.glb",
+      "sha256": "a912dc489c4f096608ea81a577e5bef9c746d6ee837f2a1dee4c872acfa4f09c",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0383_51/pm0383_51.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0422/0",
+      "url": "/assets/native/pokemon/shellos-470e3701b800.glb",
+      "sha256": "470e3701b800659f5546efa5b19ba19d6db15ea7955af4e05307ec7cf4b82ae0",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0422_11/pm0422_11.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0441/0",
+      "url": "/assets/native/pokemon/chatot-97bec3a5907a.glb",
+      "sha256": "97bec3a5907a5d9c8d6b02e14d7e6d77bd07f96554b2ce8d328998b53349f971",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0441_00/pm0441_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0506/0",
+      "url": "/assets/native/pokemon/lillipup-6a33b165b237.glb",
+      "sha256": "6a33b165b2375d503014d63085860f42a3ac3405b39ec18b6789538b1bf56b38",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0506_00/pm0506_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0519/0",
+      "url": "/assets/native/pokemon/pidove-eb5df1e7241a.glb",
+      "sha256": "eb5df1e7241acb41f62b98eeab98933fa859c51a198d26fcbcdabfb02e04c0d2",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0519_00/pm0519_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0535/0",
+      "url": "/assets/native/pokemon/tympole-57a75a8b0ea2.glb",
+      "sha256": "57a75a8b0ea2b7ba08cadc995d01c90d6957a76dde155b368eac1785e51d01f9",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0535_00/pm0535_00.glb",
+      "clips": [
+        "idle",
+        "special",
+        "damage"
+      ]
+    },
+    {
+      "id": "pokemon/0540/0",
+      "url": "/assets/native/pokemon/sewaddle-5f83ddad4479.glb",
+      "sha256": "5f83ddad4479b914010e65d052969a1e13f24409bb1fa7669a827376a0801078",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0540_00/pm0540_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0570/0",
+      "url": "/assets/native/pokemon/zorua-3e9c7ffc6f55.glb",
+      "sha256": "3e9c7ffc6f553136afd5cfb9127c0d267ad3e7754a9ccd7f8bae80e401d5af59",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0570_00/pm0570_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0574/0",
+      "url": "/assets/native/pokemon/gothita-5ab5c184f231.glb",
+      "sha256": "5ab5c184f231bf181aeb78b9ea89d3e7512c7b89e409a14a81e12770efb06fe1",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0574_00/pm0574_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0592/0",
+      "url": "/assets/native/pokemon/frillish-b9db4015c077.glb",
+      "sha256": "b9db4015c0778c22f4c97d141bad044b4bca947287b26de63198345fadaa459a",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0592_00/pm0592_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    },
+    {
+      "id": "pokemon/0692/0",
+      "url": "/assets/native/pokemon/clauncher-975a9026a743.glb",
+      "sha256": "975a9026a743c32cadba453174712b39c6c0bbb22f48c5b71dcad1e288300ab5",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0756_00/pm0756_00.glb",
+      "clips": [
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
+      ]
+    }
+  ],
+  "unavailable": [
+    {
+      "id": "character/mm_0122",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0312",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "pokemon/0276/0",
+      "reason": "Unhandled exception. System.IO.InvalidDataException: Segment scale compensation has a zero parent scale."
+    },
+    {
+      "id": "character/mm_4133",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4134",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4141",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4148",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4153",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4156",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_8192",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_8203",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_8253",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_8265",
+      "reason": "Unmapped ROM actor model id"
+    }
+  ]
+}

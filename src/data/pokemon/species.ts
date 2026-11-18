@@ -1,5 +1,6 @@
 import { getMoveByName, getSpeciesById, type DexMove, type DexSpecies } from '../../core/dex';
 import type { ElementalType } from '../../core/typeChart';
+import nativeAssets from '../nativeAssets.json';
 
 // Os dados vêm da ROM (src/data/battle/, A-010/A-011); aqui fica só o elenco com modelo .glb disponível.
 export type PokemonType = ElementalType;
@@ -65,7 +66,7 @@ export const MOVES = {
 } satisfies Record<string, DexMove>;
 
 // Getters: as tabelas da ROM são carregadas sob demanda (ADR-004), então nada é resolvido no import.
-const ROSTER_IDS: readonly string[] = ['treecko', 'torchic', 'mudkip', 'poochyena', 'zigzagoon', 'wurmple', 'lotad', 'ralts'];
+const ROSTER_IDS: readonly string[] = Object.keys(nativeAssets.pokemon);
 
 /** Espécies com modelo .glb extraído; ids vindos de mapas/encontros podem não estar no elenco. */
 export function findRosterSpecies(id: string): DexSpecies | undefined {

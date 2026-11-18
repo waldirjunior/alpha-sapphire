@@ -11,6 +11,7 @@ import {
 import { toBattleMove, type BattleMove, type PokemonInstance } from './battlePokemon';
 import { STRUGGLE_MOVE_ID } from './damage';
 import { getMoveById } from './dex';
+import { healthEvents } from './battleEvents';
 import { executeMove, spendPp } from './moveExecution';
 import { statStageMultiplier } from './statStages';
 import { applyResidualDamage, checkCanAct, type Rng } from './statusConditions';
@@ -61,20 +62,27 @@ function performAction(state: BattleState, action: BattleAction, flinched: boole
   if (flinched) return { state: appendLog(state, [`${actor.species.name} recuou e não pôde agir!`]), flinchedSide: null };
   const check = checkCanAct(actor, rng);
   let next = appendLog(withPokemon(state, action.side, check.pokemon), [check.message]);
-  if (!check.canAct) return { state: next, flinchedSide: null };
+  if (!check.canAct) return { state: { ...next, events: [...(next.events ?? []),
+    ...healthEvents(action.side, actor.currentHp, check.pokemon.currentHp)] }, flinchedSide: null };
 
   const move = moveFor(check.pokemon, action.moveIndex);
   const user = action.moveIndex === null ? check.pokemon : spendPp(check.pokemon, action.moveIndex, pokemonOf(next, foeSide));
   const struggleNote = action.moveIndex === null ? `${user.species.name} não tem mais PP!` : null;
   const outcome = executeMove(user, pokemonOf(next, foeSide), move, rng);
   next = withPokemon(withPokemon(next, action.side, outcome.user), foeSide, outcome.target);
+  next = { ...next, events: [...(next.events ?? []),
+    { type: 'move', side: action.side, category: move.category },
+    ...healthEvents(foeSide, pokemonOf(state, foeSide).currentHp, outcome.target.currentHp),
+    ...healthEvents(action.side, actor.currentHp, outcome.user.currentHp)] };
   return { state: appendLog(next, [struggleNote, ...outcome.messages]), flinchedSide: outcome.flinched ? foeSide : null };
 }
 
 function applyEndOfTurn(state: BattleState, order: readonly BattleSide[]): BattleState {
   return order.reduce((current, side) => {
     const residual = applyResidualDamage(pokemonOf(current, side));
-    return appendLog(withPokemon(current, side, residual.pokemon), [residual.message]);
+    const next = appendLog(withPokemon(current, side, residual.pokemon), [residual.message]);
+    return { ...next, events: [...(next.events ?? []),
+      ...healthEvents(side, pokemonOf(current, side).currentHp, residual.pokemon.currentHp)] };
   }, state);
 }
 
@@ -82,7 +90,7 @@ function applyEndOfTurn(state: BattleState, order: readonly BattleSide[]): Battl
 export function resolveTurn(state: BattleState, playerAction: BattleAction | null, rng: Rng): BattleState {
   const enemyAction: BattleAction = { side: 'enemy', moveIndex: selectEnemyMoveIndex(state, rng) };
   const actions = playerAction ? orderActions(state, playerAction, enemyAction, rng) : [enemyAction];
-  let current = state;
+  let current: BattleState = { ...state, events: [] };
   let flinchedSide: BattleSide | null = null;
   for (const action of actions) {
     const result = performAction(current, action, flinchedSide === action.side, rng);

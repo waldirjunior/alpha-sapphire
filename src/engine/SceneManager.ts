@@ -5,6 +5,9 @@ import type { PokemonType } from '../data/pokemon/species';
 import { createBattleArena, type BattleArena } from './battleArena';
 import type { Direction, GameState, GridPosition, MapDefinition } from '../core/types';
 import { createWarpMarkers, loadZoneTerrain } from './zoneTerrain';
+import { NativeAnimationController, characterClip, type CharacterAnimController } from './nativeAnimation';
+import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
+import type { BattleEvent } from '../core/battleEvents';
 
 const ORAS_TILE_UNITS = 18;
 const POKEMON_SCALE = 1 / 25;
@@ -52,13 +55,6 @@ export function fixOrasMaterials(root: THREE.Object3D): void {
   });
 }
 
-interface CharacterAnimController {
-  mixer: THREE.AnimationMixer;
-  idle: THREE.AnimationAction | null;
-  walk: THREE.AnimationAction | null;
-  active: 'idle' | 'walk';
-}
-
 export class SceneManager {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
@@ -74,7 +70,9 @@ export class SceneManager {
   private clock = new THREE.Clock();
   private playerAnim: CharacterAnimController | null = null;
   private entityMixers: THREE.AnimationMixer[] = [];
-  private battleMixers: THREE.AnimationMixer[] = [];
+  private battleActors = new Map<THREE.Group, NativeAnimationController>();
+  private battleLoads: Promise<void>[] = [];
+  private battleLoadVersion = 0;
   private walkUntilMs = 0;
   private playerTargetPos = new THREE.Vector3();
   private lastPlayerPos = { mapId: '', x: -1, z: -1 };
@@ -306,26 +304,36 @@ export class SceneManager {
 
     if (!battle) {
       this.currentBattleKey = '';
-      for (const mixer of this.battleMixers) {
-        mixer.stopAllAction();
-      }
-      this.battleMixers = [];
+      this.clearBattleAnimations();
       return;
     }
 
     this.camera.position.set(-3.6, 2.5, 4.4);
     this.camera.lookAt(0.4, 0.8, -0.4);
 
-    const key = `${battle.player.species.id}:${battle.enemy.species.id}`;
+    const key = `${battle.playerActive}:${battle.enemyActive}:${battle.player.species.id}:${battle.enemy.species.id}`;
     if (this.currentBattleKey === key) return;
     this.currentBattleKey = key;
-    for (const mixer of this.battleMixers) {
-      mixer.stopAllAction();
-    }
-    this.battleMixers = [];
+    this.clearBattleAnimations();
+    this.battleLoads = [this.loadPokemonModel(battle.player.species.id, this.battlePlayerSlot),
+      this.loadPokemonModel(battle.enemy.species.id, this.battleEnemySlot)];
+  }
 
-    this.loadPokemonModel(battle.player.species.id, this.battlePlayerSlot);
-    this.loadPokemonModel(battle.enemy.species.id, this.battleEnemySlot);
+  private clearBattleAnimations(): void {
+    this.battleLoadVersion++;
+    for (const actor of this.battleActors.values()) actor.dispose();
+    this.battleActors.clear();
+    this.battleLoads = [];
+  }
+
+  public async playBattleEvents(events: readonly BattleEvent[]): Promise<void> {
+    const version = this.battleLoadVersion;
+    await Promise.all(this.battleLoads);
+    for (const event of events) {
+      if (!this.inBattle || version !== this.battleLoadVersion) return;
+      const slot = event.side === 'player' ? this.battlePlayerSlot : this.battleEnemySlot;
+      await this.battleActors.get(slot)?.playEvent(event);
+    }
   }
 
   private buildBattleArena(): void {
@@ -342,7 +350,7 @@ export class SceneManager {
 
   private loadCharacterModel(url: string, target: THREE.Group, isPlayer = false, fallbackUrl?: string): void {
     this.gltfLoader.load(
-      url,
+      characterModelUrl(url),
       (gltf) => {
         if (!isPlayer && target.parent !== this.entitiesGroup) return;
         const model = gltf.scene;
@@ -353,8 +361,8 @@ export class SceneManager {
 
         if (gltf.animations.length === 0) return;
         const mixer = new THREE.AnimationMixer(model);
-        const idleClip = THREE.AnimationClip.findByName(gltf.animations, 'idle') ?? gltf.animations[0];
-        const walkClip = THREE.AnimationClip.findByName(gltf.animations, 'walk');
+        const idleClip = characterClip(gltf.animations, false);
+        const walkClip = characterClip(gltf.animations, true);
         const idleAction = idleClip ? mixer.clipAction(idleClip) : null;
         const walkAction = walkClip ? mixer.clipAction(walkClip) : null;
 
@@ -379,36 +387,27 @@ export class SceneManager {
     );
   }
 
-  private loadPokemonModel(speciesId: string, target: THREE.Group): void {
+  private loadPokemonModel(speciesId: string, target: THREE.Group): Promise<void> {
     target.clear();
-    this.gltfLoader.load(
-      `/assets/pokemon/${speciesId}/${speciesId}.glb`,
-      (gltf) => {
-        const model = gltf.scene;
-        model.scale.setScalar(POKEMON_SCALE);
-        fixOrasMaterials(model);
-        target.clear();
-        target.add(model);
-        if (gltf.animations.length > 0) {
-          const mixer = new THREE.AnimationMixer(model);
-          const clip = THREE.AnimationClip.findByName(gltf.animations, 'idle') ?? gltf.animations[0];
-          if (clip) {
-            mixer.clipAction(clip).play();
-            mixer.update(0);
-          }
-          this.battleMixers.push(mixer);
-        }
-      },
-      undefined,
-      () => {
-        const fallback = new THREE.Mesh(
-          new THREE.SphereGeometry(0.5, 16, 12),
-          new THREE.MeshStandardMaterial({ color: '#f59e0b' })
-        );
-        fallback.position.y = 0.5;
-        target.add(fallback);
-      }
-    );
+    const version = this.battleLoadVersion;
+    return this.gltfLoader.loadAsync(pokemonModelUrl(speciesId)).then((gltf) => {
+      if (!this.inBattle || version !== this.battleLoadVersion) return;
+      const model = gltf.scene;
+      model.scale.setScalar(POKEMON_SCALE);
+      fixOrasMaterials(model);
+      target.clear();
+      target.add(model);
+      const mixer = new THREE.AnimationMixer(model);
+      this.battleActors.set(target, new NativeAnimationController(mixer, gltf.animations));
+      mixer.update(0);
+    }).catch((error: unknown) => {
+      if (!this.inBattle || version !== this.battleLoadVersion) return;
+      console.warn(`Pokémon asset unavailable: ${speciesId}`, error);
+      const fallback = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 12),
+        new THREE.MeshStandardMaterial({ color: '#f59e0b' }));
+      fallback.position.y = 0.5;
+      target.add(fallback);
+    });
   }
 
   private loadMapModels(map: MapDefinition): void {
@@ -490,9 +489,7 @@ export class SceneManager {
         mixer.update(dt);
       }
     } else {
-      for (const mixer of this.battleMixers) {
-        mixer.update(dt);
-      }
+      for (const actor of this.battleActors.values()) actor.mixer.update(dt);
       this.battleArena.effects.update(dt);
     }
     this.renderer.render(this.scene, this.camera);

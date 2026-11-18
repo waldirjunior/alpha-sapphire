@@ -2,6 +2,7 @@ import { refreshStats, withdrawFromBattle, type PokemonInstance } from './battle
 import { expYield } from './experience';
 import { gainExperience } from './levelUp';
 import { addEvs } from './statSpread';
+import type { BattleEvent } from './battleEvents';
 
 export const MAX_PARTY_SIZE = 6;
 const LUCKY_EGG = 'Lucky Egg';
@@ -36,6 +37,7 @@ export interface BattleState {
   log: string[];
   isTrainer?: boolean;
   trainerName?: string;
+  events?: readonly BattleEvent[];
 }
 
 export function validateParty(party: readonly PokemonInstance[], owner: string): void {

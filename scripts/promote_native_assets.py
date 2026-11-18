@@ -1,0 +1,136 @@
+from __future__ import annotations
+
+import argparse
+import copy
+import hashlib
+import json
+import re
+from pathlib import Path
+
+from glb_native_clips import decode_glb
+from native_motions import motion_slots, package_sections
+from validate_native_manifest import verify_float_accessors
+
+ZONE_IDS = (6, 7, *range(23, 31))
+ALIASES = {'brendan': 315, 'may': 314, 'npc': 45}
+
+
+def character_ids(root: Path) -> set[int]:
+    selected = set(ALIASES.values())
+    for zone in ZONE_IDS:
+        document = json.loads((root / f'src/data/maps_v2/{zone:04d}.json').read_text())
+        selected.update(npc['model'] for npc in document['npcs'])
+    return selected
+
+
+def prepare_pose_jobs(root: Path, manifest: dict) -> list[dict]:
+    wanted = character_ids(root)
+    jobs = []
+    for model in manifest['models']:
+        if model['kind'] != 'character' or model['model_id'] not in wanted or model['status'] != 'merged':
+            continue
+        if 0 not in model['mapping']['present_indices']:
+            continue
+        slots = motion_slots(package_sections((root / model['source']).read_bytes())[1])
+        job = copy.deepcopy(model)
+        for field in ('validation', 'log', 'returncode', 'error'):
+            job.pop(field, None)
+        job.update(status='ready', base_glb=model['output'], clips={'overworld_000': 0},
+                   output=f"rom/extracted/models/runtime_characters/mm_{model['model_id']:04d}.glb")
+        job['mapping']['selected_frames'] = {'overworld_000': next(slot['frames'] for slot in slots if slot['index'] == 0)}
+        jobs.append(job)
+    return jobs
+
+
+def publish_asset(root: Path, source: Path, kind: str, name: str) -> tuple[str, str]:
+    blob = source.read_bytes()
+    scene, binary = decode_glb(blob)
+    verify_float_accessors(scene, binary)
+    digest = hashlib.sha256(blob).hexdigest()
+    relative = Path(f'assets/native/{kind}/{name}-{digest[:12]}.glb')
+    output = root / 'public' / relative
+    output.parent.mkdir(parents=True, exist_ok=True)
+    if output.exists():
+        if output.read_bytes() != blob:
+            raise ValueError(f'Immutable asset collision: {relative}')
+    else:
+        with output.open('xb') as stream:
+            stream.write(blob)
+    return '/' + str(relative), digest
+
+
+def model_source(root: Path, model: dict) -> Path:
+    native = model['status'] == 'merged'
+    if native and model['kind'] == 'character':
+        augmented = root / f"rom/extracted/models/runtime_characters/mm_{model['model_id']:04d}.glb"
+        if augmented.is_file():
+            return augmented
+    return root / model['output' if native else 'base_glb']
+
+
+def pokemon_slug(model: dict, names: dict) -> str:
+    base = re.sub('[^a-z0-9]', '', names[model['species']].lower())
+    variant = model['mapping']['variant']
+    return base + (f'-{variant}' if variant else '')
+
+
+def character_urls(model_id: int) -> list[str]:
+    return [f'/assets/characters/mm_{model_id:04d}.glb',
+            *(f'/assets/characters/{alias}/{alias}.glb' for alias, value in ALIASES.items() if value == model_id)]
+
+
+def promote_model(root: Path, model: dict, names: dict, catalog: dict) -> None:
+    native = model['status'] == 'merged'
+    if not native:
+        catalog['unavailable'].append({'id': model['id'], 'reason': model.get('error', model['status'])})
+    source = model_source(root, model)
+    name = pokemon_slug(model, names) if model['kind'] == 'pokemon' else f"mm_{model['model_id']:04d}"
+    kind = 'pokemon' if model['kind'] == 'pokemon' else 'characters'
+    url, digest = publish_asset(root, source, kind, name)
+    if kind == 'pokemon':
+        catalog['pokemon'][name] = url
+    else:
+        for canonical in character_urls(model['model_id']):
+            catalog['characters'][canonical] = url
+    scene, _ = decode_glb(source.read_bytes())
+    catalog['models'].append({'id': model['id'], 'url': url, 'sha256': digest, 'native': native,
+                             'source': str(source.relative_to(root)),
+                             'clips': [clip['name'] for clip in scene.get('animations', [])]})
+
+
+def promote(root: Path, manifest: dict) -> dict:
+    wanted = character_ids(root)
+    species = json.loads((root / 'src/data/battle/species.json').read_text())
+    names = {row['species']: row['name'] for row in species if row['form'] == 0}
+    catalog: dict = {'pokemon': {}, 'characters': {}, 'models': [], 'unavailable': []}
+    for model in manifest['models']:
+        if model['kind'] != 'character' or model['model_id'] in wanted:
+            promote_model(root, model, names, catalog)
+    known = {model['model_id'] for model in manifest['models'] if model['kind'] == 'character'}
+    catalog['unavailable'].extend({'id': f'character/mm_{model:04d}', 'reason': 'Unmapped ROM actor model id'}
+                                  for model in sorted(wanted - known))
+    return catalog
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description='Promote slice-native GLBs to immutable ignored public assets.')
+    parser.add_argument('--root', required=True, type=Path)
+    parser.add_argument('--manifest', required=True, type=Path)
+    destination = parser.add_mutually_exclusive_group(required=True)
+    destination.add_argument('--catalog', type=Path)
+    destination.add_argument('--pose-manifest', type=Path)
+    args = parser.parse_args()
+    manifest = json.loads(args.manifest.read_text())
+    if args.pose_manifest is not None:
+        jobs = prepare_pose_jobs(args.root.resolve(), manifest)
+        args.pose_manifest.write_text(json.dumps({'models': jobs}, indent=2) + '\n', encoding='utf-8')
+        print(json.dumps({'pose_jobs': len(jobs)}))
+        return
+    catalog = promote(args.root.resolve(), manifest)
+    args.catalog.write_text(json.dumps(catalog, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps({'pokemon': len(catalog['pokemon']), 'character_urls': len(catalog['characters']),
+                      'models': len(catalog['models']), 'unavailable': catalog['unavailable']}))
+
+
+if __name__ == '__main__':
+    main()

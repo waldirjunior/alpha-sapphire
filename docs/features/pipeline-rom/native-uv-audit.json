@@ -1,0 +1,557 @@
+[
+  {
+    "id": "character/mm_0045",
+    "sha256": "f351711ff33b9c7227f36071d8d6e8c3d5f82d53a6f46fcaa68a46cd8917059e",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "tr0058_00_headMat",
+        "channel": 0,
+        "uv_min": [
+          0.010593200102448463,
+          0.005285024642944336
+        ],
+        "uv_max": [
+          0.9919809699058533,
+          0.9767557978630066
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0122",
+    "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 1,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0179",
+    "sha256": "0d02d53fd4a34828b623a919d0516499f0459529931a33ae55f489b2c26a8c3c",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 4,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0180",
+    "sha256": "846abfc5891a2bcc6c405e0184db1e34a56e0645c6b0f070155755ca8237ceea",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 7,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0010_00_face",
+        "channel": 0,
+        "uv_min": [
+          0.00668080011382699,
+          0.006663978099822998
+        ],
+        "uv_max": [
+          0.24159500002861023,
+          0.45926398038864136
+        ]
+      },
+      {
+        "mesh": "face_2_0",
+        "material": "rstr0010_00_head",
+        "channel": 0,
+        "uv_min": [
+          -0.1189740002155304,
+          0.007001996040344238
+        ],
+        "uv_max": [
+          -0.014459799975156784,
+          0.19047397375106812
+        ]
+      },
+      {
+        "mesh": "face_2_1",
+        "material": "rstr0010_00_head",
+        "channel": 0,
+        "uv_min": [
+          0.009291409514844418,
+          0.006244003772735596
+        ],
+        "uv_max": [
+          0.9950370192527771,
+          0.9903484582901001
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0212",
+    "sha256": "7f7feeaea4a456513486b89cff4c7e33e1365fec8d467a647018a4a44591a6f8",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 5,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0042_00_fi_face",
+        "channel": 0,
+        "uv_min": [
+          -0.993228018283844,
+          0.004755973815917969
+        ],
+        "uv_max": [
+          -0.7553889751434326,
+          0.49517202377319336
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0218",
+    "sha256": "fd0c0b77a9d076f87883bcb66e3afaa44d2604291c965660db6e99e7d8383032",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 4,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0219",
+    "sha256": "808cec0681ab32e344ba241c7f5eee539b281b1228658e5fb5f3fe418fbeaea7",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 4,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0220",
+    "sha256": "ff7bc3069a7a6706a29aa80d534a7d1ba6560c6b0c24b4ce853d73f811e5f7b9",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 4,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0221",
+    "sha256": "16f75732b0e68372f13446860f59994b1dc0ba521ab6100bb8db11c3438aabf8",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 4,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0104_00_fi_headMat",
+        "channel": 0,
+        "uv_min": [
+          0.0068456800654530525,
+          0.003300011157989502
+        ],
+        "uv_max": [
+          0.9943689703941345,
+          0.9768580794334412
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0225",
+    "sha256": "1d7a7e443328d028c38f190bae650e56d597429a79b8671722d7e9ae39beda46",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0226",
+    "sha256": "0b64d13a5229a50b3f86ed85802d7f43ea00eb1adc85a79c5d937f5703fd6e7d",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 2,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0238",
+    "sha256": "2523243f10984029257271449ba1492ef868d3db48d579dce9fbcc37f5d90025",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 4,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0239",
+    "sha256": "83501ba8fc20db684070bf2ca5c428d0930e0c9ff389bd612668db3c9eb73a6b",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0242",
+    "sha256": "6c6fd31924a7e42e361aad238a2875b6df4b94a133f538e3bbef58d64f57050b",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 6,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0246",
+    "sha256": "665988a33527163bc70cd0f6925075f636bf4fd065287d29adb62a7e036abcd2",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 2,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0254",
+    "sha256": "e43ac7317198ad46af60ec848625001e592dd23fa0a3c7cc6be5765fda3e3a27",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0137_head",
+        "channel": 0,
+        "uv_min": [
+          0.008566389791667461,
+          0.007794976234436035
+        ],
+        "uv_max": [
+          0.9953539967536926,
+          0.9879937767982483
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0255",
+    "sha256": "aa60a51f472d497238c5af1fc8d44e9943a86b5bce42d4b406bb2c83c694d84d",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0259",
+    "sha256": "a93209c78824614bab3e67bca6eff6e628b282142abb2e74fc109e87e558a20f",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 2,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0266",
+    "sha256": "7d5b4d0d99705e9b5f0c886fd82817a4f29f5388e53483d6475addf856bcaa8c",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0267",
+    "sha256": "4a36e949379756e1879bdfa2083d8d6b85e5377b608e988d429b249cd5cd861d",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0271",
+    "sha256": "698787ee45a44fa56be1d331986726f350aa394ff6fcbe8cb76c0ccb04fd2ea1",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0275",
+    "sha256": "39084e69d362c70f934900679b5ee679ab349775192c9265220716ccf789ea79",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 6,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0158_00_fi_headMat",
+        "channel": 0,
+        "uv_min": [
+          0.008066000416874886,
+          0.00548100471496582
+        ],
+        "uv_max": [
+          0.9827499985694885,
+          0.9877049922943115
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0280",
+    "sha256": "8d4e031bce9dcaae580ea8f8fd4bbb454dcb537dca3ee6929d4ab8ecb5ec79cb",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0163_00_fi_head",
+        "channel": 0,
+        "uv_min": [
+          0.007813000120222569,
+          0.00445401668548584
+        ],
+        "uv_max": [
+          0.9946320056915283,
+          0.9941480159759521
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0281",
+    "sha256": "e09cd97b6e73b2e75e70699355622d4b0c9b78107984f8ddc7cb0fb0dafe1f01",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0164_00_fi_headMat",
+        "channel": 0,
+        "uv_min": [
+          0.006192659959197044,
+          0.007124006748199463
+        ],
+        "uv_max": [
+          0.9936569929122925,
+          0.9948492646217346
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0283",
+    "sha256": "0b0a2a0cd9bba5d139dc50ab139bb62a53e5da0b449fa534cf0a6b0f09f5f7cb",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 2,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0284",
+    "sha256": "afc1227e8942e07dbd189109365f6d509739ac25c334d0f4cbd4434e812133ad",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0167_00_fi_head",
+        "channel": 0,
+        "uv_min": [
+          0.011718999594449997,
+          0.015830039978027344
+        ],
+        "uv_max": [
+          0.9882810115814209,
+          0.9375
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0287",
+    "sha256": "2fc5207c88519e90425ad2b87facd591d3d31a13ef6006b2664d2fac311c63e2",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 2,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0289",
+    "sha256": "9cdf235715d2d18f567597f17fe7a48d173c9607c2a373fa2ce37d56149e5b3c",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 2,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0296",
+    "sha256": "49915c1b2bba84b7164f12cc98c3438abe7931cda61e31f3d024b5765d2d3443",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 4,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0299",
+    "sha256": "157626c5a39b3121ae2ff3d81d2d30b9e417cb8dc963ea9fc26b789cb3aa3efb",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 5,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0305",
+    "sha256": "c73d76cadcaf567c617234765e9c8ee761b0bc02a40fc9d0e5be4f9f80284ac8",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0188_00_fi_headMat",
+        "channel": 0,
+        "uv_min": [
+          0.012250900268554688,
+          0.007812023162841797
+        ],
+        "uv_max": [
+          0.9921879768371582,
+          0.9921875
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0312",
+    "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 1,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0314",
+    "sha256": "29b54e385d73286623feaf2b9dcecfab3c42f3daa289643a087a138ddc52ab64",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 10,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_2_0",
+        "material": "rstr0001_00_face",
+        "channel": 0,
+        "uv_min": [
+          -0.995261013507843,
+          0.004755973815917969
+        ],
+        "uv_max": [
+          -0.755711019039154,
+          0.4925510287284851
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0315",
+    "sha256": "b1bf2efcd952dfb8ce351fd1a814dd5b50d4f8b15f8a1fa7e51b0e3330b5f44f",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 6,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0002_00_fi_face",
+        "channel": 0,
+        "uv_min": [
+          0.002486049896106124,
+          0.004755973815917969
+        ],
+        "uv_max": [
+          0.24203599989414215,
+          0.4925510287284851
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0318",
+    "sha256": "8460c67d980f08a9526456e8b1d3f2c3f2d9a9ebafc5a7f51030cc3d45cd34de",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 4,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0322",
+    "sha256": "3485956cba79545ed2917701ba3a0b26b3c02a5c4de90fdcf48e3e080f4f3515",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0344",
+    "sha256": "e522660f3103a223287d06cf268627cc380a7b0df7b63faf10472371c23af0d3",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  },
+  {
+    "id": "character/mm_0345",
+    "sha256": "1c66a3dd3bbe710f5b4fad0dcd5c9c0d77ebb1c853bb0f2c40ee0858abc6c6b4",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 4,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0113_00_fi_headMat",
+        "channel": 0,
+        "uv_min": [
+          0.0027119999285787344,
+          0.008239030838012695
+        ],
+        "uv_max": [
+          0.7869009971618652,
+          0.4901279807090759
+        ]
+      },
+      {
+        "mesh": "face_1_1",
+        "material": "rstr0113_00_fi_headMat",
+        "channel": 0,
+        "uv_min": [
+          0.00571999978274107,
+          0.16337299346923828
+        ],
+        "uv_max": [
+          0.9997490048408508,
+          0.992451012134552
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0346",
+    "sha256": "fc8092cfcfc7684f08d90b77d16760c4750547ab4df20ce913bddabe40bd3f5a",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 2,
+    "all_uv_pairs_identical": true,
+    "faces": [
+      {
+        "mesh": "face_1_0",
+        "material": "rstr0112_00_fi_headMat",
+        "channel": 0,
+        "uv_min": [
+          0.008252999745309353,
+          0.06216198205947876
+        ],
+        "uv_max": [
+          0.996304988861084,
+          0.9847300052642822
+        ]
+      }
+    ]
+  },
+  {
+    "id": "character/mm_0347",
+    "sha256": "88335e2e94a6e980ff3d8001b050b908c3e1ee5e122357897c361b6aa4ca68ed",
+    "channel_repairs_if_applied": [],
+    "uv_pairs": 3,
+    "all_uv_pairs_identical": true,
+    "faces": []
+  }
+]
