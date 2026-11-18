@@ -436,29 +436,38 @@ controles são explicitamente diagnósticos. Craft Anything indisponível na
 listagem MCP e CLI ausente; leitura de código/JSON e instrumentação local,
 sem executar código da ROM. P-017 e aceite visual permanecem abertos.
 
-## Fonte nativa dos atributos de movimento (PRD-015, A-080/A-081)
+## Fonte nativa dos atributos de movimento (PRD-015, A-082–A-085)
 
-A análise estática de2026-11-18 recuperou a extração nativa da classe alta
-(`LSR24`, code403558/40356c/4038cc), máscara dos12 bits baixos (402e60) e
-predicados de bits0/1 (403b2c/403b7c, com normalização de sentinelas).
-Os defaults por classe em5860e0 não explicam o flag adicional20 dos words21.
-O significado desse bit permanece aberto; não generalizar a regra75020021.
+A análise estática de2026-11-18 recuperou classe alta por `LSR24`
+(code403558/40356c/4038cc), low12 (402e60) e predicados de bits0/1 com sentinelas.
+Defaults em5860e0 não explicam flag20 dos words21. Nenhum teste de máscara20
+foi ligado ao low12 por fluxo completo; flags de controlador homônimos não
+bastam. Getter4dbe14 lê `modelo+0x148`, não diretamente a célula serializada.
 
-Getter4dbe14 lê `modelo+0x148`. A consulta por posição4dcb64 resolve import
-static.crs19c3dc→Fieldda934 e alcança leitura u32 com bounds em4d7d00 após
-seleção de registros/buffers/callbacks. A ligação completa GR/altura ainda
-não foi provada; não reduzir essa consulta ao grid plano já extraído.
+Consulta4dcb64 usa posição/registros ativos (stride1b4), ramo4dc22c e fallback
+CRS19c3dc→Fieldda934. Este tem callbacks e caminhos4d7bdc/68684 antes do u32
+com bounds em4d7d00. Ownership GR/seção8/buffer/altura segue aberto; não reduzir
+a consulta ao grid plano nem à maior/menor superfície. Grounding primário
+herdado da base3013f14 não comprova esse contrato de camadas sobrepostas.
 
-Field64be0 projeta componentes distintas do vetor para6d/e; e613c contém
-exceção numérica com `contexto+0x24` em1/2 e outros gates.6f alcança a
-construtora SkatePipe1558 e RTTI EventDanielSteppingStone, após `+0x24=2`,
-`+0x14=0x0e..0x11` e queries. Decoder73/75 é usado tanto com direção fornecida
-quanto oposta: não equivale à direção permitida de um salto. Nenhum nome de
-bike, rampa ou ponte foi promovido a comportamento a partir desses fragmentos.
+Field64be0 projeta vetores para6d/e. O contexto dos gates foi identificado:
+owner+164 recebe PlayerGrid (construtora1b394, vtable10723c), base FieldUnit.
++24 é modo corrente, +25 pendente; setters88090/a6b18 e tabela141fe4 antecedem
+commit8e494. Modos1/2 têm callbacks distintos, mas enum Mach/Acro/foot/input não
+fechado. Escritor a47c4 grava0f em+14 após pedir5d; não prova quatro direções.
 
-**Resultado inconclusivo para implementação:** runtime, parser e grids
-intactos;356 Vitest/176 Python sem skips/build passam, sem novo Playwright
-ou red-green de regra não implementada. SHA, offsets/VA, scopes e comandos
-reproduzíveis em [PRD-015](../engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md).
-P-017 aberta: fechar enums `+0x24/+0x14`, flag0x20, seleção GR/altura e transição
-completa do passo/salto antes de implementar ou declarar corredor conectado.
+6f exige modo2, estados0e..11 e queries; instancia EventDanielSteppingStone.
+Import1664→SkatePipe1428 fornece direção;14d4/1430 solicitam ação62 até contador2.
+code3fae48→CRS19c7c4→Field3a0c4 agenda comando/direção emator+8fc; ainda não foi
+fechado o executor, deslocamento/tick ou completion. Não inferir slide/dois tiles.
+Ledges64528→e6224 usam decoder72/73/74/75 e normal/oposta, mas produzem resultado
+intermediário5/1d/24, seguido de outros gates: sem regra completa nos quatro
+sentidos e sem generalizar75020021 do ADR-008.
+
+**Resultado parcial/inconclusivo para implementação:** runtime, parser, grids
+e grounding preservados nesta continuação.362 Vitest/56 arquivos,186 Python
+sem skips/build passam; nenhum novo red-green/Playwright de regra não provada.
+SHA, offsets/VA, aliases rejeitados e comandos reproduzíveis no
+[PRD-015](../engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md).
+P-017 permanece aberta: enums/input, flag20, seleção GR/altura e aceitação/efeito
+completos do passo/salto antes de declarar corredor conectado.

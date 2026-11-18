@@ -888,3 +888,17 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   Controle actor-only pertence ao harness e não é uma correção publicada.
   Um hash de canvas estrito falhou por quatro pixels remotos na15 com
   medidas iguais; preservar esse limite, sem alegar paridade de pixels.
+
+## A-087 Ownership e fila de modos precedem a identificação de enums
+
+- **Data:**2026-11-18; PRD-015/P-017, base3013f14; complementa A-082/A-083.
+- **Erro evitado:** promover qualquer STR+24 ou+164 a escritor do contexto de movimento. Field3d7b0 escreve+164 num registro de ActionCmdCycleDirtMove, não no contexto consultado pelo ramo6f. A fronteira8808c é literal; o setter começa88090. Busca sem ownership ou função correta pode produzir falso negativo e enum inventado.
+- **Evidência:** Field9dbcc aloca7ec,9dbdc chama1b394,9dbe0 gravaowner+164. RTTI10723c/fdd78 identifica PlayerGrid, base10a830 FieldUnit. A basea7b08 zera+14/+24 e inicia+25/+26=14hex. e613c aparece em107250/10a844 como slot virtual14hex, não em BL direto. Setter88090 agenda+25;8e44c despacha callback141fe4;8e494 copia+25→+24 com gate+694. Modos1/2 usamcallbacks a5014/a4ee8, seletores1b/1a e ator+59=2/3, sem vínculo completo a Mach/Acro/foot.
+- **Regra:** separar modo corrente, pendente, estado+14, direção e comando solicitado. a47c4 grava0f após pedir5d;75cac grava0/1, não o comando recebido emr1. Não converter o conjunto0e..11 em quatro direções nem os modos1/2 em bike sem binding de input/item. Fonte, reprodução e lacunas no [PRD-015](features/engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md); nenhuma fixture de enum presumido ou mudança de runtime.
+
+## A-088 Pedir ação não prova deslocamento nem permissão completa
+
+- **Data:**2026-11-18; PRD-015/P-017, continuação de A-083/A-084; renumerado de A-084/A-085 no merge (colisão).
+- **Evidência:** importField1664→SkatePipe1428 grava direção emevento+30. EventDanielSteppingStone14d4/1430 solicita comando62, incrementa contador até2 e manipula flag800 do ator. code3fae48→CRS19c7c4→Field3a0c4 só agenda comando/direção emator+8fc; executor e duração/deslocamento não fechados. Não traduzir contador2 em dois tiles ou nome do evento em slide.
+- **Outros limites:** ledges64528→e6224 reescrevem código intermediário5/1d/24, mas ainda há queries e gates; decoder comum72/73/74/75 não prova salto comum completo. Máscara20 no PlayerGrid+20 ou emregistro+1e não prova o bit5 da célula sem linhagem. Consulta4dcb64/da934 escolhe registros/buffers/callbacks e ramos4dc22c/68684; grounding primário não prova esse contrato multicamada.
+- **Regra e resultado:** só implementar após fechar entrada, estado, consulta e efeito. A continuação preservou runtime, colisões, mapas e75020021;362 Vitest/56 arquivos,186 Python sem skips/build passaram (testes extras herdados da base), cinco SHA/imports reconferidos. Sem nova mecânica, não fabricar red-green ou Playwright; aceite anterior continua histórico. P-017/corredor conectado seguem abertos, com próximo consumidor e offsets explícitos no PRD-015.

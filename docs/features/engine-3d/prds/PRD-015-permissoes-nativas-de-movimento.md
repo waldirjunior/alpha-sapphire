@@ -1,10 +1,12 @@
 # PRD-015 — Leitores e condições nativas das permissões de movimento
 
 - **Data:** 2026-11-18.
-- **Fase:** 2; P-017/P-013; A-082/A-083; continuação do PRD-014.
-- **Base:** main `202d74b`, mesmo worktree `eastern-lilycove` autorizado.
-- **Estado:** investigação estática entregue; **inconclusiva para implementar
-  uma regra completa de movimento**. Runtime, colisões e mapas intactos.
+- **Fase:** 2; P-017/P-013; A-082–A-085; continuação do PRD-014.
+- **Bases:** investigação inicial em `202d74b`; continuação A-087/A-088 em
+  `3013f14`, mesmo worktree `eastern-lilycove` autorizado.
+- **Estado:** duas passadas estáticas entregues; **inconclusivas para implementar
+  uma regra completa de movimento**. Nenhum runtime, colisão ou mapa alterado
+  nesta continuação; grounding primário herdado da base preservado.
 
 ## Objetivo e decisão
 
@@ -160,6 +162,134 @@ anterior do ADR-008; não ganhou prova de ABI completa nesta investigação.
   nativa selecionada por posição/registros. Não substituir essa lacuna por
   raycast maior-hit, offsets por mapa ou desbloqueio de `01000021`.
 
+## Continuação A-087/A-088: ownership, modos e efeito no ator
+
+A segunda passada usa os mesmos cinco SHA, reconferidos, sem executar a ROM.
+Os identificadores C01–C14 do relatório local são notas próprias, não evidence
+IDs do MCP. Os achados abaixo substituem apenas o estado de conhecimento;
+nenhuma hipótese virou regra do core.
+
+### Contexto identificado e fila de modos
+
+A origem do ponteiro foi fechada, sem procurar apenas stores com mesmo offset:
+
+1. Field `0x23cc8` lê `owner+0x164` para o contexto consultado pelo ramo6f.
+2. Field `0x9dbcc..0x9dbe0` aloca `0x7ec` bytes, chama `0x1b394` e guarda o
+   resultado em `owner+0x164`.
+3. `0x1b394` chama a base `0xa7b08` e instala vtable `0x10723c`. Seu RTTI
+   `0xfdd78` nomeia **`N5field10PlayerGridE`**. A base instala `0x10a830`,
+   com RTTI **`N5field9FieldUnitE`**.
+4. A base zera `+0x14` em `0xa7b40` e `+0x24` em `0xa7b5c`; inicializa
+   `+0x25/+0x26` com sentinela `0x14` em `0xa7b64/0xa7b68`.
+
+O predicado `0xe613c` ocupa slot virtual `+0x14` nas duas vtables: entradas
+`0x107250/0x10a844`. Ausência de `BL` direto não significa ausência de consumidor.
+Não confundir o **slot da vtable** com o **byte de estado do objeto** `+0x14`.
+
+Field `0x88090..0x880f8` recebe modo em `r1` e argumento em `r2`. Após checks
+sobre `+0x694` e sentinela de `+0x25`, grava o modo pendente em `+0x25`, argumento
+em `+0x2a`, reinicia `+0x28` e `+0x26`. A variante `0xa6b18..0xa6b5c` também
+agenda `+0x25`, mas marca `+0x694=1`. `0x8808c` é literal, **não** entrada da
+função; usar a fronteira correta nas buscas de xrefs.
+
+O commit de modo em `0x8e1e4..0x8e4f8` distingue `+0x24` corrente de `+0x25`
+pendente. A sentinela `0x14` evita o despacho. Em `0x8e44c..0x8e47c`, o pendente
+indexa pares de8 bytes da tabela `0x141fe4` (ponteiro de função-membro e ajuste
+`this`). Após sucesso do callback, `0x8e494` copia `+0x25→+0x24` se
+`+0x694==0`; o outro caminho usa `+0x26`. `0x8e4d0` restaura a sentinela pendente.
+
+| Modo corrente pretendido | Callback observado | Seletor passado a code3f58c0 | code3f2e80 / comando solicitado |
+| --- | --- | --- | --- |
+| 1 | Field `0xa5014` | `0x1b` | ator+0x59=2 / `0x51` |
+| 2 | Field `0xa4ee8` | `0x1a` | ator+0x59=3 / `0x58` |
+
+code `0x3f2e80` apenas limita o argumento a `<0x17` e escreve em `ator+0x59`.
+Esses pares provam inicializações distintas; **não fecham o enum Mach/Acro/foot**.
+Ainda falta ligar o pedido de modo a bindings de input/item e ao contrato dos
+seletores. Não criar fixture de bicicleta com base só nesses números.
+
+Para `+0x14`, há um escritor concreto adicional: Field `0xa47a8..0xa47fc`
+testa direção diferente de9, solicita comando `0x5d` por `0x7764c` e grava
+`0x0f` em `+0x14` em `0xa47c4`; o ramo sem direção solicita `0x58` e grava0.
+Isso avança a transição local, mas não nomeia todo o conjunto `0x0e..0x11`, nem
+prova que sejam quatro direções. `0x75cac` também grava0/1 nesse byte; o comando
+selecionado em `r1` e o estado armazenado são domínios diferentes.
+
+**Alias rejeitado:** Field `0x3d7b0` também escreve offset `+0x164`, mas em outro
+objeto, o registro de ActionCmd. A vtable `0x1097e4` tem RTTI
+`ActionCmdCycleDirtMove`, não PlayerGrid. Igualdade de offset não prova ownership.
+
+### Flag0x20: candidatos separados da palavra da célula
+
+A busca ARM de `AND/TST/BIC/ORR #0x20` em Field/executável não fechou a linhagem
+até o low12 do permission word. Dois candidatos delimitados:
+
+- Field `0x75c60/0x75d9c` atualiza `PlayerGrid+0x20` após checks de entrada e
+  `+0x695`; não está testando o bit5 da palavra de célula.
+- code `0x4d8574..0x4d858c` chama `0x4d83f4`, lê um `u16` em `registro+0x1e`,
+  mascara20 e desloca5. Sem ligação desse registro ao permission word, isso
+  também não explica `0x0021`.
+
+code `0x403bec` acrescenta um predicado do bit2 (`0x4`) com normalização de
+sentinelas. Os setters `0x403ba4/0x403bd8` preservam, respectivamente, campos
+altos ao escrever low12 e campos baixos ao escrever a classe. Nada disso fecha20.
+
+### Consulta geométrica: registros ativos antes do fallback
+
+Em code `0x4dcb64..0x4dccd0`, a posição é convertida por import `0x19c3b0`.
+Um ramo com tag0 e contagem do registro `+0x1c4>1` usa `0x4dc22c`. O outro
+seleciona lista `modelo+0x828`, quando não nula, ou registros em `modelo+0x154`:
+32 ou4 registros, stride `0x1b4`, ativo `+0x1b0==1`, teste `0x3ea730` e cópia
+`0x184` bytes de `registro+0x2c`. O fallback consulta o mundo por `0x19c3d8`.
+
+Field `0xda934..0xdab30` oferece callback em `objeto+0xc8`, itera registros
+ativos/tipo4 e tem dois caminhos. O direto usa buffer `registro+0xac→+0x7c`,
+converte posição por `0x8b5d4`, chama code `0x4d7bdc` e escreve o word em
+`resultado+0xc`/validade em `+0x180`. Outro passa por `0x68684`, recebendo posição,
+origem e parâmetros float. Callbacks podem aceitar, continuar ou recusar.
+
+Isso **não prova seleção por maior/menor altura**, nem ownership completo de GR,
+seção8, buffer físico e camada. O grounding primário herdado da base não equivale
+a esse contrato. `0x4dc22c`, `0x68684` e construção dos registros seguem pendentes.
+
+### Daniel: direção e pedidos de ação, não slide deduzido
+
+O segundo import ficou fechado: Field chamada `0x23e50→stub0x1660`, literal
+`0x1664`, importa SkatePipe segmento0/offset `0x12a8`, arquivo **`0x1428`**.
+Esse setter grava a direção fornecida em `evento+0x30`.
+
+A vtable `0x21e8` liga o tick `0x12d0` aos métodos `0x14d4`, `0x1430`, `0x14ac`:
+
+- `0x14d4` exige code `0x4e3fd4(ator)` não zero, passa `evento+0x30` a
+  `0x3f483c`, manipula flag de ator800 e chama `0x3f2afc(ator,0)`.
+- Solicita `0x3fae48(ator,0x62,direção)` e incrementa contador `evento+0x32`.
+  `0x1430` repete a solicitação enquanto contador `<2`; ao atingir2 marca
+  `evento+0x2f`. Isso não prova dois tiles nem duas translações concluídas.
+- `0x14ac` limpa flag800 e chama `0x3f2afc(ator,0)`. O tick tem fases0–3,
+  chamadas `0x3f82c8` e espera por `0x3f8f40`.
+
+code `0x3fae48` chega ao import CRS literal `0x19c7c4`, Field segmento0/offset
+`0x39f44`, arquivo `0x3a0c4`. Este **agenda** comando/direção em `+8/+0xa` do
+controlador `ator+0x8fc`, reinicia contador e atualiza flags. Ainda falta o
+consumidor que executa comando62 e seus deslocamento, colisão e duração. Logo,
+“deslizar na direção da pedra” não foi aceito nem substituído por salto inventado.
+
+### Ledges: do decoder ao resultado intermediário
+
+A chamada direta a `0xe6224` em Field `0x64528`, dentro de `0x64410`, exige
+máscara local `r6 &0x2`, igualdade entre bytes dos descritores e último argumento0.
+Sucesso modifica código intermediário: `0x18/0x19→0x1d`, `0x21→0x24`, demais→5;
+grava direção/vetor e limpa aquele bit. Outros flags ainda podem levar a
+`0xe811c` e recusar o resultado.
+
+No ramo de `0xe6224` com último argumento0, depois da tabela direcional há
+queries code `0x4dc6d0/0x4dcaec` e teste de outro atributo pelo decoder contra9.
+O ramo com argumento não zero aceita comparações com normal/oposta. Não foi
+fechada a relação desse parâmetro com input, posição e ação de salto do ator.
+As classes72/73/74/75 compartilham decoder e esse caminho intermediário, mas
+**isso não prova a mesma transição de salto parametrizada nos quatro sentidos**.
+A regra anterior75020021 permanece restrita ao ADR-008, sem generalização.
+
 ## Reprodução estática
 
 A partir da raiz do worktree, com `ROM_ROOT` apontando para `rom/extracted`
@@ -197,26 +327,77 @@ mostra pools de literais como instruções; isso não transforma esses dados em
 código. Para reproduzir RTTI, ler o typeinfo em `vtable-4` e o nome em
 `typeinfo+4` depois de `CroImage.relocated()` no CRO de destino.
 
-Artefatos locais, não versionados: `/tmp/native-permissions-{scan,xrefs,findings}.json`
-e os scripts `/tmp/native-permissions-*.py`, `/tmp/dump-native-permissions.py`.
-O relatório findings separa observações N01–N09, desconhecidos e decisão.
-SHA, offsets, procedimento e conclusões ficam versionados aqui para não
-depender da permanência de `/tmp`.
+Para reproduzir ownership, callbacks, imports e efeito da continuação, usar
+os mesmos `ROM_ROOT` e ambiente, sem depender dos helpers privados:
+
+```bash
+ROM_ROOT="/caminho/local/rom/extracted" /tmp/events-abi-venv/bin/python - <<'PY'
+import os, struct
+from pathlib import Path
+from capstone import Cs, CS_ARCH_ARM, CS_MODE_ARM
+from scripts.cro_native_abi import CroImage
+root = Path(os.environ['ROM_ROOT'])
+images = {name: CroImage((root/'RomFS'/f'{name}.cro').read_bytes())
+          for name in ['DllField', 'DllFieldEventSkatePipe']}
+images['static'] = CroImage((root/'RomFS/static.crs').read_bytes())
+field = images['DllField'].relocated()
+u32 = lambda blob, pos: struct.unpack_from('<I', blob, pos)[0]
+for vt, expected in [(0x10723c, b'N5field10PlayerGridE'),
+                     (0x10a830, b'N5field9FieldUnitE')]:
+    info = u32(field, vt-4)
+    pos = u32(field, info+4)
+    name = field[pos:field.index(0, pos)]
+    assert name == expected, (hex(vt), name)
+    print('RTTI', hex(vt), hex(info), name.decode())
+assert [u32(field, p) for p in [0x107250, 0x10a844]] == [0xe613c]*2
+assert [u32(field, 0x141fe4+8*n) for n in [1, 2]] == [0xa5014, 0xa4ee8]
+for image, patch in [('DllField', 0x1664), ('static', 0x19c7c4)]:
+    print('import', image, hex(patch), images[image].anonymous_import_at(patch))
+cs = Cs(CS_ARCH_ARM, CS_MODE_ARM)
+cs.skipdata = True
+for module, spans in [
+    ('DllField', [(0x9dbcc,0x9dbe4),(0x1b394,0x1b3c4),
+                  (0xa7b08,0xa7b7c),(0x88090,0x880fc),
+                  (0x8e44c,0x8e4fc),(0xa4ee8,0xa5138),
+                  (0xa47a8,0xa4804),(0x644f4,0x645d8),
+                  (0xda934,0xdab30),(0x3a0c4,0x3a12c)]),
+    ('DllFieldEventSkatePipe', [(0x12d0,0x1428),(0x1428,0x1558)]),
+]:
+    blob = images[module].relocated()
+    for start, end in spans:
+        print(module, hex(start), hex(end))
+        for row in cs.disasm(blob[start:end], start):
+            print(f'{row.address:08x} {row.mnemonic:9} {row.op_str}')
+PY
+```
+
+Artefatos locais, não versionados: `/tmp/native-permissions-{scan,xrefs,findings}.json`,
+`/tmp/native-permissions-continuation.json`, `/tmp/native-state-writers.json` e
+helpers `/tmp/native-query.py`, `/tmp/native-state-writers.py`,
+`/tmp/dump-native-permissions.py`. O relatório inicial separa N01–N09; o segundo
+registra candidatos, aliases rejeitados e limites C01–C14. SHA, offsets,
+procedimento e conclusões versionados aqui não dependem da permanência de `/tmp`.
 
 ## Verificação e próximo passo
 
-- `npm test && npm run build`:356 testes/54 arquivos e build passam;
-  warning herdado de chunks grandes permanece.
-- `python3 -B -m unittest discover -s scripts -p 'test_*.py'`:176 passam,
-  sem skips, com `GLB_MAPS_DIR` local configurado.
+- Passada inicial:356 Vitest/54 arquivos,176 Python sem skips e build passaram.
+- Continuação sobre3013f14: `npm test && npm run build` passou com
+  **362 testes/56 arquivos**, com warning herdado de chunks grandes.
+- `GLB_MAPS_DIR` apontando aos assets locais do principal:
+  `python3 -B -m unittest discover -s scripts -p 'test_*.py'` passou com
+  **186 testes, sem skips**. Os testes extras são herdados da base integrada,
+  não regressões criadas por esta entrega documental.
 - As11 regressões do PRD-014 preservam barreiras, contatos e fixture670.
   **Não são red-green de uma nova mecânica**, pois não houve implementação.
 - Nenhum Playwright novo, emulador ou execução dos CROs nesta entrega estática.
   O aceite parcial anterior e suas22 capturas não são reclassificados como
   evidência nativa/visual desta frente. Não foi necessária janela na main.
 
-**P-017, dono core/engine, aberta:** recuperar escritores/enum de `+0x24/+0x14`,
-consumidores de flag20, seleção completa GR/altura e aceitação do passo/salto.
-Só depois definir teste falhando para uma condição completa, implementar a
-menor regra e fazer Playwright visível com estado explícito equivalente.
-Corredor conectado, Surf/bike, multicamada e paridade permanecem abertos.
+**P-017, dono core/engine, aberta:** ownership do contexto, fila e commit de modo
+foram recuperados. Faltam a ligação modo1/2→input/item/bike, o enum completo do
+estado `+0x14`, consumidor do flag20, ownership GR/altura, execução do comando62
+e aceitação/efeito completo dos ledges nos quatro sentidos. Também não foram
+fechados passo, tick, gear, camada e natureza da barreira01000021.
+Só depois de uma regra completa: teste falhando, menor implementação e
+Playwright visível com estado explícito equivalente. Corredor conectado,
+Surf/bike, multicamada e paridade permanecem abertos.
