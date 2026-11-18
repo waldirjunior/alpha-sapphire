@@ -311,3 +311,20 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro reproduzido:** O remap para o último canal válido tirava o erro de shader, mas UV1 distorcia grama, placas e telhados. A/B do mesmo GLB na main (`/tmp/uv-channel-original.png` e `/tmp/uv-channel-zero.png`) confirmou TEXCOORD_0 correto para a textura difusa; o DAE tem sets0/3 e o assimp compacta para0/1, mas isso sozinho não prova o mapeamento semanticamente correto.
 - **Regra:** Para materiais explicitamente marcados extras.pica=true, usar UV0 em baseColorTexture, migrando também arquivos antes corrigidos para1. Não modificar UVs válidos de materiais genéricos nem outros mapas do material. O staging normaliza origem e destino antes de comparar, sem substituir silenciosamente um GLB de conteúdo diferente. Validar imagem, não apenas índices/shaders.
 - **Evidência:** Regressão sintética falhou com [1,1,1] onde se espera [0,0,0]; agora passa e preserva normalTexture no UV1 e idempotência. Apenas 35 GRs do slice/destinos foram reestagiados, sem conversores. No harness usar PRNG com valores distintos: fixar Math.random em uma constante também faz UUIDs de Three.js colidirem e falseia texturas.
+
+## A-042 UV0 e UV1 idênticos não descartam inversão de V
+
+- **Data:** 2026-11-17.
+- **Contexto:** P-019, continuação da auditoria A-031 sobre main 942fdb3, atualizada para 61fd0c6 antes do fechamento. A-040/A-041 foram preservados da main.
+- **Erro reproduzido:** O rosto de Brendan estava inteiro invertido, não apenas com olhos fechados. O BCH contém V=0,507449–0,995244; o GLB contém 1−V, mas a imagem RGBA é idêntica à original. Os dois canais exportados sofreram a mesma inversão, logo trocar o índice não ajuda.
+- **Regra:** Comparar valores e orientação com o BCH e a imagem, não somente índices. Restaurar V apenas com material/transformação e SHA de fonte comprovados; clonar accessors compartilhados, preservar BIN-base/skin/clipes e publicar nova URL imutável. Não aplicar flip global nem deslocamento arbitrário de meia célula.
+- **Evidência:** [Levantamento](features/pipeline-rom/character-face-evidence.json) de 61 MM encontrou 12 paletas no canal examinado; cinco casos de 70 frames foram normalizados: 0180/0181/0212/0314/0315. Fixture determinística falhou com V=0,125 em vez de 0,875 no comportamento legado de cópia; seis regressões passam com a correção. Imagens, samplers, materiais, nodes, skins, animações e prefixo BIN permanecem idênticos nos cinco GLBs; 97/102 entradas do catálogo não mudaram. Playwright A/B carregou os assets novos de Brendan/May/Wally: seis capturas inspecionadas, rosto orientado e olhos abertos, zero pageerror/HTTP>=400. [Relatório](features/pipeline-rom/face-expressions.md).
+- **Limite:** A correção é de orientação-base, não reprodução de expressões, wrap/combiners, piscada ou paridade com emulador. Pés ausentes continuam limitação do asset, sem malha inventada.
+
+## A-043 TexCoord de material e nativa Eye não identificam sozinhos um canal UV
+
+- **Data:** 2026-11-17.
+- **Contexto:** P-019, CRO/expressões BCH.
+- **Regra:** Separar slot do transform de textura, fonte de coordenadas e stream glTF. Nos cinco casos suportados, MaterialTexCoord1Trans usa TextureSources[1]=0. O switch estático chamado por ChangeFace recebe expressão uint8 e escolhe floats 0,10,…,70, correspondentes às posições da paleta; isso não prova uma animação contínua de piscar. TalkMdlSetEye resolve dois atores e um modo, não é evidência de seleção de célula. Visibilidade de ator/mesh não cria topologia.
+- **Evidência:** DllField.cro/ChangeFace em 0x51ac0 → stub 0x28f8 → import anônimo |static|/0x2f80e8; switch virtual 0x3f80e8 e constantes em 0x3f81a0. Nos MM0314/0315/0180, seção 2 contém material eye01 de 70 frames e nenhum clip de visibilidade. SHA/offsets, leitor SPICA e distinção observado/derivado estão no [relatório](features/pipeline-rom/face-expressions.md).
+- **Limite:** O nome/protótipo do stub final 0x19c7a8 e a ligação completa ao estado de expressão do ator não foram recuperados. Ausência do elemento examinado em outros MM não prova ausência de expressões; grupos PB/PK de Pokémon são outro layout.

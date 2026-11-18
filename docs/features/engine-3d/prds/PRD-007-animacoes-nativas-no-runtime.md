@@ -50,11 +50,23 @@ UV0/UV1 comparados são idênticos, inclusive faces de MM0315/MM0314/MM0180.
 Trocar 0 por 1 não seleciona outra célula nessas saídas; `glb_uv_fix.py` não foi
 alterado para mascarar o defeito com o remap de P-018.
 
-MM0315 mantém a face em aproximadamente `u=0,0025–0,2420`,
-`v=0,0048–0,4926`. A escolha de expressão/transformação de atlas no export
-continua aberta. O merge esquelético não transporta BCHs de material ou
-visibilidade e não aplica deslocamento arbitrário de UV. Os pés ausentes nos
-GLBs-base são limitação da geometria adotada: anexar animação não cria topologia.
+O snapshot A-031 tinha MM0315 em `u=0,0025–0,2420`, `v=0,0048–0,4926`.
+A-042/A-043 compararam o BCH: V original é `0,507449–0,995244`, com RGBA
+idêntico no GLB. O rosto estava invertido e amostrava a outra linha do atlas.
+A [investigação CRO/BCH](../../pipeline-rom/face-expressions.md) correlaciona
+ChangeFace com a paleta 0/10/…/70 e distingue slot de material de stream UV.
+
+A promoção agora usa [proveniência por MM](../../pipeline-rom/character-face-evidence.json)
+para restaurar V em cinco casos comprovados, MM0180/0181/0212/0314/0315.
+Verifica SHA, material, transformação-base e bounds antes de clonar UVs e
+publicar nova URL. O catálogo mantém 102 modelos; 97 entradas não mudam.
+Não há remap de canal, deslocamento arbitrário ou flip global. Imagens,
+material, skin, animações, topologia e BIN-base ficam preservados.
+
+O merge esquelético ainda não transporta estado dinâmico dos BCHs de material
+ou visibilidade, nem piscada/wrap/combiners. Os demais MM não foram corrigidos
+por extrapolação. Pés ausentes continuam limitação da geometria adotada:
+anexar animação ou normalizar UV não cria topologia.
 
 ## Reprodução
 
@@ -113,6 +125,14 @@ promoção é idempotente e registra SHA-256, fonte, clipes e razões de ausênc
   ignorados. `route101-before.png`, `route101-physical-a.png` e
   `route101-physical-b.png` mostram a mudança de pose; `route101-after.png`
   mostra a queda mantida. A-034 registra o fechamento da captura.
-- **Limite visual:** texturas/cores Pokémon (incluindo olhos) e do overworld
-  continuam incorretas. P-007/P-017/P-019 seguem abertas; não foi demonstrada
-  paridade com emulador, nem resolvidos combiners, expressões ou impacto nativo.
+- P-019/A-042/A-043, sobre main 61fd0c6: 211 Vitest/38 arquivos, build e
+  142 testes Python passaram (um skip pré-existente por public ausente no
+  worktree), incluindo seis regressões sintéticas de orientação/publicação.
+  Cinco outputs preservam imagens/skin/clipes/BIN; A/B real de Brendan, May
+  e Wally inspecionou seis capturas com os arquivos publicados, sem mutação
+  de UV no browser e sem pageerror/HTTP>=400.
+- **Limite visual:** as cinco faces têm orientação-base corrigida, mas outros
+  materiais, cores Pokémon e texturas overworld ainda podem estar incorretos.
+  P-007/P-017/P-019 seguem abertas para a fidelidade residual; não foi
+  demonstrada paridade com emulador, nem resolvidos combiners, expressões
+  dinâmicas ou impacto nativo.

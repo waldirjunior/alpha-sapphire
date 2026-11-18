@@ -1,0 +1,1342 @@
+[
+  {
+    "model": "0045",
+    "mm_sha256": "e3168a935f7da4730a72023671e7f8cafc497c0ec2e4bc96cc2524beddced751",
+    "faces": [],
+    "id": "character/mm_0045",
+    "glb_sha256": "f351711ff33b9c7227f36071d8d6e8c3d5f82d53a6f46fcaa68a46cd8917059e",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0045.glb"
+  },
+  {
+    "model": "0122",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0122",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0122/mm_0122.glb"
+  },
+  {
+    "model": "0123",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0123",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0123/mm_0123.glb"
+  },
+  {
+    "model": "0124",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0124",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0124/mm_0124.glb"
+  },
+  {
+    "model": "0125",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0125",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0125/mm_0125.glb"
+  },
+  {
+    "model": "0179",
+    "mm_sha256": "9664eb2ea3995d91402199d18928cfe2b61f269b430db2acb7106c420041643a",
+    "faces": [
+      {
+        "material": "rstr0009_00_fi_face",
+        "animation": "rstr0009_00_eye01",
+        "frames": 30,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00126423,
+          0.248821,
+          0.00801923,
+          0.986359
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0009_00_fi_face",
+        "width": 256,
+        "height": 64,
+        "rgba_sha256": "d5720be51ad445155c5015d06a01bd7a743c17add4d0a901c7e5a62db63093a2",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          },
+          {
+            "id": 3,
+            "frame": 30,
+            "translation": [
+              -0.75,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0179",
+    "glb_sha256": "0d02d53fd4a34828b623a919d0516499f0459529931a33ae55f489b2c26a8c3c",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0179.glb"
+  },
+  {
+    "model": "0180",
+    "mm_sha256": "4b9a7ee423df660409c2be27f86891febd5055ca5a16e4c5cee40583a6d9002f",
+    "faces": [
+      {
+        "material": "rstr0010_00_face",
+        "animation": "rstr0010_00_eye01",
+        "frames": 70,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0066808,
+          0.241595,
+          0.540736,
+          0.993336
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0010_00_face",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "b4f5163826c3b4a002ef8f5376a158842240c71e988cb8733f905c6c187577d6",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          },
+          {
+            "id": 3,
+            "frame": 30,
+            "translation": [
+              -0.75,
+              0
+            ]
+          },
+          {
+            "id": 4,
+            "frame": 40,
+            "translation": [
+              0,
+              -0.5
+            ]
+          },
+          {
+            "id": 5,
+            "frame": 50,
+            "translation": [
+              -0.25,
+              -0.5
+            ]
+          },
+          {
+            "id": 6,
+            "frame": 60,
+            "translation": [
+              -0.5,
+              -0.5
+            ]
+          },
+          {
+            "id": 7,
+            "frame": 70,
+            "translation": [
+              -0.75,
+              -0.5
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0180",
+    "glb_sha256": "846abfc5891a2bcc6c405e0184db1e34a56e0645c6b0f070155755ca8237ceea",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0180.glb"
+  },
+  {
+    "model": "0181",
+    "mm_sha256": "f0158744513abdeaca6bc0f73ab5adef1b65957e326fcbf9bb35a4a5e102ab91",
+    "faces": [
+      {
+        "material": "rstr0011_00_face",
+        "animation": "rstr0011_00_eye01",
+        "frames": 70,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0066808,
+          0.241595,
+          0.540736,
+          0.993336
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0011_00_face",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "2f8e6f2b8e73149562b202d303a3bd8b1dbb49696a9ba7efb5c7aa2103aee661",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          },
+          {
+            "id": 3,
+            "frame": 30,
+            "translation": [
+              -0.75,
+              0
+            ]
+          },
+          {
+            "id": 4,
+            "frame": 40,
+            "translation": [
+              0,
+              -0.5
+            ]
+          },
+          {
+            "id": 5,
+            "frame": 50,
+            "translation": [
+              -0.25,
+              -0.5
+            ]
+          },
+          {
+            "id": 6,
+            "frame": 60,
+            "translation": [
+              -0.5,
+              -0.5
+            ]
+          },
+          {
+            "id": 7,
+            "frame": 70,
+            "translation": [
+              -0.75,
+              -0.5
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0181",
+    "glb_sha256": "00c25fbd14bcfb75afe8ba076e3e4417b9edcecfd99e6a839fded835ea8e9dd3",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0181.glb"
+  },
+  {
+    "model": "0212",
+    "mm_sha256": "dbe3c85cc984cd86b2a38ea86bfc9239da224c4fd3e8fd458cbab8f5d9c53943",
+    "faces": [
+      {
+        "material": "rstr0042_00_fi_face",
+        "animation": "rstr0042_00_eye01",
+        "frames": 70,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.993228,
+          -0.755389,
+          0.504828,
+          0.995244
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0042_00_fi_face",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "993713a4d69ff39173d3a8e405af67c6125e63793501c9df1dc25b3cd2753acb",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          },
+          {
+            "id": 3,
+            "frame": 30,
+            "translation": [
+              -0.75,
+              0
+            ]
+          },
+          {
+            "id": 4,
+            "frame": 40,
+            "translation": [
+              0,
+              -0.5
+            ]
+          },
+          {
+            "id": 5,
+            "frame": 50,
+            "translation": [
+              -0.25,
+              -0.5
+            ]
+          },
+          {
+            "id": 6,
+            "frame": 60,
+            "translation": [
+              -0.5,
+              -0.5
+            ]
+          },
+          {
+            "id": 7,
+            "frame": 70,
+            "translation": [
+              -0.75,
+              -0.5
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0212",
+    "glb_sha256": "7f7feeaea4a456513486b89cff4c7e33e1365fec8d467a647018a4a44591a6f8",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0212.glb"
+  },
+  {
+    "model": "0218",
+    "mm_sha256": "6218479d8272c1922a979ede014c7b1e688aec0e4e816109c27dc249862b22aa",
+    "faces": [],
+    "id": "character/mm_0218",
+    "glb_sha256": "fd0c0b77a9d076f87883bcb66e3afaa44d2604291c965660db6e99e7d8383032",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0218.glb"
+  },
+  {
+    "model": "0219",
+    "mm_sha256": "fe5c12386fc1cbfeb55693eb5a34260481c50db14fb84a0b9bbaee865e21c260",
+    "faces": [],
+    "id": "character/mm_0219",
+    "glb_sha256": "808cec0681ab32e344ba241c7f5eee539b281b1228658e5fb5f3fe418fbeaea7",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0219.glb"
+  },
+  {
+    "model": "0220",
+    "mm_sha256": "a9e65631562e0fa47e7a3d6f2b6f2021153af03e0de3cb1446f29b92f7dd2a3d",
+    "faces": [],
+    "id": "character/mm_0220",
+    "glb_sha256": "ff7bc3069a7a6706a29aa80d534a7d1ba6560c6b0c24b4ce853d73f811e5f7b9",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0220.glb"
+  },
+  {
+    "model": "0221",
+    "mm_sha256": "6e1d0be3b12df13348d37ae9b00043375bf6253a1724b9f58338615697b3587b",
+    "faces": [],
+    "id": "character/mm_0221",
+    "glb_sha256": "16f75732b0e68372f13446860f59994b1dc0ba521ab6100bb8db11c3438aabf8",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0221.glb"
+  },
+  {
+    "model": "0223",
+    "mm_sha256": "119fc69c6db8913f637a3cd3c84c5fb2abe06adf0ddc5efa96cbc41e1dbe6ec9",
+    "faces": [],
+    "id": "character/mm_0223",
+    "glb_sha256": "48d1738dd6c4ac1931323e57e9dda8d044909513eba510219c94acb84e14ef7f",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0223.glb"
+  },
+  {
+    "model": "0225",
+    "mm_sha256": "138439a06536cf5ce307455599a5114d18cec8f90b57ac3a997ac430970fba3c",
+    "faces": [],
+    "id": "character/mm_0225",
+    "glb_sha256": "1d7a7e443328d028c38f190bae650e56d597429a79b8671722d7e9ae39beda46",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0225.glb"
+  },
+  {
+    "model": "0226",
+    "mm_sha256": "cb9776c010c0f74ccc441c83e827500d194a2ef99a2ad635ab491b4df2265980",
+    "faces": [],
+    "id": "character/mm_0226",
+    "glb_sha256": "0b64d13a5229a50b3f86ed85802d7f43ea00eb1adc85a79c5d937f5703fd6e7d",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0226.glb"
+  },
+  {
+    "model": "0231",
+    "mm_sha256": "02d263c3037bd14b994b554ddf73fec4c410334cff167ce628327b3860fd0b0e",
+    "faces": [],
+    "id": "character/mm_0231",
+    "glb_sha256": "c29ee1fb909e9f59d1262690eca16c8322d09b24074b2472ff288ae9e774e474",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0231.glb"
+  },
+  {
+    "model": "0236",
+    "mm_sha256": "eac5cbc1d5ea3621ff60b314b814596ff3bc6b1ed1c757b2787d9880b522fc93",
+    "faces": [],
+    "id": "character/mm_0236",
+    "glb_sha256": "c41aacc03800407e3b53a00446a0498a6ca490378dff6f6b897c8203b565bc29",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0236.glb"
+  },
+  {
+    "model": "0238",
+    "mm_sha256": "de6afe0a8ae04fb5f7ec3ae0642db4e80a8e7a9075aafd85e76a7aee61a1c206",
+    "faces": [],
+    "id": "character/mm_0238",
+    "glb_sha256": "2523243f10984029257271449ba1492ef868d3db48d579dce9fbcc37f5d90025",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0238.glb"
+  },
+  {
+    "model": "0239",
+    "mm_sha256": "6eecc106206f74f0044f262704ce60f367a39df8784da6168f5ad1e6a1adc1d0",
+    "faces": [],
+    "id": "character/mm_0239",
+    "glb_sha256": "83501ba8fc20db684070bf2ca5c428d0930e0c9ff389bd612668db3c9eb73a6b",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0239.glb"
+  },
+  {
+    "model": "0242",
+    "mm_sha256": "b415dfc50a4ac944604e8396656396643c1b600136bad9b1c4949a34253fe0d8",
+    "faces": [],
+    "id": "character/mm_0242",
+    "glb_sha256": "6c6fd31924a7e42e361aad238a2875b6df4b94a133f538e3bbef58d64f57050b",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0242.glb"
+  },
+  {
+    "model": "0244",
+    "mm_sha256": "beca0c63661625a7e18fee12de104af35a6f9f7cd8670a8ee4931e5313d99e53",
+    "faces": [],
+    "id": "character/mm_0244",
+    "glb_sha256": "bf9bdba289eca9386a8024ffcda8dd163c72ed68f657879b605095e184d1d43e",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0244.glb"
+  },
+  {
+    "model": "0245",
+    "mm_sha256": "8057c8a3ddce3129d9bbbc52e3afa634966c7119f57080986ad3276e40c756f2",
+    "faces": [],
+    "id": "character/mm_0245",
+    "glb_sha256": "a2b1da4b79d77530d33c4feebf465fd26140f54b9b930d76d06a2d45f551e43c",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0245.glb"
+  },
+  {
+    "model": "0246",
+    "mm_sha256": "cfe3c55008411acc173e77a96eea28ac9d8d774adef80eccefd5d4b44255a8b4",
+    "faces": [],
+    "id": "character/mm_0246",
+    "glb_sha256": "665988a33527163bc70cd0f6925075f636bf4fd065287d29adb62a7e036abcd2",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0246.glb"
+  },
+  {
+    "model": "0252",
+    "mm_sha256": "33f9a2fe11c80e63773c5c845240fce45461ed2b3af2ef65c125447c2cc036f1",
+    "faces": [],
+    "id": "character/mm_0252",
+    "glb_sha256": "dcaebda6edd7eae0521b86fcce3e3a84959e9b420095841dd678413a3b0cbfdf",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0252.glb"
+  },
+  {
+    "model": "0254",
+    "mm_sha256": "96d998286e13cf64ab5f158b486ec116904b1b58dc19ece6b6ac01e261a2c00c",
+    "faces": [],
+    "id": "character/mm_0254",
+    "glb_sha256": "e43ac7317198ad46af60ec848625001e592dd23fa0a3c7cc6be5765fda3e3a27",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0254.glb"
+  },
+  {
+    "model": "0255",
+    "mm_sha256": "2b77dd092558bffeffdb9c83dd9b1f0dc02126e5e9cbf8d5e1dfed51d70fd701",
+    "faces": [],
+    "id": "character/mm_0255",
+    "glb_sha256": "aa60a51f472d497238c5af1fc8d44e9943a86b5bce42d4b406bb2c83c694d84d",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0255.glb"
+  },
+  {
+    "model": "0256",
+    "mm_sha256": "1108889959d8bee4b4b94c73ea91bf4c4074469f96da4cb7cb408e44af17b361",
+    "faces": [],
+    "id": "character/mm_0256",
+    "glb_sha256": "9d5aec72199a2e08c2c1045a1cf0e9247551cd93965b2ecafd087b9353c3562d",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0256.glb"
+  },
+  {
+    "model": "0259",
+    "mm_sha256": "52a92c973c257f202a7e314cbe7a3990abae848458790f6ed8c7b86adf605340",
+    "faces": [],
+    "id": "character/mm_0259",
+    "glb_sha256": "a93209c78824614bab3e67bca6eff6e628b282142abb2e74fc109e87e558a20f",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0259.glb"
+  },
+  {
+    "model": "0266",
+    "mm_sha256": "1740549e4f2fba9a2063ad728dcc6e781962e7c4213bef5d47230299b27865af",
+    "faces": [],
+    "id": "character/mm_0266",
+    "glb_sha256": "7d5b4d0d99705e9b5f0c886fd82817a4f29f5388e53483d6475addf856bcaa8c",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0266.glb"
+  },
+  {
+    "model": "0267",
+    "mm_sha256": "3f5740082366cfe841ba29611142616fb33bc40c0589538cb62f199e559c0029",
+    "faces": [],
+    "id": "character/mm_0267",
+    "glb_sha256": "4a36e949379756e1879bdfa2083d8d6b85e5377b608e988d429b249cd5cd861d",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0267.glb"
+  },
+  {
+    "model": "0270",
+    "mm_sha256": "098878a16f46d656769569f8752288df788c0844f15f11d802ce338b1d903e88",
+    "faces": [],
+    "id": "character/mm_0270",
+    "glb_sha256": "a67d30672bde6fd352a69aff3db6b80f6eff25356cf35b9799473c62ee3c535a",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0270.glb"
+  },
+  {
+    "model": "0271",
+    "mm_sha256": "61d4f0d24a3a2f51e22cc2ae99c06a56721fb381701233ed43be590886d2fba0",
+    "faces": [],
+    "id": "character/mm_0271",
+    "glb_sha256": "698787ee45a44fa56be1d331986726f350aa394ff6fcbe8cb76c0ccb04fd2ea1",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0271.glb"
+  },
+  {
+    "model": "0275",
+    "mm_sha256": "b23458c41d7f8bd6597ba52ab67b95ad43f9b71d3d0bc8edf07b593e045ebdaa",
+    "faces": [],
+    "id": "character/mm_0275",
+    "glb_sha256": "39084e69d362c70f934900679b5ee679ab349775192c9265220716ccf789ea79",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0275.glb"
+  },
+  {
+    "model": "0280",
+    "mm_sha256": "912b9f9beb28ea53b422d584daedf6389bb977a467dbec3ff7ba98181d5447ce",
+    "faces": [],
+    "id": "character/mm_0280",
+    "glb_sha256": "8d4e031bce9dcaae580ea8f8fd4bbb454dcb537dca3ee6929d4ab8ecb5ec79cb",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0280.glb"
+  },
+  {
+    "model": "0281",
+    "mm_sha256": "5e3d7821db1b589a08796bebf49785d57b06d85c435a1e65712d24941ee0c470",
+    "faces": [],
+    "id": "character/mm_0281",
+    "glb_sha256": "e09cd97b6e73b2e75e70699355622d4b0c9b78107984f8ddc7cb0fb0dafe1f01",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0281.glb"
+  },
+  {
+    "model": "0283",
+    "mm_sha256": "1e65128be0433cd1f9f061676d5fe7e636a55dbff5b22d861a79c009afd81962",
+    "faces": [],
+    "id": "character/mm_0283",
+    "glb_sha256": "0b0a2a0cd9bba5d139dc50ab139bb62a53e5da0b449fa534cf0a6b0f09f5f7cb",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0283.glb"
+  },
+  {
+    "model": "0284",
+    "mm_sha256": "2d7902d8c95fcbff2672f4f7a7a723203b42c975fa916488a5f278bdbdc7f546",
+    "faces": [],
+    "id": "character/mm_0284",
+    "glb_sha256": "afc1227e8942e07dbd189109365f6d509739ac25c334d0f4cbd4434e812133ad",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0284.glb"
+  },
+  {
+    "model": "0286",
+    "mm_sha256": "ead83ff0859eda6ab87762c963fb26305a9c69df33b021baa0558808cf42f707",
+    "faces": [],
+    "id": "character/mm_0286",
+    "glb_sha256": "013fd8bfad945ee4526d182343b02b1095776b48fac3f31ef867976fb936bafe",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0286.glb"
+  },
+  {
+    "model": "0287",
+    "mm_sha256": "25aeb3eefeb63260dd94bcc095390acd26e7bd39f4de38ee102fbdaec99d31f9",
+    "faces": [],
+    "id": "character/mm_0287",
+    "glb_sha256": "2fc5207c88519e90425ad2b87facd591d3d31a13ef6006b2664d2fac311c63e2",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0287.glb"
+  },
+  {
+    "model": "0288",
+    "mm_sha256": "c4a4124993c1dbbeadf8916ad7e952a1218c98c57551de624cbcabdbea2cb764",
+    "faces": [],
+    "id": "character/mm_0288",
+    "glb_sha256": "fb4379c1d942ef3e9c7cf2859b4d365463472add6fa5020bc91613f2cefd561d",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0288.glb"
+  },
+  {
+    "model": "0289",
+    "mm_sha256": "d5332bcf14583a68c019736cf9c4a1ac4753cbff3abaec64747b709e27d183a7",
+    "faces": [],
+    "id": "character/mm_0289",
+    "glb_sha256": "9cdf235715d2d18f567597f17fe7a48d173c9607c2a373fa2ce37d56149e5b3c",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0289.glb"
+  },
+  {
+    "model": "0296",
+    "mm_sha256": "51588c9268f19bb64f06c34d46edaf74058c7f9b69fd09683b8446e00e410c1f",
+    "faces": [],
+    "id": "character/mm_0296",
+    "glb_sha256": "49915c1b2bba84b7164f12cc98c3438abe7931cda61e31f3d024b5765d2d3443",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0296.glb"
+  },
+  {
+    "model": "0298",
+    "mm_sha256": "03fbe49d27811ed210fe0207aac4856be744bbb5189fb04c1024364fea107862",
+    "faces": [
+      {
+        "material": "rstr0181_00_fi_headMat",
+        "animation": "rstr0181_00_eye01",
+        "frames": 10,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0042111,
+          0.495203,
+          0.0124155,
+          0.997988
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0181_00_fi_head",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "c6a483fe1a742fc285813a5a38add2e4a25b062c40a225ce1153e0b97e27293f",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.5,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0298",
+    "glb_sha256": "b2b1887b9f69b0216bfeb69a7ec55577ca808f16799e548f1a7e1c6caca3dadd",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0298.glb"
+  },
+  {
+    "model": "0299",
+    "mm_sha256": "ca43d1adf23861cdf3fefe6e6d82acd70f30bce9d8d32e7948d56e436f444395",
+    "faces": [
+      {
+        "material": "rstr0182_00_fi_headMat",
+        "animation": "rstr0182_00_eye01",
+        "frames": 10,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          0.000459524,
+          0.491375,
+          0.0132301,
+          0.986736
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0182_00_fi_head",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "b3dd60a2ef4e9c7b55549bb88d8e4891e4c8f62731aa5c4d0caa83e9bed64052",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.5,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0299",
+    "glb_sha256": "157626c5a39b3121ae2ff3d81d2d30b9e417cb8dc963ea9fc26b789cb3aa3efb",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0299.glb"
+  },
+  {
+    "model": "0301",
+    "mm_sha256": "6cba73117f3a0bbfc4d3e184a9f848d026f93a497d6b974949e5972132081746",
+    "faces": [],
+    "id": "character/mm_0301",
+    "glb_sha256": "a9fc69bd43ab5ee3e98e86424af58a09e981f874e4f00be4bd1d90b48b25cb28",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0301.glb"
+  },
+  {
+    "model": "0302",
+    "mm_sha256": "f2908ea2410a0b72db6993cf42dd5743a610549b2a008697688ddf6b8911f4cb",
+    "faces": [
+      {
+        "material": "rstr0185_00_fi_headMat",
+        "animation": "rstr0185_00_eye01",
+        "frames": 10,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0012112,
+          0.495664,
+          0.00860512,
+          0.998363
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0185_00_fi_head",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "cb4fe498cb3c991c8e0a2143df344385430affa4a831edbd3c6c8e35d7a1c771",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.5,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0302",
+    "glb_sha256": "76411d9a22bc8c87896fc930823a4d4d4a09a5418b78ad7b8e5ad0ed5ecbe488",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0302.glb"
+  },
+  {
+    "model": "0303",
+    "mm_sha256": "1e3b38fdb200bb3effbc3919dedf4d011fbea6b707eb809220e31d4fe3e45895",
+    "faces": [
+      {
+        "material": "rstr0186_00_fi_headMat",
+        "animation": "rstr0186_00_eye01",
+        "frames": 10,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0012112,
+          0.495664,
+          0.00860512,
+          0.998363
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0186_00_fi_head",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "b8bbbc025b64309769a97c516aff28cc068f31a6ad8b8939bf4a0ddbe59711d7",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.5,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0303",
+    "glb_sha256": "9a3bc037d50f46eaf53e65d6266a337c88ee2470b5a8c99d9598319eaeebbe26",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0303.glb"
+  },
+  {
+    "model": "0305",
+    "mm_sha256": "0479b0f08bea39033327e049a337bbb47f0e89656a379b72536d9d13a01a2fa3",
+    "faces": [],
+    "id": "character/mm_0305",
+    "glb_sha256": "c73d76cadcaf567c617234765e9c8ee761b0bc02a40fc9d0e5be4f9f80284ac8",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0305.glb"
+  },
+  {
+    "model": "0306",
+    "mm_sha256": "9a4ba7f453a6f3908f008aac992d664cc69b285e7b1f4599d17a9f040db3d242",
+    "faces": [],
+    "id": "character/mm_0306",
+    "glb_sha256": "0a663933716c939a0f7605dddfe55092840350bbca61e535e47999327b90c9ef",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0306.glb"
+  },
+  {
+    "model": "0307",
+    "mm_sha256": "8490cecc76dda8cdfc3501fd3996410e81662b4082a4320f1c45ec1cee69a1fe",
+    "faces": [],
+    "id": "character/mm_0307",
+    "glb_sha256": "afbd2e91a8019a14c0cfd8b9b4906bac58e2dca7b6ccb9f8d0cdab1566e722db",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0307.glb"
+  },
+  {
+    "model": "0312",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0312",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0312/mm_0312.glb"
+  },
+  {
+    "model": "0314",
+    "mm_sha256": "eb16c24b213d15cd9a940e23e662420f778f0c3cf12f457a477cea1335731309",
+    "faces": [
+      {
+        "material": "rstr0001_00_face",
+        "animation": "rstr0048_00_eye01",
+        "frames": 70,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.995261,
+          -0.755711,
+          0.507449,
+          0.995244
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0001_00_fi_face",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "e2e1f79a301abaf6f5a1a60fc9364d8d3f24a717aad0b6c641e28cbf62694ffa",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          },
+          {
+            "id": 3,
+            "frame": 30,
+            "translation": [
+              -0.75,
+              0
+            ]
+          },
+          {
+            "id": 4,
+            "frame": 40,
+            "translation": [
+              0,
+              -0.5
+            ]
+          },
+          {
+            "id": 5,
+            "frame": 50,
+            "translation": [
+              -0.25,
+              -0.5
+            ]
+          },
+          {
+            "id": 6,
+            "frame": 60,
+            "translation": [
+              -0.5,
+              -0.5
+            ]
+          },
+          {
+            "id": 7,
+            "frame": 70,
+            "translation": [
+              -0.75,
+              -0.5
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0314",
+    "glb_sha256": "29b54e385d73286623feaf2b9dcecfab3c42f3daa289643a087a138ddc52ab64",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0314.glb"
+  },
+  {
+    "model": "0315",
+    "mm_sha256": "45650bcb286a130479920c4d0a666929ee46702bff42bc96b6240a3bd3482638",
+    "faces": [
+      {
+        "material": "rstr0002_00_fi_face",
+        "animation": "rstr0049_00_eye01",
+        "frames": 70,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00248605,
+          0.242036,
+          0.507449,
+          0.995244
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0002_00_fi_face",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "b94369da1fef3e65547a8ac60697ceb074c1b6057a5bf9b114b65fbddaf7bc5e",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          },
+          {
+            "id": 3,
+            "frame": 30,
+            "translation": [
+              -0.75,
+              0
+            ]
+          },
+          {
+            "id": 4,
+            "frame": 40,
+            "translation": [
+              0,
+              -0.5
+            ]
+          },
+          {
+            "id": 5,
+            "frame": 50,
+            "translation": [
+              -0.25,
+              -0.5
+            ]
+          },
+          {
+            "id": 6,
+            "frame": 60,
+            "translation": [
+              -0.5,
+              -0.5
+            ]
+          },
+          {
+            "id": 7,
+            "frame": 70,
+            "translation": [
+              -0.75,
+              -0.5
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0315",
+    "glb_sha256": "b1bf2efcd952dfb8ce351fd1a814dd5b50d4f8b15f8a1fa7e51b0e3330b5f44f",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0315.glb"
+  },
+  {
+    "model": "0318",
+    "mm_sha256": "c9ee149c25c8723d7da6107485a9a90419de1343013e1a2b4cb060ff29706003",
+    "faces": [
+      {
+        "material": "rstr0009_00_fi_face",
+        "animation": "rstr0052_00_eye01",
+        "frames": 30,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00126423,
+          0.248821,
+          0.00801923,
+          0.986359
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0009_00_fi_face",
+        "width": 256,
+        "height": 64,
+        "rgba_sha256": "d5720be51ad445155c5015d06a01bd7a743c17add4d0a901c7e5a62db63093a2",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          },
+          {
+            "id": 3,
+            "frame": 30,
+            "translation": [
+              -0.75,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0318",
+    "glb_sha256": "8460c67d980f08a9526456e8b1d3f2c3f2d9a9ebafc5a7f51030cc3d45cd34de",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0318.glb"
+  },
+  {
+    "model": "0319",
+    "mm_sha256": "3739bcf71334b241c6688cbb05674c97e1c6bd0d1a2d802ad3e5a27aa21d0d6c",
+    "faces": [
+      {
+        "material": "rstr0053_00_fi_faceMat",
+        "animation": "rstr0053_00_eye01",
+        "frames": 30,
+        "target": "MaterialTexCoord1Trans",
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.997978,
+          -0.751737,
+          0.00495929,
+          0.992623
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0053_00_fi_face",
+        "width": 256,
+        "height": 64,
+        "rgba_sha256": "0e99fbfaf9bcfff191d021b66b78e32dfe4122d77c50c4b09162721c35056018",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          },
+          {
+            "id": 3,
+            "frame": 30,
+            "translation": [
+              -0.75,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "id": "character/mm_0319",
+    "glb_sha256": "9b8a9b6c38e1b84add63082e996063a0e6c2bdc8ae725b34b0fc10ea8ceef9de",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0319.glb"
+  },
+  {
+    "model": "0322",
+    "mm_sha256": "456c5822ab0fe98a053788caa8c86d5bbc2c5850b6d6b5ba359be2a26952e1f1",
+    "faces": [],
+    "id": "character/mm_0322",
+    "glb_sha256": "3485956cba79545ed2917701ba3a0b26b3c02a5c4de90fdcf48e3e080f4f3515",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0322.glb"
+  },
+  {
+    "model": "0344",
+    "mm_sha256": "178f70ab1ad753c1d27c3882430beadad3e1d3c9dff395ce441ef4660d369137",
+    "faces": [],
+    "id": "character/mm_0344",
+    "glb_sha256": "e522660f3103a223287d06cf268627cc380a7b0df7b63faf10472371c23af0d3",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0344.glb"
+  },
+  {
+    "model": "0345",
+    "mm_sha256": "6a9637ec95e5d343144cbd51a1d6117a3e0cc9b299ad698ed2dc6c7562af8114",
+    "faces": [],
+    "id": "character/mm_0345",
+    "glb_sha256": "1c66a3dd3bbe710f5b4fad0dcd5c9c0d77ebb1c853bb0f2c40ee0858abc6c6b4",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0345.glb"
+  },
+  {
+    "model": "0346",
+    "mm_sha256": "21c868deb37ec75852d98510229f8681255b8e09bdcf0983d84e6db91206dfa5",
+    "faces": [],
+    "id": "character/mm_0346",
+    "glb_sha256": "fc8092cfcfc7684f08d90b77d16760c4750547ab4df20ce913bddabe40bd3f5a",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0346.glb"
+  },
+  {
+    "model": "0347",
+    "mm_sha256": "8d606f03a400284ed749983e8c10aa3c0be784ac846893a0f2b70bd9ad39dd04",
+    "faces": [],
+    "id": "character/mm_0347",
+    "glb_sha256": "88335e2e94a6e980ff3d8001b050b908c3e1ee5e122357897c361b6aa4ca68ed",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0347.glb"
+  }
+]

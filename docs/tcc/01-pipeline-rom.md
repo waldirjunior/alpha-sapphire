@@ -39,6 +39,11 @@
    - `promote_native_assets.py` publica cópias locais por SHA-256 sem sobrescrever
      os modelos anteriores; o catálogo versiona apenas URLs, fontes e metadados.
      A auditoria P-019 distingue canal inválido de escolha de expressão do atlas.
+     A-042/A-043 ampliam a comparação ao BCH original: V invertido com RGBA
+     inalterado explicava o rosto invertido. A promoção restaura a orientação
+     somente em cinco casos com proveniência e clona UV compartilhado; não
+     muda skin/clipes nem inventa pés. [CRO/paleta e A/B](../features/pipeline-rom/face-expressions.md)
+     separam essa correção-base de expressão dinâmica ainda não implementada.
      [PRD-007](../features/engine-3d/prds/PRD-007-animacoes-nativas-no-runtime.md)
      registra comandos, falhas e limites; GLBs e screenshots continuam ignorados.
    - Áudio: `vgmstream-cli` decodifica `RomFS/sound/*.bcstm` para `.wav` e `ffmpeg` (`libmp3lame`) gera `.mp3` em `rom/extracted/audio/mp3/`.

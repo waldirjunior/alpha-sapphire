@@ -36,3 +36,11 @@ consumidos sem WebGL nos testes e preservam uma fronteira reutilizável pelo
 servidor. A apresentação local é sequencial; ainda não representa marcadores de
 impacto, sincronização de expressões BCH ou paridade temporal com o emulador.
 Os testes de mixer e catálogo não substituem a validação visual na main.
+
+A-042/A-043 acrescentam a correção offline P-019, não um efeito do core ou
+uma heurística global de material: a promoção restaura V da face somente com
+proveniência BCH/SHA e transforma accessors clonados, preservando skin,
+clipes e materiais. O renderer continua consumindo glTF comum; não transporta
+ainda o estado dinâmico de expressão/visibilidade. A/B com assets publicados
+valida a orientação-base de três personagens, não a paleta inteira nem
+paridade com o emulador. Ver [evidência](../../pipeline-rom/face-expressions.md).
