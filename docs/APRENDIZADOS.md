@@ -352,3 +352,19 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro reproduzido:** zone_audio.hasMp3 refere-se à extração local, não ao public. As BGMs r_b/d_01/c_02 existiam em rom/extracted/audio/mp3, mas faltavam no staging; o fallback SPA devolvia HTML200, sem HTTP404 e sem consoleErrors, enquanto pageErrors acumulava falhas do decoder. Auditar apenas status HTTP ou console não detectaria o defeito.
 - **Regra:** Ao expandir o slice, copiar também as BGMs nativas das raízes usando --audio-dir. Não inventar música, silenciar rejeições ou falsificar hasMp3. Conferir pageerror e decodificação além da presença/HTTP; um asset200 ainda pode ser HTML. Melhorias genéricas de fallback/erros do player fora das zonas staged permanecem no escopo P-008.
 - **Evidência:** Fixture sintética falhou antes de stage_audio e agora garante seleção por zona, sem copiar faixa de raiz não solicitada. Os três MP3s reais foram staged com write_new idempotente; repetição completa dos306 passos encerrou com consoleErrors=[], pageErrors=[], missing=[], sem interceptar áudio. 215 Vitest/139 Python sem skips/build passaram; oito capturas locais e encontros das cinco zonas foram conferidos, com limitações visuais e de história preservadas.
+
+## A-047 Uma rota bloqueada por atores não é uma borda ausente
+
+- **Data:** 2026-11-18.
+- **Contexto:** PRD-009, Rustboro16→Route11643→Rusturf75→Verdanturf11. O contato16↔43 já vem da MM4; os portais43↔75↔11 são ZO reais.
+- **Erro reproduzido:** BFS com movePlayer e dados intactos entra em75(14,20), mas não alcança11. Os NPCs12/13/14, modelo8204/spawnFlag676, ocupam(50,10)/(51,11)/(50,12). Remover colisões, ocultar qualquer spawnFlag não zero ou inventar ponte contornaria o bloqueio de história, não corrigiria o mapa.
+- **Regra:** Isolar os bloqueadores e conferir o script antes de abrir caminho. O programa75/map função6116 contém FlagSet676@6180 e MdlDel12/13/14@6196/6212/6228. A flag representa ocultação neste grupo: um NPC não zero continua visível enquanto a flag não estiver setada; flag0 nunca é gate. A-042 permanece válida: a mera existência de spawnFlag não autoriza esconder o ator.
+- **Evidência:** O teste base permanece bloqueado. MdlDel falhava antes em await-input; agora o bloco real6176..6239, limitado por halt sintético, seta676 e remove os três atores sem mutar a origem. Fixture pós-evento passa pelo mecanismo real de restauração/projeção e atravessa16→43→75→11. Não prova obtenção de Rock Smash, missão Peeko ou script inteiro; Playwright continua aceite separado.
+
+## A-048 Flags e remoções precisam sobreviver ao mundo transitório da VM
+
+- **Data:** 2026-11-18.
+- **Contexto:** ADR-006, host de eventos e save v1. O save já serializava storyFlags, mas flags da VM permaneciam só no AmxWorld privado, e MdlDel ainda era opaco.
+- **Erro:** Apagar apenas world.actors deixa o fallback da projeção reapresentar o NPC. Recriar todos os atores na entrada também ressuscita removidos. Persistir flags somente quando player/atores são projetados perde FlagSet posterior ao warp se o save ainda contém false e a entrada restaura esse valor antigo.
+- **Regra:** Remover realmente da VM e manter tombstone por zona/ID; não confundir com MdlSetVisible. Serializar flags true/false e tombstones em chaves amx distintas, restaurar antes do init e persistir mesmo quando a projeção gráfica é suprimida após warp. Não projetar atores antigos no destino. Não inferir MdlAdd ou ressurreição a partir de FlagReset.
+- **Evidência:** Testes cobrem bloco real75, imutabilidade, hide-flag0/676 e reset sem sobrepor visibilidade explícita, save/reload e isolamento do ID7 entre zonas6/7; FlagSet123 após warp substitui false persistido. 226 Vitest e build passaram; Python145 sem skips com GLB_MAPS_DIR do principal. JSONs de mapas/encontros e grafo não foram alterados; apresentação/quest/save de vars/party/bag continuam fora desta correção.

@@ -5,6 +5,10 @@ import type { ZoneEventPrograms } from '../data/zone_scripts/loader';
 import { ZoneEvents, type ZoneEventAssets } from './zoneEvents';
 import { eventWarpState } from './eventWarp';
 import { projectEventPlayer } from './eventHost';
+import { persistAmxProgress } from '../core/amxProgress';
+import { deserializeSave, serializeSave } from '../core/save';
+import { createPokemonInstance } from '../core/battle';
+import { SPECIES } from '../data/pokemon/species';
 
 function image(calls: readonly [string, number[]][], wait = false) {
   const instructions: AmxInstruction[] = [{ offset: 0, size: 4, mnemonic: 'proc', operands: [] }];
@@ -50,6 +54,36 @@ function fixture(calls: readonly [string, number[]][]) {
 }
 
 describe('ciclo de vida do host de zonas', () => {
+  it('persists MdlDel and FlagSet through save/reload without deleting the same actor ID in another zone', async () => {
+    const f = fixture([['FlagSet', [676]], ['MdlDel', [7]]]);
+    let map = f.ports.map(), state = f.ports.state();
+    const ports = { ...f.ports, state: () => state, map: () => map,
+      project: (next: MapDefinition, world: AmxWorld) => {
+        map = next; state = persistAmxProgress(state, world); f.worlds.push(world);
+      } };
+    const load = async (zone: number): Promise<ZoneEventAssets> => zone === 6 ? f.assets : { programs: null, lines: [] };
+    const events = new ZoneEvents(ports, load);
+    await events.enter();
+    await events.interact(f.npc());
+    expect(map.npcs?.[0].visible).toBe(false);
+    expect(state.storyFlags).toMatchObject({ 'amx:flag:676': true, 'amx:deleted:6:7': true });
+    expect(f.worlds.at(-1)?.actors[7]).toBeUndefined();
+    const loaded = deserializeSave(serializeSave({ version: 1, state, party: [createPokemonInstance(SPECIES.torchic, 5)], caughtCount: 0 }));
+    if (!loaded) throw new Error('Expected valid saved event state');
+    state = loaded.state;
+    f.programs.bundle = { ...f.programs.bundle, 'zone:0006:entities': image([]) };
+    map = f.ports.map();
+    const reloaded = new ZoneEvents(ports, load);
+    await reloaded.enter();
+    expect(map.npcs?.[0].visible).toBe(false);
+    expect(f.worlds.at(-1)?.actors[7]).toBeUndefined();
+    map = { ...f.ports.map(), id: 'zone_0007', zoneId: 7 };
+    state = { ...state, player: { ...state.player, mapId: map.id } };
+    await reloaded.enter('warp');
+    expect(map.npcs?.[0].visible).toBe(true);
+    expect(f.worlds.at(-1)?.actors[7]).toBeDefined();
+    expect(f.ports.report).not.toHaveBeenCalled();
+  });
   it('preserva chegada contínua 7→24 e libera input enquanto init permanece opaco', async () => {
     const f = fixture([]);
     f.programs.bundle = { ...f.programs.bundle, 'zone:0006:entities': image([
@@ -138,10 +172,10 @@ describe('ciclo de vida do host de zonas', () => {
   it('conclui VM após warp sem projetar atores antigos e inicializa destino com flags preservadas', async () => {
     const f = fixture([['_MapChangeCore', [7, 4, 0, 6, 1, 0, 0, 0, 0]], ['FlagSet', [123]]]);
     let map = f.ports.map();
-    let state = f.ports.state();
+    let state: GameState = { ...f.ports.state(), storyFlags: { 'amx:flag:123': false } };
     const load = vi.fn(async (zoneId: number) => zoneId === 6 ? f.assets : { programs: null, lines: [] });
     const events = new ZoneEvents({ ...f.ports, state: () => state, map: () => map,
-      project: (next, world) => { map = next; f.ports.project(next, world); },
+      project: (next, world) => { map = next; state = persistAmxProgress(state, world); f.ports.project(next, world); },
       warp: async (target, active) => {
         expect(active()).toBe(true);
         map = { ...map, id: 'zone_0007', zoneId: 7, npcs: [] };

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { createAmxState, resumeAmx, runAmx } from './amxRunner';
 import { createAmxWorld } from './amxMemory';
 import type { AmxBundle, AmxInstruction, AmxWorld } from './amxTypes';
+import rusturf from '../data/zone_scripts/0075.json';
 
 function syntheticBundle(calls: readonly { name: string; args: number[] }[], suffix: AmxInstruction[] = []): AmxBundle {
   const instructions: AmxInstruction[] = [{ offset: 0, size: 4, mnemonic: 'proc', operands: [] }];
@@ -44,6 +45,33 @@ describe('nativas de estado Pawn', () => {
     expect(world.party).toEqual([]);
     expect(world.pokemon[100].hp).toBe(1);
     expect(result.machines[0].pri).toBe(0);
+  });
+
+  it('deletes actors with a zone-scoped persistent tombstone without mutating its input', () => {
+    const world = createAmxWorld(0, 75);
+    world.actors[12] = { x: 50, y: 0, z: 10, direction: 0, visible: true, moveCode: 0 };
+    const result = execute(syntheticBundle([{ name: 'MdlDel', args: [12] }]), world);
+    expect(result.status).toBe('completed');
+    expect(result.world.actors[12]).toBeUndefined();
+    expect(result.world.deletedActors['75:12']).toBe(true);
+    expect(world.actors[12]).toBeDefined();
+    expect(world.deletedActors).toEqual({});
+  });
+
+  it('executes the actual Rusturf flag/delete instruction block at 6176..6239', () => {
+    const world = createAmxWorld(0, 75);
+    for (const id of [12, 13, 14]) world.actors[id] = { x: 50, y: 0, z: 10, direction: 0, visible: true, moveCode: 0 };
+    const instructions: AmxInstruction[] = rusturf.programs.map.instructions.filter(row => row.offset >= 6176 && row.offset < 6240);
+    const bundle: AmxBundle = { rusturf: { data: [0], stackTop: 4096,
+      program: { entryPoint: 6176, dispatch: null, instructions: [...instructions,
+        { offset: 6240, size: 8, mnemonic: 'halt', operands: [0] }] } } };
+    const result = runAmx(bundle, createAmxState(bundle, 'rusturf', 0, world));
+    expect(result.status).toBe('completed');
+    expect(result.world.flags[676]).toBe(true);
+    expect(result.world.actors).toEqual({});
+    expect(result.world.deletedActors).toEqual({ '75:12': true, '75:13': true, '75:14': true });
+    expect(result.world.effects).toEqual([]);
+    expect(world.flags).toEqual({});
   });
 
   it('checa capacidade sem adicionar e recusa overflow', () => {

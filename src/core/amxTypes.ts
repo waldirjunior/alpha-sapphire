@@ -25,6 +25,7 @@ export interface AmxEffect { channel: AmxEffectChannel; name: string; args: read
 export type AmxAwait = { kind: 'native'; effect: AmxEffect } | { kind: 'ticks'; remaining: number };
 export interface AmxWorld {
   flags: Record<number, boolean>; vars: Record<number, number>; actors: Record<number, AmxActor>;
+  deletedActors: Record<string, boolean>;
   bag: Record<number, number>; party: AmxPokemon[]; box: AmxPokemon[]; pokemon: Record<number, AmxPokemon>;
   dex: Record<number, boolean>; sex: 0 | 1; zoneId: number; warpId: number | null;
   dialogue: readonly number[] | null; effects: AmxEffect[]; suspendTicks: number;

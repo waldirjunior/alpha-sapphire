@@ -1,6 +1,13 @@
 # Status
 
-Atualizado em 2026-11-17 (host verificado no worktree; registros de VPS abaixo são históricos).
+Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
+
+## Extensão Rustboro–Verdanturf (2026-11-18, zone-maps)
+
+- PRD-009/A-047/A-048: IDs16→43→75→11. MM4 já deriva16↔43; portais43(62,10)→75(14,20) e75(59,27)→11(16,7) preservados. Nenhuma ponte nova, colisão ou tabela de encontros alterada.
+- Teste base reproduziu bloqueio no túnel por NPCs12/13/14, spawnFlag676. Implementados MdlDel real na VM, tombstones por zona e persistência de flags em storyFlags; hide-flag é aplicada só quando setada, nunca por existir. O bloco real6176..6239 de75/map confirma FlagSet676 e remoções; fixture explícita pós-evento libera a navegação sem afirmar execução de Peeko/RockSmash.
+- Stage `--zones 16 43 75 11 --include-neighbors --audio-dir`:26 zonas/41 GRs/68 atores existentes, sete IDs especiais em fallback; BGMs nativas c_02/d_01/r_b/t_04. Dry-run UV de GRs/atores públicos não propôs remaps, inclusive UV0 diffuse PICA; nenhum binário versionado.
+- **226 Vitest/41 arquivos, build e145 testes Python sem skips passaram**; Python exige GLB_MAPS_DIR do public principal para o teste de assets, senão há um skip explícito. Aviso de chunk >500kB herdado. Playwright bloqueio/abertura e caminhada até11 ainda pendente nesta revisão.
 
 ## Extensão Petalburg–Rustboro (2026-11-17, zone-maps)
 

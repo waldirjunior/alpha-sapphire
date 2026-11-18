@@ -44,13 +44,14 @@ export function createAmxMachine(id: string, image: AmxImage, scriptId: number):
   return machine;
 }
 export function createAmxWorld(sex: 0 | 1 = 0, zoneId = 0): AmxWorld {
-  return { flags: {}, vars: {}, actors: {}, bag: {}, party: [], box: [], pokemon: {}, dex: {}, sex, zoneId,
+  return { flags: {}, vars: {}, actors: {}, deletedActors: {}, bag: {}, party: [], box: [], pokemon: {}, dex: {}, sex, zoneId,
     warpId: null, dialogue: null, effects: [], suspendTicks: 0 };
 }
 export function cloneAmxState(state: AmxState): AmxState {
   return { ...state, machines: state.machines.map(machine => ({ ...machine, memory: { ...machine.memory },
     childParams: { ...machine.childParams }, parentParams: { ...machine.parentParams } })),
-    world: { ...state.world, flags: { ...state.world.flags }, vars: { ...state.world.vars }, bag: { ...state.world.bag },
+    world: { ...state.world, flags: { ...state.world.flags }, deletedActors: { ...state.world.deletedActors },
+      vars: { ...state.world.vars }, bag: { ...state.world.bag },
       actors: Object.fromEntries(Object.entries(state.world.actors).map(([id, actor]) => [id, { ...actor }])),
       party: state.world.party.map(poke => ({ ...poke })), box: state.world.box.map(poke => ({ ...poke })),
       pokemon: Object.fromEntries(Object.entries(state.world.pokemon).map(([id, poke]) => [id, { ...poke }])),

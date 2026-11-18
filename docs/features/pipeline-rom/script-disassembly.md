@@ -102,6 +102,13 @@ Aridades são observadas nos `SYSREQ.N`; tipos/efeitos abaixo são **inferidos**
 nomes, empilhamento e fluxo, não validados contra o emulador. O mundo inicial
 é fornecido pelo chamador, incluindo zona, atores e metadados dos Pokémon.
 
+Desde ADR-006/A-047/A-048, o host persiste flags como `amx:flag:id` e remoções
+como `amx:deleted:zona:id` em storyFlags, restaurando-as antes do init.
+SpawnFlag não zero é hide-flag: só oculta quando a flag correspondente está
+setada, sem sobrepor visibilidade falsa explícita nem afetar spawnFlag0.
+O bloco real de 75/map em6176..6239 seta676 e deleta12/13/14; o teste limita
+esse trecho com halt sintético, sem alegar execução da missão inteira.
+
 | Nativa(s) | Células em ordem ABI | Efeito/retorno no modelo |
 | --- | --- | --- |
 | `CommandNOP` | nenhuma | Retorna 0 sem efeito, explicitamente |
@@ -114,6 +121,7 @@ nomes, empilhamento e fluxo, não validados contra o emulador. O mundo inicial
 | `PlayerGetReturnDir` | nenhuma | Direção do ator 255 nesta projeção |
 | `MdlGetDirDisp`, `MdlSetDirDisp` | actor / actor,direction | Consulta/atualiza direção bruta, sem conversão para Three.js |
 | `MdlSetVisible` | actor,visible | Atualiza visibilidade booleana |
+| `MdlDel` | actor | Remove ator da VM e registra tombstone por zona, persistido via storyFlags; host retorna0 como comando sem resultado observado, sem completion opaca (ADR-006/A-047) |
 | `MdlSetGPos` | **x,y,z,actor** | Atualiza posição bruta; não usa a ordem do runner normalizado |
 | `MdlGetGPosX`, `MdlGetGPosZ` | actor | Retorna posição como célula float32; unidades são inferidas, sem escala gráfica |
 | `MdlGetMoveCode`, `MdlChangeMoveCode` | actor / actor,code | Consulta/atualiza código de movimento, não interpreta ACMD |
@@ -152,7 +160,7 @@ exigem retorno do host: por exemplo, não se presume que uma câmera terminou.
 | `fade` | `FadeIsEnd`, `FadeRequestOut`, `_FadeRequestIn`: fade e consulta de conclusão |
 | `audio` | `SEPlay`, `SEIsPlaying`, `MEPlay`, `MEIsFinished`, `MEReturnBGM`, `BGMChangeNowMap`, `VoicePlay`, `VoiceIsEnd`: áudio e consultas de reprodução |
 | `field` | `_FieldMapBlockIsLoading`, `_MapChangeCore`, `_FieldClose`, `BGParamPosChange`, `PlaceNameSetNotCloseFlag`, `ContactEncountStart`, `ContactEncountIsActive`, `ContactEncountEnd`: carregamento/transição/encontro do campo |
-| `actor` | `_TalkMdlStartInit`, `_TalkMdlEndInit`, `TalkMdlClearEye`, `TalkMdlClearEyeToEye`, `TalkMdlSetEye`, `TalkMdlSetEyeToEye`, `TalkMdlSetTalkMotion`, `MdlSetWaitAnimeReq`, `MdlAdd`, `MdlDel`, `_MdlProperties`, `MdlParamPosChange`, `BuildMdlEventAnimeInvStart`, `BuildMdlEventAnimeIsEnd`, `BuildMdlEventAnimeSetEnd`, `BuildMdlEventAnimeStart`, `BuildMdlEventAnimeStop`, `MdlInterestViewClear`, `MdlInterestViewSet`, `MdlInterestViewSetMode`, `ChangeFace`, `GetDirAddValueGridX`, `GetDirAddValueGridZ`, `CalcVecToDir`: ações/consultas de modelos, olhar, animação e direção |
+| `actor` | `_TalkMdlStartInit`, `_TalkMdlEndInit`, `TalkMdlClearEye`, `TalkMdlClearEyeToEye`, `TalkMdlSetEye`, `TalkMdlSetEyeToEye`, `TalkMdlSetTalkMotion`, `MdlSetWaitAnimeReq`, `MdlAdd`, `_MdlProperties`, `MdlParamPosChange`, `BuildMdlEventAnimeInvStart`, `BuildMdlEventAnimeIsEnd`, `BuildMdlEventAnimeSetEnd`, `BuildMdlEventAnimeStart`, `BuildMdlEventAnimeStop`, `MdlInterestViewClear`, `MdlInterestViewSet`, `MdlInterestViewSetMode`, `ChangeFace`, `GetDirAddValueGridX`, `GetDirAddValueGridZ`, `CalcVecToDir`: ações/consultas de modelos, olhar, animação e direção |
 | `words` | `_WordSetRegister`, `WordSetItemName`, `WordSetItemPocketName`, `WordSetItemWazaName`, `WordSetTemotiMonsNickName`: registro/formatação de palavras |
 | `pokemon` | `BoxIsFull`, `PokePartySetDefaultName`, `PokeMemorySet`, `_CallWildBattleWithoutField`, `RecordAdd`: consultas/metadados/batalha delegados, sem simular resultado |
 | `ui` | `SetKeyWaitMark`, `VanishKeyWaitMark`, `IsKeyTrigger`, `PlayerSetFieldMenu`, `MsgIsLoaded`, `MsgLoad`, `MsgRelease`, `MsgSwap`, `PocketGetID`, `ItemIsMegaStone`, `FieldMenuPopPage`, `FieldMenuPushPage`, `SpMotionDelete`, `SpMotionLoadIsEnd`, `SpMotionPlay`, `SpMotionReqLoad`, `SpMotionSetup`: UI, banco de mensagens e recursos da apresentação |

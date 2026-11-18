@@ -1,4 +1,5 @@
 import { createAmxWorld } from '../core/amxMemory';
+import { actorDeletionKey, restoreAmxProgress } from '../core/amxProgress';
 import { createAmxState, resumeAmx, runAmx } from '../core/amxRunner';
 import type { AmxInput, AmxState, AmxWorld } from '../core/amxTypes';
 import type { GameState, MapDefinition, MapNpc } from '../core/types';
@@ -94,11 +95,15 @@ export class ZoneEvents {
       if (generation !== this.generation) return;
       this.loaded = assets.programs;
       this.messages = new EventMessageBanks(assets.lines);
-      this.world = { ...this.world, zoneId: map.zoneId, actors: {}, sex: this.ports.state().player.gender === 'female' ? 1 : 0 };
-      for (const npc of map.npcs) this.world.actors[npcActorId(npc)] = {
-        x: npc.pos.x + (map.romOrigin?.x ?? 0), y: 0, z: npc.pos.z + (map.romOrigin?.z ?? 0),
-        direction: directionCell(npc.facing), visible: true, moveCode: 0,
-      };
+      this.world = restoreAmxProgress({ ...this.world, zoneId: map.zoneId, actors: {},
+        sex: this.ports.state().player.gender === 'female' ? 1 : 0 }, this.ports.state().storyFlags);
+      for (const npc of map.npcs) {
+        if (this.world.deletedActors[actorDeletionKey(map.zoneId, npcActorId(npc))]) continue;
+        this.world.actors[npcActorId(npc)] = {
+          x: npc.pos.x + (map.romOrigin?.x ?? 0), y: 0, z: npc.pos.z + (map.romOrigin?.z ?? 0),
+          direction: directionCell(npc.facing), visible: npc.visible !== false, moveCode: 0,
+        };
+      }
       this.refreshPlayer();
       this.ports.project(projectEventActors(map, this.world), this.world, this.projectPlayer);
       const id = this.loaded && zoneInitProgram(this.loaded);
@@ -159,7 +164,8 @@ export class ZoneEvents {
         if (requests >= 1000) throw new Error('Evento excede 1000 solicitações do host');
         this.current = runAmx(this.loaded.bundle, this.current);
         this.world = this.current.world;
-        if (!this.pendingEntry) this.ports.project(projectEventActors(this.ports.map(), this.world), this.world, this.projectPlayer);
+        this.ports.project(this.pendingEntry ? this.ports.map() : projectEventActors(this.ports.map(), this.world),
+          this.world, !this.pendingEntry && this.projectPlayer);
         if (!this.world.dialogue) this.ports.dialogue(null);
         if (this.current.status === 'completed') { this.current = null; break; }
         const response = await this.serviceRequest(this.current);

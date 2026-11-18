@@ -10,3 +10,4 @@
 | [PRD-006](PRD-006-corredor-continuo-hoenn.md) | Corredor contínuo Littleroot–Petalburg | Validado; 500 passos Playwright na main | 2026-11-17 |
 | [PRD-007](PRD-007-animacoes-nativas-no-runtime.md) | Animações GF1 no runtime e auditoria do atlas | Implementado; Playwright main validado, paridade pendente | 2026-11-17 |
 | [PRD-008](PRD-008-corredor-petalburg-rustboro.md) | Corredor Petalburg–Route104–Woods–Rustboro | Validado;306 passos Playwright main sem erros | 2026-11-17 |
+| [PRD-009](PRD-009-corredor-rustboro-verdanturf.md) | Corredor Rustboro–Route116–Rusturf–Verdanturf | Stage/testes concluídos; Playwright pendente | 2026-11-18 |

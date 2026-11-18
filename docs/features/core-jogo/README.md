@@ -10,6 +10,7 @@ Lógica pura e determinística do jogo em `src/core/` (`types.ts`, `gameState.ts
 - [ADR-003](adrs/ADR-003-vm-pawn-e-efeitos-do-host.md) e [PRD-003](prds/PRD-003-execucao-amx-da-abertura.md) — VM Pawn real com estado puro e pedidos tipados ao host; não implica paridade gráfica/ABI ACMD.
 - [ADR-004](adrs/ADR-004-host-conservador-de-eventos.md) — host gráfico conservador inicial; não é paridade da abertura.
 - [ADR-005](adrs/ADR-005-abi-cro-e-init-nao-bloqueante.md) e [PRD-004](prds/PRD-004-abi-e-recursos-locais-de-eventos.md) — ABI evidenciada no CRO, mensagens/warp, recursos privados locais e init opaco sem bloquear navegação nem sobrescrever chegada. Inclui comandos de geração e limites do smoke sintético de warp.
+- [ADR-006](adrs/ADR-006-hide-flags-e-remocao-persistente.md) — MdlDel real na VM, tombstones por zona no save e hide-flags ligadas a storyFlags; não equivale a executar a missão Peeko.
 - Referência TCC: [docs/tcc/00-arquitetura.md](../../tcc/00-arquitetura.md).
 
 ## Estado atual
