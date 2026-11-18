@@ -18,7 +18,7 @@ Oldale (1,z) conecta a Route102 (78,z), z=20..22. Assim o passo mundial mede um.
 
 O core mantém posições locais e verifica colisão no destino antes da mudança;
 warps nativos têm prioridade, exceto quando uma ponte inferred=true substitui
-explicitamente a mesma conexão/destino (A-039). O repositório carrega um salto de vizinhos por
+explicitamente a mesma conexão/destino (A-040). O repositório carrega um salto de vizinhos por
 vez e preserva o estado em falha. O renderer usa origens mundiais estáveis,
 cache de modelos/chunks e acrescenta vizinhos sem apagar os objetos existentes.
 A mudança de componente (ex.: interior) mantém o caminho de warp/teleporte;

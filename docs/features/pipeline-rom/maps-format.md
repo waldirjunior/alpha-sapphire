@@ -211,7 +211,7 @@ os atributos para `TEXCOORD_0..k` mas mantém o número esparso em
 `texture.texCoord`, e o three.js amostra `uvN` inexistente (cor plana) ou nem
 compila o shader (`uvN` undeclared). `convert_gr_to_glb` roda
 `scripts/glb_uv_fix.py` ao final. A política inicial de escolher o último canal
-válido foi revisada pelo A/B visual descrito abaixo (A-040);
+válido foi revisada pelo A/B visual descrito abaixo (A-041);
 `validate_glb.py` audita os índices de qualquer `.glb`, mas não prova UV correto.
 
 ## Corredor contínuo e revisão visual (2026-11-17)
@@ -230,7 +230,7 @@ MM1 contém 6/23/7/25; MM2 contém 13/24. A única ponte entre matrizes é
 7↔24, **inferred=true**, aprovada como migração, não conexão nativa extraída.
 As lanes20–22 ligam Oldale x=1 a Route102 x=78, preservando o padding bloqueado.
 A ponte substitui apenas o warp ZO para o mesmo destino; caso contrário ele
-puxava o jogador para a âncora79,20/right. Portas/demais warps não mudam (A-039).
+puxava o jogador para a âncora79,20/right. Portas/demais warps não mudam (A-040).
 O core mantém posições locais; o renderer usa um referencial mundial estável,
 acrescenta chunks/atores vizinhos e não limpa a cena nem aplica fade em bordas.
 O repositório carrega um salto de vizinhos, não o grafo inteiro.
@@ -245,4 +245,7 @@ inclusive para migrar arquivos antes remapeados para1. UVs válidos de materiais
 genéricos e demais texturas do material permanecem intactos. A/B temporário no
 mesmo servidor/GLB (`/tmp/uv-channel-original.png`, `/tmp/uv-channel-zero.png`)
 restaurou grama, placas e telhados; índices válidos sozinhos não validavam imagem.
-A caminhada integral Playwright na main ainda aguarda integração desta correção.
+A caminhada integral foi validada na main d85d534: 500 passos por teclado com
+ida/retorno, Route103, warp real6→223→6 e diálogo ROM. Zero consoleErrors,
+pageErrors e missing; capturas por zona e A/B inspecionados (STATUS.md).
+Persistem avisos explícitos AMX/SE e limites PICA/combiners; não é paridade.

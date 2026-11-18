@@ -1,6 +1,6 @@
 # PRD-006 — Corredor contínuo Littleroot–Petalburg
 
-- **Estado:** Implementação verificada em testes; Playwright na main pendente
+- **Estado:** Aceite verificado em testes e Playwright na main d85d534
 - **Fase:** 2 / P-017
 - **Data:** 2026-11-17
 - **Decisão:** [ADR-004](../adrs/ADR-004-bordas-por-zone-grid.md)
@@ -13,7 +13,17 @@
 - [x] Compor/cachear chunks vizinhos, manter chunks/atores existentes nas bordas e ignorar respostas obsoletas.
 - [x] Carregar encontros diretamente do JSON `zones/NNN_*.json` da zona exata.
 - [x] Stage do corredor e destinos diretos com correção/validação UV, sem conversores.
-- [ ] Caminhada Playwright no checkout principal, screenshot por zona e auditoria de console/texturas/telas pretas.
+- [x] Caminhada Playwright no checkout principal, screenshot por zona e auditoria de console/texturas/telas pretas.
+
+## Evidência de aceite
+
+Duas rodadas de 500 passos por teclado, última na main `d85d534`, cobriram
+ida/retorno, Route103, warp real 6→223→6 e fala ROM do NPC0/script14.
+Zero consoleErrors/pageErrors/missing; BGM WebAudio running com quatro faixas.
+A ponte conservou `(78,22)/left` na ida e `(1,22)/right` no retorno.
+Capturas e limites estão em `docs/STATUS.md`; log local completo em
+`/tmp/world-roundtrip-results.json`. Os avisos P-013/P-008 são explícitos;
+não se afirma paridade gráfica nem execução fiel dos efeitos opacos.
 
 ## Limites explícitos
 
