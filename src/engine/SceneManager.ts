@@ -9,6 +9,7 @@ import { appendMapEntities, eventActorRoot, syncMapEntities, FACING_YAW } from '
 import { CharacterExpressions } from './characterExpressions';
 import { ContinuousTerrain } from './continuousTerrain';
 import { worldPosition } from '../core/boundaries';
+import { applyNativePicaAlpha, picaMaterialModelUrl } from './picaMaterials';
 import { NativeAnimationController } from './nativeAnimation';
 import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import type { BattleEvent } from '../core/battleEvents';
@@ -21,6 +22,7 @@ const POKEMON_SCALE = 1 / 25;
 // alphaMode/alphaCutoff derivados do BlendFunction/AlphaTest do PICA200. Nesse caso o
 // GLTFLoader já configurou transparência e recorte; só falta impedir depthWrite em BLEND.
 function applyPicaAlphaState(mat: THREE.MeshStandardMaterial): void {
+  if (applyNativePicaAlpha(mat)) return;
   if (mat.transparent) mat.depthWrite = false;
 }
 
@@ -68,7 +70,7 @@ export class SceneManager {
   private battlePlayerSlot: THREE.Group;
   private battleEnemySlot: THREE.Group;
   private gltfLoader = new GLTFLoader();
-  private continuousTerrain = new ContinuousTerrain((url) => this.gltfLoader.loadAsync(url), fixOrasMaterials);
+  private continuousTerrain = new ContinuousTerrain((url) => this.gltfLoader.loadAsync(picaMaterialModelUrl(url)), fixOrasMaterials);
   private continuousRegion = '';
   private renderedZones = new Set<string>();
   private clock = new THREE.Clock();
@@ -261,7 +263,7 @@ export class SceneManager {
       this.buildEntities(map);
       this.terrainReady = null;
       if (map.modelChunks?.length) {
-        this.terrainReady = loadZoneTerrain(map.modelChunks, (url) => this.gltfLoader.loadAsync(url), fixOrasMaterials)
+        this.terrainReady = loadZoneTerrain(map.modelChunks, (url) => this.gltfLoader.loadAsync(picaMaterialModelUrl(url)), fixOrasMaterials)
           .then((root) => {
             if (this.mapLoadVersion !== version) return;
             this.terrainGroup.clear();
@@ -353,7 +355,7 @@ export class SceneManager {
 
   private loadCharacterModel(url: string, target: THREE.Group, isPlayer = false, fallbackUrl?: string): void {
     this.gltfLoader.load(
-      characterModelUrl(url),
+      picaMaterialModelUrl(characterModelUrl(url)),
       (gltf) => {
         if (!isPlayer && target.parent !== this.entitiesGroup) return;
         const model = gltf.scene;
@@ -410,7 +412,7 @@ export class SceneManager {
     if (!map.modelUrl) return;
     const expectedMapId = map.id;
     this.gltfLoader.load(
-      map.modelUrl,
+      picaMaterialModelUrl(map.modelUrl),
       (gltf) => {
         if (this.currentMapId !== expectedMapId) return;
         const model = gltf.scene;

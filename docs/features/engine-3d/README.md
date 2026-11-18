@@ -13,6 +13,7 @@ Camada de renderização WebGL com Three.js em `src/engine/` (`SceneManager.ts`)
 - [PRD-010](prds/PRD-010-corredor-rustboro-verdanturf.md) — corredor16→43→75→11; contato MM4 e portais ZO existentes, bloqueio nativo pela hide-flag676 e estado pós-evento explícito. 325 passos Playwright main9023a3f até11(16,22), bloqueio sem676 e fixture pós-evento derivada do bloco real; zero consoleErrors/pageErrors/missing, com limites visuais e de história documentados.
 - [PRD-011](prds/PRD-011-corredor-verdanturf-mauville-slateport.md) —11→44→445→15, com hall e pátio distintos; continuação33→14 bloqueada sem660 e validada por fixture real isolada em testes. Stage concluído, Playwright main pendente; nenhum alinhamento presumido entre portais desiguais.
 - A-063–A-065 / PRD-007/009: blink helper is bounded random, but dispatch cadence and gates remain unproven; no automatic timer. NativeAnimationController now also owns standing/movement loops for player/NPCs, with 48 native pairs across zones 6–16 and both players after 15 standing-pose exports. Visible synthetic projection validates 000→002→000 and 39 changing bones without renaming unproven motions.
+- [P-007/A-069/A-070](../pipeline-rom/pica-materials.md): aliases imutáveis de materiais em SceneManager e alpha nativo explícito; V corrigido somente no pipeline com proveniência. 322 GLBs auditados,12 capturas A/B visíveis inspecionadas e RGB/iluminação/projeção ainda aproximados, sem custom shader especulativo.
 - Referência TCC: [docs/tcc/00-arquitetura.md](../../tcc/00-arquitetura.md).
 
 ## Estado atual

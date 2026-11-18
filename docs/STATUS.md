@@ -2,6 +2,30 @@
 
 Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## P-007: orientação de atlas e alpha nativo (2026-11-18)
+
+- Base5880bf1, worktree pica-materials; A-069/A-070 (66–68 já usados na main).
+  [Evidência/reprodução](features/pipeline-rom/pica-materials.md) separa BCH,
+  DAE, CRO e limites; [auditoria](features/pipeline-rom/pica-material-coverage.json)
+  cobre322 GLBs/4.328 materiais,232 estados nativos deduplicados.
+- 315 URLs imutáveis publicadas localmente:216 GRs e99 personagens. V é
+  restaurado em206 GRs/3.625 materiais por identidade RGBA e correspondência
+  posição+UV, sem flip global. 3.971 materiais recebem somente o caminho
+  alpha estático provado,709 com blend; teste e blend coexistem com fatores
+  alpha explícitos e depthWrite observado. Atores mantêm a política P-019.
+- Prefixo BIN/accessors originais, geometria, nodes, skin e clipes preservados;
+  idempotência e reexecução dos322 modelos verificadas, sete GRs intactos.
+  Nenhum Pokémon, core, script, colisão ou geometria de pés alterado.
+- Playwright visível/Vite5195, código do worktree/public principal:12 capturas
+  A/B GR0004/0005/0006 inspecionadas, com folhagem/casas/solo corrigidos e
+  zero pageerror/console error/warning/HTTP>=400/request failures. Evidências
+  ignoradas em rom/pica-material-validation/browser/. Cenário estático com
+  configurador real, não caminhada, integração de fonte na main ou emulador.
+- **328 Vitest/49 arquivos, build e 168 Python sem skips passaram**; Python
+  usa GLB_MAPS_DIR do principal. Warning de chunks e diagnóstico de câmera
+  AMX herdados. P-007 permanece aberta para RGB/iluminação, LUTs/toon,
+  projeção/multi-textura, transformações não identidade e paridade.
+
 ## Verdanturf–Mauville e acesso condicional a Slateport (2026-11-18)
 
 - PRD-011/A-061/A-062, base3dbfd21:11→44→445→15; hall445 antes do pátio15. Contato MM6 entre11/44; demais ligações ZO preservadas, sem ponte ou grafo modificado. Continuação445→33→14 usa Route110 terrestre33, não variante34; retângulos recíprocos7/5 e5/3 não justificam continuidade lateral presumida.

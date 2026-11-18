@@ -31,6 +31,7 @@
    - O mesmo `SpicaExport` + `assimp` converte personagens (`a/0/2/1/0315.bin` → `public/assets/characters/brendan/brendan.glb`).
    - `scripts/extract_pokemon_glb.py` varre a tabela `FATB` de `a/0/0/8` (`PC\x02\x00` modelo + `+2` `PT\x01\x00` texturas) e gera `.glb` + `.png`s dos iniciais e Pokémon da Route 101 em `public/assets/pokemon/<especie>/`; `--all` extrai todas as espécies/formas detectando o tag `pmNNNN_NN` no blob.
    - `scripts/batch_convert_grs.py` e `scripts/batch_convert_chars.py` convertem em lote os `GR`s do catálogo e os `MM` de `a/0/2/1` para `rom/extracted/models/` (fora do Git), que depois são promovidos a `public/assets/` sob demanda.
+   - P-007/A-069/A-070: [materiais PICA](../features/pipeline-rom/pica-materials.md) são auditados por BCH/DAE, SHA/RGBA e posição+UV. Somente V comprovadamente invertido e alpha estático suportado são normalizados;322 GLBs/4.328 materiais,315 URLs imutáveis,12 capturas A/B inspecionadas. RGB/LUT/projeção não são substituídos por shader presumido.
    - GF1: `native_motions.py` e `attach_native_motions.py` anexam canais nativos
      preservando imagens, materiais, skin e o BIN-base. O catálogo do runtime usa
      a tabela do slot 0 para identificar espécie/variante, não o tag interno

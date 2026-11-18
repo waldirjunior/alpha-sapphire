@@ -589,3 +589,56 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   the real SceneManager, not a ROM script route or emulator comparison.
   Existing movement interpolation/crossfades are web presentation policies,
   not newly proven native timing; feet remain an asset-geometry limitation.
+
+## A-069 Canal UV válido não prova orientação correta do atlas
+
+- **Data:** 2026-11-18; P-007. A-066–068 já ocupados na main.
+- **Erro reproduzido:** GR0006 já tinha MASK/cutoff e RGBA com alpha, mas V
+  invertido amostrava áreas opacas e fachadas sobre telhados. Forçar outro
+  alphaTest não corrige essa seleção de texels.
+- **Regra:** Exigir identidade RGBA e correspondência posição+UV com o BCH,
+  além de origem UV0 e transformação-base identidade. Restaurar somente o
+  accessor comprovado, clonando referências compartilhadas; não usar flip
+  global nem BBox simétrica como prova. Comparação numérica tolerante evita
+  falsos negativos nas fronteiras de arredondamento float32/DAE.
+- **Evidência:** auditoria de 322 GLBs/4.328 materiais; 206 GRs e 3.625
+  materiais elegíveis. Preservação do BIN/accessors/geometria/skin/clipes e
+  idempotência verificadas. Doze capturas A/B GR0004/0005/0006 inspecionadas,
+  com recorte, casas e solo orientados e zero erros/warnings.
+- **Limite:** orientação dos atores continua sob a política de P-019;
+  transformações não identidade, projeção e shaders não recebem aproximação.
+
+## A-070 Blend e alpha test são estados independentes
+
+- **Data:** 2026-11-18; P-007.
+- **Erro reproduzido:** o caminho legado escolhe BLEND e perde o cutoff.
+  Regressão no configurador real falhou com alphaTest zero em vez de52/255;
+  fixtures GLB sintéticas verificam a preservação do teste junto do blend.
+- **Regra:** Interpretar somente o caminho alpha estático reconhecido e
+  mapear fatores RGB e alpha explicitamente. O default Three de fator alpha
+  não equivale sempre ao SourceAlpha nativo. Greater, Gequal e Always têm
+  regras distintas; operadores, fontes ou blends desconhecidos ficam fora.
+  COLOR_0 inteiro normalizado não é um accessor float32.
+- **Evidência:** 3.971 perfis suportados, 709 com blend; 315 URLs novas
+  imutáveis. A auditoria deduplica232 estados sem perder nomes/hashes de
+  texturas. 328 Vitest, build e 168 Python sem skips passaram.
+- **Limite:** Texture1/projection_dummy, PrimaryColor e LUTs não autorizam
+  inventar lightmap ou unlit. O RGB e a iluminação continuam aproximados;
+  wrappers CRO de weather/motion blur não provam dispatch dos materiais GR.
+
+## A-071 GetVertices não aplica todos os atributos fixos do PICA
+
+- **Data:** 2026-11-18; auditoria de cores P-007.
+- **Erro evitado:** interpretar COLOR ausente no buffer como cor nativa zero.
+  GetVertices aplica posição/escala e pesos fixos, mas o DAEExporter precisa
+  aplicar FixedAttributes separadamente. O primeiro relatório indicava
+  1.053 diferenças de range por não considerar a cor fixa.
+- **Regra:** distinguir cor de buffer, fixa e ausente. Usar o float24 fixo
+  decodificado, sem inventar branco/preto para um atributo inexistente.
+- **Evidência:** 4.290/4.328 materiais possuem COLOR_0 exportado; todos os
+  encodings presentes são suportados e preservados. Após corrigir o leitor,
+  restam só três diferenças de range: body MM0180/MM0181 e head MM0319.
+  A auditoria registra componentes, normalização e min/max nativos/GLB.
+- **Limite:** igualdade de ranges não prova o shader vertex original nem
+  correspondência por vértice. As três diferenças não recebem correção RGB
+  nesta entrega; exigem rastrear o export/skin sem apagar as variações nativas.
