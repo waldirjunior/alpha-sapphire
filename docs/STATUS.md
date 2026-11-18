@@ -12,6 +12,30 @@ Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo s
 - **Zero consoleErrors/pageErrors/missing/requestFailures**; encontros das onze zonas percorridas nativos, dez transições e16 capturas inspecionadas. Um aviso BuildMdlEventAnimeSetEnd(6553770,0) permanece P-013, não bloqueou input. Evidências/script em `/tmp/fallarbor-results.json` e `/tmp/playwright-test-fallarbor.js`; imagens00–15 listadas no PRD-012.
 - **Aceite visual não fechado:** oclusão severa/ausência de avatar legível nas chegadas445/39/10/41/71 e no bloqueio37; só a projeção/colisão, não as imagens do terreno, comprova a remoção das quatro pedras. Fiery85 mostra exterior preto/céu,36 oclusão por árvore, encostas/folhagem/fallbacks com limites de material. Preservar P-017/P-019 e investigar câmera/altura/geometria, sem causa presumida. Loop71→42→16 e RockSmash natural continuam bloqueados/pendentes.
 
+## P-007: orientação de atlas e alpha nativo (2026-11-18)
+
+- Base5880bf1, worktree pica-materials; A-069/A-070 (66–68 já usados na main).
+  [Evidência/reprodução](features/pipeline-rom/pica-materials.md) separa BCH,
+  DAE, CRO e limites; [auditoria](features/pipeline-rom/pica-material-coverage.json)
+  cobre322 GLBs/4.328 materiais,232 estados nativos deduplicados.
+- 315 URLs imutáveis publicadas localmente:216 GRs e99 personagens. V é
+  restaurado em206 GRs/3.625 materiais por identidade RGBA e correspondência
+  posição+UV, sem flip global. 3.971 materiais recebem somente o caminho
+  alpha estático provado,709 com blend; teste e blend coexistem com fatores
+  alpha explícitos e depthWrite observado. Atores mantêm a política P-019.
+- Prefixo BIN/accessors originais, geometria, nodes, skin e clipes preservados;
+  idempotência e reexecução dos322 modelos verificadas, sete GRs intactos.
+  Nenhum Pokémon, core, script, colisão ou geometria de pés alterado.
+- Playwright visível/Vite5195, código do worktree/public principal:12 capturas
+  A/B GR0004/0005/0006 inspecionadas, com folhagem/casas/solo corrigidos e
+  zero pageerror/console error/warning/HTTP>=400/request failures. Evidências
+  ignoradas em rom/pica-material-validation/browser/. Cenário estático com
+  configurador real, não caminhada, integração de fonte na main ou emulador.
+- **328 Vitest/49 arquivos, build e 168 Python sem skips passaram**; Python
+  usa GLB_MAPS_DIR do principal. Warning de chunks e diagnóstico de câmera
+  AMX herdados. P-007 permanece aberta para RGB/iluminação, LUTs/toon,
+  projeção/multi-textura, transformações não identidade e paridade.
+
 ## Verdanturf–Mauville e acesso condicional a Slateport (2026-11-18)
 
 - PRD-011/A-061/A-062, base3dbfd21:11→44→445→15; hall445 antes do pátio15. Contato MM6 entre11/44; demais ligações ZO preservadas, sem ponte ou grafo modificado. Continuação445→33→14 usa Route110 terrestre33, não variante34; retângulos recíprocos7/5 e5/3 não justificam continuidade lateral presumida.
@@ -53,7 +77,7 @@ Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo s
   validation. Inherited >500kB chunk warning and the explicit AMX camera
   non-parity diagnostic remain. Craft Anything discovery/CLI are unavailable;
   blink analysis uses local Capstone5.0.3 and the existing CRO resolver.
-=======
+
 - Revisão inicial:320 Vitest/150 Python/build. Após integração na **main4b7d09d:321 Vitest/48 arquivos,157 Python sem skips e build passaram**; GLB_MAPS_DIR aponta ao public principal.162 GLBs públicos de mapa válidos/zero violações; aviso de chunk >500kB herdado.
 - **Playwright visível/5200:748 passos**,146 desde11(16,22) até15(17,22) sem660, passando por44 e445;514 até33(16,115). Contato11(39,22)→44(0,22)/right com deslocamento mundial unitário; portais reais/facing preservados. Duas teclas down contra16,116 foram bloqueadas pelos cinco atores visíveis, com piso0 e660 ausente.
 - Fixture explícita7360..7475/halt7476 executou WorkSet16526=2, FlagSet660 e MdlDel dos cinco IDs na VM, sem mover o player. Reload conservou16,115 e aplicou as remoções reais; continuação33→14(31,1)/down e caminhada até31,22. Novo reload, retorno33(33,155)/up e visita ao bloqueio confirmaram work/tombstones; nova ida encerrou em14(31,22). Não é função/evento inteiro nem campanha New Game; PRNG0.9..1 evitou batalhas.

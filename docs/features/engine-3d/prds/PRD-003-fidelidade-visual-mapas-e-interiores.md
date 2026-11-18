@@ -1,7 +1,7 @@
 # PRD-003 — Fidelidade Visual de Mapas, Shaders PICA200 e Interiores
 
 - **Módulo:** [engine-3d](../README.md)
-- **Estado:** Planejado (Fase 2 do [ROADMAP.md](../../../ROADMAP.md))
+- **Estado:** Em andamento (Fase 2 do [ROADMAP.md](../../../ROADMAP.md))
 - **Data:** 2026-11-17
 - **Pendências relacionadas:** `P-007`, `P-009`
 
@@ -19,4 +19,21 @@ Na conversão genérica `BCH → DAE → GLB`, materiais multi-textura PICA200 (
 
 - [ ] Zero placas/telhados brancos não intencionais ou faixas pretas de sombra nos mapas iniciais.
 - [ ] Portas de Littleroot Town e Oldale Town executam `warp` para seus respectivos interiores 3D e retornam para a porta correta.
-- [ ] `npm test && npm run build` passando.
+- [x] `npm test && npm run build` passando.
+
+## 4. Entrega parcial verificada — P-007, 2026-11-18
+
+[Evidência e reprodução](../../pipeline-rom/pica-materials.md), A-069/A-070:
+322 GLBs/4.328 materiais auditados; 315 URLs novas imutáveis, com V
+restaurado seletivamente em 206 GRs/3.625 materiais e 3.971 perfis alpha
+estáticos. Alpha test e blend coexistem; fatores RGB/alpha e depthWrite
+suportados vêm do BCH. UVs de atores, geometria, skin e clipes não mudam.
+
+Doze capturas A/B visíveis GR0004/0005/0006 foram inspecionadas, com câmera
+fixa e zero erros/warnings. 328 Vitest/49 arquivos, build e 168 Python sem
+skips passaram. O cenário usa arquivos publicados e o configurador real;
+não valida caminhada natural ou equivalência no emulador.
+
+RF-01/RF-02 permanecem parciais: iluminação fragmentária, RGB, LUTs/toon,
+projeção e múltiplas texturas não recebem implementação especulativa.
+Interiores e o aceite visual integral continuam abertos em P-007/P-009.

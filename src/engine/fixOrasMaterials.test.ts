@@ -13,6 +13,14 @@ function textured(name: string): THREE.MeshStandardMaterial {
 }
 
 describe('fixOrasMaterials (P-007)', () => {
+  it('restaura alpha test junto com o blend nativo comprovado', () => {
+    const mat = textured('leaves');
+    mat.userData = { pica: true, picaAlpha: { cutoff: 52 / 255, blend: 'source-alpha', alphaBlend: 'source-alpha', depthWrite: false } };
+    mat.transparent = true;
+    fixOrasMaterials(meshWith(mat));
+    expect(mat.alphaTest).toBe(52 / 255);
+    expect(mat.blendSrcAlpha).toBe(THREE.SrcAlphaFactor);
+  });
   it('preserva o recorte MASK do PICA em vez de forçar alphaTest 0.45', () => {
     const mat = textured('t01_01');
     mat.userData = { pica: true };
