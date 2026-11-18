@@ -41,7 +41,10 @@
      A auditoria P-019 distingue canal inválido de escolha de expressão do atlas.
      A-042/A-043 ampliam a comparação ao BCH original: V invertido com RGBA
      inalterado explicava o rosto invertido. A promoção restaura a orientação
-     somente em cinco casos com proveniência e clona UV compartilhado; não
+     inicialmente em cinco casos; A-050/A-051 ampliam para 79 GLBs/91 materiais
+     comprovados entre 99 MM auditados, incluindo paletas curtas e faces estáticas.
+     A prova compara RGBA/dimensões e BBox nativa por material; casos simétricos
+     ficam intactos com razão por modelo. Clona UV compartilhado e não
      muda skin/clipes nem inventa pés. [CRO/paleta e A/B](../features/pipeline-rom/face-expressions.md)
      separam essa correção-base da seleção dinâmica por ator acrescentada em
      PRD-009/A-046–A-048: a promoção exporta os oito frames evidenciados sem

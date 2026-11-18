@@ -4,8 +4,23 @@ import { listRosterSpecies } from '../data/pokemon/species';
 import catalog from '../data/nativeAssets.json';
 
 describe('native asset catalog', () => {
-  it('limits material palettes to the five corrected immutable GLBs and their aliases', () => {
-    for (const model of ['0180', '0181', '0212', '0314', '0315']) {
+  it('resolves every mapped character used in zones 6 through 16 without guessing special IDs', () => {
+    const zones = import.meta.glob<{ npcs: { model: number }[] }>(
+      '../data/maps_v2/00{06,07,08,09,10,11,12,13,14,15,16}.json', { eager: true, import: 'default' });
+    expect(Object.keys(zones)).toHaveLength(11);
+    for (const zone of Object.values(zones)) for (const npc of zone.npcs) {
+      const url = `/assets/characters/mm_${String(npc.model).padStart(4, '0')}.glb`;
+      if (npc.model < 544) {
+        expect(characterModelUrl(url)).toMatch(/^\/assets\/native\/characters\/mm_\d{4}-[a-f0-9]{12}\.glb$/);
+      } else {
+        expect(characterModelUrl(url)).toBe(url);
+        expect(catalog.unavailable.some(row => row.id === `character/mm_${npc.model}`)).toBe(true);
+      }
+    }
+  });
+
+  it('keeps complete material palettes limited to evidenced immutable GLBs and their aliases', () => {
+    for (const model of ['0180', '0181', '0182', '0212', '0314', '0315']) {
       const profiles = characterFaceAnimations(`/assets/characters/mm_${model}.glb`);
       expect(profiles).toHaveLength(1);
       expect(profiles[0].frames.map(frame => frame.frame)).toEqual([0, 10, 20, 30, 40, 50, 60, 70]);

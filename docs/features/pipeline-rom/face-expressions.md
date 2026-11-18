@@ -282,12 +282,97 @@ até evidenciar a base temporal e as condições completas.
   Regressões reproduziram a pausa opaca anterior, a falta de projeção da
   expressão, a falta de exportação de paleta e valores inválidos do save.
 
+## Expansão da orientação-base — 2026-11-18 (A-050/A-051)
+
+A base a0ab2ce foi auditada a partir dos GLBs-fonte, antes de publicar novos
+outputs. A duração de 70 frames era uma restrição de reprodução de expressão,
+não uma condição geométrica para restaurar V. O scanner agora busca também
+materiais nativos face/head sem animação; nomes apenas selecionam candidatos.
+`BaseColorUV` é um marcador derivado do scanner, não um novo target BCH.
+
+A seleção exige material exato, SHA do GLB-fonte, RGBA **e dimensões** iguais
+à textura BCH, UV0, matriz DccMaya/UV de base identidade e BBox inequívoca.
+Slots nativos alternativos são comparados à imagem base-color realmente
+exportada; um slot inativo com nome parecido não autoriza flip. A prova fica
+em [character-face-evidence.json](character-face-evidence.json).
+
+A publicação inicial encontrou outra restrição indevida: o BCH agrega meshes
+por material, mas o exportador divide primitives com limites locais menores.
+Uma fixture de duas primitives reproduziu o erro observado em
+`rstr0010_00_head`. A validação agora compara a união do material ao BCH e
+clona os accessors por primitive, preservando compartilhamento não elegível.
+
+### Cobertura e exclusões
+
+- 99 MM auditados, 98 materiais candidatos e 17 paletas: **79 GLBs / 91
+  materiais normalizados**, 74 personagens adicionais aos cinco anteriores.
+  Os cinco anteriores recebem também head comprovado e novas URLs imutáveis.
+- Todos os sete casos curtos das 12 paletas antigas foram incluídos:
+  MM0179/0298/0299/0302/0303/0318/0319. Novas paletas foram encontradas ao
+  ampliar o conjunto; o runtime só exporta a sequência completa 0/10/…/70,
+  sem extrapolar as curtas nem inventar piscada.
+- MM0226/0232/0241/0245/0262/0270/0305: imagens coincidem, mas BBox simétrica
+  satisfaz simultaneamente original e espelhado. **Nenhum flip aplicado**;
+  requer correspondência por vértice para desambiguar.
+- MM0122–0133 e MM0312: nenhum candidato nativo face/head no escopo examinado;
+  outputs intactos. Não se conclui ausência universal de texturas/expressões.
+- Zonas 6–16: 63 IDs únicos, 51 MM publicados, dos quais 44 normalizados e
+  sete intactos. Outros 12 são IDs sem MM correspondente e não tiveram bits
+  mascarados ou remapeamento inventado. O catálogo contém 99 personagens e
+  41 Pokémon; todos os registros Pokémon permanecem iguais.
+- [character-face-coverage.json](character-face-coverage.json) lista por modelo
+  e zona status, materiais, exclusões, URLs, SHA e preservação. `unavailable`
+  também inclui falta de motion nativo; isso não significa GLB ausente.
+
+O validador real cobre todos os 99 GLBs: prefixo BIN e accessors anteriores,
+clipes, skins, nodes, imagens, materiais, samplers e demais campos preservados;
+únicas mudanças permitidas são novos UVs, referências e proveniência. Repetir
+normalização/publicação não muda os bytes nem sobrescreve URLs anteriores.
+
+### Reprodução
+
+Use ferramentas já existentes (.NET/SPICA, Pillow 11.3.0); nenhuma dependência
+nova foi instalada. Craft Anything/MCP e CLI permaneceram indisponíveis.
+
+```bash
+python3 scripts/inspect_character_faces.py --root "$ROOT" \
+  --manifest docs/features/pipeline-rom/native-models-manifest.json \
+  --spica-dll "$SPICA_DLL" \
+  --output docs/features/pipeline-rom/character-face-evidence.json
+python3 scripts/promote_native_assets.py --root "$ROOT" \
+  --manifest docs/features/pipeline-rom/native-models-manifest.json \
+  --catalog src/data/nativeAssets.json
+python3 scripts/validate_character_faces.py --root "$ROOT" \
+  --catalog src/data/nativeAssets.json \
+  --evidence docs/features/pipeline-rom/character-face-evidence.json \
+  --output docs/features/pipeline-rom/character-face-coverage.json
+```
+
+### A/B novo e verificação
+
+Chromium visível 149.0.7827.55, código do worktree, Vite isolado 5194 com
+`publicDir` do principal. NPCs reais no SceneManager, câmera/luz/pose fixa e
+mixer em t=0; nenhum UV foi editado pelo browser. Seis capturas inspecionadas
+mostram rosto/cabelo orientados, com boca/olhos nas posições corretas:
+
+| MM | Antes | Depois |
+| --- | --- | --- |
+| 0179 | `mm_0179-0d02d53fd4a3.glb` | `mm_0179-c18ab2e1f75e.glb` |
+| 0299 | `mm_0299-157626c5a39b.glb` | `mm_0299-11331f49d34d.glb` |
+| 0221 | `mm_0221-16f75732b0e6.glb` | `mm_0221-8dec1f50a9f5.glb` |
+
+Todos responderam 200; zero pageerror, console error, warning ou HTTP>=400.
+Relatório com SHA das capturas e PNGs ignorados no principal em
+`rom/face_expression_validation/expanded/`; harness temporário
+`/tmp/playwright-test-expanded-faces.js`. Não foi repetida a caminhada do
+corredor nem exercitada cutscene ROM. 250 Vitest/40 arquivos, build e 155
+Python passaram; um skip pré-existente por assets públicos ausentes no
+worktree, e aviso herdado de chunks >500 kB.
+
 ## Limites e continuação
 
-A seleção explícita é implementada para os cinco GLBs corrigidos, mas não
-valida a paleta inteira no emulador. Próximos passos: clock/condições de
-piscada, ramo natural AMX, paletas10/30, outros canais e materiais,
-wrap/combiners e visibilidade PB/PK. As texturas não faciais ainda podem estar
-incorretas. Os pés continuam ausentes no GLB-base e não foram reconstruídos.
-P-019 permanece aberta; orientação, seleção, temporização e paridade são
-critérios separados.
+P-019 continua aberta para BBox ambígua/correspondência por vértice, materiais
+fora do escopo, wrap/combiners, visibilidade PB/PK, clock/condições de piscada
+e emulador. As texturas não faciais ainda podem estar incorretas. Os pés
+continuam ausentes no GLB-base e não foram reconstruídos. Orientação,
+seleção, temporização e paridade são critérios separados.

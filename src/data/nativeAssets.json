@@ -43,76 +43,125 @@
     "clauncher": "/assets/native/pokemon/clauncher-975a9026a743.glb"
   },
   "characters": {
-    "/assets/characters/mm_0045.glb": "/assets/native/characters/mm_0045-f351711ff33b.glb",
-    "/assets/characters/npc/npc.glb": "/assets/native/characters/mm_0045-f351711ff33b.glb",
+    "/assets/characters/mm_0000.glb": "/assets/native/characters/mm_0000-57b2903d4593.glb",
+    "/assets/characters/mm_0045.glb": "/assets/native/characters/mm_0045-660899967e9b.glb",
+    "/assets/characters/npc/npc.glb": "/assets/native/characters/mm_0045-660899967e9b.glb",
     "/assets/characters/mm_0122.glb": "/assets/native/characters/mm_0122-b313831fd7c2.glb",
     "/assets/characters/mm_0123.glb": "/assets/native/characters/mm_0123-b313831fd7c2.glb",
     "/assets/characters/mm_0124.glb": "/assets/native/characters/mm_0124-b313831fd7c2.glb",
     "/assets/characters/mm_0125.glb": "/assets/native/characters/mm_0125-b313831fd7c2.glb",
-    "/assets/characters/mm_0179.glb": "/assets/native/characters/mm_0179-0d02d53fd4a3.glb",
-    "/assets/characters/mm_0180.glb": "/assets/native/characters/mm_0180-dd6b6a2e504c.glb",
-    "/assets/characters/mm_0181.glb": "/assets/native/characters/mm_0181-6f08749256d7.glb",
-    "/assets/characters/mm_0212.glb": "/assets/native/characters/mm_0212-ac27329bbeb3.glb",
-    "/assets/characters/mm_0218.glb": "/assets/native/characters/mm_0218-fd0c0b77a9d0.glb",
-    "/assets/characters/mm_0219.glb": "/assets/native/characters/mm_0219-808cec0681ab.glb",
-    "/assets/characters/mm_0220.glb": "/assets/native/characters/mm_0220-ff7bc3069a7a.glb",
-    "/assets/characters/mm_0221.glb": "/assets/native/characters/mm_0221-16f75732b0e6.glb",
-    "/assets/characters/mm_0223.glb": "/assets/native/characters/mm_0223-48d1738dd6c4.glb",
-    "/assets/characters/mm_0225.glb": "/assets/native/characters/mm_0225-1d7a7e443328.glb",
+    "/assets/characters/mm_0126.glb": "/assets/native/characters/mm_0126-b313831fd7c2.glb",
+    "/assets/characters/mm_0127.glb": "/assets/native/characters/mm_0127-b313831fd7c2.glb",
+    "/assets/characters/mm_0128.glb": "/assets/native/characters/mm_0128-b313831fd7c2.glb",
+    "/assets/characters/mm_0129.glb": "/assets/native/characters/mm_0129-b313831fd7c2.glb",
+    "/assets/characters/mm_0130.glb": "/assets/native/characters/mm_0130-b313831fd7c2.glb",
+    "/assets/characters/mm_0131.glb": "/assets/native/characters/mm_0131-b313831fd7c2.glb",
+    "/assets/characters/mm_0132.glb": "/assets/native/characters/mm_0132-b313831fd7c2.glb",
+    "/assets/characters/mm_0133.glb": "/assets/native/characters/mm_0133-b313831fd7c2.glb",
+    "/assets/characters/mm_0179.glb": "/assets/native/characters/mm_0179-c18ab2e1f75e.glb",
+    "/assets/characters/mm_0180.glb": "/assets/native/characters/mm_0180-d4aca3a4129d.glb",
+    "/assets/characters/mm_0181.glb": "/assets/native/characters/mm_0181-bc3666eee589.glb",
+    "/assets/characters/mm_0182.glb": "/assets/native/characters/mm_0182-69c6f0532712.glb",
+    "/assets/characters/mm_0187.glb": "/assets/native/characters/mm_0187-127c5238f925.glb",
+    "/assets/characters/mm_0189.glb": "/assets/native/characters/mm_0189-2c59a2db4f05.glb",
+    "/assets/characters/mm_0210.glb": "/assets/native/characters/mm_0210-d65e1d9ac3ce.glb",
+    "/assets/characters/mm_0212.glb": "/assets/native/characters/mm_0212-3797abf4809c.glb",
+    "/assets/characters/mm_0218.glb": "/assets/native/characters/mm_0218-04f4d7adabea.glb",
+    "/assets/characters/mm_0219.glb": "/assets/native/characters/mm_0219-8b67d12a006a.glb",
+    "/assets/characters/mm_0220.glb": "/assets/native/characters/mm_0220-8a15ce63a6d1.glb",
+    "/assets/characters/mm_0221.glb": "/assets/native/characters/mm_0221-8dec1f50a9f5.glb",
+    "/assets/characters/mm_0222.glb": "/assets/native/characters/mm_0222-b6aaf0c9be5b.glb",
+    "/assets/characters/mm_0223.glb": "/assets/native/characters/mm_0223-46e685a45075.glb",
+    "/assets/characters/mm_0225.glb": "/assets/native/characters/mm_0225-648de6104cc0.glb",
     "/assets/characters/mm_0226.glb": "/assets/native/characters/mm_0226-0b64d13a5229.glb",
-    "/assets/characters/mm_0231.glb": "/assets/native/characters/mm_0231-c29ee1fb909e.glb",
-    "/assets/characters/mm_0236.glb": "/assets/native/characters/mm_0236-c41aacc03800.glb",
-    "/assets/characters/mm_0238.glb": "/assets/native/characters/mm_0238-2523243f1098.glb",
-    "/assets/characters/mm_0239.glb": "/assets/native/characters/mm_0239-83501ba8fc20.glb",
-    "/assets/characters/mm_0242.glb": "/assets/native/characters/mm_0242-6c6fd31924a7.glb",
-    "/assets/characters/mm_0244.glb": "/assets/native/characters/mm_0244-bf9bdba289ec.glb",
+    "/assets/characters/mm_0231.glb": "/assets/native/characters/mm_0231-16666162bf13.glb",
+    "/assets/characters/mm_0232.glb": "/assets/native/characters/mm_0232-8412b643e7cb.glb",
+    "/assets/characters/mm_0233.glb": "/assets/native/characters/mm_0233-9ee2c9e57cdb.glb",
+    "/assets/characters/mm_0234.glb": "/assets/native/characters/mm_0234-fc2c62b10c21.glb",
+    "/assets/characters/mm_0235.glb": "/assets/native/characters/mm_0235-523c5b38b463.glb",
+    "/assets/characters/mm_0236.glb": "/assets/native/characters/mm_0236-f962c28368ec.glb",
+    "/assets/characters/mm_0237.glb": "/assets/native/characters/mm_0237-a196c7b11b8a.glb",
+    "/assets/characters/mm_0238.glb": "/assets/native/characters/mm_0238-834834e36531.glb",
+    "/assets/characters/mm_0239.glb": "/assets/native/characters/mm_0239-1bfab36a9d98.glb",
+    "/assets/characters/mm_0241.glb": "/assets/native/characters/mm_0241-014bc8097af3.glb",
+    "/assets/characters/mm_0242.glb": "/assets/native/characters/mm_0242-2d76c7fc00c8.glb",
+    "/assets/characters/mm_0244.glb": "/assets/native/characters/mm_0244-b32f819ed4ed.glb",
     "/assets/characters/mm_0245.glb": "/assets/native/characters/mm_0245-a2b1da4b79d7.glb",
-    "/assets/characters/mm_0246.glb": "/assets/native/characters/mm_0246-665988a33527.glb",
-    "/assets/characters/mm_0252.glb": "/assets/native/characters/mm_0252-dcaebda6edd7.glb",
-    "/assets/characters/mm_0254.glb": "/assets/native/characters/mm_0254-e43ac7317198.glb",
-    "/assets/characters/mm_0255.glb": "/assets/native/characters/mm_0255-aa60a51f472d.glb",
-    "/assets/characters/mm_0256.glb": "/assets/native/characters/mm_0256-9d5aec72199a.glb",
-    "/assets/characters/mm_0259.glb": "/assets/native/characters/mm_0259-a93209c78824.glb",
-    "/assets/characters/mm_0266.glb": "/assets/native/characters/mm_0266-7d5b4d0d9970.glb",
-    "/assets/characters/mm_0267.glb": "/assets/native/characters/mm_0267-4a36e9493797.glb",
+    "/assets/characters/mm_0246.glb": "/assets/native/characters/mm_0246-32d686ee9c01.glb",
+    "/assets/characters/mm_0247.glb": "/assets/native/characters/mm_0247-d6738d393bc6.glb",
+    "/assets/characters/mm_0249.glb": "/assets/native/characters/mm_0249-fc85a3328cd6.glb",
+    "/assets/characters/mm_0252.glb": "/assets/native/characters/mm_0252-a44a5f58b3d2.glb",
+    "/assets/characters/mm_0254.glb": "/assets/native/characters/mm_0254-a1407c07ddc7.glb",
+    "/assets/characters/mm_0255.glb": "/assets/native/characters/mm_0255-b0a52a3aee3c.glb",
+    "/assets/characters/mm_0256.glb": "/assets/native/characters/mm_0256-05ae21294bee.glb",
+    "/assets/characters/mm_0257.glb": "/assets/native/characters/mm_0257-97b676a502bc.glb",
+    "/assets/characters/mm_0259.glb": "/assets/native/characters/mm_0259-93d31d6ffc35.glb",
+    "/assets/characters/mm_0260.glb": "/assets/native/characters/mm_0260-7d74506b69d3.glb",
+    "/assets/characters/mm_0261.glb": "/assets/native/characters/mm_0261-4c67aab463ca.glb",
+    "/assets/characters/mm_0262.glb": "/assets/native/characters/mm_0262-1d0f03064ed2.glb",
+    "/assets/characters/mm_0264.glb": "/assets/native/characters/mm_0264-9bc7b8d3362c.glb",
+    "/assets/characters/mm_0265.glb": "/assets/native/characters/mm_0265-0d43b2a7c75a.glb",
+    "/assets/characters/mm_0266.glb": "/assets/native/characters/mm_0266-c0662141ef3f.glb",
+    "/assets/characters/mm_0267.glb": "/assets/native/characters/mm_0267-5700519ddac0.glb",
     "/assets/characters/mm_0270.glb": "/assets/native/characters/mm_0270-a67d30672bde.glb",
-    "/assets/characters/mm_0271.glb": "/assets/native/characters/mm_0271-698787ee45a4.glb",
-    "/assets/characters/mm_0275.glb": "/assets/native/characters/mm_0275-39084e69d362.glb",
-    "/assets/characters/mm_0280.glb": "/assets/native/characters/mm_0280-8d4e031bce9d.glb",
-    "/assets/characters/mm_0281.glb": "/assets/native/characters/mm_0281-e09cd97b6e73.glb",
-    "/assets/characters/mm_0283.glb": "/assets/native/characters/mm_0283-0b0a2a0cd9bb.glb",
-    "/assets/characters/mm_0284.glb": "/assets/native/characters/mm_0284-afc1227e8942.glb",
-    "/assets/characters/mm_0286.glb": "/assets/native/characters/mm_0286-013fd8bfad94.glb",
-    "/assets/characters/mm_0287.glb": "/assets/native/characters/mm_0287-2fc5207c8851.glb",
-    "/assets/characters/mm_0288.glb": "/assets/native/characters/mm_0288-fb4379c1d942.glb",
-    "/assets/characters/mm_0289.glb": "/assets/native/characters/mm_0289-9cdf235715d2.glb",
-    "/assets/characters/mm_0296.glb": "/assets/native/characters/mm_0296-49915c1b2bba.glb",
-    "/assets/characters/mm_0298.glb": "/assets/native/characters/mm_0298-b2b1887b9f69.glb",
-    "/assets/characters/mm_0299.glb": "/assets/native/characters/mm_0299-157626c5a39b.glb",
-    "/assets/characters/mm_0301.glb": "/assets/native/characters/mm_0301-a9fc69bd43ab.glb",
-    "/assets/characters/mm_0302.glb": "/assets/native/characters/mm_0302-76411d9a22bc.glb",
-    "/assets/characters/mm_0303.glb": "/assets/native/characters/mm_0303-9a3bc037d50f.glb",
+    "/assets/characters/mm_0271.glb": "/assets/native/characters/mm_0271-c7f6fd4d1902.glb",
+    "/assets/characters/mm_0275.glb": "/assets/native/characters/mm_0275-10321342a069.glb",
+    "/assets/characters/mm_0276.glb": "/assets/native/characters/mm_0276-0a03a8df9916.glb",
+    "/assets/characters/mm_0277.glb": "/assets/native/characters/mm_0277-c81e944422de.glb",
+    "/assets/characters/mm_0280.glb": "/assets/native/characters/mm_0280-b3c774562f83.glb",
+    "/assets/characters/mm_0281.glb": "/assets/native/characters/mm_0281-e118eb892d5f.glb",
+    "/assets/characters/mm_0283.glb": "/assets/native/characters/mm_0283-d73318715940.glb",
+    "/assets/characters/mm_0284.glb": "/assets/native/characters/mm_0284-8406b22da89f.glb",
+    "/assets/characters/mm_0285.glb": "/assets/native/characters/mm_0285-0760c2a86bf8.glb",
+    "/assets/characters/mm_0286.glb": "/assets/native/characters/mm_0286-2a9f9811c560.glb",
+    "/assets/characters/mm_0287.glb": "/assets/native/characters/mm_0287-eeec5072a505.glb",
+    "/assets/characters/mm_0288.glb": "/assets/native/characters/mm_0288-c724be870081.glb",
+    "/assets/characters/mm_0289.glb": "/assets/native/characters/mm_0289-0ac8e97fd645.glb",
+    "/assets/characters/mm_0296.glb": "/assets/native/characters/mm_0296-f2ca034cae61.glb",
+    "/assets/characters/mm_0298.glb": "/assets/native/characters/mm_0298-f21d9066e37d.glb",
+    "/assets/characters/mm_0299.glb": "/assets/native/characters/mm_0299-11331f49d34d.glb",
+    "/assets/characters/mm_0300.glb": "/assets/native/characters/mm_0300-5c9ff6a30dab.glb",
+    "/assets/characters/mm_0301.glb": "/assets/native/characters/mm_0301-479e7112f3eb.glb",
+    "/assets/characters/mm_0302.glb": "/assets/native/characters/mm_0302-2f8792849140.glb",
+    "/assets/characters/mm_0303.glb": "/assets/native/characters/mm_0303-73f5880cb5eb.glb",
     "/assets/characters/mm_0305.glb": "/assets/native/characters/mm_0305-c73d76cadcaf.glb",
-    "/assets/characters/mm_0306.glb": "/assets/native/characters/mm_0306-0a663933716c.glb",
-    "/assets/characters/mm_0307.glb": "/assets/native/characters/mm_0307-afbd2e91a801.glb",
+    "/assets/characters/mm_0306.glb": "/assets/native/characters/mm_0306-9b3e91b04d40.glb",
+    "/assets/characters/mm_0307.glb": "/assets/native/characters/mm_0307-b34108b95099.glb",
+    "/assets/characters/mm_0309.glb": "/assets/native/characters/mm_0309-93753e7e246c.glb",
     "/assets/characters/mm_0312.glb": "/assets/native/characters/mm_0312-b313831fd7c2.glb",
-    "/assets/characters/mm_0314.glb": "/assets/native/characters/mm_0314-d5918ea6dc77.glb",
-    "/assets/characters/may/may.glb": "/assets/native/characters/mm_0314-d5918ea6dc77.glb",
-    "/assets/characters/mm_0315.glb": "/assets/native/characters/mm_0315-0e785f6fc374.glb",
-    "/assets/characters/brendan/brendan.glb": "/assets/native/characters/mm_0315-0e785f6fc374.glb",
-    "/assets/characters/mm_0318.glb": "/assets/native/characters/mm_0318-8460c67d980f.glb",
-    "/assets/characters/mm_0319.glb": "/assets/native/characters/mm_0319-9b8a9b6c38e1.glb",
-    "/assets/characters/mm_0322.glb": "/assets/native/characters/mm_0322-3485956cba79.glb",
-    "/assets/characters/mm_0344.glb": "/assets/native/characters/mm_0344-e522660f3103.glb",
-    "/assets/characters/mm_0345.glb": "/assets/native/characters/mm_0345-1c66a3dd3bbe.glb",
-    "/assets/characters/mm_0346.glb": "/assets/native/characters/mm_0346-fc8092cfcfc7.glb",
-    "/assets/characters/mm_0347.glb": "/assets/native/characters/mm_0347-88335e2e94a6.glb"
+    "/assets/characters/mm_0314.glb": "/assets/native/characters/mm_0314-6a5e601384ab.glb",
+    "/assets/characters/may/may.glb": "/assets/native/characters/mm_0314-6a5e601384ab.glb",
+    "/assets/characters/mm_0315.glb": "/assets/native/characters/mm_0315-3aa3b5d4c326.glb",
+    "/assets/characters/brendan/brendan.glb": "/assets/native/characters/mm_0315-3aa3b5d4c326.glb",
+    "/assets/characters/mm_0318.glb": "/assets/native/characters/mm_0318-8f8d4fc602da.glb",
+    "/assets/characters/mm_0319.glb": "/assets/native/characters/mm_0319-e10b64bdc72e.glb",
+    "/assets/characters/mm_0320.glb": "/assets/native/characters/mm_0320-b08bdce0e21d.glb",
+    "/assets/characters/mm_0321.glb": "/assets/native/characters/mm_0321-48754a8e45a7.glb",
+    "/assets/characters/mm_0322.glb": "/assets/native/characters/mm_0322-5f5525bde229.glb",
+    "/assets/characters/mm_0333.glb": "/assets/native/characters/mm_0333-ccada447fb28.glb",
+    "/assets/characters/mm_0340.glb": "/assets/native/characters/mm_0340-7ff086e557e6.glb",
+    "/assets/characters/mm_0341.glb": "/assets/native/characters/mm_0341-5728d70a2f18.glb",
+    "/assets/characters/mm_0344.glb": "/assets/native/characters/mm_0344-b924c255ad10.glb",
+    "/assets/characters/mm_0345.glb": "/assets/native/characters/mm_0345-c4ed7a7657a2.glb",
+    "/assets/characters/mm_0346.glb": "/assets/native/characters/mm_0346-f03821c75e28.glb",
+    "/assets/characters/mm_0347.glb": "/assets/native/characters/mm_0347-a94fa0add561.glb"
   },
   "models": [
     {
+      "id": "character/mm_0000",
+      "url": "/assets/native/characters/mm_0000-57b2903d4593.glb",
+      "sha256": "57b2903d4593ea3af8df92de8b053bb70652efa5e4345f4094da0fe2b5b3f274",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0000/mm_0000.glb",
+      "clips": [
+        "idle",
+        "walk"
+      ]
+    },
+    {
       "id": "character/mm_0045",
-      "url": "/assets/native/characters/mm_0045-f351711ff33b.glb",
-      "sha256": "f351711ff33b9c7227f36071d8d6e8c3d5f82d53a6f46fcaa68a46cd8917059e",
+      "url": "/assets/native/characters/mm_0045-660899967e9b.glb",
+      "sha256": "660899967e9b7c16c3f537ca2e799435b7d7987b3d2376c9ea4f46e57e64db10",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0045.glb",
       "clips": [
@@ -155,9 +204,73 @@
       "clips": []
     },
     {
+      "id": "character/mm_0126",
+      "url": "/assets/native/characters/mm_0126-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0126/mm_0126.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0127",
+      "url": "/assets/native/characters/mm_0127-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0127/mm_0127.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0128",
+      "url": "/assets/native/characters/mm_0128-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0128/mm_0128.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0129",
+      "url": "/assets/native/characters/mm_0129-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0129/mm_0129.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0130",
+      "url": "/assets/native/characters/mm_0130-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0130/mm_0130.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0131",
+      "url": "/assets/native/characters/mm_0131-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0131/mm_0131.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0132",
+      "url": "/assets/native/characters/mm_0132-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0132/mm_0132.glb",
+      "clips": []
+    },
+    {
+      "id": "character/mm_0133",
+      "url": "/assets/native/characters/mm_0133-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "native": false,
+      "source": "rom/extracted/models/characters/mm_0133/mm_0133.glb",
+      "clips": []
+    },
+    {
       "id": "character/mm_0179",
-      "url": "/assets/native/characters/mm_0179-0d02d53fd4a3.glb",
-      "sha256": "0d02d53fd4a34828b623a919d0516499f0459529931a33ae55f489b2c26a8c3c",
+      "url": "/assets/native/characters/mm_0179-c18ab2e1f75e.glb",
+      "sha256": "c18ab2e1f75e9c0fa50b40335255bde384bc2ae1b6b56c1815f3f5cc670fd395",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0179.glb",
       "clips": [
@@ -169,8 +282,8 @@
     },
     {
       "id": "character/mm_0180",
-      "url": "/assets/native/characters/mm_0180-dd6b6a2e504c.glb",
-      "sha256": "dd6b6a2e504c3b7f33da892f744fb748379788bf40854cb3eb93345552962f8f",
+      "url": "/assets/native/characters/mm_0180-d4aca3a4129d.glb",
+      "sha256": "d4aca3a4129d5001b637a877a96395a2e662bfa796ea81c5f8b19dafe4d2bcaa",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0180.glb",
       "clips": [
@@ -253,8 +366,8 @@
     },
     {
       "id": "character/mm_0181",
-      "url": "/assets/native/characters/mm_0181-6f08749256d7.glb",
-      "sha256": "6f08749256d7b037076de684c3eca309fe1b529fb4225fb4121350463b54bf83",
+      "url": "/assets/native/characters/mm_0181-bc3666eee589.glb",
+      "sha256": "bc3666eee5895b4b9aa087a44e77e143e633fe138eea8f16c080eb77a2697e1f",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0181.glb",
       "clips": [
@@ -336,9 +449,128 @@
       ]
     },
     {
+      "id": "character/mm_0182",
+      "url": "/assets/native/characters/mm_0182-69c6f0532712.glb",
+      "sha256": "69c6f053271227298a9bb1aaab382a81de12914c71f770cc8bf07e79c6f8dcb4",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0182/mm_0182.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ],
+      "faceAnimations": [
+        {
+          "material": "rstr0012_00_fi_face",
+          "frames": [
+            {
+              "id": 0,
+              "frame": 0,
+              "translation": [
+                0,
+                0
+              ]
+            },
+            {
+              "id": 1,
+              "frame": 10,
+              "translation": [
+                -0.25,
+                0
+              ]
+            },
+            {
+              "id": 2,
+              "frame": 20,
+              "translation": [
+                -0.5,
+                0
+              ]
+            },
+            {
+              "id": 3,
+              "frame": 30,
+              "translation": [
+                -0.75,
+                0
+              ]
+            },
+            {
+              "id": 4,
+              "frame": 40,
+              "translation": [
+                0,
+                -0.5
+              ]
+            },
+            {
+              "id": 5,
+              "frame": 50,
+              "translation": [
+                -0.25,
+                -0.5
+              ]
+            },
+            {
+              "id": 6,
+              "frame": 60,
+              "translation": [
+                -0.5,
+                -0.5
+              ]
+            },
+            {
+              "id": 7,
+              "frame": 70,
+              "translation": [
+                -0.75,
+                -0.5
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "character/mm_0187",
+      "url": "/assets/native/characters/mm_0187-127c5238f925.glb",
+      "sha256": "127c5238f925aa0b90e952bb95b520fadc875d4ee5071e8f5bce85a334a65eba",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0187/mm_0187.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0189",
+      "url": "/assets/native/characters/mm_0189-2c59a2db4f05.glb",
+      "sha256": "2c59a2db4f05db8c3cff29f66c939ddfaa695b04bf863bdadac936cb3711b45b",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0189/mm_0189.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0210",
+      "url": "/assets/native/characters/mm_0210-d65e1d9ac3ce.glb",
+      "sha256": "d65e1d9ac3ce0b6c1a569ce02ef672dc0cb926b7a08e18d482e9158b7ae04910",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0210/mm_0210.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0212",
-      "url": "/assets/native/characters/mm_0212-ac27329bbeb3.glb",
-      "sha256": "ac27329bbeb3143aaf291de33c2086c91787dbf54b1bc7c27584942851ee7238",
+      "url": "/assets/native/characters/mm_0212-3797abf4809c.glb",
+      "sha256": "3797abf4809c47d4c58379f0d1ed5815789fca2d068f276b3b50b3a770546e2a",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0212.glb",
       "clips": [
@@ -421,8 +653,8 @@
     },
     {
       "id": "character/mm_0218",
-      "url": "/assets/native/characters/mm_0218-fd0c0b77a9d0.glb",
-      "sha256": "fd0c0b77a9d076f87883bcb66e3afaa44d2604291c965660db6e99e7d8383032",
+      "url": "/assets/native/characters/mm_0218-04f4d7adabea.glb",
+      "sha256": "04f4d7adabea9c96b013b46cdf8787ead1f8aeb5fb6c2d4a728fbbf0eee88134",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0218.glb",
       "clips": [
@@ -434,8 +666,8 @@
     },
     {
       "id": "character/mm_0219",
-      "url": "/assets/native/characters/mm_0219-808cec0681ab.glb",
-      "sha256": "808cec0681ab32e344ba241c7f5eee539b281b1228658e5fb5f3fe418fbeaea7",
+      "url": "/assets/native/characters/mm_0219-8b67d12a006a.glb",
+      "sha256": "8b67d12a006a9202ff7ff5a0158d96ec2f1bf9a3e0b96e4825ec590cefbb5d19",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0219.glb",
       "clips": [
@@ -447,8 +679,8 @@
     },
     {
       "id": "character/mm_0220",
-      "url": "/assets/native/characters/mm_0220-ff7bc3069a7a.glb",
-      "sha256": "ff7bc3069a7a6706a29aa80d534a7d1ba6560c6b0c24b4ce853d73f811e5f7b9",
+      "url": "/assets/native/characters/mm_0220-8a15ce63a6d1.glb",
+      "sha256": "8a15ce63a6d1ea05f06ad16cd96b721fbf24b5d57b85dddfc3a174e036653415",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0220.glb",
       "clips": [
@@ -460,8 +692,8 @@
     },
     {
       "id": "character/mm_0221",
-      "url": "/assets/native/characters/mm_0221-16f75732b0e6.glb",
-      "sha256": "16f75732b0e68372f13446860f59994b1dc0ba521ab6100bb8db11c3438aabf8",
+      "url": "/assets/native/characters/mm_0221-8dec1f50a9f5.glb",
+      "sha256": "8dec1f50a9f5fc0da97b7e74660fd1250c71baecd023d77087f4530aed2430f1",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0221.glb",
       "clips": [
@@ -472,9 +704,21 @@
       ]
     },
     {
+      "id": "character/mm_0222",
+      "url": "/assets/native/characters/mm_0222-b6aaf0c9be5b.glb",
+      "sha256": "b6aaf0c9be5bc20ad947e173c2bf7794744fa6e9fc723d4c54fb7d73490e5234",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0222/mm_0222.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0223",
-      "url": "/assets/native/characters/mm_0223-48d1738dd6c4.glb",
-      "sha256": "48d1738dd6c4ac1931323e57e9dda8d044909513eba510219c94acb84e14ef7f",
+      "url": "/assets/native/characters/mm_0223-46e685a45075.glb",
+      "sha256": "46e685a4507567bc94d3a25ff8da839144f1d94800da3175fd22c31342ff3f18",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0223.glb",
       "clips": [
@@ -486,8 +730,8 @@
     },
     {
       "id": "character/mm_0225",
-      "url": "/assets/native/characters/mm_0225-1d7a7e443328.glb",
-      "sha256": "1d7a7e443328d028c38f190bae650e56d597429a79b8671722d7e9ae39beda46",
+      "url": "/assets/native/characters/mm_0225-648de6104cc0.glb",
+      "sha256": "648de6104cc087c45685c773f487782ae66e05b22c70fec5fe9ae1cf053b08fe",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0225.glb",
       "clips": [
@@ -512,8 +756,8 @@
     },
     {
       "id": "character/mm_0231",
-      "url": "/assets/native/characters/mm_0231-c29ee1fb909e.glb",
-      "sha256": "c29ee1fb909e9f59d1262690eca16c8322d09b24074b2472ff288ae9e774e474",
+      "url": "/assets/native/characters/mm_0231-16666162bf13.glb",
+      "sha256": "16666162bf13af04b4cc46ee487e894550e681de88cb92e65debe19708e8eec7",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0231.glb",
       "clips": [
@@ -524,9 +768,57 @@
       ]
     },
     {
+      "id": "character/mm_0232",
+      "url": "/assets/native/characters/mm_0232-8412b643e7cb.glb",
+      "sha256": "8412b643e7cb132df650646debc06615355acca1b8defcc3bcefc3a8db07cb62",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0232/mm_0232.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0233",
+      "url": "/assets/native/characters/mm_0233-9ee2c9e57cdb.glb",
+      "sha256": "9ee2c9e57cdb39fd88796f023abe4c2b4b45efaf6bfe5e74cb5a7ff0a9ab1245",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0233/mm_0233.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0234",
+      "url": "/assets/native/characters/mm_0234-fc2c62b10c21.glb",
+      "sha256": "fc2c62b10c2151c39c0ba1d6db3f5c0bf88e9e87d52a0e8b8ac73f848ca66e36",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0234/mm_0234.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0235",
+      "url": "/assets/native/characters/mm_0235-523c5b38b463.glb",
+      "sha256": "523c5b38b46356c36848e34ef726f571db83685b254a7a1ca3a477a613c2343a",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0235/mm_0235.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0236",
-      "url": "/assets/native/characters/mm_0236-c41aacc03800.glb",
-      "sha256": "c41aacc03800407e3b53a00446a0498a6ca490378dff6f6b897c8203b565bc29",
+      "url": "/assets/native/characters/mm_0236-f962c28368ec.glb",
+      "sha256": "f962c28368ec2d1531130c9ccb33f9c84d1152832cecaac32c3e9c8fe6ff989d",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0236.glb",
       "clips": [
@@ -537,9 +829,21 @@
       ]
     },
     {
+      "id": "character/mm_0237",
+      "url": "/assets/native/characters/mm_0237-a196c7b11b8a.glb",
+      "sha256": "a196c7b11b8a0e9f0d3c2852760aaf2b2e0944dd16a2486b149119f201bc4552",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0237/mm_0237.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0238",
-      "url": "/assets/native/characters/mm_0238-2523243f1098.glb",
-      "sha256": "2523243f10984029257271449ba1492ef868d3db48d579dce9fbcc37f5d90025",
+      "url": "/assets/native/characters/mm_0238-834834e36531.glb",
+      "sha256": "834834e365315ef249383a72d3be0074090c3aae3b3f9207b255a2d616152074",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0238.glb",
       "clips": [
@@ -551,8 +855,8 @@
     },
     {
       "id": "character/mm_0239",
-      "url": "/assets/native/characters/mm_0239-83501ba8fc20.glb",
-      "sha256": "83501ba8fc20db684070bf2ca5c428d0930e0c9ff389bd612668db3c9eb73a6b",
+      "url": "/assets/native/characters/mm_0239-1bfab36a9d98.glb",
+      "sha256": "1bfab36a9d98157de34670f34029b4989c66f85bc3e2f51943c750cc2c044b5c",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0239.glb",
       "clips": [
@@ -563,9 +867,21 @@
       ]
     },
     {
+      "id": "character/mm_0241",
+      "url": "/assets/native/characters/mm_0241-014bc8097af3.glb",
+      "sha256": "014bc8097af33bca51be7a0c99a6e893dbf0c08a74906113baa6434ed813655a",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0241/mm_0241.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0242",
-      "url": "/assets/native/characters/mm_0242-6c6fd31924a7.glb",
-      "sha256": "6c6fd31924a7e42e361aad238a2875b6df4b94a133f538e3bbef58d64f57050b",
+      "url": "/assets/native/characters/mm_0242-2d76c7fc00c8.glb",
+      "sha256": "2d76c7fc00c8dba8589ae978d832b00a925ef8f5d23ded3993c10c8d7634280d",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0242.glb",
       "clips": [
@@ -577,8 +893,8 @@
     },
     {
       "id": "character/mm_0244",
-      "url": "/assets/native/characters/mm_0244-bf9bdba289ec.glb",
-      "sha256": "bf9bdba289eca9386a8024ffcda8dd163c72ed68f657879b605095e184d1d43e",
+      "url": "/assets/native/characters/mm_0244-b32f819ed4ed.glb",
+      "sha256": "b32f819ed4edc845ae685d0174880c61b82014c4b674913e0baf669f6b6fc625",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0244.glb",
       "clips": [
@@ -603,8 +919,8 @@
     },
     {
       "id": "character/mm_0246",
-      "url": "/assets/native/characters/mm_0246-665988a33527.glb",
-      "sha256": "665988a33527163bc70cd0f6925075f636bf4fd065287d29adb62a7e036abcd2",
+      "url": "/assets/native/characters/mm_0246-32d686ee9c01.glb",
+      "sha256": "32d686ee9c01f253a2018c9d57dd346e2c0e660c6155ac7aeafc5beafd6f1475",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0246.glb",
       "clips": [
@@ -615,9 +931,33 @@
       ]
     },
     {
+      "id": "character/mm_0247",
+      "url": "/assets/native/characters/mm_0247-d6738d393bc6.glb",
+      "sha256": "d6738d393bc6d164bfcf32aca7d51a9640bffee15888768c6eb55ff282990f80",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0247/mm_0247.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0249",
+      "url": "/assets/native/characters/mm_0249-fc85a3328cd6.glb",
+      "sha256": "fc85a3328cd64f88172cc5868efc2fefcd007c4ffcd36609e273ec5ae4c1c020",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0249/mm_0249.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0252",
-      "url": "/assets/native/characters/mm_0252-dcaebda6edd7.glb",
-      "sha256": "dcaebda6edd7eae0521b86fcce3e3a84959e9b420095841dd678413a3b0cbfdf",
+      "url": "/assets/native/characters/mm_0252-a44a5f58b3d2.glb",
+      "sha256": "a44a5f58b3d2ce9b01a7369aa5f9c8c20269fbfb4479b0e14dd49e4ea086087c",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0252.glb",
       "clips": [
@@ -629,8 +969,8 @@
     },
     {
       "id": "character/mm_0254",
-      "url": "/assets/native/characters/mm_0254-e43ac7317198.glb",
-      "sha256": "e43ac7317198ad46af60ec848625001e592dd23fa0a3c7cc6be5765fda3e3a27",
+      "url": "/assets/native/characters/mm_0254-a1407c07ddc7.glb",
+      "sha256": "a1407c07ddc72634854995e62aa0d72efe74b1e4e11d645bd7f81a66d3b3160a",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0254.glb",
       "clips": [
@@ -642,8 +982,8 @@
     },
     {
       "id": "character/mm_0255",
-      "url": "/assets/native/characters/mm_0255-aa60a51f472d.glb",
-      "sha256": "aa60a51f472d497238c5af1fc8d44e9943a86b5bce42d4b406bb2c83c694d84d",
+      "url": "/assets/native/characters/mm_0255-b0a52a3aee3c.glb",
+      "sha256": "b0a52a3aee3c89f26a365b518994a361d58df228ccd6b718c882ba8e2e05ba1c",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0255.glb",
       "clips": [
@@ -655,8 +995,8 @@
     },
     {
       "id": "character/mm_0256",
-      "url": "/assets/native/characters/mm_0256-9d5aec72199a.glb",
-      "sha256": "9d5aec72199a2e08c2c1045a1cf0e9247551cd93965b2ecafd087b9353c3562d",
+      "url": "/assets/native/characters/mm_0256-05ae21294bee.glb",
+      "sha256": "05ae21294beebbd5f0c3c48fab870d055fb3a5145bc4750b28ce00c713686ad4",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0256.glb",
       "clips": [
@@ -667,9 +1007,21 @@
       ]
     },
     {
+      "id": "character/mm_0257",
+      "url": "/assets/native/characters/mm_0257-97b676a502bc.glb",
+      "sha256": "97b676a502bc43b255d904dae1dcb54f627c9ed2a91e7cfc6c9481dddae98383",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0257/mm_0257.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0259",
-      "url": "/assets/native/characters/mm_0259-a93209c78824.glb",
-      "sha256": "a93209c78824614bab3e67bca6eff6e628b282142abb2e74fc109e87e558a20f",
+      "url": "/assets/native/characters/mm_0259-93d31d6ffc35.glb",
+      "sha256": "93d31d6ffc350e449c12d7c69a5e0f20fd1e497b3a9e42873898865bdc3f743a",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0259.glb",
       "clips": [
@@ -680,9 +1032,69 @@
       ]
     },
     {
+      "id": "character/mm_0260",
+      "url": "/assets/native/characters/mm_0260-7d74506b69d3.glb",
+      "sha256": "7d74506b69d32966ea352ffda74dd2ce3f6c1f3d96fdc694601970ba950aced4",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0260/mm_0260.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0261",
+      "url": "/assets/native/characters/mm_0261-4c67aab463ca.glb",
+      "sha256": "4c67aab463ca698efde058f840e2a53caf3b91fe28f4eec8f60e532db4bc0da8",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0261/mm_0261.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0262",
+      "url": "/assets/native/characters/mm_0262-1d0f03064ed2.glb",
+      "sha256": "1d0f03064ed29dffe0e29ba6e529f107d23cd6884e77d6f5e109eb9e74264af2",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0262/mm_0262.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0264",
+      "url": "/assets/native/characters/mm_0264-9bc7b8d3362c.glb",
+      "sha256": "9bc7b8d3362ce7c0257be5569173155c1af2cf3e5037368b603ffd6126d09da7",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0264/mm_0264.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0265",
+      "url": "/assets/native/characters/mm_0265-0d43b2a7c75a.glb",
+      "sha256": "0d43b2a7c75ac0e4883377a5cdc387e0febf69d726b6da93e8f02dcfde297299",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0265/mm_0265.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0266",
-      "url": "/assets/native/characters/mm_0266-7d5b4d0d9970.glb",
-      "sha256": "7d5b4d0d99705e9b5f0c886fd82817a4f29f5388e53483d6475addf856bcaa8c",
+      "url": "/assets/native/characters/mm_0266-c0662141ef3f.glb",
+      "sha256": "c0662141ef3f8556aa925a27f9523a71f7117f4f7648e5f94cf05fd0c65c5b8f",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0266.glb",
       "clips": [
@@ -694,8 +1106,8 @@
     },
     {
       "id": "character/mm_0267",
-      "url": "/assets/native/characters/mm_0267-4a36e9493797.glb",
-      "sha256": "4a36e949379756e1879bdfa2083d8d6b85e5377b608e988d429b249cd5cd861d",
+      "url": "/assets/native/characters/mm_0267-5700519ddac0.glb",
+      "sha256": "5700519ddac0364aa3f4287577afba321f955fd531f6005b3c0b683924328ba0",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0267.glb",
       "clips": [
@@ -720,8 +1132,8 @@
     },
     {
       "id": "character/mm_0271",
-      "url": "/assets/native/characters/mm_0271-698787ee45a4.glb",
-      "sha256": "698787ee45a44fa56be1d331986726f350aa394ff6fcbe8cb76c0ccb04fd2ea1",
+      "url": "/assets/native/characters/mm_0271-c7f6fd4d1902.glb",
+      "sha256": "c7f6fd4d190293963991460190b50e5fe8ba208bb8da680ed236908f4b2338d9",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0271.glb",
       "clips": [
@@ -733,8 +1145,8 @@
     },
     {
       "id": "character/mm_0275",
-      "url": "/assets/native/characters/mm_0275-39084e69d362.glb",
-      "sha256": "39084e69d362c70f934900679b5ee679ab349775192c9265220716ccf789ea79",
+      "url": "/assets/native/characters/mm_0275-10321342a069.glb",
+      "sha256": "10321342a0691be4fd6b503d7cb6db3e5b711fe6b4287c5bdd78069c7bad5fbf",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0275.glb",
       "clips": [
@@ -745,9 +1157,33 @@
       ]
     },
     {
+      "id": "character/mm_0276",
+      "url": "/assets/native/characters/mm_0276-0a03a8df9916.glb",
+      "sha256": "0a03a8df991683caa57662fc85a07efaa40387bb35b9308818b16d0c0872fe67",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0276/mm_0276.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0277",
+      "url": "/assets/native/characters/mm_0277-c81e944422de.glb",
+      "sha256": "c81e944422de1e176806213ba5ce858c22eeb97b716f4296683b773ac1bfc7d0",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0277/mm_0277.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0280",
-      "url": "/assets/native/characters/mm_0280-8d4e031bce9d.glb",
-      "sha256": "8d4e031bce9dcaae580ea8f8fd4bbb454dcb537dca3ee6929d4ab8ecb5ec79cb",
+      "url": "/assets/native/characters/mm_0280-b3c774562f83.glb",
+      "sha256": "b3c774562f8335d63a9915c985ee774851270f555dbf1ebeaa80843d02670f1b",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0280.glb",
       "clips": [
@@ -759,8 +1195,8 @@
     },
     {
       "id": "character/mm_0281",
-      "url": "/assets/native/characters/mm_0281-e09cd97b6e73.glb",
-      "sha256": "e09cd97b6e73b2e75e70699355622d4b0c9b78107984f8ddc7cb0fb0dafe1f01",
+      "url": "/assets/native/characters/mm_0281-e118eb892d5f.glb",
+      "sha256": "e118eb892d5f3bd4d754a139fb250974c5e6e1fa60a074214da9b44aeab27760",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0281.glb",
       "clips": [
@@ -772,8 +1208,8 @@
     },
     {
       "id": "character/mm_0283",
-      "url": "/assets/native/characters/mm_0283-0b0a2a0cd9bb.glb",
-      "sha256": "0b0a2a0cd9bba5d139dc50ab139bb62a53e5da0b449fa534cf0a6b0f09f5f7cb",
+      "url": "/assets/native/characters/mm_0283-d73318715940.glb",
+      "sha256": "d7331871594087d6c3299381867d3671475052bc0aa1f5fb8d3631eddc0445bc",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0283.glb",
       "clips": [
@@ -785,8 +1221,8 @@
     },
     {
       "id": "character/mm_0284",
-      "url": "/assets/native/characters/mm_0284-afc1227e8942.glb",
-      "sha256": "afc1227e8942e07dbd189109365f6d509739ac25c334d0f4cbd4434e812133ad",
+      "url": "/assets/native/characters/mm_0284-8406b22da89f.glb",
+      "sha256": "8406b22da89f3b30e66ea868910f413561187bf6385e7823735f34aa7e349f6b",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0284.glb",
       "clips": [
@@ -797,9 +1233,21 @@
       ]
     },
     {
+      "id": "character/mm_0285",
+      "url": "/assets/native/characters/mm_0285-0760c2a86bf8.glb",
+      "sha256": "0760c2a86bf84eda40f7eceef6b9716abd5c222e8be5335d0ed7b378dbb0ffe5",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0285/mm_0285.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0286",
-      "url": "/assets/native/characters/mm_0286-013fd8bfad94.glb",
-      "sha256": "013fd8bfad945ee4526d182343b02b1095776b48fac3f31ef867976fb936bafe",
+      "url": "/assets/native/characters/mm_0286-2a9f9811c560.glb",
+      "sha256": "2a9f9811c560080319dcc31f10f9b223a286713137b3afef40d8850dd8cd86f3",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0286.glb",
       "clips": [
@@ -811,8 +1259,8 @@
     },
     {
       "id": "character/mm_0287",
-      "url": "/assets/native/characters/mm_0287-2fc5207c8851.glb",
-      "sha256": "2fc5207c88519e90425ad2b87facd591d3d31a13ef6006b2664d2fac311c63e2",
+      "url": "/assets/native/characters/mm_0287-eeec5072a505.glb",
+      "sha256": "eeec5072a5053c9e12ae5099bc4c8dc81b671eb6f7bc72b724ba9bcf4092dc79",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0287.glb",
       "clips": [
@@ -824,8 +1272,8 @@
     },
     {
       "id": "character/mm_0288",
-      "url": "/assets/native/characters/mm_0288-fb4379c1d942.glb",
-      "sha256": "fb4379c1d942ef3e9c7cf2859b4d365463472add6fa5020bc91613f2cefd561d",
+      "url": "/assets/native/characters/mm_0288-c724be870081.glb",
+      "sha256": "c724be870081cc8ea5b4da059c191d936cb34c738e9a30ce7620dad6fa948c11",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0288.glb",
       "clips": [
@@ -837,8 +1285,8 @@
     },
     {
       "id": "character/mm_0289",
-      "url": "/assets/native/characters/mm_0289-9cdf235715d2.glb",
-      "sha256": "9cdf235715d2d18f567597f17fe7a48d173c9607c2a373fa2ce37d56149e5b3c",
+      "url": "/assets/native/characters/mm_0289-0ac8e97fd645.glb",
+      "sha256": "0ac8e97fd6458dfd75a0487e4a7066e5e1ebf1a0d91ad2d9e784a546ad42e7c1",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0289.glb",
       "clips": [
@@ -850,8 +1298,8 @@
     },
     {
       "id": "character/mm_0296",
-      "url": "/assets/native/characters/mm_0296-49915c1b2bba.glb",
-      "sha256": "49915c1b2bba84b7164f12cc98c3438abe7931cda61e31f3d024b5765d2d3443",
+      "url": "/assets/native/characters/mm_0296-f2ca034cae61.glb",
+      "sha256": "f2ca034cae618b726d5445d54a4d1eb07a8b0b360c0bc4db9d7000558e54b419",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0296.glb",
       "clips": [
@@ -863,8 +1311,8 @@
     },
     {
       "id": "character/mm_0298",
-      "url": "/assets/native/characters/mm_0298-b2b1887b9f69.glb",
-      "sha256": "b2b1887b9f69b0216bfeb69a7ec55577ca808f16799e548f1a7e1c6caca3dadd",
+      "url": "/assets/native/characters/mm_0298-f21d9066e37d.glb",
+      "sha256": "f21d9066e37dc3f19bd3c52ca5cd59e4d3b04bef387cba71c2941fbbcf97f56f",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0298.glb",
       "clips": [
@@ -876,8 +1324,8 @@
     },
     {
       "id": "character/mm_0299",
-      "url": "/assets/native/characters/mm_0299-157626c5a39b.glb",
-      "sha256": "157626c5a39b3121ae2ff3d81d2d30b9e417cb8dc963ea9fc26b789cb3aa3efb",
+      "url": "/assets/native/characters/mm_0299-11331f49d34d.glb",
+      "sha256": "11331f49d34ddd941e52b23d03e988d8ff17fcb376e4588c0ac456d00664c6ec",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0299.glb",
       "clips": [
@@ -888,9 +1336,21 @@
       ]
     },
     {
+      "id": "character/mm_0300",
+      "url": "/assets/native/characters/mm_0300-5c9ff6a30dab.glb",
+      "sha256": "5c9ff6a30dab3a0497b55aa1de015752839a83531c614b2868d238034d8263ee",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0300/mm_0300.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0301",
-      "url": "/assets/native/characters/mm_0301-a9fc69bd43ab.glb",
-      "sha256": "a9fc69bd43ab5ee3e98e86424af58a09e981f874e4f00be4bd1d90b48b25cb28",
+      "url": "/assets/native/characters/mm_0301-479e7112f3eb.glb",
+      "sha256": "479e7112f3eb38fe8d389de46697f568aafa6befe183426bd682eb3ac699746d",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0301.glb",
       "clips": [
@@ -902,8 +1362,8 @@
     },
     {
       "id": "character/mm_0302",
-      "url": "/assets/native/characters/mm_0302-76411d9a22bc.glb",
-      "sha256": "76411d9a22bc8c87896fc930823a4d4d4a09a5418b78ad7b8e5ad0ed5ecbe488",
+      "url": "/assets/native/characters/mm_0302-2f8792849140.glb",
+      "sha256": "2f8792849140409d02dd2ff683ab136f3314e76d72c3c6875c705948252eb73d",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0302.glb",
       "clips": [
@@ -915,8 +1375,8 @@
     },
     {
       "id": "character/mm_0303",
-      "url": "/assets/native/characters/mm_0303-9a3bc037d50f.glb",
-      "sha256": "9a3bc037d50f46eaf53e65d6266a337c88ee2470b5a8c99d9598319eaeebbe26",
+      "url": "/assets/native/characters/mm_0303-73f5880cb5eb.glb",
+      "sha256": "73f5880cb5eb785ae87be85b42396135ade512dc2d60ca1422e6c7c481773279",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0303.glb",
       "clips": [
@@ -941,8 +1401,8 @@
     },
     {
       "id": "character/mm_0306",
-      "url": "/assets/native/characters/mm_0306-0a663933716c.glb",
-      "sha256": "0a663933716c939a0f7605dddfe55092840350bbca61e535e47999327b90c9ef",
+      "url": "/assets/native/characters/mm_0306-9b3e91b04d40.glb",
+      "sha256": "9b3e91b04d408459fc18dc3e58b65459f85c4fa70d7137bb75cd020b4b34fe22",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0306.glb",
       "clips": [
@@ -954,8 +1414,8 @@
     },
     {
       "id": "character/mm_0307",
-      "url": "/assets/native/characters/mm_0307-afbd2e91a801.glb",
-      "sha256": "afbd2e91a8019a14c0cfd8b9b4906bac58e2dca7b6ccb9f8d0cdab1566e722db",
+      "url": "/assets/native/characters/mm_0307-b34108b95099.glb",
+      "sha256": "b34108b950995376a8ff160b33b855da1d3b8382a3b41f2c447b360f90523b5d",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0307.glb",
       "clips": [
@@ -963,6 +1423,18 @@
         "walk",
         "overworld_002",
         "overworld_000"
+      ]
+    },
+    {
+      "id": "character/mm_0309",
+      "url": "/assets/native/characters/mm_0309-93753e7e246c.glb",
+      "sha256": "93753e7e246c31dc1cd3463fb702a28cd1458dcd067199301d667b9b1c3e6cc8",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0309/mm_0309.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
       ]
     },
     {
@@ -975,8 +1447,8 @@
     },
     {
       "id": "character/mm_0314",
-      "url": "/assets/native/characters/mm_0314-d5918ea6dc77.glb",
-      "sha256": "d5918ea6dc77c43ce3d366d35c0b110c7abbaff8da8f692e4ff45b117d7ad4f5",
+      "url": "/assets/native/characters/mm_0314-6a5e601384ab.glb",
+      "sha256": "6a5e601384ab124301d4896a27264c70bf44350c42b4a773f61447171537cf55",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0314.glb",
       "clips": [
@@ -1059,8 +1531,8 @@
     },
     {
       "id": "character/mm_0315",
-      "url": "/assets/native/characters/mm_0315-0e785f6fc374.glb",
-      "sha256": "0e785f6fc374d47579bd477f9d0efb6c6c804d05c952a6bc0a67561ec3458dd0",
+      "url": "/assets/native/characters/mm_0315-3aa3b5d4c326.glb",
+      "sha256": "3aa3b5d4c3262988cd1470cfdc9300fae6704b4c3b09e1f5260d3ab189392302",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0315.glb",
       "clips": [
@@ -1143,8 +1615,8 @@
     },
     {
       "id": "character/mm_0318",
-      "url": "/assets/native/characters/mm_0318-8460c67d980f.glb",
-      "sha256": "8460c67d980f08a9526456e8b1d3f2c3f2d9a9ebafc5a7f51030cc3d45cd34de",
+      "url": "/assets/native/characters/mm_0318-8f8d4fc602da.glb",
+      "sha256": "8f8d4fc602da5f8260c900e8d69180e069b753bb9fc7a0d6e9dbb6cb7a17e687",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0318.glb",
       "clips": [
@@ -1155,8 +1627,8 @@
     },
     {
       "id": "character/mm_0319",
-      "url": "/assets/native/characters/mm_0319-9b8a9b6c38e1.glb",
-      "sha256": "9b8a9b6c38e1b84add63082e996063a0e6c2bdc8ae725b34b0fc10ea8ceef9de",
+      "url": "/assets/native/characters/mm_0319-e10b64bdc72e.glb",
+      "sha256": "e10b64bdc72efc891d0d3c4be0b9c29eac70722a7a48e7a5bd762dea362dc4f6",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0319.glb",
       "clips": [
@@ -1167,9 +1639,33 @@
       ]
     },
     {
+      "id": "character/mm_0320",
+      "url": "/assets/native/characters/mm_0320-b08bdce0e21d.glb",
+      "sha256": "b08bdce0e21d737f53c3b9444000b48a471e8531eb43678f19b2025d6b449e3c",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0320/mm_0320.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0321",
+      "url": "/assets/native/characters/mm_0321-48754a8e45a7.glb",
+      "sha256": "48754a8e45a7bcd12ea051592e2e0d1c7489ee564caa86131b52f352107a951b",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0321/mm_0321.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0322",
-      "url": "/assets/native/characters/mm_0322-3485956cba79.glb",
-      "sha256": "3485956cba79545ed2917701ba3a0b26b3c02a5c4de90fdcf48e3e080f4f3515",
+      "url": "/assets/native/characters/mm_0322-5f5525bde229.glb",
+      "sha256": "5f5525bde22971398a9a7134b4a6d401fce2b4a9df6a4ec263a7dc20dac1b3a7",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0322.glb",
       "clips": [
@@ -1180,9 +1676,45 @@
       ]
     },
     {
+      "id": "character/mm_0333",
+      "url": "/assets/native/characters/mm_0333-ccada447fb28.glb",
+      "sha256": "ccada447fb285017feb83bf155f7f2864b8957d9c0fe390ed08de32fe9710d8d",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0333/mm_0333.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0340",
+      "url": "/assets/native/characters/mm_0340-7ff086e557e6.glb",
+      "sha256": "7ff086e557e61c66d1f6b5a2a582a8260a7e0bc4a4658ff008fd676ee0f11b79",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0340/mm_0340.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
+      "id": "character/mm_0341",
+      "url": "/assets/native/characters/mm_0341-5728d70a2f18.glb",
+      "sha256": "5728d70a2f18484bf143f11f182773510d3c19545b9d3cd9c3c2009120d21a62",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/characters/mm_0341/mm_0341.glb",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002"
+      ]
+    },
+    {
       "id": "character/mm_0344",
-      "url": "/assets/native/characters/mm_0344-e522660f3103.glb",
-      "sha256": "e522660f3103a223287d06cf268627cc380a7b0df7b63faf10472371c23af0d3",
+      "url": "/assets/native/characters/mm_0344-b924c255ad10.glb",
+      "sha256": "b924c255ad104aba119cec316e9c3cc2c49da46ac8efa5a3e320a16565819ee8",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0344.glb",
       "clips": [
@@ -1194,8 +1726,8 @@
     },
     {
       "id": "character/mm_0345",
-      "url": "/assets/native/characters/mm_0345-1c66a3dd3bbe.glb",
-      "sha256": "1c66a3dd3bbe710f5b4fad0dcd5c9c0d77ebb1c853bb0f2c40ee0858abc6c6b4",
+      "url": "/assets/native/characters/mm_0345-c4ed7a7657a2.glb",
+      "sha256": "c4ed7a7657a293385d5c1d9f415e39f42f791f4a6d4ccb838c4d74ea13d5ea0f",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0345.glb",
       "clips": [
@@ -1207,8 +1739,8 @@
     },
     {
       "id": "character/mm_0346",
-      "url": "/assets/native/characters/mm_0346-fc8092cfcfc7.glb",
-      "sha256": "fc8092cfcfc7684f08d90b77d16760c4750547ab4df20ce913bddabe40bd3f5a",
+      "url": "/assets/native/characters/mm_0346-f03821c75e28.glb",
+      "sha256": "f03821c75e2849db3d19f8eac8328a2f373592e96a81de63c25aec06855bede2",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0346.glb",
       "clips": [
@@ -1220,8 +1752,8 @@
     },
     {
       "id": "character/mm_0347",
-      "url": "/assets/native/characters/mm_0347-88335e2e94a6.glb",
-      "sha256": "88335e2e94a6e980ff3d8001b050b908c3e1ee5e122357897c361b6aa4ca68ed",
+      "url": "/assets/native/characters/mm_0347-a94fa0add561.glb",
+      "sha256": "a94fa0add561b7b0742a351791323e42debfc40b6b806ad245f9930271b4b402",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0347.glb",
       "clips": [
@@ -1800,6 +2332,10 @@
   ],
   "unavailable": [
     {
+      "id": "character/mm_0000",
+      "reason": "MM has only the model section"
+    },
+    {
       "id": "character/mm_0122",
       "reason": "MM has only the model section"
     },
@@ -1816,6 +2352,38 @@
       "reason": "MM has only the model section"
     },
     {
+      "id": "character/mm_0126",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0127",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0128",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0129",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0130",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0131",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0132",
+      "reason": "MM has only the model section"
+    },
+    {
+      "id": "character/mm_0133",
+      "reason": "MM has only the model section"
+    },
+    {
       "id": "character/mm_0312",
       "reason": "MM has only the model section"
     },
@@ -1824,11 +2392,19 @@
       "reason": "Unhandled exception. System.IO.InvalidDataException: Segment scale compensation has a zero parent scale."
     },
     {
+      "id": "character/mm_4115",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
       "id": "character/mm_4133",
       "reason": "Unmapped ROM actor model id"
     },
     {
       "id": "character/mm_4134",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4137",
       "reason": "Unmapped ROM actor model id"
     },
     {
@@ -1840,7 +2416,23 @@
       "reason": "Unmapped ROM actor model id"
     },
     {
+      "id": "character/mm_4149",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4150",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4151",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
       "id": "character/mm_4153",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_4155",
       "reason": "Unmapped ROM actor model id"
     },
     {
@@ -1849,6 +2441,10 @@
     },
     {
       "id": "character/mm_8192",
+      "reason": "Unmapped ROM actor model id"
+    },
+    {
+      "id": "character/mm_8193",
       "reason": "Unmapped ROM actor model id"
     },
     {

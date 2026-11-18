@@ -1,8 +1,96 @@
 [
   {
+    "model": "0000",
+    "mm_sha256": "4bfea6d76d2f576870a8b503db723177f96bd2eab6b7cc6953069844e7dcb3d8",
+    "faces": [
+      {
+        "material": "npc_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00432567,
+          0.996569,
+          0.00700237,
+          1.00029
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "dummy_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "5912c99502fb731db11033125a1a74fa362190bdb8b95a97e5d4d577152cce2c",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.004325670190155506,
+          0.9965689778327942,
+          -0.0002899169921875,
+          0.9929976463317871
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0000",
+    "glb_sha256": "ec8eabc7bf996fb5c48d4a8c8b8ab46d2437f872cf1a1f590cf828c1c82496e8",
+    "source_glb": "rom/extracted/models/characters/mm_0000/mm_0000.glb"
+  },
+  {
     "model": "0045",
     "mm_sha256": "e3168a935f7da4730a72023671e7f8cafc497c0ec2e4bc96cc2524beddced751",
-    "faces": [],
+    "faces": [
+      {
+        "material": "tr0058_00_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0105932,
+          0.991981,
+          0.0232442,
+          0.994715
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "tr0058_00_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "c5dbb8f1b267a11b8af8fc8383be63c4c1104bbde177eb936c26f72c49e111cf",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.010593200102448463,
+          0.9919809699058533,
+          0.005285024642944336,
+          0.9767557978630066
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0045",
     "glb_sha256": "f351711ff33b9c7227f36071d8d6e8c3d5f82d53a6f46fcaa68a46cd8917059e",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0045.glb"
@@ -40,6 +128,70 @@
     "source_glb": "rom/extracted/models/characters/mm_0125/mm_0125.glb"
   },
   {
+    "model": "0126",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0126",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0126/mm_0126.glb"
+  },
+  {
+    "model": "0127",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0127",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0127/mm_0127.glb"
+  },
+  {
+    "model": "0128",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0128",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0128/mm_0128.glb"
+  },
+  {
+    "model": "0129",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0129",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0129/mm_0129.glb"
+  },
+  {
+    "model": "0130",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0130",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0130/mm_0130.glb"
+  },
+  {
+    "model": "0131",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0131",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0131/mm_0131.glb"
+  },
+  {
+    "model": "0132",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0132",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0132/mm_0132.glb"
+  },
+  {
+    "model": "0133",
+    "mm_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+    "faces": [],
+    "id": "character/mm_0133",
+    "glb_sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+    "source_glb": "rom/extracted/models/characters/mm_0133/mm_0133.glb"
+  },
+  {
     "model": "0179",
     "mm_sha256": "9664eb2ea3995d91402199d18928cfe2b61f269b430db2acb7106c420041643a",
     "faces": [
@@ -48,6 +200,7 @@
         "animation": "rstr0009_00_eye01",
         "frames": 30,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           0.00126423,
@@ -103,7 +256,55 @@
               0
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          0.0012642299989238381,
+          0.24882100522518158,
+          0.013640999794006348,
+          0.991980791091919
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0009_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          1.01636,
+          1.97189,
+          0.0163083,
+          0.987448
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0009_00_fi_head",
+        "width": 128,
+        "height": 64,
+        "rgba_sha256": "6593a16420dcf35299a1e87301e3234ff67d25721b05a90d294cde7495fd1ced",
+        "palette": [],
+        "glb_uv_bounds": [
+          1.0163599252700806,
+          1.9718899726867676,
+          0.012552022933959961,
+          0.9836916923522949
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0179",
@@ -119,6 +320,7 @@
         "animation": "rstr0010_00_eye01",
         "frames": 70,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           0.0066808,
@@ -206,7 +408,55 @@
               -0.5
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          0.00668080011382699,
+          0.24159500002861023,
+          0.006663978099822998,
+          0.45926398038864136
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0010_00_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.118974,
+          0.995037,
+          0.00965154,
+          0.993756
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0010_00_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "44107049ec5d4f26de9eeab81b20074cc61e4aa442b8be9265697da19e959880",
+        "palette": [],
+        "glb_uv_bounds": [
+          -0.1189740002155304,
+          0.9950370192527771,
+          0.006244003772735596,
+          0.9903484582901001
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0180",
@@ -222,6 +472,7 @@
         "animation": "rstr0011_00_eye01",
         "frames": 70,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           0.0066808,
@@ -309,12 +560,564 @@
               -0.5
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          0.00668080011382699,
+          0.24159500002861023,
+          0.006663978099822998,
+          0.45926398038864136
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0011_00_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.118974,
+          0.995037,
+          0.00965154,
+          0.993756
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0011_00_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "44107049ec5d4f26de9eeab81b20074cc61e4aa442b8be9265697da19e959880",
+        "palette": [],
+        "glb_uv_bounds": [
+          -0.1189740002155304,
+          0.9950370192527771,
+          0.006244003772735596,
+          0.9903484582901001
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0181",
     "glb_sha256": "00c25fbd14bcfb75afe8ba076e3e4417b9edcecfd99e6a839fded835ea8e9dd3",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0181.glb"
+  },
+  {
+    "model": "0182",
+    "mm_sha256": "dec5300361ab1881dcdfef7dd8e8b0f464692f22e7431311e7f8ded90874f7c1",
+    "faces": [
+      {
+        "material": "rstr0012_00_fi_face",
+        "animation": "rstr0012_00_eye01",
+        "frames": 70,
+        "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00241062,
+          0.242908,
+          0.506137,
+          0.970827
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0012_00_fi_face",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "70f137809e99113dda0469fa54d9489cd067c0077d6987ff2a06dd3c89b6209e",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          },
+          {
+            "id": 3,
+            "frame": 30,
+            "translation": [
+              -0.75,
+              0
+            ]
+          },
+          {
+            "id": 4,
+            "frame": 40,
+            "translation": [
+              0,
+              -0.5
+            ]
+          },
+          {
+            "id": 5,
+            "frame": 50,
+            "translation": [
+              -0.25,
+              -0.5
+            ]
+          },
+          {
+            "id": 6,
+            "frame": 60,
+            "translation": [
+              -0.5,
+              -0.5
+            ]
+          },
+          {
+            "id": 7,
+            "frame": 70,
+            "translation": [
+              -0.75,
+              -0.5
+            ]
+          }
+        ],
+        "glb_uv_bounds": [
+          0.0024106199853122234,
+          0.24290800094604492,
+          0.02917301654815674,
+          0.49386298656463623
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0012_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.992734,
+          -0.00938899,
+          0.0271933,
+          0.99126
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0012_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "00f4cc820ad7fb66ca372f37cbc1b34a0e9ad862af2989ec3a4eaaf5559addf2",
+        "palette": [],
+        "glb_uv_bounds": [
+          -0.9927340149879456,
+          -0.009388989768922329,
+          0.008740007877349854,
+          0.9728066921234131
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0182",
+    "glb_sha256": "8901e594d4b9f7645bef65627a00260806f0614adf0b46c714cb66d9d7a00732",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0182/mm_0182.glb"
+  },
+  {
+    "model": "0187",
+    "mm_sha256": "d601df35d54dda40c223f37152ab7cc386c0ef0c8efc3a4b93df24a6f7e06092",
+    "faces": [
+      {
+        "material": "rstr0017_00_fi_faceMat",
+        "animation": "rstr0017_00_eye01",
+        "frames": 20,
+        "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.997281,
+          -0.750387,
+          0.0147341,
+          0.988034
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0017_00_fi_face",
+        "width": 256,
+        "height": 64,
+        "rgba_sha256": "0c5f4b2af5cf5e26bfa8e8a579ab880b6283f37ee5c162cffa84b3cc3f30d049",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          }
+        ],
+        "glb_uv_bounds": [
+          -0.997281014919281,
+          -0.7503870129585266,
+          0.01196599006652832,
+          0.9852659106254578
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0017_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00386435,
+          0.989493,
+          0.00823903,
+          0.990845
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0017_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "9aaa92869eb5f47813bf7ac860ac6a42417c439fce4a2c10203c451171b7ee7d",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0038643500301986933,
+          0.9894930124282837,
+          0.009154975414276123,
+          0.9917609691619873
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0187",
+    "glb_sha256": "959a1cfed24893860bf958001c5e2f58f4243a6cca9a974ea052811192287ed2",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0187/mm_0187.glb"
+  },
+  {
+    "model": "0189",
+    "mm_sha256": "47ef8581d78c24d218c6e07fe3bb9b1ec65d81ec8483858f36c5fdf61e28cce2",
+    "faces": [
+      {
+        "material": "rstr0019_00_fi_faceMat",
+        "animation": "rstr0019_00_eye01",
+        "frames": 20,
+        "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.998464,
+          -0.755926,
+          0.007002,
+          0.990009
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0019_00_fi_face",
+        "width": 256,
+        "height": 64,
+        "rgba_sha256": "c4865120c6db8472112e53d85be6ef6d549d2c7d92c47978fc4786c74984652a",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          }
+        ],
+        "glb_uv_bounds": [
+          -0.9984639883041382,
+          -0.7559260129928589,
+          0.009990990161895752,
+          0.9929980039596558
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0019_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.007368,
+          0.9928,
+          0.010087,
+          0.988791
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0019_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "6d7a0e7a8ca02bd644e3550921afd456061940dba4d7a6ddb133595f0edca9f1",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007367999758571386,
+          0.9927999973297119,
+          0.01120901107788086,
+          0.9899129867553711
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0189",
+    "glb_sha256": "00af8fbc8335f904abbdec30f796619f2a318e60760183e051f766e44bb88de0",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0189/mm_0189.glb"
+  },
+  {
+    "model": "0210",
+    "mm_sha256": "2bd5bff6a2149b33d5135fb007cc18df48456b632869ae2959c9bc23ff1936ba",
+    "faces": [
+      {
+        "material": "rstr0040_00_fi_face",
+        "animation": "rstr0040_00_eye01",
+        "frames": 40,
+        "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0067718,
+          0.244611,
+          0.504828,
+          0.995244
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0040_00_fi_face",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "0f82208ad1c8ce686a4175affc2ca3fb165488447ae5faf3252f1c985c3a57b1",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.25,
+              0
+            ]
+          },
+          {
+            "id": 2,
+            "frame": 20,
+            "translation": [
+              -0.5,
+              0
+            ]
+          },
+          {
+            "id": 3,
+            "frame": 30,
+            "translation": [
+              -0.75,
+              0
+            ]
+          },
+          {
+            "id": 4,
+            "frame": 40,
+            "translation": [
+              0,
+              -0.5
+            ]
+          }
+        ],
+        "glb_uv_bounds": [
+          0.006771800108253956,
+          0.244610995054245,
+          0.004755973815917969,
+          0.49517202377319336
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0040_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.987217,
+          -0.00838017,
+          -0.989126,
+          -0.0118647
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0040_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "c04b0874637eb7b0f76f9282afc55b760b1b92d06bb657550f5ee2097e894038",
+        "palette": [],
+        "glb_uv_bounds": [
+          -0.9872170090675354,
+          -0.008380169980227947,
+          1.0118646621704102,
+          1.9891259670257568
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0210",
+    "glb_sha256": "382d429254010eea25d1fc8bcb22398a994792010edf149833b3c0570f327f13",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0210/mm_0210.glb"
   },
   {
     "model": "0212",
@@ -325,6 +1128,7 @@
         "animation": "rstr0042_00_eye01",
         "frames": 70,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           -0.993228,
@@ -412,7 +1216,55 @@
               -0.5
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          -0.993228018283844,
+          -0.7553889751434326,
+          0.004755973815917969,
+          0.49517202377319336
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0042_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0179752,
+          3.31316,
+          0.018943,
+          3.22869
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0042_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "56bdc19dc4220916d8356a87dea18086b9b3007a02295f15aad39314aa245238",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.017975199967622757,
+          3.313159942626953,
+          -2.2286899089813232,
+          0.9810569882392883
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0212",
@@ -422,7 +1274,47 @@
   {
     "model": "0218",
     "mm_sha256": "6218479d8272c1922a979ede014c7b1e688aec0e4e816109c27dc249862b22aa",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0101_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.000839082,
+          0.979346,
+          0.00886053,
+          0.937329
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0101_00_fi_head",
+        "width": 64,
+        "height": 128,
+        "rgba_sha256": "6b1b35eb965d8b0e21dff9e98ecfac5f6db538f9f9874d2fbdc37c74ee4422bf",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0008390820003114641,
+          0.979345977306366,
+          0.0626710057258606,
+          0.9911394715309143
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0218",
     "glb_sha256": "fd0c0b77a9d076f87883bcb66e3afaa44d2604291c965660db6e99e7d8383032",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0218.glb"
@@ -430,7 +1322,47 @@
   {
     "model": "0219",
     "mm_sha256": "fe5c12386fc1cbfeb55693eb5a34260481c50db14fb84a0b9bbaee865e21c260",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0102_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00528736,
+          0.988511,
+          0.013082,
+          0.997429
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0102_00_fi_head",
+        "width": 64,
+        "height": 128,
+        "rgba_sha256": "ad9162064d9eeb6f94538e5eb766057aad7444222baa639c882dc07c84280463",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.005287359934300184,
+          0.9885110259056091,
+          0.0025709867477416992,
+          0.9869179725646973
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0219",
     "glb_sha256": "808cec0681ab32e344ba241c7f5eee539b281b1228658e5fb5f3fe418fbeaea7",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0219.glb"
@@ -438,7 +1370,47 @@
   {
     "model": "0220",
     "mm_sha256": "a9e65631562e0fa47e7a3d6f2b6f2021153af03e0de3cb1446f29b92f7dd2a3d",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0103_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.007813,
+          0.98952,
+          0.007813,
+          0.988091
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0103_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "f7ed7fd5ca32862137a6fdcf754d950be1e7b5f90696ba45ea2c0133da9b0a5b",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007813000120222569,
+          0.9895199537277222,
+          0.011909008026123047,
+          0.9921870231628418
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0220",
     "glb_sha256": "ff7bc3069a7a6706a29aa80d534a7d1ba6560c6b0c24b4ce853d73f811e5f7b9",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0220.glb"
@@ -446,15 +1418,143 @@
   {
     "model": "0221",
     "mm_sha256": "6e1d0be3b12df13348d37ae9b00043375bf6253a1724b9f58338615697b3587b",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0104_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00684568,
+          0.994369,
+          0.0231419,
+          0.9967
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0104_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "d56ce3859e6150c01efe981d3d7b16e8d476d60fb6f7b5374f85f42b18a68301",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0068456800654530525,
+          0.9943689703941345,
+          0.003300011157989502,
+          0.9768580794334412
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0221",
     "glb_sha256": "16f75732b0e68372f13446860f59994b1dc0ba521ab6100bb8db11c3438aabf8",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0221.glb"
   },
   {
+    "model": "0222",
+    "mm_sha256": "9591672b277c64e391d4491ad57a1b447939d068f94d8ff3403983631c05700f",
+    "faces": [
+      {
+        "material": "rstr0105_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00284482,
+          0.998036,
+          0.00480116,
+          0.994154
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0105_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "65a26c62fa93a5e29a2f0195f6b2957c512081f46a3db41ee7a914d5d4677f0b",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0028448200318962336,
+          0.9980360269546509,
+          0.0058460235595703125,
+          0.9951988458633423
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0222",
+    "glb_sha256": "53bce209beabc814858cb8609dcd901bf20a6275b5da3ce13ee9bf31e66562b3",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0222/mm_0222.glb"
+  },
+  {
     "model": "0223",
     "mm_sha256": "119fc69c6db8913f637a3cd3c84c5fb2abe06adf0ddc5efa96cbc41e1dbe6ec9",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0106_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00770366,
+          0.988883,
+          0.00831596,
+          0.992731
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0106_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "213842c62c9406210b1525e2806c75f97ff0e78e374fad246cbd3ec9e0b46dbf",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0077036600559949875,
+          0.9888830184936523,
+          0.007269024848937988,
+          0.9916840195655823
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0223",
     "glb_sha256": "48d1738dd6c4ac1931323e57e9dda8d044909513eba510219c94acb84e14ef7f",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0223.glb"
@@ -462,7 +1562,47 @@
   {
     "model": "0225",
     "mm_sha256": "138439a06536cf5ce307455599a5114d18cec8f90b57ac3a997ac430970fba3c",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0108_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00646985,
+          0.938772,
+          0.00401782,
+          0.995398
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0108_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "3c6bac2c7e6c3bc98a55ac48c3733a7ef236a1f6ebba4502eeac4a56233fe1c3",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0064698499627411366,
+          0.9387720227241516,
+          0.004602015018463135,
+          0.9959821701049805
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0225",
     "glb_sha256": "1d7a7e443328d028c38f190bae650e56d597429a79b8671722d7e9ae39beda46",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0225.glb"
@@ -470,7 +1610,47 @@
   {
     "model": "0226",
     "mm_sha256": "cb9776c010c0f74ccc441c83e827500d194a2ef99a2ad635ab491b4df2265980",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0109_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0078125,
+          0.992188,
+          0.0078125,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0109_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "1fca7c766ad38673f3dea66189ffcd2cb76dfae6b0b6a00443029acd3f43e8e8",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0078125,
+          0.9921879768371582,
+          0.007812023162841797,
+          0.9921875
+        ],
+        "image_match": true,
+        "uv_orientation": "ambiguous",
+        "exclusion": "Unproven UV orientation: ambiguous"
+      }
+    ],
     "id": "character/mm_0226",
     "glb_sha256": "0b64d13a5229a50b3f86ed85802d7f43ea00eb1adc85a79c5d937f5703fd6e7d",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0226.glb"
@@ -478,23 +1658,383 @@
   {
     "model": "0231",
     "mm_sha256": "02d263c3037bd14b994b554ddf73fec4c410334cff167ce628327b3860fd0b0e",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0114_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.007275,
+          0.993442,
+          0.007813,
+          0.997603
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0114_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "5cae919d92982c35268ab6dc976a6423433dc666d725b27d6975d8271ecdf67e",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007274999748915434,
+          0.9934419989585876,
+          0.002397000789642334,
+          0.9921870231628418
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0231",
     "glb_sha256": "c29ee1fb909e9f59d1262690eca16c8322d09b24074b2472ff288ae9e774e474",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0231.glb"
   },
   {
+    "model": "0232",
+    "mm_sha256": "a51a9bb313acc5f5169a709ca7b9cc06d646aa43bd98f431cb3168452521db75",
+    "faces": [
+      {
+        "material": "rstr0115_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0078125,
+          0.992188,
+          0.0078125,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0115_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "b610af1085db08c7c6e55932c83a0c14b7e512832364b7fcf2b6915eee45a668",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0078125,
+          0.9921879768371582,
+          0.007812023162841797,
+          0.9921875
+        ],
+        "image_match": true,
+        "uv_orientation": "ambiguous",
+        "exclusion": "Unproven UV orientation: ambiguous"
+      }
+    ],
+    "id": "character/mm_0232",
+    "glb_sha256": "8412b643e7cb132df650646debc06615355acca1b8defcc3bcefc3a8db07cb62",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0232/mm_0232.glb"
+  },
+  {
+    "model": "0233",
+    "mm_sha256": "8e9416fd11ec2c57a7c702747cf6314bdd291fa74530a9658cb3106e99b58309",
+    "faces": [
+      {
+        "material": "rstr0116_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.009649,
+          0.992379,
+          0.001525,
+          0.993744
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0116_00_fi_head",
+        "width": 64,
+        "height": 128,
+        "rgba_sha256": "15267292db3ef4bbf064bcd9e8c0a7c19c314cce882ee8b3900902859563b1c3",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.009649000130593777,
+          0.9923790097236633,
+          0.006255984306335449,
+          0.9984750151634216
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0233",
+    "glb_sha256": "811f35d747d839990c386f1043f566412f725fbf6f1c838d7727e1fb6adafa68",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0233/mm_0233.glb"
+  },
+  {
+    "model": "0234",
+    "mm_sha256": "49c47f8652eec6c8f5391d90452369b8668a718d7754caa4e5370595c820a40b",
+    "faces": [
+      {
+        "material": "rstr0117_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00658435,
+          0.98998,
+          0.00754088,
+          0.994375
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0117_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "c798943ac8c3dde9246eb470059c299ed4251f5d8b8a929fb1eb42834fe4c4c8",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.006584350019693375,
+          0.9899799823760986,
+          0.005625009536743164,
+          0.9924591183662415
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0234",
+    "glb_sha256": "120d781c58e61df86561ef522d36b9014195421dfff3e60202913dd7722eb34c",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0234/mm_0234.glb"
+  },
+  {
+    "model": "0235",
+    "mm_sha256": "8cd6b79e05aed9341fb924851abe5eafb5196a806ba27e50f30f7abc37627812",
+    "faces": [
+      {
+        "material": "rstr0118_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00866163,
+          0.99503,
+          0.0107361,
+          0.997068
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0118_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "c90d5adeac7d4f4b0e6691dd3cfdc0264819f4929a17139867175ef5bf8eae60",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.008661629632115364,
+          0.9950299859046936,
+          0.0029320120811462402,
+          0.9892638921737671
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0235",
+    "glb_sha256": "9542c2c8b51f870f1348913a1f6719dca86b660f0195f4145302aa82443048f3",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0235/mm_0235.glb"
+  },
+  {
     "model": "0236",
     "mm_sha256": "eac5cbc1d5ea3621ff60b314b814596ff3bc6b1ed1c757b2787d9880b522fc93",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0119_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.003158,
+          0.98769,
+          0.004512,
+          0.997627
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0119_00_fi_head",
+        "width": 64,
+        "height": 128,
+        "rgba_sha256": "66b2128527de665bc4d32ff35a2cdf1dfff98d404a793a8da41244971b2b4344",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0031580000650137663,
+          0.9876899719238281,
+          0.0023729801177978516,
+          0.9954879879951477
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0236",
     "glb_sha256": "c41aacc03800407e3b53a00446a0498a6ca490378dff6f6b897c8203b565bc29",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0236.glb"
   },
   {
+    "model": "0237",
+    "mm_sha256": "4330c5294c023781425a3bd05bb1d3a38456818bf5d0616ed94d284f1db4eda3",
+    "faces": [
+      {
+        "material": "rstr0120_00_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0139394,
+          0.99047,
+          0.0102196,
+          0.989321
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0120_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "0c8cb255d172d5b433474b35cb1c8b019e3fb7cf78b63f106b82a365addcb464",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.01393940020352602,
+          0.9904699921607971,
+          0.010679006576538086,
+          0.9897804260253906
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0237",
+    "glb_sha256": "5d96e2cf297aec9e2f1759e7b6320bcdc1fc5f202bdc3b720ce18c75d9d2dfc5",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0237/mm_0237.glb"
+  },
+  {
     "model": "0238",
     "mm_sha256": "de6afe0a8ae04fb5f7ec3ae0642db4e80a8e7a9075aafd85e76a7aee61a1c206",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0121_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00526008,
+          0.985241,
+          0.00650044,
+          0.998358
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0121_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "7a7beac824574182fd12f4e53a3337f5ced1779eb6ac1ed35fd1440eee4b98fb",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.005260080099105835,
+          0.9852409958839417,
+          0.001641988754272461,
+          0.9934995770454407
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0238",
     "glb_sha256": "2523243f10984029257271449ba1492ef868d3db48d579dce9fbcc37f5d90025",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0238.glb"
@@ -502,15 +2042,143 @@
   {
     "model": "0239",
     "mm_sha256": "6eecc106206f74f0044f262704ce60f367a39df8784da6168f5ad1e6a1adc1d0",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0122_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0118814,
+          0.965075,
+          0.0074601,
+          0.989954
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0122_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "e004099579b5b21d86c45708ab3eb350b03ac8284e9dd3920e325978a1095161",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.011881399899721146,
+          0.9650750160217285,
+          0.010046005249023438,
+          0.9925398826599121
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0239",
     "glb_sha256": "83501ba8fc20db684070bf2ca5c428d0930e0c9ff389bd612668db3c9eb73a6b",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0239.glb"
   },
   {
+    "model": "0241",
+    "mm_sha256": "4c4341808cc8657c7638995da41eca1273628825459f1567c02441e673b6311f",
+    "faces": [
+      {
+        "material": "rstr0124_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.007813,
+          0.992188,
+          0.007813,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0124_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "a724d24f9390eadd2bc1542d1dc12cdcec5489cf629db112fb79cac84e8e533c",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007813000120222569,
+          0.9921879768371582,
+          0.007812023162841797,
+          0.9921870231628418
+        ],
+        "image_match": true,
+        "uv_orientation": "ambiguous",
+        "exclusion": "Unproven UV orientation: ambiguous"
+      }
+    ],
+    "id": "character/mm_0241",
+    "glb_sha256": "014bc8097af33bca51be7a0c99a6e893dbf0c08a74906113baa6434ed813655a",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0241/mm_0241.glb"
+  },
+  {
     "model": "0242",
     "mm_sha256": "b415dfc50a4ac944604e8396656396643c1b600136bad9b1c4949a34253fe0d8",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0125_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.988312,
+          -0.0136881,
+          0.0231392,
+          0.993073
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0125_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "75f4342b16fa57500df66ba3c522d61d1bbbb4c40535fab3cc765c2a6e8646ac",
+        "palette": [],
+        "glb_uv_bounds": [
+          -0.9883120059967041,
+          -0.01368810050189495,
+          0.006927013397216797,
+          0.9768608212471008
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0242",
     "glb_sha256": "6c6fd31924a7e42e361aad238a2875b6df4b94a133f538e3bbef58d64f57050b",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0242.glb"
@@ -518,7 +2186,47 @@
   {
     "model": "0244",
     "mm_sha256": "beca0c63661625a7e18fee12de104af35a6f9f7cd8670a8ee4931e5313d99e53",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0127_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.006337,
+          0.975008,
+          0.017036,
+          0.994436
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0127_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "e54cd33c98ea6d20b62bdad60cbb61ac55a1f9ef81deb908a2a3ad8ca7c66626",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.00633700005710125,
+          0.9750080108642578,
+          0.005563974380493164,
+          0.9829639792442322
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0244",
     "glb_sha256": "bf9bdba289eca9386a8024ffcda8dd163c72ed68f657879b605095e184d1d43e",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0244.glb"
@@ -526,7 +2234,47 @@
   {
     "model": "0245",
     "mm_sha256": "8057c8a3ddce3129d9bbbc52e3afa634966c7119f57080986ad3276e40c756f2",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0128_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0078125,
+          0.984375,
+          0.0078125,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0128_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "719a9b9854ffc74fd272b4809939b4b204fd8d79656556a81fae4b0e7d99e07a",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0078125,
+          0.984375,
+          0.007812023162841797,
+          0.9921875
+        ],
+        "image_match": true,
+        "uv_orientation": "ambiguous",
+        "exclusion": "Unproven UV orientation: ambiguous"
+      }
+    ],
     "id": "character/mm_0245",
     "glb_sha256": "a2b1da4b79d77530d33c4feebf465fd26140f54b9b930d76d06a2d45f551e43c",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0245.glb"
@@ -534,15 +2282,191 @@
   {
     "model": "0246",
     "mm_sha256": "cfe3c55008411acc173e77a96eea28ac9d8d774adef80eccefd5d4b44255a8b4",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0129_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.004256,
+          0.992188,
+          0.006639,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0129_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "2f30f847f2b2d41f8e8e4d18bd764dcac83f7f6c581c5985b927c735aacc17ac",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.004255999810993671,
+          0.9921879768371582,
+          0.007812023162841797,
+          0.9933609962463379
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0246",
     "glb_sha256": "665988a33527163bc70cd0f6925075f636bf4fd065287d29adb62a7e036abcd2",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0246.glb"
   },
   {
+    "model": "0247",
+    "mm_sha256": "051766504b47a46be48c66b4f30b5243279ad83ac94725c0fcdd5eb05c9a1ec1",
+    "faces": [
+      {
+        "material": "rstr0130_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.011371,
+          0.987949,
+          0.008647,
+          0.992219
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0130_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "7668d913aea21932c75b177f7f2196505550c7dab60040265c5f330fcec1e99d",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.011370999738574028,
+          0.987949013710022,
+          0.007781028747558594,
+          0.9913529753684998
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0247",
+    "glb_sha256": "22c0cd4c223e99cbe9c0b46fa85441328cc102235ab5eabc66a963e5c85641f4",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0247/mm_0247.glb"
+  },
+  {
+    "model": "0249",
+    "mm_sha256": "3496fd1d81ece0ec9d26e7d2e5a6bd5f073598832ddeb99aa21a6dcb9db8f430",
+    "faces": [
+      {
+        "material": "rstr0132_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.005503,
+          0.990946,
+          0.019398,
+          0.991807
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0132_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "0370eb6b3578a8b3c66acd31e17e06c874165b25fec9f2454e87edaeb67b630c",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.005502999760210514,
+          0.9909459948539734,
+          0.008193016052246094,
+          0.9806020259857178
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0249",
+    "glb_sha256": "2560f848ec4ee9ac9dc2293a784103ba66445d75ea48366d4b6b28f934b61ff5",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0249/mm_0249.glb"
+  },
+  {
     "model": "0252",
     "mm_sha256": "33f9a2fe11c80e63773c5c845240fce45461ed2b3af2ef65c125447c2cc036f1",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0135_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.007813,
+          0.992188,
+          0.00973,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0135_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "4f34148c5a81f6b528d466b494b9558d54749838593bb9aac61edaaa3a2759b6",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007813000120222569,
+          0.9921879768371582,
+          0.007812023162841797,
+          0.9902700185775757
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0252",
     "glb_sha256": "dcaebda6edd7eae0521b86fcce3e3a84959e9b420095841dd678413a3b0cbfdf",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0252.glb"
@@ -550,7 +2474,47 @@
   {
     "model": "0254",
     "mm_sha256": "96d998286e13cf64ab5f158b486ec116904b1b58dc19ece6b6ac01e261a2c00c",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0137_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00856639,
+          0.995354,
+          0.0120062,
+          0.992205
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0137_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "d7efdfb876b6db7a10d6c16f3f97b6b5d62457f24b3beb423e5ddfc230a57e8f",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.008566389791667461,
+          0.9953539967536926,
+          0.007794976234436035,
+          0.9879937767982483
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0254",
     "glb_sha256": "e43ac7317198ad46af60ec848625001e592dd23fa0a3c7cc6be5765fda3e3a27",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0254.glb"
@@ -558,7 +2522,47 @@
   {
     "model": "0255",
     "mm_sha256": "2b77dd092558bffeffdb9c83dd9b1f0dc02126e5e9cbf8d5e1dfed51d70fd701",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0138_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0078125,
+          0.983257,
+          0.03125,
+          0.988864
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0138_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "2caa3c9e5d7d0bd78d43dbdc1ea1d306846f9843d98c79a5a6bd140df6e87caf",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0078125,
+          0.983256995677948,
+          0.011135995388031006,
+          0.96875
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0255",
     "glb_sha256": "aa60a51f472d497238c5af1fc8d44e9943a86b5bce42d4b406bb2c83c694d84d",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0255.glb"
@@ -566,23 +2570,431 @@
   {
     "model": "0256",
     "mm_sha256": "1108889959d8bee4b4b94c73ea91bf4c4074469f96da4cb7cb408e44af17b361",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0139_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0078125,
+          0.992188,
+          0.0124115,
+          0.986843
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0139_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "bf7062dd78ead65fda3bc8b0807f72872e00f5e073668b7bc2540c4917455919",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0078125,
+          0.9921879768371582,
+          0.013157010078430176,
+          0.9875885248184204
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0256",
     "glb_sha256": "9d5aec72199a2e08c2c1045a1cf0e9247551cd93965b2ecafd087b9353c3562d",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0256.glb"
   },
   {
+    "model": "0257",
+    "mm_sha256": "ef404b3bd846e699b6b4d89795faef4d8c8e9e556942d3efe27d3ed7ca1439ec",
+    "faces": [
+      {
+        "material": "rstr0140_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.007813,
+          0.983728,
+          0.006847,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0140_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "281c0647a75d894852b358819b01eeb9b0cda465f7177031d2d71c3fe0871239",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007813000120222569,
+          0.9837279915809631,
+          0.007812023162841797,
+          0.9931529760360718
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0257",
+    "glb_sha256": "3c8ab5d0c653fe2ccd46991c33c87c9fb6ecf93aed4fd55ec8ff547095075a81",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0257/mm_0257.glb"
+  },
+  {
     "model": "0259",
     "mm_sha256": "52a92c973c257f202a7e314cbe7a3990abae848458790f6ed8c7b86adf605340",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0142_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.007813,
+          0.991908,
+          0.008914,
+          0.987955
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0142_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "218511818694ef703d88a7f42c0ebf7749b15dfbf6cc6b7dbefc460096879130",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007813000120222569,
+          0.9919080138206482,
+          0.012045025825500488,
+          0.9910860061645508
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0259",
     "glb_sha256": "a93209c78824614bab3e67bca6eff6e628b282142abb2e74fc109e87e558a20f",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0259.glb"
   },
   {
+    "model": "0260",
+    "mm_sha256": "f8ebf94eaccf412518855ab99f9dbc8489d4881c1244cda998173ff839a1e630",
+    "faces": [
+      {
+        "material": "rstr0143_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.008283,
+          0.99394,
+          -0.002082,
+          0.995044
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0143_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "9eb63b4997a39fa20cbd958205e07924265743ea2028253ac0a4f23153a8f1ae",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.008283000439405441,
+          0.993939995765686,
+          0.00495600700378418,
+          1.0020819902420044
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0260",
+    "glb_sha256": "fe48ee0179fc7e94460dcab8132a0bc61929af50708b821684cf11eeb7add0d8",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0260/mm_0260.glb"
+  },
+  {
+    "model": "0261",
+    "mm_sha256": "7b3ee739aca48cb7a731ace1511302726222d320c34f046e3be6fb4b5e9cb73c",
+    "faces": [
+      {
+        "material": "rstr0144_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.008643,
+          0.992903,
+          0.0108,
+          0.992727
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0144_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "9171524f882551dfd79d59905b03e5a4f17e21f5199fccc0fbaa91b4091de218",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.00864300038665533,
+          0.9929029941558838,
+          0.0072730183601379395,
+          0.9891999959945679
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0261",
+    "glb_sha256": "2677a83920e45b4938af6b17874cfd640afec24ab9df4e6b3d6a40bf3419c9a7",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0261/mm_0261.glb"
+  },
+  {
+    "model": "0262",
+    "mm_sha256": "480db80d8d702a619c2b1c60c58ae8fcb00e04c4dd9d78c5fde8bca3e7c2c635",
+    "faces": [
+      {
+        "material": "rstr0145_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.007813,
+          0.992188,
+          0.007813,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0145_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "8320f8bbfacbda6d482c1fd192d9322e8d6acec4c3d21bfe1e394c511be57f82",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007813000120222569,
+          0.9921879768371582,
+          0.007812023162841797,
+          0.9921870231628418
+        ],
+        "image_match": true,
+        "uv_orientation": "ambiguous",
+        "exclusion": "Unproven UV orientation: ambiguous"
+      }
+    ],
+    "id": "character/mm_0262",
+    "glb_sha256": "1d0f03064ed29dffe0e29ba6e529f107d23cd6884e77d6f5e109eb9e74264af2",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0262/mm_0262.glb"
+  },
+  {
+    "model": "0264",
+    "mm_sha256": "e4a72879ee8dd396e261c83372372f7df92766f48ac40e24b249f9356f231b75",
+    "faces": [
+      {
+        "material": "rstr0147_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00987283,
+          0.988748,
+          0.00768306,
+          0.993052
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0147_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "6f0dc88d743859b7e3e4dde6794ab194642575d11fe7febd9b1b6a30d05dac93",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.009872829541563988,
+          0.9887480139732361,
+          0.006947994232177734,
+          0.9923169612884521
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0264",
+    "glb_sha256": "2da947df515e33bb9a3910f9bf599b9c38bf61dbc7e72a82c26d79384be6d2dd",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0264/mm_0264.glb"
+  },
+  {
+    "model": "0265",
+    "mm_sha256": "53949f6f036cbd1b37d18d9ed75fda1b8b910aa7b139305d6aa5ab53ff0b746d",
+    "faces": [
+      {
+        "material": "rstr0148_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0082531,
+          0.990498,
+          0.0278577,
+          0.990079
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0148_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "ae8ad7ad3c97393508a4c3c4aeff48ca6bdc6eba188b706d598a99ae82a10412",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.008253100328147411,
+          0.9904980063438416,
+          0.009921014308929443,
+          0.9721422791481018
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0265",
+    "glb_sha256": "05fe0e33fe84dc33b209301274a0370e850087eed70de08fecdc4622ff004ac1",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0265/mm_0265.glb"
+  },
+  {
     "model": "0266",
     "mm_sha256": "1740549e4f2fba9a2063ad728dcc6e781962e7c4213bef5d47230299b27865af",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0149_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.001929,
+          0.995963,
+          0.003339,
+          0.998619
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0149_00_fi_head",
+        "width": 64,
+        "height": 64,
+        "rgba_sha256": "5c12028c52f5dde84af5fef6f86265d8ec83dbf63e97e75ea51a69f0cee5a5a3",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0019290000200271606,
+          0.9959629774093628,
+          0.0013809800148010254,
+          0.9966610074043274
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0266",
     "glb_sha256": "7d5b4d0d99705e9b5f0c886fd82817a4f29f5388e53483d6475addf856bcaa8c",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0266.glb"
@@ -590,7 +3002,47 @@
   {
     "model": "0267",
     "mm_sha256": "3f5740082366cfe841ba29611142616fb33bc40c0589538cb62f199e559c0029",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0150_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.001929,
+          0.995963,
+          0.003339,
+          0.998619
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0150_00_fi_head",
+        "width": 64,
+        "height": 64,
+        "rgba_sha256": "5c12028c52f5dde84af5fef6f86265d8ec83dbf63e97e75ea51a69f0cee5a5a3",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0019290000200271606,
+          0.9959629774093628,
+          0.0013809800148010254,
+          0.9966610074043274
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0267",
     "glb_sha256": "4a36e949379756e1879bdfa2083d8d6b85e5377b608e988d429b249cd5cd861d",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0267.glb"
@@ -598,7 +3050,47 @@
   {
     "model": "0270",
     "mm_sha256": "098878a16f46d656769569f8752288df788c0844f15f11d802ce338b1d903e88",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0153_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0078125,
+          0.992188,
+          0.0078125,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0153_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "b9f5f828286557a4e5d9f16449ae894544e879c161686479431ce772a175757c",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0078125,
+          0.9921879768371582,
+          0.007812023162841797,
+          0.9921875
+        ],
+        "image_match": true,
+        "uv_orientation": "ambiguous",
+        "exclusion": "Unproven UV orientation: ambiguous"
+      }
+    ],
     "id": "character/mm_0270",
     "glb_sha256": "a67d30672bde6fd352a69aff3db6b80f6eff25356cf35b9799473c62ee3c535a",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0270.glb"
@@ -606,7 +3098,47 @@
   {
     "model": "0271",
     "mm_sha256": "61d4f0d24a3a2f51e22cc2ae99c06a56721fb381701233ed43be590886d2fba0",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0154_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.004556,
+          0.994612,
+          0.00969,
+          0.99632
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0154_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "7a4c2528bec075adf93b186536b431e4252971e1b996d7dc27ad78d7678264cb",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.004555999767035246,
+          0.9946119785308838,
+          0.0036800503730773926,
+          0.99031001329422
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0271",
     "glb_sha256": "698787ee45a44fa56be1d331986726f350aa394ff6fcbe8cb76c0ccb04fd2ea1",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0271.glb"
@@ -614,15 +3146,191 @@
   {
     "model": "0275",
     "mm_sha256": "b23458c41d7f8bd6597ba52ab67b95ad43f9b71d3d0bc8edf07b593e045ebdaa",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0158_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.008066,
+          0.98275,
+          0.012295,
+          0.994519
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0158_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "bf10b057c9a34d4629a8ca148ae6c06f43c72967bee12c710ffbae8601191e45",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.008066000416874886,
+          0.9827499985694885,
+          0.00548100471496582,
+          0.9877049922943115
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0275",
     "glb_sha256": "39084e69d362c70f934900679b5ee679ab349775192c9265220716ccf789ea79",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0275.glb"
   },
   {
+    "model": "0276",
+    "mm_sha256": "624bdb501ad88e4f4ed2192a3502ba6ece5ba10a9e36febb324dbbc5758af082",
+    "faces": [
+      {
+        "material": "rstr0159_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0078125,
+          0.989903,
+          0.0078125,
+          0.98656
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0159_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "185c8983e684fbcbd7a0614ea181450fa23d94e08586fb147f36ddbeabe2a3c8",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0078125,
+          0.9899029731750488,
+          0.01344001293182373,
+          0.9921875
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0276",
+    "glb_sha256": "77359d00e6cbb85e377da2d81550df1e8686a2324e328ad3aafeb053cb428b7f",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0276/mm_0276.glb"
+  },
+  {
+    "model": "0277",
+    "mm_sha256": "780331ddbc2c802e7cdc9505734c281aef3acd2811cb33c21a8aced220d38f68",
+    "faces": [
+      {
+        "material": "rstr0160_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00338,
+          0.991746,
+          0.005967,
+          0.990603
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0160_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "cb1b9b08108f54a153442830861463674894cd25a731f5b789bb48c5f7cebfec",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.003379999892786145,
+          0.9917460083961487,
+          0.009397029876708984,
+          0.9940329790115356
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0277",
+    "glb_sha256": "fb091470f36bd2469df0381ddbcd5a4476f127d4f3b485bfcebd98aad0ec7064",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0277/mm_0277.glb"
+  },
+  {
     "model": "0280",
     "mm_sha256": "912b9f9beb28ea53b422d584daedf6389bb977a467dbec3ff7ba98181d5447ce",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0163_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.007813,
+          0.994632,
+          0.005852,
+          0.995546
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0163_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "b94a4b324b9d9e129bbae0c7ddf9c4e19f48fdb6ddd329d18cde26e0eedbed6e",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007813000120222569,
+          0.9946320056915283,
+          0.00445401668548584,
+          0.9941480159759521
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0280",
     "glb_sha256": "8d4e031bce9dcaae580ea8f8fd4bbb454dcb537dca3ee6929d4ab8ecb5ec79cb",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0280.glb"
@@ -630,7 +3338,47 @@
   {
     "model": "0281",
     "mm_sha256": "5e3d7821db1b589a08796bebf49785d57b06d85c435a1e65712d24941ee0c470",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0164_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00619266,
+          0.993657,
+          0.00515074,
+          0.992876
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0164_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "4c1e41d013ce95e47b50c0cd60ecd7e4acd88e6b88453255ec8a2dba48a3b3aa",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.006192659959197044,
+          0.9936569929122925,
+          0.007124006748199463,
+          0.9948492646217346
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0281",
     "glb_sha256": "e09cd97b6e73b2e75e70699355622d4b0c9b78107984f8ddc7cb0fb0dafe1f01",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0281.glb"
@@ -638,7 +3386,47 @@
   {
     "model": "0283",
     "mm_sha256": "1e65128be0433cd1f9f061676d5fe7e636a55dbff5b22d861a79c009afd81962",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0166_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0207021,
+          0.988069,
+          0.00687382,
+          0.989905
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0166_00_fi_head",
+        "width": 64,
+        "height": 128,
+        "rgba_sha256": "8a01e9904a080847f6a0bf05d5592f250775d02273440ef8c995186f403e6861",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.020702099427580833,
+          0.9880689978599548,
+          0.010095000267028809,
+          0.9931261539459229
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0283",
     "glb_sha256": "0b0a2a0cd9bba5d139dc50ab139bb62a53e5da0b449fa534cf0a6b0f09f5f7cb",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0283.glb"
@@ -646,15 +3434,143 @@
   {
     "model": "0284",
     "mm_sha256": "2d7902d8c95fcbff2672f4f7a7a723203b42c975fa916488a5f278bdbdc7f546",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0167_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.011719,
+          0.988281,
+          0.0625,
+          0.98417
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0167_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "5dc4a518f222dc3178cd174e5509fc1405e2bd05407874238d53bc2c41818d08",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.011718999594449997,
+          0.9882810115814209,
+          0.015830039978027344,
+          0.9375
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0284",
     "glb_sha256": "afc1227e8942e07dbd189109365f6d509739ac25c334d0f4cbd4434e812133ad",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0284.glb"
   },
   {
+    "model": "0285",
+    "mm_sha256": "ccc9f20dc13f2d7dab78a5e31ff12d6235d44608ccc121b3fecb69a5543cbed8",
+    "faces": [
+      {
+        "material": "rstr0168_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0078125,
+          0.992125,
+          0.00843421,
+          0.989695
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0168_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "c37ed1bf49d3e57d92050c5c63053de0f6815e7ac377ca232d2363d1df8d6665",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0078125,
+          0.9921249747276306,
+          0.01030498743057251,
+          0.9915657639503479
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0285",
+    "glb_sha256": "db925b44cff90767f82fca94367d61da899fcc2c509b1b03c3f8e5b70da4954e",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0285/mm_0285.glb"
+  },
+  {
     "model": "0286",
     "mm_sha256": "ead83ff0859eda6ab87762c963fb26305a9c69df33b021baa0558808cf42f707",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0169_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00585515,
+          0.989849,
+          0.0111124,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0169_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "df2bfa2bf35f67652c02d398466068629384e55d6ee68631ba215d3c6f9718e5",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.005855150055140257,
+          0.9898489713668823,
+          0.007812023162841797,
+          0.9888876080513
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0286",
     "glb_sha256": "013fd8bfad945ee4526d182343b02b1095776b48fac3f31ef867976fb936bafe",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0286.glb"
@@ -662,7 +3578,47 @@
   {
     "model": "0287",
     "mm_sha256": "25aeb3eefeb63260dd94bcc095390acd26e7bd39f4de38ee102fbdaec99d31f9",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0170_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0109444,
+          0.99405,
+          0.0254418,
+          0.997357
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0170_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "0949e3185e7b4bacc05cc10b44a9fef36c8c7f1a81ede5607c29b254f02221d2",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.010944399982690811,
+          0.9940499663352966,
+          0.002642989158630371,
+          0.9745581746101379
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0287",
     "glb_sha256": "2fc5207c88519e90425ad2b87facd591d3d31a13ef6006b2664d2fac311c63e2",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0287.glb"
@@ -670,7 +3626,47 @@
   {
     "model": "0288",
     "mm_sha256": "c4a4124993c1dbbeadf8916ad7e952a1218c98c57551de624cbcabdbea2cb764",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0171_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.006931,
+          0.983431,
+          0.012755,
+          0.998939
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0171_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "1099042095ce179fe13f32a3ed7e8006a968d2959ef0620166ea6777622e61f8",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.006930999923497438,
+          0.9834309816360474,
+          0.0010610222816467285,
+          0.9872450232505798
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0288",
     "glb_sha256": "fb4379c1d942ef3e9c7cf2859b4d365463472add6fa5020bc91613f2cefd561d",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0288.glb"
@@ -678,7 +3674,47 @@
   {
     "model": "0289",
     "mm_sha256": "d5332bcf14583a68c019736cf9c4a1ac4753cbff3abaec64747b709e27d183a7",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0172_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.039664,
+          0.974158,
+          0.00858858,
+          0.995956
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0172_00_fi_head",
+        "width": 64,
+        "height": 128,
+        "rgba_sha256": "465b1a496ff582197697979776c3acf00fe537ed1ce4b4e40d3daa2cc3c95c69",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.039664000272750854,
+          0.974157989025116,
+          0.004043996334075928,
+          0.9914114475250244
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0289",
     "glb_sha256": "9cdf235715d2d18f567597f17fe7a48d173c9607c2a373fa2ce37d56149e5b3c",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0289.glb"
@@ -686,7 +3722,47 @@
   {
     "model": "0296",
     "mm_sha256": "51588c9268f19bb64f06c34d46edaf74058c7f9b69fd09683b8446e00e410c1f",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0179_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00390625,
+          0.996094,
+          0.0165228,
+          0.996094
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0179_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "86547ef446e9b1b9a192da6c34de705e84ad5932550f887139eda80876bbf517",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.00390625,
+          0.9960939884185791,
+          0.0039060115814208984,
+          0.9834771752357483
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0296",
     "glb_sha256": "49915c1b2bba84b7164f12cc98c3438abe7931cda61e31f3d024b5765d2d3443",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0296.glb"
@@ -700,6 +3776,7 @@
         "animation": "rstr0181_00_eye01",
         "frames": 10,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           0.0042111,
@@ -739,7 +3816,16 @@
               0
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          0.004211099818348885,
+          0.4952029883861542,
+          0.002012014389038086,
+          0.9875844717025757
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0298",
@@ -755,6 +3841,7 @@
         "animation": "rstr0182_00_eye01",
         "frames": 10,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           0.000459524,
@@ -794,7 +3881,16 @@
               0
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          0.0004595239879563451,
+          0.49137499928474426,
+          0.013264000415802002,
+          0.9867699146270752
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0299",
@@ -802,9 +3898,114 @@
     "source_glb": "rom/extracted/models/runtime_characters/mm_0299.glb"
   },
   {
+    "model": "0300",
+    "mm_sha256": "2b9703d8053e86d0aa05e6e88acfa6a445aca930cdf91f084156a40fc49e4129",
+    "faces": [
+      {
+        "material": "rstr0183_00_fi_headMat",
+        "animation": "rstr0183_00_eye01",
+        "frames": 10,
+        "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0012112,
+          0.495664,
+          0.00860512,
+          0.998363
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0183_00_fi_head",
+        "width": 256,
+        "height": 128,
+        "rgba_sha256": "a830bef3c701ac7cf7788488e6ecee4b96e3a585cecfbb7539f17f5c3dcee95f",
+        "palette": [
+          {
+            "id": 0,
+            "frame": 0,
+            "translation": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": 1,
+            "frame": 10,
+            "translation": [
+              -0.5,
+              0
+            ]
+          }
+        ],
+        "glb_uv_bounds": [
+          0.0012112000258639455,
+          0.49566400051116943,
+          0.0016369819641113281,
+          0.9913948774337769
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0300",
+    "glb_sha256": "b946f7a5feef819ddf688fa1300cdf70dc7c6da8cc51717b612779303a396985",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0300/mm_0300.glb"
+  },
+  {
     "model": "0301",
     "mm_sha256": "6cba73117f3a0bbfc4d3e184a9f848d026f93a497d6b974949e5972132081746",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0184_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0217975,
+          0.985015,
+          0.0272526,
+          0.977725
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0184_00_fi_head",
+        "width": 64,
+        "height": 128,
+        "rgba_sha256": "856e142cc9609afd2a3bcd8e534578c9d00b8fca8fe153b3ff485aff9b66eb70",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.021797500550746918,
+          0.9850149750709534,
+          0.022275030612945557,
+          0.9727473855018616
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0301",
     "glb_sha256": "a9fc69bd43ab5ee3e98e86424af58a09e981f874e4f00be4bd1d90b48b25cb28",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0301.glb"
@@ -818,6 +4019,7 @@
         "animation": "rstr0185_00_eye01",
         "frames": 10,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           0.0012112,
@@ -857,7 +4059,16 @@
               0
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          0.0012112000258639455,
+          0.49566400051116943,
+          0.0016369819641113281,
+          0.9913948774337769
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0302",
@@ -873,6 +4084,7 @@
         "animation": "rstr0186_00_eye01",
         "frames": 10,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           0.0012112,
@@ -912,7 +4124,16 @@
               0
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          0.0012112000258639455,
+          0.49566400051116943,
+          0.0016369819641113281,
+          0.9913948774337769
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0303",
@@ -922,7 +4143,47 @@
   {
     "model": "0305",
     "mm_sha256": "0479b0f08bea39033327e049a337bbb47f0e89656a379b72536d9d13a01a2fa3",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0188_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0122509,
+          0.992188,
+          0.0078125,
+          0.992188
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0188_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "8ab9a08f88dc0f920420f1e29c1acf5043f4fbf17f7ccdc45a9f37918cac5e49",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.012250900268554688,
+          0.9921879768371582,
+          0.007812023162841797,
+          0.9921875
+        ],
+        "image_match": true,
+        "uv_orientation": "ambiguous",
+        "exclusion": "Unproven UV orientation: ambiguous"
+      }
+    ],
     "id": "character/mm_0305",
     "glb_sha256": "c73d76cadcaf567c617234765e9c8ee761b0bc02a40fc9d0e5be4f9f80284ac8",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0305.glb"
@@ -930,7 +4191,47 @@
   {
     "model": "0306",
     "mm_sha256": "9a4ba7f453a6f3908f008aac992d664cc69b285e7b1f4599d17a9f040db3d242",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0189_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00254081,
+          0.987309,
+          0.00947154,
+          0.986383
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0189_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "7808c54b317057d6102e5476ced4d365e160fe74d12e39932beb43b22def8e01",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0025408100336790085,
+          0.9873089790344238,
+          0.013616979122161865,
+          0.9905284643173218
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0306",
     "glb_sha256": "0a663933716c939a0f7605dddfe55092840350bbca61e535e47999327b90c9ef",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0306.glb"
@@ -938,10 +4239,98 @@
   {
     "model": "0307",
     "mm_sha256": "8490cecc76dda8cdfc3501fd3996410e81662b4082a4320f1c45ec1cee69a1fe",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0190_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00999999,
+          0.992397,
+          0.0122994,
+          0.987369
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0190_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "0444274dd1100d6515e865fd0f04a638f8d722f2393b07658aa7f294191ea110",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.009999989531934261,
+          0.9923970103263855,
+          0.012630999088287354,
+          0.9877005815505981
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0307",
     "glb_sha256": "afbd2e91a8019a14c0cfd8b9b4906bac58e2dca7b6ccb9f8d0cdab1566e722db",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0307.glb"
+  },
+  {
+    "model": "0309",
+    "mm_sha256": "42f740d67ad5db3e32a1f89b178bff95c232f69e7ae6fbd7260c3e195a48516d",
+    "faces": [
+      {
+        "material": "rstr0192_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.007275,
+          0.993442,
+          0.007813,
+          0.997603
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0192_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "fb4b4e92904d38cf8f9b1e2feeec127240e9247d31f77e042479a8de3540cb6b",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007274999748915434,
+          0.9934419989585876,
+          0.002397000789642334,
+          0.9921870231628418
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0309",
+    "glb_sha256": "52991de3653074a9804b993d5c9ad3ff1a23fa742990675fb76d017a48faba31",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0309/mm_0309.glb"
   },
   {
     "model": "0312",
@@ -960,6 +4349,7 @@
         "animation": "rstr0048_00_eye01",
         "frames": 70,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           -0.995261,
@@ -1047,7 +4437,55 @@
               -0.5
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          -0.995261013507843,
+          -0.755711019039154,
+          0.004755973815917969,
+          0.4925510287284851
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0001_00_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00842154,
+          0.993301,
+          0.00514811,
+          0.993594
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0001_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "d32768999cd50d2b45763da1430a848d74332ddd7d37da85dfcd5a8534092b15",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.008421540260314941,
+          0.9933009743690491,
+          0.006406009197235107,
+          0.9948518872261047
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0314",
@@ -1063,6 +4501,7 @@
         "animation": "rstr0049_00_eye01",
         "frames": 70,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           0.00248605,
@@ -1150,7 +4589,55 @@
               -0.5
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          0.002486049896106124,
+          0.24203599989414215,
+          0.004755973815917969,
+          0.4925510287284851
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0002_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          -0.986963,
+          -0.00600791,
+          -0.990966,
+          -0.00975233
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0002_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "332b17d8145ca55f6d81d1b80c51344e58a9dc62409d73b4601d086f612ed5aa",
+        "palette": [],
+        "glb_uv_bounds": [
+          -0.9869629740715027,
+          -0.0060079097747802734,
+          1.0097522735595703,
+          1.9909660816192627
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0315",
@@ -1166,6 +4653,7 @@
         "animation": "rstr0052_00_eye01",
         "frames": 30,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           0.00126423,
@@ -1221,7 +4709,55 @@
               0
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          0.0012642299989238381,
+          0.24882100522518158,
+          0.013640999794006348,
+          0.991980791091919
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0009_00_fi_head",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          1.01636,
+          1.97189,
+          0.0163083,
+          0.987448
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0009_00_fi_head",
+        "width": 128,
+        "height": 64,
+        "rgba_sha256": "6593a16420dcf35299a1e87301e3234ff67d25721b05a90d294cde7495fd1ced",
+        "palette": [],
+        "glb_uv_bounds": [
+          1.0163599252700806,
+          1.9718899726867676,
+          0.012552022933959961,
+          0.9836916923522949
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0318",
@@ -1237,6 +4773,7 @@
         "animation": "rstr0053_00_eye01",
         "frames": 30,
         "target": "MaterialTexCoord1Trans",
+        "native_slot": 1,
         "uv_source": 0,
         "uv_bounds": [
           -0.997978,
@@ -1292,7 +4829,55 @@
               0
             ]
           }
-        ]
+        ],
+        "glb_uv_bounds": [
+          -0.9979779720306396,
+          -0.7517369985580444,
+          0.007377028465270996,
+          0.9950407147407532
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      },
+      {
+        "material": "rstr0053_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0321096,
+          0.954785,
+          0.0310719,
+          0.98326
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0053_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "ff4e37375673081e8e031cfb955dc9ebde38e5a8b2a57c3f090bbaa6b358b5f7",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.03210959956049919,
+          0.9547849893569946,
+          0.016740024089813232,
+          0.9689280986785889
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
       }
     ],
     "id": "character/mm_0319",
@@ -1300,17 +4885,337 @@
     "source_glb": "rom/extracted/models/runtime_characters/mm_0319.glb"
   },
   {
+    "model": "0320",
+    "mm_sha256": "a2200ac73a515bc1fd69091171e3af596cb904bc41742a39bce73a90057eff69",
+    "faces": [
+      {
+        "material": "rstr0196_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.014272,
+          0.994215,
+          0.007813,
+          0.99289
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0196_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "65669b3060407249eae272515c22d8ee3f27c07e2e07481f5c2071fe262b9013",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.014271999709308147,
+          0.9942150115966797,
+          0.007109999656677246,
+          0.9921870231628418
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0320",
+    "glb_sha256": "db0c256629ecfc7dcac4305248d8f61e5b090a77cb3c5901d53e6ac10baa9dea",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0320/mm_0320.glb"
+  },
+  {
+    "model": "0321",
+    "mm_sha256": "2ba4bc945d13a67e275787210cd54c01badb7fdf105a1bfb8fcb0267a9dd90c5",
+    "faces": [
+      {
+        "material": "rstr0197_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.000675859,
+          0.988738,
+          0,
+          0.997364
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0197_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "3d220a65af1cc630a9addfa104379a57543900772195e786e45f3a3fcf83f7df",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0006758589879609644,
+          0.9887380003929138,
+          0.0026360154151916504,
+          1.0
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0321",
+    "glb_sha256": "b0b301a5acf8049f4e2fed23a2c77cf6bc5bf0c05248580f6f9cca31b18f8348",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0321/mm_0321.glb"
+  },
+  {
     "model": "0322",
     "mm_sha256": "456c5822ab0fe98a053788caa8c86d5bbc2c5850b6d6b5ba359be2a26952e1f1",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0198_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.008643,
+          0.985781,
+          0.009718,
+          0.991119
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0198_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "075d4b8506ba0dbbac856b5d311cae3bd9c9db6a6df8c07c27ebf2594b83ec2f",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.00864300038665533,
+          0.9857810139656067,
+          0.008880972862243652,
+          0.9902819991111755
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0322",
     "glb_sha256": "3485956cba79545ed2917701ba3a0b26b3c02a5c4de90fdcf48e3e080f4f3515",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0322.glb"
   },
   {
+    "model": "0333",
+    "mm_sha256": "aae60f9791b0ee70504ec2f850d668d3ed63b4041aae5599d69b11b6a0d16117",
+    "faces": [
+      {
+        "material": "rstr0209_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0078125,
+          0.989903,
+          0.0078125,
+          0.98656
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0209_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "185c8983e684fbcbd7a0614ea181450fa23d94e08586fb147f36ddbeabe2a3c8",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0078125,
+          0.9899029731750488,
+          0.01344001293182373,
+          0.9921875
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0333",
+    "glb_sha256": "fd4e4651e639882582b30650ba5d9b35259b1902c05cae416e7aed2cc10634ca",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0333/mm_0333.glb"
+  },
+  {
+    "model": "0340",
+    "mm_sha256": "b42f56c1acdd7b0ae622b5ec615c8222937d640138eaa26d67bc1b6d5c005291",
+    "faces": [
+      {
+        "material": "rstr0216_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.006931,
+          0.983431,
+          0.012755,
+          0.998939
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0216_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "fbda9db54c4377770df28bf00697d54bac0ba5ec06bea7852df9c649cb0b1032",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.006930999923497438,
+          0.9834309816360474,
+          0.0010610222816467285,
+          0.9872450232505798
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0340",
+    "glb_sha256": "c131ffc602bec87221e5e609540be2dd6688eef1fdcc3a6ae56973907ba3460e",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0340/mm_0340.glb"
+  },
+  {
+    "model": "0341",
+    "mm_sha256": "e63bbf11e1e5c43d29da55c831b635709e69c870b15f1a60bc925a78e7b4ba6f",
+    "faces": [
+      {
+        "material": "rstr0217_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.039664,
+          0.974158,
+          0.00858858,
+          0.995956
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0217_00_fi_head",
+        "width": 64,
+        "height": 128,
+        "rgba_sha256": "465b1a496ff582197697979776c3acf00fe537ed1ce4b4e40d3daa2cc3c95c69",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.039664000272750854,
+          0.974157989025116,
+          0.004043996334075928,
+          0.9914114475250244
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
+    "id": "character/mm_0341",
+    "glb_sha256": "03beb12c9ec8b441aaeb95856791d6a1dfb227d6cf04eb4f522785568c0a6e41",
+    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0341/mm_0341.glb"
+  },
+  {
     "model": "0344",
     "mm_sha256": "178f70ab1ad753c1d27c3882430beadad3e1d3c9dff395ce441ef4660d369137",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0122_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.0118814,
+          0.965075,
+          0.0074601,
+          0.989954
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0122_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "e004099579b5b21d86c45708ab3eb350b03ac8284e9dd3920e325978a1095161",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.011881399899721146,
+          0.9650750160217285,
+          0.010046005249023438,
+          0.9925398826599121
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0344",
     "glb_sha256": "e522660f3103a223287d06cf268627cc380a7b0df7b63faf10472371c23af0d3",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0344.glb"
@@ -1318,7 +5223,47 @@
   {
     "model": "0345",
     "mm_sha256": "6a9637ec95e5d343144cbd51a1d6117a3e0cc9b299ad698ed2dc6c7562af8114",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0113_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.002712,
+          0.999749,
+          0.007549,
+          0.991761
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0113_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "dcb510387895730d79330cd0058c891423efe3cada0400dab1bf1e51b58b0589",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.0027119999285787344,
+          0.9997490048408508,
+          0.008239030838012695,
+          0.992451012134552
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0345",
     "glb_sha256": "1c66a3dd3bbe710f5b4fad0dcd5c9c0d77ebb1c853bb0f2c40ee0858abc6c6b4",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0345.glb"
@@ -1326,7 +5271,47 @@
   {
     "model": "0346",
     "mm_sha256": "21c868deb37ec75852d98510229f8681255b8e09bdcf0983d84e6db91206dfa5",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0112_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.008253,
+          0.996305,
+          0.01527,
+          0.937838
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0112_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "f239e00bdb2efccf5c24737aeea682a057290d8ba932cc6bb943e45f07c89e91",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.008252999745309353,
+          0.996304988861084,
+          0.06216198205947876,
+          0.9847300052642822
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0346",
     "glb_sha256": "fc8092cfcfc7684f08d90b77d16760c4750547ab4df20ce913bddabe40bd3f5a",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0346.glb"
@@ -1334,7 +5319,47 @@
   {
     "model": "0347",
     "mm_sha256": "8d606f03a400284ed749983e8c10aa3c0be784ac846893a0f2b70bd9ad39dd04",
-    "faces": [],
+    "faces": [
+      {
+        "material": "rstr0110_00_fi_headMat",
+        "animation": null,
+        "frames": null,
+        "target": "BaseColorUV",
+        "native_slot": 1,
+        "uv_source": 0,
+        "uv_bounds": [
+          0.00794776,
+          0.991356,
+          0.00898988,
+          0.997713
+        ],
+        "scale": [
+          1,
+          1
+        ],
+        "rotation": 0,
+        "translation": [
+          0,
+          0
+        ],
+        "transform": "DccMaya",
+        "mapping": "UvCoordinateMap",
+        "texture": "rstr0110_00_fi_head",
+        "width": 128,
+        "height": 128,
+        "rgba_sha256": "82d0ece7616bb91a6a6f9503bacb7b361f397f243ca59a9fc32dfefa2508f70b",
+        "palette": [],
+        "glb_uv_bounds": [
+          0.007947759702801704,
+          0.9913560152053833,
+          0.0022870302200317383,
+          0.9910101294517517
+        ],
+        "image_match": true,
+        "uv_orientation": "mirrored",
+        "exclusion": null
+      }
+    ],
     "id": "character/mm_0347",
     "glb_sha256": "88335e2e94a6e980ff3d8001b050b908c3e1ee5e122357897c361b6aa4ca68ed",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0347.glb"

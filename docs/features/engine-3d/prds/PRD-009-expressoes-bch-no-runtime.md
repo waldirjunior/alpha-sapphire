@@ -43,3 +43,22 @@ As leituras são estáticas, sem executar código da ROM.
 - Verificação canônica e Python; documentação A-046+ e limites atualizados.
 - Piscada automática fica pendente enquanto o clock/condições não forem
   comprovados; não tocar a paleta70 continuamente nem inventar frames.
+
+## Expansão de orientação-base — A-050/A-051
+
+Continuação sobre a0ab2ce: a guarda de oito frames pertence à expressão,
+não à restauração de V. A auditoria agora inclui 99 MM e rostos/cabeças
+estáticos, com identidade RGBA/dimensões e orientação comprovadas por material.
+79 GLBs/91 materiais foram normalizados e publicados por hash, incluindo os
+sete casos curtos das 12 paletas antigas. Novas expressões só são exportadas
+quando a paleta completa observada existe; nenhuma temporização foi criada.
+
+Os 51 MM mapeados das zonas 6–16 estão no catálogo (44 corrigidos, sete
+intactos); 12 IDs especiais seguem sem remapeamento. Sete materiais de BBox
+simétrica e 13 MM sem candidato nativo ficam intactos, com razões em
+[character-face-coverage.json](../../pipeline-rom/character-face-coverage.json).
+O validador comprova preservação estrutural/idempotência dos 99 outputs.
+A/B de MM0179/MM0299/MM0221 com arquivos publicados inspecionou seis capturas,
+sem editar UV no navegador e sem erros/warnings/HTTP>=400. Não é caminhada
+nem paridade com emulador; 250 Vitest/build/155 Python passaram, um skip
+pré-existente por assets públicos ausentes no worktree.

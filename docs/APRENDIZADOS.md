@@ -403,3 +403,41 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Consequência:** Seleção explícita implementada, piscada automática
   explicitamente pendente; P-019 permanece aberta para isso, ramos naturais,
   cobertura de outros materiais e paridade. Pés ausentes não foram inventados.
+
+## A-050 Orientação-base não depende do tamanho da paleta de expressão
+
+- **Data:** 2026-11-18; P-019, continuação sobre a0ab2ce.
+- **Erro reproduzido:** A guarda de 70 frames impedia corrigir V em paletas
+  de 10/30 frames e em rostos estáticos. Testes sintéticos falharam antes da
+  separação entre orientação e reprodução de expressão.
+- **Regra:** Nome de face/head apenas seleciona candidatos para inspeção.
+  Autorizar correção por material exato, SHA da fonte, RGBA/dimensões iguais
+  ao BCH, UV0, transformação-base suportada e BBox nativa inequívoca. Não
+  fabricar animação quando não existe paleta completa 0/10/…/70.
+- **Evidência:** Auditoria de 99 MM encontrou 17 paletas e 91 materiais
+  corrigíveis em 79 modelos. Isso inclui os sete casos curtos das 12 paletas
+  antigas. Das zonas 6–16, 51 MM têm GLB no catálogo: 44 normalizados e sete
+  intactos; 12 IDs especiais continuam sem remapeamento inventado.
+- **Limite:** BBox simétrica em V não distingue original de espelhado. Os
+  materiais de MM0226/0232/0241/0245/0262/0270/0305 permanecem intactos por
+  ambiguidade; outros 13 MM não têm candidato nativo face/head. Próximo passo
+  nesses casos é provar correspondência por vértice, não usar flip global.
+  Razões por modelo em character-face-coverage.json.
+
+## A-051 BBox de material não é BBox de cada primitive exportada
+
+- **Data:** 2026-11-18; P-019, expansão de faces/cabeças estáticas.
+- **Erro reproduzido:** O BCH agrega as meshes do material, mas Blender/glTF
+  pode dividi-las em primitives com limites locais menores. A publicação
+  parou em rstr0010_00_head; fixture de duas primitives reproduziu a falha.
+- **Regra:** Validar a união dos UVs do material contra a evidência nativa,
+  depois clonar os accessors de cada primitive sem alterar os compartilhados
+  com materiais não elegíveis. Não relaxar a prova de SHA/imagem/transform.
+- **Evidência:** Regressão passou após a correção; validador real verificou os
+  99 GLBs: prefixo BIN, accessors anteriores, materiais, imagens, samplers,
+  nodes, skins, clipes e dados não UV preservados, com idempotência. A/B de
+  MM0179/MM0299/MM0221 inspecionou seis capturas com pose/câmera fixas e
+  arquivos publicados, sem editar UV no browser; zero erros/warnings/HTTP>=400.
+- **Limite:** Isso valida orientação dos três novos exemplos, não caminhada,
+  história ROM, todos os 79 rostos no browser ou paridade com emulador. Pés,
+  corpos/texturas residuais e clock da piscada não foram inventados.
