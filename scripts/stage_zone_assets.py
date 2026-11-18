@@ -6,8 +6,9 @@ from pathlib import Path
 from urllib.parse import unquote
 
 from scripts.glb_native_clips import decode_glb, encode_glb
+from scripts.glb_uv_fix import fix_file
 
-SLICE = (6, 7, 23, 24, 25, *range(223, 232))
+SLICE = (6, 7, 13, 23, 24, 25, *range(223, 232))
 
 
 def select_slice(maps: dict, roots: tuple = SLICE) -> list[int]:
@@ -31,6 +32,7 @@ def image_file(model: Path, uri: str) -> Path:
 
 
 def copy_gr(source: Path, target: Path) -> None:
+    fix_file(source)
     blob = source.read_bytes()
     scene, _ = decode_glb(blob)
     for image in scene.get('images', []):

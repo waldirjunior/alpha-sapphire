@@ -3,20 +3,17 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BattleState } from '../core/battle';
 import type { PokemonType } from '../data/pokemon/species';
 import { createBattleArena, type BattleArena } from './battleArena';
-import type { Direction, GameState, GridPosition, MapDefinition } from '../core/types';
-import { createWarpMarkers, loadZoneTerrain } from './zoneTerrain';
+import type { GameState, MapDefinition } from '../core/types';
+import { loadZoneTerrain } from './zoneTerrain';
+import { appendMapEntities, FACING_YAW } from './zoneEntities';
+import { ContinuousTerrain } from './continuousTerrain';
+import { worldPosition } from '../core/boundaries';
 import { NativeAnimationController, characterClip, type CharacterAnimController } from './nativeAnimation';
 import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import type { BattleEvent } from '../core/battleEvents';
 
 const ORAS_TILE_UNITS = 18;
 const POKEMON_SCALE = 1 / 25;
-const FACING_YAW: Record<Direction, number> = {
-  down: 0,
-  up: Math.PI,
-  right: Math.PI / 2,
-  left: -Math.PI / 2,
-};
 
 // P-007: .glb de mapas gerados por convert_gr_to_glb.py trazem `extras.pica` e o
 // alphaMode/alphaCutoff derivados do BlendFunction/AlphaTest do PICA200. Nesse caso o
@@ -67,6 +64,9 @@ export class SceneManager {
   private battlePlayerSlot: THREE.Group;
   private battleEnemySlot: THREE.Group;
   private gltfLoader = new GLTFLoader();
+  private continuousTerrain = new ContinuousTerrain((url) => this.gltfLoader.loadAsync(url), fixOrasMaterials);
+  private continuousRegion = '';
+  private renderedZones = new Set<string>();
   private clock = new THREE.Clock();
   private playerAnim: CharacterAnimController | null = null;
   private entityMixers: THREE.AnimationMixer[] = [];
@@ -193,49 +193,38 @@ export class SceneManager {
     }
   }
 
-  private buildEntities(map: MapDefinition): void {
+  private resetEntities(): void {
     this.entitiesGroup.clear();
-    for (const mixer of this.entityMixers) {
-      mixer.stopAllAction();
-    }
+    for (const mixer of this.entityMixers) mixer.stopAllAction();
     this.entityMixers = [];
-
-    this.entitiesGroup.add(createWarpMarkers(map));
-
-    for (const npc of map.npcs ?? []) this.buildNpc(npc.pos, npc.modelUrl, npc.facing);
-    const postGeo = new THREE.BoxGeometry(0.14, 0.55, 0.14);
-    const boardGeo = new THREE.BoxGeometry(0.7, 0.45, 0.12);
-    const woodMat = new THREE.MeshStandardMaterial({ color: '#92400e' });
-    const boardMat = new THREE.MeshStandardMaterial({ color: '#fef3c7' });
-
-    for (const item of map.interactables ?? []) {
-      if (item.kind === 'sign') {
-        const signGroup = new THREE.Group();
-        const post = new THREE.Mesh(postGeo, woodMat);
-        post.position.y = 0.27;
-        const board = new THREE.Mesh(boardGeo, boardMat);
-        board.position.y = 0.65;
-        signGroup.add(post, board);
-        signGroup.position.set(item.pos.x, 0, item.pos.z);
-        this.entitiesGroup.add(signGroup);
-        continue;
-      }
-
-      const modelPath = item.npcModel === 'may' ? '/assets/characters/may/may.glb' : '/assets/characters/npc/npc.glb';
-      this.buildNpc(item.pos, modelPath, item.facing);
-    }
+    this.renderedZones.clear();
   }
 
-  private buildNpc(pos: GridPosition, modelUrl: string, facing?: Direction): void {
-    const root = new THREE.Group();
-    root.position.set(pos.x, 0, pos.z);
-    root.rotation.y = FACING_YAW[facing ?? 'down'];
-    const fallback = new THREE.Mesh(new THREE.CapsuleGeometry(0.3, 0.5, 4, 8),
-      new THREE.MeshStandardMaterial({ color: '#f43f5e' }));
-    fallback.position.y = 0.55;
-    root.add(fallback);
-    this.entitiesGroup.add(root);
-    this.loadCharacterModel(modelUrl, root, false, '/assets/characters/npc/npc.glb');
+  private buildEntities(map: MapDefinition, append = false): void {
+    if (!append) this.resetEntities();
+    appendMapEntities(map, this.entitiesGroup,
+      (url, target) => this.loadCharacterModel(url, target, false, '/assets/characters/npc/npc.glb'));
+  }
+
+  private syncContinuous(map: MapDefinition, maps: Record<string, MapDefinition>): boolean {
+    if (!map.continuousRegion) return false;
+    if (this.continuousRegion !== map.continuousRegion) {
+      this.continuousRegion = map.continuousRegion;
+      this.mapLoadVersion++;
+      this.continuousTerrain.reset();
+      this.terrainGroup.clear();
+      this.terrainGroup.add(this.continuousTerrain.root);
+      this.resetEntities();
+    }
+    const visible = Object.values(maps).filter((zone) => zone.continuousRegion === map.continuousRegion);
+    for (const zone of visible) {
+      if (this.renderedZones.has(zone.id)) continue;
+      this.renderedZones.add(zone.id);
+      this.buildEntities(zone, true);
+    }
+    void this.continuousTerrain.sync(visible).catch((error: unknown) => console.error(`Chunks da região ${map.continuousRegion}`, error));
+    this.currentMapId = map.id;
+    return true;
   }
 
   public sync(state: GameState, maps: Record<string, MapDefinition>): void {
@@ -252,7 +241,10 @@ export class SceneManager {
     const map = maps[state.player.mapId];
     if (!map) return;
 
-    if (this.currentMapId !== map.id) {
+    const previousRegion = this.continuousRegion;
+    if (!this.syncContinuous(map, maps) && this.currentMapId !== map.id) {
+      this.continuousRegion = '';
+      this.continuousTerrain.reset();
       this.currentMapId = map.id;
       const version = ++this.mapLoadVersion;
       this.buildTerrainPlaceholder(map);
@@ -282,10 +274,19 @@ export class SceneManager {
       z: state.player.pos.z,
     };
 
-    this.playerTargetPos.set(state.player.pos.x, 0, state.player.pos.z);
-    if (mapChanged) {
-      this.playerRoot.position.copy(this.playerTargetPos);
+    for (const npc of map.npcs ?? []) {
+      const root = this.entitiesGroup.getObjectByName(npc.id);
+      if (!root) continue;
+      const npcPos = worldPosition(npc.pos, map);
+      root.position.set(npcPos.x, 0, npcPos.z);
+      root.rotation.y = FACING_YAW[npc.facing ?? 'down'];
+      root.visible = npc.visible !== false;
     }
+    const target = worldPosition(state.player.pos, map);
+    this.playerTargetPos.set(target.x, 0, target.z);
+    const continuous = previousRegion && previousRegion === map.continuousRegion &&
+      this.playerRoot.position.distanceToSquared(this.playerTargetPos) < 2.5;
+    if (mapChanged && !continuous) this.playerRoot.position.copy(this.playerTargetPos);
     this.playerRoot.rotation.y = FACING_YAW[state.player.facing];
 
     if (!this.inBattle) {

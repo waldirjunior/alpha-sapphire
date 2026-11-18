@@ -27,6 +27,19 @@
 - [x] Flags/vars/itens/party/cura/escolha/tempo/erro/orçamento testados sinteticamente.
 - [x] 61 testes Vitest, 47 Python e build canônico passando.
 
+## Continuação gráfica conservadora (2026-11-17)
+
+[ADR-004](../adrs/ADR-004-host-conservador-de-eventos.md) registra o recorte aprovado:
+NPCs de `maps_v2` usam vínculo AMX único com fallback explícito; `entities/case 1`
+roda na entrada, atores são projetados e texto StoryText pausa até tecla.
+ACMD/câmera/olhar usam confirmação manual de stub, não execução de apresentação.
+Smoke real em Littleroot confirmou script 14/linha 6 após cinco confirmações,
+com zero pageerror; 160 Vitest/25 arquivos e build passaram.
+
+Continuam pendentes: memória fora das 19 imagens, bancos GameText/MsgLoad, warp
+AMX/ABI de `_MapChangeCore`, query de construções no init de Littleroot,
+persistência/projeções de save/party/bag e paridade de todos os ramos.
+
 Não se exige nesta etapa um host gráfico pronto, ABI ACMD decodificada,
 concorrência da ROM ou paridade no emulador. Completar todos os serviços/ramos e
 ligar a execução ao jogo ativo são próximos passos de P-013, não aceites implícitos.

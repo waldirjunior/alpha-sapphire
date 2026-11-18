@@ -2,6 +2,28 @@
 
 Atualizado em 2026-11-17 (verificação local na VPS).
 
+## Host de eventos AMX (2026-11-17, worktree `events-layer`)
+
+- Base `main b09a93b`; desenvolvimento isolado, sem trocar branch no checkout principal.
+- Loader lazy por zona/vínculo, validação de SHA das 19 imagens disponíveis,
+  init `entities/case 1`, interação frontal com NPC, texto real StoryText, frames,
+  projeção de posição/direção/visibilidade no SceneManager e colisão de NPC visível.
+- **160 testes Vitest em 25 arquivos e build passando**, incluindo dez regressões
+  sintéticas novas do host/ciclo de vida; aviso Vite >500 kB permanece.
+- Playwright visível com servidor iniciado no checkout principal (5178), código do
+  worktree e `public/` principal: jogador (24,20)/up interagiu com NPC 0/script 14;
+  texto ROM da linha 6 de Littleroot exibido após cinco confirmações cosméticas.
+  Zero pageerror; mensagens tardias de 404 não foram classificadas como resolvidas.
+  Screenshots inspecionados em `/tmp/events-layer-before-npc.png` e
+  `/tmp/events-layer-rom-dialogue.png`, script `/tmp/playwright-test-events.js`.
+- **Recorte aprovado, não paridade:** ACMD/câmera/olhar opacos aguardam Enter com
+  retorno de stub visível; SEPlay silencioso é diagnosticado. Init de zona 6 para
+  em BuildMdlGetHandleByGPos; bancos GameText/MsgLoad, warp AMX/_MapChangeCore,
+  expansão da memória, save/party/bag, gatilhos e callbacks de mapa continuam
+  pendentes em P-013/P-017. Warps de navegação existentes chamam o init do destino.
+  [ADR-004](features/core-jogo/adrs/ADR-004-host-conservador-de-eventos.md) registra
+  política, evidência e próximos passos. Não houve conversão/cópia de assets.
+
 ## Estado do Código e Build
 
 - Branch atual: `main`.
@@ -21,6 +43,13 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   - [src/ai/emulatorParity.test.ts](../src/ai/emulatorParity.test.ts): suíte de paridade contra o comportamento esperado da ROM original.
   - [src/main.ts](../src/main.ts): bootstrap que carrega as tabelas de batalha e importa [src/game.ts](../src/game.ts): loop de renderização, teclado, caixa de diálogo, menu estilo 3DS (`Time`, `Mochila`, `Pokédex`, `Salvar`), HUD de batalha 3D com barras de HP coloridas, time de até 6 Pokémon e auto-save em `localStorage`.
 - Diretórios planejados ainda não criados: `src/ai/`.
+
+## Corredor contínuo (2026-11-17, implementação sobre main b09a93b)
+
+- `_neighbors.json`: 58 zonas/90 bordas dirigidas derivadas do contato MM, com ponte 7↔24 explicitamente inferred=true, aprovada pelo coordenador; não se alega extração da conexão entre MM1 e MM2. Padding permanece bloqueado; passo entre x=1 de Oldale e x=78 de Route102 mede um tile mundial.
+- Core mantém colisão/direção e coordenadas locais; engine conserva chunks/atores e usa origens mundiais estáveis. Repositório só pré-carrega um salto de vizinhos; encontros vêm diretamente de zones/NNN_*.json por ID exato.
+- Staging ampliado: 23 zonas (slice + destinos diretos), 35 GRs, 51 atores; glb_uv_fix aplicado antes da cópia e os 7 testes UV passaram apontando ao public principal, sem skips.
+- Testes de borda, grafo e cache passam; Playwright no checkout principal **ainda pendente**, aguardando avanço da main pelo coordenador conforme PRD-006/ADR-004. Nenhuma caminhada completa declarada pronta nesta etapa.
 
 ## Integração maps_v2 no runtime (2026-11-17, zone-maps sobre main 5d9a3b6)
 
@@ -109,7 +138,7 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   - Tabela de zonas decodificada: `a/0/1/3` (`ZO` × 536 + `0536.bin` ZoneData master + `0537.bin` encontros `EN`) cruzada com `a/0/4/0` (matrizes) e metlist `a_0_7_3/0090`; `src/data/zones.json` gerado por [scripts/build_zone_catalog.py](../scripts/build_zone_catalog.py) — 536 zonas nomeadas com `grIds` e `textFile` (`A-008`).
   - `a/0/3/9` completo desempacotado (`857` `GR`s) e `a/0/1/4` (`229` `AD`s) em `rom/extracted/garc/` (`417M`).
   - `536` textos de zona em `src/data/texts/zones/` e `175` arquivos GameText em `src/data/texts/gametext/` (via `extract_texts.decode_gen6_text`).
-  - `199` trilhas `.bcstm` → `.mp3` em `rom/extracted/audio/mp3/` (`281M`); [src/data/zone_audio.json](../src/data/zone_audio.json) mapeia as 536 zonas para a trilha ([audio-format.md](features/pipeline-rom/audio-format.md)); `game.ts` toca a BGM do mapa via [src/engine/audioPlayer.ts](../src/engine/audioPlayer.ts) (7 faixas do slice em `public/assets/audio/`, local).
+  - `199` trilhas `.bcstm` → `.mp3` em `rom/extracted/audio/mp3/` (`281M`); [src/data/zone_audio.json](../src/data/zone_audio.json) mapeia as 536 zonas para a trilha ([audio-format.md](features/pipeline-rom/audio-format.md)); `game.ts` toca a BGM do mapa via [src/engine/audioPlayer.ts](../src/engine/audioPlayer.ts) e, em batalha, tema/fanfarra/jingles via [src/core/battleAudio.ts](../src/core/battleAudio.ts) (16 faixas do slice em `public/assets/audio/`, local; validado com Playwright, `P-008`).
   - Batch `.glb` em andamento em `rom/extracted/models/`: `gr_NNNN/` (GRs de mapa), `pokemon/` (`--all`, tags `pmNNNN_NN`), `characters/` (`mm_NNNN`).
 
 ## Correção de texCoord nos GLBs de GR (2026-11-17, fix/texcoord-uv-channels)

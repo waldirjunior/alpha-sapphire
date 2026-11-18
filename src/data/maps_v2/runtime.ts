@@ -1,6 +1,7 @@
 import { movePlayer } from '../../core/gameState';
 import type { Direction, GameState, MapDefinition } from '../../core/types';
 import { stepWarp } from '../../core/warps';
+import { stepBoundary } from '../../core/boundaries';
 import { MAPS } from '../maps';
 import { getZoneMap, type ZoneMapLoader } from './loader';
 
@@ -14,17 +15,25 @@ export function saveStorageKey(search: string): string {
 
 export function createMapRepository(getZone: ZoneMapLoader, legacy: Record<string, MapDefinition>) {
   const maps: Record<string, MapDefinition> = { ...legacy };
-  const load = async (id: string): Promise<MapDefinition> => {
+  const loadOne = async (id: string): Promise<MapDefinition> => {
     if (maps[id]) return maps[id];
     const map = await getZone(id);
     maps[id] = map;
     return map;
   };
+  const load = async (id: string): Promise<MapDefinition> => {
+    const current = await loadOne(id);
+    const neighbors = new Set(current.boundaries?.map((edge) => edge.targetMapId));
+    await Promise.all([...neighbors].map(loadOne));
+    return current;
+  };
   const move = async (state: GameState, direction: Direction): Promise<GameState> => {
     if (state.activeDialogue) return state;
     const current = await load(state.player.mapId);
     const warp = stepWarp(state, direction, current);
+    const boundary = !warp && stepBoundary(state.player.pos, direction, current);
     if (warp && (!warp.requiredFlag || state.storyFlags[warp.requiredFlag])) await load(warp.targetMapId);
+    if (boundary) await load(boundary.targetMapId);
     return movePlayer(state, direction, maps);
   };
   return { maps, load, move };

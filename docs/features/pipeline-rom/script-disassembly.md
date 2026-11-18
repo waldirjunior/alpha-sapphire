@@ -4,6 +4,21 @@ Continuação de [script-format.md](script-format.md), em 2026-11-17.
 Escopo inicial: Fase 1/P-013. A continuação abaixo inclui o primeiro runner
 puro da Fase 2, ainda sem integração ao comportamento ativo do jogo.
 
+## Host gráfico conservador — continuação de P-013
+
+`zone_scripts/loader.ts` e `engine/zoneEvents.ts` agora ligam o disassembly ao
+runtime de NPCs/init, no recorte aprovado de
+[ADR-004](../core-jogo/adrs/ADR-004-host-conservador-de-eventos.md). Só imagens
+presentes em opening-memory e com SHA correspondente são executadas. Texto de
+Littleroot/script 14/linha 6 foi exibido via Playwright após cinco confirmações
+manuais de stubs cosméticos; não houve interpretação de ACMD ou paridade de ROM.
+
+MsgLoad/seleção de GameText e a ordem dos nove argumentos de _MapChangeCore
+continuam sem contrato host validado. Não transformar WarpSetID de uma célula
+no par zona/warp do runner normalizado. O init de zona 6 encontrou
+BuildMdlGetHandleByGPos e foi interrompido com diagnóstico, sem inventar handle.
+Próxima expansão precisa de memória e ABI evidenciadas por zona/programa.
+
 ## VM Pawn e abertura real — continuação de P-013
 
 Em 2026-11-17, o caminho `src/core/amxRunner.ts` passou a executar as **instruções
