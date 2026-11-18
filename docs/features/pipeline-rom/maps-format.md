@@ -249,3 +249,22 @@ A caminhada integral foi validada na main d85d534: 500 passos por teclado com
 ida/retorno, Route103, warp real6→223→6 e diálogo ROM. Zero consoleErrors,
 pageErrors e missing; capturas por zona e A/B inspecionados (STATUS.md).
 Persistem avisos explícitos AMX/SE e limites PICA/combiners; não é paridade.
+
+## Ledge sul derivado da permissão GR (PRD-013, 2026-11-18)
+
+`read_gr_permissions` preserva cada u32 da seção0 antes de `collision_layers`
+produzir os grids binários existentes. A composição por zona acrescenta o campo
+opcional `southLedges: [{x,z}]` para a palavra **exata0x75020021**, somente em
+células pertencentes à zona segundo a MM, com coordenadas locais. Schema v2 é
+aditivo; os grids, fonte, portais, NPCs e encontros não mudam. Regeneração de536
+zonas acrescentou816 pontos a28 JSONs; os outros campos são idênticos à base.
+
+A direção é derivada de padrões e geometrias, não um bitfield nativo generalizado:
+nos223 GRs staged pesquisados havia541 ocorrências, todas com norte livre;
+modelos de Jagged e outras rotas mostram queda norte→sul. O core mantém o ledge
+bloqueado para caminhada/subida/lateral, mas permite salto de dois tiles ao sul
+se a aterrissagem e o ledge estão livres de atores e dentro dos limites. Não
+promover0x75000021/0x75640021 ou classes laterais. Detalhes, limites estáticos e
+regressões em [ADR-008](../core-jogo/adrs/ADR-008-ledges-sul-por-permissao-gr.md)
+e [PRD-013](../engine-3d/prds/PRD-013-bondinho-mt-chimney-lavaridge.md).
+Animação/altura/multicamada e validação no emulador continuam P-017.

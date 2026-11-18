@@ -2,6 +2,15 @@
 
 Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## Bondinho de Mt. Chimney e descida a Lavaridge (2026-11-18)
+
+- PRD-013/A-069/A-070, base357692a e core/ADR-008: cadeia39→384→385→83→84→39→9 confirmada em MM/ZO/AMX, sem ponte nova. Bondinho usa demo11/12, work16699=1 e _MapChangeCore, não ZO entre estações. Gate666 dos atores39/0–2 tem FlagSet real global0028@21804 chamado por Meteor71; fixture recorta só essa flag, sem executar o evento inteiro.
+- Entities385/script1 restaura work16699 e move funcionário1 de21,26 para24,57,18, liberando a chegada23,18 sem ocultá-lo nem deslocar o jogador. Duas imagens entities adicionadas por SHA a local-memory, preservando as oito anteriores; binding NPC2 e imagens map/apresentação do bondinho não promovidos. Transporte é fixture pós-demo explícita dos recortes WorkSet e _MapChangeCore, sem executar filme/embarque/RecordAdd175 ou alegar campanha natural.
+- Jagged84 bloqueava emz30 mesmo sem NPCs. Inventário de223 GRs staged encontrou541 palavras0x75020021 com norte livre; geometrias de84 e outras rotas corroboram queda ao sul. Core salta dois tiles ao sul somente por metadado dessa palavra exata e aterrissagem livre; subida/lateral, bounds, atores, diálogo e prioridade ZO preservados. Variante0000/6400 e ledges laterais não implementados. Evidência estática/semântica derivada, não validação no emulador ou ABI. Animação de hop e altura visual continuam pendentes.
+- Regeneração adicionou816 southLedges em28 zonas; auditoria estruturada confirmou todos os outros campos idênticos à base, inclusive colisões/terreno/warps/NPCs/encontros. Regressão após init385 alcança83→84→39→9 com os NPCs nativos; sem metadado continua bloqueada emz30. Testes negativos de Meteor71→42/72/73 continuam válidos; loop antigo não foi fechado.
+- Stage33 zonas/99 GRs/91 atores existentes,18 códigos especiais em fallback, BGMs c_02/d_01/d_02/r_c/t_02. Zero assets declarados ausentes e SHA das dez imagens AMX conferidos;248 GLBs públicos de mapa sem erros UV e dry-run GR/atores sem remaps. Saídas ignoradas; nenhum binário versionado.
+- **340 Vitest/52 arquivos,160 Python sem skips e build passaram.** Integração e Playwright visível na main permanecem pendentes. Preservar P-013/P-017/P-019 e limites visuais já conhecidos; nenhum aceite gráfico ou campanha completa. npm install inicial reportou9 vulnerabilidades herdadas (3 moderadas/4 altas/2 críticas); dependências não alteradas.
+
 ## Mauville–Fallarbor e entrada de Meteor Falls (2026-11-18)
 
 - PRD-012/A-066–A-068 sobrec9be392: caminho físico15→445→37→39→85→38→36→40→10→41→71. Route113 precede Fallarbor10, Route114 liga Meteor; contatos MM7/MM8 e ZO existentes, sem ponte nova, colisão ou encontro alterado. Loop71→42→16 ainda bloqueado em P-017.

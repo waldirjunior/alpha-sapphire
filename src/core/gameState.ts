@@ -2,6 +2,7 @@ import type { Direction, GameState, GridPosition, Interactable, MapDefinition } 
 import { DIRECTION_DELTAS, stepPosition, stepWarp } from './warps';
 import { boundaryTarget, stepBoundary } from './boundaries';
 import type { BoundaryLink } from './types';
+import { southLedgeLanding } from './ledges';
 
 function crossBoundary(state: GameState, direction: Direction, maps: Record<string, MapDefinition>, link: BoundaryLink): GameState {
   const target = maps[link.targetMapId];
@@ -55,8 +56,8 @@ export function movePlayer(
   const currentMap = maps[state.player.mapId];
   if (!currentMap) return state;
 
-  const nextPos = stepPosition(state.player.pos, direction);
   const warp = stepWarp(state, direction, currentMap);
+  const nextPos = (warp ? undefined : southLedgeLanding(currentMap, state.player.pos, direction)) ?? stepPosition(state.player.pos, direction);
   const boundary = !warp && stepBoundary(state.player.pos, direction, currentMap);
   if (boundary) return crossBoundary(state, direction, maps, boundary);
 

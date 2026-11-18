@@ -31,6 +31,17 @@ describe('zone map adapter', () => {
     expect(() => adaptZoneMap({ ...fixture, warps: [{ ...fixture.warps[0], width: 0 }] })).toThrow(/warp/);
   });
 
+  it('copies extracted south ledges without opening collisions and rejects invalid coordinates', () => {
+    const source = { ...fixture, southLedges: [{ x: 1, z: 0 }] };
+    const map = adaptZoneMap(source);
+    expect(map.southLedges).toEqual(source.southLedges);
+    expect(map.southLedges).not.toBe(source.southLedges);
+    expect(map.collisions).toEqual(source.collisions);
+    for (const pos of [{ x: 2, z: 0 }, { x: 0, z: 0 }, { x: 1.5, z: 0 }]) {
+      expect(() => adaptZoneMap({ ...source, southLedges: [pos] })).toThrow(/ledge/);
+    }
+  });
+
   it('loads only the requested JSON, deduplicates requests and retries failures', async () => {
     const load = vi.fn().mockRejectedValueOnce(new Error('offline')).mockResolvedValue(fixture);
     const unused = vi.fn();

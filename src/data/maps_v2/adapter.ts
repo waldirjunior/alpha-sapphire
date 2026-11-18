@@ -10,6 +10,7 @@ export interface ZoneMapSource {
   height: number;
   collisions: number[][];
   terrain: number[][];
+  southLedges?: GridPosition[];
   spawnPos: GridPosition | null;
   spawnDerived: boolean;
   spawnPolicy: string;
@@ -33,6 +34,10 @@ function validateZone(source: ZoneMapSource): void {
     !validGrid(source.collisions) || !validGrid(source.terrain)) {
     throw new Error(`Mapa ${source.id}: esperado schema v2 e grids width×height inteiros`);
   }
+  const invalidLedge = source.southLedges?.find(({ x, z }) => !Number.isInteger(x) || !Number.isInteger(z) || source.collisions[z]?.[x] !== 1);
+  if (invalidLedge) {
+    throw new Error(`Mapa ${source.id}: ledge sul (${invalidLedge.x},${invalidLedge.z}) exige coordenadas inteiras em tile bloqueado`);
+  }
   if (source.warps.some((warp) => !Number.isInteger(warp.width) || warp.width < 1 || !Number.isInteger(warp.height) || warp.height < 1)) {
     throw new Error(`Mapa ${source.id}: warp com width/height inválidos`);
   }
@@ -43,6 +48,7 @@ export function adaptZoneMap(source: ZoneMapSource): MapDefinition {
   return {
     id: source.id, zoneId: source.zone, name: source.name, width: source.width, height: source.height,
     collisions: source.collisions.map((row) => [...row]), terrain: source.terrain.map((row) => [...row]),
+    southLedges: source.southLedges?.map(pos => ({ ...pos })),
     romOrigin: source.source.originTile ? { ...source.source.originTile } : undefined,
     spawnPos: source.spawnPos ? { ...source.spawnPos } : undefined,
     spawnDerived: source.spawnDerived, spawnPolicy: source.spawnPolicy,
