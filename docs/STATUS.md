@@ -2,6 +2,14 @@
 
 Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## Trechos leste de Mauville e acesso parcial a Lilycove (2026-11-18)
+
+- PRD-014/A-074/A-075, base b358b5a: sequência topológica15→445→45→47→46→17→48→50→18; ramal45→52→51→50, não52→50 direto. IDs/MM/ZO e contatos nativos preservados; nenhuma ponte, colisão, altura, parser ou regra de movimento alterada. **Não é um corredor conectado concluído.**
+- Regressões reproduziram47→46 e48→50 inalcançáveis mesmo sem NPCs/incluindo49;52 trava no ledge lateral73020021. Passada em315 GRs staged:6d14/6e77/6f30, ownership por zona e raycasts com superfícies/inclinações divergentes. Abrir só6x em diagnóstico não conecta os trechos; nenhuma semântica nova promovida. Classe3d1a0006 permanece candidata não provada: parser0/0 e capturas rochosas/verdes não comprovam água ou Surf.
+- Checkpoints independentes explicitamente autorizados: core15→445→45→47;46(75,19)→17→48 e bloqueio;52 oeste bloqueada;50 base bloqueada/fixture real5388..5519 com WorkSet16530=2,FlagSet670 e seis MdlDel até18. Não alegar travessia entre checkpoints nem evento completo.11 regressões passam, geometria/dados originais imutáveis.
+- Stage60 zonas/139 GRs/111 atores existentes/21 IDs especiais em fallback; seis BGMs principais e15 declaradas considerando vizinhos, sem ampliar os modelos para copiar cinco MP3s inicialmente ausentes. Probe final zero ausentes/remaps;315 GLBs válidos.169 Python sem skips e npm test/build passaram; warning herdado de chunks grandes e nove vulnerabilidades herdadas do lock, sem alterar dependências. **Integração/Playwright visível na main pendentes.**
+- Detalhes, artefatos e roteiro separado em [PRD-014](features/engine-3d/prds/PRD-014-trechos-leste-mauville-lilycove.md). P-013/P-017/P-019, movimento6x/73, classificação residual, corredor contínuo, Surf e paridade permanecem abertos.
+
 ## Bondinho de Mt. Chimney e descida a Lavaridge (2026-11-18)
 
 - PRD-013/A-072/A-073, base357692a e core/ADR-008: cadeia39→384→385→83→84→39→9 confirmada em MM/ZO/AMX, sem ponte nova. Bondinho usa demo11/12, work16699=1 e _MapChangeCore, não ZO entre estações. Gate666 dos atores39/0–2 tem FlagSet real global0028@21804 chamado por Meteor71; fixture recorta só essa flag, sem executar o evento inteiro.
