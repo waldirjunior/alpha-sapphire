@@ -2,6 +2,13 @@
 
 Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## Verdanturf–Mauville e acesso condicional a Slateport (2026-11-18)
+
+- PRD-011/A-061/A-062, base3dbfd21:11→44→445→15; hall445 antes do pátio15. Contato MM6 entre11/44; demais ligações ZO preservadas, sem ponte ou grafo modificado. Continuação445→33→14 usa Route110 terrestre33, não variante34; retângulos recíprocos7/5 e5/3 não justificam continuidade lateral presumida.
+- Regressão base chegou a33 mas não14 por cinco NPCs9–13/hide-flag660. Bloco real33/map7360..7475 contém WorkSet16526=2, FlagSet660 e MdlDel dos cinco IDs; fixture com halt7476 executa na VM existente e restaura/projeta progresso real, sem alterar colisões ou ocultar genericamente atores. SHA/offsets no PRD; não é função/campanha inteira.
+- Stage `--zones 11 44 445 15 33 14 --include-neighbors --audio-dir`:46 zonas/100 GRs/100 atores existentes,18 códigos em fallback; BGMs c_02/c_03/r_c/t_04. Probe falhou antes com80 assets ausentes e passou depois; dry-run UV de GRs/atores públicos limpo. Outputs ignorados, nenhum binário versionado.
+- **320 Vitest/48 arquivos,150 Python sem skips e build passaram**; GLB_MAPS_DIR aponta ao public principal. Aviso de chunk >500kB herdado. Playwright na main ainda pendente: caminhada natural até Mauville, bloqueio33 e fase pós-evento explícita até Slateport.
+
 ## Extensão Rustboro–Verdanturf (2026-11-18, zone-maps)
 
 - PRD-010/A-050/A-051: IDs16→43→75→11. MM4 já deriva16↔43; portais43(62,10)→75(14,20) e75(59,27)→11(16,7) preservados. Nenhuma ponte nova, colisão ou tabela de encontros alterada.

@@ -11,6 +11,7 @@ Camada de renderização WebGL com Three.js em `src/engine/` (`SceneManager.ts`)
 - [PRD-008](prds/PRD-008-corredor-petalburg-rustboro.md) / [ADR-004](adrs/ADR-004-bordas-por-zone-grid.md) — extensão até Rustboro: ponte explícita13↔27, portais reais da floresta e contato MM4 entre26/16; A-042/A-043/A-044,306 passos Playwright na main com zero consoleErrors/pageErrors/missing; limites visuais e de história mantidos.
 - [PRD-009](prds/PRD-009-expressoes-bch-no-runtime.md) — ChangeFace por ID do ator, estado puro e oito frames BCH somente nas paletas completas evidenciadas, com clones de textura por instância e A/B AMX sintético validado no engine real. A-047–A-049: piscada automática pendente de clock/condições nativas; sem UV inventado ou alteração de geometria.
 - [PRD-010](prds/PRD-010-corredor-rustboro-verdanturf.md) — corredor16→43→75→11; contato MM4 e portais ZO existentes, bloqueio nativo pela hide-flag676 e estado pós-evento explícito. 325 passos Playwright main9023a3f até11(16,22), bloqueio sem676 e fixture pós-evento derivada do bloco real; zero consoleErrors/pageErrors/missing, com limites visuais e de história documentados.
+- [PRD-011](prds/PRD-011-corredor-verdanturf-mauville-slateport.md) —11→44→445→15, com hall e pátio distintos; continuação33→14 bloqueada sem660 e validada por fixture real isolada em testes. Stage concluído, Playwright main pendente; nenhum alinhamento presumido entre portais desiguais.
 - Referência TCC: [docs/tcc/00-arquitetura.md](../../tcc/00-arquitetura.md).
 
 ## Estado atual
