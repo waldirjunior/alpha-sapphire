@@ -27,6 +27,15 @@
    - `scripts/extract_gr_maps.py` gera `src/data/maps/*.json` (`collisions`, `terrain`, `warps`, `spawnPos`).
    - Continuação de 2026-11-17: [build_zone_maps.py](../../scripts/build_zone_maps.py) gera 536 mapas paralelos em `src/data/maps_v2/`, compondo GRs pelos zoneIds da MM (não por `mapArea` nem pelos retângulos sec1). Escala 18 unidades/tile, dez referências/16.000 tiles por camada sem diferenças; [maps-format.md](../features/pipeline-rom/maps-format.md), A-023/ADR-005 e P-017 distinguem layout físico, campos não comprovados e spawn derivado de spawn canônico.
    - PRD-015/A-082–A-087: [atributos nativos](../features/engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md) rastreados em Field/code/CROs por relocations e Capstone, sem executar ROM. Ownership PlayerGrid/base FieldUnit e fila pendente+25→corrente+24 recuperados. Continuação28113e3 fecha resultado5→executor25/Jump2G16F, registro3ca4c e consumidor401f0; deslocamento parametrizado e pose até o término no ramo de grid. Tabelas direcionais dão73→oeste, não autorização para abrir52 oeste→leste. Outro ramo pedeaa/BehindJump; callbacks/máscara/landing e input ainda não fechados. Modos1/2 ligados a famílias CycleMach/CycleDirt por51/58;62 é CycleDirtDanielSteppingJump, distância-param1/tipo5/limite8, não prova de duas travessias completas. Flag20 e seleção GR/altura ficam por último. Runtime/parser/mapa/colisão/grounding/75020021 preservados; cinco SHA, RTTI, imports e parâmetros reproduzíveis conferidos.362 Vitest/186 Python sem skips/build passam novamente, sem red-green ou Playwright novo. P-017/corredor conectado permanecem abertos.
+   - Continuação PRD-015/A-092/A-093, baseffd1154: ownership liga global100+fc8
+     ao subobjeto+e50+178, carregado do parâmetro7 do modelo por1cf74; perfil
+     efetivo ainda falta. e811c retorna fallback0/0f/10, não autoriza5. aa tem
+     etapas4513c→48eb4→3a0bc, endpoint2 e atualização vetorial com término
+     antecipado possível; não prova equivalência com salto atômico25. Footprint,
+     interseção/altura/flags de atores e seleção dos callbacks impedem chamar
+     landing de teste booleano já fechado. Runtime/75020021 preservados;
+     362 Vitest/186 Python sem skips/build e nova receita estática passam,
+     sem red-green/Playwright novo; P-017 permanece aberta.
    - `scripts/extract_texts.py` decodifica textos Gen 6 (`XOR 0x7C89`) para `src/data/texts/*.json`.
    - `scripts/convert_gr_to_glb.py` usa `SpicaExport` (`.NET 8` + `SPICA` sem `System.Drawing`) + `assimp` (`5.2`) para gerar `<mapa>.glb` + `.png`s em `public/assets/maps/<mapa>/` (escala ORAS `1 / 18` por tile).
    - O mesmo `SpicaExport` + `assimp` converte personagens (`a/0/2/1/0315.bin` → `public/assets/characters/brendan/brendan.glb`).

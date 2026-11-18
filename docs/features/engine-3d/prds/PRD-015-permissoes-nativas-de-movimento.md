@@ -427,6 +427,145 @@ real da sequência Daniel. Duas solicitações do evento não garantem duas
 translações concluídas ou travessia irrestrita de6f. Não implementar bike,
 SteppingStone ou fixture que force estado0e–11 a partir apenas desses nomes.
 
+## Continuação A-092/A-093: fallback, perfil e landing (baseffd1154)
+
+Observações estáticas desta passada; nenhum código da ROM executado. A regra
+continua parcial: não fixar um perfil nativo ausente do core para fabricar uma
+regressão de ledge. Mantida a ordem: aceitação, landing, BehindJump; depois
+input/item/+14/Daniel; flag20 e seleção GR/altura por último.
+
+### e811c não autoriza o resultado5
+
+Em `64594..6459c`, máscara residual zero devolve diretamente o resultado
+corrente emr7, inclusive5. Havendo máscara, `645a8` chamae811c e usa seu retorno.
+A função `e811c..e8510` só devolve0,0fhex ou10hex: busca alternativas laterais
+em até duas iterações, consulta bit0 do atributo via403b2c, exige as condições
+sobre facing e consulta645f0 da direção alternativa com máscara zero. Os ramos
+`e8444/e8468` escolhem códigos0f/10; `e84f0` devolve0. **É fallback com outro
+resultado, não um validador que conserva ou cria5.** Isso refina A-085–A-087.
+
+Callbacks: `9d918→31b40` cria quatro sequências por seletores do registro
+`global+ec`, offsets28+2*i; `9d950→31d30` cria a sequência principal a partir
+de `4d86fc→4d83f4`, u16 no offset26 do registro retornado. O default das duas
+fábricas usa vtable107820, RTTI `FieldUniqueSequenceNone`; seu slot24 aponta
+para2ad5c, que retorna0. Não inferir que todas as sequências sejam None: há
+imports para DllUSR113, DllUSAreaFriendShip, DllUSAreaWaterSurface,
+DllUSAreaTenji e DllUSGymFighting, entre outros. A ligação dos seletores ativos
+a cada mapa do core ainda falta.
+
+### Produtor do seletor global+fc8
+
+A cadeia de ownership elimina a ambiguidade de campos com mesmo offset:
+
+1. `9d084..9d09c` aloca1438hex bytes, chamaa0488 e guarda emglobal+100.
+2. A construtora chama1d634 no subobjeto `global100+e50`; logo, seu campo178
+   é o mesmo endereço que `global100+fc8`. Inicialização em1d6f0 zera o campo
+   por alias `subobjeto+16c+c`, não por um STRB com imediatofc8.
+3. `a0428..a0450` exige byte13 do modelo não zero, obtém seu parâmetro7 por
+   `4e4798` e chama `1cf50(global100+e50,pacote)`. O getter exige campo48 do
+   modelo igual5 e usa12fb40 no contêiner apontado por44.
+4. `1cf50` vincula o pacote por3a7d54. `12faf4` lê a contagem u16 no offset2
+   do pacote. Se houver três parâmetros, `1cfcc..1cfe0` lê o primeiro por
+   `12fb40(index0)` e usa seu u32 baixo8; caso contrário, usa0. `1cf74` grava
+   esse valor emsubobjeto+178. Não há aqui um enum provado de botões/bicicleta.
+
+Assim, o seletor tem um produtor ligado ao **recurso/perfil do modelo**.
+Falta identificar o pacote7 efetivamente carregado e seu contrato no core;
+não assumir que todo jogador tenhafc8=1 ou que0 signifique analógico. A busca
+ARM de stores diretos em Field/code não cobre todos os aliases ou outros CROs.
+O STRB code12267c no mesmo offset não foi ligado a esse objeto: não é evidência
+de ownership. A-089 registra essa armadilha.
+
+### Landing: footprint e interseção, não um booleano livre já recuperado
+
+A consulta `645f0→4e067c→4de148` usa a pose candidata deslocada uma célula,
+a direção e dados do ator. `4deb9c` monta o footprint a partir dos bytes150/151
+do modelo;4de148 percorre suas células e combina as máscaras observadas.
+`3f3498` recebe essa pose candidata e direção, percorre atores por4e358c,
+pula o próprio ator, filtra flags e chama3f1a00. Esta consulta posições lógica
+e física do outro ator, flags, diferença de altura e geometria por4dd840.
+Além disso, `6457c..64590` pode limpar a máscara4 conforme4e3dc8 do ator atingido.
+
+**Não foi fechado um teste independente “destino+2 livre de NPC visível”.**
+A busca acima cobre essas funções e os caminhos de inicialização25/aa; não
+prova ausência de verificações em outros callbacks/camadas. Igualar essa
+interseção a `map.npcs.visible/pos` ou usar só collision0 da célula de landing
+inventaria o contrato que ainda falta. O destino lógico calculado não é, por
+si só, aceitação da aterrissagem nem prova de seleção da superfície correta.
+
+### BehindJump: endpoint de duas unidades, atualização diferente
+
+A entradaaa tem etapas **4513c→48eb4→3a0bc**: ponteiro48eb4 carregado em3ce34
+e registro em3f614. A inicialização4513c chama4df9b8 com limite16 e flag1.
+Seu vetor vem de `45150→4dc174`, que copiaator+84c/850/854; esse trecho não
+lê direção de comando+0a como41310. Falta ligar esse vetor ao input e à normal
+nos chamadores, não substituir ambos por um único número sem prova.
+Esse helper normaliza vetor por4df718, deriva direção por3d3efc, chama
+`4dc6d0(...,distância2)` e projeta o destino por3f2418. Falhas seguem para11ef4c,
+não retornam um booleano de movimento bloqueado. A diferença X/Z entre a
+projeção e a pose física é dividida por16; outras saídas incluem direção
+normalizada e vetor zero. Isso calcula movimento; não é teste de NPC livre.
+
+`81670` usa vetores, velocidade emator+87c, conversões de pose e projeções;
+grava o destino lógico por3f12d8 em8192c. O tick48eb4 incrementa contador,
+aplica movimento por3f13fc e chama `3f2afc(ator,1)`. O caminho48fc4..490b0
+inspeciona flag10000000 e pode alcançar o término49154 antes do limite16.
+O término converte a pose por8a668, grava por3f18e8/3f12d8 e ajusta flags.
+Não foi provada equivalência com um salto atômico de dois tiles: ainda faltam
+contrato das poses, velocidade, flags e resolução dinâmica da trajetória.
+
+**Decisão:** preservar runtime, parser, mapas, colisões, grounding e75020021.
+73 continua com normal oeste no ramo acompanhado;52 oeste→leste não é um caso
+positivo a fabricar. Primeiro fechar perfil7/seletores ativos e a relação
+footprint/interseção/pose com landing no core. Não foram implementados novos
+ledges, bike ou6f; red-green e Playwright ficam condicionados à regra fechada.
+
+### Verificação adicional desta continuação
+
+Com `ROM_ROOT` e Capstone como na receita abaixo, estes checks validam os
+pontos de ligação, não simulam a ROM nem substituem regressões do core:
+
+```bash
+/tmp/events-abi-venv/bin/python - <<'PY'
+import os
+import struct
+from pathlib import Path
+from capstone import Cs, CS_ARCH_ARM, CS_MODE_ARM
+from scripts.cro_native_abi import CroImage
+
+root = Path(os.environ['ROM_ROOT'])
+b = CroImage((root / 'RomFS/DllField.cro').read_bytes()).relocated()
+cs = Cs(CS_ARCH_ARM, CS_MODE_ARM)
+checks = {
+    0x1cf64: ('cmp', 'r0, #3'),
+    0x1cf74: ('strb', 'r0, [r4, #0x178]'),
+    0x1cfcc: ('mov', 'r1, #0'),
+    0x1d6f0: ('strb', 'r6, [r0, #0xc]'),
+    0xa0434: ('mov', 'r1, #7'),
+    0xa0444: ('add', 'r0, r4, #0xe50'),
+    0xa0448: ('bl', '#0x1cf50'),
+    0x9d09c: ('str', 'r0, [r4, #0x100]'),
+    0xe8444: ('mov', 'r6, #0xf'),
+    0xe8468: ('mov', 'r6, #0x10'),
+    0xe84e0: ('bl', '#0x645f0'),
+    0xe84f0: ('mov', 'r0, #0'),
+    0x8192c: ('bl', '#0x21e8'),
+    0x48fc0: ('bl', '#0x2118'),
+    0x49180: ('bl', '#0x21e8'),
+}
+for p, expected in checks.items():
+    row = next(cs.disasm(b[p:p + 4], p))
+    assert (row.mnemonic, row.op_str) == expected, hex(p)
+u32 = lambda p: struct.unpack_from('<I', b, p)[0]
+assert u32(0x107820 + 0x24) == 0x2ad5c
+p = 0x3ce34
+row = next(cs.disasm(b[p:p + 4], p))
+assert u32(p + 8 + int(row.op_str.split('#')[1].split(']')[0], 0)) == 0x48eb4
+assert 0xe50 + 0x178 == 0xfc8
+print('15 instruções, callback None, tick aa e alias fc8 conferidos')
+PY
+```
+
 ## Reprodução estática
 
 A partir da raiz do worktree, com `ROM_ROOT` apontando para `rom/extracted`

@@ -22,6 +22,27 @@ Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo s
 - Chromium visível, servidores separados5197/5198 e assets idênticos:12 checkpoints/34 capturas inspecionadas, zero page/console/HTTP/request errors ou warnings. Corpo inteiro em83 sem alterar skin; terreno e avatar recuperados em39/84/385/71. Passo core84(38,29)→(38,31) verificouY21→20.5 e câmera relativa em30 renders. Não é caminhada/campanha natural nem emulador.
 - Telhado6(14,16), paredes445(78,48)/15(2,20), camada secundária/actor.y, warps elevados, células null e paridade continuam P-017. Nenhum shader, depth, alpha, clip ou colisão alterado. Fonte, guardas e tabela em [maps-format](features/pipeline-rom/maps-format.md#grounding-pela-superfície-física-primária-a-080a-081); report/data-audit/contact sheets ignorados em `rom/ground-height-validation/` no principal. Reprodutores `/tmp/playwright-test-ground-height-fix.js`, `/tmp/ground-height-servers.mjs`, `/tmp/audit-ground-height-data.py`, `/tmp/analyze-ground-height-fix.py`.
 
+## PRD-015: perfil do seletor e fallback de movimento (2026-11-18)
+
+- A-092/A-093, baseffd1154: e811c retorna0/0f/10, não conserva5;
+  máscara residual zero já devolve o resultado corrente em64594. Sequências
+  default são FieldUniqueSequenceNone/slot24→2ad5c, não todos os callbacks.
+- Produtor defc8 fechado por ownership: global100+e50+178. a0448 carrega
+  parâmetro7 do modelo;1cf74 grava o primeiro byte do primeiro parâmetro se
+  o pacote tem três entradas, ou0. Perfil efetivo e binding no core faltam;
+  não é enum provado de input/bike nem autorização para fixarfc8=1.
+- Landing usa footprint150/151, altura, flags e interseção de atores por
+  3f3498/3f1a00. aa tem etapas4513c→48eb4→3a0bc, endpoint2 via4df9b8 e
+  atualização por vetores/velocidade/pose; pode terminar antes do contador16.
+  Equivalência com salto atômico e contrato de destino livre não fechados.
+- **Entrega parcial, documental:** runtime/mapas/grounding/75020021 preservados,
+  52 oeste→leste continua negativo; nenhum red-green ou Playwright novo.
+  362 Vitest/56 arquivos,186 Python sem skips/build passaram novamente;
+  receita de15 instruções, callback None, tickaa e aliasfc8 conferida.
+  [PRD-015](features/engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md)
+  registra fonte e gaps; P-017 aberta. Próximo: perfil7/seletores ativos e
+  landing/pose; depois input/+14/Daniel, por último flag20 e seleção GR/altura.
+
 ## PRD-015: executores de salto e direção lateral (2026-11-18)
 
 - A-090/A-091, base28113e3: resultado5 chega ao comando25 no ramo de grid;

@@ -168,6 +168,26 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Continuação PRD-015/A-087/A-088,2026-11-18, aberta, dono core/engine:** contexto identificado como PlayerGrid/base FieldUnit por alocação9dbcc→1b394→owner+164, vtables10723c/10a830 e slot virtuale613c. +24 é modo corrente, +25 pendente; setters88090/a6b18 e commit8e494 após callback141fe4/gate694. Modos1/2 chegam a seletores1b/1a e ator+59=2/3, ainda sem enum bike/foot. +14 tem escritor0f@a47c4 após pedido5d; faltam estados0e..11 completos. Daniel recebe direção viaimport1664→SkatePipe1428, pede comando62 em14d4/1430 com contador até2; code3fae48→CRS19c7c4→Field3a0c4 apenas agenda, não prova distância, slide ou completion. Consulta4dcb64 envolve32/4 registros, stride1b4 e ramo4dc22c; Fieldda934 usa4d7bdc ou68684/callbacks. **Continuam abertos:** ligação modo→input/item/tipo de bike, consumidor do bit5/máscara20 da célula (flags locais homônimos não bastam), ownership GR/seção8/altura e sobreposição, execução/deslocamento/tick/gear do62, ledges64528→e6224→resultado5/1d/24 até salto efetivo nos quatro sentidos, barreira01000021. Nenhuma regra fechada; nenhum runtime/mapa/parser/colisão/grounding alterado nesta continuação,75020021 preservado.362 Vitest/56 arquivos,186 Python sem skips/build passam; nenhum red-green ou Playwright novo de mecânica não provada. SHA/imports, aliases rejeitados e receita no [PRD-015](features/engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md); `/tmp/native-permissions-continuation.json` é relatório auxiliar, não dependência da documentação. Próximo: consumidor do comando62, bindings de pedido de modo,4dc22c/68684 e transição final de ledge; só implementar com condição completa, regressão falhando e browser visível. Corredor continua parcial.
 
 - **PRD-015/A-090/A-091,2026-11-18, aberta, dono core/engine, base28113e3:**
+
+- **PRD-015/A-092/A-093,2026-11-18, aberta, dono core/engine, baseffd1154:**
+  e811c retorna0/0f/10 como fallback; não autoriza5, que já retorna com máscara
+  zero em64594. Default107820/FieldUniqueSequenceNone→slot24/2ad5c retorna0,
+  mas faltam seletores efetivos dos callbacks de cada mapa. Produtor defc8
+  fechado emglobal100+e50+178: a0448 obtém parâmetro7 do modelo e1cf74 grava
+  baixo8 do primeiro parâmetro quando há três entradas, ou0. **Falta fechar
+  qual pacote7 é carregado e o contrato no core**, não fixarfc8=1 por hipótese.
+  Landing consulta footprint150/151 e atores via3f3498/3f1a00 com flags/altura/
+  geometria; não foi fechado um teste separado de destino+2 livre de NPC.
+  aa fecha4513c→48eb4→3a0bc e endpoint2 por4df9b8;81670/tick usam velocidade/
+  pose e podem terminar antes do contador16. **Ainda não implementável como
+  equivalência atômica de25.** Próximo: perfil7/seletores e landing/pose;
+  depois input/item/+14/Daniel; flag20 e seleção GR/altura por último.
+  Runtime/mapas/colisão/grounding/75020021 intactos; negativo52 oeste→leste
+  preservado.362 Vitest/56 arquivos,186 Python sem skips/build passaram;
+  receita estática nova conferida, sem red-green/Playwright de regra nova.
+  Fonte e limites no [PRD-015](features/engine-3d/prds/PRD-015-permissoes-nativas-de-movimento.md).
+
+- **PRD-015/A-086/A-087,2026-11-18, aberta, dono core/engine, base28113e3:**
   executor25 recuperado: resultado5→a29e0→25, registro3ca4c/vtable108fc4
   `ActionCmdJump2G16F`, etapas41310→83028→3a0bc, consumidor401f0 via
   CRS19c7e4/code3f852c emator+8fc. Distância-param2 no grid, tipo1 e limite16
