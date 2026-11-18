@@ -11,4 +11,4 @@
 | [PRD-007](PRD-007-animacoes-nativas-no-runtime.md) | Animações GF1 no runtime e auditoria do atlas | Implementado; Playwright main validado, paridade pendente | 2026-11-17 |
 | [PRD-008](PRD-008-corredor-petalburg-rustboro.md) | Corredor Petalburg–Route104–Woods–Rustboro | Validado;306 passos Playwright main sem erros | 2026-11-17 |
 | [PRD-009](PRD-009-expressoes-bch-no-runtime.md) | ChangeFace e seleção de expressão BCH por ator | Seleção e A/B implementados; piscada automática pendente de clock | 2026-11-18 |
-| [PRD-010](PRD-010-corredor-rustboro-verdanturf.md) | Corredor Rustboro–Route116–Rusturf–Verdanturf | Stage/testes concluídos; Playwright pendente | 2026-11-18 |
+| [PRD-010](PRD-010-corredor-rustboro-verdanturf.md) | Corredor Rustboro–Route116–Rusturf–Verdanturf | Validado;325 passos main, fixture pós-evento explícita | 2026-11-18 |

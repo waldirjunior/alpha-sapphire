@@ -102,7 +102,7 @@ Aridades são observadas nos `SYSREQ.N`; tipos/efeitos abaixo são **inferidos**
 nomes, empilhamento e fluxo, não validados contra o emulador. O mundo inicial
 é fornecido pelo chamador, incluindo zona, atores e metadados dos Pokémon.
 
-Desde ADR-006/A-047/A-048, o host persiste flags como `amx:flag:id` e remoções
+Desde ADR-006/A-050/A-051, o host persiste flags como `amx:flag:id` e remoções
 como `amx:deleted:zona:id` em storyFlags, restaurando-as antes do init.
 SpawnFlag não zero é hide-flag: só oculta quando a flag correspondente está
 setada, sem sobrepor visibilidade falsa explícita nem afetar spawnFlag0.
@@ -121,7 +121,7 @@ esse trecho com halt sintético, sem alegar execução da missão inteira.
 | `PlayerGetReturnDir` | nenhuma | Direção do ator 255 nesta projeção |
 | `MdlGetDirDisp`, `MdlSetDirDisp` | actor / actor,direction | Consulta/atualiza direção bruta, sem conversão para Three.js |
 | `MdlSetVisible` | actor,visible | Atualiza visibilidade booleana |
-| `MdlDel` | actor | Remove ator da VM e registra tombstone por zona, persistido via storyFlags; host retorna0 como comando sem resultado observado, sem completion opaca (ADR-006/A-047) |
+| `MdlDel` | actor | Remove ator da VM e registra tombstone por zona, persistido via storyFlags; host retorna0 como comando sem resultado observado, sem completion opaca (ADR-006/A-050) |
 | `MdlSetGPos` | **x,y,z,actor** | Atualiza posição bruta; não usa a ordem do runner normalizado |
 | `MdlGetGPosX`, `MdlGetGPosZ` | actor | Retorna posição como célula float32; unidades são inferidas, sem escala gráfica |
 | `MdlGetMoveCode`, `MdlChangeMoveCode` | actor / actor,code | Consulta/atualiza código de movimento, não interpreta ACMD |
