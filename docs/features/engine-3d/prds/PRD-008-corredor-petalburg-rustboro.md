@@ -1,6 +1,6 @@
 # PRD-008 — Corredor Petalburg–Rustboro
 
-- **Estado:** Implementado e verificado em testes; Playwright na main pendente
+- **Estado:** Aceite verificado em testes e Playwright na main b5e3efc
 - **Fase:** 2 / P-017, continuação do PRD-006
 - **Data:** 2026-11-17
 - **Decisão:** [ADR-004](../adrs/ADR-004-bordas-por-zone-grid.md), A-042/A-043
@@ -41,7 +41,7 @@ limite transitável da ponte. Portas e outros destinos não são suprimidos.
 - [x] Verificar rota com todos os NPCs extraídos; spawnFlag sozinho não oculta ator.
 - [x] Conferir encounters das cinco zonas contra os JSONs nativos.
 - [x] Stage limitado: raízes, destinos ZO diretos e um salto de vizinhos visuais.
-- [ ] Caminhar de Petalburg até o interior urbano de Rustboro na main, com
+- [x] Caminhar de Petalburg até o interior urbano de Rustboro na main, com
   screenshots e zero consoleErrors/pageErrors/erros de shader.
 
 ## Reprodução e limites
@@ -51,6 +51,7 @@ python3 -B -m scripts.build_zone_neighbors
 python3 -B -m scripts.stage_zone_assets \
   --models-dir "$CHECKOUT/rom/extracted/models" \
   --public-dir "$CHECKOUT/public" \
+  --audio-dir "$CHECKOUT/rom/extracted/audio/mp3" \
   --zones 13 27 82 26 16 --include-neighbors
 ```
 
@@ -59,6 +60,20 @@ sem correspondente físico usam fallback, sem mascarar bits. A correção UV0
 PICA ocorre antes da cópia; não há conversores nem binários no Git. O public
 acumulado foi validado: 74 GRs e 68 atores, zero violações texCoord.
 
-215 Vitest, 138 Python sem skips e build passaram. A caminhada Playwright ainda
-não foi executada nesta revisão. Persistem P-013/P-017/P-019 e os limites de
-PICA/combiners, flags e eventos de história; navegação não comprova paridade.
+215 Vitest, 139 Python sem skips e build passaram. Playwright visível na main
+b5e3efc/5200 caminhou306 passos até Rustboro(47,65), com ida/volta da ponte,
+os portais principais de Woods e o contato MM4. Encontros ativos conferidos
+contra os cinco JSONs nativos. Rodada final: zero consoleErrors/pageErrors/missing.
+
+A primeira rodada expôs três MP3s ausentes: HTML200 do fallback Vite não é
+áudio válido (A-044). --audio-dir copia somente as BGMs nativas das raízes;
+foram acrescentadas r_b/d_01/c_02 e o percurso completo foi repetido. Nada foi
+silenciado nem convertido. Fixture inicial em Petalburg e PRNG0.9..1 evitam
+batalhas aleatórias; não se declara disparo selvagem nem reprodução da história.
+
+Log: `/tmp/rustboro-results.json`; script: `/tmp/playwright-test-rustboro.js`.
+Capturas inspecionadas das cinco zonas e do centro urbano em
+`/tmp/rustboro-{00..07}-*.png`, listadas integralmente em STATUS.md.
+Sem telas pretas ou texturas difusas ausentes. Persistem dois avisos AMX de
+init não bloqueante, P-013/P-017/P-019, cartões de folhagem/combiners, marcadores
+de warp e fallbacks especiais; navegação não comprova paridade gráfica ou flags.
