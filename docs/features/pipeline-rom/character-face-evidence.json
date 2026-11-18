@@ -764,8 +764,8 @@
       }
     ],
     "id": "character/mm_0182",
-    "glb_sha256": "8901e594d4b9f7645bef65627a00260806f0614adf0b46c714cb66d9d7a00732",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0182/mm_0182.glb"
+    "glb_sha256": "a3824345df4b1e7555bd1e137266f3f585d46d0174ae26f4124ab041577f06c1",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0182.glb"
   },
   {
     "model": "0187",
@@ -988,8 +988,8 @@
       }
     ],
     "id": "character/mm_0189",
-    "glb_sha256": "00af8fbc8335f904abbdec30f796619f2a318e60760183e051f766e44bb88de0",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0189/mm_0189.glb"
+    "glb_sha256": "713f41667bed162ee008ac0165b2ccd9be96ea50229b55ddb23cfdb336d1469a",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0189.glb"
   },
   {
     "model": "0210",
@@ -1116,8 +1116,8 @@
       }
     ],
     "id": "character/mm_0210",
-    "glb_sha256": "382d429254010eea25d1fc8bcb22398a994792010edf149833b3c0570f327f13",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0210/mm_0210.glb"
+    "glb_sha256": "db463cdedb2888bc4a639f63edc47a95ecec5c0c36a759e60ebe8c7639217dcd",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0210.glb"
   },
   {
     "model": "0212",
@@ -1508,8 +1508,8 @@
       }
     ],
     "id": "character/mm_0222",
-    "glb_sha256": "53bce209beabc814858cb8609dcd901bf20a6275b5da3ce13ee9bf31e66562b3",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0222/mm_0222.glb"
+    "glb_sha256": "cbe560d73d523dafa4ca4cff08bea78d6241526364834f1af20b10ce907bb1d1",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0222.glb"
   },
   {
     "model": "0223",
@@ -1748,8 +1748,8 @@
       }
     ],
     "id": "character/mm_0232",
-    "glb_sha256": "8412b643e7cb132df650646debc06615355acca1b8defcc3bcefc3a8db07cb62",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0232/mm_0232.glb"
+    "glb_sha256": "506acc41d866bbf76a2f4a3b2e099fad4c58e81de3d8f2ea9b62c6786ce8f666",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0232.glb"
   },
   {
     "model": "0233",
@@ -2372,8 +2372,8 @@
       }
     ],
     "id": "character/mm_0247",
-    "glb_sha256": "22c0cd4c223e99cbe9c0b46fa85441328cc102235ab5eabc66a963e5c85641f4",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0247/mm_0247.glb"
+    "glb_sha256": "3911dfa659259bd14613843f6fd70a28eba734383290be10d4b50a4c50e72e51",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0247.glb"
   },
   {
     "model": "0249",
@@ -2756,8 +2756,8 @@
       }
     ],
     "id": "character/mm_0260",
-    "glb_sha256": "fe48ee0179fc7e94460dcab8132a0bc61929af50708b821684cf11eeb7add0d8",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0260/mm_0260.glb"
+    "glb_sha256": "70c4a453e45e203ae38466d424f770b2acba67f0180c0b73c970e09c577635fb",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0260.glb"
   },
   {
     "model": "0261",
@@ -2804,8 +2804,8 @@
       }
     ],
     "id": "character/mm_0261",
-    "glb_sha256": "2677a83920e45b4938af6b17874cfd640afec24ab9df4e6b3d6a40bf3419c9a7",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0261/mm_0261.glb"
+    "glb_sha256": "2ed6765941b0ef13bc14c526839a92de3416575bd13c0523ee0de2204e966804",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0261.glb"
   },
   {
     "model": "0262",
@@ -2900,8 +2900,8 @@
       }
     ],
     "id": "character/mm_0264",
-    "glb_sha256": "2da947df515e33bb9a3910f9bf599b9c38bf61dbc7e72a82c26d79384be6d2dd",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0264/mm_0264.glb"
+    "glb_sha256": "8c940e9da86b20c8cc98b39c7e12e3d4199769a0e841c62298bd0a03141b98f8",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0264.glb"
   },
   {
     "model": "0265",
@@ -2948,8 +2948,8 @@
       }
     ],
     "id": "character/mm_0265",
-    "glb_sha256": "05fe0e33fe84dc33b209301274a0370e850087eed70de08fecdc4622ff004ac1",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0265/mm_0265.glb"
+    "glb_sha256": "be4879c8456ad22cd8b7151acce56775d1b819f197b874e8204095dc9ea34614",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0265.glb"
   },
   {
     "model": "0266",
@@ -3236,8 +3236,8 @@
       }
     ],
     "id": "character/mm_0276",
-    "glb_sha256": "77359d00e6cbb85e377da2d81550df1e8686a2324e328ad3aafeb053cb428b7f",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0276/mm_0276.glb"
+    "glb_sha256": "7eab753a200d1271c37e89eed1a76be62000b3428e6dee467842045ac61f3a7a",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0276.glb"
   },
   {
     "model": "0277",
@@ -3284,8 +3284,8 @@
       }
     ],
     "id": "character/mm_0277",
-    "glb_sha256": "fb091470f36bd2469df0381ddbcd5a4476f127d4f3b485bfcebd98aad0ec7064",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0277/mm_0277.glb"
+    "glb_sha256": "056ae8c7afbecff702e11e2b840387387cfa68c5b4ebbe2e95ee671c867596bf",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0277.glb"
   },
   {
     "model": "0280",
@@ -3524,8 +3524,8 @@
       }
     ],
     "id": "character/mm_0285",
-    "glb_sha256": "db925b44cff90767f82fca94367d61da899fcc2c509b1b03c3f8e5b70da4954e",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0285/mm_0285.glb"
+    "glb_sha256": "574448a21e999f2c2874e45353423b2e7e15a9462010aa66478477a00d3f55b4",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0285.glb"
   },
   {
     "model": "0286",
@@ -4329,8 +4329,8 @@
       }
     ],
     "id": "character/mm_0309",
-    "glb_sha256": "52991de3653074a9804b993d5c9ad3ff1a23fa742990675fb76d017a48faba31",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0309/mm_0309.glb"
+    "glb_sha256": "f8c5fe830b340e353eb6cca8a1fb8d1ef39dbafc78c4c4d0038d13379510b132",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0309.glb"
   },
   {
     "model": "0312",
@@ -4929,8 +4929,8 @@
       }
     ],
     "id": "character/mm_0320",
-    "glb_sha256": "db0c256629ecfc7dcac4305248d8f61e5b090a77cb3c5901d53e6ac10baa9dea",
-    "source_glb": "rom/extracted/models/clips_merged/characters/mm_0320/mm_0320.glb"
+    "glb_sha256": "1b8e8cb0d024ad5eef2fb185f7dfc544d366280502847683f2704a32d00ffeba",
+    "source_glb": "rom/extracted/models/runtime_characters/mm_0320.glb"
   },
   {
     "model": "0321",

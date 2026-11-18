@@ -55,6 +55,38 @@ describe('native animation events', () => {
     await done;
   });
 
+  it('uses the same controller for native standing and moving without restarting repeated states', () => {
+    const { controller, mixer, actions, spy } = fixture(['idle', 'walk', 'overworld_000', 'overworld_002']);
+    expect(controller.activeClip).toBe('overworld_000');
+    mixer.update(0);
+    expect(actions.get('overworld_000')?.getEffectiveWeight()).toBe(1);
+    controller.setMoving(true);
+    expect(controller.activeClip).toBe('overworld_002');
+    mixer.update(0.1);
+    const time = actions.get('overworld_002')?.time;
+    spy.mockClear();
+    controller.setMoving(true);
+    expect(spy).not.toHaveBeenCalled();
+    expect(actions.get('overworld_002')?.time).toBe(time);
+    controller.setMoving(false);
+    expect(controller.activeClip).toBe('overworld_000');
+    controller.dispose();
+    expect(actions.get('overworld_000')?.isRunning()).toBe(false);
+    expect(actions.get('overworld_002')?.isRunning()).toBe(false);
+  });
+
+  it('holds native standing when walking is unavailable and keeps actor mixers isolated', () => {
+    const first = fixture(['overworld_000', 'overworld_002']);
+    const second = fixture(['overworld_000']);
+    first.controller.setMoving(true);
+    second.controller.setMoving(true);
+    expect(first.controller.activeClip).toBe('overworld_002');
+    expect(second.controller.activeClip).toBe('overworld_000');
+    first.controller.dispose();
+    expect(second.actions.get('overworld_000')?.isRunning()).toBe(true);
+    second.controller.dispose();
+  });
+
   it('prefers explicit overworld poses and motions, with a procedural fallback', () => {
     const clips = ['idle', 'walk', 'overworld_000', 'overworld_002'].map((name) => new THREE.AnimationClip(name, 1, []));
     expect(characterClip(clips, false)?.name).toBe('overworld_000');

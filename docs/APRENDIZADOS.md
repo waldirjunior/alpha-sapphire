@@ -533,3 +533,59 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro reproduzido:** A tentativa de caminhar11→44→445→15→445→33→14 falhou no último trecho. NPCs9–13 de33, hide-flag660, bloqueiamz114..116; ocultar661/532 isoladamente não libera o sul.
 - **Regra:** Não contornar o grupo com nova borda. Conferir o bloco real e separar estado base de fixture pós-evento rotulada, preservando também os writes de work e os tombstones por zona. O estado inicial permanece bloqueado.
 - **Evidência:** Programa33/map SHA9492e0f2e9f8bfef75e6657ffa991d3fbbc97ec101ace80b69cc550b062f4ef6 conforme disassembly: WorkSet16526=2@7368, FlagSet660@7384, MdlDel11/12/9/13/10@7400/7416/7432/7448/7464. Fixture7360..7475 com halt sintético7476 termina na VM existente, persiste/restaura progresso e alcança14 sem mutar mapas. Quatro regressões novas,320 Vitest/150 Python sem skips/build passaram sobre3dbfd21. Não executa a função inteira nem prova a campanha; Playwright ainda pendente.
+=======
+
+## A-061 A bounded random helper does not establish an update clock
+
+- **Date:** 2026-11-18; P-019, integrated base 173ada3.
+- **Context:** Resolve helper(60)+60 before adding automatic blinking. Renumbered from `A-061` on merge (collision with `zone-maps`).
+- **Error avoided:** Treating 60 as FPS, vsyncs, or milliseconds, or assigning
+  an independent random generator to every actor.
+- **Evidence:** DllField stub0xbf0 resolves to code VA0x48ad7c, then0x175d64
+  and the state-mutating PRNG0x164798. UMULL computes floor(U32*n/2^32) for
+  bounds3/60. Long waits are60–119 eligible calls; closed lasts two eligible
+  calls. Byte+0x27d prevents consecutive short4/8 waits. The wrapper uses a
+  shared global generator; its seed lifecycle is not recovered.
+- **Rule:** Separate the random bound, per-actor counters, eligibility gates,
+  and scheduler cadence. Record the entire call chain before implementing a
+  timer. Recover byte meanings rather than mapping them to guessed UI flags.
+- **Limit:** Actor-manager0x424b0 calls0x386f4 at0x424f0 only for eligible
+  entries. Dispatch cadence and several gate meanings remain unknown;
+  automatic blinking stays unimplemented. Details, source hashes, and search
+  boundaries are in face-expressions.md, not a runtime-parity claim.
+
+## A-064 A merged GF1 output can still lack the native standing pose
+
+- **Date:** 2026-11-18; P-012/P-019, zones6–16 plus both player models. Renumbered from `A-062` on merge (collision with `zone-maps`).
+- **Error reproduced:** Fifteen published models contain native002 but no
+  native000, so standing silently uses the old procedural idle despite a
+  successful batch status. Synthetic inventory tests reject exported names
+  without matching native slots and never substitute an unrelated93.
+- **Rule:** Check the pack and final clip list independently. GF1 index0 is
+  a constant standing pose here, not evidence of a breathing animation.
+  Preserve numeric native names; do not relabel slot3/93 from duration alone.
+- **Evidence:** audit_overworld_clips.py records65 IDs:48 native pairs,
+  five MM without motion,12 unmapped. Fifteen index0 exports were appended
+  serially with nice10, preserving existing geometry/materials/skin/clips.
+  All48 pose jobs and99 final face outputs pass structural validation.
+- **Limit:** The numeric dispatch of the original movement state machine and
+  its cadence remain unproven. Visual locomotion of002 is demonstrated on
+  Brendan; availability does not validate every model visually.
+
+## A-065 Repeated movement projections must not restart a native loop
+
+- **Date:** 2026-11-18; native overworld controller reuse. Renumbered from `A-063` on merge (collision with `zone-maps`).
+- **Error reproduced:** The shared battle controller selects procedural idle
+  even with000 available and has no movement transition API. Two regression
+  tests fail before the change and pass afterward.
+- **Rule:** Use NativeAnimationController for standing and movement, preserve
+  phase for repeated state, use standing when movement is unavailable, and
+  dispose only the actor's own actions/listener on replacement or zone reset.
+- **Evidence:** Native000→002→000, initial full pose weight, unchanged phase,
+  missing-clip fallback, isolated mixers, and cleanup pass without WebGL.
+  Visible Playwright shows39 changing bones, stationary native NPCs0182/0221,
+  four inspected captures, and zero errors/warnings/HTTP failures.
+- **Limit:** The browser scenario projects synthetic map/player states through
+  the real SceneManager, not a ROM script route or emulator comparison.
+  Existing movement interpolation/crossfades are web presentation policies,
+  not newly proven native timing; feet remain an asset-geometry limitation.

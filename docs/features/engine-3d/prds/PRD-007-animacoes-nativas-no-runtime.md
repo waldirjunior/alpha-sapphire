@@ -5,16 +5,16 @@
 
 ## Resultado
 
-O [catálogo runtime](../../../../src/data/nativeAssets.json) seleciona **102
-modelos locais**: 40 Pokémon e 56 personagens com GF1, mais seis GLBs-base de
-fallback (`native: false`). Abrange 41 variantes Pokémon/39 espécies e 64 URLs
-de personagens, incluindo Brendan/MM0315, May/MM0314 e NPC/MM0045.
+The [runtime catalog](../../../../src/data/nativeAssets.json) contains **140
+local models: 99 characters and 41 Pokémon variants**. Historical verification
+counts below describe earlier snapshots. The current delivery keeps this
+catalog scope, including Brendan/MM0315, May/MM0314, and NPC/MM0045.
 
-A seleção combina encontros das zonas 6, 7, 23–30, starters/evoluções,
-lendários e atores dessas zonas com os MM já staged no public principal. Essa
-última união inclui NPCs adicionais promovidos pela main atualizada. Dez IDs
-especiais de ator seguem sem correspondência MM; mantêm o fallback NPC sem
-mascarar bits por suposição.
+The selection includes encounters/starters/legendaries and staged characters.
+A-062/A-063 audit the NPC IDs of zones 6–16 plus both player models separately:
+48 native standing/movement pairs, five MM without motion, and 12 special IDs
+without a proven MM mapping. No bits are masked to invent a correspondence.
+Only 15 character records need new immutable GLBs; Pokémon records stay equal.
 
 ## Contrato
 
@@ -67,6 +67,100 @@ O merge esquelético ainda não transporta estado dinâmico dos BCHs de material
 ou visibilidade, nem piscada/wrap/combiners. Os demais MM não foram corrigidos
 por extrapolação. Pés ausentes continuam limitação da geometria adotada:
 anexar animação ou normalizar UV não cria topologia.
+
+## Native overworld follow-up — A-062/A-063
+
+The [per-model inventory](../../pipeline-rom/overworld-motion-coverage.json)
+checks the actual MM pack and exported clip names independently. The 63 NPC
+IDs of zones 6–16 plus MM0314/0315 yield 65 records:
+
+- 48 pairs: 46 NPC models plus Brendan and May have `overworld_000` and
+  `overworld_002`. Native GF1 header frame counts are 1 and 14 respectively.
+  All 48 imported 000 clips have constant output samples within 1e-5; no
+  breathing motion is hidden by the standing classification.
+- MM0000/0122/0123/0124/0312 have no motion section. Existing static or
+  procedural fallbacks remain explicit; no replacement animation is invented.
+- 12 raw special IDs have no catalog MM entry and remain unmapped.
+
+Fifteen missing index-0 exports are appended serially with `nice -n 10`:
+MM0182/0189/0210/0222/0232/0247/0260/0261/0264/0265/0276/0277/0285/0309/0320.
+Their sources are new files under `rom/extracted/models/runtime_characters/`
+in the main checkout. No base GLB or previous immutable URL is overwritten.
+All 48 standing-pose jobs pass structural validation. Face evidence is
+regenerated for changed source SHA values before publication; all 99 final
+outputs still pass face preservation/idempotence, with 79 GLBs/91 normalized
+materials and the same seven ambiguous exclusions. Geometry, skin, images,
+materials, previous clips, and original BIN prefixes remain preserved.
+
+`NativeAnimationController` now owns both battle events and character loops.
+It selects numeric native clips before legacy `idle/walk`, applies initial
+standing at full weight, preserves phase when movement state repeats, and
+holds standing when no movement clip exists. NPCs start standing; the existing
+player movement projection chooses 002 and returns to 000. Replacement or
+zone reset disposes only the owned actions/finished listener.
+
+**Semantics boundary:** 000 is a constant native standing posture, not a
+breathing-cycle reconstruction. Four inspected Chromium captures demonstrate
+alternating legs/arms in 002 on Brendan while NPC0182/0221 remain standing.
+The native state-machine dispatch, original walk/run categories, and cadence
+are not recovered by this test. Numeric names remain unchanged. No slot3/93
+is selected by duration or called an idle animation. Existing web movement
+interpolation/crossfades are presentation policy, not native timing evidence.
+
+### Browser and regression evidence
+
+- Base173ada3, worktree code with main public assets, isolated Vite5194;
+  the existing8080 server remains untouched.
+- Visible Chromium149.0.7827.55; synthetic map/player states flow through
+  real SceneManager sync/render and its normal clock. No manual mixer seek,
+  curve replacement, UV edit, ROM script route, or emulator comparison.
+- Player000→002→000; **39 bones change**, including both thighs, legs,
+  feet/toes, and arms. NPC0182/0221 keep native000. Reset removes both actor
+  controllers and their finished listeners.
+- Four inspected PNGs and report.json stay ignored in the main checkout at
+  `rom/overworld-runtime-validation/`: `00-standing`, `01-walk-a`,
+  `02-walk-b`, `03-standing-again`. Zero page/console errors, warnings, or
+  HTTP failures. Harness: `/tmp/playwright-test-overworld-runtime.js`.
+- Two controller tests fail before the change (procedural initial idle and
+  missing movement API), then pass with phase/fallback/isolation/disposal
+  checks. Inventory tests reject names without native slots and unrelated93;
+  the catalog test checks both native clips for every supported slice actor.
+- **319 Vitest/47 files, build, and159 Python tests pass**; one pre-existing
+  public-map-assets skip, inherited >500kB chunk warning, and the explicit
+  AMX camera non-parity diagnostic. No new dependency. Export uses the existing
+  Blender3.4.1, SPICA, and .NET8 tools.
+- Missing feet remain visible as missing geometry. This work does not create
+  mesh data or implement automatic blinking; A-061 records its exact blocker.
+
+### Repeat the scoped inventory
+
+Use the versioned catalog to keep this audit independent of other workers'
+newly staged actors. `prepare_pose_jobs` can generate the existing export jobs;
+filter them to the model IDs in this inventory before running the serial
+batch. This delivery's 48-job manifest is ignored at
+`rom/native-overworld-poses.json` in the main checkout. Rebuilding the plan
+validates existing outputs; the batch skips merged jobs rather than
+overwriting. Temporary planning/scope scripts are
+`/tmp/prepare-slice-native-poses.py` and `/tmp/restrict-overworld-catalog.py`.
+
+```bash
+python3 scripts/audit_overworld_clips.py --root "$ROOT" \
+  --catalog src/data/nativeAssets.json \
+  --output docs/features/pipeline-rom/overworld-motion-coverage.json
+python3 scripts/inspect_character_faces.py --root "$ROOT" \
+  --catalog src/data/nativeAssets.json --spica-dll "$SPICA_DLL" \
+  --output docs/features/pipeline-rom/character-face-evidence.json
+python3 scripts/validate_character_faces.py --root "$ROOT" \
+  --catalog src/data/nativeAssets.json \
+  --evidence docs/features/pipeline-rom/character-face-evidence.json \
+  --output docs/features/pipeline-rom/character-face-coverage.json
+```
+
+The broad promotion command below also includes all staged characters. On a
+shared checkout, that set can grow: it temporarily included 21 newly staged
+out-of-scope models during this investigation. Their immutable local copies
+are not selected by this delivery; the versioned catalog keeps exactly its
+original 99 character IDs and all 41 unchanged Pokémon records.
 
 ## Reprodução
 

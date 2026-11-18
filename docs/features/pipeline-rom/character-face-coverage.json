@@ -219,9 +219,9 @@
     },
     {
       "id": "character/mm_0182",
-      "url": "/assets/native/characters/mm_0182-69c6f0532712.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0182/mm_0182.glb",
-      "sha256": "69c6f053271227298a9bb1aaab382a81de12914c71f770cc8bf07e79c6f8dcb4",
+      "url": "/assets/native/characters/mm_0182-fbe67185a618.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0182.glb",
+      "sha256": "fbe67185a618d4396a9a055b76bdf5ec938f5f274b6789afb77191ed8467ef5f",
       "status": "normalized",
       "materials": [
         "rstr0012_00_fi_face",
@@ -249,9 +249,9 @@
     },
     {
       "id": "character/mm_0189",
-      "url": "/assets/native/characters/mm_0189-2c59a2db4f05.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0189/mm_0189.glb",
-      "sha256": "2c59a2db4f05db8c3cff29f66c939ddfaa695b04bf863bdadac936cb3711b45b",
+      "url": "/assets/native/characters/mm_0189-819953276524.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0189.glb",
+      "sha256": "819953276524823f9c94d1c828a5b53038d23862d89ba5835c9e05b287a3b0a1",
       "status": "normalized",
       "materials": [
         "rstr0019_00_fi_faceMat",
@@ -264,9 +264,9 @@
     },
     {
       "id": "character/mm_0210",
-      "url": "/assets/native/characters/mm_0210-d65e1d9ac3ce.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0210/mm_0210.glb",
-      "sha256": "d65e1d9ac3ce0b6c1a569ce02ef672dc0cb926b7a08e18d482e9158b7ae04910",
+      "url": "/assets/native/characters/mm_0210-bb9f36b61520.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0210.glb",
+      "sha256": "bb9f36b61520905001c0a9c4980bdfd8542bb6f359b3827fe18659410f0096bf",
       "status": "normalized",
       "materials": [
         "rstr0040_00_fi_face",
@@ -350,9 +350,9 @@
     },
     {
       "id": "character/mm_0222",
-      "url": "/assets/native/characters/mm_0222-b6aaf0c9be5b.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0222/mm_0222.glb",
-      "sha256": "b6aaf0c9be5bc20ad947e173c2bf7794744fa6e9fc723d4c54fb7d73490e5234",
+      "url": "/assets/native/characters/mm_0222-988ebc5dae75.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0222.glb",
+      "sha256": "988ebc5dae753aa66a74c462ad90bd3d9fb700d6ca1f9766e5a05d88d3d14e31",
       "status": "normalized",
       "materials": [
         "rstr0105_00_fi_headMat"
@@ -423,9 +423,9 @@
     },
     {
       "id": "character/mm_0232",
-      "url": "/assets/native/characters/mm_0232-8412b643e7cb.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0232/mm_0232.glb",
-      "sha256": "8412b643e7cb132df650646debc06615355acca1b8defcc3bcefc3a8db07cb62",
+      "url": "/assets/native/characters/mm_0232-506acc41d866.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0232.glb",
+      "sha256": "506acc41d866bbf76a2f4a3b2e099fad4c58e81de3d8f2ea9b62c6786ce8f666",
       "status": "unchanged",
       "materials": [],
       "exclusions": [
@@ -614,9 +614,9 @@
     },
     {
       "id": "character/mm_0247",
-      "url": "/assets/native/characters/mm_0247-d6738d393bc6.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0247/mm_0247.glb",
-      "sha256": "d6738d393bc6d164bfcf32aca7d51a9640bffee15888768c6eb55ff282990f80",
+      "url": "/assets/native/characters/mm_0247-eecddae13276.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0247.glb",
+      "sha256": "eecddae13276a15484f1f53f45b5e5d510615b11bb7cd1f111aa8a0eeaf6b1ad",
       "status": "normalized",
       "materials": [
         "rstr0130_00_fi_headMat"
@@ -726,9 +726,9 @@
     },
     {
       "id": "character/mm_0260",
-      "url": "/assets/native/characters/mm_0260-7d74506b69d3.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0260/mm_0260.glb",
-      "sha256": "7d74506b69d32966ea352ffda74dd2ce3f6c1f3d96fdc694601970ba950aced4",
+      "url": "/assets/native/characters/mm_0260-2d1a02bb9add.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0260.glb",
+      "sha256": "2d1a02bb9adda6e090e88ae069dcb9b3594001af06203ea5d17b59b5da88583c",
       "status": "normalized",
       "materials": [
         "rstr0143_00_fi_headMat"
@@ -740,9 +740,9 @@
     },
     {
       "id": "character/mm_0261",
-      "url": "/assets/native/characters/mm_0261-4c67aab463ca.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0261/mm_0261.glb",
-      "sha256": "4c67aab463ca698efde058f840e2a53caf3b91fe28f4eec8f60e532db4bc0da8",
+      "url": "/assets/native/characters/mm_0261-e8eaa43a8926.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0261.glb",
+      "sha256": "e8eaa43a8926fea1571a5d1052b84936545d1be1e928f79be18d2e6f2cb61dd3",
       "status": "normalized",
       "materials": [
         "rstr0144_00_fi_headMat"
@@ -771,9 +771,9 @@
     },
     {
       "id": "character/mm_0264",
-      "url": "/assets/native/characters/mm_0264-9bc7b8d3362c.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0264/mm_0264.glb",
-      "sha256": "9bc7b8d3362ce7c0257be5569173155c1af2cf3e5037368b603ffd6126d09da7",
+      "url": "/assets/native/characters/mm_0264-083ce7f35ec8.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0264.glb",
+      "sha256": "083ce7f35ec873e55ccc2950342b322fbd41e54754f3ccde854000f82178fa70",
       "status": "normalized",
       "materials": [
         "rstr0147_00_fi_headMat"
@@ -785,9 +785,9 @@
     },
     {
       "id": "character/mm_0265",
-      "url": "/assets/native/characters/mm_0265-0d43b2a7c75a.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0265/mm_0265.glb",
-      "sha256": "0d43b2a7c75ac0e4883377a5cdc387e0febf69d726b6da93e8f02dcfde297299",
+      "url": "/assets/native/characters/mm_0265-587e46d5fd54.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0265.glb",
+      "sha256": "587e46d5fd546f216b6629de5896b73561fd7d87559024019ceefcc91bd20547",
       "status": "normalized",
       "materials": [
         "rstr0148_00_fi_head"
@@ -872,9 +872,9 @@
     },
     {
       "id": "character/mm_0276",
-      "url": "/assets/native/characters/mm_0276-0a03a8df9916.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0276/mm_0276.glb",
-      "sha256": "0a03a8df991683caa57662fc85a07efaa40387bb35b9308818b16d0c0872fe67",
+      "url": "/assets/native/characters/mm_0276-44ad63ef2d50.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0276.glb",
+      "sha256": "44ad63ef2d50f288644aaccffcd4db9dbd38e0a09aa8cced1d97e71ab1785358",
       "status": "normalized",
       "materials": [
         "rstr0159_00_fi_headMat"
@@ -886,9 +886,9 @@
     },
     {
       "id": "character/mm_0277",
-      "url": "/assets/native/characters/mm_0277-c81e944422de.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0277/mm_0277.glb",
-      "sha256": "c81e944422de1e176806213ba5ce858c22eeb97b716f4296683b773ac1bfc7d0",
+      "url": "/assets/native/characters/mm_0277-1fa6012364e4.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0277.glb",
+      "sha256": "1fa6012364e414f99b0be3a7399f4d293ded0d324674196bfebf3303bdf5ea40",
       "status": "normalized",
       "materials": [
         "rstr0160_00_fi_headMat"
@@ -956,9 +956,9 @@
     },
     {
       "id": "character/mm_0285",
-      "url": "/assets/native/characters/mm_0285-0760c2a86bf8.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0285/mm_0285.glb",
-      "sha256": "0760c2a86bf84eda40f7eceef6b9716abd5c222e8be5335d0ed7b378dbb0ffe5",
+      "url": "/assets/native/characters/mm_0285-1799e991e3cb.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0285.glb",
+      "sha256": "1799e991e3cb40c253c7cb8a0957e48b07bb79ec76b1342d202faed90fb68985",
       "status": "normalized",
       "materials": [
         "rstr0168_00_fi_headMat"
@@ -1169,9 +1169,9 @@
     },
     {
       "id": "character/mm_0309",
-      "url": "/assets/native/characters/mm_0309-93753e7e246c.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0309/mm_0309.glb",
-      "sha256": "93753e7e246c31dc1cd3463fb702a28cd1458dcd067199301d667b9b1c3e6cc8",
+      "url": "/assets/native/characters/mm_0309-65d467b0c5b2.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0309.glb",
+      "sha256": "65d467b0c5b2cfcf3da4b32b776187f5baae382adb68a215215da08b9248c00b",
       "status": "normalized",
       "materials": [
         "rstr0192_00_fi_headMat"
@@ -1255,9 +1255,9 @@
     },
     {
       "id": "character/mm_0320",
-      "url": "/assets/native/characters/mm_0320-b08bdce0e21d.glb",
-      "source": "rom/extracted/models/clips_merged/characters/mm_0320/mm_0320.glb",
-      "sha256": "b08bdce0e21d737f53c3b9444000b48a471e8531eb43678f19b2025d6b449e3c",
+      "url": "/assets/native/characters/mm_0320-c96514be8cc9.glb",
+      "source": "rom/extracted/models/runtime_characters/mm_0320.glb",
+      "sha256": "c96514be8cc9e1b8b9a176807a5dde677493d375127f376ab27399c9629c099c",
       "status": "normalized",
       "materials": [
         "rstr0196_00_fi_headMat"

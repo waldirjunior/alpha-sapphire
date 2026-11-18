@@ -54,6 +54,17 @@
      não comprovados, e isso não representa ramo natural ROM/emulador.
      [PRD-007](../features/engine-3d/prds/PRD-007-animacoes-nativas-no-runtime.md)
      registra comandos, falhas e limites; GLBs e screenshots continuam ignorados.
+   - A-061 resolves the blink helper to bounded random through DllField0xbf0 →
+     code0x48ad7c/0x175d64/0x164798. Per-actor counters decrement only on eligible
+     calls; their dispatch cadence and gate meanings remain unproven, so no
+     automatic timer is added. A-062/A-063 separately inventory zones6–16 plus
+     both players:48 native000/002 pairs, five no-motion MM,12 unmapped IDs.
+     Fifteen standing poses were appended and published with refreshed source
+     hashes and preserved face proof. The shared native controller projects
+     standing/movement without restarting loops. Visible synthetic SceneManager
+     validation shows39 changing bones and stationary NPCs in four inspected
+     captures; this does not prove original movement dispatch or emulator
+     timing. Native000 is a constant posture, not an invented breathing cycle.
    - Áudio: `vgmstream-cli` decodifica `RomFS/sound/*.bcstm` para `.wav` e `ffmpeg` (`libmp3lame`) gera `.mp3` em `rom/extracted/audio/mp3/`.
 
 ## 3. Regra de Segurança no Repositório

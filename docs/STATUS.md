@@ -8,6 +8,42 @@ Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo s
 - Regressão base chegou a33 mas não14 por cinco NPCs9–13/hide-flag660. Bloco real33/map7360..7475 contém WorkSet16526=2, FlagSet660 e MdlDel dos cinco IDs; fixture com halt7476 executa na VM existente e restaura/projeta progresso real, sem alterar colisões ou ocultar genericamente atores. SHA/offsets no PRD; não é função/campanha inteira.
 - Stage `--zones 11 44 445 15 33 14 --include-neighbors --audio-dir`:46 zonas/100 GRs/100 atores existentes,18 códigos em fallback; BGMs c_02/c_03/r_c/t_04. Probe falhou antes com80 assets ausentes e passou depois; dry-run UV de GRs/atores públicos limpo. Outputs ignorados, nenhum binário versionado.
 - **320 Vitest/48 arquivos,150 Python sem skips e build passaram**; GLB_MAPS_DIR aponta ao public principal. Aviso de chunk >500kB herdado. Playwright na main ainda pendente: caminhada natural até Mauville, bloqueio33 e fase pós-evento explícita até Slateport.
+## Native overworld and blink follow-up (2026-11-18)
+
+- Base173ada3; A-063–A-065, PRD-007/009, P-012/P-019. The blink helper is
+  bounded random, not a clock: DllField0xbf0→code0x48ad7c→0x175d64→PRNG0x164798.
+  Long waits are60–119 eligible actor updates; closed lasts two. Guard bytes,
+  shared RNG, and4/8 short-wait branches are documented in
+  [face-expressions](features/pipeline-rom/face-expressions.md). Manager cadence,
+  seed lifecycle, and complete gate semantics remain unknown: **no automatic
+  blink timer is implemented**.
+- [Overworld inventory](features/pipeline-rom/overworld-motion-coverage.json):
+  63 unique NPC model IDs in zones6–16 plus both player models. Of65 IDs,
+  **48 have native000/002** (46 NPC models plus Brendan/May), five have no
+  motion section (0000/0122/0123/0124/0312), and12 remain unmapped. Fifteen
+  missing standing poses were exported serially with nice10, Blender3.4.1,
+  and the existing SPICA/.NET tools. No new dependency or invented motion.
+- NativeAnimationController now owns player/NPC loops as well as battle
+  presentation. Standing is the constant GF1 index0 pose; movement uses002,
+  retaining numeric names. Repeated state preserves phase; missing movement
+  holds standing; replacement/reset releases owned actions/listeners.
+- Catalog scope remains99 characters/41 Pokémon. Exactly15 character records
+  get new immutable URLs and source hashes; all Pokémon records remain equal.
+  Refreshed native face evidence passes all99 structural/idempotence checks:
+  still79 GLBs/91 materials normalized, seven ambiguous cases intact.
+- Chromium visible149.0.7827.55, isolated Vite5194, worktree code/main public
+  assets: synthetic SceneManager state projection shows000→002→000 and two
+  NPCs0182/0221 staying native000. **39 bones change**; four screenshots are
+  inspected, no page/console errors, warnings, or HTTP failures. Reset clears
+  both NPC controllers/listeners. Evidence stays ignored in the main checkout
+  at rom/overworld-runtime-validation/; harness /tmp/playwright-test-overworld-runtime.js.
+  No source integration in main, natural ROM route, breathing-cycle, or
+  emulator-parity claim. Missing feet and other visual limitations remain.
+- **319 Vitest/47 files, build, and159 Python tests pass**, one pre-existing
+  public-map-assets skip. All48 native pose jobs also pass real structural
+  validation. Inherited >500kB chunk warning and the explicit AMX camera
+  non-parity diagnostic remain. Craft Anything discovery/CLI are unavailable;
+  blink analysis uses local Capstone5.0.3 and the existing CRO resolver.
 
 ## Extensão Rustboro–Verdanturf (2026-11-18, zone-maps)
 
