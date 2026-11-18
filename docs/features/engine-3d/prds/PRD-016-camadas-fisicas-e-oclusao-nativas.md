@@ -179,3 +179,137 @@ na chegada não prova que o original mantém o ator ali após a transição.
 Mapear oclusores BCH a objetos/flags nativos e recuperar eventos de entrada
 e parâmetros de FieldCameraSetting antes de comparar no emulador. Não usar
 as cinco coincidências ZO ou a API booleana como autorização para workarounds.
+
+## Continuação: callers de visibilidade e entradas ZO (base158e557)
+
+Investigação estática em2026-11-18, A-089; decisão ADR-007 preservada.
+Não há gancho comprovado para implementar. Os offsets AMX abaixo são bytes
+na imagem disassemblada; coordenadas GPos são argumentos nativos, não IDs
+GR, índices de meshes ou coordenadas locais do snapshot.
+
+### Callers observados e condições derivadas
+
+O recorte mantém1157 programas/536 zonas/85 globais. O novo levantamento
+conta455 `MdlSetVisible`,20 `BuildMdlSetVisible`, quatro `MdlSetCullingOff`,
+duas `MdlSetVisibleMesh` e duas `EventMapReplace`. Não há referência nomeada
+a `BuildMdlGetHandleByUniqID` nos JSONs pesquisados. Os143 GPos e sete pares
+MapperBlockCalcPosSet/Clear pertencem ao survey anterior; não são uma prova
+de seleção de camada ou de visibilidade automática.
+
+| Programa/função | Chamadas BuildMdlSetVisible | Handle/condição recuperados |
+| --- | --- | --- |
+|95/entities184 |264,292 |GPos(31,18); work16570>=3 oculta, senão mostra; callers336/360 |
+|95/map4456 |7104,7460 |GPos(31,18), estados1/0 na sequência com fade; caller3720 |
+|99/entities244 |372,408,548,584 |GPos(15,20)/(26,15); RomGetVersion==26 escolhe qual ocultar; work16561>=2 também oculta o outro; callers204/228 |
+|172/entities184 |264,292 |GPos(48,14); work16569>=3 oculta, senão mostra; callers336/360 |
+|172/map4704 |7240,7584 |GPos(48,14), estados1/0 na sequência com fade; caller3968 |
+|275/entities732 |872,900,1000,1028 |GPos(8,22)/(23,13); flag2720 e work16525; callers688/716 |
+|275/map6012 |6408 |handle local−4, estado0; callers11112/15080 |
+|275/map6448/6636/7532 |6488/6676/7572 |GPos(23,13), estado0; callers11800/12532/15784/16516,5704,5724 |
+
+Em275/entities, flag2720==1 põe animação0 no handle(8,22) e oculta(23,13).
+Sem a flag, oculta(8,22) e mostra(23,13) somente para4<=work16525<5.
+São condições de estado recuperáveis do AMX, não política por câmera.
+Os callers são chamadas diretas locais; o levantamento não fecha todo
+roteamento global/dinâmico nem atribui identidade BCH aos objetos.
+
+Nos programas locais6/15/445 não há chamada direta a essas quatro APIs de
+visibilidade/culling nem a EventMapReplace. Em6/entities, GPos(100,170)@572
+alimenta BuildMdlEventAnimeSetEnd@596;6/map usa GPos(106,171)@9152 e
+GPos(94,171)/(106,171)@9540/9572 na sequência de animação.15/entities usa
+GPos(19,19)@448 com BuildMdlEventAnimeSetEnd.445 não contém essas chamadas
+de lookup/animação. Isso não prova ausência de controle indireto/nativo,
+mas não fornece init que esconda o telhado6 nem swap hall/pátio445/15.
+
+As duas EventMapReplace ficam em121/map5488 e122/map5740, ambas com
+argumentos(0,1), após WorkSet16621 e flags. As quatro MdlSetCullingOff ficam
+em57/map, função4264:10508/13324/15664/18544, ID0 com estados1/0/1/0.
+As duas MdlSetVisibleMesh são global0055@15308/26084, funções6296/17184,
+callers4672/4692: ID255, ponteiros AMX288/332, estado1. Não foi demonstrado
+que esse global seja chamado na entrada dos três checkpoints nem que os
+seletores apontem seus meshes de mapa; não convertê-los em regra de telhado.
+
+### Registros nativos diferentes, não aliases de política
+
+| API | Tabela / wrapper DllField | Observação estática |
+| --- | --- | --- |
+|MdlSetVisible |0xf842c /0x4ca0c |Resolve ID pelo caminho0x8bfd0/import0x22b0; altera máscaras4/0x100/0x1000000 |
+|MdlSetVisibleMesh |0xf843c /0x4e374 |Converte string AMX, resolve ID por0x22b0 e encaminha booleano; não usa lookup espacial0x87194 |
+|MdlSetCullingOff |0xf8454 /0x4da9c |Resolve ID/contexto e alterna flag0x20000; sem distância de câmera nesse wrapper |
+|BuildMdlSetVisible |wrapper0x4ef74 |Desempacota GPos e consulta registro espacial0x87194→0x15a54, descrito acima |
+|EventMapReplace |0xf7d94 /0x55174 |Encaminha dois argumentos ao estado de mapa; vínculo com oclusores não recuperado |
+
+**Derivado:** MdlSetVisible/MdlSetCullingOff usam o caminho de objetos por
+ID usado para atores; BuildMdlSetVisible usa outro registro, alimentado pela
+seção3 GR. Não são APIs intercambiáveis para ocultar o BCH da seção1.
+Mesmo uma nativa que controla um objeto de mapa não identifica, sozinha,
+o telhado/parede presente no GLB. Não foi provada troca de camada de render
+entre MM347 e o pátio nem ligação dos handles aos materiais medidos abaixo.
+
+### ZO de entrada e candidatos de culling
+
+Os31 registros warp das zonas6/15/445 foram comparados em bytes, além dos
+campos do parser. Nos três warps6→223/225/227, byte+5 (`transitionEffect`)
+é3. Nos quatro15→445 é5/5/2/5; nos quatro445→15 é2/5/5/5. Em todos31,
+bytes+6/+7, directionality(+0x12) e cauda+0x14..0x17 são zero. Os diferentes
+valores do byte+5 não demonstram um bit de ocultação nem um alvo de modelo.
+O nome transitionEffect é do parser; a enumeração nativa completa e seu
+vínculo ao evento de entrada ainda não foram fechados. A altura ZO também
+não foi reinterpretada como camada visual.
+
+DllFieldEventEntranceIn contém RTTI EventEntranceIn e performances
+MATE/BASE/DOOR/WARP/STAIRS/UPLADDER/DOWNLADDER/SecretBase/ONLY_SCRIPT.
+Construtores/registro e trechos0x300–0x480,0x650–0x7b0,0x990–0xb90 e
+0xedc–0xfdc delimitam dispatch de entrada, mas não fecham o fluxo inteiro
+até ocultação de um mesh. Nome de classe não prova que DOOR remova telhados.
+`setCalculateCullingFlag` existe em code/0x5a55a4; a busca de referências
+não fechou consumidor de mapa/câmera. As buscas por strings e trechos de
+DllField/DllBackGround não recuperaram occlusion set ou dissolve automático;
+a cobertura parcial não demonstra inexistência desses mecanismos.
+
+| Fonte adicional | SHA-256 |
+| --- | --- |
+|DllFieldEventEntranceIn.cro |`96813b4b15c289c28b0770ea108c98d90cac279f3da44f0359c964faeec57a89` |
+|DllBackGround.cro |`22f14fa807dd1c7abf856ed7681f2a136b6f838efb391e72326162c2d3962ea2` |
+
+### Revalidação da preservação, não correção visual
+
+Chromium visível/5199, mesmo código158e557 e assets do principal nas fases
+A/B: oito snapshots frescos/12 capturas inspecionadas. Três controles
+actor-only removem terreno/NPCs somente no harness; o quarto controle é o
+passo core84. Nenhum init/AMX, sequência de entrada nativa ou emulador foi
+executado. Métricas normais A/B são iguais, sem exigir hashes de canvas.
+
+| Checkpoint | PlayerY / eyeY | Materiais entre câmera e ator |
+| --- | --- | --- |
+|6(14,16), mundo(94,176) |0 /9 |shadow1,t01_02; telhado permanece |
+|445(78,48) |0 /9 |nakaniwa; parede permanece |
+|15(2,20) |0 /9 |c1030_floor04_r,wall_top01_r,wall_3; oclusão permanece |
+|84(38,29) |21 /30 |Nenhum hit no segmento consultado |
+
+84 move pelo core até(38,31), targetY20.5, sem overshoot nos30 renders e
+com eyeY=playerY+9. Zero erros de console/página/HTTP/requests e zero
+warnings no run final. Os retries do harness falharam primeiro no import
+Vite sem query e depois acusaram duas instâncias de Three.js; o harness
+final importa a mesma URL transformada de SceneManager, sem filtrar avisos.
+362 Vitest/56 arquivos, build e191 Python sem skips passam; warning de
+bundle/P-013 de teste permanecem herdados. Não existe regressão red-green
+de fix de oclusão porque nenhum fix, parser ou runtime foi alterado.
+
+Evidências ignoradas no principal: `rom/map-visibility-validation/` contém
+amx-calls.json, zones-details.json, dumps estáticos, browser-report.json,
+12 PNGs e quatro contact sheets; fontes ROM não são versionadas.
+Reprodutores locais: `/tmp/probe-map-visibility.py`, `/tmp/probe-map-native.py`,
+`/tmp/map-visibility-details.py`, `/tmp/map-visibility-summary.py`,
+`/tmp/map-visibility-callers.py`, `/tmp/map-visibility-server.mjs`,
+`/tmp/playwright-test-map-visibility.js` e `/tmp/map-visibility-contact.py`.
+Craft Anything MCP voltou a falhar ao listar ferramentas; sem executar ARM
+ou mudar configuração/proteções. A evidência estática não é observação da ROM
+em execução e os controles Chromium não encerram aceite visual/paridade.
+
+**Próximo passo delimitado:** rastrear o evento completo de entrada e seus
+imports/virtuais até o consumidor de visibilidade, correlacionar seção1/BCH
+com objetos/seletores/registry e fechar o consumidor de culling. Demonstrar
+alvo e condição nos três pontos antes de teste red-green/gancho mínimo;
+comparar também a transição natural no emulador, não apenas o ponto parado.
+P-017 continua aberta; grounding, câmera, depth, alpha e colisões preservados.

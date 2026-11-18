@@ -902,3 +902,25 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Evidência:** importField1664→SkatePipe1428 grava direção emevento+30. EventDanielSteppingStone14d4/1430 solicita comando62, incrementa contador até2 e manipula flag800 do ator. code3fae48→CRS19c7c4→Field3a0c4 só agenda comando/direção emator+8fc; executor e duração/deslocamento não fechados. Não traduzir contador2 em dois tiles ou nome do evento em slide.
 - **Outros limites:** ledges64528→e6224 reescrevem código intermediário5/1d/24, mas ainda há queries e gates; decoder comum72/73/74/75 não prova salto comum completo. Máscara20 no PlayerGrid+20 ou emregistro+1e não prova o bit5 da célula sem linhagem. Consulta4dcb64/da934 escolhe registros/buffers/callbacks e ramos4dc22c/68684; grounding primário não prova esse contrato multicamada.
 - **Regra e resultado:** só implementar após fechar entrada, estado, consulta e efeito. A continuação preservou runtime, colisões, mapas e75020021;362 Vitest/56 arquivos,186 Python sem skips/build passaram (testes extras herdados da base), cinco SHA/imports reconferidos. Sem nova mecânica, não fabricar red-green ou Playwright; aceite anterior continua histórico. P-017/corredor conectado seguem abertos, com próximo consumidor e offsets explícitos no PRD-015.
+
+## A-089 Resolver o registro do objeto antes de transportar uma API de visibilidade
+
+- **Data:**2026-11-18; P-017/PRD-016, continuação sobre158e557.
+- **Contexto:** distinguir visibilidade de atores/objetos por ID, objetos
+  espaciais da seção3 GR e meshes BCH da seção1 nos oclusores6/445/15.
+- **Observado:** MdlSetVisible/0x4ca0c e MdlSetCullingOff/0x4da9c resolvem
+  ID/contexto; BuildMdlSetVisible/0x4ef74 usa lookup espacial0x87194.
+  As20 chamadas AMX desta última estão em95/99/172/275, com condições de
+  works/flags/versão; nenhuma direta nos programas locais6/15/445.
+  MdlSetVisibleMesh global0055 usa ID255 e seletores AMX, sem vínculo
+  demonstrado aos meshes desses mapas. EntranceIn/DOOR e a string
+  setCalculateCullingFlag também não fecham um gatilho de ocultação.
+- **Erro a evitar:** transportar o efeito visual de uma API homônima para
+  outro registro ou converter transitionEffect do ZO em flag de telhado
+  sem rastrear o consumidor e o alvo. Ausência local não exclui globals,
+  dispatch indireto ou comportamento nativo.
+- **Regra:** exigir cadeia evento→argumentos→registro→modelo/mesh antes de
+  implementar visibilidade. Sem ela, documentar candidatos e preservar o
+  runtime; repetir A/B do mesmo código ou remover terreno no harness não
+  constitui correção nem paridade. Nesta entrega,12 capturas preservaram
+  os três oclusores e o ledge84,Y21→20.5; nenhum gancho foi publicado.
