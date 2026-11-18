@@ -10,7 +10,7 @@ Verificado em 2026-11-18, branch `feat/quality-gates` sobre a main `1d3234f`, ma
 | --- | --- | --- |
 | Testes unitários (Vitest) | 418 em 64 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | 95,9% linhas, 85,6% branches (catraca em 95/85) | `npm run test:coverage` |
-| Testes do pipeline (Python) | 191 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
+| Testes do pipeline e do oráculo (Python) | 207 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
 | Jogo real no browser (smoke) | 5 de 5 fluxos | `npm run test:e2e` |
 | Cenários visuais | 25 de 25 estáveis; **2 de 25 aceitos** sem defeito conhecido | `npm run test:e2e`, galeria em `rom/visual-report/index.html` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
@@ -34,7 +34,7 @@ Defeitos visuais registrados nos cenários: 23 com atores de ID de objeto sem mo
 | Brendan e May sem pés: o conversor descarta a malha `sw_parts02` (tênis) que existe no BCH da ROM. | P-019 |
 | Atores com ID de objeto (pedras, itens, bagas) aparecem como fallback. | P-017 |
 | Iluminação, LUTs e combiners RGB dos materiais; exterior preto em cavernas. | P-007 |
-| Não há captura de referência do emulador: nenhuma paridade visual foi medida contra o original. | P-021 |
+| O emulador já roda por script, mas ainda não há save controlável, captura de referência nem teste diferencial: nenhuma paridade foi medida contra o original. | P-021 |
 | `src/game.ts` tem 708 linhas e 0% de cobertura unitária; só o smoke e2e o protege. | P-020 |
 | HUD de desenvolvimento em vez dos menus do 3DS; arenas de batalha geométricas; efeitos sonoros ausentes. | P-011, P-014, P-008 |
 
@@ -47,8 +47,10 @@ Duas investigações de engenharia reversa pararam sem mudança de runtime; amba
 
 ## Ambiente
 
+Máquina nova: [SETUP.md](SETUP.md).
+
 - ROM, dumps e assets convertidos são locais: `rom/` e `public/assets/` (670 MB) ficam fora do Git. Em worktree, o Playwright usa automaticamente o `public/` e os baselines do checkout principal (`e2e/support/checkoutPaths.ts`); para o Vite manual, `ALPHA_PUBLIC_DIR=<checkout>/public npm run dev`.
 - Baselines de imagem em `rom/visual-baselines/<plataforma>/` do checkout principal; métricas versionadas em `e2e/visual-metrics/`.
 - Node 26, Python 3.12, Playwright 1.64.1 com Chromium próprio (`npx playwright install chromium`).
-- Conversão de modelos: SPICA, SpicaExport e Blender em `../_tools/`, .NET 8 em `~/.dotnet`. Emulador (Azahar) não instalado nesta máquina.
+- Conversão de modelos: SPICA, SpicaExport e Blender em `../_tools/`, .NET 8 em `~/.dotnet`. Emulador: Azahar 2126.2 em `../_tools/azahar/`, perfil isolado em `rom/emulator/`, cartucho em `rom/cartridge/` ([setup](features/validacao-emulador/setup-emulador.md)).
 - Harnesses Playwright antigos, que só existiam em `/tmp`, foram copiados para `rom/harness-backup-2026-11-18/` do checkout principal.

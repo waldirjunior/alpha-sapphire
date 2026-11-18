@@ -1020,3 +1020,10 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro:** as sessões gastavam a maior parte do contexto lendo histórico, não encontravam uma próxima ação definida e encerravam com "entrega documental" ou "inconclusivo". Duas frentes (PRD-015 e PRD-016) acumularam várias sessões seguidas sem mudança de runtime.
 - **Regra:** [VISAO.md](VISAO.md) guarda objetivo, evidência e continuidade; [STATUS.md](STATUS.md) é um retrato de tamanho limitado por teste; [ROADMAP.md](ROADMAP.md) tem uma fila ordenada com verificação por item; relatos de entrega vão para o PRD da frente. Pendências e aprendizados são consultados por título, sob demanda.
 
+## A-097 O Azahar só é automatizável pelo caminho certo: `open`, `-p`, XDG pré-criado e RPC
+
+- **Data:** 2026-11-18; P-021, validacao-emulador/PRD-002.
+- **Contexto:** primeira automação do emulador (Azahar 2126.2, macOS). Cada item abaixo custou uma tentativa que falhou sem mensagem clara.
+- **Erro:** (1) executar `Azahar.app/Contents/MacOS/azahar` direto abre um aviso modal e o jogo nunca inicia; o log fica parado em cinco linhas. (2) `--movie-play` é capturado pelo getopt da CLI de compressão ("Invalid option combination") porque contém as letras `o`/`c`/`x`. (3) Sem os diretórios `XDG_*_HOME/azahar-emu` já criados, o macOS grava o perfil em `~/Library/Application Support/Azahar`. (4) O servidor RPC só sobe quando um jogo inicia e com `enable_rpc_server=true`. (5) Caminho relativo do cartucho falha com "Failed to obtain loader". (6) O log em arquivo só fica completo quando o processo termina.
+- **Regra:** usar sempre `scripts/azahar_session.py` (lança por `open`, cria o perfil isolado, usa `-p`, caminho absoluto) e conferir com `python3 -m scripts.azahar_oracle check`. Entrada determinística é filme `.ctm` gerado por `scripts/azahar_movie.py`; não depender de foco de janela nem de permissão de acessibilidade. Ao trocar de versão do Azahar, atualizar `AZAHAR_REVISION` e reexecutar o `check`.
+

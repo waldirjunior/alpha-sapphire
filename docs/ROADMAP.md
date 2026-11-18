@@ -9,7 +9,7 @@ Pegue o primeiro item não bloqueado. Cada item termina quando a verificação i
 | # | Resultado | Verificação | Ref. |
 | --- | --- | --- | --- |
 | 1 | Brendan e May com tênis: o conversor deixa de descartar `sw_parts02`; modelos reconvertidos e promovidos. | `npm run test:e2e` reporta `feetOnGround: corrigido` em `avatar-brendan` e `avatar-may`; remover o defeito conhecido e reaprovar o baseline. | P-019 |
-| 2 | Oráculo visual: Azahar instalado e uma captura de referência por cenário do catálogo em `rom/visual-reference/`, exibida ao lado da nossa na galeria. | Galeria mostra os 25 pares; diferenças de câmera, escala e cor anotadas por cenário. | P-021 |
+| 2 | Oráculo do emulador: seguir os passos 1 a 5 de [PRD-002](features/validacao-emulador/prds/PRD-002-infraestrutura-do-oraculo.md) — save controlável, teleporte por save, 25 capturas de referência ao lado das nossas na galeria e teste diferencial de movimento. A base (instalação, RPC, filme de entrada) já está entregue. | Verificação de cada passo no PRD-002. | P-021 |
 | 3 | Atores com ID de objeto (`0x1000`/`0x2000`: pedras, itens, bagas) renderizam o modelo real. | `assetsLoaded` passa a `corrigido` nos 23 cenários afetados. | P-017 |
 | 4 | Câmera e oclusão iguais ao original nos pontos de telhado e parede, decididas pela referência do item 2. | `avatarVisible` passa a `corrigido` em `z0006-littleroot-telhado` e `z0445-mauville-hall`. | P-017 |
 | 5 | Corredor Littleroot → Lavaridge como teste e2e versionado, portando os roteiros de `rom/harness-backup-2026-11-18/`. | Novo `e2e/corridor.spec.ts` verde. | PRD-006 a PRD-013 |
@@ -21,9 +21,9 @@ Pegue o primeiro item não bloqueado. Cada item termina quando a verificação i
 
 Regras da fila:
 
-- Item bloqueado por ferramenta ausente (por exemplo, o emulador) não bloqueia os demais: registre o bloqueio na pendência e siga para o próximo.
+- Item bloqueado por ferramenta ausente não bloqueia os demais: registre o bloqueio na pendência e siga para o próximo. Máquina nova: [SETUP.md](SETUP.md).
 - Trabalho novo entra na fila com resultado e verificação; sem verificação executável não entra.
-- Os itens 9 e 10 são as frentes de engenharia reversa pausadas. Só retomar por disassembly depois que o emulador (item 2) estiver disponível e não tiver respondido à pergunta.
+- Os itens 9 e 10 são as frentes de engenharia reversa pausadas. Só retomar por disassembly depois que o emulador (item 2) não tiver respondido à pergunta.
 
 ## Fases
 

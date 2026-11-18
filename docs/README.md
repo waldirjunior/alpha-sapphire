@@ -8,6 +8,7 @@
 
 ## Consulta sob demanda
 
+- [SETUP.md](SETUP.md) — instalação em máquina nova: assets locais, Playwright e emulador.
 - [PENDENCIAS.md](PENDENCIAS.md) — lacunas abertas (`P-NNN`). Liste com `grep -n '^## P-' docs/PENDENCIAS.md`.
 - [APRENDIZADOS.md](APRENDIZADOS.md) — erros e regras já descobertos (`A-NNN`). Liste com `grep -n '^## A-' docs/APRENDIZADOS.md`.
 - [features/](features/README.md) — um diretório por módulo, com `README.md`, `prds/` e `adrs/`. O relato de cada entrega fica no PRD da frente.

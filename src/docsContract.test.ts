@@ -38,7 +38,8 @@ describe('documentação de entrada', () => {
   });
 
   it('não tem links relativos quebrados', () => {
-    const files = [...Object.keys(ENTRY_DOCS), 'README.md', 'docs/README.md', 'docs/features/README.md', 'docs/features/validacao-visual/README.md'];
+    const files = [...Object.keys(ENTRY_DOCS), 'README.md', 'docs/README.md', 'docs/features/README.md', 'docs/features/validacao-visual/README.md',
+      'docs/SETUP.md', 'docs/features/validacao-emulador/setup-emulador.md', 'docs/features/validacao-emulador/prds/PRD-002-infraestrutura-do-oraculo.md'];
     expect(files.flatMap(brokenLinks)).toEqual([]);
   });
 

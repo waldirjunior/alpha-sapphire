@@ -8,7 +8,7 @@ Portar **Pokémon Alpha Sapphire** para o navegador em **Three.js** e **TypeScri
 
 Detalhada em [docs/tcc/00-arquitetura.md](docs/tcc/00-arquitetura.md) e em [docs/features/](docs/features/README.md).
 
-- **`scripts/`**: pipeline offline em Python (extração da ROM, conversão para JSON/GLB/áudio, disassembly AMX) com testes `scripts/test_*.py`.
+- **`scripts/`**: pipeline offline em Python (extração da ROM, conversão para JSON/GLB/áudio, disassembly AMX) e automação do emulador (`azahar_*.py`), com testes `scripts/test_*.py`.
 - **`src/core/`**: lógica pura do jogo — grade, colisão, warps, batalha, save e a VM Pawn/AMX dos scripts de evento. Proibido importar `three`, `src/engine/` ou APIs de browser (`window`, `document`). Roda em Node.
 - **`src/engine/`**: apresentação Three.js — `SceneManager.ts`, terreno e atores por zona, animações nativas, host de eventos AMX, áudio. Consome o estado do core sem mutá-lo.
 - **`src/data/`**: dados gerados pelo pipeline — `maps_v2/` (536 zonas), `zone_scripts/`, `texts/`, `zones/` (encontros), `battle/`. Não editar à mão: regenerar pelo script correspondente.
@@ -30,6 +30,7 @@ Sob demanda, só o que a tarefa toca:
 - **Pendências**: `grep -n '^## P-' docs/PENDENCIAS.md` lista os títulos; leia os itens citados pela tarefa.
 - **Aprendizados**: `grep -n '^## A-' docs/APRENDIZADOS.md` lista as 90+ regras já descobertas pelo título; leia as da área em que vai mexer antes de editar.
 - **PRD e ADR** do módulo em [docs/features/](docs/features/README.md).
+- **Máquina nova ou ferramenta faltando**: [docs/SETUP.md](docs/SETUP.md).
 - [docs/historico/](docs/historico/) guarda relatos antigos de entrega; não é leitura obrigatória.
 
 ## Método de trabalho

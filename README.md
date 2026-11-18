@@ -19,6 +19,7 @@ Primeira vez com Playwright: `npx playwright install chromium`.
 
 ## Documentação
 
+- [docs/SETUP.md](docs/SETUP.md) — instalação em máquina nova (assets, Playwright, emulador).
 - [docs/VISAO.md](docs/VISAO.md) — objetivo e definição de pronto.
 - [docs/STATUS.md](docs/STATUS.md) — estado atual medido.
 - [docs/ROADMAP.md](docs/ROADMAP.md) — o que vem a seguir.
