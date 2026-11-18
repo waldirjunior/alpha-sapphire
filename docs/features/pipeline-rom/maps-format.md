@@ -210,5 +210,39 @@ SpicaExport emite `set="3|4"` em `TEXCOORD` para as fontes `*_mapped_uv*_id`;
 os atributos para `TEXCOORD_0..k` mas mantém o número esparso em
 `texture.texCoord`, e o three.js amostra `uvN` inexistente (cor plana) ou nem
 compila o shader (`uvN` undeclared). `convert_gr_to_glb` roda
-`scripts/glb_uv_fix.py` ao final: `texCoord` inválido → maior canal válido
-(`valid-1`, o slot `mapped_uv`); `validate_glb.py` audita qualquer `.glb`.
+`scripts/glb_uv_fix.py` ao final. A política inicial de escolher o último canal
+válido foi revisada pelo A/B visual descrito abaixo (A-040);
+`validate_glb.py` audita os índices de qualquer `.glb`, mas não prova UV correto.
+
+## Corredor contínuo e revisão visual (2026-11-17)
+
+[PRD-006](../engine-3d/prds/PRD-006-corredor-continuo-hoenn.md) e
+[ADR-004](../engine-3d/adrs/ADR-004-bordas-por-zone-grid.md) usam
+`_neighbors.json`: 58 zonas/90 bordas dirigidas por contato ortogonal de zoneIds
+nas MM. Cada borda tem span, direção, offset local→local e proveniência.
+`build_zone_maps.py` regenera o grafo; para refazê-lo sem ler binários:
+
+```bash
+python3 -B -m scripts.build_zone_neighbors
+```
+
+MM1 contém 6/23/7/25; MM2 contém 13/24. A única ponte entre matrizes é
+7↔24, **inferred=true**, aprovada como migração, não conexão nativa extraída.
+As lanes20–22 ligam Oldale x=1 a Route102 x=78, preservando o padding bloqueado.
+A ponte substitui apenas o warp ZO para o mesmo destino; caso contrário ele
+puxava o jogador para a âncora79,20/right. Portas/demais warps não mudam (A-039).
+O core mantém posições locais; o renderer usa um referencial mundial estável,
+acrescenta chunks/atores vizinhos e não limpa a cena nem aplica fade em bordas.
+O repositório carrega um salto de vizinhos, não o grafo inteiro.
+Encontros vêm diretamente de `zones/NNN_*.json` pelo ID, antes de liberar o mapa.
+
+O staging acima agora inclui Petalburg e destinos diretos: 23 zonas, **35 GRs**
+e **51 atores**. Os 16 IDs sem correspondente físico mantêm fallback explícito;
+nenhum bit de modelo é mascarado. Não há conversão nem binários no Git.
+O script aplica `glb_uv_fix` na origem e no destino antes da comparação:
+a textura difusa de materiais marcados `extras.pica=true` usa **TEXCOORD_0**,
+inclusive para migrar arquivos antes remapeados para1. UVs válidos de materiais
+genéricos e demais texturas do material permanecem intactos. A/B temporário no
+mesmo servidor/GLB (`/tmp/uv-channel-original.png`, `/tmp/uv-channel-zero.png`)
+restaurou grama, placas e telhados; índices válidos sozinhos não validavam imagem.
+A caminhada integral Playwright na main ainda aguarda integração desta correção.

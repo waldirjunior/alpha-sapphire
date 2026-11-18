@@ -12,11 +12,12 @@ littleroot_town/littleroot_town.dae: os sets 3/4 referenciam fontes
 enquanto o .glb legado (assimp v5) usa canal 0 para os mesmos materiais e
 renderiza corretamente.
 
-Regra de remap (A-NNN/P-NNN ver docs): para cada material, o canal válido é o
-maior índice TEXCOORD_n presente nas primitivas que usam o material. texCoord
-acima desse limite é remapeado para o maior canal válido quando existem 2+
-conjuntos de UV (o "mapped_uv" do PICA vive no último slot compactado); se a
-primitiva só tem TEXCOORD_0, remapeia para 0.
+A política inicial de escolher o último canal válido removia o erro de shader,
+mas distorcia grama, placas e telhados. O A/B visual em Littleroot confirmou que
+a textura difusa PICA deve usar TEXCOORD_0, não o mapped_uv compactado. Materiais
+com extras.pica=True migram baseColorTexture para 0, inclusive arquivos antes
+corrigidos para 1. Outros mapas UV válidos permanecem intactos; canais inválidos
+não PICA continuam limitados ao último atributo existente.
 """
 
 from __future__ import annotations
@@ -88,11 +89,13 @@ def fix_doc(doc: dict) -> list[str]:
         valid = uv_channel_count(doc, mat_index)
         if valid == 0:
             continue
+        diffuse = material.get("pbrMetallicRoughness", {}).get("baseColorTexture")
         for tex_info in iter_texture_infos(material):
-            tex_coord = tex_info.get("texCoord")
-            if tex_coord is None or tex_coord < valid:
+            tex_coord = tex_info.get("texCoord", 0)
+            pica_diffuse = material.get("extras", {}).get("pica") is True and tex_info is diffuse
+            target = 0 if pica_diffuse else valid - 1
+            if tex_coord == target or (tex_coord < valid and not pica_diffuse):
                 continue
-            target = valid - 1
             fixes.append(
                 f"material[{mat_index}] {material.get('name', '?')}: "
                 f"texCoord {tex_coord} -> {target} (TEXCOORD_0..{valid - 1})"

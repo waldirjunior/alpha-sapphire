@@ -287,3 +287,19 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro potencial:** Confundir warp de navegação com `_MapChangeCore`, ou chamar uma fixture sintética de cutscene real. `networkidle` antigo também permitia enviar seta enquanto os imports lazy pós-transição ainda carregavam.
 - **Regra:** Distinguir evidências: texto do NPC veio do AMX real; o warp do smoke veio de nove células sintéticas executadas pela VM e engine reais. Aguardar explicitamente programas/textos do destino antes da próxima tecla. Manter as lacunas naturais da ROM documentadas, sem respostas inventadas para `float`, queries de atores ou globais ausentes.
 - **Evidência:** Fixture do Playwright chamou `_MapChangeCore(225,7,0,18,1,0,0,0,0)` e mudou a zona/posição renderizada. Três screenshots inspecionados, zero pageerror; 195 Vitest e build passam. Paridade/cutscene completa continua em P-013.
+
+## A-039 Ponte inferida deve substituir o warp da mesma conexão
+
+- **Data:** 2026-11-17.
+- **Contexto:** PRD-006/ADR-004, caminhada de borda em f4eaffa.
+- **Erro reproduzido:** Oldale (1,22)/left entrava no retângulo ZO antes de consultar a ponte, chegando a Route102 (79,20)/right. O teste antigo na linha21 só conferia distância Manhattan=1: a posição errada ainda satisfazia essa distância, mas mudava no eixo errado.
+- **Regra:** Uma ponte inferred=true suprime somente o warp que coincide com seu span/direção e destino. `stepWarp` centraliza essa escolha para core, preload, razão de entrada AMX e fade; outros warps/portas continuam prioritários. Conferir posição, vetor mundial e facing, inclusive nos extremos do retângulo.
+- **Evidência:** O teste da linha22 falhou com distância2 antes da correção; agora preserva (78,22)/left e o vetor(-1,0). Casos sintéticos garantem que borda não inferida ou warp para outro destino não são suprimidos. A confirmação Playwright na main aguarda integrar esta correção.
+
+## A-040 Canal UV existente ainda pode distorcer a textura difusa PICA
+
+- **Data:** 2026-11-17.
+- **Contexto:** Revisão da política de A-026 por validação visual de PRD-006.
+- **Erro reproduzido:** O remap para o último canal válido tirava o erro de shader, mas UV1 distorcia grama, placas e telhados. A/B do mesmo GLB na main (`/tmp/uv-channel-original.png` e `/tmp/uv-channel-zero.png`) confirmou TEXCOORD_0 correto para a textura difusa; o DAE tem sets0/3 e o assimp compacta para0/1, mas isso sozinho não prova o mapeamento semanticamente correto.
+- **Regra:** Para materiais explicitamente marcados extras.pica=true, usar UV0 em baseColorTexture, migrando também arquivos antes corrigidos para1. Não modificar UVs válidos de materiais genéricos nem outros mapas do material. O staging normaliza origem e destino antes de comparar, sem substituir silenciosamente um GLB de conteúdo diferente. Validar imagem, não apenas índices/shaders.
+- **Evidência:** Regressão sintética falhou com [1,1,1] onde se espera [0,0,0]; agora passa e preserva normalTexture no UV1 e idempotência. Apenas 35 GRs do slice/destinos foram reestagiados, sem conversores. No harness usar PRNG com valores distintos: fixar Math.random em uma constante também faz UUIDs de Three.js colidirem e falseia texturas.
