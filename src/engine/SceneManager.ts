@@ -9,7 +9,7 @@ import { appendMapEntities, eventActorRoot, syncMapEntities, FACING_YAW } from '
 import { CharacterExpressions } from './characterExpressions';
 import { ContinuousTerrain } from './continuousTerrain';
 import { worldPosition } from '../core/boundaries';
-import { NativeAnimationController, characterClip, type CharacterAnimController } from './nativeAnimation';
+import { NativeAnimationController } from './nativeAnimation';
 import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import type { BattleEvent } from '../core/battleEvents';
 import { EventPresentation } from './eventPresentation';
@@ -72,8 +72,8 @@ export class SceneManager {
   private continuousRegion = '';
   private renderedZones = new Set<string>();
   private clock = new THREE.Clock();
-  private playerAnim: CharacterAnimController | null = null;
-  private entityMixers: THREE.AnimationMixer[] = [];
+  private playerAnim: NativeAnimationController | null = null;
+  private entityActors: NativeAnimationController[] = [];
   private readonly characterExpressions = new CharacterExpressions();
   private battleActors = new Map<THREE.Group, NativeAnimationController>();
   private battleLoads: Promise<void>[] = [];
@@ -205,8 +205,8 @@ export class SceneManager {
   private resetEntities(): void {
     this.characterExpressions.clear(this.entitiesGroup);
     this.entitiesGroup.clear();
-    for (const mixer of this.entityMixers) mixer.stopAllAction();
-    this.entityMixers = [];
+    for (const actor of this.entityActors) actor.dispose();
+    this.entityActors = [];
     this.renderedZones.clear();
   }
 
@@ -364,21 +364,13 @@ export class SceneManager {
         target.add(model);
 
         if (gltf.animations.length === 0) return;
-        const mixer = new THREE.AnimationMixer(model);
-        const idleClip = characterClip(gltf.animations, false);
-        const walkClip = characterClip(gltf.animations, true);
-        const idleAction = idleClip ? mixer.clipAction(idleClip) : null;
-        const walkAction = walkClip ? mixer.clipAction(walkClip) : null;
-
-        if (idleAction) {
-          idleAction.play();
-          mixer.update(0);
-        }
-
+        const actor = new NativeAnimationController(new THREE.AnimationMixer(model), gltf.animations);
+        actor.mixer.update(0);
         if (isPlayer) {
-          this.playerAnim = { mixer, idle: idleAction, walk: walkAction, active: 'idle' };
+          this.playerAnim?.dispose();
+          this.playerAnim = actor;
         } else {
-          this.entityMixers.push(mixer);
+          this.entityActors.push(actor);
         }
       },
       undefined,
@@ -458,15 +450,7 @@ export class SceneManager {
     const isMoving =
       this.playerRoot.position.distanceToSquared(this.playerTargetPos) > 0.002 ||
       performance.now() < this.walkUntilMs;
-    const shouldWalk = isMoving && this.playerAnim.walk !== null;
-    const nextState: 'idle' | 'walk' = shouldWalk ? 'walk' : 'idle';
-    if (this.playerAnim.active === nextState) return;
-
-    const current = this.playerAnim.active === 'walk' ? this.playerAnim.walk : this.playerAnim.idle;
-    const target = nextState === 'walk' ? this.playerAnim.walk : this.playerAnim.idle;
-    current?.fadeOut(0.15);
-    target?.reset().fadeIn(0.15).play();
-    this.playerAnim.active = nextState;
+    this.playerAnim.setMoving(isMoving);
   }
 
   public render(): void {
@@ -486,9 +470,7 @@ export class SceneManager {
       );
       this.updatePlayerAnimation();
       this.playerAnim?.mixer.update(dt);
-      for (const mixer of this.entityMixers) {
-        mixer.update(dt);
-      }
+      for (const actor of this.entityActors) actor.mixer.update(dt);
     } else {
       for (const actor of this.battleActors.values()) actor.mixer.update(dt);
       this.battleArena.effects.update(dt);

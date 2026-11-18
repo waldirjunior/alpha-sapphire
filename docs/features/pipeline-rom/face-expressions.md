@@ -369,6 +369,58 @@ corredor nem exercitada cutscene ROM. 250 Vitest/40 arquivos, build e 155
 Python passaram; um skip pré-existente por assets públicos ausentes no
 worktree, e aviso herdado de chunks >500 kB.
 
+## Blink scheduler follow-up — A-061 (2026-11-18)
+
+Static analysis on integrated base `173ada3` resolved the previously unknown
+helper, without executing ROM code. Source hashes remain DllField.cro
+`9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925`
+and code.bin `b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16`.
+Craft Anything discovery failed and its CLI was unavailable; the existing
+CroImage import resolver and Capstone 5.0.3 were used locally.
+
+**Observed:** DllField call stub `0xbf0` imports code VA `0x48ad7c`. That
+wrapper loads a generator from global `0x63106c+0x14` and tail-calls
+`0x175d64`. For bounds below `0xffff`, the latter calls `0x164798`, multiplies
+its unsigned 32-bit result by the bound with UMULL, and returns the upper
+word. `0x164798` mutates four generator words with shifts/XORs and constants
+`0x8f7011ee`, `0xfc78ff1f`, `0x3793fdff`; it reads no tick/vsync clock.
+Thus, for the bounds used here, `R(n) = floor(U32*n/2^32)` and `0 <= R(n) < n`.
+The helper provides randomness, not a unit of time. It uses the same global
+generator across calls; the seed lifecycle remains unknown.
+
+**Derived blink state machine:** setup `0x80b34–0x80b4c` enables state+`0x27c`,
+sets wait=`60+R(60)` and closed=0. In `0x388b4–0x389ac`, one eligible call
+subtracts one from wait; reaching zero selects material frame 10 and closed=2.
+Subsequent eligible calls decrement closed; zero selects frame 0. If byte
+`+0x27d` is nonzero OR `R(3)!=0`, next wait=`60+R(60)` and byte becomes zero.
+Otherwise next wait is 8 when a second `R(3)==0`, or 4 otherwise, and byte
+becomes one. A short interval therefore cannot immediately select another
+short interval. No probabilities or clock rate are inferred from this.
+Setup does not initialize `+0x27d` in this function; its earlier initialization
+is not established. Selecting a nonzero material frame disables the enable
+byte without resetting these counters; frame 0 re-enables the existing state.
+
+**Observed eligibility:** caller `0x424b0` iterates an actor-pointer array
+(count at manager+`0x2e94`, array pointer at `+0x2e90`) and calls `0x386f4`
+at `0x424f0` only for non-null entries with actor byte `+0x251==0`. The callee
+returns before blinking when pointer `+0x1d0` is null, byte `+0x215` is nonzero,
+byte `+0x1b0` is nonzero, or byte `+0x1d8` is zero. The blink path additionally
+requires bytes `+0x270/+0x271/+0x27c` nonzero. Names/purposes of those general
+actor gates have not been recovered. Two render-object paths through state
+`+0x1fc/+0x200` eventually use virtual material slot `+0xcc`, channel zero.
+
+**Exact remaining limit:** no direct ARM caller or internal relocated pointer
+to `0x424b0` was found in the inspected DllField text/relocation tables. No
+corresponding anonymous import was found in the inspected static.crs table.
+This does not exclude indirect dispatch or imports from other modules. The
+dispatch cadence, pause/culling behavior, relation to vsync, and mapping of all
+eligibility bytes to web actor state remain unknown. The
+closed interval is two eligible calls, not two proven display frames. No
+seconds-based or requestAnimationFrame-based automatic blink is implemented.
+Temporary read-only probes were `/tmp/oras-field-disasm.py` and
+`/tmp/oras-field-calls.py`; previous scheduler hypotheses are superseded only
+where the observations above resolve them.
+
 ## Limites e continuação
 
 P-019 continua aberta para BBox ambígua/correspondência por vértice, materiais

@@ -1,0 +1,1193 @@
+{
+  "zones": {
+    "6": [
+      122,
+      179,
+      212,
+      221,
+      280,
+      281,
+      289,
+      296,
+      4153,
+      8253
+    ],
+    "7": [
+      122,
+      219,
+      238,
+      299
+    ],
+    "8": [
+      221,
+      236,
+      239,
+      283,
+      285,
+      312
+    ],
+    "9": [
+      0,
+      122,
+      236,
+      271,
+      286,
+      287,
+      4137,
+      8253
+    ],
+    "10": [
+      122,
+      231,
+      286,
+      305,
+      4115
+    ],
+    "11": [
+      222,
+      223,
+      225,
+      231,
+      285,
+      4148,
+      8253
+    ],
+    "12": [
+      239,
+      284,
+      305,
+      8253
+    ],
+    "13": [
+      122,
+      123,
+      180,
+      181,
+      221,
+      231,
+      254,
+      284,
+      289,
+      319,
+      8192
+    ],
+    "14": [
+      123,
+      124,
+      210,
+      232,
+      247,
+      260,
+      261,
+      264,
+      265,
+      284,
+      287,
+      288,
+      296,
+      305,
+      306,
+      309,
+      4155
+    ],
+    "15": [
+      122,
+      189,
+      225,
+      256,
+      275,
+      276,
+      277,
+      285,
+      286,
+      320,
+      4149,
+      4150,
+      4151,
+      8193
+    ],
+    "16": [
+      122,
+      123,
+      182,
+      219,
+      221,
+      226,
+      260,
+      284,
+      285,
+      288,
+      306,
+      307,
+      8192,
+      8203
+    ]
+  },
+  "players": [
+    314,
+    315
+  ],
+  "models": [
+    {
+      "model": 0,
+      "status": "no_motion_section",
+      "native_standing": false,
+      "native_movement": false,
+      "standing_frames": null,
+      "movement_frames": null,
+      "reason": "MM has no GF1 motion section; existing fallback retained",
+      "pack": "rom/extracted/garc/a_0_2_1/0000.bin",
+      "pack_sha256": "4bfea6d76d2f576870a8b503db723177f96bd2eab6b7cc6953069844e7dcb3d8",
+      "source_glb": "rom/extracted/models/characters/mm_0000/mm_0000.glb",
+      "url": "/assets/native/characters/mm_0000-57b2903d4593.glb",
+      "sha256": "57b2903d4593ea3af8df92de8b053bb70652efa5e4345f4094da0fe2b5b3f274",
+      "clips": [
+        "idle",
+        "walk"
+      ]
+    },
+    {
+      "model": 122,
+      "status": "no_motion_section",
+      "native_standing": false,
+      "native_movement": false,
+      "standing_frames": null,
+      "movement_frames": null,
+      "reason": "MM has no GF1 motion section; existing fallback retained",
+      "pack": "rom/extracted/garc/a_0_2_1/0122.bin",
+      "pack_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+      "source_glb": "rom/extracted/models/characters/mm_0122/mm_0122.glb",
+      "url": "/assets/native/characters/mm_0122-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "clips": []
+    },
+    {
+      "model": 123,
+      "status": "no_motion_section",
+      "native_standing": false,
+      "native_movement": false,
+      "standing_frames": null,
+      "movement_frames": null,
+      "reason": "MM has no GF1 motion section; existing fallback retained",
+      "pack": "rom/extracted/garc/a_0_2_1/0123.bin",
+      "pack_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+      "source_glb": "rom/extracted/models/characters/mm_0123/mm_0123.glb",
+      "url": "/assets/native/characters/mm_0123-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "clips": []
+    },
+    {
+      "model": 124,
+      "status": "no_motion_section",
+      "native_standing": false,
+      "native_movement": false,
+      "standing_frames": null,
+      "movement_frames": null,
+      "reason": "MM has no GF1 motion section; existing fallback retained",
+      "pack": "rom/extracted/garc/a_0_2_1/0124.bin",
+      "pack_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+      "source_glb": "rom/extracted/models/characters/mm_0124/mm_0124.glb",
+      "url": "/assets/native/characters/mm_0124-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "clips": []
+    },
+    {
+      "model": 179,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0179.bin",
+      "pack_sha256": "9664eb2ea3995d91402199d18928cfe2b61f269b430db2acb7106c420041643a",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0179.glb",
+      "url": "/assets/native/characters/mm_0179-c18ab2e1f75e.glb",
+      "sha256": "c18ab2e1f75e9c0fa50b40335255bde384bc2ae1b6b56c1815f3f5cc670fd395",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 180,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0180.bin",
+      "pack_sha256": "4b9a7ee423df660409c2be27f86891febd5055ca5a16e4c5cee40583a6d9002f",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0180.glb",
+      "url": "/assets/native/characters/mm_0180-d4aca3a4129d.glb",
+      "sha256": "d4aca3a4129d5001b637a877a96395a2e662bfa796ea81c5f8b19dafe4d2bcaa",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 181,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0181.bin",
+      "pack_sha256": "f0158744513abdeaca6bc0f73ab5adef1b65957e326fcbf9bb35a4a5e102ab91",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0181.glb",
+      "url": "/assets/native/characters/mm_0181-bc3666eee589.glb",
+      "sha256": "bc3666eee5895b4b9aa087a44e77e143e633fe138eea8f16c080eb77a2697e1f",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 182,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0182.bin",
+      "pack_sha256": "dec5300361ab1881dcdfef7dd8e8b0f464692f22e7431311e7f8ded90874f7c1",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0182.glb",
+      "url": "/assets/native/characters/mm_0182-fbe67185a618.glb",
+      "sha256": "fbe67185a618d4396a9a055b76bdf5ec938f5f274b6789afb77191ed8467ef5f",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 189,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0189.bin",
+      "pack_sha256": "47ef8581d78c24d218c6e07fe3bb9b1ec65d81ec8483858f36c5fdf61e28cce2",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0189.glb",
+      "url": "/assets/native/characters/mm_0189-819953276524.glb",
+      "sha256": "819953276524823f9c94d1c828a5b53038d23862d89ba5835c9e05b287a3b0a1",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 210,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0210.bin",
+      "pack_sha256": "2bd5bff6a2149b33d5135fb007cc18df48456b632869ae2959c9bc23ff1936ba",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0210.glb",
+      "url": "/assets/native/characters/mm_0210-bb9f36b61520.glb",
+      "sha256": "bb9f36b61520905001c0a9c4980bdfd8542bb6f359b3827fe18659410f0096bf",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 212,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0212.bin",
+      "pack_sha256": "dbe3c85cc984cd86b2a38ea86bfc9239da224c4fd3e8fd458cbab8f5d9c53943",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0212.glb",
+      "url": "/assets/native/characters/mm_0212-3797abf4809c.glb",
+      "sha256": "3797abf4809c47d4c58379f0d1ed5815789fca2d068f276b3b50b3a770546e2a",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 219,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0219.bin",
+      "pack_sha256": "fe5c12386fc1cbfeb55693eb5a34260481c50db14fb84a0b9bbaee865e21c260",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0219.glb",
+      "url": "/assets/native/characters/mm_0219-8b67d12a006a.glb",
+      "sha256": "8b67d12a006a9202ff7ff5a0158d96ec2f1bf9a3e0b96e4825ec590cefbb5d19",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 221,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0221.bin",
+      "pack_sha256": "6e1d0be3b12df13348d37ae9b00043375bf6253a1724b9f58338615697b3587b",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0221.glb",
+      "url": "/assets/native/characters/mm_0221-8dec1f50a9f5.glb",
+      "sha256": "8dec1f50a9f5fc0da97b7e74660fd1250c71baecd023d77087f4530aed2430f1",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 222,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0222.bin",
+      "pack_sha256": "9591672b277c64e391d4491ad57a1b447939d068f94d8ff3403983631c05700f",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0222.glb",
+      "url": "/assets/native/characters/mm_0222-988ebc5dae75.glb",
+      "sha256": "988ebc5dae753aa66a74c462ad90bd3d9fb700d6ca1f9766e5a05d88d3d14e31",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 223,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0223.bin",
+      "pack_sha256": "119fc69c6db8913f637a3cd3c84c5fb2abe06adf0ddc5efa96cbc41e1dbe6ec9",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0223.glb",
+      "url": "/assets/native/characters/mm_0223-46e685a45075.glb",
+      "sha256": "46e685a4507567bc94d3a25ff8da839144f1d94800da3175fd22c31342ff3f18",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 225,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0225.bin",
+      "pack_sha256": "138439a06536cf5ce307455599a5114d18cec8f90b57ac3a997ac430970fba3c",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0225.glb",
+      "url": "/assets/native/characters/mm_0225-648de6104cc0.glb",
+      "sha256": "648de6104cc087c45685c773f487782ae66e05b22c70fec5fe9ae1cf053b08fe",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 226,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0226.bin",
+      "pack_sha256": "cb9776c010c0f74ccc441c83e827500d194a2ef99a2ad635ab491b4df2265980",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0226.glb",
+      "url": "/assets/native/characters/mm_0226-0b64d13a5229.glb",
+      "sha256": "0b64d13a5229a50b3f86ed85802d7f43ea00eb1adc85a79c5d937f5703fd6e7d",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 231,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0231.bin",
+      "pack_sha256": "02d263c3037bd14b994b554ddf73fec4c410334cff167ce628327b3860fd0b0e",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0231.glb",
+      "url": "/assets/native/characters/mm_0231-16666162bf13.glb",
+      "sha256": "16666162bf13af04b4cc46ee487e894550e681de88cb92e65debe19708e8eec7",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 232,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0232.bin",
+      "pack_sha256": "a51a9bb313acc5f5169a709ca7b9cc06d646aa43bd98f431cb3168452521db75",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0232.glb",
+      "url": "/assets/native/characters/mm_0232-506acc41d866.glb",
+      "sha256": "506acc41d866bbf76a2f4a3b2e099fad4c58e81de3d8f2ea9b62c6786ce8f666",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 236,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0236.bin",
+      "pack_sha256": "eac5cbc1d5ea3621ff60b314b814596ff3bc6b1ed1c757b2787d9880b522fc93",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0236.glb",
+      "url": "/assets/native/characters/mm_0236-f962c28368ec.glb",
+      "sha256": "f962c28368ec2d1531130c9ccb33f9c84d1152832cecaac32c3e9c8fe6ff989d",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 238,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0238.bin",
+      "pack_sha256": "de6afe0a8ae04fb5f7ec3ae0642db4e80a8e7a9075aafd85e76a7aee61a1c206",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0238.glb",
+      "url": "/assets/native/characters/mm_0238-834834e36531.glb",
+      "sha256": "834834e365315ef249383a72d3be0074090c3aae3b3f9207b255a2d616152074",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 239,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0239.bin",
+      "pack_sha256": "6eecc106206f74f0044f262704ce60f367a39df8784da6168f5ad1e6a1adc1d0",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0239.glb",
+      "url": "/assets/native/characters/mm_0239-1bfab36a9d98.glb",
+      "sha256": "1bfab36a9d98157de34670f34029b4989c66f85bc3e2f51943c750cc2c044b5c",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 247,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0247.bin",
+      "pack_sha256": "051766504b47a46be48c66b4f30b5243279ad83ac94725c0fcdd5eb05c9a1ec1",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0247.glb",
+      "url": "/assets/native/characters/mm_0247-eecddae13276.glb",
+      "sha256": "eecddae13276a15484f1f53f45b5e5d510615b11bb7cd1f111aa8a0eeaf6b1ad",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 254,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0254.bin",
+      "pack_sha256": "96d998286e13cf64ab5f158b486ec116904b1b58dc19ece6b6ac01e261a2c00c",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0254.glb",
+      "url": "/assets/native/characters/mm_0254-a1407c07ddc7.glb",
+      "sha256": "a1407c07ddc72634854995e62aa0d72efe74b1e4e11d645bd7f81a66d3b3160a",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 256,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0256.bin",
+      "pack_sha256": "1108889959d8bee4b4b94c73ea91bf4c4074469f96da4cb7cb408e44af17b361",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0256.glb",
+      "url": "/assets/native/characters/mm_0256-05ae21294bee.glb",
+      "sha256": "05ae21294beebbd5f0c3c48fab870d055fb3a5145bc4750b28ce00c713686ad4",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 260,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0260.bin",
+      "pack_sha256": "f8ebf94eaccf412518855ab99f9dbc8489d4881c1244cda998173ff839a1e630",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0260.glb",
+      "url": "/assets/native/characters/mm_0260-2d1a02bb9add.glb",
+      "sha256": "2d1a02bb9adda6e090e88ae069dcb9b3594001af06203ea5d17b59b5da88583c",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 261,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0261.bin",
+      "pack_sha256": "7b3ee739aca48cb7a731ace1511302726222d320c34f046e3be6fb4b5e9cb73c",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0261.glb",
+      "url": "/assets/native/characters/mm_0261-e8eaa43a8926.glb",
+      "sha256": "e8eaa43a8926fea1571a5d1052b84936545d1be1e928f79be18d2e6f2cb61dd3",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 264,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0264.bin",
+      "pack_sha256": "e4a72879ee8dd396e261c83372372f7df92766f48ac40e24b249f9356f231b75",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0264.glb",
+      "url": "/assets/native/characters/mm_0264-083ce7f35ec8.glb",
+      "sha256": "083ce7f35ec873e55ccc2950342b322fbd41e54754f3ccde854000f82178fa70",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 265,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0265.bin",
+      "pack_sha256": "53949f6f036cbd1b37d18d9ed75fda1b8b910aa7b139305d6aa5ab53ff0b746d",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0265.glb",
+      "url": "/assets/native/characters/mm_0265-587e46d5fd54.glb",
+      "sha256": "587e46d5fd546f216b6629de5896b73561fd7d87559024019ceefcc91bd20547",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 271,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0271.bin",
+      "pack_sha256": "61d4f0d24a3a2f51e22cc2ae99c06a56721fb381701233ed43be590886d2fba0",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0271.glb",
+      "url": "/assets/native/characters/mm_0271-c7f6fd4d1902.glb",
+      "sha256": "c7f6fd4d190293963991460190b50e5fe8ba208bb8da680ed236908f4b2338d9",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 275,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0275.bin",
+      "pack_sha256": "b23458c41d7f8bd6597ba52ab67b95ad43f9b71d3d0bc8edf07b593e045ebdaa",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0275.glb",
+      "url": "/assets/native/characters/mm_0275-10321342a069.glb",
+      "sha256": "10321342a0691be4fd6b503d7cb6db3e5b711fe6b4287c5bdd78069c7bad5fbf",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 276,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0276.bin",
+      "pack_sha256": "624bdb501ad88e4f4ed2192a3502ba6ece5ba10a9e36febb324dbbc5758af082",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0276.glb",
+      "url": "/assets/native/characters/mm_0276-44ad63ef2d50.glb",
+      "sha256": "44ad63ef2d50f288644aaccffcd4db9dbd38e0a09aa8cced1d97e71ab1785358",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 277,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0277.bin",
+      "pack_sha256": "780331ddbc2c802e7cdc9505734c281aef3acd2811cb33c21a8aced220d38f68",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0277.glb",
+      "url": "/assets/native/characters/mm_0277-1fa6012364e4.glb",
+      "sha256": "1fa6012364e414f99b0be3a7399f4d293ded0d324674196bfebf3303bdf5ea40",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 280,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0280.bin",
+      "pack_sha256": "912b9f9beb28ea53b422d584daedf6389bb977a467dbec3ff7ba98181d5447ce",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0280.glb",
+      "url": "/assets/native/characters/mm_0280-b3c774562f83.glb",
+      "sha256": "b3c774562f8335d63a9915c985ee774851270f555dbf1ebeaa80843d02670f1b",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 281,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0281.bin",
+      "pack_sha256": "5e3d7821db1b589a08796bebf49785d57b06d85c435a1e65712d24941ee0c470",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0281.glb",
+      "url": "/assets/native/characters/mm_0281-e118eb892d5f.glb",
+      "sha256": "e118eb892d5f3bd4d754a139fb250974c5e6e1fa60a074214da9b44aeab27760",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 283,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0283.bin",
+      "pack_sha256": "1e65128be0433cd1f9f061676d5fe7e636a55dbff5b22d861a79c009afd81962",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0283.glb",
+      "url": "/assets/native/characters/mm_0283-d73318715940.glb",
+      "sha256": "d7331871594087d6c3299381867d3671475052bc0aa1f5fb8d3631eddc0445bc",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 284,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0284.bin",
+      "pack_sha256": "2d7902d8c95fcbff2672f4f7a7a723203b42c975fa916488a5f278bdbdc7f546",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0284.glb",
+      "url": "/assets/native/characters/mm_0284-8406b22da89f.glb",
+      "sha256": "8406b22da89f3b30e66ea868910f413561187bf6385e7823735f34aa7e349f6b",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 285,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0285.bin",
+      "pack_sha256": "ccc9f20dc13f2d7dab78a5e31ff12d6235d44608ccc121b3fecb69a5543cbed8",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0285.glb",
+      "url": "/assets/native/characters/mm_0285-1799e991e3cb.glb",
+      "sha256": "1799e991e3cb40c253c7cb8a0957e48b07bb79ec76b1342d202faed90fb68985",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 286,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0286.bin",
+      "pack_sha256": "ead83ff0859eda6ab87762c963fb26305a9c69df33b021baa0558808cf42f707",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0286.glb",
+      "url": "/assets/native/characters/mm_0286-2a9f9811c560.glb",
+      "sha256": "2a9f9811c560080319dcc31f10f9b223a286713137b3afef40d8850dd8cd86f3",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 287,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0287.bin",
+      "pack_sha256": "25aeb3eefeb63260dd94bcc095390acd26e7bd39f4de38ee102fbdaec99d31f9",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0287.glb",
+      "url": "/assets/native/characters/mm_0287-eeec5072a505.glb",
+      "sha256": "eeec5072a5053c9e12ae5099bc4c8dc81b671eb6f7bc72b724ba9bcf4092dc79",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 288,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0288.bin",
+      "pack_sha256": "c4a4124993c1dbbeadf8916ad7e952a1218c98c57551de624cbcabdbea2cb764",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0288.glb",
+      "url": "/assets/native/characters/mm_0288-c724be870081.glb",
+      "sha256": "c724be870081cc8ea5b4da059c191d936cb34c738e9a30ce7620dad6fa948c11",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 289,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0289.bin",
+      "pack_sha256": "d5332bcf14583a68c019736cf9c4a1ac4753cbff3abaec64747b709e27d183a7",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0289.glb",
+      "url": "/assets/native/characters/mm_0289-0ac8e97fd645.glb",
+      "sha256": "0ac8e97fd6458dfd75a0487e4a7066e5e1ebf1a0d91ad2d9e784a546ad42e7c1",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 296,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0296.bin",
+      "pack_sha256": "51588c9268f19bb64f06c34d46edaf74058c7f9b69fd09683b8446e00e410c1f",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0296.glb",
+      "url": "/assets/native/characters/mm_0296-f2ca034cae61.glb",
+      "sha256": "f2ca034cae618b726d5445d54a4d1eb07a8b0b360c0bc4db9d7000558e54b419",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 299,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0299.bin",
+      "pack_sha256": "ca43d1adf23861cdf3fefe6e6d82acd70f30bce9d8d32e7948d56e436f444395",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0299.glb",
+      "url": "/assets/native/characters/mm_0299-11331f49d34d.glb",
+      "sha256": "11331f49d34ddd941e52b23d03e988d8ff17fcb376e4588c0ac456d00664c6ec",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 305,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0305.bin",
+      "pack_sha256": "0479b0f08bea39033327e049a337bbb47f0e89656a379b72536d9d13a01a2fa3",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0305.glb",
+      "url": "/assets/native/characters/mm_0305-c73d76cadcaf.glb",
+      "sha256": "c73d76cadcaf567c617234765e9c8ee761b0bc02a40fc9d0e5be4f9f80284ac8",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 306,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0306.bin",
+      "pack_sha256": "9a4ba7f453a6f3908f008aac992d664cc69b285e7b1f4599d17a9f040db3d242",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0306.glb",
+      "url": "/assets/native/characters/mm_0306-9b3e91b04d40.glb",
+      "sha256": "9b3e91b04d408459fc18dc3e58b65459f85c4fa70d7137bb75cd020b4b34fe22",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 307,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0307.bin",
+      "pack_sha256": "8490cecc76dda8cdfc3501fd3996410e81662b4082a4320f1c45ec1cee69a1fe",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0307.glb",
+      "url": "/assets/native/characters/mm_0307-b34108b95099.glb",
+      "sha256": "b34108b950995376a8ff160b33b855da1d3b8382a3b41f2c447b360f90523b5d",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 309,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0309.bin",
+      "pack_sha256": "42f740d67ad5db3e32a1f89b178bff95c232f69e7ae6fbd7260c3e195a48516d",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0309.glb",
+      "url": "/assets/native/characters/mm_0309-65d467b0c5b2.glb",
+      "sha256": "65d467b0c5b2cfcf3da4b32b776187f5baae382adb68a215215da08b9248c00b",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 312,
+      "status": "no_motion_section",
+      "native_standing": false,
+      "native_movement": false,
+      "standing_frames": null,
+      "movement_frames": null,
+      "reason": "MM has no GF1 motion section; existing fallback retained",
+      "pack": "rom/extracted/garc/a_0_2_1/0312.bin",
+      "pack_sha256": "c85a93942f6e33d50c0d8ee8d5ae983df14b2312a79641255c350d96021bc0ef",
+      "source_glb": "rom/extracted/models/characters/mm_0312/mm_0312.glb",
+      "url": "/assets/native/characters/mm_0312-b313831fd7c2.glb",
+      "sha256": "b313831fd7c254b7574c0dcca4dcc8686ed9e6ff3ad4bdefe541a93358fe0d76",
+      "clips": []
+    },
+    {
+      "model": 314,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0314.bin",
+      "pack_sha256": "eb16c24b213d15cd9a940e23e662420f778f0c3cf12f457a477cea1335731309",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0314.glb",
+      "url": "/assets/native/characters/mm_0314-6a5e601384ab.glb",
+      "sha256": "6a5e601384ab124301d4896a27264c70bf44350c42b4a773f61447171537cf55",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 315,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0315.bin",
+      "pack_sha256": "45650bcb286a130479920c4d0a666929ee46702bff42bc96b6240a3bd3482638",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0315.glb",
+      "url": "/assets/native/characters/mm_0315-3aa3b5d4c326.glb",
+      "sha256": "3aa3b5d4c3262988cd1470cfdc9300fae6704b4c3b09e1f5260d3ab189392302",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 319,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0319.bin",
+      "pack_sha256": "3739bcf71334b241c6688cbb05674c97e1c6bd0d1a2d802ad3e5a27aa21d0d6c",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0319.glb",
+      "url": "/assets/native/characters/mm_0319-e10b64bdc72e.glb",
+      "sha256": "e10b64bdc72efc891d0d3c4be0b9c29eac70722a7a48e7a5bd762dea362dc4f6",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 320,
+      "status": "native_pair",
+      "native_standing": true,
+      "native_movement": true,
+      "standing_frames": 1,
+      "movement_frames": 14,
+      "pack": "rom/extracted/garc/a_0_2_1/0320.bin",
+      "pack_sha256": "a2200ac73a515bc1fd69091171e3af596cb904bc41742a39bce73a90057eff69",
+      "source_glb": "rom/extracted/models/runtime_characters/mm_0320.glb",
+      "url": "/assets/native/characters/mm_0320-c96514be8cc9.glb",
+      "sha256": "c96514be8cc9e1b8b9a176807a5dde677493d375127f376ab27399c9629c099c",
+      "clips": [
+        "idle",
+        "walk",
+        "overworld_002",
+        "overworld_000"
+      ]
+    },
+    {
+      "model": 4115,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 4137,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 4148,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 4149,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 4150,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 4151,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 4153,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 4155,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 8192,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 8193,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 8203,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    },
+    {
+      "model": 8253,
+      "status": "unmapped",
+      "reason": "No corresponding MM catalog entry; no ID remapping"
+    }
+  ],
+  "semantics": {
+    "overworld_000": "Native standing pose, not an inferred breathing cycle",
+    "overworld_002": "Locomotion candidate; visual validation is separate from availability",
+    "original_state_dispatch": "Not proven by this inventory"
+  },
+  "summary": {
+    "native_pair": 48,
+    "incomplete_pair": 0,
+    "no_motion_section": 5,
+    "unmapped": 12
+  }
+}

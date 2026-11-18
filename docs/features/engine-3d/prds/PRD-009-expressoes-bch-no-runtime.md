@@ -26,8 +26,12 @@ e grava estado+0x27c=(frame==0). O vínculo é ao ator resolvido, não ao speake
 
 O update DllField 0x38850–0x389ac usa o mesmo modelo/slot virtual: frame10,
 contador fechado2, depois frame0; espera helper(60)+60 e possíveis intervalos
-curtos4/8 controlados por outro byte. O clock desse update e o contrato do
-helper não foram comprovados: não inventar uma temporização automática.
+curtos4/8 controlados por outro byte. A-061 resolves the helper as bounded
+random (0x48ad7c→0x175d64→0x164798), not a clock: long waits are60–119 eligible
+calls. Manager0x424b0 visits actors and calls0x386f4, but its dispatch cadence,
+RNG seed lifecycle, and complete gate meanings remain unknown. The complete
+branch/gate evidence is in [face-expressions.md](../../pipeline-rom/face-expressions.md).
+Do not invent an automatic timer or assume two closed updates mean two vsyncs.
 As leituras são estáticas, sem executar código da ROM.
 
 ## Aceite

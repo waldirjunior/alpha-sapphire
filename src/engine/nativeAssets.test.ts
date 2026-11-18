@@ -12,6 +12,9 @@ describe('native asset catalog', () => {
       const url = `/assets/characters/mm_${String(npc.model).padStart(4, '0')}.glb`;
       if (npc.model < 544) {
         expect(characterModelUrl(url)).toMatch(/^\/assets\/native\/characters\/mm_\d{4}-[a-f0-9]{12}\.glb$/);
+        const model = catalog.models.find(row => row.url === characterModelUrl(url));
+        expect(model).toBeDefined();
+        if (model?.native) expect(model.clips).toEqual(expect.arrayContaining(['overworld_000', 'overworld_002']));
       } else {
         expect(characterModelUrl(url)).toBe(url);
         expect(catalog.unavailable.some(row => row.id === `character/mm_${npc.model}`)).toBe(true);

@@ -1,13 +1,6 @@
 import * as THREE from 'three';
 import type { BattleEvent } from '../core/battleEvents';
 
-export interface CharacterAnimController {
-  mixer: THREE.AnimationMixer;
-  idle: THREE.AnimationAction | null;
-  walk: THREE.AnimationAction | null;
-  active: 'idle' | 'walk';
-}
-
 export function characterClip(clips: THREE.AnimationClip[], moving: boolean): THREE.AnimationClip | undefined {
   const native = THREE.AnimationClip.findByName(clips, moving ? 'overworld_002' : 'overworld_000');
   return native ?? THREE.AnimationClip.findByName(clips, moving ? 'walk' : 'idle') ?? undefined;
@@ -33,12 +26,19 @@ export class NativeAnimationController {
   };
 
   private idle(): void {
-    const clip = THREE.AnimationClip.findByName(this.clips, 'idle');
-    if (!clip || this.disposed) return;
+    this.loop(characterClip(this.clips, false));
+  }
+
+  public setMoving(moving: boolean): void {
+    this.loop(characterClip(this.clips, moving) ?? characterClip(this.clips, false));
+  }
+
+  private loop(clip: THREE.AnimationClip | undefined): void {
+    if (!clip || this.disposed || this.activeClip === clip.name) return;
     const transition = this.current !== null;
     this.current?.fadeOut(0.1);
     this.current = this.mixer.clipAction(clip);
-    this.activeClip = 'idle';
+    this.activeClip = clip.name;
     this.current.clampWhenFinished = false;
     this.current.reset().setLoop(THREE.LoopRepeat, Infinity);
     if (transition) this.current.fadeIn(0.1);
