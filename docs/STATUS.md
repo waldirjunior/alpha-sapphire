@@ -2,6 +2,28 @@
 
 Atualizado em 2026-11-17 (verificação local na VPS).
 
+## Host de eventos AMX (2026-11-17, worktree `events-layer`)
+
+- Base `main b09a93b`; desenvolvimento isolado, sem trocar branch no checkout principal.
+- Loader lazy por zona/vínculo, validação de SHA das 19 imagens disponíveis,
+  init `entities/case 1`, interação frontal com NPC, texto real StoryText, frames,
+  projeção de posição/direção/visibilidade no SceneManager e colisão de NPC visível.
+- **160 testes Vitest em 25 arquivos e build passando**, incluindo dez regressões
+  sintéticas novas do host/ciclo de vida; aviso Vite >500 kB permanece.
+- Playwright visível com servidor iniciado no checkout principal (5178), código do
+  worktree e `public/` principal: jogador (24,20)/up interagiu com NPC 0/script 14;
+  texto ROM da linha 6 de Littleroot exibido após cinco confirmações cosméticas.
+  Zero pageerror; mensagens tardias de 404 não foram classificadas como resolvidas.
+  Screenshots inspecionados em `/tmp/events-layer-before-npc.png` e
+  `/tmp/events-layer-rom-dialogue.png`, script `/tmp/playwright-test-events.js`.
+- **Recorte aprovado, não paridade:** ACMD/câmera/olhar opacos aguardam Enter com
+  retorno de stub visível; SEPlay silencioso é diagnosticado. Init de zona 6 para
+  em BuildMdlGetHandleByGPos; bancos GameText/MsgLoad, warp AMX/_MapChangeCore,
+  expansão da memória, save/party/bag, gatilhos e callbacks de mapa continuam
+  pendentes em P-013/P-017. Warps de navegação existentes chamam o init do destino.
+  [ADR-004](features/core-jogo/adrs/ADR-004-host-conservador-de-eventos.md) registra
+  política, evidência e próximos passos. Não houve conversão/cópia de assets.
+
 ## Estado do Código e Build
 
 - Branch atual: `main`.

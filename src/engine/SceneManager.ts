@@ -204,7 +204,11 @@ export class SceneManager {
 
     this.entitiesGroup.add(createWarpMarkers(map));
 
-    for (const npc of map.npcs ?? []) this.buildNpc(npc.pos, npc.modelUrl, npc.facing);
+    for (const npc of map.npcs ?? []) {
+      this.buildNpc(npc.pos, npc.modelUrl, npc.facing);
+      const root = this.entitiesGroup.children.at(-1);
+      if (root) { root.name = npc.id; root.visible = npc.visible !== false; }
+    }
     const postGeo = new THREE.BoxGeometry(0.14, 0.55, 0.14);
     const boardGeo = new THREE.BoxGeometry(0.7, 0.45, 0.12);
     const woodMat = new THREE.MeshStandardMaterial({ color: '#92400e' });
@@ -284,6 +288,13 @@ export class SceneManager {
       z: state.player.pos.z,
     };
 
+    for (const npc of map.npcs ?? []) {
+      const root = this.entitiesGroup.getObjectByName(npc.id);
+      if (!root) continue;
+      root.position.set(npc.pos.x, 0, npc.pos.z);
+      root.rotation.y = FACING_YAW[npc.facing ?? 'down'];
+      root.visible = npc.visible !== false;
+    }
     this.playerTargetPos.set(state.player.pos.x, 0, state.player.pos.z);
     if (mapChanged) {
       this.playerRoot.position.copy(this.playerTargetPos);

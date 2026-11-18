@@ -31,6 +31,7 @@ Planejamento em fases para sair do protótipo placeholder atual até a reconstru
 **Objetivo:** Substituir os placeholders por dados reais extraídos, carregamento assíncrono de `.glb`, fidelidade visual (animações, shaders/materiais, interiores, áudio) e eventos de história iniciais.
 
 - **Referências:** [engine-3d/PRD-001](features/engine-3d/prds/PRD-001-cena-3d-e-glb-sob-demanda.md), [engine-3d/PRD-002](features/engine-3d/prds/PRD-002-animacoes-esqueleticas-idle-walk.md), [engine-3d/PRD-003](features/engine-3d/prds/PRD-003-fidelidade-visual-mapas-e-interiores.md), [engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md), [pipeline-rom/PRD-002](features/pipeline-rom/prds/PRD-002-extracao-audio-bcstm.md), [core-jogo/PRD-002](features/core-jogo/prds/PRD-002-eventos-historia-interiores-inventario.md).
+- **Progresso parcial de eventos:** host conservador ligado à VM ([core-jogo/ADR-004](features/core-jogo/adrs/ADR-004-host-conservador-de-eventos.md)): texto ROM em NPC de Littleroot validado, init de entidades e projeção de atores; ACMD/câmera exigem confirmação de stub. GameText/MsgLoad, warp AMX, memória além da abertura e paridade permanecem em P-013.
 - **Critérios de pronto:**
   - `src/data/` carregando mapas, textos e áudios reais (`P-004` concluída, `P-008` aberta).
   - `maps_v2` integrado via JSON lazy e bootstrap zone_0006 (engine-3d/PRD-005/ADR-003): GRs compostos e NPCs do slice, warps retangulares com fade básico, fallback `?maps=legacy` e saves isolados; VM, flags e bordas contínuas ainda em P-013/P-017.

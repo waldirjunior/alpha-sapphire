@@ -24,7 +24,8 @@ export function isWalkable(map: MapDefinition, pos: GridPosition): boolean {
   if (pos.x < 0 || pos.z < 0 || pos.x >= map.width || pos.z >= map.height) {
     return false;
   }
-  return map.collisions[pos.z]?.[pos.x] === 0;
+  return map.collisions[pos.z]?.[pos.x] === 0 &&
+    !map.npcs?.some(npc => npc.visible !== false && npc.pos.x === pos.x && npc.pos.z === pos.z);
 }
 
 export function isTallGrass(map: MapDefinition, pos: GridPosition): boolean {

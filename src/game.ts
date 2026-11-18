@@ -35,6 +35,8 @@ import { SceneManager } from './engine/SceneManager';
 import { BgmPlayer } from './engine/audioPlayer';
 import { bgmUrl, resolveMapBgm, type ZoneAudioEntry } from './core/zoneAudio';
 import { MAP_ZONE_IDS } from './data/audio/mapZones';
+import { createGameEvents } from './engine/gameEvents';
+import { facingNpc } from './engine/eventHost';
 
 const MAPS = zoneMaps.maps;
 const START_MAP_ID = startingMapId(window.location.search);
@@ -117,6 +119,7 @@ function persistSave(): void {
 
 function startNewGame(): void {
   if (activeBattle || moving) return;
+  zoneEvents.reset();
   window.localStorage.removeItem(SAVE_STORAGE_KEY);
   state = createInitialState(START_MAP_ID, MAPS);
   party = [createPokemonInstance(SPECIES[starterId], 5)];
@@ -476,8 +479,10 @@ function renderIntro(): void {
           text: `Mãe: ${state.player.playerName ?? 'Querido(a)'}, chegamos a Littleroot Town! Entre em casa pela porta logo à frente para descansar e falar comigo!`,
         },
       };
+      zoneEvents.reset();
       renderIntro();
       syncUi();
+      void zoneEvents.enter();
     };
   }
 }
@@ -544,8 +549,11 @@ function syncUi(): void {
   }
 }
 
+const zoneEvents = createGameEvents(() => state, next => { state = next; }, MAPS, syncUi);
+
 renderIntro();
 syncUi();
+void zoneEvents.enter();
 
 const KEY_TO_DIR: Record<string, Direction> = {
   ArrowUp: 'up',
@@ -563,6 +571,15 @@ window.addEventListener('keydown', async (event) => {
 
   if (event.code === 'Space' || event.code === 'Enter') {
     event.preventDefault();
+    if (zoneEvents.busy) { await zoneEvents.advance(); return; }
+    const npc = !state.activeDialogue && facingNpc(state.player, MAPS[state.player.mapId]);
+    if (npc) {
+      if (!await zoneEvents.interact(npc)) {
+        state = { ...state, activeDialogue: { sourceId: npc.id, text: 'Olá! Bem-vindo a Hoenn.' } };
+        syncUi();
+      }
+      return;
+    }
     const wasDialogueOpen = Boolean(state.activeDialogue);
     const prevSourceId = state.activeDialogue?.sourceId;
     const hadLabGift = Boolean(state.storyFlags.visited_birch_lab);
@@ -603,7 +620,7 @@ window.addEventListener('keydown', async (event) => {
   }
 
   const dir = KEY_TO_DIR[event.code];
-  if (!dir) return;
+  if (!dir || zoneEvents.busy) return;
 
   event.preventDefault();
   const prevPos = state.player.pos;
@@ -614,6 +631,7 @@ window.addEventListener('keydown', async (event) => {
     const next = await zoneMaps.move(state, dir);
     if (next.player.mapId !== previousMapId) {
       await transitionMap(app, warp?.transitionEffect, () => { state = next; syncUi(); });
+      await zoneEvents.enter();
     } else state = next;
   } catch (error) {
     console.error('Falha ao carregar zona; movimento não aplicado', error);
