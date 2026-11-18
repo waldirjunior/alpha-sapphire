@@ -769,3 +769,19 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Decisão:** nenhuma alteração de runtime, assets, colisão ou shader.
   Consulta de altura/camada e aceite visual continuam abertos; snapshots
   controlados sem init/VM não substituem caminhada natural ou emulador.
+
+## A-078 Grafo alcançável não comprova terreno nativo nem conexão entre checkpoints
+
+- **Data:**2026-11-18; PRD-014/P-013/P-017/P-019. Renumerado de `A-074` no merge (colisão com `pica-rgb`).
+- **Erro reproduzido:** o pedido45→52→50 omitia51(Route122); o grafo correto pelo norte é45→47→46→17→48→50→18. Ainda assim47→46 e48→50 falham mesmo sem NPCs/incluindo49, e52 para emx77 por73020021. BFS15→445→45→47 passa no core, mas não comprova Surf/terreno:3d1a0006 é817 vezes45/1306 em51 e o parser trata como collision0/terrain0.
+- **Evidência:** capturas visíveis exploratórias45 em38,16/50,16/70,16 mostram superfícies rochosas/verdes, não água inequívoca; passo50,16→51,16 permitido não resolve a semântica. Bloco50/map5388..5519 contém WorkSet16530=2,FlagSet670 e MdlDel13/14/15/16/10/11; base50 bloqueada e fixture delimitada libera18 sem mudar mapas/posição. Checkpoint46(75,19) chega17/48, mas não prova o trecho desde47.
+- **Regra:** testar cada ligação com NPCs e diagnóstico isolado, preservar ZO/MM e separar transporte ROM, fixture real e checkpoint independente. Não concatenar checkpoints como caminhada contínua nem promover classe a água por frequência/nome/BFS. Semântica candidata permanece desconhecida e o corredor conectado continua aberto; nenhum Surf ou ponte fabricado. Stage precisa conferir também áudio declarado dos vizinhos: cinco MP3s foram copiados seletivamente, sem expandir GRs (A-046).
+- **Verificação:**11 regressões separadas,356 Vitest/54 arquivos,169 Python sem skips e build passam;315 GLBs válidos/probe sem ausentes/remaps. Staging60 zonas/139GRs/111atores, seis BGMs principais e15 com vizinhos. Integração/Playwright parcial na main pendentes.
+
+## A-079 Inventário e raycast podem refutar uma generalização de permissões
+
+- **Data:**2026-11-18; PRD-014/P-017, complemento restritivo de A-073. Renumerado de `A-075` no merge (colisão com `pica-rgb`).
+- **Hipótese testada:** a família6x000021 poderia explicar os novos bloqueios e ter uma direção simples como75020021. Em315 GRs staged há6d14 (46),6e77 (46/47),6f30 (18/84); ownership evita duplicar recortes.6e tem norte bloqueado77/77,6d lados bloqueados14/14; a vizinhança não é o padrão do ledge sul.
+- **Geometria estática:** GR214/1,22 (47/41,22) possui oeste0,5/1,348, centro inclinado2,282 e leste2,5. GR207/6,23 (6d) sobrepõe15/15,5/17,483.6f em GR157/34,13 cai norte5→sul4,5, mas GR292/13,35 tem oeste19→leste18. Não escolher uma superfície como altura universal nem deduzir direção/condição de bike da classe alta.
+- **Contrafactual isolado:** abrir somente6x, sem NPCs, mudou47 de2459 para2631 células, mas não conectou46;48 ficou1707 e não conectou50, cuja fronteira alcançável não tem6x. Nenhum JSON/runtime foi alterado pelo diagnóstico. Fronteiras também têm01000021; a geometria não autoriza abrir paredes ou inventar rampas.
+- **Regra:** filtro numérico não é bitfield semântico. Manter6d/6e/6f e classe lateral73 fechados até prova de mecânica/condições, sem generalizar75020021. Registrar resultado inconclusivo, método e artefatos do inventário/raycast no PRD; não transformar ausência de erro visual ou um desnível em implementação arbitrária.
