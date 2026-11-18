@@ -24,6 +24,11 @@ a pose final de queda. Ao descartar a cena, resolve esperas e remove listeners;
 uma versão de carga impede anexar modelos antigos. O primeiro idle começa com
 peso integral, sem transição da bind pose. Clipes ausentes não são inventados.
 
+Os GLBs Pokémon preservam também OPAQUE/MASK/BLEND do GLTFLoader, mesmo sem
+`extras.pica`; a heurística legada de recorte fica como default dos demais
+modelos. O merge preserva materiais do GLB-base e não autoriza substituí-los por
+um cutoff global. Isso não equivale a implementar os combiners PICA200 (A-033).
+
 ## Consequências
 
 O renderer não decide dano nem altera o estado do core. Os eventos podem ser

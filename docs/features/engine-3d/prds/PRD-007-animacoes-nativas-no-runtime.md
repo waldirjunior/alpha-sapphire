@@ -35,6 +35,9 @@ mascarar bits por suposição.
   quando presentes, com fallback `idle/walk`. Foram anexadas poses GF1 de
   índice 0 a 56 GLBs em `rom/extracted/models/runtime_characters/`. Os IDs não
   foram renomeados como semântica original comprovada.
+- Pokémon preservam os estados alpha importados do GLB, sem impor o recorte
+  legado 0,45 a superfícies OPAQUE. MASK/BLEND mantêm sua política; mapas e
+  personagens continuam com a política anterior (A-033, P-007).
 - A promoção verifica floats finitos e publica URLs com hash sem sobrescrever
   modelos públicos anteriores. Assets, poses, logs e screenshots ficam locais
   e ignorados; scripts, catálogo e evidência textual são versionados.
@@ -88,6 +91,17 @@ promoção é idempotente e registra SHA-256, fonte, clipes e razões de ausênc
   assets reais estão no principal. Os 102 modelos passaram na checagem de
   floats e 61 na auditoria UV. Todas as 56 poses passaram na validação
   estrutural de cache, incluindo 18 anexadas após ampliar o staging.
-- **Pendente:** Playwright visível na Route 101 na main integrada, screenshots
-  antes/durante ataque e relatório de clipe, tempo e transformações observadas.
-  Nenhuma screenshot foi tratada como validação executada nesta etapa.
+- Playwright visível na main **8cb61de**, porta 5187: save isolado na Route 101
+  (`zone_0023`, 13,4), Torchic Lv5 com Scratch/Ember contra Zigzagoon Lv2.
+  `physical` teve 2,4 s/228 canais e 45 ossos alterados entre t=0,367 e 1,0834 s;
+  damage, special/status e faint também terminaram, com faint mantido. Zero
+  pageerror, warning ou HTTP>=400; modelos Pokémon nativos responderam 200.
+- Seis screenshots inspecionadas e relatório ficam ignorados no principal em
+  `rom/native_runtime_validation/`; observador Playwright em
+  `/tmp/playwright-test-native-battle.js`. O observador delega aos métodos reais,
+  sem trocar clipes ou alterar o relógio; o cenário usa RNG seed 7.
+- A captura revelou recorte indevido dos corpos, também presente com mixers
+  parados; diagnóstico em `rest_probe/` confirmou a influência de alphaTest.
+  A-033 registra a correção restrita aos Pokémon e a regressão OPAQUE/MASK/BLEND;
+  **186 Vitest e build passaram**. **Pendente:** repetir a validação na main
+  após integrar essa correção. Cores/combiners/atlas continuam sem paridade.

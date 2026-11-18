@@ -239,3 +239,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro reproduzido:** O seletor omitia MM0179 já staged no principal; o plano também marcava uma pose existente como `ready`, embora o runner corretamente se recuse a sobrescrevê-la. Dois testes falharam com esses casos antes da correção.
 - **Regra:** Unir atores das zonas/aliases aos MM canônicos já staged, recalcular os frames do índice selecionado e só reutilizar poses existentes após validar estrutura, prefixo-base, skin, canais e tempos. Não tratar mera existência como cache válido nem remover a proteção contra sobrescrita.
 - **Evidência:** [test_native_assets.py](../scripts/test_native_assets.py): sete testes passaram após o fix; suíte Python completa com 129 testes e um skip por assets públicos ausentes no worktree. O plano verificou as 38 poses anteriores e as 18 novas, totalizando 56; catálogo final com 102 modelos e 61 personagens auditados. Assets permanecem ignorados no principal.
+
+## A-033 Recorte legado pode apagar geometria presente em GLBs OPAQUE
+
+- **Data:** 2026-11-17
+- **Contexto:** Playwright visível na main 8cb61de, Route 101, Torchic contra Zigzagoon (P-012/P-007).
+- **Erro reproduzido:** O ataque nativo alterou 45 ossos, mas partes dos corpos não apareciam. Parar todos os mixers manteve os buracos, descartando a animação como causa suficiente. Os materiais publicados eram `OPAQUE`; o renderer os convertia para `alphaTest=0,45` pela heurística sem `extras.pica`. O teste sintético recebeu 0,45 quando esperava 0 antes do fix.
+- **Regra:** Pokémon preservam os estados alpha carregados pelo GLTFLoader mesmo sem metadado PICA: OPAQUE permanece sem recorte, MASK mantém seu cutoff e BLEND desliga depthWrite. Não zerar alpha indiscriminadamente nem alterar a heurística dos mapas/personagens. Geometria invisível não comprova geometria ausente; isolar material e mixer antes de atribuir o defeito ao rig.
+- **Evidência:** [fixOrasMaterials.test.ts](../src/engine/fixOrasMaterials.test.ts), 186 Vitest/34 arquivos e build passaram. Comparações locais em `rom/native_runtime_validation/rest_probe/` no principal: bind-rest ainda incompleto e retirada diagnóstica do recorte recuperando os corpos. Cores/combiners/atlas dos olhos continuam em P-007/P-019; não há paridade visual declarada. Revalidação da correção integrada na main ainda pendente.

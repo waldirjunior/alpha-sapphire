@@ -35,7 +35,7 @@ function applyLegacyAlphaState(mat: THREE.MeshStandardMaterial): void {
   mat.transparent = false;
 }
 
-export function fixOrasMaterials(root: THREE.Object3D): void {
+export function fixOrasMaterials(root: THREE.Object3D, preserveGltfAlpha = false): void {
   root.traverse((obj) => {
     if (!(obj instanceof THREE.Mesh)) return;
     const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
@@ -45,7 +45,7 @@ export function fixOrasMaterials(root: THREE.Object3D): void {
       mat.roughness = 0.92;
       mat.metalness = 0.0;
       if (mat.map) mat.map.colorSpace = THREE.SRGBColorSpace;
-      if (mat.userData.pica === true) applyPicaAlphaState(mat);
+      if (preserveGltfAlpha || mat.userData.pica === true) applyPicaAlphaState(mat);
       else applyLegacyAlphaState(mat);
       mat.needsUpdate = true;
     }
@@ -395,7 +395,7 @@ export class SceneManager {
       if (!this.inBattle || version !== this.battleLoadVersion) return;
       const model = gltf.scene;
       model.scale.setScalar(POKEMON_SCALE);
-      fixOrasMaterials(model);
+      fixOrasMaterials(model, true);
       target.clear();
       target.add(model);
       const mixer = new THREE.AnimationMixer(model);

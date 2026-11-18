@@ -31,6 +31,22 @@ describe('fixOrasMaterials (P-007)', () => {
     expect(mat.transparent).toBe(true);
   });
 
+  it('preserva OPAQUE, MASK e BLEND dos GLBs Pokémon sem impor recorte legado', () => {
+    const opaque = textured('BodyAVco00');
+    const mask = textured('cutout');
+    const blend = textured('translucent');
+    mask.alphaTest = 0.2;
+    blend.transparent = true;
+    const root = new THREE.Group();
+    root.add(meshWith(opaque), meshWith(mask), meshWith(blend));
+    fixOrasMaterials(root, true);
+    expect(opaque.alphaTest).toBe(0);
+    expect(opaque.transparent).toBe(false);
+    expect(mask.alphaTest).toBe(0.2);
+    expect(blend.transparent).toBe(true);
+    expect(blend.depthWrite).toBe(false);
+  });
+
   it('mantém a heurística antiga para modelos sem metadado PICA', () => {
     const body = textured('body');
     const shadow = textured('kage_01');
