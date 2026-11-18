@@ -1,7 +1,7 @@
 {
   "voidRatio": 0,
   "avatarVisibility": 1,
-  "avatarScreenShare": 0.0047,
-  "groundGap": 0.0859,
+  "avatarScreenShare": 0.0049,
+  "groundGap": -0.0001,
   "failedAssets": 5
 }

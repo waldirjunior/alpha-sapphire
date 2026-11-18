@@ -129,10 +129,10 @@
     "/assets/characters/mm_0307.glb": "/assets/native/characters/mm_0307-b34108b95099.glb",
     "/assets/characters/mm_0309.glb": "/assets/native/characters/mm_0309-65d467b0c5b2.glb",
     "/assets/characters/mm_0312.glb": "/assets/native/characters/mm_0312-b313831fd7c2.glb",
-    "/assets/characters/mm_0314.glb": "/assets/native/characters/mm_0314-6a5e601384ab.glb",
-    "/assets/characters/may/may.glb": "/assets/native/characters/mm_0314-6a5e601384ab.glb",
-    "/assets/characters/mm_0315.glb": "/assets/native/characters/mm_0315-3aa3b5d4c326.glb",
-    "/assets/characters/brendan/brendan.glb": "/assets/native/characters/mm_0315-3aa3b5d4c326.glb",
+    "/assets/characters/mm_0314.glb": "/assets/native/characters/mm_0314-b1a1c752befd.glb",
+    "/assets/characters/may/may.glb": "/assets/native/characters/mm_0314-b1a1c752befd.glb",
+    "/assets/characters/mm_0315.glb": "/assets/native/characters/mm_0315-67676addb837.glb",
+    "/assets/characters/brendan/brendan.glb": "/assets/native/characters/mm_0315-67676addb837.glb",
     "/assets/characters/mm_0318.glb": "/assets/native/characters/mm_0318-8f8d4fc602da.glb",
     "/assets/characters/mm_0319.glb": "/assets/native/characters/mm_0319-e10b64bdc72e.glb",
     "/assets/characters/mm_0320.glb": "/assets/native/characters/mm_0320-c96514be8cc9.glb",
@@ -1461,8 +1461,8 @@
     },
     {
       "id": "character/mm_0314",
-      "url": "/assets/native/characters/mm_0314-6a5e601384ab.glb",
-      "sha256": "6a5e601384ab124301d4896a27264c70bf44350c42b4a773f61447171537cf55",
+      "url": "/assets/native/characters/mm_0314-b1a1c752befd.glb",
+      "sha256": "b1a1c752befd087d128ae23b62fce1075662d1f6b42a4361a7834f5c29c3d7d2",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0314.glb",
       "clips": [
@@ -1545,8 +1545,8 @@
     },
     {
       "id": "character/mm_0315",
-      "url": "/assets/native/characters/mm_0315-3aa3b5d4c326.glb",
-      "sha256": "3aa3b5d4c3262988cd1470cfdc9300fae6704b4c3b09e1f5260d3ab189392302",
+      "url": "/assets/native/characters/mm_0315-67676addb837.glb",
+      "sha256": "67676addb837e33c2cdc5ed0f895cfcef51edd2b9e1ce53a0d0aabc5b9ac6899",
       "native": true,
       "source": "rom/extracted/models/runtime_characters/mm_0315.glb",
       "clips": [

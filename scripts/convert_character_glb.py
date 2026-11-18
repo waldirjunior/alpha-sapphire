@@ -10,12 +10,43 @@ import sys
 import tempfile
 from pathlib import Path
 
-SPICA_EXPORT = Path(
-    os.environ.get(
-        "SPICA_EXPORT",
-        "/opt/tools/SpicaExport/bin/Release/net8.0/SpicaExport",
+ROOT = Path(__file__).resolve().parents[1]
+DISCARDED_SW_PARTS = ("sw_parts03", "sw_parts04", "sw_parts05")
+
+
+def _main_checkout() -> Path:
+    result = subprocess.run(
+        ["git", "rev-parse", "--path-format=absolute", "--git-common-dir"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
     )
+    return Path(result.stdout.strip()).parent if result.returncode == 0 and result.stdout.strip() else ROOT
+
+
+def _resolve_tool(env_var: str, relative: str, fallback: str) -> Path:
+    explicit = os.environ.get(env_var)
+    if explicit:
+        return Path(explicit)
+    for base in (ROOT.parent, _main_checkout().parent):
+        candidate = base / relative
+        if candidate.exists():
+            return candidate
+    return Path(fallback)
+
+
+SPICA_EXPORT = _resolve_tool(
+    "SPICA_EXPORT",
+    "_tools/SpicaExport/bin/Release/net8.0/SpicaExport",
+    "/opt/tools/SpicaExport/bin/Release/net8.0/SpicaExport",
 )
+BLENDER = _resolve_tool("BLENDER", "_tools/bin/blender", "blender")
+
+
+def should_discard_sw_part(mesh_name: str) -> bool:
+    """Mantém sw_parts01 (pulso) e sw_parts02 (tênis do jogador, A-095/P-019); descarta variantes 03..05."""
+    return any(tag in mesh_name for tag in DISCARDED_SW_PARTS)
 
 BLENDER_SCRIPT = """
 import bpy
@@ -118,10 +149,10 @@ if armature:
 
     armature.animation_data.action = idle_action
 
-# Remove peças trocáveis duplicadas (sw_parts02..05), mantendo apenas a peça padrão (sw_parts01)
+# Remove apenas peças alternativas 03..05; mantém o pulso e o tênis do jogador (A-095/P-019)
 for obj in list(bpy.data.objects):
     if obj.type == 'MESH' and any(
-        tag in obj.name for tag in ("sw_parts02", "sw_parts03", "sw_parts04", "sw_parts05")
+        tag in obj.name for tag in ("sw_parts03", "sw_parts04", "sw_parts05")
     ):
         bpy.data.objects.remove(obj, do_unlink=True)
 
@@ -144,7 +175,7 @@ def convert_character(mm_path: Path, out_glb: Path, walk_slot: int = 1) -> None:
         raise FileNotFoundError(f"Arquivo de personagem não encontrado: {mm_path}")
 
     out_glb.parent.mkdir(parents=True, exist_ok=True)
-    env = {**os.environ, "DOTNET_ROOT": os.environ.get("DOTNET_ROOT", "/root/.dotnet")}
+    env = {**os.environ, "DOTNET_ROOT": os.environ.get("DOTNET_ROOT", str(Path.home() / ".dotnet"))}
 
     with tempfile.TemporaryDirectory() as tmp:
         tmp_path = Path(tmp)
@@ -163,7 +194,7 @@ def convert_character(mm_path: Path, out_glb: Path, walk_slot: int = 1) -> None:
             pass
 
         subprocess.run(
-            ["blender", "--background", "--python", str(py_path), "--", str(idle_dae), walk_arg, str(out_glb)],
+            [str(BLENDER), "--background", "--python", str(py_path), "--", str(idle_dae), walk_arg, str(out_glb)],
             check=True,
         )
 

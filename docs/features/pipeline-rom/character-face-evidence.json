@@ -4489,7 +4489,7 @@
       }
     ],
     "id": "character/mm_0314",
-    "glb_sha256": "29b54e385d73286623feaf2b9dcecfab3c42f3daa289643a087a138ddc52ab64",
+    "glb_sha256": "00aa734a49242f77bfbb417134f0a546feaee5ed74648d427f023155462e8c08",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0314.glb"
   },
   {
@@ -4641,7 +4641,7 @@
       }
     ],
     "id": "character/mm_0315",
-    "glb_sha256": "b1bf2efcd952dfb8ce351fd1a814dd5b50d4f8b15f8a1fa7e51b0e3330b5f44f",
+    "glb_sha256": "011d595ada506ce9595a1060f711497ddb29478b4e0ff6911c956ffbe51ac9f1",
     "source_glb": "rom/extracted/models/runtime_characters/mm_0315.glb"
   },
   {

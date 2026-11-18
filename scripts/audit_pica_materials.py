@@ -121,11 +121,11 @@ def material_evidence(scene: dict, binary: bytes, source: Path, model: dict,
     slots = [i for i, texture in enumerate(native['textureNames']) if actual_hash in textures.get(texture, set())]
     slot = slots[0] if len(slots) == 1 else None
     native_uvs = [v for mesh in model['meshes'] if mesh['MaterialIndex'] == native_index for v in mesh['positionUv0']]
-    orientation = uv_orientation(native_uvs, position_uvs(scene, binary, primitives)) if kind == 'gr' else 'actor-policy-unchanged'
+    orientation = uv_orientation(native_uvs, position_uvs(scene, binary, primitives))
     has_vertex_alpha = vertex_alpha(scene, binary, primitives)
     factor_alpha = material.get('pbrMetallicRoughness', {}).get('baseColorFactor', [1, 1, 1, 1])[3]
     alpha = alpha_profile(native, slot, has_vertex_alpha) if slot is not None and has_vertex_alpha is not None and factor_alpha == 1 else None
-    base = slot is not None and identity_base(native, slot) and kind == 'gr'
+    base = slot is not None and identity_base(native, slot)
     return {'material': name, 'uv_orientation': orientation, 'image_match': slot is not None,
             'uv_identity_base': base, 'base_slot': slot, 'rgba_sha256': actual_hash,
             'alpha': alpha, 'native': {k: v for k, v in native.items() if k != 'VtxShaderUniforms'},

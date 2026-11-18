@@ -95,7 +95,8 @@ export class SceneManager {
   private currentMapId = '';
   private mapLoadVersion = 0;
   private currentBattleKey = '';
-  private currentPlayerGender: 'male' | 'female' = 'male';
+  private currentPlayerGender: 'male' | 'female' | null = null;
+  private playerLoadVersion = 0;
   private inBattle = false;
 
   constructor(container: HTMLElement) {
@@ -140,7 +141,6 @@ export class SceneManager {
     placeholder.position.y = 0.65;
     this.playerRoot.add(placeholder);
     this.scene.add(this.playerRoot);
-    this.loadCharacterModel('/assets/characters/brendan/brendan.glb', this.playerRoot, true);
 
     this.battleGroup = new THREE.Group();
     this.battleGroup.visible = false;
@@ -369,10 +369,11 @@ export class SceneManager {
   }
 
   private loadCharacterModel(url: string, target: THREE.Group, isPlayer = false, fallbackUrl?: string): void {
+    const version = isPlayer ? ++this.playerLoadVersion : 0;
     this.gltfLoader.load(
       picaMaterialModelUrl(characterModelUrl(url)),
       (gltf) => {
-        if (!isPlayer && target.parent !== this.entitiesGroup) return;
+        if (isPlayer ? version !== this.playerLoadVersion : target.parent !== this.entitiesGroup) return;
         const model = gltf.scene;
         model.scale.setScalar(1 / ORAS_TILE_UNITS);
         fixOrasMaterials(model);

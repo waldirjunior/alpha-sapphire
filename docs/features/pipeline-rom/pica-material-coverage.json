@@ -253725,9 +253725,9 @@
       "materials": [
         {
           "material": "npc_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "f2fd7d09a8ea79ec246b8316284d150ff8c84c2262b8237627295292bdcfbc20",
           "alpha": {
@@ -253746,9 +253746,9 @@
         },
         {
           "material": "npc_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "5912c99502fb731db11033125a1a74fa362190bdb8b95a97e5d4d577152cce2c",
           "alpha": {
@@ -253858,8 +253858,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0000-a61dc18defec.glb",
-      "sha256": "a61dc18defecff1458e6f93eed0e9ab437ad1875a8e71508159d11556aeffabb"
+      "url": "/assets/native/materials/character_mm_0000-babe08654c26.glb",
+      "sha256": "babe08654c26db83e7855bfcb6ffdfa8ccd8693e44c37406556a3e9dfe1c0e58"
     },
     {
       "id": "character/mm_0045",
@@ -253872,9 +253872,9 @@
       "materials": [
         {
           "material": "tr0058_00_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "8fb740cc1d4c6a4cf2410c1df568cfec799da17c8c4a633d02cd3356e3594d16",
           "alpha": {
@@ -253893,9 +253893,9 @@
         },
         {
           "material": "tr0058_00_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c5dbb8f1b267a11b8af8fc8383be63c4c1104bbde177eb936c26f72c49e111cf",
           "alpha": {
@@ -254005,8 +254005,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0045-8ba9ec7ecfe9.glb",
-      "sha256": "8ba9ec7ecfe91850599334b11855936ad536f1221ad267ffbf55b4958b2173d8"
+      "url": "/assets/native/materials/character_mm_0045-65eea1bc8a24.glb",
+      "sha256": "65eea1bc8a24284194d47720e6b9c10e754890bbc8773970bf78e2770e8065f8"
     },
     {
       "id": "character/mm_0122",
@@ -254019,9 +254019,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254087,8 +254087,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0122-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0122-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0123",
@@ -254101,9 +254101,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254169,8 +254169,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0123-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0123-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0124",
@@ -254183,9 +254183,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254251,8 +254251,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0124-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0124-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0125",
@@ -254265,9 +254265,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254333,8 +254333,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0125-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0125-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0126",
@@ -254347,9 +254347,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254415,8 +254415,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0126-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0126-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0127",
@@ -254429,9 +254429,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254497,8 +254497,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0127-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0127-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0128",
@@ -254511,9 +254511,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254579,8 +254579,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0128-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0128-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0129",
@@ -254593,9 +254593,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254661,8 +254661,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0129-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0129-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0130",
@@ -254675,9 +254675,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254743,8 +254743,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0130-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0130-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0131",
@@ -254757,9 +254757,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254825,8 +254825,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0131-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0131-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0132",
@@ -254839,9 +254839,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254907,8 +254907,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0132-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0132-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0133",
@@ -254921,9 +254921,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -254989,8 +254989,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0133-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0133-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0179",
@@ -255003,9 +255003,9 @@
       "materials": [
         {
           "material": "rstr0009_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "ded1559452d4154eebfc1f435889d624b2bae88fb4e35294fb7f48d407be9675",
           "alpha": {
@@ -255024,9 +255024,9 @@
         },
         {
           "material": "rstr0009_00_fi_face",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "d5720be51ad445155c5015d06a01bd7a743c17add4d0a901c7e5a62db63093a2",
           "alpha": {
@@ -255045,9 +255045,9 @@
         },
         {
           "material": "rstr0009_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "6593a16420dcf35299a1e87301e3234ff67d25721b05a90d294cde7495fd1ced",
           "alpha": {
@@ -255194,8 +255194,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0179-1d1b67e2420a.glb",
-      "sha256": "1d1b67e2420aa9b58408249c5fe84ded671b6bce9a7ebcb03b0e6c5e0e1611fd"
+      "url": "/assets/native/materials/character_mm_0179-b3035515fc54.glb",
+      "sha256": "b3035515fc549318ce0ee198d5c9710ec2daf5f8837f6d6e93074f0402a23df0"
     },
     {
       "id": "character/mm_0180",
@@ -255208,9 +255208,9 @@
       "materials": [
         {
           "material": "rstr0010_00_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "bffb836a81d0ee2442724db56d04aba04d3298531b58def1922cff19fc8f5ac1",
           "alpha": {
@@ -255229,9 +255229,9 @@
         },
         {
           "material": "rstr0010_00_face",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "b4f5163826c3b4a002ef8f5376a158842240c71e988cb8733f905c6c187577d6",
           "alpha": {
@@ -255250,9 +255250,9 @@
         },
         {
           "material": "rstr0010_00_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "44107049ec5d4f26de9eeab81b20074cc61e4aa442b8be9265697da19e959880",
           "alpha": {
@@ -255421,11 +255421,11 @@
       "preserved": true,
       "idempotent": true,
       "vertex_color_correction": {
-        "inputSha256": "30d6b144089d8d06de5edfa7a2d86bc443658607791a88cbea3650ca2b590e58",
+        "inputSha256": "36c5013143d045dc0a43ed1edf91e8a3b559a5e54050fbe4108fb45f4ce3f799",
         "nativeSha256": "4b9a7ee423df660409c2be27f86891febd5055ca5a16e4c5cee40583a6d9002f",
         "referenceSha256": "b209209b7788be0dc03bc1f0991d02c627bde44b5dfed73c77e36570ac85d7d4",
         "toolSha256": "31f9c3bd0b8b241b92a7e964ac6fbc6b12425c418ece52649579dfcbaf3fbceb",
-        "daeSha256": "348918059022475c960f8e429102f63a1f1da25509e5908a2b9d5d5653fb3d5a",
+        "daeSha256": "7e9e69af2a11ef0aaa94f5e40f0aedfd14189f2c12dfd3c6eb24df72df90c7bd",
         "materials": [
           {
             "material": "rstr0010_00_body",
@@ -255504,7 +255504,7 @@
               "componentType": 5126,
               "type": "VEC4",
               "count": 339,
-              "index": 475
+              "index": 479
             }
           ]
         },
@@ -255590,8 +255590,8 @@
           ]
         }
       ],
-      "url": "/assets/native/materials/character_mm_0180-bff484c141fa.glb",
-      "sha256": "bff484c141fa8470bc4794313ea6cbe0c58bb58f2a20193a72f1ccf4186f6f9b"
+      "url": "/assets/native/materials/character_mm_0180-4222e2f140d6.glb",
+      "sha256": "4222e2f140d6e417fb5906242f92171c3953c87220af64686ea3a6f97bbaacd6"
     },
     {
       "id": "character/mm_0181",
@@ -255604,9 +255604,9 @@
       "materials": [
         {
           "material": "rstr0011_00_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "bffb836a81d0ee2442724db56d04aba04d3298531b58def1922cff19fc8f5ac1",
           "alpha": {
@@ -255625,9 +255625,9 @@
         },
         {
           "material": "rstr0011_00_face",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "2f8e6f2b8e73149562b202d303a3bd8b1dbb49696a9ba7efb5c7aa2103aee661",
           "alpha": {
@@ -255646,9 +255646,9 @@
         },
         {
           "material": "rstr0011_00_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "44107049ec5d4f26de9eeab81b20074cc61e4aa442b8be9265697da19e959880",
           "alpha": {
@@ -255824,11 +255824,11 @@
       "preserved": true,
       "idempotent": true,
       "vertex_color_correction": {
-        "inputSha256": "420cba6ab90a48114535c6879914ab0c5b683fbe567805e2d90e5136299cbfbd",
+        "inputSha256": "992b13cba251d951445c8bfcde5fdcac8bee6f2881d7a8ec246bf76408b16bcf",
         "nativeSha256": "f0158744513abdeaca6bc0f73ab5adef1b65957e326fcbf9bb35a4a5e102ab91",
         "referenceSha256": "8c341f15b6c9f58f09cee05dd9ffde020fc9077b99541e2f093f170e4e203f38",
         "toolSha256": "31f9c3bd0b8b241b92a7e964ac6fbc6b12425c418ece52649579dfcbaf3fbceb",
-        "daeSha256": "9044d3ae7401e9932e7e900eda7158f2a6de66865b2a4e7a3d04766525700b5e",
+        "daeSha256": "23d46b788facf1d6dad4c1908fc0a7178545ac43164a66c2e40ca9321e6cef24",
         "materials": [
           {
             "material": "rstr0011_00_body",
@@ -255914,7 +255914,7 @@
               "componentType": 5126,
               "type": "VEC4",
               "count": 337,
-              "index": 507
+              "index": 512
             }
           ]
         },
@@ -256000,8 +256000,8 @@
           ]
         }
       ],
-      "url": "/assets/native/materials/character_mm_0181-3ddf00a69197.glb",
-      "sha256": "3ddf00a69197f05ef138bf6a58e331c3913f5ff0e08aed181f60db083c6de96b"
+      "url": "/assets/native/materials/character_mm_0181-b7517ea4fd26.glb",
+      "sha256": "b7517ea4fd26d8091ecc91fdff43feba72ff47f020b0b900023ec9cf03c9bb35"
     },
     {
       "id": "character/mm_0182",
@@ -256014,9 +256014,9 @@
       "materials": [
         {
           "material": "rstr0012_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "8bc9c9a1ebf87c9f1ab95e4d9258de2ecc9c334af5e586026207f57a71a905b1",
           "alpha": {
@@ -256035,9 +256035,9 @@
         },
         {
           "material": "rstr0012_00_fi_face",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "70f137809e99113dda0469fa54d9489cd067c0077d6987ff2a06dd3c89b6209e",
           "alpha": {
@@ -256056,9 +256056,9 @@
         },
         {
           "material": "rstr0012_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "00f4cc820ad7fb66ca372f37cbc1b34a0e9ad862af2989ec3a4eaaf5559addf2",
           "alpha": {
@@ -256212,8 +256212,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0182-6ccbc17fbd92.glb",
-      "sha256": "6ccbc17fbd921e40febd714727241c2376394cd6f8efd30646813ed9c9ff2c0b"
+      "url": "/assets/native/materials/character_mm_0182-59b14c84175d.glb",
+      "sha256": "59b14c84175d1920c6da814be605a6bac912606d31d316772376f5bef60d4c57"
     },
     {
       "id": "character/mm_0187",
@@ -256226,9 +256226,9 @@
       "materials": [
         {
           "material": "rstr0017_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0e650c5433312ba9fbe032f3d0bc2433d383abed35288e55b9a40eb14553af4a",
           "alpha": {
@@ -256247,9 +256247,9 @@
         },
         {
           "material": "rstr0017_00_fi_faceMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0c5f4b2af5cf5e26bfa8e8a579ab880b6283f37ee5c162cffa84b3cc3f30d049",
           "alpha": {
@@ -256268,9 +256268,9 @@
         },
         {
           "material": "rstr0017_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "9aaa92869eb5f47813bf7ac860ac6a42417c439fce4a2c10203c451171b7ee7d",
           "alpha": {
@@ -256424,8 +256424,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0187-717acaef31a8.glb",
-      "sha256": "717acaef31a861f3ccada40c7d863101ff9da486612b2f48ab80ed4209be6c7b"
+      "url": "/assets/native/materials/character_mm_0187-7129501e4eb3.glb",
+      "sha256": "7129501e4eb3f6dc45c83f454204563d6cc36a43e66fb475ea823906633aa6c5"
     },
     {
       "id": "character/mm_0189",
@@ -256438,9 +256438,9 @@
       "materials": [
         {
           "material": "rstr0019_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "52f476fd1b1407ae4be4a8ff5976ed899f20b2a45efb71ffc4beda05a40aa137",
           "alpha": {
@@ -256459,9 +256459,9 @@
         },
         {
           "material": "rstr0019_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "6d7a0e7a8ca02bd644e3550921afd456061940dba4d7a6ddb133595f0edca9f1",
           "alpha": {
@@ -256480,9 +256480,9 @@
         },
         {
           "material": "rstr0019_00_fi_faceMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c4865120c6db8472112e53d85be6ef6d549d2c7d92c47978fc4786c74984652a",
           "alpha": {
@@ -256629,8 +256629,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0189-d482224beedb.glb",
-      "sha256": "d482224beedb8e7eb1dbbebe1333d18ca570d1398c81ea786ed2cf7d335b0499"
+      "url": "/assets/native/materials/character_mm_0189-1816d82c4b2f.glb",
+      "sha256": "1816d82c4b2f19e66b9458c001c54794de739adb0c4d883f79848e1350e75ccc"
     },
     {
       "id": "character/mm_0210",
@@ -256643,9 +256643,9 @@
       "materials": [
         {
           "material": "rstr0040_00_fi_face",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0f82208ad1c8ce686a4175affc2ca3fb165488447ae5faf3252f1c985c3a57b1",
           "alpha": {
@@ -256664,9 +256664,9 @@
         },
         {
           "material": "rstr0040_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c04b0874637eb7b0f76f9282afc55b760b1b92d06bb657550f5ee2097e894038",
           "alpha": {
@@ -256685,9 +256685,9 @@
         },
         {
           "material": "rstr0040_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "31e18451b4929547ba9aa71d156c1834f88299b0ed6faadaca0094625632ab44",
           "alpha": {
@@ -256848,8 +256848,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0210-00ba513022c2.glb",
-      "sha256": "00ba513022c2f0892233089f34e024616c1d095d9cd2420a2974c4fb5c6a88ac"
+      "url": "/assets/native/materials/character_mm_0210-23e23f1fbfa8.glb",
+      "sha256": "23e23f1fbfa89071739e85dac2a35a5bfd5de60f093426c2b9e08725b6ab506a"
     },
     {
       "id": "character/mm_0212",
@@ -256862,9 +256862,9 @@
       "materials": [
         {
           "material": "rstr0042_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c13f2399cdc9c7adf3490ac15daeb6c3c3fc1206c6e26a0fb2f24261a39cfd9f",
           "alpha": {
@@ -256883,9 +256883,9 @@
         },
         {
           "material": "rstr0042_00_fi_face",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "993713a4d69ff39173d3a8e405af67c6125e63793501c9df1dc25b3cd2753acb",
           "alpha": {
@@ -256904,9 +256904,9 @@
         },
         {
           "material": "rstr0042_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "56bdc19dc4220916d8356a87dea18086b9b3007a02295f15aad39314aa245238",
           "alpha": {
@@ -257060,8 +257060,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0212-a33f760bda4a.glb",
-      "sha256": "a33f760bda4ac84e9000dd4c790ecd5910a66e34aac5f220f723cd6a8c366070"
+      "url": "/assets/native/materials/character_mm_0212-54c5710f9794.glb",
+      "sha256": "54c5710f97943afa20829f46dfad614c5f61a560432551955e1e954674c36355"
     },
     {
       "id": "character/mm_0218",
@@ -257074,9 +257074,9 @@
       "materials": [
         {
           "material": "rstr0101_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "6ee9eb136e42068f8659f7f936a901dc48976eb1df59332fc6c20f8867f25cd9",
           "alpha": {
@@ -257095,9 +257095,9 @@
         },
         {
           "material": "rstr0101_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "6b1b35eb965d8b0e21dff9e98ecfac5f6db538f9f9874d2fbdc37c74ee4422bf",
           "alpha": {
@@ -257214,8 +257214,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0218-5970eb072ee3.glb",
-      "sha256": "5970eb072ee30ff21c631a39bd0d86acacc49cdc1a396dcc3a8814bcd65fccbf"
+      "url": "/assets/native/materials/character_mm_0218-4addc4101ace.glb",
+      "sha256": "4addc4101acefa1d72b04b3c5e40ef875843efd85452f47548d56e20bb2476c2"
     },
     {
       "id": "character/mm_0219",
@@ -257228,9 +257228,9 @@
       "materials": [
         {
           "material": "rstr0102_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "1b75249a65fc86dd388ec70e40373cf89b86a1ca75ea3a83f0edf342844e9e42",
           "alpha": {
@@ -257249,9 +257249,9 @@
         },
         {
           "material": "rstr0102_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "ad9162064d9eeb6f94538e5eb766057aad7444222baa639c882dc07c84280463",
           "alpha": {
@@ -257368,8 +257368,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0219-7ffdb500c1ca.glb",
-      "sha256": "7ffdb500c1cafc95474476e59a1bb6357e19bdc44bd5827b2cdb99c73b024533"
+      "url": "/assets/native/materials/character_mm_0219-a4a4065bacf6.glb",
+      "sha256": "a4a4065bacf6f94ac1402702cd9b0edf22fd36d83fe4e29599d4b2c858084bb8"
     },
     {
       "id": "character/mm_0220",
@@ -257382,9 +257382,9 @@
       "materials": [
         {
           "material": "rstr0103_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "22e9a4214a9fc11683e0edf25424218f4246ccee6ec65152d437d3d7806ef97d",
           "alpha": {
@@ -257403,9 +257403,9 @@
         },
         {
           "material": "rstr0103_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "f7ed7fd5ca32862137a6fdcf754d950be1e7b5f90696ba45ea2c0133da9b0a5b",
           "alpha": {
@@ -257522,8 +257522,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0220-2153b4ef6511.glb",
-      "sha256": "2153b4ef651178cf46a63e140a7699578e0c67fc562692ad040fc9171db54d27"
+      "url": "/assets/native/materials/character_mm_0220-e2a901d44f37.glb",
+      "sha256": "e2a901d44f37e48d42f2bb2cf14d1feaafa6e77ee1f4d95e2f8d5ba00c15b255"
     },
     {
       "id": "character/mm_0221",
@@ -257536,9 +257536,9 @@
       "materials": [
         {
           "material": "rstr0104_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0ce11a469d3139f36706e2e97bf152ecfac7e0625580b19c7ccf8df292be5a9a",
           "alpha": {
@@ -257557,9 +257557,9 @@
         },
         {
           "material": "rstr0104_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "d56ce3859e6150c01efe981d3d7b16e8d476d60fb6f7b5374f85f42b18a68301",
           "alpha": {
@@ -257676,8 +257676,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0221-2a9c49b5a54d.glb",
-      "sha256": "2a9c49b5a54dab2e3196ef1c3ba9335496284603f58476887ba6b4d964fd63f6"
+      "url": "/assets/native/materials/character_mm_0221-30943619a1b0.glb",
+      "sha256": "30943619a1b0da0466d9e034860d035ce1356a0cb19a755f7a08b6b6085e282e"
     },
     {
       "id": "character/mm_0222",
@@ -257690,9 +257690,9 @@
       "materials": [
         {
           "material": "rstr0105_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "a5a113887a224e03d43010da8b85028bc6e301767f849bcad16178b0c9d08504",
           "alpha": {
@@ -257711,9 +257711,9 @@
         },
         {
           "material": "rstr0105_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "65a26c62fa93a5e29a2f0195f6b2957c512081f46a3db41ee7a914d5d4677f0b",
           "alpha": {
@@ -257823,8 +257823,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0222-6aec8e41a7b6.glb",
-      "sha256": "6aec8e41a7b6ea801ec6585b089ad70772eb3d00ae4076f6ae879747107b9753"
+      "url": "/assets/native/materials/character_mm_0222-e78d42e8eec1.glb",
+      "sha256": "e78d42e8eec1b8b3768618bdabbad4051b151e5b6a1745ba12750379a42cedc3"
     },
     {
       "id": "character/mm_0223",
@@ -257837,9 +257837,9 @@
       "materials": [
         {
           "material": "rstr0106_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "e1eba45dfc7ddfd04e2d9286706851305564f9c5bc8bfa10e2b4859a1caa3f81",
           "alpha": {
@@ -257858,9 +257858,9 @@
         },
         {
           "material": "rstr0106_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "213842c62c9406210b1525e2806c75f97ff0e78e374fad246cbd3ec9e0b46dbf",
           "alpha": {
@@ -257984,8 +257984,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0223-f7d25f59fd25.glb",
-      "sha256": "f7d25f59fd2538d7fccdd8b27c479637bf6cfe98e4b57e17af01ae07073e54da"
+      "url": "/assets/native/materials/character_mm_0223-327abbf08d03.glb",
+      "sha256": "327abbf08d03afa52ed5bc7c944d0f9ab252ffaa5ce42cc81305b12cc6dd556b"
     },
     {
       "id": "character/mm_0225",
@@ -257998,9 +257998,9 @@
       "materials": [
         {
           "material": "rstr0108_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "02e872f4b0d70d40a06865a51135cdc583ece632f7dddb4ded1d74647c28f938",
           "alpha": {
@@ -258019,9 +258019,9 @@
         },
         {
           "material": "rstr0108_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "3c6bac2c7e6c3bc98a55ac48c3733a7ef236a1f6ebba4502eeac4a56233fe1c3",
           "alpha": {
@@ -258131,8 +258131,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0225-3467a7b011ed.glb",
-      "sha256": "3467a7b011ed50d97e378a124cc6c70b3e2d6619bdb24d3f41b1959783b58821"
+      "url": "/assets/native/materials/character_mm_0225-4b91b39ef36a.glb",
+      "sha256": "4b91b39ef36a3bbc23fdb28b1e71b287d1dc90662830f5eb1bac81f9fa166a89"
     },
     {
       "id": "character/mm_0226",
@@ -258145,9 +258145,9 @@
       "materials": [
         {
           "material": "rstr0109_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "f47681d933dd8f143de688d86db053395f1e679e85978977616372c8502e4c85",
           "alpha": {
@@ -258166,9 +258166,9 @@
         },
         {
           "material": "rstr0109_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "1fca7c766ad38673f3dea66189ffcd2cb76dfae6b0b6a00443029acd3f43e8e8",
           "alpha": {
@@ -258271,8 +258271,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0226-56bc02d1ac1c.glb",
-      "sha256": "56bc02d1ac1cacd016e4703acfd05bc5b5823461160836d5c813e02b62208199"
+      "url": "/assets/native/materials/character_mm_0226-a3aa03a4c8c2.glb",
+      "sha256": "a3aa03a4c8c22637327dc54cc135edecd46b042f371a0b6d1bc7a58c18ebd781"
     },
     {
       "id": "character/mm_0231",
@@ -258285,9 +258285,9 @@
       "materials": [
         {
           "material": "rstr0114_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "789876b3903f838f6ae53cc5e1bf46968de10058012151f6182b309e77974574",
           "alpha": {
@@ -258306,9 +258306,9 @@
         },
         {
           "material": "rstr0114_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "5cae919d92982c35268ab6dc976a6423433dc666d725b27d6975d8271ecdf67e",
           "alpha": {
@@ -258418,8 +258418,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0231-a3225b076ea8.glb",
-      "sha256": "a3225b076ea8c3795bcf6e75771ca8efb70d5f7749ca37c8c246378fddeac2af"
+      "url": "/assets/native/materials/character_mm_0231-6b07c1992f26.glb",
+      "sha256": "6b07c1992f263a15e39b0d806cbf95085d7871ee8f0909f826b123e01b0cd6bb"
     },
     {
       "id": "character/mm_0232",
@@ -258432,9 +258432,9 @@
       "materials": [
         {
           "material": "rstr0115_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "6f22ddc2b3c2a11887da8ec69fce1278af2a8f6cc7310f1c20a9ea1f60a0acbc",
           "alpha": {
@@ -258453,9 +258453,9 @@
         },
         {
           "material": "rstr0115_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "b610af1085db08c7c6e55932c83a0c14b7e512832364b7fcf2b6915eee45a668",
           "alpha": {
@@ -258565,8 +258565,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0232-27e7011ceffb.glb",
-      "sha256": "27e7011ceffb8bbc3e2912ff00e277f7559cf09262a621275d6dbba0fe10dcaa"
+      "url": "/assets/native/materials/character_mm_0232-456a0c6f9368.glb",
+      "sha256": "456a0c6f93689edadc412331e2f25a5bfe5bbc09e61289c7d9634c8b4fc6c8f0"
     },
     {
       "id": "character/mm_0233",
@@ -258579,9 +258579,9 @@
       "materials": [
         {
           "material": "rstr0116_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "81298dfec7b59aa1ec5f76fd317a0310a311a88700c9505c3d153ba0e2965c22",
           "alpha": {
@@ -258600,9 +258600,9 @@
         },
         {
           "material": "rstr0116_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "15267292db3ef4bbf064bcd9e8c0a7c19c314cce882ee8b3900902859563b1c3",
           "alpha": {
@@ -258712,8 +258712,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0233-e3759bdaae13.glb",
-      "sha256": "e3759bdaae137054fad95c4190a1b8fc76efdc9df7f7546bf66971a8e04c0e37"
+      "url": "/assets/native/materials/character_mm_0233-681c91eb6f9d.glb",
+      "sha256": "681c91eb6f9da757e4d383879738f261c47a9eccf6ea48d574082421dd5a01ae"
     },
     {
       "id": "character/mm_0234",
@@ -258726,9 +258726,9 @@
       "materials": [
         {
           "material": "rstr0117_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "b2e633ab53c93799f6529701c0686f53920a1a1f97eeee7760e84e4e1dc1c54c",
           "alpha": {
@@ -258747,9 +258747,9 @@
         },
         {
           "material": "rstr0117_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c798943ac8c3dde9246eb470059c299ed4251f5d8b8a929fb1eb42834fe4c4c8",
           "alpha": {
@@ -258880,8 +258880,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0234-93dfc96305ad.glb",
-      "sha256": "93dfc96305adce87088edc43bf80a404fc35e121439841408223ee4cab34a1bf"
+      "url": "/assets/native/materials/character_mm_0234-b97f2fbc9170.glb",
+      "sha256": "b97f2fbc9170e8d8b08e2e16c8e8df31a2fc39267b73586c5fd4c529bb3bdfde"
     },
     {
       "id": "character/mm_0235",
@@ -258894,9 +258894,9 @@
       "materials": [
         {
           "material": "rstr0118_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c0ed7e80c06ab2d468e5b18ab0d469749088ade087a4f0383f69f5b0c843bd9c",
           "alpha": {
@@ -258915,9 +258915,9 @@
         },
         {
           "material": "rstr0118_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c90d5adeac7d4f4b0e6691dd3cfdc0264819f4929a17139867175ef5bf8eae60",
           "alpha": {
@@ -259048,8 +259048,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0235-91c46ef5714b.glb",
-      "sha256": "91c46ef5714b040bb305151fd6f41044734713152112d8451f5b5dfeca1e8dde"
+      "url": "/assets/native/materials/character_mm_0235-3b5b58b6d9e8.glb",
+      "sha256": "3b5b58b6d9e84fc130c06e08e09413b4b319f189c3ca97621ed2146abe8ee593"
     },
     {
       "id": "character/mm_0236",
@@ -259062,9 +259062,9 @@
       "materials": [
         {
           "material": "rstr0119_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "f8610249e1d94d90a5b89245ba269b92e94331f04d044a35069314e1e23f5ee6",
           "alpha": {
@@ -259083,9 +259083,9 @@
         },
         {
           "material": "rstr0119_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "66b2128527de665bc4d32ff35a2cdf1dfff98d404a793a8da41244971b2b4344",
           "alpha": {
@@ -259195,8 +259195,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0236-38d162c0f889.glb",
-      "sha256": "38d162c0f889c50716bfb7e7782f781fe514a1ae412b63561bd39c68e66266de"
+      "url": "/assets/native/materials/character_mm_0236-4e1616d761da.glb",
+      "sha256": "4e1616d761dac0b57bb36efd977be0f33d1a5ff9af4c2a93b9879fc80dfa7c51"
     },
     {
       "id": "character/mm_0237",
@@ -259209,9 +259209,9 @@
       "materials": [
         {
           "material": "rstr0120_00_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "014c5b7503a6eaa17711c28b704db7f0354a312301f1e12f0ded6999a9724024",
           "alpha": {
@@ -259230,9 +259230,9 @@
         },
         {
           "material": "rstr0120_00_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0c8cb255d172d5b433474b35cb1c8b019e3fb7cf78b63f106b82a365addcb464",
           "alpha": {
@@ -259335,8 +259335,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0237-132fef7a5186.glb",
-      "sha256": "132fef7a5186ee72c204aa71f5a9d07a24dcc9b3509a9d80ef857a774ed56000"
+      "url": "/assets/native/materials/character_mm_0237-0ec464309aa1.glb",
+      "sha256": "0ec464309aa13ef70207dde30a7289e5feabd93f57b6c461de5062f274993516"
     },
     {
       "id": "character/mm_0238",
@@ -259349,9 +259349,9 @@
       "materials": [
         {
           "material": "rstr0121_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "d46adf5d3c798f841efd9c3b2ad244d940dca2561038f596384225e415e6cff9",
           "alpha": {
@@ -259370,9 +259370,9 @@
         },
         {
           "material": "rstr0121_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "7a7beac824574182fd12f4e53a3337f5ced1779eb6ac1ed35fd1440eee4b98fb",
           "alpha": {
@@ -259489,8 +259489,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0238-160e21c39f62.glb",
-      "sha256": "160e21c39f62bc42f3a5e9908c4893a0d96ec3795c2ee1c8a0793583fd9a79b8"
+      "url": "/assets/native/materials/character_mm_0238-9ecf36083f1a.glb",
+      "sha256": "9ecf36083f1a155f0b6e13dace19cfa3f56f54759b020b1fd2b1063b84a78f77"
     },
     {
       "id": "character/mm_0239",
@@ -259503,9 +259503,9 @@
       "materials": [
         {
           "material": "rstr0122_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "80d5a2d63add6af096d2abe41e15773ca54efcc3fdf0fb25c1b6db303f7bf845",
           "alpha": {
@@ -259524,9 +259524,9 @@
         },
         {
           "material": "rstr0122_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "e004099579b5b21d86c45708ab3eb350b03ac8284e9dd3920e325978a1095161",
           "alpha": {
@@ -259636,8 +259636,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0239-cd9b23e73b5f.glb",
-      "sha256": "cd9b23e73b5f92217f68843c30b15a1c8cf15ee9a72966b4c5344a8262962fa3"
+      "url": "/assets/native/materials/character_mm_0239-2422ff1e3610.glb",
+      "sha256": "2422ff1e3610bdef9ff750666b80448da0b189f6c2bd62700438b217ddf561f1"
     },
     {
       "id": "character/mm_0241",
@@ -259650,9 +259650,9 @@
       "materials": [
         {
           "material": "rstr0124_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "19b727d476a29c4297625fdae1feb6a0d30ac49f0c2f390827f81ce0062b273f",
           "alpha": {
@@ -259671,9 +259671,9 @@
         },
         {
           "material": "rstr0124_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "a724d24f9390eadd2bc1542d1dc12cdcec5489cf629db112fb79cac84e8e533c",
           "alpha": {
@@ -259783,8 +259783,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0241-4ca6f3c7a97f.glb",
-      "sha256": "4ca6f3c7a97fd50b0e6365a044349ee0f956ee81d5e4f6fdeef23eee40c58cf4"
+      "url": "/assets/native/materials/character_mm_0241-430f042a599a.glb",
+      "sha256": "430f042a599a440bc22a1349cf06401010215d096ba571c9e67c99cc27559709"
     },
     {
       "id": "character/mm_0242",
@@ -259797,9 +259797,9 @@
       "materials": [
         {
           "material": "rstr0125_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "75aa7f0f23b8a5cebedc18a31640f2dc94b114566023f4aa864060187c840fa9",
           "alpha": {
@@ -259818,9 +259818,9 @@
         },
         {
           "material": "rstr0125_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "75f4342b16fa57500df66ba3c522d61d1bbbb4c40535fab3cc765c2a6e8646ac",
           "alpha": {
@@ -259951,8 +259951,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0242-8c871fe34b5e.glb",
-      "sha256": "8c871fe34b5e082d4e6166aad2075d609b85f9173247a61573720c7cd3ea5f88"
+      "url": "/assets/native/materials/character_mm_0242-a1ad9e2a1d58.glb",
+      "sha256": "a1ad9e2a1d58555c537bbd0ca3bf837ce2d6f3f2569c09acc499ae480262b78e"
     },
     {
       "id": "character/mm_0244",
@@ -259965,9 +259965,9 @@
       "materials": [
         {
           "material": "rstr0127_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c4306e6e2b4cf12a9cbe0289023ad3e9b3aa4f7fcf15caa2a45e1db3c7a3fead",
           "alpha": {
@@ -259986,9 +259986,9 @@
         },
         {
           "material": "rstr0127_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "e54cd33c98ea6d20b62bdad60cbb61ac55a1f9ef81deb908a2a3ad8ca7c66626",
           "alpha": {
@@ -260091,8 +260091,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0244-0f671831d8fb.glb",
-      "sha256": "0f671831d8fb70c7ed13e63d797410d3553526d2e8a9f5e1addc3a03bf2a65dc"
+      "url": "/assets/native/materials/character_mm_0244-bca449d741a8.glb",
+      "sha256": "bca449d741a843609899278edf40e3b7a661fa1e92eadc91e80fdd45c5f67284"
     },
     {
       "id": "character/mm_0245",
@@ -260105,9 +260105,9 @@
       "materials": [
         {
           "material": "rstr0128_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "915767ede147971039389a496934e6ebcc54de09cdd3e3febc5567a5034ce206",
           "alpha": {
@@ -260126,9 +260126,9 @@
         },
         {
           "material": "rstr0128_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "719a9b9854ffc74fd272b4809939b4b204fd8d79656556a81fae4b0e7d99e07a",
           "alpha": {
@@ -260245,8 +260245,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0245-bfbf987df9fa.glb",
-      "sha256": "bfbf987df9fa4fc87df2d6430c95264748c8aad31e33a4a5c942100a5e41c32d"
+      "url": "/assets/native/materials/character_mm_0245-a608ed160a8c.glb",
+      "sha256": "a608ed160a8c19781632386a7ce824a92429e23ca86d181cd6f7adf29184b275"
     },
     {
       "id": "character/mm_0246",
@@ -260259,9 +260259,9 @@
       "materials": [
         {
           "material": "rstr0129_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "00efc62b0265824eca2ded9bf50860e0f5a88122c3eac25d76997c086bdd0c01",
           "alpha": {
@@ -260280,9 +260280,9 @@
         },
         {
           "material": "rstr0129_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "2f30f847f2b2d41f8e8e4d18bd764dcac83f7f6c581c5985b927c735aacc17ac",
           "alpha": {
@@ -260385,8 +260385,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0246-3101b92fa28a.glb",
-      "sha256": "3101b92fa28a5e83d48c417b90b77286613de3a3d0928072c4b4221c63ba2026"
+      "url": "/assets/native/materials/character_mm_0246-ccdf40609ae2.glb",
+      "sha256": "ccdf40609ae231260cd7d931c9d8003eb4f693d1b427ac0bd80f2c20e6bd53ab"
     },
     {
       "id": "character/mm_0247",
@@ -260399,9 +260399,9 @@
       "materials": [
         {
           "material": "rstr0130_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "7c694c26e0d2f73e2726181dc7d70342283d58bd694bddd3a6372e1cc5522009",
           "alpha": {
@@ -260420,9 +260420,9 @@
         },
         {
           "material": "rstr0130_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "7668d913aea21932c75b177f7f2196505550c7dab60040265c5f330fcec1e99d",
           "alpha": {
@@ -260539,8 +260539,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0247-e4ef3a80c9c4.glb",
-      "sha256": "e4ef3a80c9c47fd637a06fb7ad464a2c41982c5638d9b1eabd8bbf7a74a99084"
+      "url": "/assets/native/materials/character_mm_0247-486f6f5b503b.glb",
+      "sha256": "486f6f5b503b4449154aa5cfde5dd49f7a4d370c9773201253643212d3106f40"
     },
     {
       "id": "character/mm_0249",
@@ -260553,9 +260553,9 @@
       "materials": [
         {
           "material": "rstr0132_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "50642f1aba155e064b24f5ac7a192d581885ef668e1a648e8948e59336d86c8e",
           "alpha": {
@@ -260574,9 +260574,9 @@
         },
         {
           "material": "rstr0132_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0370eb6b3578a8b3c66acd31e17e06c874165b25fec9f2454e87edaeb67b630c",
           "alpha": {
@@ -260693,8 +260693,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0249-5ddbafde7cb8.glb",
-      "sha256": "5ddbafde7cb841a785c65b28799cd48a90dfa2cddca8bb7a862765e7894ed16c"
+      "url": "/assets/native/materials/character_mm_0249-af5488c3978d.glb",
+      "sha256": "af5488c3978d3a64f77b06d5da6570ee8d62d1db37ba5397691e2a65da220038"
     },
     {
       "id": "character/mm_0252",
@@ -260707,9 +260707,9 @@
       "materials": [
         {
           "material": "rstr0135_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "cae0d27555a88448c36fc78c6f8b8a57200b93373f47421a97cb04bca8cf37d1",
           "alpha": {
@@ -260728,9 +260728,9 @@
         },
         {
           "material": "rstr0135_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "4f34148c5a81f6b528d466b494b9558d54749838593bb9aac61edaaa3a2759b6",
           "alpha": {
@@ -260840,8 +260840,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0252-e654fa04ee6d.glb",
-      "sha256": "e654fa04ee6dd08c948aa44d41579e615ef54cd397720d41e49df3fe339ffacb"
+      "url": "/assets/native/materials/character_mm_0252-7e33a1ee684c.glb",
+      "sha256": "7e33a1ee684cc6f3e35341cc2fb3c72476fda1cb741350b0cb68501ca30a77a2"
     },
     {
       "id": "character/mm_0254",
@@ -260854,9 +260854,9 @@
       "materials": [
         {
           "material": "rstr0137_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "9392f33a055c8339ea1d5835c4207d6db40d729fbff5caf9631b4b3b9bc4dab2",
           "alpha": {
@@ -260875,9 +260875,9 @@
         },
         {
           "material": "rstr0137_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "d7efdfb876b6db7a10d6c16f3f97b6b5d62457f24b3beb423e5ddfc230a57e8f",
           "alpha": {
@@ -260987,8 +260987,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0254-ebc2e0e35bbf.glb",
-      "sha256": "ebc2e0e35bbff4aaf4a2be78395b270031146ffc76ca85090125234393553277"
+      "url": "/assets/native/materials/character_mm_0254-975752a0d8fe.glb",
+      "sha256": "975752a0d8fe79f6b91236bb00e58bb6ff6855c2527910bd456c78b3b78fc7e6"
     },
     {
       "id": "character/mm_0255",
@@ -261001,9 +261001,9 @@
       "materials": [
         {
           "material": "rstr0138_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "45016dabbf0f35221b299adc54b24a90dbc267b71398a49c77c377de13e8ceaa",
           "alpha": {
@@ -261022,9 +261022,9 @@
         },
         {
           "material": "rstr0138_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "2caa3c9e5d7d0bd78d43dbdc1ea1d306846f9843d98c79a5a6bd140df6e87caf",
           "alpha": {
@@ -261134,8 +261134,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0255-b7cce3e805f4.glb",
-      "sha256": "b7cce3e805f476520c56694a1cac0024f3b65ec3db169479c4c81e2e50a3baa2"
+      "url": "/assets/native/materials/character_mm_0255-46c249db0acf.glb",
+      "sha256": "46c249db0acfdc9403e655b29ac6fc6fb5f257dd28e54fa3988a8ecd22991ed9"
     },
     {
       "id": "character/mm_0256",
@@ -261148,9 +261148,9 @@
       "materials": [
         {
           "material": "rstr0139_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "f0153dd60c45134f7c96299ed2ceb3902b69619284d9fa644037ae19ace3388f",
           "alpha": {
@@ -261169,9 +261169,9 @@
         },
         {
           "material": "rstr0139_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "bf7062dd78ead65fda3bc8b0807f72872e00f5e073668b7bc2540c4917455919",
           "alpha": {
@@ -261302,8 +261302,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0256-18599b83b387.glb",
-      "sha256": "18599b83b387c7fb82963a8186dc5b3331f9de1e3565f4c749015f931a380a02"
+      "url": "/assets/native/materials/character_mm_0256-4ea77c2d69c1.glb",
+      "sha256": "4ea77c2d69c1fb754d586b0bcfa91c6a802867315390f4d26f12083ffbbc1617"
     },
     {
       "id": "character/mm_0257",
@@ -261316,9 +261316,9 @@
       "materials": [
         {
           "material": "rstr0140_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "a49469033a06d2f78423abadbc6429c4d6ed2835f1452e770eac90468cf947bd",
           "alpha": {
@@ -261337,9 +261337,9 @@
         },
         {
           "material": "rstr0140_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "281c0647a75d894852b358819b01eeb9b0cda465f7177031d2d71c3fe0871239",
           "alpha": {
@@ -261449,8 +261449,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0257-62c5f150656c.glb",
-      "sha256": "62c5f150656c51c68e770287e405c20e1c78b6b4ff20531f960f5baa795d20de"
+      "url": "/assets/native/materials/character_mm_0257-ef7ce036cfa6.glb",
+      "sha256": "ef7ce036cfa6952653fc74952a5a1a7eeac9a4e091704f60d5e66a6cfd9de7e5"
     },
     {
       "id": "character/mm_0259",
@@ -261463,9 +261463,9 @@
       "materials": [
         {
           "material": "rstr0142_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "225e74f30f3bafd62223531d9f3e1b5550bb3ab26497e2ae9fe62b593f2b0d84",
           "alpha": {
@@ -261484,9 +261484,9 @@
         },
         {
           "material": "rstr0142_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "218511818694ef703d88a7f42c0ebf7749b15dfbf6cc6b7dbefc460096879130",
           "alpha": {
@@ -261589,8 +261589,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0259-2d3b50b6ab06.glb",
-      "sha256": "2d3b50b6ab063fcea6c6ec8e0211e6359e6a74f01fc5fa8e5f35f1cd3b7c9b07"
+      "url": "/assets/native/materials/character_mm_0259-1202519ff8ee.glb",
+      "sha256": "1202519ff8ee974bbd2072165d8586839709cc36470bfe2aad5aca2504654e1d"
     },
     {
       "id": "character/mm_0260",
@@ -261603,9 +261603,9 @@
       "materials": [
         {
           "material": "rstr0143_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c6ae68287f15605ed2118a74ecb34200144ffbf6abf92f82ec1ca7c1b9193cd6",
           "alpha": {
@@ -261624,9 +261624,9 @@
         },
         {
           "material": "rstr0143_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "9eb63b4997a39fa20cbd958205e07924265743ea2028253ac0a4f23153a8f1ae",
           "alpha": {
@@ -261750,8 +261750,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0260-aa4bdfb9d290.glb",
-      "sha256": "aa4bdfb9d29058d874bd28cf2d974f549397844d371538e993ea4d9340233f10"
+      "url": "/assets/native/materials/character_mm_0260-5c37f69d10a9.glb",
+      "sha256": "5c37f69d10a9131d576bde7c4092541b8b8c48dffb93df22bb8d88b308781a1d"
     },
     {
       "id": "character/mm_0261",
@@ -261764,9 +261764,9 @@
       "materials": [
         {
           "material": "rstr0144_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "10b214ca298453fad733e2fc311415922de0dc1f1fc10f39adbd59d283313957",
           "alpha": {
@@ -261785,9 +261785,9 @@
         },
         {
           "material": "rstr0144_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "9171524f882551dfd79d59905b03e5a4f17e21f5199fccc0fbaa91b4091de218",
           "alpha": {
@@ -261911,8 +261911,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0261-8ca13ea49035.glb",
-      "sha256": "8ca13ea4903504d9358c5a06ab9bb76b80d0e03795554309773f5d65faa0b035"
+      "url": "/assets/native/materials/character_mm_0261-3eedb16ac4c8.glb",
+      "sha256": "3eedb16ac4c881172fd5733926ee27e26ba01b756981a963dcf32e05741c8410"
     },
     {
       "id": "character/mm_0262",
@@ -261925,9 +261925,9 @@
       "materials": [
         {
           "material": "rstr0145_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "2fdb4fcf16cd087bb4fc6de13b056af90d93f11894eff2ff402f0c0a13e93201",
           "alpha": {
@@ -261946,9 +261946,9 @@
         },
         {
           "material": "rstr0145_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "8320f8bbfacbda6d482c1fd192d9322e8d6acec4c3d21bfe1e394c511be57f82",
           "alpha": {
@@ -262065,8 +262065,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0262-ae14ff036842.glb",
-      "sha256": "ae14ff036842289b493ae7f965deaa9287ab7b83af309ebf229f4415b30084fb"
+      "url": "/assets/native/materials/character_mm_0262-d736c3e21a30.glb",
+      "sha256": "d736c3e21a301e5fa53e7004ea596e926a03d1201370836cf49d80c10a80bad2"
     },
     {
       "id": "character/mm_0264",
@@ -262079,9 +262079,9 @@
       "materials": [
         {
           "material": "rstr0147_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "6f0dc88d743859b7e3e4dde6794ab194642575d11fe7febd9b1b6a30d05dac93",
           "alpha": {
@@ -262100,9 +262100,9 @@
         },
         {
           "material": "rstr0147_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "1065b0a06de09f6194c452dcd0632e85ded348266cbc32ac623c3f31eabad30f",
           "alpha": {
@@ -262219,8 +262219,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0264-e1fd73002c06.glb",
-      "sha256": "e1fd73002c062b53e706fb655d593bddfa4ba4ec73051dd366c502be31791f1e"
+      "url": "/assets/native/materials/character_mm_0264-22039e44f5c0.glb",
+      "sha256": "22039e44f5c0bcf0046c3e751c6a1d25a2646e10fb0227dd7240f6dabb45b8d9"
     },
     {
       "id": "character/mm_0265",
@@ -262233,9 +262233,9 @@
       "materials": [
         {
           "material": "rstr0148_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "428718877e8532f20df6351db8b82bfb8e517d43405be5ca8354ff2f3574fd2e",
           "alpha": {
@@ -262254,9 +262254,9 @@
         },
         {
           "material": "rstr0148_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "ae8ad7ad3c97393508a4c3c4aeff48ca6bdc6eba188b706d598a99ae82a10412",
           "alpha": {
@@ -262366,8 +262366,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0265-fa834ceb5e15.glb",
-      "sha256": "fa834ceb5e15a33f3b731f460d98150e29e7ea8078935d31dcaeb87d18a63886"
+      "url": "/assets/native/materials/character_mm_0265-77b466f68b4d.glb",
+      "sha256": "77b466f68b4dd164b4ca6959c5f64bbb344a378138560160f4e24167523a76c7"
     },
     {
       "id": "character/mm_0266",
@@ -262380,9 +262380,9 @@
       "materials": [
         {
           "material": "rstr0149_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "fec648457cd2479609fd5db066e9daff54770038b9ea8529a2e211a61aa2ddd0",
           "alpha": {
@@ -262401,9 +262401,9 @@
         },
         {
           "material": "rstr0149_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "5c12028c52f5dde84af5fef6f86265d8ec83dbf63e97e75ea51a69f0cee5a5a3",
           "alpha": {
@@ -262513,8 +262513,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0266-d4ae2adee8eb.glb",
-      "sha256": "d4ae2adee8eb08b0e1e898555782370f55707ea23c18badf4dee9499382e86a2"
+      "url": "/assets/native/materials/character_mm_0266-5c0912362dbe.glb",
+      "sha256": "5c0912362dbe2e18b687dcacac6bf297bef07e7b86c5580f0efc7550d9729b35"
     },
     {
       "id": "character/mm_0267",
@@ -262527,9 +262527,9 @@
       "materials": [
         {
           "material": "rstr0150_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "85f3c91ae11d4c8f14a552dbff70e3c4934fe1f14f8568bdb68a2379be2c0e1f",
           "alpha": {
@@ -262548,9 +262548,9 @@
         },
         {
           "material": "rstr0150_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "5c12028c52f5dde84af5fef6f86265d8ec83dbf63e97e75ea51a69f0cee5a5a3",
           "alpha": {
@@ -262660,8 +262660,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0267-25de0683c042.glb",
-      "sha256": "25de0683c0429235dc4c0e65f37fdd78691b3396a38cc19038ccf08002da32c4"
+      "url": "/assets/native/materials/character_mm_0267-ceb337f06bc0.glb",
+      "sha256": "ceb337f06bc074f932acbd7f0e1d9344c10a6963be926d5cedb61537ea65d464"
     },
     {
       "id": "character/mm_0270",
@@ -262674,9 +262674,9 @@
       "materials": [
         {
           "material": "rstr0153_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "810b254674f2046bb1aa79e636cb4182183055f3ba8f5e44209b804187162fc2",
           "alpha": {
@@ -262695,9 +262695,9 @@
         },
         {
           "material": "rstr0153_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "b9f5f828286557a4e5d9f16449ae894544e879c161686479431ce772a175757c",
           "alpha": {
@@ -262807,8 +262807,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0270-262948074e11.glb",
-      "sha256": "262948074e1150b45861b5f157687c0bc088e6fa08ed64780414233ce586ace9"
+      "url": "/assets/native/materials/character_mm_0270-3b28460395a8.glb",
+      "sha256": "3b28460395a8a71c2b80701d1bce842f5581555b5356ac4c2cd46a1d3820ebd3"
     },
     {
       "id": "character/mm_0271",
@@ -262821,9 +262821,9 @@
       "materials": [
         {
           "material": "rstr0154_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "5a87053c4a1484cb3fdd1790145d46bce20d6253c84e89260d2cc8d49d8de009",
           "alpha": {
@@ -262842,9 +262842,9 @@
         },
         {
           "material": "rstr0154_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "7a4c2528bec075adf93b186536b431e4252971e1b996d7dc27ad78d7678264cb",
           "alpha": {
@@ -262954,8 +262954,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0271-402a7db6f25e.glb",
-      "sha256": "402a7db6f25e5872f1fabc0ea0b5f727c369add34147f99bd4833d1d82a99720"
+      "url": "/assets/native/materials/character_mm_0271-c3218c476c0a.glb",
+      "sha256": "c3218c476c0ac8c847f0e9efb1e5941448258db16627361e6731f4b666ae6016"
     },
     {
       "id": "character/mm_0275",
@@ -262968,9 +262968,9 @@
       "materials": [
         {
           "material": "rstr0158_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "f35ac97af043893b2fc1029647b2dde47dc413a71c32d370b39b5180db940c70",
           "alpha": {
@@ -262989,9 +262989,9 @@
         },
         {
           "material": "rstr0158_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "bf10b057c9a34d4629a8ca148ae6c06f43c72967bee12c710ffbae8601191e45",
           "alpha": {
@@ -263122,8 +263122,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0275-0da49c15ce46.glb",
-      "sha256": "0da49c15ce46c77a494db7ec967a1299bd432e4ee2b27c3f7d628b4636178511"
+      "url": "/assets/native/materials/character_mm_0275-467b3a7b9dff.glb",
+      "sha256": "467b3a7b9dffbbeead38a9efd00be6a13613ba57429e1b5cb4b6f57b2c1eb361"
     },
     {
       "id": "character/mm_0276",
@@ -263136,9 +263136,9 @@
       "materials": [
         {
           "material": "rstr0159_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "070541ec91f4d9a90f5b4e44d4cbb129109536a753c35d38ef0c5309c9d55eec",
           "alpha": {
@@ -263157,9 +263157,9 @@
         },
         {
           "material": "rstr0159_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "185c8983e684fbcbd7a0614ea181450fa23d94e08586fb147f36ddbeabe2a3c8",
           "alpha": {
@@ -263262,8 +263262,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0276-50e565a2fc4f.glb",
-      "sha256": "50e565a2fc4f680a79fac9bc9950b6304ba23229501fb14f59269a3843e0a729"
+      "url": "/assets/native/materials/character_mm_0276-56cc71ae20f8.glb",
+      "sha256": "56cc71ae20f885d9716e8240e160384966a2ab2dfd13f5861160ead973d0dac7"
     },
     {
       "id": "character/mm_0277",
@@ -263276,9 +263276,9 @@
       "materials": [
         {
           "material": "rstr0160_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "085c443344b76cc239b199161d7519c18bffbec87c7a9d21942d5e6488a1c29b",
           "alpha": {
@@ -263297,9 +263297,9 @@
         },
         {
           "material": "rstr0160_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "cb1b9b08108f54a153442830861463674894cd25a731f5b789bb48c5f7cebfec",
           "alpha": {
@@ -263416,8 +263416,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0277-bec0704b3ceb.glb",
-      "sha256": "bec0704b3cebbaeee2fe9e7e34873dc13dfd26b762d63a73d103f7c4321360e8"
+      "url": "/assets/native/materials/character_mm_0277-a7e6a3edfae8.glb",
+      "sha256": "a7e6a3edfae896b2601e9026553a37484c4c170834e8910007f5098118dddb7e"
     },
     {
       "id": "character/mm_0280",
@@ -263430,9 +263430,9 @@
       "materials": [
         {
           "material": "rstr0163_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "5d120b6a203fd06fce899672414c4e0d8c96ea5699ab0d026fae26df63015f0a",
           "alpha": {
@@ -263451,9 +263451,9 @@
         },
         {
           "material": "rstr0163_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "b94a4b324b9d9e129bbae0c7ddf9c4e19f48fdb6ddd329d18cde26e0eedbed6e",
           "alpha": {
@@ -263563,8 +263563,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0280-eb466c7d8d2c.glb",
-      "sha256": "eb466c7d8d2cd0b442a08678407e7baa2e338361459a727cf8be17219b5b84f4"
+      "url": "/assets/native/materials/character_mm_0280-25301e2d46e6.glb",
+      "sha256": "25301e2d46e63403723ffe107fdad7ea3737ae3a502ea6b6dfed6474ebf48d96"
     },
     {
       "id": "character/mm_0281",
@@ -263577,9 +263577,9 @@
       "materials": [
         {
           "material": "rstr0164_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "ebe2a9fbc608e16113774e58d6b6af8f2f7f7a9dd575e1787d13b1c316a64232",
           "alpha": {
@@ -263598,9 +263598,9 @@
         },
         {
           "material": "rstr0164_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "4c1e41d013ce95e47b50c0cd60ecd7e4acd88e6b88453255ec8a2dba48a3b3aa",
           "alpha": {
@@ -263710,8 +263710,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0281-c5b549513858.glb",
-      "sha256": "c5b54951385869f33e9074ed013233e83fd195ef6629c1d009e655537921fdd3"
+      "url": "/assets/native/materials/character_mm_0281-04d1637d6bac.glb",
+      "sha256": "04d1637d6bacfbb021d64356f78fba84d38f3133a6f44b6e1e3a6c6e12e6b0ea"
     },
     {
       "id": "character/mm_0283",
@@ -263724,9 +263724,9 @@
       "materials": [
         {
           "material": "rstr0166_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "d742bd5028265f1f7ab3ac8fc69af2be527d982a011a45e5cb840b601eb621e0",
           "alpha": {
@@ -263745,9 +263745,9 @@
         },
         {
           "material": "rstr0166_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "8a01e9904a080847f6a0bf05d5592f250775d02273440ef8c995186f403e6861",
           "alpha": {
@@ -263850,8 +263850,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0283-a3698c1bcffc.glb",
-      "sha256": "a3698c1bcffcca77e7a775970bca9b2259c9760b501ba75e4c49acc82d337ca7"
+      "url": "/assets/native/materials/character_mm_0283-92d146c55877.glb",
+      "sha256": "92d146c558777593da6ff35b07d2cd727514e40563318a1c978b5d6bf6192562"
     },
     {
       "id": "character/mm_0284",
@@ -263864,9 +263864,9 @@
       "materials": [
         {
           "material": "rstr0167_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "d87811ae2d4a98da5a0340eb521226ec4884a2d1eb86f0c3f4739aefa9d0ea43",
           "alpha": {
@@ -263885,9 +263885,9 @@
         },
         {
           "material": "rstr0167_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "5dc4a518f222dc3178cd174e5509fc1405e2bd05407874238d53bc2c41818d08",
           "alpha": {
@@ -263997,8 +263997,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0284-dcd3a16dca36.glb",
-      "sha256": "dcd3a16dca366e84099201497b174aeb407625145bf7c8723bdf6bbbbdcd4c8b"
+      "url": "/assets/native/materials/character_mm_0284-7d9118f4b419.glb",
+      "sha256": "7d9118f4b4194d91c553230d7563e35821350b5547d4bbdf272ad7dd0f2181fb"
     },
     {
       "id": "character/mm_0285",
@@ -264011,9 +264011,9 @@
       "materials": [
         {
           "material": "rstr0168_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "d40db2b4fe58bc10171a3d0de30e9d449bc0fc78109416f15375c2b8e399243f",
           "alpha": {
@@ -264032,9 +264032,9 @@
         },
         {
           "material": "rstr0168_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c37ed1bf49d3e57d92050c5c63053de0f6815e7ac377ca232d2363d1df8d6665",
           "alpha": {
@@ -264144,8 +264144,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0285-46e7b6a342b8.glb",
-      "sha256": "46e7b6a342b8ef2604c2ee204231ac625a02350d82ce26faa557fbfa9c644094"
+      "url": "/assets/native/materials/character_mm_0285-3f14d5277d8a.glb",
+      "sha256": "3f14d5277d8ad4324620d208a96475335c5c246680f95808e59d99640c3aa7a2"
     },
     {
       "id": "character/mm_0286",
@@ -264158,9 +264158,9 @@
       "materials": [
         {
           "material": "rstr0169_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "474635dcd6cda4b6898ead14fe1fb3a12070314eb7109f6b75f1c0fd78f7015d",
           "alpha": {
@@ -264179,9 +264179,9 @@
         },
         {
           "material": "rstr0169_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "df2bfa2bf35f67652c02d398466068629384e55d6ee68631ba215d3c6f9718e5",
           "alpha": {
@@ -264284,8 +264284,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0286-edf9be4f50fa.glb",
-      "sha256": "edf9be4f50fa2567f65d9d92bd0f0bd050f200408267a6707658473d44c4788f"
+      "url": "/assets/native/materials/character_mm_0286-70ef4c6891d0.glb",
+      "sha256": "70ef4c6891d0f5d5aaa00cc496752c3fa0451cc0c7f80bbd856c5c76d35cc582"
     },
     {
       "id": "character/mm_0287",
@@ -264298,9 +264298,9 @@
       "materials": [
         {
           "material": "rstr0170_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "6cd2ee5802933ab5529039529a30e6ef3f307e63a0e37676140b950fa50e8a42",
           "alpha": {
@@ -264319,9 +264319,9 @@
         },
         {
           "material": "rstr0170_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0949e3185e7b4bacc05cc10b44a9fef36c8c7f1a81ede5607c29b254f02221d2",
           "alpha": {
@@ -264424,8 +264424,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0287-7e3d96675fd1.glb",
-      "sha256": "7e3d96675fd1fe6ad909ecd2892d80bf4dfcb1fd386f74b09f6a1d7d3e991e28"
+      "url": "/assets/native/materials/character_mm_0287-a8c4b3900588.glb",
+      "sha256": "a8c4b39005886db7728af1d641f41529f967afbb2a7ca142ed4cb22a3706c353"
     },
     {
       "id": "character/mm_0288",
@@ -264438,9 +264438,9 @@
       "materials": [
         {
           "material": "rstr0171_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "1099042095ce179fe13f32a3ed7e8006a968d2959ef0620166ea6777622e61f8",
           "alpha": {
@@ -264459,9 +264459,9 @@
         },
         {
           "material": "rstr0171_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "e2236bcdfe1cf29f47b258fc084fb16b236af3b269b51b787a6796975dae2d94",
           "alpha": {
@@ -264571,8 +264571,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0288-03544cf3e78a.glb",
-      "sha256": "03544cf3e78a8efe704964c09798a7a9790413062d133d93f8c9fcac551c3ec6"
+      "url": "/assets/native/materials/character_mm_0288-293adf40701f.glb",
+      "sha256": "293adf40701fbca2401d176ad12e71b70b0ddb21b436d155b9f8909d6a6b7818"
     },
     {
       "id": "character/mm_0289",
@@ -264585,9 +264585,9 @@
       "materials": [
         {
           "material": "rstr0172_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "df79b38e9710a86f257538c4a3f44effe6bccecc9dc6dd3e347a9fe283b5a7c9",
           "alpha": {
@@ -264606,9 +264606,9 @@
         },
         {
           "material": "rstr0172_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "465b1a496ff582197697979776c3acf00fe537ed1ce4b4e40d3daa2cc3c95c69",
           "alpha": {
@@ -264711,8 +264711,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0289-45577ca3745a.glb",
-      "sha256": "45577ca3745a61bd12379b32e51d7525c2fbafcb978391b27f01dfe870791a40"
+      "url": "/assets/native/materials/character_mm_0289-e40a27a395ed.glb",
+      "sha256": "e40a27a395edd7e6a4c4a45dfd083384047769e1cc69015bfea92dfd8a98e182"
     },
     {
       "id": "character/mm_0296",
@@ -264725,9 +264725,9 @@
       "materials": [
         {
           "material": "rstr0179_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "73f9073e1dd5172427bec9355597414333203762aa83c73e91ae37782464758c",
           "alpha": {
@@ -264746,9 +264746,9 @@
         },
         {
           "material": "rstr0179_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "86547ef446e9b1b9a192da6c34de705e84ad5932550f887139eda80876bbf517",
           "alpha": {
@@ -264865,8 +264865,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0296-ff88e1cd854a.glb",
-      "sha256": "ff88e1cd854a82ffc92dd064ebaa54d406b84d55c8fc7d2bd3c0d505700c4e44"
+      "url": "/assets/native/materials/character_mm_0296-d68c1b221075.glb",
+      "sha256": "d68c1b221075c2c9661e80736679f7246727068595e01cea00b39074e84a8b32"
     },
     {
       "id": "character/mm_0298",
@@ -264879,9 +264879,9 @@
       "materials": [
         {
           "material": "rstr0181_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c6a483fe1a742fc285813a5a38add2e4a25b062c40a225ce1153e0b97e27293f",
           "alpha": {
@@ -264900,9 +264900,9 @@
         },
         {
           "material": "rstr0181_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "a8ddddec541d4bec73170344e314186773f285665ca593e7f7ff522a62d725af",
           "alpha": {
@@ -265019,8 +265019,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0298-2aa27dc538f9.glb",
-      "sha256": "2aa27dc538f940ecfa3e98fff0f1cdc3d0771232dd01c5888bae0a7a60fe8b44"
+      "url": "/assets/native/materials/character_mm_0298-b9c1f7529337.glb",
+      "sha256": "b9c1f7529337afcbd3d02d6a82e759ea0ede6b84d222c988d5c974fef224ec3b"
     },
     {
       "id": "character/mm_0299",
@@ -265033,9 +265033,9 @@
       "materials": [
         {
           "material": "rstr0182_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "b3dd60a2ef4e9c7b55549bb88d8e4891e4c8f62731aa5c4d0caa83e9bed64052",
           "alpha": {
@@ -265054,9 +265054,9 @@
         },
         {
           "material": "rstr0182_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "4ba964ec5a42ab32538c24f4ed5423956d16b133691b1a766793a0737e3890b6",
           "alpha": {
@@ -265180,8 +265180,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0299-f50ba5565275.glb",
-      "sha256": "f50ba556527587d4d49798928b3e8187cc1ea4f4ecb2a265e16b23903a9c0dea"
+      "url": "/assets/native/materials/character_mm_0299-34c599d005a6.glb",
+      "sha256": "34c599d005a6c7052bc09fb9fdf4a206d6a2346ddefe2feded4737f43f04345f"
     },
     {
       "id": "character/mm_0300",
@@ -265194,9 +265194,9 @@
       "materials": [
         {
           "material": "rstr0183_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0f1e7b2b156d0f4776fb92b668c358537fb5c8b90720f1ab70c5d533ac6568e2",
           "alpha": {
@@ -265215,9 +265215,9 @@
         },
         {
           "material": "rstr0183_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "a830bef3c701ac7cf7788488e6ecee4b96e3a585cecfbb7539f17f5c3dcee95f",
           "alpha": {
@@ -265334,8 +265334,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0300-6565812b0a2b.glb",
-      "sha256": "6565812b0a2bd6702676ddae94ed891720731402f7f5f5ba37e96e871c7af38f"
+      "url": "/assets/native/materials/character_mm_0300-f3f35a97fb00.glb",
+      "sha256": "f3f35a97fb000d76cfb2b1220845c6aa34f3daf8374400bb2118263f7c9cf143"
     },
     {
       "id": "character/mm_0301",
@@ -265348,9 +265348,9 @@
       "materials": [
         {
           "material": "rstr0184_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "c9bd050b24e48b243e478a40d78620bc5da77eb920af1d67d7d5b95293ff09aa",
           "alpha": {
@@ -265369,9 +265369,9 @@
         },
         {
           "material": "rstr0184_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "856e142cc9609afd2a3bcd8e534578c9d00b8fca8fe153b3ff485aff9b66eb70",
           "alpha": {
@@ -265474,8 +265474,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0301-999da4bc5824.glb",
-      "sha256": "999da4bc5824fd2094e182a5c916a4dceecc736cbb6b6d8ef207060397a0e302"
+      "url": "/assets/native/materials/character_mm_0301-b7f6b84c0256.glb",
+      "sha256": "b7f6b84c025684337ffe1ab7049e6f59182a1ae9471c286cc9067502360f7fa9"
     },
     {
       "id": "character/mm_0302",
@@ -265488,9 +265488,9 @@
       "materials": [
         {
           "material": "rstr0185_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "bfba27c5a7c7b9ecb4be813fb45f15f4b9c3fde8b150803ce220969b3a1d75a6",
           "alpha": {
@@ -265509,9 +265509,9 @@
         },
         {
           "material": "rstr0185_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "cb4fe498cb3c991c8e0a2143df344385430affa4a831edbd3c6c8e35d7a1c771",
           "alpha": {
@@ -265628,8 +265628,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0302-22724e87db2c.glb",
-      "sha256": "22724e87db2c0349e67cca92d98fff7b12332ee9a22ab3715cc9bfcaf190289b"
+      "url": "/assets/native/materials/character_mm_0302-29fd908c6510.glb",
+      "sha256": "29fd908c651059d89bd6f770f975cb58c860439e74a91faaa7b290a72389ecd4"
     },
     {
       "id": "character/mm_0303",
@@ -265642,9 +265642,9 @@
       "materials": [
         {
           "material": "rstr0186_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "030fb8983f3aacf02f7ffe0d6d0f8243f48e623164c83cd1859809d72d8db2ab",
           "alpha": {
@@ -265663,9 +265663,9 @@
         },
         {
           "material": "rstr0186_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "b8bbbc025b64309769a97c516aff28cc068f31a6ad8b8939bf4a0ddbe59711d7",
           "alpha": {
@@ -265782,8 +265782,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0303-967a3a8e5bf7.glb",
-      "sha256": "967a3a8e5bf7c944eeefcd2024a78e1180f4698d31eaecc387265029c912d77b"
+      "url": "/assets/native/materials/character_mm_0303-e0ec50ade224.glb",
+      "sha256": "e0ec50ade2244dd5f3848bcf61c063a8b9881c8d31f5cd497d641f2e58b017d9"
     },
     {
       "id": "character/mm_0305",
@@ -265796,9 +265796,9 @@
       "materials": [
         {
           "material": "rstr0188_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "b06ba5122d341a1b911fbc50b01477801cc585a728eb44b891ff269ee2dca869",
           "alpha": {
@@ -265817,9 +265817,9 @@
         },
         {
           "material": "rstr0188_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "8ab9a08f88dc0f920420f1e29c1acf5043f4fbf17f7ccdc45a9f37918cac5e49",
           "alpha": {
@@ -265929,8 +265929,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0305-4114890ffcdd.glb",
-      "sha256": "4114890ffcdd8651ad04eb29b457796ae67a56afd957153a2d6a9754b98a5232"
+      "url": "/assets/native/materials/character_mm_0305-6fa9e5653c52.glb",
+      "sha256": "6fa9e5653c52de9f505768c584874c7389e1b528d1867109fa7453bfba5516f6"
     },
     {
       "id": "character/mm_0306",
@@ -265943,9 +265943,9 @@
       "materials": [
         {
           "material": "rstr0189_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "e13b5d514562d7d4f9532fb363b89fc31d8d8eb92908f0ba2e332d629e9f89c2",
           "alpha": {
@@ -265964,9 +265964,9 @@
         },
         {
           "material": "rstr0189_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "7808c54b317057d6102e5476ced4d365e160fe74d12e39932beb43b22def8e01",
           "alpha": {
@@ -266083,8 +266083,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0306-dd9feb48d56b.glb",
-      "sha256": "dd9feb48d56b53150db61449f3e25b3306fb796cad4e94918b63b50acfab089f"
+      "url": "/assets/native/materials/character_mm_0306-a9c544627472.glb",
+      "sha256": "a9c544627472f27efe7e5976a6932cfce4d9b4293e67f3504df19342befccd5c"
     },
     {
       "id": "character/mm_0307",
@@ -266097,9 +266097,9 @@
       "materials": [
         {
           "material": "rstr0190_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "86d023c5431e535a1663f4a5f60b916334ef71d087629b8a436ebb3d809705b7",
           "alpha": {
@@ -266118,9 +266118,9 @@
         },
         {
           "material": "rstr0190_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0444274dd1100d6515e865fd0f04a638f8d722f2393b07658aa7f294191ea110",
           "alpha": {
@@ -266230,8 +266230,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0307-9d2a1f4893b9.glb",
-      "sha256": "9d2a1f4893b90acf83810960421b45db95f2d0e26e85ba3f4b831f6ba0fce19b"
+      "url": "/assets/native/materials/character_mm_0307-1656741be83c.glb",
+      "sha256": "1656741be83c1b670970a9b83d75362360757ab39bbc8d8e7e0146bdee539188"
     },
     {
       "id": "character/mm_0309",
@@ -266244,9 +266244,9 @@
       "materials": [
         {
           "material": "rstr0192_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "7b37a972dd1946455a5e060c40a67fca8c91c400f7686cd7922b5c94ce98a249",
           "alpha": {
@@ -266265,9 +266265,9 @@
         },
         {
           "material": "rstr0192_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "fb4b4e92904d38cf8f9b1e2feeec127240e9247d31f77e042479a8de3540cb6b",
           "alpha": {
@@ -266377,8 +266377,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0309-839a88f0651f.glb",
-      "sha256": "839a88f0651f790124d0d732e5300d63d80ce553999cc1bcc688389b73c87ec3"
+      "url": "/assets/native/materials/character_mm_0309-46a6ce711138.glb",
+      "sha256": "46a6ce71113825ce620002a1a2a9e6de364cdd66d6f18566004936ba3a86a71c"
     },
     {
       "id": "character/mm_0312",
@@ -266391,9 +266391,9 @@
       "materials": [
         {
           "material": "monsball_M__Comb__",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "unproven",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 0,
           "rgba_sha256": "69663977e8d071ab043e542aa87a7025e4ad91bcb4a6d7b4edf6942d8c46e16e",
           "alpha": {
@@ -266459,13 +266459,13 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0312-e232d68581a0.glb",
-      "sha256": "e232d68581a050f0a76e8f8731140e9c30b97790c89ca53251787e4e065fdc7f"
+      "url": "/assets/native/materials/character_mm_0312-86ba875f10c7.glb",
+      "sha256": "86ba875f10c7ae3bdc11edcb886dcfcaf3c59f7130ff6935317d6f137a4348b6"
     },
     {
       "id": "character/mm_0314",
-      "source_url": "/assets/native/characters/mm_0314-6a5e601384ab.glb",
-      "source_sha256": "6a5e601384ab124301d4896a27264c70bf44350c42b4a773f61447171537cf55",
+      "source_url": "/assets/native/characters/mm_0314-b1a1c752befd.glb",
+      "source_sha256": "b1a1c752befd087d128ae23b62fce1075662d1f6b42a4361a7834f5c29c3d7d2",
       "native_pack": "rom/extracted/garc/a_0_2_1/0314.bin",
       "native_sha256": "eb16c24b213d15cd9a940e23e662420f778f0c3cf12f457a477cea1335731309",
       "texture_archive": null,
@@ -266473,9 +266473,9 @@
       "materials": [
         {
           "material": "rstr0001_00_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "4a2df75e8c7194415cf86359d19146f73deaa32c0840250b0ceae541b0639738",
           "alpha": {
@@ -266494,9 +266494,9 @@
         },
         {
           "material": "rstr0001_00_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "d32768999cd50d2b45763da1430a848d74332ddd7d37da85dfcd5a8534092b15",
           "alpha": {
@@ -266515,9 +266515,9 @@
         },
         {
           "material": "rstr0001_00_face",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "e2e1f79a301abaf6f5a1a60fc9364d8d3f24a717aad0b6c641e28cbf62694ffa",
           "alpha": {
@@ -266605,6 +266605,13 @@
               "normalized": true,
               "type": "VEC4",
               "index": 73
+            },
+            {
+              "componentType": 5123,
+              "count": 188,
+              "normalized": true,
+              "type": "VEC4",
+              "index": 81
             }
           ]
         },
@@ -266706,13 +266713,13 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0314-b1143a0c0caa.glb",
-      "sha256": "b1143a0c0caad4e06a08967d4682618e0a2e0db3544c62bd051bf0b75c2b5291"
+      "url": "/assets/native/materials/character_mm_0314-b4535bc6530a.glb",
+      "sha256": "b4535bc6530ab57a779f9721b14121911e073b790cf0aabde52e3ef96026b719"
     },
     {
       "id": "character/mm_0315",
-      "source_url": "/assets/native/characters/mm_0315-3aa3b5d4c326.glb",
-      "source_sha256": "3aa3b5d4c3262988cd1470cfdc9300fae6704b4c3b09e1f5260d3ab189392302",
+      "source_url": "/assets/native/characters/mm_0315-67676addb837.glb",
+      "source_sha256": "67676addb837e33c2cdc5ed0f895cfcef51edd2b9e1ce53a0d0aabc5b9ac6899",
       "native_pack": "rom/extracted/garc/a_0_2_1/0315.bin",
       "native_sha256": "45650bcb286a130479920c4d0a666929ee46702bff42bc96b6240a3bd3482638",
       "texture_archive": null,
@@ -266720,9 +266727,9 @@
       "materials": [
         {
           "material": "rstr0002_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "04f23e4c11d2e68edefcb7de21eb302571e55080e2cae393db68fcd4e216cd6d",
           "alpha": {
@@ -266741,9 +266748,9 @@
         },
         {
           "material": "rstr0002_00_fi_face",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "b94369da1fef3e65547a8ac60697ceb074c1b6057a5bf9b114b65fbddaf7bc5e",
           "alpha": {
@@ -266762,9 +266769,9 @@
         },
         {
           "material": "rstr0002_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "332b17d8145ca55f6d81d1b80c51344e58a9dc62409d73b4601d086f612ed5aa",
           "alpha": {
@@ -266838,6 +266845,13 @@
               "normalized": true,
               "type": "VEC4",
               "index": 41
+            },
+            {
+              "componentType": 5123,
+              "count": 218,
+              "normalized": true,
+              "type": "VEC4",
+              "index": 49
             }
           ]
         },
@@ -266925,8 +266939,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0315-8588cd487553.glb",
-      "sha256": "8588cd487553026afb432d0bb9c4d541540fbbb7dd7d53728dbbf6f05abfdc8d"
+      "url": "/assets/native/materials/character_mm_0315-5b020226c7ec.glb",
+      "sha256": "5b020226c7ecefa10b4023e14a4d18facbd3b7ed953778b143f26dd477b72070"
     },
     {
       "id": "character/mm_0318",
@@ -266939,9 +266953,9 @@
       "materials": [
         {
           "material": "rstr0009_00_fi_body",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "ded1559452d4154eebfc1f435889d624b2bae88fb4e35294fb7f48d407be9675",
           "alpha": {
@@ -266960,9 +266974,9 @@
         },
         {
           "material": "rstr0009_00_fi_face",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "d5720be51ad445155c5015d06a01bd7a743c17add4d0a901c7e5a62db63093a2",
           "alpha": {
@@ -266981,9 +266995,9 @@
         },
         {
           "material": "rstr0009_00_fi_head",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "6593a16420dcf35299a1e87301e3234ff67d25721b05a90d294cde7495fd1ced",
           "alpha": {
@@ -267130,8 +267144,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0318-c2c646bf3392.glb",
-      "sha256": "c2c646bf3392771f1d0d0b5bea0dfc6cf8fe25cd973d26af1f68a30430809b94"
+      "url": "/assets/native/materials/character_mm_0318-d17ad5c2020a.glb",
+      "sha256": "d17ad5c2020a6a74b1c10012455de22fff79df8f8d2852de4a59e839728e47ba"
     },
     {
       "id": "character/mm_0319",
@@ -267144,9 +267158,9 @@
       "materials": [
         {
           "material": "rstr0053_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "1672fbf232cd217acb46e79b7f1b971d291d8006190a97e840c59059ce09fb94",
           "alpha": {
@@ -267165,9 +267179,9 @@
         },
         {
           "material": "rstr0053_00_fi_faceMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0e99fbfaf9bcfff191d021b66b78e32dfe4122d77c50c4b09162721c35056018",
           "alpha": {
@@ -267186,9 +267200,9 @@
         },
         {
           "material": "rstr0053_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "ff4e37375673081e8e031cfb955dc9ebde38e5a8b2a57c3f090bbaa6b358b5f7",
           "alpha": {
@@ -267336,11 +267350,11 @@
       "preserved": true,
       "idempotent": true,
       "vertex_color_correction": {
-        "inputSha256": "b9c29c79b071564f914ce9bf2633ba67dff80b8c5339d9aa1b39bd8508f2d42c",
+        "inputSha256": "3abaa220b209a30f58484da54b5d38bf33d389c3c9883c05032b46e4314fe21b",
         "nativeSha256": "3739bcf71334b241c6688cbb05674c97e1c6bd0d1a2d802ad3e5a27aa21d0d6c",
         "referenceSha256": "8edd1dd4cb228fe4448e34a4ed305222a2a3296a77000862d92cd2f48b39fd8e",
         "toolSha256": "31f9c3bd0b8b241b92a7e964ac6fbc6b12425c418ece52649579dfcbaf3fbceb",
-        "daeSha256": "9aad2512686f5d8be45ab43532ff28d14f76a8b6584820448b187e67c833b3cd",
+        "daeSha256": "fe929e56ae0c12f55d57919ce73e5c99b4a4a05decdce541d569b07d602b5f88",
         "materials": [
           {
             "material": "rstr0053_00_fi_bodyMat",
@@ -267479,13 +267493,13 @@
               "componentType": 5126,
               "type": "VEC4",
               "count": 163,
-              "index": 437
+              "index": 439
             }
           ]
         }
       ],
-      "url": "/assets/native/materials/character_mm_0319-8074a5be6776.glb",
-      "sha256": "8074a5be6776f994a73754d81548ff3d024ac9e4a575eb9a39d3a9b0c211b1bb"
+      "url": "/assets/native/materials/character_mm_0319-845c316cbd7a.glb",
+      "sha256": "845c316cbd7a4d716018b375b61265868e0a85c77c17c1c7d482832afffaa282"
     },
     {
       "id": "character/mm_0320",
@@ -267498,9 +267512,9 @@
       "materials": [
         {
           "material": "rstr0196_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "281533f350d9dbb7fd26684a6fa356c236bb8f352bbe244729b63c306ff24f17",
           "alpha": {
@@ -267519,9 +267533,9 @@
         },
         {
           "material": "rstr0196_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "65669b3060407249eae272515c22d8ee3f27c07e2e07481f5c2071fe262b9013",
           "alpha": {
@@ -267624,8 +267638,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0320-78aef0354142.glb",
-      "sha256": "78aef03541425ebd17a8e4ab7c9908a3c3c4066004c7818f44ff2d5ce5cda919"
+      "url": "/assets/native/materials/character_mm_0320-eea1dc5ebd65.glb",
+      "sha256": "eea1dc5ebd653b2b31590d3c8079b40b6e95f8990d21b089d82bd65cdc85db2d"
     },
     {
       "id": "character/mm_0321",
@@ -267638,9 +267652,9 @@
       "materials": [
         {
           "material": "rstr0197_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "6ee9eb136e42068f8659f7f936a901dc48976eb1df59332fc6c20f8867f25cd9",
           "alpha": {
@@ -267659,9 +267673,9 @@
         },
         {
           "material": "rstr0197_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "3d220a65af1cc630a9addfa104379a57543900772195e786e45f3a3fcf83f7df",
           "alpha": {
@@ -267785,8 +267799,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0321-86a7016d9a25.glb",
-      "sha256": "86a7016d9a25b25e214c58c30ae0d787b306b07a619fb358c2781f13b018c38b"
+      "url": "/assets/native/materials/character_mm_0321-8affa8104eb5.glb",
+      "sha256": "8affa8104eb5f168e946b4e5f03c71c003ea69a0615923cc33b77b591650a76f"
     },
     {
       "id": "character/mm_0322",
@@ -267799,9 +267813,9 @@
       "materials": [
         {
           "material": "rstr0198_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "ccec1daa2b2d3da9e3ec8f33f30d79c4086cde1465befe249fe8c15402b53500",
           "alpha": {
@@ -267820,9 +267834,9 @@
         },
         {
           "material": "rstr0198_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "075d4b8506ba0dbbac856b5d311cae3bd9c9db6a6df8c07c27ebf2594b83ec2f",
           "alpha": {
@@ -267932,8 +267946,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0322-6b45efc9bb61.glb",
-      "sha256": "6b45efc9bb612fe37dacf8c0923947297282b541b22001801d54dac24fa8296a"
+      "url": "/assets/native/materials/character_mm_0322-a3ea2e26cd91.glb",
+      "sha256": "a3ea2e26cd91d33d3563edd0e2b574d98559e8572bcb20029fbcbeafba110557"
     },
     {
       "id": "character/mm_0333",
@@ -267946,9 +267960,9 @@
       "materials": [
         {
           "material": "rstr0209_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "3a46512c191a81daebae8f11082673d5befe26e4ef1eedce9635660264749a8f",
           "alpha": {
@@ -267967,9 +267981,9 @@
         },
         {
           "material": "rstr0209_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "185c8983e684fbcbd7a0614ea181450fa23d94e08586fb147f36ddbeabe2a3c8",
           "alpha": {
@@ -268072,8 +268086,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0333-8c7607070839.glb",
-      "sha256": "8c7607070839f0a4752f1f73a6540fa4bdfb1f3cee2996ca6840402f1f1a0536"
+      "url": "/assets/native/materials/character_mm_0333-395295fa4bb9.glb",
+      "sha256": "395295fa4bb956d1232581fe0328414516e47e14dc2793ceff75044c5c3c4c6f"
     },
     {
       "id": "character/mm_0340",
@@ -268086,9 +268100,9 @@
       "materials": [
         {
           "material": "rstr0216_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "fbda9db54c4377770df28bf00697d54bac0ba5ec06bea7852df9c649cb0b1032",
           "alpha": {
@@ -268107,9 +268121,9 @@
         },
         {
           "material": "rstr0216_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "a9660185b089ef59182f2fcfecb88000f1e38cb08788fc18822151c80cec6330",
           "alpha": {
@@ -268219,8 +268233,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0340-675343d8be68.glb",
-      "sha256": "675343d8be6897b133adb2739e8713f164cc4f6b439c793497ef3538c6c09798"
+      "url": "/assets/native/materials/character_mm_0340-ddd5424f005f.glb",
+      "sha256": "ddd5424f005fe30d1644dca1f80a76232349b6c59f202ab74dc1b94a58e2621e"
     },
     {
       "id": "character/mm_0341",
@@ -268233,9 +268247,9 @@
       "materials": [
         {
           "material": "rstr0217_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "9ab0c28060fcce867c906ee4600f9d826ff4ad73d063ae56374a31e4dcf08eec",
           "alpha": {
@@ -268254,9 +268268,9 @@
         },
         {
           "material": "rstr0217_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "465b1a496ff582197697979776c3acf00fe537ed1ce4b4e40d3daa2cc3c95c69",
           "alpha": {
@@ -268359,8 +268373,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0341-ab88566a00c9.glb",
-      "sha256": "ab88566a00c9e2594ccde0c03b7863d4f8facd642ab0cac3b969c998148fda4d"
+      "url": "/assets/native/materials/character_mm_0341-468691bc665e.glb",
+      "sha256": "468691bc665edc366e8fb48f93e3cd9d43da2ea2578030773e535f53d90b808c"
     },
     {
       "id": "character/mm_0344",
@@ -268373,9 +268387,9 @@
       "materials": [
         {
           "material": "rstr0122_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "80d5a2d63add6af096d2abe41e15773ca54efcc3fdf0fb25c1b6db303f7bf845",
           "alpha": {
@@ -268394,9 +268408,9 @@
         },
         {
           "material": "rstr0122_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "e004099579b5b21d86c45708ab3eb350b03ac8284e9dd3920e325978a1095161",
           "alpha": {
@@ -268506,8 +268520,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0344-48face3a204b.glb",
-      "sha256": "48face3a204b9d729886e2166e7f091f00538702d3ca38895062c8d2fc86908d"
+      "url": "/assets/native/materials/character_mm_0344-e07ace4187ee.glb",
+      "sha256": "e07ace4187ee85e152951f45ea145dfe5025433f9097db3d5e946353a8714ef3"
     },
     {
       "id": "character/mm_0345",
@@ -268520,9 +268534,9 @@
       "materials": [
         {
           "material": "rstr0113_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "da013e0b4b962c0a8a361c7353d22463e502053d15ac3ceecaa8c057d36b8f79",
           "alpha": {
@@ -268541,9 +268555,9 @@
         },
         {
           "material": "rstr0113_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "dcb510387895730d79330cd0058c891423efe3cada0400dab1bf1e51b58b0589",
           "alpha": {
@@ -268660,8 +268674,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0345-1494ca81c413.glb",
-      "sha256": "1494ca81c4136f99b50ab7c6abdb41caad82bff009724b8b5b3e13621c53f8ab"
+      "url": "/assets/native/materials/character_mm_0345-3f92dfb8dd5a.glb",
+      "sha256": "3f92dfb8dd5a695c39a3afc1a56a87f2fdc3331afa3d1d49d4ac7bea685d9cfa"
     },
     {
       "id": "character/mm_0346",
@@ -268674,9 +268688,9 @@
       "materials": [
         {
           "material": "rstr0112_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "0f2f139ac9e389f367b7b11bdc4d7d11d03ca780474bc950cda2c7e3a3cef20c",
           "alpha": {
@@ -268695,9 +268709,9 @@
         },
         {
           "material": "rstr0112_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "f239e00bdb2efccf5c24737aeea682a057290d8ba932cc6bb943e45f07c89e91",
           "alpha": {
@@ -268800,8 +268814,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0346-137985f400de.glb",
-      "sha256": "137985f400de9256fdd8fbc32bf4bc502ae26e7289791c438222aeee27884210"
+      "url": "/assets/native/materials/character_mm_0346-7264e1bfc30e.glb",
+      "sha256": "7264e1bfc30eaa378c13fb70b831cf6fa0ea196aa4879913c5a53354fdddfbaa"
     },
     {
       "id": "character/mm_0347",
@@ -268814,9 +268828,9 @@
       "materials": [
         {
           "material": "rstr0110_00_fi_bodyMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "mirrored",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "d7eb6c85da6af151e5a2e8f90492549e3a51c975c591986edab212ed72ee6969",
           "alpha": {
@@ -268835,9 +268849,9 @@
         },
         {
           "material": "rstr0110_00_fi_headMat",
-          "uv_orientation": "actor-policy-unchanged",
+          "uv_orientation": "original",
           "image_match": true,
-          "uv_identity_base": false,
+          "uv_identity_base": true,
           "base_slot": 1,
           "rgba_sha256": "82d0ece7616bb91a6a6f9503bacb7b361f397f243ca59a9fc32dfefa2508f70b",
           "alpha": {
@@ -268947,8 +268961,8 @@
       "changed": true,
       "preserved": true,
       "idempotent": true,
-      "url": "/assets/native/materials/character_mm_0347-00d87c0534bd.glb",
-      "sha256": "00d87c0534bd7f2847792070c406f7c17fa89366bd76aec6f0cf0c84c1c83636"
+      "url": "/assets/native/materials/character_mm_0347-60b5e3c88ffc.glb",
+      "sha256": "60b5e3c88ffc93fe0e085489f6b538b66844117028011e7ec260e3ad541d17b5"
     }
   ],
   "native_states": {
@@ -393453,8 +393467,8 @@
     "models": 336,
     "changed": 329,
     "materials": 4547,
-    "uv_models": 216,
-    "uv_materials": 3817,
+    "uv_models": 302,
+    "uv_materials": 3910,
     "alpha_materials": 4158,
     "native_states": 248,
     "color_models": 3,

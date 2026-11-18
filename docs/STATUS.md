@@ -10,12 +10,12 @@ Verificado em 2026-11-18 na `main`, macOS e Linux (headless via Xvfb). Todo trab
 | --- | --- | --- |
 | Testes unitários (Vitest) | 418 em 64 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | 95,9% linhas, 85,6% branches (catraca em 95/85) | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 209 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
+| Testes do pipeline e do oráculo (Python) | 213 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
 | Jogo real no browser (smoke) | 5 de 5 fluxos | `npm run test:e2e` |
 | Cenários visuais | 25 de 25 estáveis; **2 de 25 aceitos** sem defeito conhecido | `npm run test:e2e`, galeria em `rom/visual-report/index.html` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
 
-Defeitos visuais registrados nos cenários: 23 com atores de ID de objeto sem modelo (P-017), 2 com avatar encoberto por telhado ou parede (P-017), 2 close-ups do jogador sem pés (P-019).
+Defeitos visuais registrados nos cenários: 23 com atores de ID de objeto sem modelo (P-017), 2 com avatar encoberto por telhado ou parede (P-017). Pés de Brendan e May (`sw_parts02`) e orientação V de corpo/faces (`A-099`) corrigidos e verificados em todos os 25 cenários (`groundGap = -0,0001` nos close-ups).
 
 ## O que funciona
 
@@ -31,7 +31,6 @@ Defeitos visuais registrados nos cenários: 23 com atores de ID de objeto sem mo
 | --- | --- |
 | Campanha desde New Game não roda de forma natural: init, callbacks AMX e vários nativos de apresentação pendentes. Cada nativo pendente exige um Enter extra do jogador. | P-013 |
 | Permissões de movimento (ledges laterais, bike, Surf), camadas de piso e oclusão por prédios. | P-017 |
-| Brendan e May sem pés: o conversor descarta a malha `sw_parts02` (tênis) que existe no BCH da ROM. | P-019 |
 | Atores com ID de objeto (pedras, itens, bagas) aparecem como fallback. | P-017 |
 | Iluminação, LUTs e combiners RGB dos materiais; exterior preto em cavernas. | P-007 |
 | O emulador já roda por script, mas ainda não há save controlável, captura de referência nem teste diferencial: nenhuma paridade foi medida contra o original. | P-021 |

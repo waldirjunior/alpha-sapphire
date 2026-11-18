@@ -165,6 +165,32 @@ class PicaMaterialTests(unittest.TestCase):
         native['BlendFunction']['ColorDstFunc'] = 'One'
         self.assertIsNone(alpha_profile(native, 0, False))
 
+    def test_character_material_evidence_proves_uv_orientation_by_vertex_correspondence(self):
+        blob, _, native = fixture()
+        scene, binary = decode_glb(blob)
+        png = base64.b64decode(scene['images'][0]['uri'].split(',', 1)[1])
+        digest = hashlib.sha256(Image.open(io.BytesIO(png)).convert('RGBA').tobytes()).hexdigest()
+        coord = {'MappingType': 'UvCoordinateMap', 'Scale': {'X': 1, 'Y': 1}, 'Rotation': 0, 'Translation': {'X': 0, 'Y': 0}}
+        model = {
+            'materials': [{
+                'Name': 'foliage',
+                'textureNames': ['tex0'],
+                'TextureSources': [0, 0, 0, 0],
+                'TextureCoords': [coord, coord, coord],
+                'TexEnvStages': [],
+                'ColorOperation': {'BlendMode': 'Blend', 'FragOpMode': 'Default'},
+                'BlendFunction': {'ColorEquation': 'FuncAdd', 'AlphaEquation': 'FuncAdd',
+                                  'ColorSrcFunc': 'One', 'ColorDstFunc': 'Zero',
+                                  'AlphaSrcFunc': 'One', 'AlphaDstFunc': 'Zero'},
+                'AlphaTest': {'Enabled': False, 'Function': 'Always', 'Reference': 0},
+                'DepthColorMask': {'DepthWrite': True},
+            }],
+            'meshes': [{'MaterialIndex': 0, 'positionUv0': native}],
+        }
+        proof = material_evidence(scene, binary, Path('/unused.glb'), model, scene['materials'][0], {'tex0': {digest}}, 'character')
+        self.assertEqual(proof['uv_orientation'], 'mirrored')
+        self.assertTrue(proof['uv_identity_base'])
+
 
 if __name__ == '__main__':
     unittest.main()

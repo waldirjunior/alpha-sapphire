@@ -20,14 +20,13 @@ export interface VisualScenario {
 
 const OBJECT_MODELS: KnownDefects = { assetsLoaded: 'P-017: atores com ID de objeto (0x1000/0x2000) sem modelo mapeado' };
 const OCCLUDED: KnownDefects = { avatarVisible: 'P-017: telhado ou parede encobre o avatar' };
-const FEET: KnownDefects = { feetOnGround: 'P-019: a conversão perde a malha dos pés' };
 
 function overworld(id: string, zone: number, x: number, z: number, knownDefects: KnownDefects = OBJECT_MODELS): VisualScenario {
   return { id, zone, x, z, facing: 'down', camera: 'game', knownDefects };
 }
 
 function closeup(id: string, gender: 'male' | 'female'): VisualScenario {
-  return { id, zone: 6, x: 17, z: 14, facing: 'down', camera: 'closeup', gender, knownDefects: { ...OBJECT_MODELS, ...FEET } };
+  return { id, zone: 6, x: 17, z: 14, facing: 'down', camera: 'closeup', gender, knownDefects: OBJECT_MODELS };
 }
 
 export const VISUAL_SCENARIOS: readonly VisualScenario[] = [
