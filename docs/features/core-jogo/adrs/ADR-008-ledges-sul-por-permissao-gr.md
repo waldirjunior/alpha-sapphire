@@ -1,7 +1,7 @@
 # ADR-008 — Ledges ao sul por permissão GR
 
 - Data: 2026-11-18.
-- Estado: aceito e verificado localmente; Playwright na main pendente.
+- Estado: aceito; navegação condicional validada na main809b814, altura/animação/paridade pendentes.
 - Contexto: Fase2/P-017 e PRD-013 da engine-3d.
 
 ## Problema e evidência
@@ -36,7 +36,11 @@ não generalizar um bitfield direcional nem liberar todos os low bytes21.
 Regressões sintéticas cobrem descida/subida/lateral, imutabilidade, aterrissagem
 bloqueada/fora dos limites, atores visíveis/ocultos, ZO coincidente e diálogo.
 A composição Python deve preservar a colisão1 e mascarar a zona vizinha.
-O corredor real deve atravessar84→39→9 com os NPCs nativos presentes.
+O corredor84→39→9 passou com NPCs nativos após init real385 e fixture pós-demo.
+Playwright main809b814 confirmou oito saltos sul, subida bloqueada e452 passos
+até9(20,21), com reload/progresso preservados.345 Vitest/169 Python/build passam.
+As21 capturas revelam céu/avatar sem terreno em Jagged e oclusão em outros
+pontos: isso não é aceite visual ou validação da física vertical/emulador.
 
 Não implementar animação de hop ou altura gráfica nesta decisão. Esses efeitos,
 o demo do bondinho e a campanha completa continuam distintos da passabilidade.

@@ -14,4 +14,4 @@
 | [PRD-010](PRD-010-corredor-rustboro-verdanturf.md) | Corredor Rustboro–Route116–Rusturf–Verdanturf | Validado;325 passos main, fixture pós-evento explícita | 2026-11-18 |
 | [PRD-011](PRD-011-corredor-verdanturf-mauville-slateport.md) | Verdanturf–Mauville e acesso pós-evento a Slateport | Validado;748 passos main, fixture explícita e limites de oclusão | 2026-11-18 |
 | [PRD-012](PRD-012-corredor-mauville-fallarbor-meteor-falls.md) | Mauville–Fallarbor–entrada de Meteor Falls | 1023 passos main; base bloqueada/fixture derivada, loop e visual pendentes | 2026-11-18 |
-| [PRD-013](PRD-013-bondinho-mt-chimney-lavaridge.md) | Bondinho de Mt. Chimney, Jagged Pass e Lavaridge | Implementação e regressões locais; integração/Playwright pendentes | 2026-11-18 |
+| [PRD-013](PRD-013-bondinho-mt-chimney-lavaridge.md) | Bondinho de Mt. Chimney, Jagged Pass e Lavaridge | 452 passos main809b814; nav condicional validada, visual/natural pendentes | 2026-11-18 |

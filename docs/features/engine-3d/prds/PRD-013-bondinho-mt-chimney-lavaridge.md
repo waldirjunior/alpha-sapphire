@@ -1,7 +1,7 @@
 # PRD-013 — Bondinho de Mt. Chimney e descida a Lavaridge
 
 - Data: 2026-11-18.
-- Estado: implementado e verificado localmente; integração e Playwright na main pendentes.
+- Estado: navegação condicional validada na main809b814; transporte natural e aceite visual pendentes.
 - Base: main357692a; worktree `chimney-lavaridge`, branch `feat/chimney-lavaridge`.
 - Fase2/P-013/P-017; aprendizados A-072/A-073 (renumerados de A-069/A-070 no merge).
 
@@ -152,12 +152,80 @@ e build passaram; aviso herdado de chunks >500kB. Avisos herdados de câmera AMX
 não equivalem a paridade. npm install inicial reportou9 vulnerabilidades herdadas
 (3 moderadas/4 altas/2 críticas); dependências não foram alteradas nesta frente.
 
-## Aceite main pendente
+## Aceite condicional na main809b814
 
-Solicitar integração/janela estável. Playwright visível deve partir de15, provar
-bloqueio37 e usar a fixture derivada autorizada, provar bloqueio666 em39 antes do
-recorte real, entrar384 por teclado e aplicar a fixture pós-demo explicitamente
-rotulada. Entrada385 executa entities real; caminhar83→84→39→9, conferir encontros
-contra JSON, BGM, reload/persistência e subida bloqueada. Inspecionar screenshots,
-consoleErrors/pageErrors/missing/requestFailures e registrar oclusão/altura,
-sem chamar o transporte de interação/campanha natural ou alegar paridade visual.
+Chromium visível/1280×900, Vite127.0.0.1:5200 servido do checkout principal
+confirmado por PID/cwd; HEAD809b814 limpo. Contexto de browser novo, save isolado
+v2, checkpoint15(17,22). Não é New Game/campanha desde o início. RNG de teste
+mantido no intervalo0.9–1 para não abrir batalhas durante o aceite de navegação;
+as tabelas de encontro foram comparadas, não a distribuição estatística.
+
+| Marco | Tile | Passos de movimento acumulados |
+|---|---|---:|
+| Route111/base e duas tentativas bloqueadas | 37(31,66) | 115 |
+| Estação/sem666 e duas tentativas bloqueadas | 39(55,29) | 266 |
+| Entrada384 por ZO/teclado | 384(15,28) | 275 |
+| Aproximação ao funcionário, antes da fixture pós-demo | 384(15,25) | 278 |
+| Fixture pós-demo, sem contar como passo de teclado | 385(23,18) | 278 |
+| Saída da estação para o cume | 83(31,61) | 294 |
+| Entrada de Jagged | 84(38,5) | 314 |
+| Primeiro ledge sul | 84(38,29)→(38,31) | 338→339 |
+| Saída de Jagged pelo ZO real | 39(14,56) | 413 |
+| Borda MM para Lavaridge | 9(39,20) | 432 |
+| Interior de Lavaridge/reload | 9(20,21) | 452 |
+
+Oito transições por teclado e uma de fixture _MapChangeCore, oito saltos ao sul.
+As duas tentativas de subir após38,31 permaneceram bloqueadas. As seis tentativas
+negativas não entram nos452 passos. Contatos MM sem fade/continuidade world-unit
+conferidos; ZO e células de chegada preservados.
+
+Três estados são explicitamente rotulados no relatório e nas capturas:
+1. DERIVED post-RockSmash: somente tombstones37:2..5, sem mudar posição/flags;
+   não executa10050/efeito nativo.
+2. REAL FlagSet666 slice: global0028/21800..21815, halt21816, mesma posição;
+   esconde só os três atores666 em39, sem evento Meteor inteiro.
+3. EXPLICIT POST-DEMO: recortes WorkSet/_MapChangeCore, args385,23,57,18,1,0,0,1,0;
+   não executa filme, embarque, RecordAdd175 ou binding ambíguo. Entities385 real
+   restaura16699=1 e projeta funcionário1 em24,18 visível antes da caminhada ao
+   cume. Reload em Lavaridge preserva posição,666,16699=1 e quatro tombstones.
+
+Encontros das nove zonas15/445/37/39/384/385/83/84/9 iguais aos JSONs nativos.
+BGM observada por zona; requests c_02/r_c/d_02/d_01/t_02, mais t_01 da intro.
+**consoleErrors/pageErrors/missing/requestFailures vazios** nas duas execuções;
+segunda execução só corrigiu a legenda BASE inicial das capturas, sem mudar
+lógica/rota. Um aviso herdado BuildMdlEventAnimeSetEnd(6553770,0) continua P-013;
+nenhum Enter foi usado para completar ou simular esse efeito.
+
+**345 Vitest/53 arquivos,169 Python sem skips e build passaram sobre809b814**,
+com assets públicos apontados por GLB_MAPS_DIR; aviso de chunk >500kB herdado.
+Nenhuma dependência nova, imagem/binário da ROM ou screenshot versionado.
+
+### Inspeção das21 capturas: aceite visual NÃO fechado
+
+- 00: pátio de Mauville e avatar legíveis.01: chegada445(78,48) totalmente ocluída
+  por fachada próxima.02: saída37 parcialmente coberta por estrutura.
+- 03/04: gate RockSmash37 antes/depois sem avatar legível; mudança lógica confirmada
+  por projeção/teclado, não por imagem de quebra da pedra.
+- 05–07: Route11239(79,65/55,29) mostra superfícies próximas e oculta o avatar;
+  imagens não provam visualmente a remoção dos atores666.
+- 08/09: estação inferior384 legível, mas exterior azul/céu e limites de apresentação.
+- 10: estação superior385 mostra escada/cabine sem jogador/funcionário legíveis;
+  a posição/abertura da saída são evidência do estado e movimento, não da imagem.
+- 11/12: exterior83 visível, avatar parcialmente enterrado/ocluído junto à porta.
+- 13–15: Jagged84(38,5/38,29/38,31) mostra céu/avatar e marcador de warp, **sem
+  terreno visível**, apesar de zero recursos faltantes. Não chamar isso de salto
+  nativo animado ou descida visual validada.
+- 16–20: retorno39(14,56) e Lavaridge9(39,20/20,21) com avatar ausente/ocluído;
+  chegada sob árvore e oclusão persistente após reload.
+
+Manter P-013/P-017/P-019: investigar câmera/altura/geometria/seleção de camada e
+renderização de Jagged com evidência antes de corrigir; causa não diagnosticada.
+Não atribuir ausência de terreno a assets faltantes, inferir altura ou alterar
+colisões para mascarar o problema. Transporte/campanha natural, RecordAdd175,
+variantes de ledge e animação/altura continuam abertos.
+
+Relatório `/tmp/chimney-results.json`, script `/tmp/playwright-test-chimney.js`,
+imagens `/tmp/chimney-00-mauville-base.png` até
+`/tmp/chimney-20-lavaridge-reload-fixtures-preserved.png` (nomes completos no
+relatório). Executor do skill copilot com NODE_PATH apontando para a instalação
+Playwright já existente em cursor; sem instalar ou modificar dependências.
