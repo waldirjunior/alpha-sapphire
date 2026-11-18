@@ -2,7 +2,7 @@
 
 Retrato do estado verificado. **Edite as linhas; não acrescente seções nem relatos de entrega** — o relato vai para o PRD da frente. O tamanho deste arquivo é limitado por `src/docsContract.test.ts`. Histórico até 2026-11-18: [historico/STATUS-ate-2026-11-18.md](historico/STATUS-ate-2026-11-18.md).
 
-Verificado em 2026-11-18, branch `feat/quality-gates` sobre a main `1d3234f`, macOS.
+Verificado em 2026-11-18 na `main`, macOS. Todo trabalho anterior está na `main`; as branches de worker já estavam integradas e foram removidas.
 
 ## Placar
 
