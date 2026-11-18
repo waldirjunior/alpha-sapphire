@@ -276,6 +276,14 @@ export class SceneManager {
       z: state.player.pos.z,
     };
 
+    for (const npc of map.npcs ?? []) {
+      const root = this.entitiesGroup.getObjectByName(npc.id);
+      if (!root) continue;
+      const npcPos = worldPosition(npc.pos, map);
+      root.position.set(npcPos.x, 0, npcPos.z);
+      root.rotation.y = FACING_YAW[npc.facing ?? 'down'];
+      root.visible = npc.visible !== false;
+    }
     const target = worldPosition(state.player.pos, map);
     this.playerTargetPos.set(target.x, 0, target.z);
     const continuous = previousRegion && previousRegion === map.continuousRegion &&

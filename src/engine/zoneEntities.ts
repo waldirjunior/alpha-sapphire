@@ -9,8 +9,9 @@ export const FACING_YAW: Record<Direction, number> = {
 
 type ActorLoader = (url: string, target: THREE.Group) => void;
 
-function addNpc(group: THREE.Group, pos: GridPosition, modelUrl: string, facing: Direction | undefined, load: ActorLoader): void {
+function addNpc(group: THREE.Group, pos: GridPosition, modelUrl: string, facing: Direction | undefined, load: ActorLoader, id?: string): void {
   const root = new THREE.Group();
+  if (id) root.name = id;
   root.position.set(pos.x, 0, pos.z);
   root.rotation.y = FACING_YAW[facing ?? 'down'];
   const fallback = new THREE.Mesh(new THREE.CapsuleGeometry(0.3, 0.5, 4, 8),
@@ -34,7 +35,7 @@ function addSign(group: THREE.Group, pos: GridPosition): void {
 
 export function appendMapEntities(map: MapDefinition, group: THREE.Group, load: ActorLoader): void {
   group.add(createWarpMarkers({ ...map, warps: map.warps.map((warp) => ({ ...warp, from: worldPosition(warp.from, map) })) }));
-  for (const npc of map.npcs ?? []) addNpc(group, worldPosition(npc.pos, map), npc.modelUrl, npc.facing, load);
+  for (const npc of map.npcs ?? []) addNpc(group, worldPosition(npc.pos, map), npc.modelUrl, npc.facing, load, npc.id);
   for (const item of map.interactables ?? []) {
     const pos = worldPosition(item.pos, map);
     if (item.kind === 'sign') { addSign(group, pos); continue; }

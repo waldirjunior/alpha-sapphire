@@ -45,6 +45,7 @@ export interface Interactable {
 }
 
 export interface MapNpc {
+  visible?: boolean;
   id: string;
   pos: GridPosition;
   modelUrl: string;

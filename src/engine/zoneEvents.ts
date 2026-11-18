@@ -1,0 +1,175 @@
+import { createAmxWorld } from '../core/amxMemory';
+import { createAmxState, resumeAmx, runAmx } from '../core/amxRunner';
+import type { AmxInput, AmxState, AmxWorld } from '../core/amxTypes';
+import type { GameState, MapDefinition, MapNpc } from '../core/types';
+import { loadZoneEventPrograms, npcEventProgram, zoneInitProgram, type ZoneEventPrograms } from '../data/zone_scripts/loader';
+import { classifyEventRequest, npcActorId, projectEventActors } from './eventHost';
+
+interface TextSource { zone: number; lines: string[] }
+const texts = import.meta.glob<TextSource>('../data/texts/zones/*.json', { import: 'default' });
+export interface ZoneEventAssets { programs: ZoneEventPrograms | null; lines: readonly string[] }
+
+async function loadZoneEventAssets(zoneId: number): Promise<ZoneEventAssets> {
+  const key = String(zoneId).padStart(3, '0');
+  const loadText = Object.entries(texts).find(([path]) => path.split('/').at(-1)?.startsWith(`${key}_`))?.[1];
+  const [programs, lines] = await Promise.all([loadZoneEventPrograms(zoneId), loadText ? loadText().then(t => t.lines) : Promise.resolve([])]);
+  return { programs, lines };
+}
+interface EventPorts {
+  state(): GameState;
+  map(): MapDefinition;
+  project(map: MapDefinition, world: AmxWorld): void;
+  dialogue(text: string | null): void;
+  frames(count: number): Promise<void>;
+  report(message: string): void;
+  silentAudio(soundId: number): void;
+}
+
+export class ZoneEvents {
+  private world = createAmxWorld();
+  private loaded: ZoneEventPrograms | null = null;
+  private current: AmxState | null = null;
+  private lines: readonly string[] = [];
+  private waitingKey = false;
+  private completionValue = 0;
+  private executing = false;
+  private generation = 0;
+  private activeMap = '';
+  private readonly initialMaps = new Map<string, MapDefinition>();
+
+  constructor(private readonly ports: EventPorts,
+    private readonly loadAssets: (zoneId: number) => Promise<ZoneEventAssets> = loadZoneEventAssets) {}
+
+  get busy(): boolean { return this.executing || this.current !== null; }
+
+  reset(): void {
+    this.generation += 1;
+    this.world = createAmxWorld();
+    this.current = null;
+    this.loaded = null;
+    this.lines = [];
+    this.executing = false;
+    this.waitingKey = false;
+    this.completionValue = 0;
+    this.activeMap = '';
+  }
+
+  async enter(): Promise<void> {
+    const currentMap = this.ports.map();
+    const map = this.initialMaps.get(currentMap.id) ?? currentMap;
+    if (map.id === this.activeMap || map.zoneId === undefined || !map.npcs) return;
+    this.initialMaps.set(map.id, map);
+    this.activeMap = map.id;
+    this.current = null;
+    this.loaded = null;
+    this.lines = [];
+    this.waitingKey = false;
+    this.completionValue = 0;
+    this.executing = true;
+    const generation = ++this.generation;
+    try {
+      const assets = await this.loadAssets(map.zoneId);
+      if (generation !== this.generation) return;
+      this.loaded = assets.programs;
+      this.lines = assets.lines;
+      this.world = { ...this.world, zoneId: map.zoneId, actors: {}, sex: this.ports.state().player.gender === 'female' ? 1 : 0 };
+      for (const npc of map.npcs) this.world.actors[npcActorId(npc)] = {
+        x: npc.pos.x, y: 0, z: npc.pos.z, direction: directionCell(npc.facing), visible: true, moveCode: 0,
+      };
+      this.refreshPlayer();
+      this.ports.project(projectEventActors(map, this.world), this.world);
+      const id = this.loaded && zoneInitProgram(this.loaded);
+      if (id) await this.start(id, 1);
+    } catch (error) {
+      if (generation === this.generation) { this.activeMap = ''; this.fail(error); }
+    } finally { if (generation === this.generation) this.executing = false; }
+  }
+
+  async interact(npc: MapNpc): Promise<boolean> {
+    if (this.busy || !this.loaded) return false;
+    const id = npcEventProgram(this.loaded, npcActorId(npc), npc.script);
+    if (!id) return false;
+    this.refreshPlayer();
+    await this.start(id, npc.script);
+    return true;
+  }
+
+  async advance(): Promise<void> {
+    if (!this.waitingKey || !this.current || this.executing) return;
+    this.waitingKey = false;
+    const value = this.completionValue;
+    this.completionValue = 0;
+    await this.drive({ kind: 'native-result', value });
+  }
+
+  private refreshPlayer(): void {
+    const player = this.ports.state().player;
+    this.world.actors[255] = { x: player.pos.x, y: 0, z: player.pos.z,
+      direction: directionCell(player.facing), visible: true, moveCode: 0 };
+  }
+
+  private async start(id: string, scriptId: number): Promise<void> {
+    if (!this.loaded) return;
+    this.current = createAmxState(this.loaded.bundle, id, scriptId, { ...this.world, effects: [], dialogue: null });
+    await this.drive();
+  }
+
+  private async drive(input?: AmxInput): Promise<void> {
+    if (!this.current || !this.loaded) return;
+    this.executing = true;
+    const generation = this.generation;
+    try {
+      if (input) this.current = resumeAmx(this.current, input);
+      for (let requests = 0; this.current && generation === this.generation; requests += 1) {
+        if (requests >= 1000) throw new Error('Evento excede 1000 solicitações do host');
+        this.current = runAmx(this.loaded.bundle, this.current);
+        this.world = this.current.world;
+        this.ports.project(projectEventActors(this.ports.map(), this.world), this.world);
+        if (!this.world.dialogue) this.ports.dialogue(null);
+        if (this.current.status === 'completed') { this.current = null; return; }
+        const response = await this.serviceRequest(this.current);
+        if (!response || generation !== this.generation || !this.current) return;
+        this.current = resumeAmx(this.current, response);
+      }
+    } catch (error) { if (generation === this.generation) this.fail(error); }
+    finally { if (generation === this.generation) this.executing = false; }
+  }
+
+  private async serviceRequest(state: AmxState): Promise<AmxInput | null> {
+    const request = classifyEventRequest(state, this.lines);
+    if (request.kind === 'opaque') return this.deferPresentation(state, request.name);
+    if (request.kind === 'key' || request.kind === 'text') {
+      if (request.kind === 'text') this.ports.dialogue(request.text);
+      this.waitingKey = true;
+      return null;
+    }
+    if (request.kind === 'frames') {
+      await this.ports.frames(request.count);
+      return { kind: 'ticks', count: request.count };
+    }
+    if (request.kind === 'silent-audio') this.ports.silentAudio(request.soundId);
+    return { kind: 'native-result', value: request.kind === 'complete' ? request.value : 0 };
+  }
+
+  private deferPresentation(state: AmxState, name: string): null {
+    const pending = state.awaiting;
+    const cosmeticActor = ['TalkMdlSetEyeToEye', 'TalkMdlClearEyeToEye', 'TalkMdlSetTalkMotion', 'TalkMdlClearEye'].includes(name);
+    if (pending?.kind !== 'native' || !(['movement', 'camera'].includes(pending.effect.channel) || cosmeticActor)) {
+      throw new Error(`Efeito pendente não implementado: ${name}`);
+    }
+    this.completionValue = name === 'MdlAcmdUpdate' ? 1 : 0;
+    this.ports.dialogue(`Apresentação pendente: ${name}. Enter fornece retorno ${this.completionValue} sem reproduzir o efeito (P-013).`);
+    this.waitingKey = true;
+    return null;
+  }
+
+  private fail(error: unknown): void {
+    this.current = null;
+    this.waitingKey = false;
+    this.ports.report(error instanceof Error ? error.message : String(error));
+  }
+}
+
+function directionCell(direction: MapNpc['facing']): number {
+  return { down: 0, up: 1, left: 2, right: 3 }[direction ?? 'down'];
+}

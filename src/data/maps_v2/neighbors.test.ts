@@ -9,7 +9,8 @@ it('connects the corridor with unit world steps and reads the exact native zone 
   const maps = Object.fromEntries(zones.map((map) => [map.id, map]));
   const cases = [
     { zone: 6, pos: { x: 20, z: 0 }, direction: 'up', target: 23 },
-    { zone: 23, pos: { x: 20, z: 0 }, direction: 'up', target: 7 },
+    // x=21: o tile (20,39) de Oldale tem um NPC ROM real (spawnFlag 619) que bloqueia a coluna 20
+    { zone: 23, pos: { x: 21, z: 0 }, direction: 'up', target: 7 },
     { zone: 7, pos: { x: 1, z: 21 }, direction: 'left', target: 24 },
     { zone: 24, pos: { x: 0, z: 16 }, direction: 'left', target: 13 },
   ] as const;
