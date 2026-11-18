@@ -202,3 +202,13 @@ Playwright serviu os assets reais do checkout principal por interceptação;
 screenshots temporários foram inspecionados, não versionados. 150 Vitest/113
 Python e build passaram. Flags/diálogos/VM, IDs especiais, bordas contínuas sem
 warp ZO, transições exatas e paridade permanecem em P-013/P-017 (A-025).
+
+## texCoord esparso do assimp v6 (2026-11-17, A-026)
+
+SpicaExport emite `set="3|4"` em `TEXCOORD` para as fontes `*_mapped_uv*_id`;
+`bind_vertex_input` liga `UV0` do material a esses sets. O assimp v6 compacta
+os atributos para `TEXCOORD_0..k` mas mantém o número esparso em
+`texture.texCoord`, e o three.js amostra `uvN` inexistente (cor plana) ou nem
+compila o shader (`uvN` undeclared). `convert_gr_to_glb` roda
+`scripts/glb_uv_fix.py` ao final: `texCoord` inválido → maior canal válido
+(`valid-1`, o slot `mapped_uv`); `validate_glb.py` audita qualquer `.glb`.

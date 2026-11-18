@@ -148,3 +148,17 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Progresso:** `build_zone_maps.py` gera 536 JSONs em `maps_v2`, com 911 destinos resolvidos e dez referências sem diferenças de colisão/terreno. `_validation.json` lista 48 warps de origem e 48 targets off-region, todos da zona 0, e quatro NPCs off-map (23/44/177/221). Nenhuma coordenada foi ajustada ou descartada; spawn é fallback derivado e marcado, não ponto original do jogo.
 - **Integração 2026-11-17:** Loader/adapter lazy, bootstrap zone_0006, chunks posicionados, NPCs mm_NNNN com fallback, warps retangulares e orientação/fade básicos implementados (engine-3d/PRD-005/ADR-003, A-025). Staging limitado a 15 zonas/25 GRs/42 personagens; 15 IDs especiais sem asset correspondente usam fallback sem mascarar bits. Saves v2 e legacy ficam em namespaces separados. Smoke real 6→223→6 verificou posição/direção e requests lazy, sem pageerror.
 - **Próximo passo:** Confirmar semântica MM/IDs especiais, uso da zona 0 e atores off-map; integrar VM/init/save, visibilidade por spawnFlag, diálogos e bordas contínuas sem warp ZO. Validar códigos exatos de faceDirection/transitionEffect e paridade no emulador. Não fechar pela integração básica: o fade é aproximação de host e os atores atualmente mantêm suas posições estáticas. O arquivo legado game.ts já excedia 500 linhas antes desta tarefa; separar sua UI/input em trabalho dedicado, sem refatoração oportunista.
+
+## P-018 Reprocessar texCoord dos ~830 GLBs de GR fora do slice público
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** `python3 scripts/validate_glb.py --glob 'rom/extracted/models/gr_*/gr_*.glb'` no checkout principal: **831 de 846 arquivos inválidos, 11.972 violações** (`texCoord` 3/4 sem atributo `TEXCOORD_n` correspondente, A-026). Os 36 GLBs já staged em `public/assets/maps/` foram corrigidos in-place por `glb_uv_fix.py` e validados (0 violações); Littleroot voltou a renderizar texturas.
+- **Próximo passo:** Aplicar `scripts/glb_uv_fix.py` em lote sobre `rom/extracted/models/` (barato, só reescreve o chunk JSON do GLB) ou reconverter via `batch_convert_grs.py` — `convert_gr_to_glb` já chama `fix_file` no fim. Validar depois com `validate_glb.py` antes de staged novos GRs.
+
+## P-019 Personagens exportados com UV de rosto na célula errada do atlas e sem geometria de pés
+
+- **Estado:** aberta
+- **Data:** 2026-11-17
+- **Evidência:** `brendan.glb` (Blender glTF, 6 meshes skinned): a textura `rstr0002_00_fi_face` é um atlas 4×2 de variantes de expressão e as UVs da mesh `face_1_0` só cobrem `u 0–0,24, v 0–0,49` — a célula de olhos fechados, por isso o personagem renderiza "sem olhos" (verificado em render isolado). Os pés não existem como geometria: o corpo (`bag_0_*`) termina em `y≈1,5` unidades. `alphaTest` não é causa: as três texturas do modelo são 100% opacas (histograma α ≥ 0,45 em todos os texels).
+- **Próximo passo:** Investigar em `convert_character_glb.py`/SpicaExport se outra célula do atlas ou outro arquivo (sapatos/overlay de olhos) deveria ser usado; decidir se o engine deve deslocar o V da face para a célula de olhos abertos ou se o export precisa remapear UVs/incluir submodelos ausentes. Vale para `may.glb` e `mm_*` (verificar).

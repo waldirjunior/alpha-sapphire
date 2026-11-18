@@ -111,3 +111,10 @@ Atualizado em 2026-11-17 (verificação local na VPS).
   - `536` textos de zona em `src/data/texts/zones/` e `175` arquivos GameText em `src/data/texts/gametext/` (via `extract_texts.decode_gen6_text`).
   - `199` trilhas `.bcstm` → `.mp3` em `rom/extracted/audio/mp3/` (`281M`); [src/data/zone_audio.json](../src/data/zone_audio.json) mapeia as 536 zonas para a trilha ([audio-format.md](features/pipeline-rom/audio-format.md)); `game.ts` toca a BGM do mapa via [src/engine/audioPlayer.ts](../src/engine/audioPlayer.ts) (7 faixas do slice em `public/assets/audio/`, local).
   - Batch `.glb` em andamento em `rom/extracted/models/`: `gr_NNNN/` (GRs de mapa), `pokemon/` (`--all`, tags `pmNNNN_NN`), `characters/` (`mm_NNNN`).
+
+## Correção de texCoord nos GLBs de GR (2026-11-17, fix/texcoord-uv-channels)
+
+- Regressão visual maps_v2 (casas marrons/chão plano) rastreada a `texture.texCoord` esparso (3/4) escrito pelo assimp v6 sem atributo `TEXCOORD_n` correspondente (A-026). Fix na origem: `convert_gr_to_glb` agora chama [glb_uv_fix.py](../scripts/glb_uv_fix.py) após o export; validador [validate_glb.py](../scripts/validate_glb.py) checa qualquer `.glb`.
+- Os **36 GLBs staged** em `public/assets/maps/` do checkout principal foram corrigidos in-place (todos os `gr_*` afetados; os legados/intactos não foram tocados) e `validate_glb.py` reporta 0 violações; screenshot Playwright confirma texturas restauradas e zero erros de shader.
+- `python3 -B -m unittest` das suítes `test_glb_uv_fix` (+7 testes sintéticos e de assets staged) junto às demais: **120 testes, 1 skip** (assets públicos ausentes neste worktree; rodados com `GLB_MAPS_DIR` apontando ao checkout principal). `npm test` **150 testes** e `npm run build` passaram.
+- Auditoria `rom/extracted/models/gr_*/`: 831/846 inválidos → `P-018`. Rosto/pés dos personagens é problema de asset, não da regressão → `P-019`.

@@ -147,6 +147,10 @@ def convert_gr_to_glb(
         subprocess.run(["assimp", "export", str(dae_path), str(glb_path)], check=True)
         states = read_pica_alpha_states(dae_path.read_text(encoding="utf-8"))
         glb_path.write_bytes(patch_glb_materials(glb_path.read_bytes(), states))
+        # assimp v6 preserva o número de set TEXCOORD do COLLADA (3/4, esparsos
+        # no PICA200) em texture.texCoord enquanto compacta os atributos para
+        # TEXCOORD_0..k — sem o remap o three.js amostra um canal inexistente.
+        fix_file(glb_path)
         for png in Path(tmp).glob("*.png"):
             shutil.copy2(png, glb_path.parent / png.name)
 
