@@ -1,5 +1,6 @@
 import type { GameState, MapDefinition } from '../core/types';
 import { projectEventPlayer } from './eventHost';
+import { persistAmxProgress } from '../core/amxProgress';
 import { ZoneEvents } from './zoneEvents';
 import { zoneMaps } from '../data/maps_v2/runtime';
 import { eventWarpState } from './eventWarp';
@@ -16,7 +17,7 @@ export function createGameEvents(getState: () => GameState, setState: (state: Ga
     map: () => maps[getState().player.mapId],
     project: (map, world, player) => {
       maps[map.id] = map;
-      setState(projectEventPlayer(getState(), map, world, player));
+      setState(persistAmxProgress(projectEventPlayer(getState(), map, world, player), world));
       syncUi();
     },
     dialogue,

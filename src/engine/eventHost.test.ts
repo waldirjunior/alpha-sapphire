@@ -61,6 +61,25 @@ describe('host de eventos AMX', () => {
     expect(classifyEventRequest(state, [])).toEqual({ kind: 'frames', count: 3 });
     expect(() => classifyEventRequest(pending('TalkMdlMsg_Seq', [7]), [])).toThrow('7');
   });
+  it('uses nonzero spawnFlag as hide-flag while preserving flag0 and explicit actor visibility', () => {
+    const map: MapDefinition = { id: 'zone_0075', zoneId: 75, name: 'Tunnel', width: 80, height: 40,
+      collisions: [], warps: [], npcs: [
+        { id: 'zone_0075:npc:12', model: 8204, modelUrl: '', script: 2000, spawnFlag: 676, pos: { x: 50, z: 10 } },
+        { id: 'zone_0075:npc:7', model: 8204, modelUrl: '', script: 10050, spawnFlag: 0, pos: { x: 61, z: 26 } },
+      ] };
+    const world = createAmxWorld(0, 75);
+    world.actors[12] = { x: 50, y: 0, z: 10, direction: 0, visible: true, moveCode: 0 };
+    expect(projectEventActors(map, world).npcs?.[0].visible).toBe(true);
+    world.flags[676] = world.flags[0] = true;
+    const hidden = projectEventActors(map, world);
+    expect(hidden.npcs?.map(npc => npc.visible)).toEqual([false, true]);
+    world.flags[676] = false;
+    expect(projectEventActors(hidden, world).npcs?.[0].visible).toBe(true);
+    world.actors[12].visible = false;
+    expect(projectEventActors(map, world).npcs?.[0].visible).toBe(false);
+    expect(map.npcs?.[0].visible).toBeUndefined();
+  });
+
   it('projeta posição/visibilidade sem mutar atores e encontra somente NPC à frente visível', () => {
     const map: MapDefinition = { id: 'zone_0006', zoneId: 6, name: 'Town', width: 8, height: 8,
       collisions: [], warps: [], npcs: [{ id: 'zone_0006:npc:7', model: 1, modelUrl: '', script: 14,

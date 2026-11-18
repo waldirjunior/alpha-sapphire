@@ -18,7 +18,7 @@ const groups: Readonly<Record<AmxEffectChannel, Readonly<Record<string, number>>
     ContactEncountIsActive: 0, ContactEncountEnd: 0 },
   actor: { _TalkMdlStartInit: 4, _TalkMdlEndInit: 2, TalkMdlClearEye: 1, TalkMdlClearEyeToEye: 1,
     TalkMdlSetEye: 3, TalkMdlSetEyeToEye: 1, TalkMdlSetTalkMotion: 1, MdlSetWaitAnimeReq: 1,
-    MdlAdd: 1, MdlDel: 1, _MdlProperties: 2, MdlParamPosChange: 5,
+    MdlAdd: 1, _MdlProperties: 2, MdlParamPosChange: 5,
     BuildMdlEventAnimeInvStart: 4, BuildMdlEventAnimeIsEnd: 2, BuildMdlEventAnimeSetEnd: 2,
     BuildMdlEventAnimeStart: 3, BuildMdlEventAnimeStop: 2,
     MdlInterestViewClear: 1, MdlInterestViewSet: 4, MdlInterestViewSetMode: 2,

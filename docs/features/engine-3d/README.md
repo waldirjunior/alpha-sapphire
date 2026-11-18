@@ -10,6 +10,7 @@ Camada de renderização WebGL com Three.js em `src/engine/` (`SceneManager.ts`)
 - [PRD-007](prds/PRD-007-animacoes-nativas-no-runtime.md) / [ADR-005](adrs/ADR-005-eventos-batalha-e-clipes-nativos.md) — eventos puros de batalha dirigem clipes GF1 em `nativeAnimation.ts`, com catálogo local imutável, fallbacks explícitos e auditoria P-019; Playwright nativo na main ac4054d validado com capturas e estados alpha preservados. Paridade de texturas/combiners/expressões segue pendente.
 - [PRD-008](prds/PRD-008-corredor-petalburg-rustboro.md) / [ADR-004](adrs/ADR-004-bordas-por-zone-grid.md) — extensão até Rustboro: ponte explícita13↔27, portais reais da floresta e contato MM4 entre26/16; A-042/A-043/A-044,306 passos Playwright na main com zero consoleErrors/pageErrors/missing; limites visuais e de história mantidos.
 - [PRD-009](prds/PRD-009-expressoes-bch-no-runtime.md) — ChangeFace por ID do ator, estado puro e oito frames BCH em cinco materiais evidenciados, com clones de textura por instância e A/B AMX sintético validado no engine real. A-047–A-049: piscada automática pendente de clock/condições nativas; sem UV inventado ou alteração de geometria.
+- [PRD-010](prds/PRD-010-corredor-rustboro-verdanturf.md) — corredor16→43→75→11; contato MM4 e portais ZO existentes, bloqueio nativo pela hide-flag676 e estado pós-evento explícito. Stage e testes concluídos; Playwright ainda pendente nesta revisão.
 - Referência TCC: [docs/tcc/00-arquitetura.md](../../tcc/00-arquitetura.md).
 
 ## Estado atual

@@ -1,6 +1,7 @@
 import type { AmxState, AmxWorld } from '../core/amxTypes';
 import type { Direction, GameState, MapDefinition, MapNpc, PlayerState } from '../core/types';
 import { stepBoundary } from '../core/boundaries';
+import { actorDeletionKey } from '../core/amxProgress';
 import { romFacing } from '../data/maps_v2/adapter';
 import { decodeEventWarp, type EventWarp } from './eventWarp';
 
@@ -39,8 +40,11 @@ export function projectEventActors(map: MapDefinition, world: AmxWorld): MapDefi
   const origin = map.romOrigin ?? { x: 0, z: 0 };
   return { ...map, npcs: map.npcs?.map(npc => {
     const actor = world.actors[npcActorId(npc)];
-    return actor ? { ...npc, pos: { x: actor.x - origin.x, z: actor.z - origin.z },
-      facing: romFacing(actor.direction), visible: actor.visible, faceExpression: actor.faceExpression } : npc;
+    const deleted = world.deletedActors[actorDeletionKey(map.zoneId ?? world.zoneId, npcActorId(npc))];
+    const hidden = npc.spawnFlag !== 0 && world.flags[npc.spawnFlag] === true;
+    return { ...npc, ...(actor ? { pos: { x: actor.x - origin.x, z: actor.z - origin.z },
+      facing: romFacing(actor.direction), faceExpression: actor.faceExpression } : {}),
+      visible: !deleted && !hidden && (actor?.visible ?? npc.visible ?? true) };
   }) };
 }
 

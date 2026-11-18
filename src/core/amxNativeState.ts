@@ -1,5 +1,6 @@
 import { amxError, type AmxActor, type AmxMachine, type AmxWorld } from './amxTypes';
 import { cellFromFloat, floatFromCell } from './amxMemory';
+import { actorDeletionKey } from './amxProgress';
 
 type Native = (world: AmxWorld, args: readonly number[], machine: AmxMachine) => number;
 export interface AmxNativeDefinition { arity: number; execute: Native }
@@ -38,6 +39,11 @@ export const stateNatives: Readonly<Record<string, AmxNativeDefinition>> = {
   MdlGetDirDisp: { arity: 1, execute: (w, [id]) => actor(w, id).direction },
   MdlSetDirDisp: { arity: 2, execute: (w, [id, direction]) => { actor(w, id).direction = direction; return 0; } },
   MdlSetVisible: { arity: 2, execute: (w, [id, visible]) => { actor(w, id).visible = !!visible; return 0; } },
+  MdlDel: { arity: 1, execute: (w, [id]) => {
+    delete w.actors[id];
+    w.deletedActors[actorDeletionKey(w.zoneId, id)] = true;
+    return 0;
+  } },
   MdlSetGPos: { arity: 4, execute: (w, [x, y, z, id]) => { Object.assign(actor(w, id), { x, y, z }); return 0; } },
   MdlGetGPosX: { arity: 1, execute: (w, [id]) => cellFromFloat(actor(w, id).x) },
   MdlGetGPosZ: { arity: 1, execute: (w, [id]) => cellFromFloat(actor(w, id).z) },
