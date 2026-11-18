@@ -151,10 +151,10 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-018 Reprocessar texCoord dos ~830 GLBs de GR fora do slice público
 
-- **Estado:** aberta
+- **Estado:** fechada
 - **Data:** 2026-11-17
 - **Evidência:** `python3 scripts/validate_glb.py --glob 'rom/extracted/models/gr_*/gr_*.glb'` no checkout principal: **831 de 846 arquivos inválidos, 11.972 violações** (`texCoord` 3/4 sem atributo `TEXCOORD_n` correspondente, A-026). Os 36 GLBs já staged em `public/assets/maps/` foram corrigidos in-place por `glb_uv_fix.py` e validados (0 violações); Littleroot voltou a renderizar texturas.
-- **Próximo passo:** Aplicar `scripts/glb_uv_fix.py` em lote sobre `rom/extracted/models/` (barato, só reescreve o chunk JSON do GLB) ou reconverter via `batch_convert_grs.py` — `convert_gr_to_glb` já chama `fix_file` no fim. Validar depois com `validate_glb.py` antes de staged novos GRs.
+- **Fechamento (2026-11-17):** `glb_uv_fix.py` aplicado em lote aos 846 `gr_*.glb` de `rom/extracted/models/` (11.972 remaps). Revalidação: `validate_glb.py` → **846 arquivo(s), 0 inválido(s), 0 violação(ões)**. Novos GRs promovidos a `public/assets/` continuam a exigir validação prévia.
 
 ## P-019 Personagens exportados com UV de rosto na célula errada do atlas e sem geometria de pés
 
