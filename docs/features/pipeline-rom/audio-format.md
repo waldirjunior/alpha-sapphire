@@ -42,6 +42,22 @@ As 536 zonas resolvem para um `.mp3` existente. Zona 0 (cópia técnica de Littl
 
 `src/data/zone_audio.json`: um registro por linha `{zone, name, bgmIndex, soundIndex, soundLabel, bgmName, hasMp3}`; `bgmName` é o nome do `.mp3` sem extensão.
 
+## Batalha e jingles
+
+[src/core/battleAudio.ts](../../../src/core/battleAudio.ts) escolhe a faixa pela classe da batalha; os nomes vêm dos rótulos do BCSAR (`STRM_BGM_VS_*_SG`, `STRM_ME_*`):
+
+| Situação | Rótulo | Arquivo |
+|---|---|---|
+| Selvagem | `STRM_BGM_VS_NORAPOKE_SG` (som 100) | `bgm_sg_vs_norapoke_sg` |
+| Treinador | `STRM_BGM_VS_TRAINER_SG` (101) | `bgm_sg_vs_trainer_sg` |
+| Líder de ginásio | `STRM_BGM_VS_GYMLEADER_SG` (102) | `bgm_sg_vs_gymleader_sg` |
+| Rival | `STRM_BGM_VS_RIVAL_SG` (103) | `bgm_sg_vs_rival_sg` |
+| Vitória selvagem / treinador / ginásio | `STRM_BGM_WIN1/2/3` (125–127) | `bgm_sg_win1/2/3` — **inferência** pela ordem dos rótulos (`A-027`) |
+| Cura | `STRM_ME_KAIFUKU` (211) | `me_xy_kaifuku` |
+| Level-up | `STRM_ME_LVUP` (212) | `me_xy_lvup` |
+
+O tema começa ao abrir a batalha, a fanfarra substitui o tema quando `status = victory` e a BGM da zona volta ao fechar a batalha (ou de imediato em fuga/captura/derrota). Jingles tocam uma vez com a BGM abaixada (`BgmPlayer.playJingle`).
+
 ## Fora do escopo
 
-Música de batalha/encontro por treinador, variações por evento/flag de história (ex.: Littleroot após o intro), ME (`STRM_ME_*`), efeitos sonoros (SEQ/WSD no bloco FILE) e integração no `src/engine/` (`P-008`).
+Tema por classe específica de treinador (Aqua/Magma, Elite Four, campeão, lendários) e IDs de BGM do `trdata`, variações por evento/flag de história (ex.: Littleroot após o intro), ME (`STRM_ME_*`), efeitos sonoros (SEQ/WSD no bloco FILE) e integração no `src/engine/` (`P-008`).

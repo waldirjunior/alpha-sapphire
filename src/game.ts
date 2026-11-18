@@ -34,6 +34,7 @@ import { findRosterSpecies, SPECIES } from './data/pokemon/species';
 import { SceneManager } from './engine/SceneManager';
 import { BgmPlayer } from './engine/audioPlayer';
 import { bgmUrl, resolveMapBgm, type ZoneAudioEntry } from './core/zoneAudio';
+import { JINGLES, leveledUpDuring, resolveCurrentMusic } from './core/battleAudio';
 import { MAP_ZONE_IDS } from './data/audio/mapZones';
 
 const MAPS = zoneMaps.maps;
@@ -101,6 +102,35 @@ let activeBagPocket: 'items' | 'balls' | 'key' = 'items';
 let introStep: 'birch' | 'truck' | null = state.storyFlags.intro_completed ? null : 'birch';
 let pendingGender: 'male' | 'female' = state.player.gender ?? 'male';
 
+// P-008: BGM por zona; zone_audio.json chega por chunk e o áudio só começa após o primeiro gesto.
+const bgmPlayer = new BgmPlayer();
+bgmPlayer.attachUnlock(window);
+let zoneAudio: readonly ZoneAudioEntry[] = [];
+
+function zoneTrackFor(mapId: string): string | null {
+  const zoneId = MAPS[mapId]?.zoneId;
+  const mapZones = zoneId === undefined ? MAP_ZONE_IDS : { ...MAP_ZONE_IDS, [mapId]: zoneId };
+  return resolveMapBgm(mapId, mapZones, zoneAudio);
+}
+
+/** Batalha aberta (tema/fanfarra) tem prioridade sobre a BGM da zona; `play` ignora a mesma faixa. */
+function syncMusic(): void {
+  const track = resolveCurrentMusic(activeBattle, zoneTrackFor(state.player.mapId));
+  document.body.dataset.bgm = track ?? '';
+  if (track) void bgmPlayer.play(bgmUrl(import.meta.env.BASE_URL, track));
+  else bgmPlayer.stop();
+}
+
+function playJingle(name: string): void {
+  document.body.dataset.jingle = name;
+  void bgmPlayer.playJingle(bgmUrl(import.meta.env.BASE_URL, name));
+}
+
+void import('./data/zone_audio.json').then((module) => {
+  zoneAudio = module.default;
+  syncMusic();
+});
+
 function createHpBarMarkup(currentHp: number, maxHp: number): string {
   const ratio = maxHp > 0 ? Math.max(0, Math.min(1, currentHp / maxHp)) : 0;
   const pct = Math.round(ratio * 100);
@@ -156,12 +186,14 @@ starterButtons.forEach((btn) => {
 
 function syncPartyFromBattle(): void {
   if (!activeBattle) return;
+  if (leveledUpDuring(party, activeBattle.playerParty)) playJingle(JINGLES.levelUp);
   party = [...activeBattle.playerParty];
   activePartyIndex = activeBattle.playerActive;
 }
 
 function renderBattle(): void {
   sceneManager.syncBattle(activeBattle);
+  syncMusic();
   if (!battleOverlay || !battleEnemy || !battlePlayer || !battleLog || !battleActions) return;
   if (!activeBattle) {
     battleOverlay.classList.remove('open');
@@ -501,31 +533,9 @@ saveGameBtn?.addEventListener('click', () => {
   saveGameBtn.blur();
 });
 
-// P-008: BGM por zona; zone_audio.json chega por chunk e o áudio só começa após o primeiro gesto.
-const bgmPlayer = new BgmPlayer();
-bgmPlayer.attachUnlock(window);
-let zoneAudio: readonly ZoneAudioEntry[] = [];
-let bgmMapId: string | null = null;
-
-function syncBgm(mapId: string): void {
-  if (mapId === bgmMapId) return;
-  bgmMapId = mapId;
-  const zoneId = MAPS[mapId]?.zoneId;
-  const mapZones = zoneId === undefined ? MAP_ZONE_IDS : { ...MAP_ZONE_IDS, [mapId]: zoneId };
-  const track = resolveMapBgm(mapId, mapZones, zoneAudio);
-  if (track) void bgmPlayer.play(bgmUrl(import.meta.env.BASE_URL, track));
-  else bgmPlayer.stop();
-}
-
-void import('./data/zone_audio.json').then((module) => {
-  zoneAudio = module.default;
-  bgmMapId = null;
-  syncBgm(state.player.mapId);
-});
-
 function syncUi(): void {
   sceneManager.sync(state, MAPS);
-  syncBgm(state.player.mapId);
+  syncMusic();
   persistSave();
   renderDsPanel();
   if (hudPos) {
@@ -574,6 +584,7 @@ window.addEventListener('keydown', async (event) => {
       sourceId === 'mom_heal_interior'
     ) {
       party = healParty(party);
+      playJingle(JINGLES.heal);
     }
     if (!hadLabGift && state.storyFlags.visited_birch_lab) {
       bag = addBagItem(bag, 'pokeballs', 5);
