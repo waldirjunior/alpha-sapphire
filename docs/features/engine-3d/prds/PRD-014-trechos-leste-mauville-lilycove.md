@@ -3,8 +3,9 @@
 - **Data:** 2026-11-18.
 - **Fase:** 2; P-013/P-017/P-019; A-078/A-079.
 - **Base:** main `b358b5a`, worktree `eastern-lilycove`.
-- **Estado:** regressões e staging verificados; aceite separado na main pendente.
-  **O corredor conectado até Lilycove não está concluído.**
+- **Estado:** aceite funcional parcial na main `665aca4`: quatro trechos
+  independentes,375+139+85+175 passos;22 capturas inspecionadas, zero erros.
+  **O corredor conectado até Lilycove e o aceite visual não estão concluídos.**
 
 ## Resultado e limites
 
@@ -196,17 +197,59 @@ Não houve promoção de imagem AMX ou mudança no manifesto local-memory.
 
 ## Aceite separado na main
 
-Pendente integração e janela estável. O roteiro aprovado usa save isolado e
-checkpoints independentes rotulados, nunca uma caminhada contínua:
+**Main `665aca4`, Chromium visível, porta5200:** roteiro parcial autorizado
+executado em quatro segmentos independentes rotulados.774 é apenas a soma de
+375+139+85+175 inputs de movimento aceitos; **não é uma caminhada conectada**.
+A preparação usa save isolado, RNG diagnóstico0,95 para não iniciar batalhas,
+e só os quatro checkpoints de partida aprovados. Durante cada segmento,
+a posição resulta exclusivamente de teclado/core/ZO, não de teleporte.
 
-1. Mauville→45→47 e tentativas bloqueadas em47. A passagem de45 é apenas
-   navegação do core atual, sem afirmar terreno nativo ou Surf.
-2. Checkpoint46(75,19)→17→48 e tentativas bloqueadas em48; não comprova47→46.
-3. Checkpoint52(0,20) e barreira lateral; não comprova chegada terrestre de45.
-4. Checkpoint50(1,17), bloqueio base por teclado, recorte real670 preservando
-   posição e navegação até18; reload/reentrada com progresso preservado.
-5. Comparar encontros com JSONs nativos, coletar console/page/request/resource
-   errors e inspecionar cada captura. Zero missing não equivale a paridade.
+| Segmento independente | Passos aceitos | Resultado observado |
+| --- | --- | --- |
+| A:15(17,22)→445→45→47 | 375 | Chegada47 em262; bloqueios em42,22 (esquerda/6e) e47,3 (norte/parede) |
+| B:checkpoint46(75,19)→17→48 | 139 | 73 até48; bloqueio sul em42,55; não comprova47→46 |
+| C:checkpoint52(0,20) | 85 | Bloqueio lateral direito em77,28; não comprova chegada terrestre de45 |
+| D:checkpoint50(1,17)→18 pós-fixture | 175 | Base bloqueada em48,17; fixture mantém posição;148 até18 e resto inclui interior/reload/reentrada |
+
+Cada um dos cinco bloqueios recebeu duas tentativas por teclado. O planner
+confirmou47→46,48→50 (incluindo49),52→51 e50→18 sem670 inalcançáveis. A passagem
+de45 é somente navegação do parser atual, não prova de piso terrestre/Surf.
+Checkpoint B não comprova chegada de47; D não comprova chegada de120/122.
+
+A fixture5388..5519 manteve50(48,17), gravou work16530=2,flag670 e os seis
+tombstones de50. O save foi recarregado em18(20,21); retorno real a50(130,13)
+e reentrada em18(9,21) preservaram flag/work/remoções. Sem Enter de completion,
+sem efeito nativo de campanha ou classificação de terreno inventados.
+
+Encontros de **dez zonas** (`15,445,45,47,46,17,48,52,50,18`) iguais aos JSONs
+nativos em todas as capturas.51/49 não foram percorridas no browser nem
+incluídas nesse aceite de encontros. `consoleErrors`, `pageErrors`, `missing`
+e `requestFailures` vazios; dois avisos `BuildMdlEventAnimeSetEnd(6553770,0)`
+permaneceram suspensos sem bloquear movimento. Zero erros não é zero avisos.
+
+**22 capturas00–21 inspecionadas manualmente; aceite visual permanece aberto:**
+
+- 00: pátio15 e avatar legíveis;01/02: fachadas/geometria em close cobrem avatar
+  nas chegadas445/45. A ausência não foi confundida com recursos faltantes.
+- 03: chegada47 com avatar/terreno;04/05: terreno visível, avatar oculto nos
+  bloqueios42,22 e47,3.06:46(75,19) mostra céu/avatar/marcador, sem terreno.
+- 07: Fortree apresenta superfícies claras/azuis repetidas.08/09:48 e seu
+  bloqueio sul mostram avatar/terreno.10/11:52 também é mais legível, mas
+  apresenta recortes/triângulos escuros; isso não valida paridade gráfica.
+- 12/13/14:50 e grupo670 antes/depois. Em48,17 a cena aparece cinza/rochosa na
+  base e verde após reload pós-fixture. **Causa não atribuída:** não é evidência
+  de que o recorte AMX altere geometria, materiais ou colisões.
+- 15/16/17 e20/21: Lilycove9,21/20,21 mostra superfícies repetidas cobrindo o
+  avatar, inclusive após reload.18/19: reentrada50(130,13) legível, progresso
+  preservado. Nem essa legibilidade nem zero missing fecham o aceite visual.
+
+Artefatos locais: `/tmp/playwright-test-east-partial.js`,
+`/tmp/east-partial-results.json`, `/tmp/east-partial-00-*` até `21-*`.
+O relatório separa fases, checkpoints, inputs aceitos, encontros, avisos,
+atores/progresso e inspeção visual; imagens/scripts não foram versionados.
+Pós-integração: **356 Vitest/54 arquivos,176 Python sem skips e build passam**.
+Não há script `npm run format` no projeto; nenhum formatter foi executado.
 
 O percurso conectado Mauville–Lilycove, Surf, mecânicas6x/73, alturas,
-multicamada, campanha completa e aceite visual continuam abertos.
+multicamada, campanha completa e aceite visual continuam abertos em
+P-013/P-017/P-019. Não foi feita correção especulativa de câmera/altura/material.
