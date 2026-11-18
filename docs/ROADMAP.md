@@ -10,6 +10,8 @@ Planejamento em fases para sair do protótipo placeholder atual até a reconstru
 
 **P-017/A-084–A-086:** [PRD-016](features/engine-3d/prds/PRD-016-camadas-fisicas-e-oclusao-nativas.md)/engine ADR-007 acrescentam auditoria multicamada e rastreio CRO, sem mudar o runtime primário. Seleção de camada e política nativa de oclusão continuam abertas; cinco coincidências ZO não autorizam escolha automática.
 
+**P-017/A-089, base158e557:** continuação do PRD-016 rastreia callers AMX, registros distintos de atores/objetos e31 warps ZO, sem demonstrar alvo/gatilho de ocultação em6/445/15 nem swap MM347/pátio.12 capturas controladas preservam oclusores e ledge84, sem fix visual ou mudança runtime; evento de entrada completo, registry→BCH e consumidor de culling continuam abertos.
+
 ## Fase 0 — Governança, Planejamento e Ambiente (Meses 1 — Concluída)
 
 **Objetivo:** Estruturar regras de engenharia (`AGENTS.md`, `CLAUDE.md`), rastreabilidade (`PRD`, `ADR`), memória operacional (`APRENDIZADOS.md`, `PENDENCIAS.md`, `STATUS.md`) e isolar o desenvolvimento em worktree.

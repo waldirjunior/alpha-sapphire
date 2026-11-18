@@ -2,6 +2,13 @@
 
 Atualizado em 2026-11-18 (host verificado no worktree; registros de VPS abaixo são históricos).
 
+## Callers de visibilidade de mapa: inconclusivo (2026-11-18)
+
+- Base158e557, A-089/[continuação PRD-016](features/engine-3d/prds/PRD-016-camadas-fisicas-e-oclusao-nativas.md#continuação-callers-de-visibilidade-e-entradas-zo-base158e557):20 BuildMdlSetVisible restritas a95/99/172/275, com handles GPos e condições de works/flags/versão. Nas6/15, handles encontrados alimentam animações;445 não contém chamadas diretas dessas famílias.455 MdlSetVisible usam outro caminho de registro, não são evidência de ocultação de GR. Tabelas/callers/argumentos e offsets estão no PRD.
+- 31 warps ZO6/15/445 comparados: byte transitionEffect varia, mas nenhum bit/alvo de roof-hide foi demonstrado. MdlSetVisibleMesh global0055, MdlSetCullingOff em57, EventMapReplace em121/122, classes EntranceIn e string setCalculateCullingFlag continuam candidatos delimitados; não provam swap MM347/pátio, occlusion set ou dissolve. MCP Craft Anything indisponível; somente análise estática local, sem execução ARM.
+- Chromium visível5199: oito snapshots/12 capturas inspecionadas, três oclusores presentes e controle actor-only apenas no harness. A/B do mesmo runtime, não antes/depois de fix. Ledge84 preserva(38,29)→(38,31),Y21→20.5 e eyeY=playerY+9; zero console/page/HTTP/request errors e warnings no run final.362 Vitest/56 arquivos, build e191 Python sem skips passam; avisos herdados de build/teste preservados.
+- Entrega exclusivamente documental; src, mapas, assets, grounding, câmera e materiais inalterados. P-017 permanece aberta quanto ao mecanismo visual; decisão ADR-007 preservada. Evidências locais ignoradas em `rom/map-visibility-validation/` no principal; próximo: fechar evento de entrada/consumidor e vínculo registry→BCH antes de regressão/gancho mínimo e comparação natural/emulador.
+
 ## Camadas físicas e visibilidade: investigação delimitada (2026-11-18)
 
 - Base0d745b2, [PRD-016](features/engine-3d/prds/PRD-016-camadas-fisicas-e-oclusao-nativas.md)/ADR-007/A-084–A-086: parser/auditor offline, sem mudanças em src, mapas ou assets.857 GRs/899 colisores aceitos; índices de colisão adicionais dependem do número de pisos, não são sempre8.133 desvios ZO: cinco candidatos secundários/128 não resolvidos;539 células null:423 sem hit/116 ambíguas,101 com candidato adicional.

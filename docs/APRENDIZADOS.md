@@ -888,3 +888,25 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   Controle actor-only pertence ao harness e não é uma correção publicada.
   Um hash de canvas estrito falhou por quatro pixels remotos na15 com
   medidas iguais; preservar esse limite, sem alegar paridade de pixels.
+
+## A-089 Resolver o registro do objeto antes de transportar uma API de visibilidade
+
+- **Data:**2026-11-18; P-017/PRD-016, continuação sobre158e557.
+- **Contexto:** distinguir visibilidade de atores/objetos por ID, objetos
+  espaciais da seção3 GR e meshes BCH da seção1 nos oclusores6/445/15.
+- **Observado:** MdlSetVisible/0x4ca0c e MdlSetCullingOff/0x4da9c resolvem
+  ID/contexto; BuildMdlSetVisible/0x4ef74 usa lookup espacial0x87194.
+  As20 chamadas AMX desta última estão em95/99/172/275, com condições de
+  works/flags/versão; nenhuma direta nos programas locais6/15/445.
+  MdlSetVisibleMesh global0055 usa ID255 e seletores AMX, sem vínculo
+  demonstrado aos meshes desses mapas. EntranceIn/DOOR e a string
+  setCalculateCullingFlag também não fecham um gatilho de ocultação.
+- **Erro a evitar:** transportar o efeito visual de uma API homônima para
+  outro registro ou converter transitionEffect do ZO em flag de telhado
+  sem rastrear o consumidor e o alvo. Ausência local não exclui globals,
+  dispatch indireto ou comportamento nativo.
+- **Regra:** exigir cadeia evento→argumentos→registro→modelo/mesh antes de
+  implementar visibilidade. Sem ela, documentar candidatos e preservar o
+  runtime; repetir A/B do mesmo código ou remover terreno no harness não
+  constitui correção nem paridade. Nesta entrega,12 capturas preservaram
+  os três oclusores e o ledge84,Y21→20.5; nenhum gancho foi publicado.
