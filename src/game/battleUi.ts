@@ -1,8 +1,8 @@
 import { consumePokeball, usePotion, type BagState } from '../core/bag';
 import {
   createPokemonInstance,
-  evolveAfterBattle,
   executeBattleTurn,
+  resolvePendingMove,
   runFromBattle,
   switchActivePokemon,
   throwPokeball,
@@ -17,6 +17,7 @@ import type { GameState, MapDefinition } from '../core/types';
 import { JINGLES, leveledUpDuring, type SfxCue } from '../core/battleAudio';
 import { SPECIES } from '../data/pokemon/species';
 import type { BattleEvent } from '../core/battleEvents';
+import { evolveAfterBattleWithPrompt, getPendingMovePrompt } from './battleProgression';
 
 export interface BattleUiHost {
   overlay: HTMLElement | null;
@@ -24,6 +25,10 @@ export interface BattleUiHost {
   player: HTMLElement | null;
   log: HTMLElement | null;
   actions: HTMLElement | null;
+  prompt: HTMLElement | null;
+  promptTitle: HTMLElement | null;
+  promptMessage: HTMLElement | null;
+  promptActions: HTMLElement | null;
   scene: {
     syncBattle(battle: BattleState | null): void;
     playAttackEffect(type: BattleMove['type']): void;
@@ -100,17 +105,80 @@ export function renderBattle(host: BattleUiHost): void {
   if (!overlay || !enemy || !player || !log || !actions) return;
   actions.inert = host.isAnimating();
   if (!battle) {
+    hideBattlePrompt(host);
     overlay.classList.remove('open');
     return;
   }
 
   overlay.classList.add('open');
   renderBattleSummary(battle, enemy, player, log, actions);
+  const pendingPrompt = getPendingMovePrompt(battle);
+  if (pendingPrompt) {
+    showPendingMovePrompt(host, battle, pendingPrompt);
+    return;
+  }
+  hideBattlePrompt(host);
   if (battle.status === 'ongoing') {
     renderOngoingBattle(host, battle, actions);
     return;
   }
   renderFinishedBattle(host, actions);
+}
+
+function showPendingMovePrompt(
+  host: BattleUiHost,
+  battle: BattleState,
+  pending: NonNullable<ReturnType<typeof getPendingMovePrompt>>
+): void {
+  const choices: { label: string; value: number | null }[] = pending.choices.map(({ slot, moveName }) => ({
+    label: `Esquecer ${moveName}`,
+    value: slot,
+  }));
+  choices.push({ label: pending.skipLabel, value: null });
+  void showBattlePrompt(
+    host,
+    `${pending.pokemonName} quer aprender ${pending.moveName}`,
+    'Qual golpe deve esquecer?',
+    choices
+  ).then((slot) => {
+    if (host.getBattle() !== battle) return;
+    host.setBattle(resolvePendingMove(battle, slot));
+    syncPartyFromBattle(host);
+    renderBattle(host);
+  });
+}
+
+function showBattlePrompt<T>(
+  host: BattleUiHost,
+  title: string,
+  message: string,
+  choices: { label: string; value: T }[]
+): Promise<T> {
+  const fallback = choices[choices.length - 1];
+  const { prompt, promptTitle, promptMessage, promptActions } = host;
+  if (!prompt || !promptTitle || !promptMessage || !promptActions) {
+    return fallback ? Promise.resolve(fallback.value) : Promise.reject(new Error('Prompt de batalha sem opções.'));
+  }
+  promptTitle.textContent = title;
+  promptMessage.textContent = message;
+  promptActions.replaceChildren();
+  prompt.hidden = false;
+  return new Promise((resolve) => {
+    for (const choice of choices) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = choice.label;
+      button.onclick = () => {
+        prompt.hidden = true;
+        resolve(choice.value);
+      };
+      promptActions.appendChild(button);
+    }
+  });
+}
+
+function hideBattlePrompt(host: BattleUiHost): void {
+  if (host.prompt) host.prompt.hidden = true;
 }
 
 function renderBattleSummary(
@@ -232,11 +300,11 @@ function throwWildBall(host: BattleUiHost): void {
 function renderFinishedBattle(host: BattleUiHost, actions: HTMLElement): void {
   const button = document.createElement('button');
   button.textContent = 'Voltar ao mapa';
-  button.onclick = () => closeBattle(host);
+  button.onclick = () => { void closeBattle(host); };
   actions.appendChild(button);
 }
 
-function closeBattle(host: BattleUiHost): void {
+async function closeBattle(host: BattleUiHost): Promise<void> {
   const battle = host.getBattle();
   if (battle?.isTrainer && battle.status === 'victory' && host.getActiveTrainerId()) {
     const state = host.getState();
@@ -246,9 +314,23 @@ function closeBattle(host: BattleUiHost): void {
     });
   }
   if (battle && battle.status !== 'defeat') {
-    const evolved = evolveAfterBattle(host.getParty(), battle.leveledUp, timeOfDayFromHour(new Date().getHours())).party;
+    const evolved = await evolveAfterBattleWithPrompt(
+      host.getParty(),
+      battle.leveledUp,
+      timeOfDayFromHour(new Date().getHours()),
+      async (pokemon, target) => showBattlePrompt(
+        host,
+        `${pokemon.species.name} quer evoluir para ${target.species.name}`,
+        'Deseja evoluir? Você pode cancelar agora.',
+        [
+          { label: 'Evoluir', value: true },
+          { label: 'Cancelar', value: false },
+        ]
+      )
+    );
     host.setParty(evolved);
   }
+  hideBattlePrompt(host);
   if (battle?.status === 'defeat') resetAfterDefeat(host);
   host.setBattle(null);
   host.setActiveTrainerId(null);

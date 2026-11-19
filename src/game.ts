@@ -9,7 +9,6 @@ import { createInitialState } from './core/gameState';
 import { zoneMaps, startingMapId, saveStorageKey } from './data/maps_v2/runtime';
 import type { WildEncounterEntry } from './data/pokemon/route101';
 import { SPECIES } from './data/pokemon/species';
-import { generatePokemon } from './core/wildPokemon';
 import { SceneManager } from './engine/SceneManager';
 import { BgmPlayer } from './engine/audioPlayer';
 import { bgmUrl, resolveMapBgm, type ZoneAudioEntry } from './core/zoneAudio';
@@ -29,6 +28,7 @@ import {
 import { loadAudioPreferences, saveAudioPreferences, type AudioPreferences } from './game/audioPreferences';
 import { renderIntro as renderIntroUi, type IntroGender, type IntroStep } from './game/intro';
 import { clearSavedGame, loadSavedGame, storeSavedGame } from './game/saveStorage';
+import { createWildBattlePokemon } from './game/wildBattle';
 
 const MAPS = zoneMaps.maps;
 const START_MAP_ID = startingMapId(window.location.search);
@@ -48,6 +48,10 @@ const battleEnemy = document.getElementById('battle-enemy');
 const battlePlayer = document.getElementById('battle-player');
 const battleLog = document.getElementById('battle-log');
 const battleActions = document.getElementById('battle-actions');
+const battlePrompt = document.getElementById('battle-prompt');
+const battlePromptTitle = document.getElementById('battle-prompt-title');
+const battlePromptMessage = document.getElementById('battle-prompt-message');
+const battlePromptActions = document.getElementById('battle-prompt-actions');
 const dsPanel = document.getElementById('ds-panel');
 const dsTabButtons = document.querySelectorAll<HTMLButtonElement>('#ds-tabs button[data-tab]');
 const saveGameBtn = document.getElementById('btn-save-game');
@@ -168,7 +172,7 @@ function startEventBattle(args: readonly number[], amxParty: readonly AmxPokemon
   }
   return new Promise(resolve => {
     resolveEventBattle = resolve;
-    const enemy = generatePokemon(SPECIES.poochyena, 3, Math.random);
+    const enemy = createWildBattlePokemon(SPECIES.poochyena, 3);
     activeBattle = startWildBattle(party, enemy);
     syncPartyFromBattle();
     renderBattle();
@@ -256,6 +260,10 @@ const battleHost = {
   player: battlePlayer,
   log: battleLog,
   actions: battleActions,
+  prompt: battlePrompt,
+  promptTitle: battlePromptTitle,
+  promptMessage: battlePromptMessage,
+  promptActions: battlePromptActions,
   scene: sceneManager,
   getBattle: () => activeBattle,
   setBattle: (battle: BattleState | null) => { activeBattle = battle; },

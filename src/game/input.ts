@@ -30,6 +30,7 @@ import { loadZoneTextLines } from '../engine/zoneTextBank';
 import { resolveRosterSpeciesId } from '../engine/zoneEncounterLoader';
 import type { ZoneEvents } from '../engine/zoneEvents';
 import type { SfxCue } from '../core/battleAudio';
+import { createWildBattlePokemon } from './wildBattle';
 
 const KEY_TO_DIR: Readonly<Record<string, Direction>> = {
   ArrowUp: 'up',
@@ -237,7 +238,7 @@ function startWildEncounter(host: GameInputHost): void {
   const encounter = table ? rollWildEncounter(table) : null;
   const species = encounter ? findRosterSpecies(encounter.speciesId) : undefined;
   if (!encounter || !species || !host.getParty().some((pokemon) => pokemon.currentHp > 0)) return;
-  host.setBattle(startWildBattle(host.getParty(), generatePokemon(species, encounter.level, Math.random)));
+  host.setBattle(startWildBattle(host.getParty(), createWildBattlePokemon(species, encounter.level)));
   host.syncPartyFromBattle();
   host.renderBattle();
 }

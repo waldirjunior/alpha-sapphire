@@ -95,7 +95,7 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Atualização 2026-11-17 (progressão):** críticos Gen VI, XP por curva real (`growthRate`/`baseExp`) com fórmula plana Gen VI, level-up com aprendizado de golpes (`pendingMoves`/`resolvePendingMove`), times de até 6 (troca voluntária/forçada, treinador envia o próximo) e IA determinística de treinador implementados (`battleProgression.test.ts`, 16 testes). `TrainerSpec.team` aceita times; `main.ts` ainda não oferece UI para escolher o golpe a esquecer (descarta a fila ao fechar a batalha).
 - **Atualização 2026-11-17 (crescimento):** IVs/EVs/naturezas no cálculo de stats Gen VI, EVs por KO, Exp. Share (flag `expShare` da batalha) e Lucky Egg (`heldItem`), tabela de evolução extraída (`evolutions.json`) e evolução pós-batalha implementadas (`battleGrowth.test.ts`, 15 testes). Correção: a Gen VI dá XP integral a cada participante (sem divisão), ver `A-014`.
 - **Atualização 2026-11-17 (geração/encontros):** selvagens e times de treinador gerados com IVs, natureza e personalidade via `generatePokemon(species, level, rng)` (RNG injetado; `createSeededRng` para sementes). Encontros usam `src/data/zones/*.json` quando presentes (adapter `buildZoneEncounterTables`, só a sub-tabela de grama, espécies fora do elenco com `.glb` descartadas) e caem em `MAP_ENCOUNTERS` caso contrário. Peso por slot é 1 (taxas reais por slot do ORAS não extraídas).
-- **Fica para depois (fechamento do branch `battle-tables`):** evoluções por troca (não há troca) e por condições raras (sexo, item segurado, local, afeição, clima, Beauty, Shedinja, 3DS invertido); UI de itens evolutivos, de cancelar evolução e de escolher o golpe a esquecer; taxas reais de slot de encontro e sub-tabelas de surf/pesca/horda; IVs fixos por classe de treinador; o restante abaixo.
+- **Fica para depois (fechamento do branch `battle-tables`):** evoluções por troca (não há troca) e por condições raras (sexo, item segurado, local, afeição, clima, Beauty, Shedinja, 3DS invertido); UI de itens evolutivos; taxas reais de slot de encontro e sub-tabelas de surf/pesca/horda; IVs fixos por classe de treinador; o restante abaixo.
 - **Atualização 2026-11-19 (campo e captura):** prioridade ROM ordenada por
   bracket; golpes OHKO (accuracy por nível e Sheer Cold), Sturdy, Levitate,
   Intimidate e Blaze/Torrent/Overgrow; Sunny Day/Rain Dance/Sandstorm/Hail
@@ -120,21 +120,25 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
   `src/ai/battleParity.test.ts`. `npm run verify` passou: 530 testes Vitest,
   build e 233 testes Python (1 skip); a catraca de cobertura de `src/core`
   passou.
+- **Atualização 2026-11-19 (host e progressão):** todos os encontros selvagens
+  do host usam `generatePokemon` e sorteiam IVs, natureza e personalidade. Ao
+  aprender um quinto golpe, o modal mostra os quatro golpes atuais e permite
+  escolher qual substituir ou desistir; a fila `pendingMoves` é resolvida antes
+  de fechar a batalha. Ao voltar ao mapa, espécies elegíveis mostram confirmação
+  de evolução; cancelar preserva a espécie. Testes em `src/game/` cobrem a
+  geração, as quatro opções e o cancelamento/aceite. `npm run verify` passou com
+  544 testes Vitest, build e 233 testes Python (1 skip); o smoke Playwright
+  passou (7/7).
 - **Ainda não simulado:** Substitute, outros voláteis (`atração`, Disable,
-  Yawn, Perish Song etc.) e golpes restantes ainda sem efeito; habilidades e itens
-  segurados restantes; IA de troca do treinador; bônus de troca na XP e
+  Yawn, Perish Song etc.) e golpes restantes ainda sem efeito; habilidades e
+  itens segurados restantes; IA de troca do treinador; bônus de troca na XP e
   evoluções por troca (não há troca no jogo); evoluções por sexo, item segurado,
-  local, afeição, clima, Beauty, Shedinja e 3DS invertido; IVs/natureza aleatórios
-  ainda não aplicados aos selvagens em `main.ts` (`rollIvs`/`rollNature` prontos);
-  UI de item evolutivo e de cancelar evolução. O cálculo de captura crítica
-  recebe `caughtSpeciesCount`; o host ainda não fornece a contagem de espécies
+  local, afeição, clima, Beauty, Shedinja e 3DS invertido; UI de item evolutivo;
+  taxas reais de slot de encontro e sub-tabelas de surf/pesca/horda; IVs fixos
+  por classe de treinador. O cálculo de captura crítica recebe
+  `caughtSpeciesCount`, mas o host ainda não fornece a contagem de espécies
   únicas da Pokédex. Golpes não simulados registram "ainda não é simulado
   (P-010)" no log.
-  evoluções por sexo, item segurado, local, afeição, clima, Beauty, Shedinja e
-  3DS invertido; IVs/natureza aleatórios ainda não aplicados aos selvagens em
-  `main.ts` (`rollIvs`/`rollNature` prontos); UI de item evolutivo e de cancelar
-  evolução; IA de troca do treinador; demais habilidades e itens segurados.
-  Golpes não simulados registram "ainda não é simulado (P-010)" no log.
 - **Próximo passo:** Expandir o motor de batalha conforme [batalha/PRD-002](features/batalha/prds/PRD-002-mecanicas-completas-gen6.md).
 
 ## P-011 HUD de desenvolvimento em vez de menus estilo Nintendo 3DS
