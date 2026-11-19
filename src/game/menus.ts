@@ -1,10 +1,16 @@
 import type { BagState } from '../core/bag';
 import { usePotion } from '../core/bag';
 import type { BattleState, PokemonInstance } from '../core/battle';
+import {
+  HOENN_LOCATIONS,
+  HOENN_MAP_CONNECTIONS,
+  HOENN_MAP_VIEWBOX,
+  resolveHoennLocation,
+} from '../core/hoennMap';
 import { SPECIES } from '../data/pokemon/species';
 import { createHpBarMarkup } from './battleUi';
 
-export type MenuTab = 'party' | 'bag' | 'pokedex' | 'time';
+export type MenuTab = 'party' | 'bag' | 'pokedex' | 'time' | 'map';
 export type BagPocket = 'items' | 'balls' | 'key';
 export interface BagPocketItem {
   label: string;
@@ -23,6 +29,7 @@ const MENU_TAB_PRESENTATIONS: Record<MenuTab, MenuTabPresentation> = {
   bag: { label: 'Mochila', icon: '▣', accessibleName: 'Abrir mochila' },
   pokedex: { label: 'Pokédex', icon: '⬡', accessibleName: 'Abrir Pokédex' },
   time: { label: 'Hora', icon: '◷', accessibleName: 'Abrir hora' },
+  map: { label: 'Mapa', icon: '⌖', accessibleName: 'Abrir Mapa de Hoenn' },
 };
 
 export interface DialogueLine {
@@ -71,6 +78,9 @@ export interface MenuHost {
   setParty(party: PokemonInstance[]): void;
   getActiveBagPocket(): BagPocket;
   setActiveBagPocket(pocket: BagPocket): void;
+  getPlayerMap(): { mapId: string; zoneName?: string };
+  getSelectedMapLocationId(): string | null;
+  setSelectedMapLocationId(locationId: string): void;
   renderIntro(): void;
   syncUi(): void;
 }
@@ -117,8 +127,8 @@ function bindTabEvents(host: MenuControlHost): void {
   });
 }
 
-function menuTabFrom(value: string | undefined): MenuTab | null {
-  return value === 'party' || value === 'bag' || value === 'pokedex' || value === 'time' ? value : null;
+export function menuTabFrom(value: string | undefined): MenuTab | null {
+  return value === 'party' || value === 'bag' || value === 'pokedex' || value === 'time' || value === 'map' ? value : null;
 }
 
 function bindNewGameButtons(host: MenuControlHost): void {
@@ -178,6 +188,7 @@ export function renderDsPanel(host: MenuHost): void {
   const panel = host.panel;
   if (!panel) return;
   if (!host.getOpenTab() || host.getActiveBattle()) {
+    panel.classList.remove('hoenn-map-open');
     panel.classList.remove('open');
     panel.innerHTML = '';
     return;
@@ -185,6 +196,7 @@ export function renderDsPanel(host: MenuHost): void {
 
   panel.classList.add('open');
   panel.innerHTML = '';
+  panel.classList.remove('hoenn-map-open');
   const tab = host.getOpenTab();
   if (tab === 'party') {
     renderPartyTab(host, panel);
@@ -198,6 +210,12 @@ export function renderDsPanel(host: MenuHost): void {
     renderTimeTab(panel);
     return;
   }
+  if (tab === 'map') {
+    panel.classList.add('hoenn-map-open');
+    renderHoennMapTab(host, panel);
+    return;
+  }
+  panel.classList.remove('hoenn-map-open');
   renderPokedexTab(host.getParty(), panel);
 }
 
@@ -231,6 +249,161 @@ function renderTimeTab(panel: HTMLElement): void {
   });
   card.append(eyebrow, time, date);
   panel.appendChild(card);
+}
+
+function renderHoennMapTab(host: MenuHost, panel: HTMLElement): void {
+  const playerMap = host.getPlayerMap();
+  const playerLocation = resolveHoennLocation(playerMap.mapId, playerMap.zoneName);
+  const selected = HOENN_LOCATIONS.find(({ id }) => id === host.getSelectedMapLocationId()) ?? playerLocation;
+  const layout = document.createElement('div');
+  layout.className = 'oras-hoenn-map';
+  const svg = createHoennSvg(playerLocation, selected?.id ?? null, (id) => {
+    const location = HOENN_LOCATIONS.find((entry) => entry.id === id);
+    if (!location) return;
+    host.setSelectedMapLocationId(id);
+    updateMapSelection(svg, layout, location);
+  });
+  layout.append(svg, createMapDetails(selected ?? undefined));
+  panel.appendChild(layout);
+}
+
+function createHoennSvg(
+  playerLocation: (typeof HOENN_LOCATIONS)[number] | null,
+  selectedId: string | null,
+  selectLocation: (id: string) => void,
+): SVGSVGElement {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'hoenn-map-svg');
+  svg.setAttribute('viewBox', `0 0 ${HOENN_MAP_VIEWBOX.width} ${HOENN_MAP_VIEWBOX.height}`);
+  svg.setAttribute('role', 'group');
+  svg.setAttribute('aria-label', 'Mapa interativo da região de Hoenn');
+  addMapBackdrop(svg);
+  for (const [from, to] of HOENN_MAP_CONNECTIONS) addMapConnection(svg, from, to);
+  for (const location of HOENN_LOCATIONS) addMapLocation(svg, location, selectedId, selectLocation);
+  if (playerLocation) addPlayerMarker(svg, playerLocation);
+  return svg;
+}
+
+function addMapBackdrop(svg: SVGSVGElement): void {
+  const land = document.createElementNS(svg.namespaceURI, 'path');
+  land.setAttribute('class', 'hoenn-map-land');
+  land.setAttribute('d', 'M178 72 261 50 352 67 406 89 451 119 470 169 530 194 589 177 641 194 718 177 772 204 757 256 786 305 760 358 727 391 690 427 621 448 552 444 500 426 440 448 380 446 321 428 265 443 218 415 181 369 202 323 219 277 247 226 230 177 181 128Z');
+  svg.appendChild(land);
+}
+
+function addMapConnection(svg: SVGSVGElement, fromId: string, toId: string): void {
+  const from = HOENN_LOCATIONS.find(({ id }) => id === fromId);
+  const to = HOENN_LOCATIONS.find(({ id }) => id === toId);
+  if (!from || !to) return;
+  const line = document.createElementNS(svg.namespaceURI, 'line');
+  line.setAttribute('class', `hoenn-map-route${from.kind === 'route' || to.kind === 'route' ? ' road' : ''}`);
+  line.setAttribute('x1', String(from.x));
+  line.setAttribute('y1', String(from.y));
+  line.setAttribute('x2', String(to.x));
+  line.setAttribute('y2', String(to.y));
+  svg.appendChild(line);
+}
+
+function addMapLocation(
+  svg: SVGSVGElement,
+  location: (typeof HOENN_LOCATIONS)[number],
+  selectedId: string | null,
+  selectLocation: (id: string) => void,
+): void {
+  const group = document.createElementNS(svg.namespaceURI, 'g');
+  group.setAttribute('class', `hoenn-map-location ${location.kind}${location.id === selectedId ? ' selected' : ''}`);
+  group.setAttribute('data-location-id', location.id);
+  group.setAttribute('role', 'button');
+  group.setAttribute('tabindex', '0');
+  group.setAttribute('aria-label', `${location.name}. ${location.description}`);
+  group.setAttribute('aria-pressed', String(location.id === selectedId));
+  const title = document.createElementNS(svg.namespaceURI, 'title');
+  title.textContent = `${location.name}: ${location.description}`;
+  group.appendChild(title);
+  const dot = document.createElementNS(svg.namespaceURI, 'circle');
+  dot.setAttribute('r', location.kind === 'route' ? '5' : '8');
+  group.appendChild(dot);
+  if (shouldShowMapLabel(location, selectedId)) addMapLabel(group, location);
+  group.addEventListener('click', () => selectLocation(location.id));
+  group.addEventListener('keydown', (event) => {
+    if (event instanceof KeyboardEvent) activateMapLocation(event, location.id, selectLocation);
+  });
+  group.setAttribute('transform', `translate(${location.x} ${location.y})`);
+  svg.appendChild(group);
+}
+
+function shouldShowMapLabel(location: (typeof HOENN_LOCATIONS)[number], selectedId: string | null): boolean {
+  return location.kind === 'city' || location.kind === 'town' || location.id === 'pokemon-league' || location.id === selectedId;
+}
+
+function addMapLabel(group: Element, location: (typeof HOENN_LOCATIONS)[number]): void {
+  const label = document.createElementNS(group.namespaceURI, 'text');
+  const offset = mapLabelOffset(location);
+  label.setAttribute('x', String(offset.x));
+  label.setAttribute('y', String(offset.y));
+  if (offset.anchor) label.setAttribute('text-anchor', offset.anchor);
+  label.textContent = location.kind === 'route' && location.id !== 'pokemon-league'
+    ? location.name.replace('Route ', '')
+    : location.name;
+  group.appendChild(label);
+}
+
+function mapLabelOffset(location: (typeof HOENN_LOCATIONS)[number]): { x: number; y: number; anchor?: string } {
+  if (location.id === 'verdanturf-town') return { x: -10, y: -12, anchor: 'end' };
+  if (location.id === 'mauville-city') return { x: 10, y: 18 };
+  if (location.id === 'oldale-town') return { x: -8, y: -12, anchor: 'end' };
+  if (location.id === 'slateport-city') return { x: 10, y: 20 };
+  if (location.id === 'littleroot-town') return { x: -10, y: 20, anchor: 'end' };
+  if (location.id === 'ever-grande-city') return { x: -12, y: 15, anchor: 'end' };
+  if (location.id === 'pokemon-league') return { x: -12, y: -8, anchor: 'end' };
+  return location.x > 620 ? { x: -10, y: 4, anchor: 'end' } : { x: 10, y: 4 };
+}
+
+function activateMapLocation(event: KeyboardEvent, id: string, selectLocation: (id: string) => void): void {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  event.preventDefault();
+  selectLocation(id);
+}
+
+function addPlayerMarker(svg: SVGSVGElement, location: (typeof HOENN_LOCATIONS)[number]): void {
+  const marker = document.createElementNS(svg.namespaceURI, 'g');
+  marker.setAttribute('class', 'hoenn-player-marker');
+  marker.setAttribute('transform', `translate(${location.x} ${location.y})`);
+  marker.setAttribute('aria-label', `Sua posição: ${location.name}`);
+  const ring = document.createElementNS(svg.namespaceURI, 'circle');
+  ring.setAttribute('r', '13');
+  const label = document.createElementNS(svg.namespaceURI, 'text');
+  label.setAttribute('x', '13');
+  label.setAttribute('y', '-11');
+  label.textContent = 'Você';
+  marker.append(ring, label);
+  svg.appendChild(marker);
+}
+
+function createMapDetails(location: (typeof HOENN_LOCATIONS)[number] | undefined): HTMLElement {
+  const details = document.createElement('section');
+  details.className = 'hoenn-map-details';
+  updateMapDetails(details, location);
+  return details;
+}
+
+function updateMapSelection(svg: SVGSVGElement, layout: HTMLElement, location: (typeof HOENN_LOCATIONS)[number]): void {
+  svg.querySelectorAll<SVGGElement>('.hoenn-map-location').forEach((marker) => {
+    const selected = marker.dataset.locationId === location.id;
+    marker.classList.toggle('selected', selected);
+    marker.setAttribute('aria-pressed', String(selected));
+  });
+  const details = layout.querySelector<HTMLElement>('.hoenn-map-details');
+  if (details) updateMapDetails(details, location);
+}
+
+function updateMapDetails(details: HTMLElement, location: (typeof HOENN_LOCATIONS)[number] | undefined): void {
+  details.replaceChildren();
+  const name = document.createElement('strong');
+  name.textContent = location?.name ?? 'Posição atual';
+  const description = document.createElement('span');
+  description.textContent = location?.description ?? 'Esta zona ainda não está associada a um ponto do mapa de Hoenn.';
+  details.append(name, description);
 }
 
 function renderPartyTab(host: MenuHost, panel: HTMLElement): void {
