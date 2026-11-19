@@ -197,15 +197,16 @@ export class SceneManager {
     this.renderedZones.clear();
   }
 
-  private buildEntities(map: MapDefinition, append = false): void {
+  private buildEntities(map: MapDefinition, append = false, flags: Readonly<Record<number, boolean>> = {}): void {
     if (!append) this.resetEntities();
     const grass = buildTallGrassGroup(map);
     if (grass) this.tallGrassGroup.add(grass);
     appendMapEntities(map, this.entitiesGroup,
-      (url, target) => this.loadCharacterModel(url, target, false, '/assets/characters/npc/npc.glb'));
+      (url, target) => this.loadCharacterModel(url, target, false, '/assets/characters/npc/npc.glb'), flags);
   }
 
-  private syncContinuous(map: MapDefinition, maps: Record<string, MapDefinition>): boolean {
+  private syncContinuous(map: MapDefinition, maps: Record<string, MapDefinition>,
+    flags: Readonly<Record<number, boolean>>): boolean {
     if (!map.continuousRegion) return false;
     if (this.continuousRegion !== map.continuousRegion) {
       this.continuousRegion = map.continuousRegion;
@@ -219,7 +220,7 @@ export class SceneManager {
     for (const zone of visible) {
       if (this.renderedZones.has(zone.id)) continue;
       this.renderedZones.add(zone.id);
-      this.buildEntities(zone, true);
+      this.buildEntities(zone, true, flags);
     }
     this.terrainReady = this.continuousTerrain.sync(visible).catch((error: unknown) => console.error(`Chunks da região ${map.continuousRegion}`, error));
     this.currentMapId = map.id;
@@ -245,15 +246,16 @@ export class SceneManager {
 
     const map = maps[state.player.mapId];
     if (!map) return;
+    const flags = state.romEvents?.flags ?? {};
 
     const previousRegion = this.continuousRegion;
-    if (!this.syncContinuous(map, maps) && this.currentMapId !== map.id) {
+    if (!this.syncContinuous(map, maps, flags) && this.currentMapId !== map.id) {
       this.continuousRegion = '';
       this.continuousTerrain.reset();
       this.currentMapId = map.id;
       const version = ++this.mapLoadVersion;
       this.buildTerrainPlaceholder(map);
-      this.buildEntities(map);
+      this.buildEntities(map, false, flags);
       this.terrainReady = null;
       if (map.modelChunks?.length) {
         this.terrainReady = loadZoneTerrain(map.modelChunks, (url) => this.gltfLoader.loadAsync(picaMaterialModelUrl(url)), fixOrasMaterials)
@@ -280,7 +282,7 @@ export class SceneManager {
       z: state.player.pos.z,
     };
 
-    syncMapEntities(map, this.entitiesGroup, this.characterExpressions);
+    syncMapEntities(map, this.entitiesGroup, this.characterExpressions, flags);
     this.characterExpressions.set(this.playerRoot, state.player.faceExpression);
     const target = groundedWorldPosition(state.player.pos, map, state.player.groundY);
     this.playerTargetPos.set(target.x, target.y, target.z);

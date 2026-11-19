@@ -4,6 +4,7 @@ import { boundaryTarget, stepBoundary } from './boundaries';
 import type { BoundaryLink } from './types';
 import { lateralLedgeLanding, southLedgeLanding } from './ledges';
 import { groundHeight, selectGroundHeight } from './groundHeight';
+import { createInitialAmxFlags } from './initialAmxFlags';
 
 function playerGroundReference(state: GameState, map: MapDefinition): number {
   return state.player.groundY ?? groundHeight(map, state.player.pos) ?? 0;
@@ -46,6 +47,7 @@ export function createInitialState(
       intro_completed: false,
       starter_chosen: false,
     },
+    romEvents: { flags: createInitialAmxFlags(), vars: {} },
   };
 }
 

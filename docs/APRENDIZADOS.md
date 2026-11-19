@@ -1090,4 +1090,12 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro:** `A-104` assumiu sem prova binária que `model & 0x0fff` indexava `a/0/2/3` (`BM`, modelos de portas/janelas de prédios). Na tabela real de `DllField.cro` (`0xf5d04..0xf6ce4`, registros de 8 bytes `<4H`), os bancos de objetos e Pokémon de overworld continuam sendo índices de `a/0/2/1` (`MM`): `0x0000..0x0161` → `0..353`, `0x2000..0x205b` → `354..445` (`354 + (id - 0x2000)`) e `0x1000..0x103f` → `446..509` (`446 + (id - 0x1000)`).
 - **Regra:** resolver `0x2000..0x205b` e `0x1000..0x103f` para `/assets/characters/mm_XXXX.glb` segundo a tabela de `DllField.cro`; nunca mapear atores `npcs[].model` para `/assets/objects/bm_XXXX.glb`. Garantido por contrato em `src/data/maps_v2/zoneContracts.test.ts` cobrindo as 536 zonas e por `scripts/test_object_models.py`.
 
+## A-107 Flags de aparição precisam ser projetadas na criação e sincronização dos atores
+
+- **Data:** 2026-11-19; P-013, spawn flags.
+- **Erro reproduzido:** carregar mapas com `spawnFlag` sem aplicar o estado AMX deixava duplicatas futuras visíveis; filtrar apenas durante eventos não escondia as raízes Three.js construídas antes da sincronização. Aplicar sem seleção todas as flags do save também escondia o NPC0 de Route 101, que abre o resgate de Birch no fluxo New Game.
+- **Regra:** compartilhe `isNpcVisible` entre projeção de eventos e engine: `spawnFlag=0` ignora flags, `visible=false` explícito prevalece, e flag não zero só esconde quando seu valor está setado. Passe `romEvents.flags` ao construir e sincronizar raízes. O save `first_save.main` contém 332 flags ativas; para o bootstrap New Game desta campanha, deixe a 602 fora do seed até esclarecer a diferença de estágio.
+- **Evidência:** `src/core/spawnFlags.test.ts` cobre 612/824/825, flag zero e as flags 550/780 limpas; `src/engine/zoneEntities.test.ts` verifica criação e sincronização. `e2e/campaign.spec.ts` completa Birch → laboratório → Oldale → Route 102 e valida o estado dos gates sem erros de página; `e2e/corridor.spec.ts` preserva o corredor e suas fixtures.
+- **Limite:** a flag 602 está setada no save local após a abertura, mas setá-la no bootstrap esconde `zone_0023:npc:0` e impede a escolha do inicial no Playwright; o ramo exato que a limpa antes do encontro no Azahar ainda precisa de comparação. P-013 continua aberta.
+
 
