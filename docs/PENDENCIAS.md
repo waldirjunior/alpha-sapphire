@@ -262,10 +262,10 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 
 ## P-020 `src/game.ts` concentra o host inteiro e não tem teste unitário
 
-- **Estado:** aberta
-- **Data:** 2026-11-18
-- **Evidência:** `src/game.ts` tem 708 linhas (limite do projeto: 500) e 0% de cobertura em `npm run test:coverage`. O módulo executa efeitos no import (DOM, `localStorage`, `SceneManager`, listeners), o que impede teste unitário. Mistura entrada de teclado, intro, HUD, menus do 3DS, batalha, encontros, save e música. `src/engine/SceneManager.ts` está em 13%. A única proteção atual é o smoke `e2e/smoke.spec.ts` (cinco fluxos). O arquivo está congelado em 708 linhas pela catraca de `src/architecture.test.ts`.
-- **Próximo passo:** dividir por responsabilidade (passo do overworld, sessão de batalha, menus, intro), extraindo primeiro as decisões puras para `src/core/` com teste unitário, sempre com o smoke verde antes e depois. Item 6 da fila do [ROADMAP](ROADMAP.md).
+- **Estado:** fechada
+- **Data:** 2026-11-19
+- **Evidência:** `src/game.ts` ficou com 282 linhas e `FROZEN_SIZES` está vazio. Entrada (movimento, interação e encontros), UI de batalha, menus, intro e acesso ao save foram separados em módulos `src/game/` com testes unitários; `npm run verify` passou (450 testes Vitest, build, 229 testes Python e 1 skip preexistente). `ALPHA_E2E_PORT=5390 npx playwright test e2e/smoke.spec.ts` passou 6/6 antes e depois da refatoração.
+- **Próximo passo:** concluído; manter os módulos testáveis ao alterar o host do jogo.
 
 ## P-021 Nenhuma referência do jogo original foi capturada do emulador
 

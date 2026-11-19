@@ -48,7 +48,7 @@ describe('estilo de código (AGENTS.md)', () => {
   });
 
   // Catraca: arquivos acima de 500 linhas ficam congelados no tamanho atual até serem divididos (P-020).
-  const FROZEN_SIZES: Readonly<Record<string, number>> = { 'src/game.ts': 708 };
+  const FROZEN_SIZES: Readonly<Record<string, number>> = {};
 
   it('mantém módulos em até 500 linhas, sem crescer os já excedentes', () => {
     const oversized = FILES.map((file) => ({ file: relative(file), lines: readFileSync(file, 'utf8').split('\n').length - 1 }))
