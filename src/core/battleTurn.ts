@@ -12,9 +12,10 @@ import { toBattleMove, type BattleMove, type PokemonInstance } from './battlePok
 import { STRUGGLE_MOVE_ID } from './damage';
 import { getMoveById } from './dex';
 import { healthEvents } from './battleEvents';
-import { executeMove, spendPp } from './moveExecution';
+import { executeMove, spendPp, type MoveExecutionContext, type MoveOutcome } from './moveExecution';
 import { statStageMultiplier } from './statStages';
 import { applyResidualDamage, checkCanAct, type Rng } from './statusConditions';
+import { advanceBattleField } from './battleField';
 
 export type { BattleSide, BattleState, BattleStatus, PendingMoveLearn } from './battleParty';
 
@@ -68,8 +69,10 @@ function performAction(state: BattleState, action: BattleAction, flinched: boole
   const move = moveFor(check.pokemon, action.moveIndex);
   const user = action.moveIndex === null ? check.pokemon : spendPp(check.pokemon, action.moveIndex, pokemonOf(next, foeSide));
   const struggleNote = action.moveIndex === null ? `${user.species.name} não tem mais PP!` : null;
-  const outcome = executeMove(user, pokemonOf(next, foeSide), move, rng);
+  const context = moveContext(next, action.side, foeSide);
+  const outcome = executeMove(user, pokemonOf(next, foeSide), move, rng, context);
   next = withPokemon(withPokemon(next, action.side, outcome.user), foeSide, outcome.target);
+  next = applyFieldUpdate(next, action.side, outcome);
   next = { ...next, events: [...(next.events ?? []),
     { type: 'move', side: action.side, category: move.category },
     ...healthEvents(foeSide, pokemonOf(state, foeSide).currentHp, outcome.target.currentHp),
@@ -77,13 +80,38 @@ function performAction(state: BattleState, action: BattleAction, flinched: boole
   return { state: appendLog(next, [struggleNote, ...outcome.messages]), flinchedSide: outcome.flinched ? foeSide : null };
 }
 
+function moveContext(state: BattleState, userSide: BattleSide, targetSide: BattleSide): MoveExecutionContext {
+  const weatherSuppressed = [state.player.ability, state.enemy.ability].some((ability) => ability === 'Air Lock' || ability === 'Cloud Nine');
+  return {
+    weather: state.field.weather,
+    weatherSuppressed,
+    userScreens: state.field.screens[userSide],
+    targetScreens: state.field.screens[targetSide],
+  };
+}
+
+function applyFieldUpdate(state: BattleState, side: BattleSide, outcome: MoveOutcome): BattleState {
+  const update = outcome.fieldUpdate;
+  if (!update) return state;
+  const weather = 'weather' in update ? update.weather ?? null : state.field.weather;
+  const screens = update.screen ? { ...state.field.screens, [side]: { ...state.field.screens[side], [update.screen]: 5 } } : state.field.screens;
+  return { ...state, field: { weather, screens } };
+}
+
 function applyEndOfTurn(state: BattleState, order: readonly BattleSide[]): BattleState {
   return order.reduce((current, side) => {
-    const residual = applyResidualDamage(pokemonOf(current, side));
+    const weatherSuppressed = [current.player.ability, current.enemy.ability].some((ability) => ability === 'Air Lock' || ability === 'Cloud Nine');
+    const residual = applyResidualDamage(pokemonOf(current, side), current.field.weather?.kind ?? null, weatherSuppressed);
     const next = appendLog(withPokemon(current, side, residual.pokemon), [residual.message]);
     return { ...next, events: [...(next.events ?? []),
       ...healthEvents(side, pokemonOf(current, side).currentHp, residual.pokemon.currentHp)] };
   }, state);
+}
+
+function ageBattleField(state: BattleState): BattleState {
+  const advanced = advanceBattleField(state.field);
+  const next = { ...state, field: advanced.field };
+  return appendLog(next, advanced.messages);
 }
 
 /** Resolve um turno; `playerAction === null` = jogador gastou o turno (troca ou Poké Ball). */
@@ -98,6 +126,6 @@ export function resolveTurn(state: BattleState, playerAction: BattleAction | nul
     flinchedSide = result.flinchedSide;
   }
   const residualOrder: BattleSide[] = playerAction ? actions.map((action) => action.side) : ['enemy', 'player'];
-  const resolved = resolveFaints(applyEndOfTurn(current, residualOrder));
+  const resolved = resolveFaints(ageBattleField(applyEndOfTurn(current, residualOrder)));
   return { ...resolved, turn: resolved.turn + 1 };
 }

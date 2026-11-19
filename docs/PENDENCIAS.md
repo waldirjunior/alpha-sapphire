@@ -95,7 +95,25 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Atualização 2026-11-17 (crescimento):** IVs/EVs/naturezas no cálculo de stats Gen VI, EVs por KO, Exp. Share (flag `expShare` da batalha) e Lucky Egg (`heldItem`), tabela de evolução extraída (`evolutions.json`) e evolução pós-batalha implementadas (`battleGrowth.test.ts`, 15 testes). Correção: a Gen VI dá XP integral a cada participante (sem divisão), ver `A-014`.
 - **Atualização 2026-11-17 (geração/encontros):** selvagens e times de treinador gerados com IVs, natureza e personalidade via `generatePokemon(species, level, rng)` (RNG injetado; `createSeededRng` para sementes). Encontros usam `src/data/zones/*.json` quando presentes (adapter `buildZoneEncounterTables`, só a sub-tabela de grama, espécies fora do elenco com `.glb` descartadas) e caem em `MAP_ENCOUNTERS` caso contrário. Peso por slot é 1 (taxas reais por slot do ORAS não extraídas).
 - **Fica para depois (fechamento do branch `battle-tables`):** evoluções por troca (não há troca) e por condições raras (sexo, item segurado, local, afeição, clima, Beauty, Shedinja, 3DS invertido); UI de itens evolutivos, de cancelar evolução e de escolher o golpe a esquecer; taxas reais de slot de encontro e sub-tabelas de surf/pesca/horda; IVs fixos por classe de treinador; o restante abaixo.
-- **Ainda não simulado:** `quality` 5 (Swagger/Flatter), 9 (OHKO), 10/11 (clima, telas, hazards), 12 (forçar troca) e 13 (efeito único: Protect, Substitute, golpes de dois turnos etc. — 90 golpes); `inflict` ≥ 6 (confusão, atração, Leech Seed, Taunt, Disable, Yawn, Perish Song etc.); telas (Reflect/Light Screen) e o seu bypass por crítico; Super Luck/Sniper/Scope Lens; bônus de troca na XP e evoluções por troca (não há troca no jogo); evoluções por sexo, item segurado, local, afeição, clima, Beauty, Shedinja e 3DS invertido; IVs/natureza aleatórios ainda não aplicados aos selvagens em `main.ts` (`rollIvs`/`rollNature` prontos); UI de item evolutivo e de cancelar evolução; IA de troca do treinador; habilidades além de Pressure e Battle/Shell Armor; itens segurados. Golpes não simulados registram "ainda não é simulado (P-010)" no log.
+- **Atualização 2026-11-19 (campo e captura):** prioridade ROM ordenada por
+  bracket; golpes OHKO (accuracy por nível e Sheer Cold), Sturdy, Levitate,
+  Intimidate e Blaze/Torrent/Overgrow; Sunny Day/Rain Dance/Sandstorm/Hail
+  alteram dano, dano residual e Sandstorm em Sp. Def, com duração Gen VI;
+  Reflect/Light Screen têm bypass por crítico; captura usa catch rate, HP,
+  status e quatro shakes. Vetores em `src/ai/battleParity.test.ts` conferem
+  dano 72/108/162 e limiares 53335,91/63333,49. `npm run verify` passou: 508
+  Vitest, cobertura `src/core` 96,20% linhas/87,08% branches, build e 233
+  testes Python (1 skip).
+- **Ainda não simulado:** `quality` 5 (Swagger/Flatter), hazards de `quality`
+  11, 12 (forçar troca) e 13 (Protect, Substitute, golpes de dois turnos etc. —
+  90 golpes); `inflict` ≥ 6 (confusão, atração, Leech Seed, Taunt, Disable,
+  Yawn, Perish Song etc.); Super Luck/Sniper/Scope Lens; críticos da mecânica de
+  captura; bônus de troca na XP e evoluções por troca (não há troca no jogo);
+  evoluções por sexo, item segurado, local, afeição, clima, Beauty, Shedinja e
+  3DS invertido; IVs/natureza aleatórios ainda não aplicados aos selvagens em
+  `main.ts` (`rollIvs`/`rollNature` prontos); UI de item evolutivo e de cancelar
+  evolução; IA de troca do treinador; demais habilidades e itens segurados.
+  Golpes não simulados registram "ainda não é simulado (P-010)" no log.
 - **Próximo passo:** Expandir o motor de batalha conforme [batalha/PRD-002](features/batalha/prds/PRD-002-mecanicas-completas-gen6.md).
 
 ## P-011 HUD de desenvolvimento em vez de menus estilo Nintendo 3DS

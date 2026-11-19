@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { createPokemonInstance, executeBattleTurn, healParty, startWildBattle, type PokemonInstance } from './battle';
+import { createPokemonInstance, executeBattleTurn, healParty, startTrainerBattle, startWildBattle, throwPokeball, type PokemonInstance } from './battle';
 import { orderActions, resolveTurn, effectiveSpeed } from './battleTurn';
+import { resolveFaints, switchPlayerIn } from './battleParty';
 import { calculateDamage, rollHitCount } from './damage';
+import { genSixCatchShakeThreshold } from './battleCapture';
 import { getMoveByName, getSpeciesById } from './dex';
 import { executeMove, rollAccuracy, spendPp } from './moveExecution';
 import { toBattleMove } from './battlePokemon';
@@ -82,6 +84,21 @@ describe('accuracy', () => {
     expect(rollAccuracy(user, untouchable, move('Disarming Voice'), always(0.999))).toBe(true);
   });
 
+  it('uses Gen VI level-based OHKO accuracy and Sheer Cold type penalty', () => {
+    const fissure = move('Fissure');
+    const sheerCold = move('Sheer Cold');
+    const user = pokemon('torchic', 30, 'Fissure', 'Sheer Cold');
+    const sameLevel = pokemon('wurmple', 30, 'Tackle');
+    const higherLevel = pokemon('wurmple', 31, 'Tackle');
+    const iceUser = pokemon('snover', 30, 'Sheer Cold');
+
+    expect(rollAccuracy(user, higherLevel, fissure, always(0))).toBe(false);
+    expect(rollAccuracy(user, sameLevel, sheerCold, always(0.199))).toBe(true);
+    expect(rollAccuracy(user, sameLevel, sheerCold, always(0.2))).toBe(false);
+    expect(rollAccuracy(iceUser, sameLevel, sheerCold, always(0.299))).toBe(true);
+    expect(rollAccuracy(iceUser, sameLevel, sheerCold, always(0.3))).toBe(false);
+  });
+
   it('logs a miss and keeps the target intact', () => {
     const outcome = executeMove(user, target, move('Take Down'), always(0.9));
     expect(outcome.target.currentHp).toBe(target.currentHp);
@@ -96,6 +113,16 @@ describe('turn order', () => {
     const state = startWildBattle(slow, fast);
     const [first] = orderActions(state, { side: 'player', moveIndex: 0 }, { side: 'enemy', moveIndex: 0 }, always(0.9));
     expect(first.side).toBe('player');
+  });
+
+  it('orders across Gen VI priority brackets, including negative priority', () => {
+    const slow = pokemon('wurmple', 5, 'Extreme Speed');
+    const fast = { ...pokemon('torchic', 5, 'Whirlwind'), speed: 999 };
+    const state = startWildBattle(slow, fast);
+    const [first] = orderActions(state, { side: 'player', moveIndex: 0 }, { side: 'enemy', moveIndex: 0 }, always(0.9));
+    expect(first.side).toBe('player');
+    expect(move('Extreme Speed').priority).toBe(2);
+    expect(move('Whirlwind').priority).toBe(-6);
   });
 
   it('breaks speed ties with the injected RNG', () => {
@@ -201,5 +228,166 @@ describe('stat stages and HP effects', () => {
     const next = resolveTurn(startWildBattle(fast, slow), { side: 'player', moveIndex: 0 }, always(0));
     expect(next.log).toContain('Torchic recuou e não pôde agir!');
     expect(next.player.currentHp).toBe(fast.currentHp);
+  });
+});
+
+describe('weather and Gen VI abilities', () => {
+  it('modifies Fire and Water damage under sun and rain', () => {
+    const fireUser = pokemon('torchic', 30, 'Ember');
+    const waterUser = pokemon('mudkip', 30, 'Water Gun');
+    const target = pokemon('wurmple', 30, 'Tackle');
+    const ember = move('Ember');
+    const waterGun = move('Water Gun');
+
+    expect(calculateDamage(fireUser, target, ember, always(1), { weather: 'sun' })).toBeGreaterThan(
+      calculateDamage(fireUser, target, ember, always(1))
+    );
+    expect(calculateDamage(waterUser, target, waterGun, always(1), { weather: 'sun' })).toBeLessThan(
+      calculateDamage(waterUser, target, waterGun, always(1))
+    );
+    expect(calculateDamage(waterUser, target, waterGun, always(1), { weather: 'rain' })).toBeGreaterThan(
+      calculateDamage(waterUser, target, waterGun, always(1))
+    );
+    expect(calculateDamage(fireUser, target, ember, always(1), { weather: 'rain' })).toBeLessThan(
+      calculateDamage(fireUser, target, ember, always(1))
+    );
+  });
+
+  it.each([
+    ['torchic', 'Ember', 'Blaze'],
+    ['mudkip', 'Water Gun', 'Torrent'],
+    ['treecko', 'Absorb', 'Overgrow'],
+  ])('%s gets its starter ability bonus at one-third HP', (speciesId, moveName, ability) => {
+    const base = pokemon(speciesId, 30, moveName);
+    const target = pokemon('wurmple', 30, 'Tackle');
+    const healthy = { ...base, maxHp: 30, currentHp: 11, ability };
+    const criticalHp = { ...healthy, currentHp: 10 };
+    const damage = (attacker: PokemonInstance) => calculateDamage(attacker, target, move(moveName), always(1));
+
+    expect(damage(criticalHp)).toBeGreaterThan(damage(healthy));
+  });
+
+  it('applies Intimidate when a Pokémon enters battle', () => {
+    const intimidator = { ...pokemon('poochyena', 10, 'Tackle'), ability: 'Intimidate' };
+    const target = pokemon('wurmple', 10, 'Tackle');
+    const battle = startWildBattle(intimidator, target);
+
+    expect(battle.enemy.stages.atk).toBe(-1);
+    expect(battle.log).toContain("Wurmple teve o Ataque reduzido por Intimidate!");
+  });
+
+  it('triggers Intimidate on player switch-in and trainer send-out', () => {
+    const intimidator = { ...pokemon('poochyena', 10, 'Tackle'), ability: 'Intimidate' };
+    const target = pokemon('wurmple', 10, 'Tackle');
+    const switched = switchPlayerIn(startWildBattle([target, intimidator], pokemon('zigzagoon', 10, 'Tackle')), 1);
+    const trainer = startTrainerBattle(target, [pokemon('zigzagoon', 10, 'Tackle'), intimidator], 'Treinador');
+    const fainted = { ...trainer.enemy, currentHp: 0 };
+    const nextEnemy = resolveFaints({ ...trainer, enemy: fainted, enemyParty: [fainted, intimidator] });
+
+    expect(switched.enemy.stages.atk).toBe(-1);
+    expect(nextEnemy.enemy.ability).toBe('Intimidate');
+    expect(nextEnemy.player.stages.atk).toBe(-1);
+  });
+
+  it('lets Sturdy survive a lethal hit only from full HP and blocks OHKO moves', () => {
+    const attacker = pokemon('torchic', 100, 'Flamethrower', 'Fissure');
+    const target = { ...pokemon('wurmple', 2, 'Tackle'), ability: 'Sturdy' };
+    const saved = executeMove(attacker, target, move('Flamethrower'), always(0));
+    const chipped = executeMove(attacker, { ...target, currentHp: target.maxHp - 1 }, move('Flamethrower'), always(0));
+    const ohko = executeMove(attacker, target, move('Fissure'), always(0));
+
+    expect(saved.target.currentHp).toBe(1);
+    expect(chipped.target.currentHp).toBe(0);
+    expect(ohko.target.currentHp).toBe(target.currentHp);
+  });
+
+  it('makes Ground moves ineffective against Levitate', () => {
+    const attacker = pokemon('torchic', 30, 'Earthquake');
+    const levitating = { ...pokemon('wurmple', 30, 'Tackle'), ability: 'Levitate' };
+    const fissure = executeMove(pokemon('torchic', 30, 'Fissure'), levitating, move('Fissure'), always(0));
+
+    expect(calculateDamage(attacker, levitating, move('Earthquake'), always(1))).toBe(0);
+    expect(fissure.target.currentHp).toBe(levitating.currentHp);
+  });
+
+  it('applies weather damage and Rock special-defense immunity correctly', () => {
+    const ordinary = pokemon('torchic', 20, 'Tackle');
+    const rock = pokemon('kabuto', 20, 'Tackle');
+    const hail = applyResidualDamage(ordinary, 'hail').pokemon;
+    const sandstorm = applyResidualDamage(rock, 'sandstorm').pokemon;
+    const fireUser = pokemon('torchic', 30, 'Ember');
+    const target = pokemon('wurmple', 30, 'Tackle');
+
+    expect(hail.currentHp).toBe(ordinary.currentHp - Math.max(1, Math.floor(ordinary.maxHp / 16)));
+    expect(sandstorm.currentHp).toBe(rock.currentHp);
+    expect(applyResidualDamage({ ...ordinary, ability: 'Magic Guard' }, 'hail').pokemon.currentHp).toBe(ordinary.currentHp);
+    expect(applyResidualDamage(pokemon('snover', 20, 'Tackle'), 'hail').pokemon.currentHp).toBe(
+      pokemon('snover', 20, 'Tackle').currentHp
+    );
+    expect(calculateDamage(fireUser, target, move('Ember'), always(1), { weather: 'sun', weatherSuppressed: true })).toBe(
+      calculateDamage(fireUser, target, move('Ember'), always(1))
+    );
+    const specialAttacker = pokemon('torchic', 30, 'Psychic');
+    expect(calculateDamage(specialAttacker, rock, move('Psychic'), always(1), { weather: 'sandstorm' })).toBeLessThan(
+      calculateDamage(specialAttacker, rock, move('Psychic'), always(1))
+    );
+  });
+
+  it('starts weather and screens through their moves and counts the setup turn', () => {
+    const weatherBattle = startWildBattle(pokemon('torchic', 20, 'Sunny Day'), pokemon('wurmple', 5, 'Tackle'));
+    const screenBattle = startWildBattle(pokemon('torchic', 20, 'Reflect'), pokemon('wurmple', 5, 'Tackle'));
+    const weather = executeBattleTurn(weatherBattle, 0, always(0.5));
+    const screen = executeBattleTurn(screenBattle, 0, always(0.5));
+
+    expect(weather.field.weather).toEqual({ kind: 'sun', turns: 4 });
+    expect(screen.field.screens.player.reflect).toBe(4);
+  });
+
+  it.each([
+    ['Sunny Day', 'sun'],
+    ['Rain Dance', 'rain'],
+    ['Sandstorm', 'sandstorm'],
+    ['Hail', 'hail'],
+  ] as const)('%s sets a five-turn %s weather state', (moveName, weather) => {
+    const battle = startWildBattle(pokemon('torchic', 20, moveName), pokemon('wurmple', 5, 'Tackle'));
+    const next = executeBattleTurn(battle, 0, always(0.5));
+
+    expect(next.field.weather).toEqual({ kind: weather, turns: 4 });
+  });
+
+  it('applies and bypasses Reflect and Light Screen as Gen VI does', () => {
+    const attacker = pokemon('torchic', 30, 'Tackle', 'Psychic');
+    const target = pokemon('wurmple', 30, 'Tackle');
+    const normal = calculateDamage(attacker, target, move('Tackle'), always(1));
+    const reflected = calculateDamage(attacker, target, move('Tackle'), always(1), { screen: 'reflect' });
+    const critical = calculateDamage(attacker, target, move('Tackle'), always(1), { screen: 'reflect', critical: true });
+    const special = calculateDamage(attacker, target, move('Psychic'), always(1), { screen: 'lightScreen' });
+
+    expect(reflected).toBeLessThan(normal);
+    expect(critical).toBe(normal * 1.5);
+    expect(special).toBeLessThan(calculateDamage(attacker, target, move('Psychic'), always(1)));
+  });
+});
+
+describe('Gen VI capture formula', () => {
+  it('uses species catch rate, remaining HP and status multipliers for shake checks', () => {
+    const wild = pokemon('poochyena', 5, 'Tackle');
+    const fullHp = genSixCatchShakeThreshold(wild);
+    const weakened = genSixCatchShakeThreshold({ ...wild, currentHp: 1 });
+    const asleep = genSixCatchShakeThreshold({ ...wild, status: { kind: 'sleep', counter: 2 } });
+
+    expect(fullHp).toBeCloseTo(53335.908, 2);
+    expect(weakened).toBeGreaterThan(fullHp);
+    expect(asleep).toBeGreaterThan(fullHp);
+  });
+
+  it('requires four successful shake checks to catch and uses the enemy turn after a breakout', () => {
+    const battle = startWildBattle(pokemon('torchic', 5, 'Scratch'), pokemon('poochyena', 5, 'Tackle'));
+    const caught = throwPokeball(battle, always(0));
+    const escaped = throwPokeball(battle, always(0.99));
+
+    expect(caught.status).toBe('caught');
+    expect(escaped.status).toBe('ongoing');
+    expect(escaped.turn).toBe(2);
   });
 });

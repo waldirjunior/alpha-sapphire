@@ -3,6 +3,13 @@ import type { DexMove } from './dex';
 import { statStageMultiplier } from './statStages';
 import { rollInRange, type Rng } from './statusConditions';
 import { getTypeEffectivenessAgainst, type ElementalType } from './typeChart';
+import {
+  rockSpecialDefenseMultiplier,
+  screenDamageMultiplier,
+  weatherPowerMultiplier,
+  type BattleScreen,
+  type BattleWeather,
+} from './battleField';
 
 export const STRUGGLE_MOVE_ID = 165;
 const STAB = 1.5;
@@ -13,6 +20,9 @@ const CRIT_IMMUNE_ABILITIES: ReadonlySet<string> = new Set(['Battle Armor', 'She
 
 export interface DamageOptions {
   critical?: boolean;
+  weather?: BattleWeather | null;
+  weatherSuppressed?: boolean;
+  screen?: BattleScreen | null;
 }
 
 export function rollCritical(defender: PokemonInstance, move: DexMove, rng: Rng): boolean {
@@ -29,6 +39,7 @@ export function getTypeEffectiveness(moveType: ElementalType, defenderTypes: rea
 
 /** Struggle é "sem tipo" na Gen VI: ignora efetividade e STAB. */
 export function moveEffectiveness(move: DexMove, defender: PokemonInstance): number {
+  if (move.type === 'ground' && defender.ability === 'Levitate') return 0;
   return move.id === STRUGGLE_MOVE_ID ? 1 : getTypeEffectiveness(move.type, defender.species.types);
 }
 
@@ -41,12 +52,19 @@ function attackingStat(attacker: PokemonInstance, move: DexMove, critical: boole
   return Math.max(1, Math.floor(raw * statStageMultiplier(stage)));
 }
 
-function defendingStat(defender: PokemonInstance, move: DexMove, critical: boolean): number {
+function defendingStat(
+  defender: PokemonInstance,
+  move: DexMove,
+  critical: boolean,
+  weather: BattleWeather | null,
+  weatherSuppressed: boolean
+): number {
   const physical = move.category === 'physical';
   const raw = physical ? defender.defense : defender.spDef;
   const rawStage = physical ? defender.stages.def : defender.stages.spd;
   const stage = critical ? Math.min(0, rawStage) : rawStage;
-  return Math.max(1, Math.floor(raw * statStageMultiplier(stage)));
+  const sandstormBoost = physical ? 1 : rockSpecialDefenseMultiplier(defender, weather, weatherSuppressed);
+  return Math.max(1, Math.floor(raw * statStageMultiplier(stage) * sandstormBoost));
 }
 
 function stabFor(attacker: PokemonInstance, move: DexMove): number {
@@ -57,20 +75,29 @@ function burnFor(attacker: PokemonInstance, move: DexMove): number {
   return attacker.status?.kind === 'burn' && move.category === 'physical' ? BURN_PHYSICAL_MULTIPLIER : 1;
 }
 
+function starterAbilityFor(attacker: PokemonInstance, move: DexMove): number {
+  if (attacker.currentHp * 3 > attacker.maxHp) return 1;
+  const boosts: Readonly<Record<string, ElementalType>> = { Blaze: 'fire', Torrent: 'water', Overgrow: 'grass' };
+  return boosts[attacker.ability] === move.type ? 1.5 : 1;
+}
+
 export function calculateDamage(
   attacker: PokemonInstance,
   defender: PokemonInstance,
   move: DexMove,
   rng: Rng = Math.random,
-  { critical = false }: DamageOptions = {}
+  { critical = false, weather = null, weatherSuppressed = false, screen = null }: DamageOptions = {}
 ): number {
   const effectiveness = moveEffectiveness(move, defender);
   if (effectiveness === 0 || move.power === 0) return 0;
-  const ratio = attackingStat(attacker, move, critical) / defendingStat(defender, move, critical);
+  const ratio = attackingStat(attacker, move, critical) / defendingStat(defender, move, critical, weather, weatherSuppressed);
   const base = Math.floor((((2 * attacker.level) / 5 + 2) * move.power * ratio) / 50) + 2;
   const randomFactor = 0.85 + 0.15 * Math.min(1, Math.max(0, rng()));
   const critMultiplier = critical ? CRIT_MULTIPLIER : 1;
-  const modifier = critMultiplier * stabFor(attacker, move) * effectiveness * burnFor(attacker, move) * randomFactor;
+  const weatherMultiplier = weatherPowerMultiplier(move.type, weather, weatherSuppressed);
+  const screenMultiplier = screenDamageMultiplier(screen, move.category, critical);
+  const modifier = critMultiplier * stabFor(attacker, move) * effectiveness * burnFor(attacker, move)
+    * starterAbilityFor(attacker, move) * weatherMultiplier * screenMultiplier * randomFactor;
   return Math.max(1, Math.floor(base * modifier));
 }
 

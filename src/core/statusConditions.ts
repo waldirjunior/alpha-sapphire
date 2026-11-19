@@ -1,5 +1,6 @@
 import type { BattleMove, MajorStatus, MajorStatusKind, PokemonInstance } from './battlePokemon';
 import type { ElementalType } from './typeChart';
+import { weatherChipDamage, type BattleWeather } from './battleField';
 
 export type Rng = () => number;
 
@@ -88,20 +89,33 @@ export function checkCanAct(pokemon: PokemonInstance, rng: Rng): { pokemon: Poke
 }
 
 /** Dano residual de fim de turno (Gen VI): queimadura/veneno 1/8, tóxico n/16 crescente. */
-export function applyResidualDamage(pokemon: PokemonInstance): { pokemon: PokemonInstance; message: string | null } {
+export function applyResidualDamage(
+  pokemon: PokemonInstance,
+  weather: BattleWeather | null = null,
+  weatherSuppressed = false
+): { pokemon: PokemonInstance; message: string | null } {
   const status = pokemon.status;
-  if (pokemon.currentHp === 0 || !status) return { pokemon, message: null };
+  if (pokemon.currentHp === 0) return { pokemon, message: null };
+  const statusDamage = statusResidual(pokemon, status);
+  const weatherDamage = weatherChipDamage(statusDamage.pokemon, weather, weatherSuppressed);
+  if (weatherDamage === 0 || statusDamage.pokemon.currentHp === 0) return statusDamage;
+  const currentHp = Math.max(0, statusDamage.pokemon.currentHp - weatherDamage);
+  const weatherResult = { ...statusDamage.pokemon, currentHp };
+  const weatherMessage = `${pokemon.species.name} sofreu ${weatherDamage} de dano do clima.`;
+  return { pokemon: weatherResult, message: [statusDamage.message, weatherMessage].filter(Boolean).join(' ') };
+}
+
+function statusResidual(pokemon: PokemonInstance, status: MajorStatus | null): { pokemon: PokemonInstance; message: string | null } {
+  if (!status) return { pokemon, message: null };
   if (status.kind === 'burn' || status.kind === 'poison') {
     const damage = Math.max(1, Math.floor(pokemon.maxHp / BURN_POISON_FRACTION));
     const verb = status.kind === 'burn' ? 'sofre com a queimadura' : 'sofre com o veneno';
     return residual(pokemon, damage, status, verb);
   }
-  if (status.kind === 'toxic') {
-    const damage = Math.max(1, Math.floor((pokemon.maxHp * status.counter) / TOXIC_DENOMINATOR));
-    const nextStatus = { kind: 'toxic' as const, counter: Math.min(TOXIC_MAX_COUNTER, status.counter + 1) };
-    return residual(pokemon, damage, nextStatus, 'sofre com o veneno');
-  }
-  return { pokemon, message: null };
+  if (status.kind !== 'toxic') return { pokemon, message: null };
+  const damage = Math.max(1, Math.floor((pokemon.maxHp * status.counter) / TOXIC_DENOMINATOR));
+  const nextStatus = { kind: 'toxic' as const, counter: Math.min(TOXIC_MAX_COUNTER, status.counter + 1) };
+  return residual(pokemon, damage, nextStatus, 'sofre com o veneno');
 }
 
 function residual(pokemon: PokemonInstance, damage: number, status: MajorStatus, verb: string): { pokemon: PokemonInstance; message: string } {
