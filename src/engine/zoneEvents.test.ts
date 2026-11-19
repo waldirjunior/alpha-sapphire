@@ -206,7 +206,8 @@ describe('ciclo de vida do host de zonas', () => {
   });
 
   it('permite NPC com init opaco suspenso e restaura init sem perder flags da interação', async () => {
-    const f = fixture([['FlagSet', [123]], ['TalkMdlMsg_Seq', [0, ...Array<number>(18).fill(0)]], ['MsgWinAllClose', []]]);
+    const f = fixture([['FlagSet', [123]], ['TalkMdlMsg_Seq', [0, ...Array<number>(18).fill(0)]],
+      ['LastKeyWait', []], ['MsgWinAllClose', []]]);
     f.programs.bundle = { ...f.programs.bundle, 'zone:0006:entities': image([['BuildMdlEventAnimeSetEnd', [1, 0]], ['FlagSet', [88]]]) };
     const events = new ZoneEvents(f.ports, async () => f.assets);
     await events.enter();
@@ -245,7 +246,18 @@ describe('ciclo de vida do host de zonas', () => {
     expect(events.busy).toBe(true);
     expect(await events.interact(f.npc())).toBe(false);
     await events.advance();
-    expect(events.busy).toBe(true);
+    expect(events.busy).toBe(false);
+    expect(f.ports.dialogue).toHaveBeenLastCalledWith(null);
+    expect(f.ports.report).not.toHaveBeenCalled();
+  });
+
+  it.each(['LastKeyWait', '_ABKeyWait'])('%s fornece a única confirmação depois do texto AMX', async waitNative => {
+    const f = fixture([['TalkMdlMsg_Seq', [0, ...Array<number>(18).fill(0)]], [waitNative, []], ['MsgWinAllClose', []]]);
+    const events = new ZoneEvents(f.ports, async () => f.assets);
+    await events.enter();
+    await events.interact(f.npc());
+    expect(f.ports.dialogue).toHaveBeenLastCalledWith('Synthetic message');
+    expect(events.canAdvance).toBe(true);
     await events.advance();
     expect(events.busy).toBe(false);
     expect(f.ports.dialogue).toHaveBeenLastCalledWith(null);

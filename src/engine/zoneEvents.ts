@@ -253,8 +253,11 @@ export class ZoneEvents {
     const request = classifyEventRequest(state, this.messages.linesFor(effect));
     if (request.kind === 'warp') return this.changeMap(state, request.target);
     if (request.kind === 'opaque') return this.deferPresentation(state, request.name);
-    if (request.kind === 'key' || request.kind === 'text') {
-      if (request.kind === 'text') this.ports.dialogue(request.text);
+    if (request.kind === 'text') {
+      this.ports.dialogue(request.text);
+      return { kind: 'native-result', value: 0 };
+    }
+    if (request.kind === 'key') {
       this.waitingKey = true;
       return null;
     }
