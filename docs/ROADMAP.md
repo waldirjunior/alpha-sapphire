@@ -8,20 +8,17 @@ Pegue o primeiro item não bloqueado. Cada item termina quando a verificação i
 
 | # | Resultado | Verificação | Ref. |
 | --- | --- | --- | --- |
-| 1 | Atores com ID de objeto (`0x1000`/`0x2000`: pedras, itens, bagas) renderizam o modelo real. | `assetsLoaded` passa a `corrigido` nos 23 cenários afetados. | P-017 |
-| 2 | Câmera e oclusão iguais ao original nos pontos de telhado e parede, decididas pelas referências capturadas no oráculo (P-021). | `avatarVisible` passa a `corrigido` em `z0006-littleroot-telhado` e `z0445-mauville-hall`. | P-017 |
-| 3 | Corredor Littleroot → Lavaridge como teste e2e versionado, portando os roteiros de `rom/harness-backup-2026-11-18/`. | Novo `e2e/corridor.spec.ts` verde. | PRD-006 a PRD-013 |
-| 4 | `src/game.ts` dividido em módulos testáveis (entrada, batalha, menus, intro), sem mudar comportamento. | Smoke e2e verde antes e depois; `FROZEN_SIZES` vazio em `src/architecture.test.ts`. | P-020 |
-| 5 | Nativos de apresentação AMX mais frequentes implementados, eliminando os "Enter extras" do diálogo de NPC. | Teste de smoke do diálogo fecha com um único Enter após o texto. | P-013 |
-| 6 | New Game natural: da intro ao laboratório de Birch e à primeira batalha sem fixture. | Novo e2e de campanha, sem `relocateSave`. | P-013 |
-| 7 | Permissões de movimento (ledges laterais, bike, Surf) fechadas por observação no emulador, dispensando as fixtures do corredor. | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
-| 8 | Camadas de piso e seleção de altura em pontes e interiores. | Cenários visuais novos nos pontos afetados, aceitos. | PRD-016, P-017 |
+| 1 | `src/game.ts` dividido em módulos testáveis (entrada, batalha, menus, intro), sem mudar comportamento. | Smoke e2e verde antes e depois; `FROZEN_SIZES` vazio em `src/architecture.test.ts`. | P-020 |
+| 2 | Nativos de apresentação AMX mais frequentes implementados, eliminando os "Enter extras" do diálogo de NPC. | Teste de smoke do diálogo fecha com um único Enter após o texto. | P-013 |
+| 3 | New Game natural: da intro ao laboratório de Birch e à primeira batalha sem fixture. | Novo e2e de campanha, sem `relocateSave`. | P-013 |
+| 4 | Permissões de movimento (ledges laterais, bike, Surf) fechadas por observação no emulador, dispensando as fixtures do corredor. | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
+| 5 | Camadas de piso e seleção de altura em pontes e interiores. | Cenários visuais novos nos pontos afetados, aceitos. | PRD-016, P-017 |
 
 Regras da fila:
 
 - Item bloqueado por ferramenta ausente não bloqueia os demais: registre o bloqueio na pendência e siga para o próximo. Máquina nova: [SETUP.md](SETUP.md).
 - Trabalho novo entra na fila com resultado e verificação; sem verificação executável não entra.
-- Os itens 7 e 8 são as frentes de engenharia reversa pausadas. Só retomar por disassembly depois que o emulador ([PRD-002](features/validacao-emulador/prds/PRD-002-infraestrutura-do-oraculo.md)) não tiver respondido à pergunta.
+- Os itens 4 e 5 são as frentes de engenharia reversa pausadas. Só retomar por disassembly depois que o emulador ([PRD-002](features/validacao-emulador/prds/PRD-002-infraestrutura-do-oraculo.md)) não tiver respondido à pergunta.
 
 ## Fases
 
