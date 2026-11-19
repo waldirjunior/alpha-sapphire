@@ -128,6 +128,90 @@
       #ds-panel.open {
         display: block;
       }
+      #ds-panel.hoenn-map-open {
+        max-height: clamp(220px, 36vh, 340px);
+      }
+      .oras-hoenn-map {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(145px, 1fr);
+        align-items: stretch;
+        gap: 10px;
+      }
+      .hoenn-map-svg {
+        width: 100%;
+        height: 185px;
+        border-radius: 10px;
+        background: radial-gradient(ellipse at 48% 46%, #164966, #0b2944 68%);
+      }
+      .hoenn-map-land {
+        fill: #5b9b74;
+        stroke: #a7d99a;
+        stroke-width: 3;
+        stroke-linejoin: round;
+        opacity: 0.82;
+      }
+      .hoenn-map-route {
+        stroke: #b9d2aa;
+        stroke-width: 2;
+        stroke-dasharray: 5 7;
+        opacity: 0.55;
+      }
+      .hoenn-map-route.road {
+        stroke: #ffe3a3;
+        stroke-width: 2.5;
+        stroke-dasharray: none;
+        opacity: 0.72;
+      }
+      .hoenn-map-location {
+        cursor: pointer;
+        outline: none;
+      }
+      .hoenn-map-location circle {
+        fill: #f6f3d5;
+        stroke: #2a5271;
+        stroke-width: 3;
+      }
+      .hoenn-map-location.city circle { fill: #ffcf69; }
+      .hoenn-map-location.town circle { fill: #d8f49a; }
+      .hoenn-map-location.landmark circle { fill: #f4a9a0; }
+      .hoenn-map-location.route circle { stroke-width: 2; }
+      .hoenn-map-location text,
+      .hoenn-player-marker text {
+        fill: #fff;
+        stroke: #102b41;
+        stroke-width: 4px;
+        paint-order: stroke;
+        font: 700 14px system-ui, sans-serif;
+        pointer-events: none;
+      }
+      .hoenn-map-location.route text {
+        fill: #ffe5a8;
+        font-size: 12px;
+      }
+      .hoenn-map-location.selected circle {
+        stroke: #fff;
+        stroke-width: 4;
+        filter: drop-shadow(0 0 4px #fff);
+      }
+      .hoenn-map-location:focus circle { stroke: #7dd3fc; stroke-width: 5; }
+      .hoenn-player-marker { pointer-events: none; }
+      .hoenn-player-marker circle {
+        fill: rgba(56, 189, 248, 0.24);
+        stroke: #38bdf8;
+        stroke-width: 4;
+      }
+      .hoenn-player-marker text { fill: #7dd3fc; }
+      .hoenn-map-details {
+        display: grid;
+        align-content: center;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 9px;
+        background: linear-gradient(145deg, #183e60, #102744);
+        border: 1px solid rgba(125, 211, 252, 0.55);
+      }
+      .hoenn-map-details strong { color: #ffe4a3; font-size: 14px; }
+      .hoenn-map-details span { color: #d6e7f5; line-height: 1.45; }
       .oras-party-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
@@ -436,6 +520,9 @@
         #battle-overlay { padding: 8px; }
         #battle-card { width: min(460px, calc(100% - 12px)); }
         .battle-status-grid { grid-template-columns: 1fr; }
+        .oras-hoenn-map { grid-template-columns: 1fr; }
+        .hoenn-map-svg { height: 165px; }
+        #ds-panel.hoenn-map-open { max-height: clamp(245px, 42vh, 360px); }
       }
     </style>
   </head>
@@ -465,6 +552,7 @@
             <button data-tab="party"><span class="menu-icon" aria-hidden="true">●</span><span class="menu-label">Equipe</span></button>
             <button data-tab="bag"><span class="menu-icon" aria-hidden="true">▣</span><span class="menu-label">Mochila</span></button>
             <button data-tab="pokedex"><span class="menu-icon" aria-hidden="true">⬡</span><span class="menu-label">Pokédex</span></button>
+            <button data-tab="map"><span class="menu-icon" aria-hidden="true">⌖</span><span class="menu-label">Mapa</span></button>
             <button data-tab="time"><span class="menu-icon" aria-hidden="true">◷</span><span class="menu-label">Hora</span></button>
             <button id="btn-save-game" aria-label="Salvar Jogo"><span class="menu-icon" aria-hidden="true">▣</span><span class="menu-label">Salvar</span></button>
             <button id="btn-new-game">Novo Jogo</button>

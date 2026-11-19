@@ -79,6 +79,7 @@ let activeBattle: BattleState | null = null;
 let battleAnimating = false;
 let activeTrainerId: string | null = null;
 let openDsTab: MenuTab | null = null;
+let selectedHoennMapLocationId: string | null = null;
 let activeBagPocket: 'items' | 'balls' | 'key' = 'items';
 let introStep: IntroStep = state.storyFlags.intro_completed ? null : 'birch';
 let pendingGender: IntroGender = state.player.gender ?? 'male';
@@ -185,6 +186,7 @@ function startNewGame(): void {
   caughtCount = 0;
   introStep = 'birch';
   openDsTab = null;
+  selectedHoennMapLocationId = null;
   renderIntro();
   syncUi();
 }
@@ -286,6 +288,12 @@ const menuHost = {
   setParty: (nextParty: typeof party) => { party = nextParty; },
   getActiveBagPocket: () => activeBagPocket,
   setActiveBagPocket: (pocket: typeof activeBagPocket) => { activeBagPocket = pocket; },
+  getPlayerMap: () => {
+    const zoneName = MAPS[state.player.mapId]?.name;
+    return zoneName ? { mapId: state.player.mapId, zoneName } : { mapId: state.player.mapId };
+  },
+  getSelectedMapLocationId: () => selectedHoennMapLocationId,
+  setSelectedMapLocationId: (locationId: string) => { selectedHoennMapLocationId = locationId; },
   renderIntro,
   syncUi,
 };

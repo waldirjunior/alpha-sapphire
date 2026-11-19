@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   bagPocketItems,
   formatPlayNavTime,
+  menuTabFrom,
   menuTabPresentation,
   splitDialogueSpeaker,
   toggleMenuTab,
@@ -22,6 +23,14 @@ describe('game menus', () => {
       accessibleName: 'Abrir mochila',
     });
     expect(menuTabPresentation('time').label).toBe('Hora');
+    expect(menuTabPresentation('map')).toEqual({
+      label: 'Mapa',
+      icon: '⌖',
+      accessibleName: 'Abrir Mapa de Hoenn',
+    });
+    expect(menuTabFrom('map')).toBe('map');
+    expect(menuTabFrom('party')).toBe('party');
+    expect(menuTabFrom('save')).toBeNull();
   });
 
   it('formats the local 3DS clock with a stable 24-hour display', () => {

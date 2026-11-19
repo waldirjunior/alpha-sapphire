@@ -98,3 +98,18 @@ test('enfermeira Joy no Centro Pokémon cura a equipe ao interagir', async ({ pa
   expect(hpAfter).toBeGreaterThan(2);
   expect(errors).toEqual([]);
 });
+
+test('PokéNav mostra o Mapa de Hoenn, posição atual e detalhes da rota selecionada', async ({ page }) => {
+  const errors = trackPageErrors(page);
+  await bootGame(page, NO_ENCOUNTERS);
+  await finishIntro(page);
+  await page.locator('#ds-tabs [data-tab="map"]').click();
+  const panel = page.locator('#ds-panel');
+  await expect(panel).toHaveClass(/hoenn-map-open/);
+  await expect(panel.locator('.hoenn-map-svg')).toHaveAttribute('aria-label', 'Mapa interativo da região de Hoenn');
+  await expect(panel.locator('.hoenn-player-marker')).toHaveAttribute('aria-label', 'Sua posição: Littleroot Town');
+  await expect(panel.locator('.hoenn-map-details')).toContainText('Littleroot Town');
+  await panel.locator('[data-location-id="route-101"] circle').click();
+  await expect(panel.locator('.hoenn-map-details')).toContainText('Route 101');
+  expect(errors).toEqual([]);
+});
