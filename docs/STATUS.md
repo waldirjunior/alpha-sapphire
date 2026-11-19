@@ -8,14 +8,14 @@ Verificado em 2026-11-19 (macOS; suporte headless Linux validado anteriormente n
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 453 em 72 arquivos, todos passando | `npm test` |
+| Testes unitários (Vitest) | 473 em 72 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | 95,9% linhas, 85,4% branches (catraca em 95/85) | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 229 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
-| Jogo real no browser (smoke + corredor) | 6 de 6 fluxos (`e2e/smoke.spec.ts`) + corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
-| Cenários visuais | 25 de 25 estáveis com referência do emulador lado a lado; **25 de 25 aceitos** sem defeito conhecido | `npm run test:e2e`, galeria em `rom/visual-report/index.html` |
+| Testes do pipeline e do oráculo (Python) | 232 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
+| Jogo real no browser (smoke + campanha + corredor) | 6 smoke (`e2e/smoke.spec.ts`), campanha New Game → Birch (`e2e/campaign.spec.ts`) e corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
+| Cenários visuais | 28 de 28 estáveis com referência do emulador lado a lado; **28 de 28 aceitos** sem defeito conhecido | `npm run test:e2e`, galeria em `rom/visual-report/index.html` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
 
-Atores com ID de objeto (`0x1000`/`0x2000` via `a/0/2/3`) renderizam o modelo real (`failedAssets = 0` nos 25 cenários), e câmera/oclusão em `z0006-littleroot-telhado` e `z0445-mauville-hall` correspondem às referências do oráculo Azahar. Pés de Brendan e May (`sw_parts02`) e orientação V de corpo/faces (`A-099`) corrigidos e verificados em todos os 25 cenários (`groundGap = -0,0001` nos close-ups). Referências 400×240 do Azahar capturadas para todos os 25 cenários em `rom/visual-reference/`.
+Atores com ID de objeto (`0x1000`/`0x2000` via `a/0/2/1` e tabela em `DllField.cro`) renderizam o modelo real (`failedAssets = 0`), câmera/oclusão em `z0006-littleroot-telhado` e `z0445-mauville-hall` correspondem ao Azahar, e 3 novos cenários multicamada (Mauville/Route 119) estão aceitos. Pés de Brendan e May (`sw_parts02`) e orientação V de corpo/faces (`A-099`) corrigidos (`groundGap = -0,0001` nos close-ups). Referências 400×240 do Azahar em `rom/visual-reference/`.
 
 ## O que funciona
 
@@ -30,8 +30,8 @@ Atores com ID de objeto (`0x1000`/`0x2000` via `a/0/2/3`) renderizam o modelo re
 
 | Limite | Pendência |
 | --- | --- |
-| Campanha desde New Game não roda de forma natural: init, callbacks AMX e visibilidade inicial por `spawnFlag` (ex.: flag `612` em `zone_0006:npc:6`) pendentes; diálogo de NPC já fecha com 1 Enter (`TalkMdlMsg_Seq` + `LastKeyWait`). | P-013 |
-| Permissões de movimento (ledges laterais, bike, Surf), camadas de piso e oclusão por prédios (ex.: `z0015-mauville-patio`). | P-017 |
+| Campanha após o laboratório de Birch ainda depende de mais eventos/callbacks AMX; New Game → Rota 101 → batalha inicial → laboratório já roda naturalmente (`e2e/campaign.spec.ts`), e diálogo de NPC fecha com 1 Enter (`TalkMdlMsg_Seq` + `LastKeyWait`). | P-013 |
+| Permissões de movimento para bike e Surf (ledges laterais 72/73 já fechados) e oclusão residual por prédios (ex.: `z0015-mauville-patio`). | P-017 |
 | Iluminação, LUTs e combiners RGB dos materiais; exterior preto em cavernas. | P-007 |
 | HUD de desenvolvimento em vez dos menus do 3DS; arenas de batalha geométricas; efeitos sonoros ausentes. | P-011, P-014, P-008 |
 

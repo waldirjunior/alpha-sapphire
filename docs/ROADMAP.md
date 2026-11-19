@@ -8,15 +8,13 @@ Pegue o primeiro item não bloqueado. Cada item termina quando a verificação i
 
 | # | Resultado | Verificação | Ref. |
 | --- | --- | --- | --- |
-| 1 | New Game natural: da intro ao laboratório de Birch e à primeira batalha sem fixture. | Novo e2e de campanha, sem `relocateSave`. | P-013 |
-| 2 | Permissões de movimento (ledges laterais, bike, Surf) fechadas por observação no emulador, dispensando as fixtures do corredor. | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
-| 3 | Camadas de piso e seleção de altura em pontes e interiores. | Cenários visuais novos nos pontos afetados, aceitos. | PRD-016, P-017 |
+| 1 | Permissões de movimento restantes (bike e Surf) fechadas por observação no emulador com save avançado ORAS, dispensando as fixtures do corredor (ledges laterais 72/73 já fechados). | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
 
 Regras da fila:
 
 - Item bloqueado por ferramenta ausente não bloqueia os demais: registre o bloqueio na pendência e siga para o próximo. Máquina nova: [SETUP.md](SETUP.md).
 - Trabalho novo entra na fila com resultado e verificação; sem verificação executável não entra.
-- Os itens 2 e 3 são as frentes de engenharia reversa pausadas. Só retomar por disassembly depois que o emulador ([PRD-002](features/validacao-emulador/prds/PRD-002-infraestrutura-do-oraculo.md)) não tiver respondido à pergunta.
+- O item 1 depende de um save ORAS avançado com Bike/Surf para observação no emulador ([PRD-002](features/validacao-emulador/prds/PRD-002-infraestrutura-do-oraculo.md)).
 
 ## Fases
 
