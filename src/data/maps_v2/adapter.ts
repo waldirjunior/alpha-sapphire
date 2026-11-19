@@ -1,4 +1,4 @@
-import type { Direction, GridPosition, MapDefinition } from '../../core/types';
+import type { Direction, GridPosition, LateralLedge, MapDefinition } from '../../core/types';
 import type { ZoneEncounterSlot } from '../../core/wildPokemon';
 
 export interface ZoneMapSource {
@@ -12,6 +12,8 @@ export interface ZoneMapSource {
   terrain: number[][];
   groundHeights?: (number | null)[][];
   southLedges?: GridPosition[];
+  lateralLedges?: LateralLedge[];
+  surfTiles?: GridPosition[];
   spawnPos: GridPosition | null;
   spawnDerived: boolean;
   spawnPolicy: string;
@@ -56,6 +58,17 @@ function validateZone(source: ZoneMapSource): void {
   if (invalidLedge) {
     throw new Error(`Mapa ${source.id}: ledge sul (${invalidLedge.x},${invalidLedge.z}) exige coordenadas inteiras em tile bloqueado`);
   }
+  const invalidLateralLedge = source.lateralLedges?.find(({ x, z, direction }) =>
+    !Number.isInteger(x) || !Number.isInteger(z) || source.collisions[z]?.[x] !== 1 ||
+    (direction !== 'left' && direction !== 'right'));
+  if (invalidLateralLedge) {
+    throw new Error(`Mapa ${source.id}: ledge lateral (${invalidLateralLedge.x},${invalidLateralLedge.z}) exige tile bloqueado e direção esquerda/direita`);
+  }
+  const invalidSurfTile = source.surfTiles?.find(({ x, z }) =>
+    !Number.isInteger(x) || !Number.isInteger(z) || source.collisions[z]?.[x] !== 0);
+  if (invalidSurfTile) {
+    throw new Error(`Mapa ${source.id}: tile de Surf (${invalidSurfTile.x},${invalidSurfTile.z}) exige coordenadas inteiras em tile GR livre`);
+  }
   if (source.warps.some((warp) => !Number.isInteger(warp.width) || warp.width < 1 || !Number.isInteger(warp.height) || warp.height < 1)) {
     throw new Error(`Mapa ${source.id}: warp com width/height inválidos`);
   }
@@ -68,6 +81,9 @@ export function adaptZoneMap(source: ZoneMapSource): MapDefinition {
     collisions: source.collisions.map((row) => [...row]), terrain: source.terrain.map((row) => [...row]),
     groundHeights: source.groundHeights?.map(row => [...row]),
     southLedges: source.southLedges?.map(pos => ({ ...pos })),
+    lateralLedges: source.lateralLedges?.map(ledge => ({ ...ledge })),
+    surfTiles: source.surfTiles?.map(pos => ({ ...pos })),
+    surfTileKeys: source.surfTiles ? new Set(source.surfTiles.map(({ x, z }) => `${x},${z}`)) : undefined,
     romOrigin: source.source.originTile ? { ...source.source.originTile } : undefined,
     spawnPos: source.spawnPos ? { ...source.spawnPos } : undefined,
     spawnDerived: source.spawnDerived, spawnPolicy: source.spawnPolicy,

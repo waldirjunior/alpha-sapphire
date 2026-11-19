@@ -2,7 +2,7 @@ import type { Direction, GameState, GridPosition, Interactable, MapDefinition } 
 import { DIRECTION_DELTAS, stepPosition, stepWarp } from './warps';
 import { boundaryTarget, stepBoundary } from './boundaries';
 import type { BoundaryLink } from './types';
-import { southLedgeLanding } from './ledges';
+import { lateralLedgeLanding, southLedgeLanding } from './ledges';
 
 function crossBoundary(state: GameState, direction: Direction, maps: Record<string, MapDefinition>, link: BoundaryLink): GameState {
   const target = maps[link.targetMapId];
@@ -36,7 +36,13 @@ export function isWalkable(map: MapDefinition, pos: GridPosition): boolean {
     return false;
   }
   return map.collisions[pos.z]?.[pos.x] === 0 &&
+    !isSurfTile(map, pos) &&
     !map.npcs?.some(npc => npc.visible !== false && npc.pos.x === pos.x && npc.pos.z === pos.z);
+}
+
+function isSurfTile(map: MapDefinition, pos: GridPosition): boolean {
+  if (map.surfTileKeys) return map.surfTileKeys.has(`${pos.x},${pos.z}`);
+  return map.surfTiles?.some(tile => tile.x === pos.x && tile.z === pos.z) ?? false;
 }
 
 export function isTallGrass(map: MapDefinition, pos: GridPosition): boolean {
@@ -57,7 +63,9 @@ export function movePlayer(
   if (!currentMap) return state;
 
   const warp = stepWarp(state, direction, currentMap);
-  const nextPos = (warp ? undefined : southLedgeLanding(currentMap, state.player.pos, direction)) ?? stepPosition(state.player.pos, direction);
+  const ledgeLanding = warp ? undefined :
+    southLedgeLanding(currentMap, state.player.pos, direction) ?? lateralLedgeLanding(currentMap, state.player.pos, direction);
+  const nextPos = ledgeLanding ?? stepPosition(state.player.pos, direction);
   const boundary = !warp && stepBoundary(state.player.pos, direction, currentMap);
   if (boundary) return crossBoundary(state, direction, maps, boundary);
 

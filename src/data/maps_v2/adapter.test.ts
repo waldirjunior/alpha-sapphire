@@ -63,6 +63,23 @@ describe('zone map adapter', () => {
     }
   });
 
+  it('copies observed lateral ledges and Surf tiles without rewriting GR collisions', () => {
+    const source = { ...fixture,
+      lateralLedges: [{ x: 1, z: 0, direction: 'right' as const }],
+      surfTiles: [{ x: 0, z: 0 }],
+    };
+    const map = adaptZoneMap(source);
+    expect(map.lateralLedges).toEqual(source.lateralLedges);
+    expect(map.lateralLedges).not.toBe(source.lateralLedges);
+    expect(map.surfTiles).toEqual(source.surfTiles);
+    expect(map.surfTiles).not.toBe(source.surfTiles);
+    expect(map.surfTileKeys?.has('0,0')).toBe(true);
+    expect(map.collisions).toEqual(source.collisions);
+    expect(() => adaptZoneMap({ ...source, lateralLedges: [{ x: 2, z: 0, direction: 'right' }] })).toThrow(/ledge lateral/);
+    expect(() => adaptZoneMap({ ...source, lateralLedges: [{ x: 1.5, z: 0, direction: 'right' }] })).toThrow(/ledge lateral/);
+    expect(() => adaptZoneMap({ ...source, surfTiles: [{ x: 1, z: 0 }] })).toThrow(/Surf/);
+  });
+
   it('copies finite primary ground samples, preserving null instead of inventing a floor', () => {
     const source = { ...fixture, groundHeights: [[0, null], [27, 20.5]] };
     const map = adaptZoneMap(source);

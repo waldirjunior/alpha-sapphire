@@ -16,30 +16,40 @@ def gr_grid(gr_id: int, directory: Path, cache: dict) -> tuple:
 
 
 def compose_row(matrix: dict, zone: int, x0: int, z: int, width: int, directory: Path, cache: dict) -> tuple:
-    collisions, terrain, south_ledge_columns, ground = [], [], [], []
+    collisions, terrain, south_ledge_columns, lateral_ledge_columns, surf_columns, ground = [], [], [], [], [], []
     for x in range(x0, x0 + width):
         gr_id = matrix['grIds'][(z // GR_TILES) * matrix['width'] + x // GR_TILES]
         if gr_id == EMPTY or not owns_tile(matrix, zone, x, z):
             collisions.append(1)
             terrain.append(1)
+            lateral_ledge_columns.append(None)
+            surf_columns.append(False)
             ground.append(None)
             continue
         _, _, gr_collisions, gr_terrain, permissions, gr_ground = gr_grid(gr_id, directory, cache)
         collisions.append(gr_collisions[z % GR_TILES][x % GR_TILES])
         terrain.append(gr_terrain[z % GR_TILES][x % GR_TILES])
         ground.append(gr_ground[z % GR_TILES][x % GR_TILES])
-        if permissions[z % GR_TILES][x % GR_TILES] == 0x75020021:
+        permission = permissions[z % GR_TILES][x % GR_TILES]
+        if permission == 0x75020021:
             south_ledge_columns.append(x - x0)
-    return collisions, terrain, south_ledge_columns, ground
+        lateral_ledge_columns.append({0x72020021: 'right', 0x73020021: 'left'}.get(permission))
+        surf_columns.append(permission == 0x3D1A0006)
+    return collisions, terrain, south_ledge_columns, lateral_ledge_columns, surf_columns, ground
 
 
 def compose_tiles(matrix: dict, zone: int, bounds: tuple, directory: Path, cache: dict) -> dict:
     x0, z0, width, height = bounds
     rows = [compose_row(matrix, zone, x0, z, width, directory, cache) for z in range(z0, z0 + height)]
     ledges = [{'x': x, 'z': z} for z, row in enumerate(rows) for x in row[2]]
+    lateral_ledges = [{'x': x, 'z': z, 'direction': direction} for z, row in enumerate(rows)
+                      for x, direction in enumerate(row[3]) if direction]
+    surf_tiles = [{'x': x, 'z': z} for z, row in enumerate(rows) for x, is_surf in enumerate(row[4]) if is_surf]
     return {'width': width, 'height': height, 'collisions': [row[0] for row in rows],
-            'terrain': [row[1] for row in rows], 'groundHeights': [row[3] for row in rows],
-            **({'southLedges': ledges} if ledges else {})}
+            'terrain': [row[1] for row in rows], 'groundHeights': [row[5] for row in rows],
+            **({'southLedges': ledges} if ledges else {}),
+            **({'lateralLedges': lateral_ledges} if lateral_ledges else {}),
+            **({'surfTiles': surf_tiles} if surf_tiles else {})}
 
 
 def matrix_chunks(matrix: dict, bounds: tuple) -> list[dict]:

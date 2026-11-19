@@ -7,6 +7,10 @@ export interface GridPosition {
   z: number;
 }
 
+export interface LateralLedge extends GridPosition {
+  direction: 'left' | 'right';
+}
+
 export interface WarpPoint {
   from: GridPosition;
   targetMapId: string;
@@ -68,6 +72,9 @@ export interface BoundaryLink {
 export interface MapDefinition {
   groundHeights?: (number | null)[][];
   southLedges?: readonly GridPosition[];
+  lateralLedges?: readonly LateralLedge[];
+  surfTiles?: readonly GridPosition[];
+  surfTileKeys?: ReadonlySet<string>;
   boundaries?: readonly BoundaryLink[];
   worldOrigin?: GridPosition;
   romOrigin?: GridPosition;
