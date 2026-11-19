@@ -1,6 +1,12 @@
 // P-008: faixas de batalha por rótulo do BCSAR (STRM_BGM_VS_*_SG → bgm_sg_vs_*_sg, A-023).
 // WIN1..WIN3 por tipo de batalha é inferência pela ordem dos rótulos (A-027), não um campo lido da ROM.
 
+import type { BattleEvent } from './battleEvents';
+
+export type SfxCue = 'dialogue-confirm' | 'menu-open' | 'menu-select' | 'wall-bump' | 'zone-warp' |
+  'heal-chime' | 'battle-hit' | 'pokeball-throw' | 'pokeball-capture' | 'faint';
+export type BattleSfxEvent = BattleEvent | { type: 'pokeball'; captured: boolean };
+
 export type BattleMusicKind = 'wild' | 'trainer' | 'rival' | 'gym';
 
 export interface BattleMusicSource {
@@ -57,4 +63,11 @@ export function resolveCurrentMusic(battle: BattleMusicSource | null, zoneTrack:
 
 export function leveledUpDuring(before: readonly { level: number }[], after: readonly { level: number }[]): boolean {
   return after.some((member, idx) => member.level > (before[idx]?.level ?? member.level));
+}
+
+export function resolveBattleSfx(event: BattleSfxEvent): SfxCue | null {
+  if (event.type === 'pokeball') return event.captured ? 'pokeball-capture' : 'pokeball-throw';
+  if (event.type === 'damage') return 'battle-hit';
+  if (event.type === 'faint') return 'faint';
+  return null;
 }

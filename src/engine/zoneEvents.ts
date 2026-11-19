@@ -9,6 +9,7 @@ import { classifyEventRequest, npcActorId, projectEventActors } from './eventHos
 import { EventMessageBanks } from './eventMessages';
 import type { EventWarp } from './eventWarp';
 import type { EventActorContext } from './eventTurns';
+import type { SfxCue } from '../core/battleAudio';
 
 interface TextSource { zone: number; lines: string[] }
 const texts = import.meta.glob<TextSource>('../data/texts/zones/*.json', { import: 'default' });
@@ -29,6 +30,7 @@ interface EventPorts {
   warp(target: EventWarp, active: () => boolean): Promise<void>;
   report(message: string): void;
   silentAudio(soundId: number): void;
+  playSfx?(cue: SfxCue): void;
   chooseStarter?(active: () => boolean): Promise<{ handle: number; pokemon: AmxPokemon } | undefined>;
   battle?(args: readonly number[], party: readonly AmxPokemon[], active: () => boolean): Promise<number | undefined>;
   presentation?: { reset(): void; directions?(): Readonly<Record<number, number>>;
@@ -260,7 +262,10 @@ export class ZoneEvents {
     if (generation !== this.generation) return null;
     if (presented !== undefined) return { kind: 'native-result', value: presented };
     const request = classifyEventRequest(state, this.messages.linesFor(effect));
-    if (request.kind === 'warp') return this.changeMap(state, request.target);
+    if (request.kind === 'warp') {
+      this.ports.playSfx?.(request.sfxCue);
+      return this.changeMap(state, request.target);
+    }
     if (request.kind === 'opaque') return this.deferPresentation(state, request.name);
     if (request.kind === 'text') {
       this.ports.dialogue(request.text);

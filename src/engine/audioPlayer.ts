@@ -1,3 +1,5 @@
+import type { SfxCue } from '../core/battleAudio';
+
 // P-008: BGM por Web Audio. Navegadores só liberam o AudioContext após um gesto do usuário,
 // então a faixa pedida antes disso fica pendente e começa no primeiro keydown/pointerdown.
 
@@ -11,6 +13,32 @@ interface PlayingTrack {
   source: AudioBufferSourceNode;
   gain: GainNode;
 }
+
+interface SfxNote {
+  frequency: number;
+  seconds: number;
+}
+
+interface SfxPattern {
+  waveform: OscillatorType;
+  amplitude: number;
+  notes: readonly SfxNote[];
+}
+
+const SFX_PATTERNS: Readonly<Record<SfxCue, SfxPattern>> = {
+  'dialogue-confirm': { waveform: 'sine', amplitude: 0.16, notes: [{ frequency: 620, seconds: 0.045 }, { frequency: 790, seconds: 0.065 }] },
+  'menu-open': { waveform: 'square', amplitude: 0.11, notes: [{ frequency: 420, seconds: 0.055 }, { frequency: 560, seconds: 0.075 }] },
+  'menu-select': { waveform: 'square', amplitude: 0.09, notes: [{ frequency: 760, seconds: 0.055 }] },
+  'wall-bump': { waveform: 'triangle', amplitude: 0.16, notes: [{ frequency: 190, seconds: 0.085 }] },
+  'zone-warp': { waveform: 'sine', amplitude: 0.13, notes: [{ frequency: 360, seconds: 0.09 }, { frequency: 540, seconds: 0.12 }] },
+  'heal-chime': { waveform: 'sine', amplitude: 0.15, notes: [
+    { frequency: 523, seconds: 0.08 }, { frequency: 659, seconds: 0.08 }, { frequency: 784, seconds: 0.08 }, { frequency: 1047, seconds: 0.19 },
+  ] },
+  'battle-hit': { waveform: 'square', amplitude: 0.18, notes: [{ frequency: 250, seconds: 0.045 }, { frequency: 150, seconds: 0.08 }] },
+  'pokeball-throw': { waveform: 'sine', amplitude: 0.13, notes: [{ frequency: 300, seconds: 0.06 }, { frequency: 700, seconds: 0.11 }] },
+  'pokeball-capture': { waveform: 'sine', amplitude: 0.15, notes: [{ frequency: 880, seconds: 0.08 }, { frequency: 1175, seconds: 0.16 }] },
+  faint: { waveform: 'triangle', amplitude: 0.15, notes: [{ frequency: 520, seconds: 0.09 }, { frequency: 360, seconds: 0.1 }, { frequency: 190, seconds: 0.18 }] },
+};
 
 export class BgmPlayer {
   private context: AudioContext | null = null;
@@ -32,6 +60,7 @@ export class BgmPlayer {
   }
 
   async unlock(): Promise<void> {
+    if (typeof AudioContext === 'undefined') return;
     const context = this.ensureContext();
     if (context.state === 'suspended') await context.resume();
     if (this.requestedUrl && this.current?.url !== this.requestedUrl) await this.play(this.requestedUrl);
@@ -78,6 +107,27 @@ export class BgmPlayer {
       if (this.current === ducked) ducked?.gain.gain.setTargetAtTime(1, context.currentTime, 0.1);
     };
     source.start();
+  }
+
+  playSfx(cue: SfxCue): void {
+    const context = this.context;
+    const pattern = SFX_PATTERNS[cue];
+    if (!context || context.state !== 'running' || this.volume === 0) return;
+    try {
+      const oscillator = context.createOscillator();
+      const envelope = context.createGain();
+      const start = context.currentTime + 0.005;
+      const duration = pattern.notes.reduce((sum, note) => sum + note.seconds, 0);
+      scheduleSfxNotes(oscillator, pattern, start);
+      scheduleSfxEnvelope(envelope, pattern.amplitude, start, duration);
+      oscillator.type = pattern.waveform;
+      oscillator.connect(envelope);
+      envelope.connect(this.master ?? context.destination);
+      oscillator.start(start);
+      oscillator.stop(start + duration);
+    } catch {
+      return;
+    }
   }
 
   /** URL da faixa em reprodução (diagnóstico/validação em browser). */
@@ -132,4 +182,19 @@ export class BgmPlayer {
     track.gain.gain.linearRampToValueAtTime(0, now + this.fadeSeconds);
     track.source.stop(now + this.fadeSeconds);
   }
+}
+
+function scheduleSfxNotes(oscillator: OscillatorNode, pattern: SfxPattern, start: number): void {
+  let offset = 0;
+  for (const note of pattern.notes) {
+    oscillator.frequency.setValueAtTime(note.frequency, start + offset);
+    offset += note.seconds;
+  }
+}
+
+function scheduleSfxEnvelope(gain: GainNode, amplitude: number, start: number, duration: number): void {
+  gain.gain.setValueAtTime(0, start);
+  gain.gain.linearRampToValueAtTime(amplitude, start + 0.008);
+  gain.gain.setValueAtTime(amplitude, start + duration * 0.72);
+  gain.gain.linearRampToValueAtTime(0.001, start + duration);
 }

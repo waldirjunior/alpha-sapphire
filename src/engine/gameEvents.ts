@@ -7,6 +7,7 @@ import { zoneMaps } from '../data/maps_v2/runtime';
 import { eventWarpState } from './eventWarp';
 import { transitionMap } from './mapTransition';
 import type { EventPresentation } from './eventPresentation';
+import type { SfxCue } from '../core/battleAudio';
 
 export interface GameEventInteractions {
   chooseStarter(active: () => boolean): Promise<{ handle: number; pokemon: AmxPokemon } | undefined>;
@@ -15,7 +16,7 @@ export interface GameEventInteractions {
 
 export function createGameEvents(getState: () => GameState, setState: (state: GameState) => void,
   maps: Record<string, MapDefinition>, syncUi: () => void, surface: Parameters<typeof transitionMap>[0],
-  presentation: EventPresentation, interactions: GameEventInteractions): ZoneEvents {
+  presentation: EventPresentation, interactions: GameEventInteractions, playSfx: (cue: SfxCue) => void): ZoneEvents {
   const dialogue = (text: string | null, sourceId = 'amx'): void => {
     setState({ ...getState(), activeDialogue: text === null ? undefined : { sourceId, text } });
     syncUi();
@@ -40,6 +41,7 @@ export function createGameEvents(getState: () => GameState, setState: (state: Ga
       await transitionMap(surface, 1, () => { if (active()) { setState(next); syncUi(); } });
     },
     silentAudio: soundId => console.warn(`SEPlay(${soundId}): efeito sonoro não extraído; host em modo silencioso (P-008)`),
+    playSfx,
     report: message => console.warn('Evento AMX pendente', message),
     chooseStarter: interactions.chooseStarter,
     battle: interactions.battle,

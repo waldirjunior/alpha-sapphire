@@ -13,7 +13,7 @@ import { generatePokemon } from './core/wildPokemon';
 import { SceneManager } from './engine/SceneManager';
 import { BgmPlayer } from './engine/audioPlayer';
 import { bgmUrl, resolveMapBgm, type ZoneAudioEntry } from './core/zoneAudio';
-import { resolveCurrentMusic } from './core/battleAudio';
+import { resolveCurrentMusic, type SfxCue } from './core/battleAudio';
 import { MAP_ZONE_IDS } from './data/audio/mapZones';
 import { createGameEvents } from './engine/gameEvents';
 import { loadZoneEncounters } from './engine/zoneEncounterLoader';
@@ -68,7 +68,9 @@ const saved = (() => {
   return loadSavedGame(window.localStorage, SAVE_STORAGE_KEY);
 })();
 
-const sceneManager = new SceneManager(app);
+const bgmPlayer = new BgmPlayer();
+bgmPlayer.attachUnlock(window);
+const sceneManager = new SceneManager(app, cue => bgmPlayer.playSfx(cue));
 let state = saved?.state ?? createInitialState(START_MAP_ID, MAPS);
 let starterId: 'treecko' | 'torchic' | 'mudkip' = 'torchic';
 let party = saved?.party ?? [createPokemonInstance(SPECIES[starterId], 5)];
@@ -86,8 +88,6 @@ let resolveStarterChoice: ((starter: StarterId | null) => void) | null = null;
 let resolveEventBattle: ((result: number) => void) | null = null;
 
 // P-008: BGM por zona; zone_audio.json chega por chunk e o áudio só começa após o primeiro gesto.
-const bgmPlayer = new BgmPlayer();
-bgmPlayer.attachUnlock(window);
 let zoneAudio: readonly ZoneAudioEntry[] = [];
 
 function zoneTrackFor(mapId: string): string | null {
@@ -239,7 +239,7 @@ function syncUi(): void {
 }
 
 const zoneEvents = createGameEvents(() => state, next => { state = next; }, MAPS, syncUi, app, sceneManager.events,
-  { chooseStarter: requestStarterChoice, battle: startEventBattle });
+  { chooseStarter: requestStarterChoice, battle: startEventBattle }, cue => sceneManager.playSfx(cue));
 
 const battleHost = {
   overlay: battleOverlay,
@@ -278,7 +278,12 @@ const menuHost = {
   panel: dsPanel,
   tabButtons: dsTabButtons,
   getOpenTab: () => openDsTab,
-  setOpenTab: (tab: MenuTab | null) => { openDsTab = tab; },
+  setOpenTab: (tab: MenuTab | null) => {
+    const previous = openDsTab;
+    openDsTab = tab;
+    if (tab && previous === null) sceneManager.playSfx('menu-open');
+    else if (tab && previous !== tab) sceneManager.playSfx('menu-select');
+  },
   getActiveBattle: () => activeBattle,
   getParty: () => party,
   getBag: () => bag,
@@ -324,6 +329,9 @@ const menuControlHost = {
 };
 
 bindMenuEvents(menuControlHost);
+dsPanel?.addEventListener('click', event => {
+  if (event.target instanceof Element && event.target.closest('button')) sceneManager.playSfx('menu-select');
+});
 
 const inputHost = {
   maps: MAPS,
@@ -348,7 +356,7 @@ const inputHost = {
   syncUi,
   syncPartyFromBattle,
   renderBattle,
-  playJingle,
+  playSfx: (cue: SfxCue) => sceneManager.playSfx(cue),
 };
 
 renderIntro();

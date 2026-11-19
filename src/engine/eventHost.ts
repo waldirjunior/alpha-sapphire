@@ -5,10 +5,11 @@ import { actorDeletionKey } from '../core/amxProgress';
 import { isNpcVisible } from '../core/spawnFlags';
 import { romFacing } from '../data/maps_v2/adapter';
 import { decodeEventWarp, type EventWarp } from './eventWarp';
+import type { SfxCue } from '../core/battleAudio';
 
 export type EventRequest = { kind: 'text'; text: string } | { kind: 'key' } |
   { kind: 'frames'; count: number } | { kind: 'complete'; value: number } |
-  { kind: 'silent-audio'; soundId: number } | { kind: 'warp'; target: EventWarp } |
+  { kind: 'silent-audio'; soundId: number } | { kind: 'warp'; target: EventWarp; sfxCue: SfxCue } |
   { kind: 'opaque'; name: string };
 
 export function classifyEventRequest(state: AmxState, lines: readonly string[]): EventRequest {
@@ -24,7 +25,7 @@ export function classifyEventRequest(state: AmxState, lines: readonly string[]):
   if (name === 'LastKeyWait' || name === '_ABKeyWait') return { kind: 'key' };
   if (name === '_FieldClose') return { kind: 'complete', value: 0 };
   if (name === 'SEPlay') return { kind: 'silent-audio', soundId: args[0] };
-  if (name === '_MapChangeCore') return { kind: 'warp', target: decodeEventWarp(args) };
+  if (name === '_MapChangeCore') return { kind: 'warp', target: decodeEventWarp(args), sfxCue: 'zone-warp' };
   if (name === 'MdlIsHalfSitSkelPreset' || name === 'MdlCanUseTurnAcmd') {
     return { kind: 'complete', value: 0 };
   }

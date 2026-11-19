@@ -14,7 +14,7 @@ import {
 } from '../core/battle';
 import { createInitialState } from '../core/gameState';
 import type { GameState, MapDefinition } from '../core/types';
-import { JINGLES, leveledUpDuring } from '../core/battleAudio';
+import { JINGLES, leveledUpDuring, type SfxCue } from '../core/battleAudio';
 import { SPECIES } from '../data/pokemon/species';
 import type { BattleEvent } from '../core/battleEvents';
 
@@ -28,7 +28,8 @@ export interface BattleUiHost {
     syncBattle(battle: BattleState | null): void;
     playAttackEffect(type: BattleMove['type']): void;
     playBattleEvents(events: readonly BattleEvent[], enemyMoveType: BattleMove['type']): Promise<void>;
-    playPokeballEffect(): void;
+    playPokeballEffect(captured?: boolean): void;
+    playSfx(cue: SfxCue): void;
   };
   getBattle(): BattleState | null;
   setBattle(battle: BattleState | null): void;
@@ -180,6 +181,7 @@ function addPotionButton(host: BattleUiHost, battle: BattleState, actions: HTMLE
     if (!current) return;
     const result = usePotion(host.getBag(), current.player);
     if (!result.used) return;
+    host.scene.playSfx('heal-chime');
     host.setBag(result.bag);
     host.setBattle({
       ...updateActivePlayer(current, result.pokemon),
@@ -215,8 +217,8 @@ function throwWildBall(host: BattleUiHost): void {
   const consumed = consumePokeball(host.getBag());
   if (!consumed.ok) return;
   host.setBag(consumed.bag);
-  host.scene.playPokeballEffect();
   const next = throwPokeball(battle);
+  host.scene.playPokeballEffect(next.status === 'caught');
   host.setBattle(next);
   syncPartyFromBattle(host);
   if (next.status === 'caught') {

@@ -26,6 +26,11 @@ class FakeSource {
   stop(when: number): void { this.stoppedAt = when; }
 }
 
+class FakeOscillator extends FakeSource {
+  type: OscillatorType = 'sine';
+  readonly frequency = new FakeParam();
+}
+
 class FakeContext {
   static last: FakeContext;
   state: 'suspended' | 'running' = 'suspended';
@@ -33,10 +38,12 @@ class FakeContext {
   readonly destination = {};
   readonly sources: FakeSource[] = [];
   readonly gains: FakeGain[] = [];
+  readonly oscillators: FakeOscillator[] = [];
   constructor() { FakeContext.last = this; }
   async resume(): Promise<void> { this.state = 'running'; }
   createGain(): FakeGain { const gain = new FakeGain(); this.gains.push(gain); return gain; }
   createBufferSource(): FakeSource { const source = new FakeSource(); this.sources.push(source); return source; }
+  createOscillator(): FakeOscillator { const oscillator = new FakeOscillator(); this.oscillators.push(oscillator); return oscillator; }
   async decodeAudioData(bytes: ArrayBuffer): Promise<{ bytes: number }> { return { bytes: bytes.byteLength }; }
 }
 
@@ -149,5 +156,33 @@ describe('BgmPlayer', () => {
     expect(FakeContext.last.gains[0].gain.value).toBe(1);
     player.setVolume(-3);
     expect(FakeContext.last.gains[0].gain.value).toBe(0);
+  });
+
+  it('synthesizes a sound cue on the unlocked WebAudio context without loading a file', async () => {
+    const fetchMock = stubFetch();
+    const player = new BgmPlayer();
+    await player.unlock();
+    expect(player.playSfx('menu-open')).toBeUndefined();
+    expect(FakeContext.last.oscillators).toHaveLength(1);
+    expect(FakeContext.last.oscillators[0]).toMatchObject({ type: 'square', started: true });
+    expect(FakeContext.last.oscillators[0]?.stoppedAt).toBeGreaterThan(FakeContext.last.currentTime);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it('does nothing for sound cues while muted, locked, or when WebAudio is unavailable', async () => {
+    const player = new BgmPlayer();
+    expect(() => player.playSfx('battle-hit')).not.toThrow();
+    await player.unlock();
+    player.setVolume(0);
+    player.playSfx('battle-hit');
+    expect(FakeContext.last.oscillators).toHaveLength(0);
+    player.setVolume(1);
+    FakeContext.last.state = 'suspended';
+    player.playSfx('battle-hit');
+    expect(FakeContext.last.oscillators).toHaveLength(0);
+
+    vi.stubGlobal('AudioContext', undefined);
+    expect(() => new BgmPlayer().playSfx('dialogue-confirm')).not.toThrow();
+    await expect(new BgmPlayer().unlock()).resolves.toBeUndefined();
   });
 });

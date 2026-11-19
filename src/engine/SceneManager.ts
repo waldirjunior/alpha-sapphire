@@ -14,6 +14,7 @@ import { fixOrasMaterials, picaMaterialModelUrl } from './picaMaterials';
 import { NativeAnimationController } from './nativeAnimation';
 import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import type { BattleEvent } from '../core/battleEvents';
+import { resolveBattleSfx, type SfxCue } from '../core/battleAudio';
 import { EventPresentation } from './eventPresentation';
 import { followCameraPose } from './cameraFollow';
 import { zoneEnvironment } from './zoneEnvironment';
@@ -70,7 +71,7 @@ export class SceneManager {
   private playerLoadVersion = 0;
   private inBattle = false;
 
-  constructor(container: HTMLElement) {
+  constructor(container: HTMLElement, private readonly emitSfx: (cue: SfxCue) => void = () => {}) {
     this.scene = new THREE.Scene();
 
     this.camera = new THREE.PerspectiveCamera(
@@ -343,12 +344,12 @@ export class SceneManager {
     this.battleActors.clear();
     this.battleLoads = [];
   }
-
   public async playBattleEvents(events: readonly BattleEvent[], enemyMoveType: PokemonType = 'normal'): Promise<void> {
     const version = this.battleLoadVersion;
     await Promise.all(this.battleLoads);
     for (const event of events) {
       if (!this.inBattle || version !== this.battleLoadVersion) return;
+      this.playSfx(resolveBattleSfx(event));
       if (event.type === 'move' && event.side === 'enemy') this.playAttackEffect(enemyMoveType, 'enemy');
       const slot = event.side === 'player' ? this.battlePlayerSlot : this.battleEnemySlot;
       await this.battleActors.get(slot)?.playEvent(event);
@@ -367,13 +368,16 @@ export class SceneManager {
     this.battleArena.effects.play(type, fromSlot.position.clone().setY(1), toSlot.position.clone().setY(1));
   }
 
-  public playPokeballEffect(): void {
+  public playPokeballEffect(captured = false): void {
     if (!this.inBattle) return;
+    this.playSfx(resolveBattleSfx({ type: 'pokeball', captured }));
     this.battleArena.effects.playPokeball(
       this.battlePlayerSlot.position.clone().setY(1.1),
       this.battleEnemySlot.position.clone().setY(0.8)
     );
   }
+
+  public playSfx(cue: SfxCue | null): void { if (cue) this.emitSfx(cue); }
 
   private loadCharacterModel(url: string, target: THREE.Group, isPlayer = false, fallbackUrl?: string): void {
     const version = isPlayer ? ++this.playerLoadVersion : 0;

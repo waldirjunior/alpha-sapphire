@@ -29,7 +29,7 @@ import { resolveNpcInteraction } from '../core/npcInteractions';
 import { loadZoneTextLines } from '../engine/zoneTextBank';
 import { resolveRosterSpeciesId } from '../engine/zoneEncounterLoader';
 import type { ZoneEvents } from '../engine/zoneEvents';
-import { JINGLES } from '../core/battleAudio';
+import type { SfxCue } from '../core/battleAudio';
 
 const KEY_TO_DIR: Readonly<Record<string, Direction>> = {
   ArrowUp: 'up',
@@ -71,7 +71,7 @@ export interface GameInputHost {
   syncUi(): void;
   syncPartyFromBattle(): void;
   renderBattle(): void;
-  playJingle(name: string): void;
+  playSfx(cue: SfxCue): void;
 }
 
 export function bindGameInput(target: Window, host: GameInputHost): void {
@@ -92,6 +92,7 @@ async function handleGameKeyDown(event: KeyboardEvent, host: GameInputHost): Pro
 async function handleInteractionKey(event: KeyboardEvent, host: GameInputHost): Promise<void> {
   event.preventDefault();
   if (host.zoneEvents.busy || host.zoneEvents.interactionActive) {
+    if (host.zoneEvents.canAdvance) host.playSfx('dialogue-confirm');
     await host.zoneEvents.advance();
     return;
   }
@@ -102,9 +103,11 @@ async function handleInteractionKey(event: KeyboardEvent, host: GameInputHost): 
     return;
   }
   if (host.zoneEvents.canAdvance) {
+    host.playSfx('dialogue-confirm');
     await host.zoneEvents.advance();
     return;
   }
+  if (host.getState().activeDialogue) host.playSfx('dialogue-confirm');
   interactWithMap(host);
 }
 
@@ -115,7 +118,7 @@ async function interactWithNpc(npc: NonNullable<ReturnType<typeof facingNpc>>, h
   const outcome = resolveNpcInteraction(npc, state.player.mapId, lines);
   if (outcome.healed) {
     host.setParty(healParty(host.getParty()));
-    host.playJingle(JINGLES.heal);
+    host.playSfx('heal-chime');
   }
   if (outcome.restockItems) {
     const bag = addBagItem(
@@ -138,7 +141,7 @@ function interactWithMap(host: GameInputHost): void {
   const sourceId = state.activeDialogue?.sourceId;
   if (isHealingDialogue(sourceId)) {
     host.setParty(healParty(host.getParty()));
-    host.playJingle(JINGLES.heal);
+    host.playSfx('heal-chime');
   }
   if (!hadLabGift && state.storyFlags.visited_birch_lab) {
     const bag = addBagItem(addBagItem(host.getBag(), 'pokeballs', 5), 'potions', 2);
@@ -184,6 +187,7 @@ async function moveInDirection(event: KeyboardEvent, direction: Direction, host:
     const next = await host.move(before, direction);
     if (next.player.mapId !== previousMapId) {
       const reason = mapEntryReason(before, host.maps[previousMapId], direction, next.player.mapId);
+      if (reason === 'warp') host.playSfx('zone-warp');
       await transitionMap(host.app, warp?.transitionEffect, () => {
         host.setState(next);
         host.syncUi();
@@ -207,6 +211,7 @@ function handleMovementResult(
 ): void {
   const state = host.getState();
   const moved = previousMapId !== state.player.mapId || previousPosition.x !== state.player.pos.x || previousPosition.z !== state.player.pos.z;
+  if (!moved) host.playSfx('wall-bump');
   const currentMap = host.maps[state.player.mapId];
   if (moved) {
     const triggeredTrainer = findTriggeredTrainer(state, host.maps);
