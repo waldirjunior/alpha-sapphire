@@ -2,7 +2,7 @@ import { createAmxWorld } from '../core/amxMemory';
 import { actorDeletionKey, restoreAmxProgress } from '../core/amxProgress';
 import { createAmxState, resumeAmx, runAmx } from '../core/amxRunner';
 import { readAmxSceneChanges, selectAmxSceneChange } from '../core/amxSceneChanges';
-import type { AmxEffect, AmxInput, AmxState, AmxWorld } from '../core/amxTypes';
+import type { AmxEffect, AmxInput, AmxPokemon, AmxState, AmxWorld } from '../core/amxTypes';
 import type { GameState, MapDefinition, MapNpc } from '../core/types';
 import { loadZoneEventPrograms, npcEventProgram, zoneInitProgram, type ZoneEventPrograms } from '../data/zone_scripts/loader';
 import { classifyEventRequest, npcActorId, projectEventActors } from './eventHost';
@@ -29,6 +29,8 @@ interface EventPorts {
   warp(target: EventWarp, active: () => boolean): Promise<void>;
   report(message: string): void;
   silentAudio(soundId: number): void;
+  chooseStarter?(active: () => boolean): Promise<{ handle: number; pokemon: AmxPokemon } | undefined>;
+  battle?(args: readonly number[], party: readonly AmxPokemon[], active: () => boolean): Promise<number | undefined>;
   presentation?: { reset(): void; directions?(): Readonly<Record<number, number>>;
     request(effect: AmxEffect, map: MapDefinition, active: () => boolean, context?: EventActorContext): Promise<number | undefined> };
 }
@@ -243,6 +245,13 @@ export class ZoneEvents {
   private async serviceRequest(state: AmxState): Promise<AmxInput | null> {
     const generation = this.generation;
     const effect = state.awaiting?.kind === 'native' ? state.awaiting.effect : undefined;
+    if (effect?.name === 'MdlAdd') return this.addActor(state, effect.args[0]);
+    if (effect?.name === '_CallPoke3Select' && this.ports.chooseStarter) {
+      return this.chooseStarter(state, generation);
+    }
+    if (effect?.name === '_CallWildBattleWithoutField' && this.ports.battle) {
+      return this.startBattle(state, effect.args, generation);
+    }
     const value = effect && await this.messages.request(effect);
     if (generation !== this.generation) return null;
     if (value !== undefined) return { kind: 'native-result', value };
@@ -267,6 +276,37 @@ export class ZoneEvents {
     }
     if (request.kind === 'silent-audio') this.ports.silentAudio(request.soundId);
     return { kind: 'native-result', value: request.kind === 'complete' ? request.value : 0 };
+  }
+
+  private async chooseStarter(state: AmxState, generation: number): Promise<AmxInput | null> {
+    const selected = await this.ports.chooseStarter?.(() => generation === this.generation);
+    if (generation !== this.generation) return null;
+    if (!selected) return this.deferPresentation(state, '_CallPoke3Select');
+    this.world = { ...state.world, vars: { ...state.world.vars, 16432: selected.handle },
+      pokemon: { ...state.world.pokemon, [selected.handle]: { ...selected.pokemon } } };
+    this.current = { ...state, world: this.world };
+    return { kind: 'native-result', value: 0 };
+  }
+
+  private async startBattle(state: AmxState, args: readonly number[], generation: number): Promise<AmxInput | null> {
+    const result = await this.ports.battle?.(args, state.world.party, () => generation === this.generation);
+    if (generation !== this.generation) return null;
+    if (result === undefined) return this.deferPresentation(state, '_CallWildBattleWithoutField');
+    return { kind: 'native-result', value: result };
+  }
+
+  private addActor(state: AmxState, id: number): AmxInput | null {
+    const map = this.ports.map();
+    const npc = map.npcs?.find(actor => npcActorId(actor) === id);
+    if (!npc) return this.deferPresentation(state, `MdlAdd(${id})`);
+    const origin = map.romOrigin ?? { x: 0, z: 0 };
+    const actor = state.world.actors[id] ?? { x: npc.pos.x + origin.x, y: 0, z: npc.pos.z + origin.z,
+      direction: directionCell(npc.facing), visible: true, moveCode: 0 };
+    const deletedActors = { ...state.world.deletedActors };
+    delete deletedActors[actorDeletionKey(map.zoneId ?? state.world.zoneId, id)];
+    this.world = { ...state.world, actors: { ...state.world.actors, [id]: { ...actor, visible: true } }, deletedActors };
+    this.current = { ...state, world: this.world };
+    return { kind: 'native-result', value: 0 };
   }
 
   private async changeMap(state: AmxState, target: EventWarp): Promise<AmxInput> {

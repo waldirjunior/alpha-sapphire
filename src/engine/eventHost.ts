@@ -21,6 +21,7 @@ export function classifyEventRequest(state: AmxState, lines: readonly string[]):
     return { kind: 'text', text };
   }
   if (name === 'LastKeyWait' || name === '_ABKeyWait') return { kind: 'key' };
+  if (name === '_FieldClose') return { kind: 'complete', value: 0 };
   if (name === 'SEPlay') return { kind: 'silent-audio', soundId: args[0] };
   if (name === '_MapChangeCore') return { kind: 'warp', target: decodeEventWarp(args) };
   if (name === 'MdlIsHalfSitSkelPreset' || name === 'MdlCanUseTurnAcmd') {

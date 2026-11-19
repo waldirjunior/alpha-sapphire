@@ -54,6 +54,9 @@ describe('host de eventos AMX', () => {
       expect(classifyEventRequest(pending(name), [])).toEqual({ kind: 'opaque', name });
     }
   });
+  it('completa _FieldClose sem bloquear uma escolha que não tem tela de campo no host', () => {
+    expect(classifyEventRequest(pending('_FieldClose', [1, 1]), [])).toEqual({ kind: 'complete', value: 0 });
+  });
   it('separa ticks de tecla e falha para texto ausente', () => {
     const state = pending('LastKeyWait');
     expect(classifyEventRequest(state, [])).toEqual({ kind: 'key' });

@@ -53,6 +53,7 @@ export interface MenuControlHost {
   startNewGame(): void;
   isBattleActive(): boolean;
   createStarter(id: StarterId): PokemonInstance;
+  onStarterSelected?(id: StarterId): void;
   getParty(): PokemonInstance[];
   setParty(party: PokemonInstance[]): void;
   setStarterId(id: StarterId): void;
@@ -102,6 +103,7 @@ function bindStarterButtons(host: MenuControlHost): void {
       const party = [...host.getParty()];
       party[0] = host.createStarter(starter);
       host.setParty(party);
+      host.onStarterSelected?.(starter);
       host.starterButtons.forEach((entry) => entry.classList.toggle('active', entry.dataset.starter === starter));
       host.persistSave();
       host.syncUi();

@@ -1,4 +1,5 @@
 import type { GameState, MapDefinition } from '../core/types';
+import type { AmxPokemon } from '../core/amxTypes';
 import { projectEventPlayer } from './eventHost';
 import { persistAmxProgress } from '../core/amxProgress';
 import { ZoneEvents } from './zoneEvents';
@@ -7,8 +8,14 @@ import { eventWarpState } from './eventWarp';
 import { transitionMap } from './mapTransition';
 import type { EventPresentation } from './eventPresentation';
 
+export interface GameEventInteractions {
+  chooseStarter(active: () => boolean): Promise<{ handle: number; pokemon: AmxPokemon } | undefined>;
+  battle(args: readonly number[], party: readonly AmxPokemon[], active: () => boolean): Promise<number | undefined>;
+}
+
 export function createGameEvents(getState: () => GameState, setState: (state: GameState) => void,
-  maps: Record<string, MapDefinition>, syncUi: () => void, surface: Parameters<typeof transitionMap>[0], presentation: EventPresentation): ZoneEvents {
+  maps: Record<string, MapDefinition>, syncUi: () => void, surface: Parameters<typeof transitionMap>[0],
+  presentation: EventPresentation, interactions: GameEventInteractions): ZoneEvents {
   const dialogue = (text: string | null, sourceId = 'amx'): void => {
     setState({ ...getState(), activeDialogue: text === null ? undefined : { sourceId, text } });
     syncUi();
@@ -34,6 +41,8 @@ export function createGameEvents(getState: () => GameState, setState: (state: Ga
     },
     silentAudio: soundId => console.warn(`SEPlay(${soundId}): efeito sonoro não extraído; host em modo silencioso (P-008)`),
     report: message => console.warn('Evento AMX pendente', message),
+    chooseStarter: interactions.chooseStarter,
+    battle: interactions.battle,
   });
 }
 

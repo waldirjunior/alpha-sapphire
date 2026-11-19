@@ -46,6 +46,7 @@ export interface BattleUiHost {
   getState(): GameState;
   setState(state: GameState): void;
   getStarterId(): 'treecko' | 'torchic' | 'mudkip';
+  onClose?(battle: BattleState | null): void;
   startMapId: string;
   maps: Record<string, MapDefinition>;
   playJingle(name: string): void;
@@ -236,6 +237,7 @@ function closeBattle(host: BattleUiHost): void {
   renderBattle(host);
   host.renderIntro();
   host.syncUi();
+  host.onClose?.(battle);
 }
 
 function resetAfterDefeat(host: BattleUiHost): void {

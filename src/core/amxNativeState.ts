@@ -59,7 +59,7 @@ export const stateNatives: Readonly<Record<string, AmxNativeDefinition>> = {
     return 0;
   } },
   PokePartyAdd: { arity: 2, execute: (w, [handle, mode]) => {
-    if (mode !== 0) amxError('AmxNativeSignatureError', `PokePartyAdd modo ${mode} não implementado`);
+    if (mode !== 0 && mode !== 1) amxError('AmxNativeSignatureError', `PokePartyAdd modo ${mode} não implementado`);
     const poke = w.pokemon[handle] ?? amxError('AmxPokemonError', `handle ${handle} não fornecido`);
     if (w.party.length >= 6) return 0;
     w.party.push({ ...poke }); return 1;

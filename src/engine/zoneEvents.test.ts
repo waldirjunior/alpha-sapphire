@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { AmxEffect, AmxInstruction, AmxWorld } from '../core/amxTypes';
+import type { AmxEffect, AmxInstruction, AmxPokemon, AmxWorld } from '../core/amxTypes';
 import type { GameState, MapDefinition } from '../core/types';
 import type { ZoneEventPrograms } from '../data/zone_scripts/loader';
 import { ZoneEvents, type ZoneEventAssets } from './zoneEvents';
@@ -74,6 +74,41 @@ function withScenes(base: ReturnType<typeof image>, rows: readonly number[][]) {
 }
 
 describe('ciclo de vida do host de zonas', () => {
+  it('liga seleção AMX do inicial ao time e aguarda a primeira batalha antes de retomar o script', async () => {
+    const f = fixture([['_FieldClose', [1, 1]], ['_CallPoke3Select', [0]], ['WorkGet', [16432]],
+      ['PokePartyAdd', [258, 1]], ['_CallWildBattleWithoutField', [-1, 0, 1, 0]], ['FlagSet', [700]]]);
+    const pokemon: AmxPokemon = { handle: 258, species: 258, hp: 20, maxHp: 20,
+      isEgg: false, nickname: 'Mudkip', status: 0 };
+    const chooseStarter = vi.fn(async () => ({ handle: pokemon.handle, pokemon }));
+    const battle = vi.fn(async (_args: readonly number[], party: readonly AmxPokemon[]) => {
+      expect(party).toEqual([pokemon]);
+      return 0;
+    });
+    const events = new ZoneEvents({ ...f.ports, chooseStarter, battle }, async () => f.assets);
+    await events.enter();
+    await events.interact(f.npc());
+    expect(chooseStarter).toHaveBeenCalledOnce();
+    expect(battle).toHaveBeenCalledWith([-1, 0, 1, 0], [pokemon], expect.any(Function));
+    expect(f.worlds.at(-1)?.vars[16432]).toBe(258);
+    expect(f.worlds.at(-1)?.flags[700]).toBe(true);
+    expect(f.worlds.at(-1)?.party).toEqual([pokemon]);
+    expect(events.busy).toBe(false);
+    expect(f.ports.report).not.toHaveBeenCalled();
+  });
+
+  it('recria o ator ROM removido quando o script chama MdlAdd', async () => {
+    const f = fixture([['MdlDel', [7]], ['MdlAdd', [7]], ['FlagSet', [701]]]);
+    const events = new ZoneEvents(f.ports, async () => f.assets);
+    await events.enter();
+    await events.interact(f.npc());
+    expect(f.worlds.at(-1)?.actors[7]).toMatchObject({ visible: true });
+    expect(f.worlds.at(-1)?.deletedActors).not.toHaveProperty('6:7');
+    expect(f.npc().visible).toBe(true);
+    expect(f.worlds.at(-1)?.flags[701]).toBe(true);
+    expect(events.pendingEffect).toBeNull();
+    expect(f.ports.report).not.toHaveBeenCalled();
+  });
+
   it('transporta ChangeFace sem confirmação cosmética e preserva expressão ao atualizar player', async () => {
     const f = fixture([['ChangeFace', [7, 1]], ['ChangeFace', [255, 3]], ['LastKeyWait', []], ['ChangeFace', [7, 0]]]);
     const events = new ZoneEvents(f.ports, async () => f.assets);

@@ -95,6 +95,16 @@ describe('nativas de estado Pawn', () => {
     expect(result.machines[0].pri).toBe(0);
   });
 
+  it('adds a Pokémon selected by an event with ROM mode 1 and copies it immutably', () => {
+    const world = createAmxWorld();
+    world.pokemon[258] = { handle: 258, species: 258, hp: 20, maxHp: 20,
+      isEgg: false, nickname: 'Mudkip', status: 0 };
+    const result = execute(syntheticBundle([{ name: 'PokePartyAdd', args: [258, 1] }]), world);
+    expect(result.world.party).toEqual([world.pokemon[258]]);
+    expect(result.world.party[0]).not.toBe(world.pokemon[258]);
+    expect(world.party).toEqual([]);
+  });
+
   it('deletes actors with a zone-scoped persistent tombstone without mutating its input', () => {
     const world = createAmxWorld(0, 75);
     world.actors[12] = { x: 50, y: 0, z: 10, direction: 0, visible: true, moveCode: 0 };
