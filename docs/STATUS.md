@@ -8,7 +8,7 @@ Verificado em 2026-11-19 (macOS; suporte headless Linux validado anteriormente n
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 439 em 67 arquivos, todos passando | `npm test` |
+| Testes unitários (Vitest) | 453 em 72 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | 95,9% linhas, 85,4% branches (catraca em 95/85) | `npm run test:coverage` |
 | Testes do pipeline e do oráculo (Python) | 229 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
 | Jogo real no browser (smoke + corredor) | 6 de 6 fluxos (`e2e/smoke.spec.ts`) + corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
@@ -30,10 +30,9 @@ Atores com ID de objeto (`0x1000`/`0x2000` via `a/0/2/3`) renderizam o modelo re
 
 | Limite | Pendência |
 | --- | --- |
-| Campanha desde New Game não roda de forma natural: init, callbacks AMX, visibilidade inicial por `spawnFlag` (ex.: flag `612` em `zone_0006:npc:6`) e vários nativos pendentes. Cada nativo pendente exige um Enter extra do jogador. | P-013 |
+| Campanha desde New Game não roda de forma natural: init, callbacks AMX e visibilidade inicial por `spawnFlag` (ex.: flag `612` em `zone_0006:npc:6`) pendentes; diálogo de NPC já fecha com 1 Enter (`TalkMdlMsg_Seq` + `LastKeyWait`). | P-013 |
 | Permissões de movimento (ledges laterais, bike, Surf), camadas de piso e oclusão por prédios (ex.: `z0015-mauville-patio`). | P-017 |
 | Iluminação, LUTs e combiners RGB dos materiais; exterior preto em cavernas. | P-007 |
-| `src/game.ts` tem 708 linhas e 0% de cobertura unitária; só o smoke e2e o protege. | P-020 |
 | HUD de desenvolvimento em vez dos menus do 3DS; arenas de batalha geométricas; efeitos sonoros ausentes. | P-011, P-014, P-008 |
 
 ## Frentes pausadas

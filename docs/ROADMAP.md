@@ -8,17 +8,15 @@ Pegue o primeiro item não bloqueado. Cada item termina quando a verificação i
 
 | # | Resultado | Verificação | Ref. |
 | --- | --- | --- | --- |
-| 1 | `src/game.ts` dividido em módulos testáveis (entrada, batalha, menus, intro), sem mudar comportamento. | Smoke e2e verde antes e depois; `FROZEN_SIZES` vazio em `src/architecture.test.ts`. | P-020 |
-| 2 | Nativos de apresentação AMX mais frequentes implementados, eliminando os "Enter extras" do diálogo de NPC. | Teste de smoke do diálogo fecha com um único Enter após o texto. | P-013 |
-| 3 | New Game natural: da intro ao laboratório de Birch e à primeira batalha sem fixture. | Novo e2e de campanha, sem `relocateSave`. | P-013 |
-| 4 | Permissões de movimento (ledges laterais, bike, Surf) fechadas por observação no emulador, dispensando as fixtures do corredor. | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
-| 5 | Camadas de piso e seleção de altura em pontes e interiores. | Cenários visuais novos nos pontos afetados, aceitos. | PRD-016, P-017 |
+| 1 | New Game natural: da intro ao laboratório de Birch e à primeira batalha sem fixture. | Novo e2e de campanha, sem `relocateSave`. | P-013 |
+| 2 | Permissões de movimento (ledges laterais, bike, Surf) fechadas por observação no emulador, dispensando as fixtures do corredor. | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
+| 3 | Camadas de piso e seleção de altura em pontes e interiores. | Cenários visuais novos nos pontos afetados, aceitos. | PRD-016, P-017 |
 
 Regras da fila:
 
 - Item bloqueado por ferramenta ausente não bloqueia os demais: registre o bloqueio na pendência e siga para o próximo. Máquina nova: [SETUP.md](SETUP.md).
 - Trabalho novo entra na fila com resultado e verificação; sem verificação executável não entra.
-- Os itens 4 e 5 são as frentes de engenharia reversa pausadas. Só retomar por disassembly depois que o emulador ([PRD-002](features/validacao-emulador/prds/PRD-002-infraestrutura-do-oraculo.md)) não tiver respondido à pergunta.
+- Os itens 2 e 3 são as frentes de engenharia reversa pausadas. Só retomar por disassembly depois que o emulador ([PRD-002](features/validacao-emulador/prds/PRD-002-infraestrutura-do-oraculo.md)) não tiver respondido à pergunta.
 
 ## Fases
 
