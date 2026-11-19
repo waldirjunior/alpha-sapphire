@@ -20,3 +20,24 @@ O HUD atual exibe controles de desenvolvimento (`Inicial: Treecko / Torchic / Mu
 - [ ] Layout dual-screen estilo Nintendo 3DS com PlayNav/Menu inferior fiel (Party em 6 slots, Bag categorizada e Pokédex em grade Hoenn).
 - [x] Controles de debug ocultos por padrão (`?debug=1`) e barras de HP coloridas.
 - [x] `npm test && npm run build` passando.
+
+## 4. Entrega web — 2026-11-19
+
+`index.html` apresenta o dock inferior do PokéNav com Equipe, Mochila,
+Pokédex, Hora e Salvar. Hora abre um cartão com relógio local; os diálogos
+exibem o nome do falante em uma faixa azul; a batalha usa cartões compactos
+no canto inferior direito. Os controles de jogo e os IDs usados pelo Playwright
+foram mantidos.
+
+`menus.test.ts` cobre os rótulos/acessibilidade do dock, o relógio de 24 horas e
+a separação do nome em diálogos. `battleUi.test.ts` cobre os cartões de batalha
+e o escape do texto. Os quatro testes novos falharam antes dos helpers e passaram
+depois.
+
+Verificação: `npm run verify` passou com 478 testes Vitest e 233 testes Python
+(1 skip); `ALPHA_E2E_PORT=5442 npx playwright test e2e/smoke.spec.ts
+e2e/campaign.spec.ts` passou com 7/7; `ALPHA_E2E_PORT=5442 npm run test:e2e`
+passou com 36/36.
+
+O PRD continua em andamento: falta a aba do Mapa de Hoenn e a revisão comparativa
+da interface contra o Azahar antes de declarar paridade visual.

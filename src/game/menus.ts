@@ -4,12 +4,48 @@ import type { BattleState, PokemonInstance } from '../core/battle';
 import { SPECIES } from '../data/pokemon/species';
 import { createHpBarMarkup } from './battleUi';
 
-export type MenuTab = 'party' | 'bag' | 'pokedex';
+export type MenuTab = 'party' | 'bag' | 'pokedex' | 'time';
 export type BagPocket = 'items' | 'balls' | 'key';
 export interface BagPocketItem {
   label: string;
   count: number;
   desc: string;
+}
+
+export interface MenuTabPresentation {
+  label: string;
+  icon: string;
+  accessibleName: string;
+}
+
+const MENU_TAB_PRESENTATIONS: Record<MenuTab, MenuTabPresentation> = {
+  party: { label: 'Equipe', icon: '●', accessibleName: 'Abrir equipe' },
+  bag: { label: 'Mochila', icon: '▣', accessibleName: 'Abrir mochila' },
+  pokedex: { label: 'Pokédex', icon: '⬡', accessibleName: 'Abrir Pokédex' },
+  time: { label: 'Hora', icon: '◷', accessibleName: 'Abrir hora' },
+};
+
+export interface DialogueLine {
+  speaker: string;
+  text: string;
+}
+
+export function menuTabPresentation(tab: MenuTab): MenuTabPresentation {
+  return MENU_TAB_PRESENTATIONS[tab];
+}
+
+export function formatPlayNavTime(date: Date): string {
+  return new Intl.DateTimeFormat('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).format(date);
+}
+
+export function splitDialogueSpeaker(text: string): DialogueLine {
+  const match = /^([^:\n]{1,32}):\s*/u.exec(text);
+  if (!match) return { speaker: '', text };
+  return { speaker: match[1] ?? '', text: text.slice(match[0].length) };
 }
 
 export function toggleMenuTab(current: MenuTab | null, selected: MenuTab): MenuTab | null {
@@ -82,7 +118,7 @@ function bindTabEvents(host: MenuControlHost): void {
 }
 
 function menuTabFrom(value: string | undefined): MenuTab | null {
-  return value === 'party' || value === 'bag' || value === 'pokedex' ? value : null;
+  return value === 'party' || value === 'bag' || value === 'pokedex' || value === 'time' ? value : null;
 }
 
 function bindNewGameButtons(host: MenuControlHost): void {
@@ -120,18 +156,25 @@ function bindSaveButton(host: MenuControlHost): void {
   host.saveButton?.addEventListener('click', () => {
     host.persistSave();
     if (!host.saveButton) return;
-    host.saveButton.textContent = 'Salvo!';
+    setSaveButtonLabel(host.saveButton, 'Salvo!');
     host.window.setTimeout(() => {
-      if (host.saveButton) host.saveButton.textContent = 'Salvar';
+      if (host.saveButton) setSaveButtonLabel(host.saveButton, 'Salvar');
     }, 1200);
     host.saveButton.blur();
   });
 }
 
+function setSaveButtonLabel(button: HTMLElement, label: string): void {
+  const text = button.querySelector<HTMLElement>('.menu-label');
+  if (text) {
+    text.textContent = label;
+    return;
+  }
+  button.textContent = label;
+}
+
 export function renderDsPanel(host: MenuHost): void {
-  host.tabButtons.forEach((button) =>
-    button.classList.toggle('active', button.dataset.tab === host.getOpenTab())
-  );
+  host.tabButtons.forEach((button) => renderMenuTabButton(button, host.getOpenTab()));
   const panel = host.panel;
   if (!panel) return;
   if (!host.getOpenTab() || host.getActiveBattle()) {
@@ -151,7 +194,43 @@ export function renderDsPanel(host: MenuHost): void {
     renderBagTab(host, panel);
     return;
   }
+  if (tab === 'time') {
+    renderTimeTab(panel);
+    return;
+  }
   renderPokedexTab(host.getParty(), panel);
+}
+
+function renderMenuTabButton(button: HTMLButtonElement, openTab: MenuTab | null): void {
+  const tab = menuTabFrom(button.dataset.tab);
+  if (!tab) return;
+  const presentation = menuTabPresentation(tab);
+  button.innerHTML = `<span class="menu-icon" aria-hidden="true">${presentation.icon}</span><span class="menu-label">${presentation.label}</span>`;
+  button.setAttribute('aria-label', presentation.accessibleName);
+  button.setAttribute('aria-pressed', String(tab === openTab));
+  button.classList.toggle('active', tab === openTab);
+}
+
+function renderTimeTab(panel: HTMLElement): void {
+  const now = new Date();
+  const card = document.createElement('section');
+  card.className = 'oras-time-card';
+  const eyebrow = document.createElement('span');
+  eyebrow.textContent = 'RELÓGIO DO 3DS';
+  const time = document.createElement('time');
+  time.className = 'oras-time-value';
+  time.dateTime = now.toISOString();
+  time.textContent = formatPlayNavTime(now);
+  const date = document.createElement('span');
+  date.className = 'oras-time-date';
+  date.textContent = now.toLocaleDateString('pt-BR', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
+  card.append(eyebrow, time, date);
+  panel.appendChild(card);
 }
 
 function renderPartyTab(host: MenuHost, panel: HTMLElement): void {

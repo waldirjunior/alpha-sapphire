@@ -66,6 +66,23 @@ export function createHpBarMarkup(currentHp: number, maxHp: number): string {
   return `<div class="hp-bar-track"><div class="hp-bar-fill" style="width:${pct}%;background:${color}"></div></div>`;
 }
 
+export function createBattleCombatantMarkup(label: string, pokemon: PokemonInstance): string {
+  const safeLabel = escapeBattleMarkup(label);
+  const safeName = escapeBattleMarkup(pokemon.species.name);
+  return `<div class="battle-combatant-heading"><span class="battle-combatant-label">${safeLabel}</span><strong>${safeName}</strong><span class="battle-level">Lv.${pokemon.level}</span></div><div class="battle-hp-value">${pokemon.currentHp}/${pokemon.maxHp} HP</div>${createHpBarMarkup(pokemon.currentHp, pokemon.maxHp)}`;
+}
+
+function escapeBattleMarkup(value: string): string {
+  const entities: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+  return value.replace(/[&<>"']/gu, (character) => entities[character] ?? character);
+}
+
 export function syncPartyFromBattle(host: BattlePartyHost): void {
   const battle = host.getBattle();
   if (!battle) return;
@@ -103,8 +120,8 @@ function renderBattleSummary(
   actions: HTMLElement
 ): void {
   const prefix = battle.isTrainer && battle.trainerName ? `${battle.trainerName}: ` : 'Selvagem: ';
-  enemy.innerHTML = `<span>${prefix}${battle.enemy.species.name} (Lv.${battle.enemy.level}) — HP ${battle.enemy.currentHp}/${battle.enemy.maxHp}</span>${createHpBarMarkup(battle.enemy.currentHp, battle.enemy.maxHp)}`;
-  player.innerHTML = `<span>Seu Pokémon: ${battle.player.species.name} (Lv.${battle.player.level}) — HP ${battle.player.currentHp}/${battle.player.maxHp}</span>${createHpBarMarkup(battle.player.currentHp, battle.player.maxHp)}`;
+  enemy.innerHTML = createBattleCombatantMarkup(prefix, battle.enemy);
+  player.innerHTML = createBattleCombatantMarkup('Seu Pokémon', battle.player);
   log.innerHTML = battle.log.slice(-4).map((line) => `<div>${line}</div>`).join('');
   actions.innerHTML = '';
 }
