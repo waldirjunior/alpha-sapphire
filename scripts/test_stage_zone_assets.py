@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 from scripts.glb_native_clips import decode_glb, encode_glb
-from scripts.stage_zone_assets import copy_character, select_slice, stage_audio
+from scripts.stage_zone_assets import copy_character, select_slice, stage_audio, stage_object_models
 
 
 class StageZoneAssetsTests(unittest.TestCase):
@@ -48,6 +48,18 @@ class StageZoneAssetsTests(unittest.TestCase):
             target.write_bytes(b'existing asset')
             with self.assertRaisesRegex(ValueError, 'existe'):
                 copy_character(source / 'actor.glb', target)
+
+    def test_stages_bm_models_under_the_object_asset_path(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source = root / 'models/objects/bm_0057/bm_0057.glb'
+            source.parent.mkdir(parents=True)
+            blob = encode_glb({'asset': {'version': '2.0'}, 'buffers': [{'byteLength': 4}],
+                               'scenes': [{'nodes': []}], 'scene': 0}, b'abcd')
+            source.write_bytes(blob)
+            self.assertEqual(stage_object_models(root / 'models', root / 'public', {57}), [])
+            target = root / 'public/assets/objects/bm_0057/bm_0057.glb'
+            self.assertEqual(target.read_bytes(), blob)
 
 
 if __name__ == '__main__':

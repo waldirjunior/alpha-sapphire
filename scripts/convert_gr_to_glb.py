@@ -104,16 +104,28 @@ def patch_glb_materials(glb: bytes, states: dict[str, tuple[str, float | None]])
     return struct.pack("<4sII", b"glTF", 2, total) + struct.pack("<I4s", len(payload), b"JSON") + payload + rest
 
 
-def run_spica(gr_path: Path, dae_path: Path, textures_path: Path | None, env: dict[str, str]) -> None:
-    cmd = [str(SPICA_EXPORT), str(gr_path), str(dae_path)]
+def run_spica(
+    gr_path: Path,
+    dae_path: Path,
+    textures_path: Path | None,
+    env: dict[str, str],
+    spica_export: Path = SPICA_EXPORT,
+) -> None:
+    cmd = [str(spica_export), str(gr_path), str(dae_path)]
     if textures_path is not None and textures_path.is_file():
         cmd.append(str(textures_path))
     subprocess.run(cmd, check=True, env=env)
 
 
-def discover_texture_archive(gr_path: Path, ad_dir: Path, env: dict[str, str], tmp: Path) -> Path | None:
+def discover_texture_archive(
+    gr_path: Path,
+    ad_dir: Path,
+    env: dict[str, str],
+    tmp: Path,
+    spica_export: Path = SPICA_EXPORT,
+) -> Path | None:
     probe = tmp / "probe.dae"
-    run_spica(gr_path, probe, None, env)
+    run_spica(gr_path, probe, None, env, spica_export)
     warnings_file = Path(f"{probe}.warnings.txt")
     if not warnings_file.is_file():
         return None

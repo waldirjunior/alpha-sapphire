@@ -18,15 +18,14 @@ export interface VisualScenario {
   knownDefects: KnownDefects;
 }
 
-const OBJECT_MODELS: KnownDefects = { assetsLoaded: 'P-017: atores com ID de objeto (0x1000/0x2000) sem modelo mapeado' };
 const OCCLUDED: KnownDefects = { avatarVisible: 'P-017: telhado ou parede encobre o avatar' };
 
-function overworld(id: string, zone: number, x: number, z: number, knownDefects: KnownDefects = OBJECT_MODELS): VisualScenario {
+function overworld(id: string, zone: number, x: number, z: number, knownDefects: KnownDefects = {}): VisualScenario {
   return { id, zone, x, z, facing: 'down', camera: 'game', knownDefects };
 }
 
 function closeup(id: string, gender: 'male' | 'female'): VisualScenario {
-  return { id, zone: 6, x: 17, z: 14, facing: 'down', camera: 'closeup', gender, knownDefects: OBJECT_MODELS };
+  return { id, zone: 6, x: 17, z: 14, facing: 'down', camera: 'closeup', gender, knownDefects: {} };
 }
 
 export const VISUAL_SCENARIOS: readonly VisualScenario[] = [
@@ -34,7 +33,7 @@ export const VISUAL_SCENARIOS: readonly VisualScenario[] = [
   closeup('avatar-may', 'female'),
   overworld('z0006-littleroot-spawn', 6, 19, 1),
   overworld('z0006-littleroot-centro', 6, 17, 14),
-  overworld('z0006-littleroot-telhado', 6, 14, 16, { ...OBJECT_MODELS, ...OCCLUDED }),
+  overworld('z0006-littleroot-telhado', 6, 14, 16, OCCLUDED),
   overworld('z0227-laboratorio-birch', 227, 14, 12, {}),
   overworld('z0007-oldale', 7, 18, 5),
   overworld('z0013-petalburg', 13, 39, 54),
@@ -42,7 +41,7 @@ export const VISUAL_SCENARIOS: readonly VisualScenario[] = [
   overworld('z0016-rustboro', 16, 47, 65),
   overworld('z0075-rusturf-tunnel', 75, 44, 11),
   overworld('z0011-verdanturf', 11, 16, 22),
-  overworld('z0445-mauville-hall', 445, 78, 48, { ...OBJECT_MODELS, ...OCCLUDED }),
+  overworld('z0445-mauville-hall', 445, 78, 48, OCCLUDED),
   overworld('z0015-mauville-patio', 15, 17, 22),
   overworld('z0014-slateport', 14, 31, 22),
   overworld('z0037-route111', 37, 31, 66),

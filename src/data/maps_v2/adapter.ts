@@ -27,6 +27,19 @@ export function romFacing(value: number): Direction | undefined {
   return directions[value];
 }
 
+const BM_MODEL_COUNT = 380;
+
+export function zoneActorModelUrl(modelId: number): string {
+  const bank = modelId & 0xf000;
+  const index = modelId & 0x0fff;
+  if (Number.isInteger(modelId) && modelId >= 0 && modelId <= 0xffff &&
+    (bank === 0x1000 || bank === 0x2000) && index < BM_MODEL_COUNT) {
+    const name = `bm_${String(index).padStart(4, '0')}`;
+    return `/assets/objects/${name}/${name}.glb`;
+  }
+  return `/assets/characters/mm_${String(modelId).padStart(4, '0')}.glb`;
+}
+
 function validateZone(source: ZoneMapSource): void {
   const validGrid = (grid: number[][]): boolean => grid.length === source.height &&
     grid.every((row) => row.length === source.width && row.every(Number.isInteger));
@@ -62,7 +75,7 @@ export function adaptZoneMap(source: ZoneMapSource): MapDefinition {
       targetPos: { ...warp.targetPos }, width: warp.width, height: warp.height,
       faceDirection: romFacing(warp.rom.faceDirection), transitionEffect: warp.rom.transitionEffect })),
     npcs: source.npcs.map((npc) => ({ ...npc, id: `${source.id}:npc:${npc.id}`, pos: { ...npc.pos },
-      facing: romFacing(npc.faceDirection), modelUrl: `/assets/characters/mm_${String(npc.model).padStart(4, '0')}.glb` })),
+      facing: romFacing(npc.faceDirection), modelUrl: zoneActorModelUrl(npc.model) })),
     encounters: source.encounters.map((slot) => ({ ...slot })),
     modelChunks: source.source.chunks.map((chunk) => ({ modelUrl: `/assets/maps/gr_${String(chunk.grId).padStart(4, '0')}/gr_${String(chunk.grId).padStart(4, '0')}.glb`,
       offset: { ...chunk.localTile } })),

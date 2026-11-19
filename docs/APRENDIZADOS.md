@@ -1069,4 +1069,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro:** `gr_gr_0511` (`27/30` materiais), `gr_gr_0512` (`9/12`) e `gr_gr_0506` (`8/31`) saem do Spica/PICA com `emissiveFactor=[1, 1, 1]` sem `emissiveTexture`; no `MeshStandardMaterial` do Three.js isso soma branco puro sobre o difuso.
 - **Regra:** em `fixOrasMaterials` (`src/engine/picaMaterials.ts`), zerar `mat.emissive` sempre que houver `mat.map` sem `mat.emissiveMap`; renderizar tufos 3D via `InstancedMesh` em `src/engine/tallGrass.ts` sobre células `terrain === 2`; e resolver falas/cura/reabastecimento determinísticos em `src/core/npcInteractions.ts` quando a zona ainda não tiver imagem AMX carregada.
 
+## A-104 IDs `0x1xxx`/`0x2xxx` de atores usam a entrada BM de mesmo sufixo em `a/0/2/3`
+
+- **Data:** 2026-11-19; P-017.
+- **Contexto:** os modelos 3D de pedras/itens e objetos de mapa faltavam quando `npcs[].model` não era um ID MM de personagem; `a/0/2/3` contém 380 arquivos BM e as amostras das entradas 19 (`c101gym_bm_door`) e 41 (`c102r0501_bm_object01`) confirmam que cada BM começa com a seção de modelo BCH.
+- **Erro:** procurar os IDs altos no banco MM (`a/0/2/1`) deixava pedidos como 8192 e 4153 sem modelo; passar o contêiner BM inteiro ao conversor também falha porque o Spica precisa da primeira seção BCH, não das seções posteriores.
+- **Regra:** somente prefixos `0x1000` e `0x2000` com sufixo abaixo de 380 resolvem para a mesma entrada numerada de `a/0/2/3`; `scripts/object_models.py` extrai sua primeira seção BCH, `scripts/convert_object_models.py` gera GLBs locais e `scripts/stage_zone_assets.py --objects-only` os copia para `public/assets/objects/`. Mantenha ROM, modelos convertidos e capturas locais e ignorados pelo Git.
+
 

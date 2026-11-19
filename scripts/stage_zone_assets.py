@@ -7,6 +7,7 @@ from urllib.parse import unquote
 
 from scripts.glb_native_clips import decode_glb, encode_glb
 from scripts.glb_uv_fix import fix_file
+from scripts.object_models import bm_model_index
 
 SLICE = (6, 7, 13, 23, 24, 25, *range(223, 232))
 
@@ -72,6 +73,18 @@ def stage_characters(models: Path, public: Path, ids: set[int]) -> list[int]:
     return missing
 
 
+def stage_object_models(models: Path, public: Path, ids: set[int]) -> list[int]:
+    missing = []
+    for index in sorted(ids):
+        name = f'bm_{index:04d}'
+        source = models / 'objects' / name / f'{name}.glb'
+        if not source.is_file():
+            missing.append(index)
+            continue
+        copy_gr(source, public / f'assets/objects/{name}/{name}.glb')
+    return missing
+
+
 def stage_audio(source: Path, public: Path, entries: list[dict], roots: tuple) -> list[str]:
     tracks = sorted({entry['bgmName'] for entry in entries
                      if entry['zone'] in roots and entry['hasMp3'] and entry['bgmName']})
@@ -88,20 +101,31 @@ def main() -> None:
     parser.add_argument('--zones', type=int, nargs='+', default=SLICE)
     parser.add_argument('--include-neighbors', action='store_true')
     parser.add_argument('--audio-dir', type=Path)
+    parser.add_argument('--objects-only', action='store_true', help='Copia os modelos BM de todos os mapas, sem GR/personagens')
     args = parser.parse_args()
     maps = {int(path.stem): json.loads(path.read_text()) for path in args.maps_dir.glob('[0-9][0-9][0-9][0-9].json')}
+    if args.objects_only:
+        object_ids = {index for map_data in maps.values() for npc in map_data['npcs']
+                      if (index := bm_model_index(npc['model'])) is not None}
+        missing = stage_object_models(args.models_dir, args.public_dir, object_ids)
+        print(json.dumps({'objects': len(object_ids) - len(missing), 'missingObjects': missing}))
+        return
     neighbors = json.loads((args.maps_dir / '_neighbors.json').read_text())['zones'] if args.include_neighbors else None
     selected = select_slice(maps, tuple(args.zones), neighbors)
     grs = {chunk['grId'] for zone in selected for chunk in maps[zone]['source']['chunks']}
     for index in sorted(grs):
         name = f'gr_{index:04d}'
         copy_gr(args.models_dir / name / f'{name}.glb', args.public_dir / f'assets/maps/{name}/{name}.glb')
-    actors = {npc['model'] for zone in selected for npc in maps[zone]['npcs']}
-    missing = stage_characters(args.models_dir, args.public_dir, actors)
+    actor_ids = {npc['model'] for zone in selected for npc in maps[zone]['npcs']}
+    object_ids = {index for model_id in actor_ids if (index := bm_model_index(model_id)) is not None}
+    character_ids = actor_ids - {model_id for model_id in actor_ids if bm_model_index(model_id) is not None}
+    missing_characters = stage_characters(args.models_dir, args.public_dir, character_ids)
+    missing_objects = stage_object_models(args.models_dir, args.public_dir, object_ids)
     tracks = stage_audio(args.audio_dir, args.public_dir,
                          json.loads((args.maps_dir.parent / 'zone_audio.json').read_text()), tuple(args.zones)) if args.audio_dir else []
-    print(json.dumps({'zones': selected, 'grs': sorted(grs), 'characters': len(actors) - len(missing),
-                      'missingCharacters': missing, 'audio': tracks}))
+    print(json.dumps({'zones': selected, 'grs': sorted(grs), 'characters': len(character_ids) - len(missing_characters),
+                      'missingCharacters': missing_characters, 'objects': len(object_ids) - len(missing_objects),
+                      'missingObjects': missing_objects, 'audio': tracks}))
 
 
 if __name__ == '__main__':

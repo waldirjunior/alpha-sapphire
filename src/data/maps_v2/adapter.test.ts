@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { adaptZoneMap, type ZoneMapSource } from './adapter';
+import { adaptZoneMap, zoneActorModelUrl, type ZoneMapSource } from './adapter';
 import { createZoneMapLoader } from './loader';
 
 const fixture: ZoneMapSource = {
@@ -14,6 +14,21 @@ const fixture: ZoneMapSource = {
 };
 
 describe('zone map adapter', () => {
+  it('resolves object model banks to matching BM assets while preserving MM character ids', () => {
+    expect(zoneActorModelUrl(0x1000 | 57)).toBe('/assets/objects/bm_0057/bm_0057.glb');
+    expect(zoneActorModelUrl(0x2000 | 11)).toBe('/assets/objects/bm_0011/bm_0011.glb');
+    expect(zoneActorModelUrl(0x2000)).toBe('/assets/objects/bm_0000/bm_0000.glb');
+    expect(zoneActorModelUrl(289)).toBe('/assets/characters/mm_0289.glb');
+    expect(zoneActorModelUrl(0x2fff)).toBe('/assets/characters/mm_12287.glb');
+    expect(zoneActorModelUrl(0x11039)).toBe('/assets/characters/mm_69689.glb');
+  });
+
+  it('keeps the ROM model id and attaches the resolved object asset URL to the actor', () => {
+    const source = { ...fixture, npcs: [{ ...fixture.npcs[0], model: 0x1000 | 57 }] };
+    const map = adaptZoneMap(source);
+    expect(map.npcs?.[0]).toMatchObject({ model: 0x1000 | 57, modelUrl: '/assets/objects/bm_0057/bm_0057.glb' });
+  });
+
   it('preserves coordinates, rectangular warps, encounters and derived spawn without mutating source', () => {
     const copy = structuredClone(fixture);
     const map = adaptZoneMap(fixture);
