@@ -58,6 +58,20 @@
         font-size: 11px; color: #34577e; font-weight: 700;
         letter-spacing: 0.04em;
       }
+      #audio-controls {
+        display: flex; align-items: center; gap: 7px;
+        color: #34577e; font-size: 11px; font-weight: 700;
+      }
+      #audio-volume {
+        width: clamp(76px, 10vw, 118px);
+        accent-color: #176eb1;
+      }
+      #audio-volume-value { min-width: 34px; }
+      #audio-controls button {
+        padding: 5px 9px; border: 1px solid rgba(63, 110, 158, 0.55);
+        border-radius: 9px; background: linear-gradient(180deg, #fff, #d9efff);
+        color: #17395f; font-size: 11px; font-weight: 700; cursor: pointer;
+      }
       #ds-tabs {
         display: flex; align-items: stretch; gap: 7px;
         flex-wrap: wrap;
@@ -548,6 +562,12 @@
       <div id="bottom-screen">
         <div id="playnav-bar">
           <div id="playnav-info">PokéNav Plus · Toque para abrir os seus recursos</div>
+          <div id="audio-controls" aria-label="Controles de áudio">
+            <label for="audio-volume">Volume</label>
+            <input id="audio-volume" type="range" min="0" max="100" step="1" value="60" aria-label="Volume da música" />
+            <output id="audio-volume-value" for="audio-volume">60%</output>
+            <button id="btn-audio-mute" type="button" aria-label="Silenciar áudio" aria-pressed="false">Silenciar áudio</button>
+          </div>
           <div id="ds-tabs">
             <button data-tab="party"><span class="menu-icon" aria-hidden="true">●</span><span class="menu-label">Equipe</span></button>
             <button data-tab="bag"><span class="menu-icon" aria-hidden="true">▣</span><span class="menu-label">Mochila</span></button>

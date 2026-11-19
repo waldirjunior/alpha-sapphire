@@ -1,4 +1,4 @@
-// P-008: faixas de batalha por rótulo do BCSAR (STRM_BGM_VS_*_SG → bgm_sg_vs_*_sg, A-023).
+// P-008: faixas de batalha por nome de stream do BCSAR ORAS (A-023).
 // WIN1..WIN3 por tipo de batalha é inferência pela ordem dos rótulos (A-027), não um campo lido da ROM.
 
 import type { BattleEvent } from './battleEvents';
@@ -7,26 +7,35 @@ export type SfxCue = 'dialogue-confirm' | 'menu-open' | 'menu-select' | 'wall-bu
   'heal-chime' | 'battle-hit' | 'pokeball-throw' | 'pokeball-capture' | 'faint';
 export type BattleSfxEvent = BattleEvent | { type: 'pokeball'; captured: boolean };
 
-export type BattleMusicKind = 'wild' | 'trainer' | 'rival' | 'gym';
+export type BattleMusicKind = 'wild' | 'trainer' | 'rival' | 'gym_leader' | 'aqua_magma' | 'elite_four' | 'champion' | 'legendary';
 
 export interface BattleMusicSource {
   status: 'ongoing' | 'victory' | 'defeat' | 'fled' | 'caught';
   isTrainer?: boolean;
   trainerName?: string;
+  context?: BattleMusicKind;
 }
 
 export const BATTLE_TRACKS: Readonly<Record<BattleMusicKind, string>> = {
   wild: 'bgm_sg_vs_norapoke_sg',
   trainer: 'bgm_sg_vs_trainer_sg',
   rival: 'bgm_sg_vs_rival_sg',
-  gym: 'bgm_sg_vs_gymleader_sg',
+  gym_leader: 'bgm_sg_vs_gymleader_sg',
+  aqua_magma: 'bgm_sg_vs_aqua_magma',
+  elite_four: 'bgm_sg_vs_shitenno_sg',
+  champion: 'bgm_sg_vs_champ_sg',
+  legendary: 'bgm_sg_vs_legend_sg',
 };
 
 export const VICTORY_TRACKS: Readonly<Record<BattleMusicKind, string>> = {
   wild: 'bgm_sg_win1',
   trainer: 'bgm_sg_win2',
   rival: 'bgm_sg_win2',
-  gym: 'bgm_sg_win3',
+  gym_leader: 'bgm_sg_win3',
+  aqua_magma: 'bgm_sg_win2',
+  elite_four: 'bgm_sg_win3',
+  champion: 'bgm_sg_win3',
+  legendary: 'bgm_sg_win1',
 };
 
 export const JINGLES = {
@@ -34,13 +43,22 @@ export const JINGLES = {
   levelUp: 'me_xy_lvup',
 } as const;
 
-const RIVAL_PATTERN = /\b(rival|may|brendan)\b/i;
-const GYM_PATTERN = /\b(leader|gym)\b/i;
+const RIVAL_PATTERN = /\b(rival|may|brendan|wally)\b/i;
+const AQUA_MAGMA_PATTERN = /\b(team aqua|team magma|aqua grunt|magma grunt|archie|maxie)\b/i;
+const ELITE_FOUR_PATTERN = /\b(elite four|sidney|phoebe|glacia|drake)\b/i;
+const CHAMPION_PATTERN = /\b(champion|steven(?: stone)?)\b/i;
+const LEGENDARY_PATTERN = /\b(legendary|groudon|kyogre|rayquaza|deoxys|latias|latios)\b/i;
+const GYM_PATTERN = /\b(gym leader|gym)\b/i;
 
-export function classifyBattleMusic(battle: Pick<BattleMusicSource, 'isTrainer' | 'trainerName'>): BattleMusicKind {
+export function classifyBattleMusic(battle: Pick<BattleMusicSource, 'isTrainer' | 'trainerName' | 'context'>): BattleMusicKind {
+  if (battle.context) return battle.context;
   if (!battle.isTrainer) return 'wild';
   const name = battle.trainerName ?? '';
-  if (GYM_PATTERN.test(name)) return 'gym';
+  if (AQUA_MAGMA_PATTERN.test(name)) return 'aqua_magma';
+  if (ELITE_FOUR_PATTERN.test(name)) return 'elite_four';
+  if (CHAMPION_PATTERN.test(name)) return 'champion';
+  if (LEGENDARY_PATTERN.test(name)) return 'legendary';
+  if (GYM_PATTERN.test(name)) return 'gym_leader';
   if (RIVAL_PATTERN.test(name)) return 'rival';
   return 'trainer';
 }

@@ -7,9 +7,87 @@ import {
   splitDialogueSpeaker,
   toggleMenuTab,
 } from './menus';
+import {
+  AUDIO_PREFERENCES_STORAGE_KEY,
+  audioMuteButtonLabel,
+  loadAudioPreferences,
+  normalizeAudioVolume,
+  saveAudioPreferences,
+  toggleAudioMuted,
+  updateAudioVolume,
+} from './audioPreferences';
+import { bindAudioControls, type AudioControlsHost } from './audioControls';
 import type { BagState } from '../core/bag';
 
+class FakeAudioControl implements EventTarget {
+  readonly listeners = new Map<string, () => void>();
+  readonly attributes = new Map<string, string>();
+  value = '';
+  textContent: string | null = null;
+  addEventListener(type: string, listener: EventListenerOrEventListenerObject | null): void {
+    if (typeof listener === 'function') this.listeners.set(type, () => listener(new Event(type)));
+  }
+  removeEventListener(): void {}
+  dispatchEvent(event: Event): boolean {
+    this.listeners.get(event.type)?.();
+    return true;
+  }
+  setAttribute(name: string, value: string): void { this.attributes.set(name, value); }
+}
+
 describe('game menus', () => {
+  it('normalizes the PokéNav volume slider to an integer from 0 to 100', () => {
+    expect(normalizeAudioVolume('75')).toBe(75);
+    expect(normalizeAudioVolume('-4')).toBe(0);
+    expect(normalizeAudioVolume('140')).toBe(100);
+    expect(normalizeAudioVolume('invalid')).toBe(60);
+  });
+
+  it('loads and saves audio volume and mute preferences in local storage', () => {
+    const entries = new Map<string, string>();
+    const storage = {
+      getItem: (key: string) => entries.get(key) ?? null,
+      setItem: (key: string, value: string) => { entries.set(key, value); },
+    };
+    expect(loadAudioPreferences(storage)).toEqual({ volume: 60, muted: false });
+    saveAudioPreferences(storage, { volume: 130, muted: true });
+    expect(loadAudioPreferences(storage)).toEqual({ volume: 100, muted: true });
+    entries.set(AUDIO_PREFERENCES_STORAGE_KEY, '{invalid');
+    expect(loadAudioPreferences(storage)).toEqual({ volume: 60, muted: false });
+  });
+
+  it('updates volume and mute state while keeping the other preference', () => {
+    const initial = { volume: 40, muted: false };
+    expect(updateAudioVolume(initial, '80')).toEqual({ volume: 80, muted: false });
+    expect(toggleAudioMuted(initial)).toEqual({ volume: 40, muted: true });
+    expect(audioMuteButtonLabel(true)).toBe('Ativar áudio');
+    expect(audioMuteButtonLabel(false)).toBe('Silenciar áudio');
+  });
+
+  it('binds the slider and mute button to persistent PokéNav preferences', () => {
+    const slider = new FakeAudioControl();
+    const output = { value: '' };
+    const muteButton = new FakeAudioControl();
+    let preferences = { volume: 60, muted: false };
+    const host: AudioControlsHost = {
+      audioVolumeSlider: slider,
+      audioVolumeOutput: output,
+      audioMuteButton: muteButton,
+      getAudioPreferences: () => preferences,
+      setAudioPreferences: (next) => { preferences = next; },
+    };
+
+    bindAudioControls(host);
+    expect(slider.value).toBe('60');
+    expect(output.value).toBe('60%');
+    slider.value = '85';
+    slider.dispatchEvent(new Event('input'));
+    expect(preferences).toEqual({ volume: 85, muted: false });
+    muteButton.dispatchEvent(new Event('click'));
+    expect(preferences).toEqual({ volume: 85, muted: true });
+    expect(muteButton.attributes.get('aria-pressed')).toBe('true');
+  });
+
   it('toggles the selected lower-screen tab closed and opens a different tab', () => {
     expect(toggleMenuTab('party', 'party')).toBeNull();
     expect(toggleMenuTab('party', 'bag')).toBe('bag');

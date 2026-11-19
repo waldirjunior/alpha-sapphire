@@ -44,7 +44,7 @@ As 536 zonas resolvem para um `.mp3` existente. Zona 0 (cópia técnica de Littl
 
 ## Batalha e jingles
 
-[src/core/battleAudio.ts](../../../src/core/battleAudio.ts) escolhe a faixa pela classe da batalha; os nomes vêm dos rótulos do BCSAR (`STRM_BGM_VS_*_SG`, `STRM_ME_*`):
+[src/core/battleAudio.ts](../../../src/core/battleAudio.ts) escolhe a faixa pelo contexto da batalha; os nomes abaixo vêm dos rótulos/faixas do BCSAR ORAS:
 
 | Situação | Rótulo | Arquivo |
 |---|---|---|
@@ -52,12 +52,16 @@ As 536 zonas resolvem para um `.mp3` existente. Zona 0 (cópia técnica de Littl
 | Treinador | `STRM_BGM_VS_TRAINER_SG` (101) | `bgm_sg_vs_trainer_sg` |
 | Líder de ginásio | `STRM_BGM_VS_GYMLEADER_SG` (102) | `bgm_sg_vs_gymleader_sg` |
 | Rival | `STRM_BGM_VS_RIVAL_SG` (103) | `bgm_sg_vs_rival_sg` |
+| Equipe Aqua/Magma | pendente de confirmação no BCSAR (`A-027`) | `bgm_sg_vs_aqua_magma` |
+| Elite Four | `STRM_BGM_VS_SHITENNO_SG` | `bgm_sg_vs_shitenno_sg` |
+| Campeão | `STRM_BGM_VS_CHAMP_SG` | `bgm_sg_vs_champ_sg` |
+| Pokémon lendário | `STRM_BGM_VS_LEGEND_SG` | `bgm_sg_vs_legend_sg` |
 | Vitória selvagem / treinador / ginásio | `STRM_BGM_WIN1/2/3` (125–127) | `bgm_sg_win1/2/3` — **inferência** pela ordem dos rótulos (`A-027`) |
 | Cura | `STRM_ME_KAIFUKU` (211) | `me_xy_kaifuku` |
 | Level-up | `STRM_ME_LVUP` (212) | `me_xy_lvup` |
 
-O tema começa ao abrir a batalha, a fanfarra substitui o tema quando `status = victory` e a BGM da zona volta ao fechar a batalha (ou de imediato em fuga/captura/derrota). Jingles tocam uma vez com a BGM abaixada (`BgmPlayer.playJingle`).
+O contexto explícito (`BattleMusicSource.context`) prevalece; na ausência dele, `battleAudio.ts` classifica batalhas pelos nomes do treinador. O tema começa ao abrir a batalha, a fanfarra substitui o tema quando `status = victory` e a BGM da zona volta ao fechar a batalha (ou de imediato em fuga/captura/derrota). Jingles tocam uma vez com a BGM abaixada (`BgmPlayer.playJingle`). O slider e o mute do PokéNav persistem em `localStorage` e controlam o ganho master do Web Audio.
 
 ## Fora do escopo
 
-Tema por classe específica de treinador (Aqua/Magma, Elite Four, campeão, lendários) e IDs de BGM do `trdata`, variações por evento/flag de história (ex.: Littleroot após o intro), ME (`STRM_ME_*`), efeitos sonoros (SEQ/WSD no bloco FILE) e integração no `src/engine/` (`P-008`).
+IDs de BGM selecionados por `trdata`, variações por evento/flag de história (ex.: Littleroot após o intro), ME (`STRM_ME_*`) e efeitos sonoros (SEQ/WSD no bloco FILE) permanecem fora do escopo desta etapa (`P-008`).

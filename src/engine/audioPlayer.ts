@@ -48,6 +48,7 @@ export class BgmPlayer {
   private requestedUrl: string | null = null;
   private requestId = 0;
   private volume = DEFAULT_VOLUME;
+  private muted = false;
 
   constructor(private readonly fadeSeconds = DEFAULT_FADE_SECONDS) {}
 
@@ -112,7 +113,7 @@ export class BgmPlayer {
   playSfx(cue: SfxCue): void {
     const context = this.context;
     const pattern = SFX_PATTERNS[cue];
-    if (!context || context.state !== 'running' || this.volume === 0) return;
+    if (!context || context.state !== 'running' || this.volume === 0 || this.muted) return;
     try {
       const oscillator = context.createOscillator();
       const envelope = context.createGain();
@@ -143,14 +144,24 @@ export class BgmPlayer {
 
   setVolume(volume: number): void {
     this.volume = Math.max(0, Math.min(1, volume));
-    if (this.master && this.context) this.master.gain.setValueAtTime(this.volume, this.context.currentTime);
+    this.updateMasterVolume();
+  }
+
+  setMuted(muted: boolean): void {
+    this.muted = muted;
+    this.updateMasterVolume();
+  }
+
+  private updateMasterVolume(): void {
+    if (!this.master || !this.context) return;
+    this.master.gain.setValueAtTime(this.muted ? 0 : this.volume, this.context.currentTime);
   }
 
   private ensureContext(): AudioContext {
     if (this.context) return this.context;
     const context = new AudioContext();
     const master = context.createGain();
-    master.gain.value = this.volume;
+    master.gain.value = this.muted ? 0 : this.volume;
     master.connect(context.destination);
     this.context = context;
     this.master = master;

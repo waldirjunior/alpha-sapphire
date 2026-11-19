@@ -9,6 +9,7 @@ import {
 } from '../core/hoennMap';
 import { SPECIES } from '../data/pokemon/species';
 import { createHpBarMarkup } from './battleUi';
+import { bindAudioControls, type AudioControlsHost } from './audioControls';
 
 export type MenuTab = 'party' | 'bag' | 'pokedex' | 'time' | 'map';
 export type BagPocket = 'items' | 'balls' | 'key';
@@ -87,7 +88,7 @@ export interface MenuHost {
 
 export type StarterId = 'treecko' | 'torchic' | 'mudkip';
 
-export interface MenuControlHost {
+export interface MenuControlHost extends AudioControlsHost {
   tabButtons: NodeListOf<HTMLButtonElement>;
   getOpenTab(): MenuTab | null;
   setOpenTab(tab: MenuTab | null): void;
@@ -113,6 +114,7 @@ export function bindMenuEvents(host: MenuControlHost): void {
   bindNewGameButtons(host);
   bindStarterButtons(host);
   bindSaveButton(host);
+  bindAudioControls(host);
 }
 
 function bindTabEvents(host: MenuControlHost): void {
