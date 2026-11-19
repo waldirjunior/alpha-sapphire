@@ -2,18 +2,34 @@ import { describe, expect, it } from 'vitest';
 import { classifyBattleMusic, leveledUpDuring, resolveBattleMusic, resolveBattleSfx, resolveCurrentMusic } from './battleAudio';
 
 describe('battle music adapter (P-008)', () => {
-  it('classifies wild, trainer, rival and gym battles', () => {
+  it('classifies the eight supported battle contexts', () => {
     expect(classifyBattleMusic({ isTrainer: false })).toBe('wild');
     expect(classifyBattleMusic({ isTrainer: true, trainerName: 'Youngster Calvin' })).toBe('trainer');
     expect(classifyBattleMusic({ isTrainer: true, trainerName: 'Rival May' })).toBe('rival');
-    expect(classifyBattleMusic({ isTrainer: true, trainerName: 'Gym Leader Roxanne' })).toBe('gym');
+    expect(classifyBattleMusic({ isTrainer: true, trainerName: 'Wally' })).toBe('rival');
+    expect(classifyBattleMusic({ isTrainer: true, trainerName: 'Gym Leader Roxanne' })).toBe('gym_leader');
+    expect(classifyBattleMusic({ isTrainer: true, trainerName: 'Team Aqua Grunt' })).toBe('aqua_magma');
+    expect(classifyBattleMusic({ isTrainer: true, trainerName: 'Elite Four Phoebe' })).toBe('elite_four');
+    expect(classifyBattleMusic({ isTrainer: true, trainerName: 'Champion Steven' })).toBe('champion');
+    expect(classifyBattleMusic({ isTrainer: true, trainerName: 'Steven' })).toBe('champion');
+    expect(classifyBattleMusic({ isTrainer: false, context: 'legendary' })).toBe('legendary');
   });
 
-  it('plays the battle theme while ongoing and the fanfare on victory', () => {
-    expect(resolveBattleMusic({ status: 'ongoing', isTrainer: false })).toBe('bgm_sg_vs_norapoke_sg');
-    expect(resolveBattleMusic({ status: 'ongoing', isTrainer: true, trainerName: 'Youngster Calvin' })).toBe('bgm_sg_vs_trainer_sg');
-    expect(resolveBattleMusic({ status: 'victory', isTrainer: false })).toBe('bgm_sg_win1');
-    expect(resolveBattleMusic({ status: 'victory', isTrainer: true, trainerName: 'Rival May' })).toBe('bgm_sg_win2');
+  it('maps each battle context to its BGM and victory fanfare', () => {
+    const cases = [
+      ['wild', 'bgm_sg_vs_norapoke_sg', 'bgm_sg_win1'],
+      ['trainer', 'bgm_sg_vs_trainer_sg', 'bgm_sg_win2'],
+      ['rival', 'bgm_sg_vs_rival_sg', 'bgm_sg_win2'],
+      ['gym_leader', 'bgm_sg_vs_gymleader_sg', 'bgm_sg_win3'],
+      ['aqua_magma', 'bgm_sg_vs_aqua_magma', 'bgm_sg_win2'],
+      ['elite_four', 'bgm_sg_vs_shitenno_sg', 'bgm_sg_win3'],
+      ['champion', 'bgm_sg_vs_champ_sg', 'bgm_sg_win3'],
+      ['legendary', 'bgm_sg_vs_legend_sg', 'bgm_sg_win1'],
+    ] as const;
+    for (const [context, battleTrack, victoryTrack] of cases) {
+      expect(resolveBattleMusic({ status: 'ongoing', context })).toBe(battleTrack);
+      expect(resolveBattleMusic({ status: 'victory', context })).toBe(victoryTrack);
+    }
   });
 
   it('returns to the zone track after fleeing, catching, defeat or closing the battle', () => {

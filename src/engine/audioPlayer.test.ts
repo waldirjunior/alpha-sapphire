@@ -158,6 +158,17 @@ describe('BgmPlayer', () => {
     expect(FakeContext.last.gains[0].gain.value).toBe(0);
   });
 
+  it('mutes and unmutes the master while preserving the selected volume', async () => {
+    stubFetch();
+    const player = new BgmPlayer();
+    player.setVolume(0.72);
+    player.setMuted(true);
+    await player.unlock();
+    expect(FakeContext.last.gains[0].gain.value).toBe(0);
+    player.setMuted(false);
+    expect(FakeContext.last.gains[0].gain.value).toBe(0.72);
+  });
+
   it('synthesizes a sound cue on the unlocked WebAudio context without loading a file', async () => {
     const fetchMock = stubFetch();
     const player = new BgmPlayer();
@@ -173,6 +184,10 @@ describe('BgmPlayer', () => {
     const player = new BgmPlayer();
     expect(() => player.playSfx('battle-hit')).not.toThrow();
     await player.unlock();
+    player.setMuted(true);
+    player.playSfx('battle-hit');
+    expect(FakeContext.last.oscillators).toHaveLength(0);
+    player.setMuted(false);
     player.setVolume(0);
     player.playSfx('battle-hit');
     expect(FakeContext.last.oscillators).toHaveLength(0);

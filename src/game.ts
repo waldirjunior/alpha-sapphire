@@ -26,6 +26,7 @@ import {
   type MenuTab,
   type StarterId,
 } from './game/menus';
+import { loadAudioPreferences, saveAudioPreferences, type AudioPreferences } from './game/audioPreferences';
 import { renderIntro as renderIntroUi, type IntroGender, type IntroStep } from './game/intro';
 import { clearSavedGame, loadSavedGame, storeSavedGame } from './game/saveStorage';
 
@@ -51,6 +52,9 @@ const dsPanel = document.getElementById('ds-panel');
 const dsTabButtons = document.querySelectorAll<HTMLButtonElement>('#ds-tabs button[data-tab]');
 const saveGameBtn = document.getElementById('btn-save-game');
 const newGameBtn = document.getElementById('btn-new-game');
+const audioVolumeSlider = document.querySelector<HTMLInputElement>('#audio-volume');
+const audioVolumeOutput = document.querySelector<HTMLOutputElement>('#audio-volume-value');
+const audioMuteButton = document.querySelector<HTMLButtonElement>('#btn-audio-mute');
 const starterBar = document.getElementById('starter-bar');
 const introOverlay = document.getElementById('intro-overlay');
 const introCard = document.getElementById('intro-card');
@@ -69,6 +73,9 @@ const saved = (() => {
 })();
 
 const bgmPlayer = new BgmPlayer();
+let audioPreferences = loadAudioPreferences(window.localStorage);
+bgmPlayer.setVolume(audioPreferences.volume / 100);
+bgmPlayer.setMuted(audioPreferences.muted);
 bgmPlayer.attachUnlock(window);
 const sceneManager = new SceneManager(app, cue => bgmPlayer.playSfx(cue));
 let state = saved?.state ?? createInitialState(START_MAP_ID, MAPS);
@@ -326,6 +333,9 @@ const menuControlHost = {
   newGameButton: newGameBtn,
   saveButton: saveGameBtn,
   starterButtons,
+  audioVolumeSlider,
+  audioVolumeOutput,
+  audioMuteButton,
   window,
   startNewGame,
   isBattleActive: () => Boolean(activeBattle),
@@ -334,6 +344,13 @@ const menuControlHost = {
   onStarterSelected: completeStarterChoice,
   persistSave,
   renderDsPanel,
+  getAudioPreferences: () => audioPreferences,
+  setAudioPreferences: (preferences: AudioPreferences) => {
+    audioPreferences = preferences;
+    saveAudioPreferences(window.localStorage, preferences);
+    bgmPlayer.setVolume(preferences.volume / 100);
+    bgmPlayer.setMuted(preferences.muted);
+  },
 };
 
 bindMenuEvents(menuControlHost);
