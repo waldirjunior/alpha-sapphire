@@ -19,7 +19,13 @@ import { createGameEvents } from './engine/gameEvents';
 import { loadZoneEncounters } from './engine/zoneEncounterLoader';
 import { bindGameInput } from './game/input';
 import { renderBattle as renderBattleUi, syncPartyFromBattle as syncPartyUi } from './game/battleUi';
-import { bindMenuEvents, renderDsPanel as renderMenuPanel, type MenuTab, type StarterId } from './game/menus';
+import {
+  bindMenuEvents,
+  renderDsPanel as renderMenuPanel,
+  splitDialogueSpeaker,
+  type MenuTab,
+  type StarterId,
+} from './game/menus';
 import { renderIntro as renderIntroUi, type IntroGender, type IntroStep } from './game/intro';
 import { clearSavedGame, loadSavedGame, storeSavedGame } from './game/saveStorage';
 
@@ -33,6 +39,9 @@ void loadZoneEncounters(Object.keys(MAPS)).then((tables) => { zoneEncounterTable
 const app = document.getElementById('app');
 const hudPos = document.getElementById('hud-pos');
 const dialogueBox = document.getElementById('dialogue-box');
+const dialogueName = dialogueBox?.querySelector<HTMLElement>('[data-dialogue-name]') ?? null;
+const dialogueText = dialogueBox?.querySelector<HTMLElement>('[data-dialogue-text]') ?? null;
+const dialoguePrompt = dialogueBox?.querySelector<HTMLElement>('[data-dialogue-prompt]') ?? null;
 const battleOverlay = document.getElementById('battle-overlay');
 const battleEnemy = document.getElementById('battle-enemy');
 const battlePlayer = document.getElementById('battle-player');
@@ -211,10 +220,19 @@ function syncUi(): void {
   }
   if (dialogueBox) {
     if (state.activeDialogue) {
-      dialogueBox.textContent = `${state.activeDialogue.text}\n\n[Espaço / Enter para fechar]`;
+      const line = splitDialogueSpeaker(state.activeDialogue.text);
+      if (dialogueName) {
+        dialogueName.textContent = line.speaker ? `${line.speaker}:` : '';
+        dialogueName.hidden = !line.speaker;
+      }
+      if (dialogueText) dialogueText.textContent = line.text;
+      if (dialoguePrompt) dialoguePrompt.textContent = '[Espaço / Enter para fechar]';
       dialogueBox.classList.add('open');
     } else {
-      dialogueBox.textContent = '';
+      if (dialogueName) dialogueName.textContent = '';
+      if (dialogueText) dialogueText.textContent = '';
+      if (dialoguePrompt) dialoguePrompt.textContent = '';
+      if (dialogueName) dialogueName.hidden = true;
       dialogueBox.classList.remove('open');
     }
   }

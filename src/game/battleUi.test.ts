@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createPokemonInstance, startWildBattle } from '../core/battle';
 import { SPECIES } from '../data/pokemon/species';
-import { createHpBarMarkup, syncPartyFromBattle } from './battleUi';
+import { createBattleCombatantMarkup, createHpBarMarkup, syncPartyFromBattle } from './battleUi';
 
 describe('battle HP bar markup', () => {
   it('clamps HP ratio and rounds to a percentage', () => {
@@ -15,6 +15,18 @@ describe('battle HP bar markup', () => {
     expect(createHpBarMarkup(12, 40)).toContain('background:#eab308');
     expect(createHpBarMarkup(8, 40)).toContain('background:#ef4444');
     expect(createHpBarMarkup(0, 0)).toContain('width:0%');
+  });
+
+  it('builds a compact, escaped combatant card for the battle touch panel', () => {
+    const pokemon = createPokemonInstance(SPECIES.torchic, 5);
+    const markup = createBattleCombatantMarkup('Rival <May>', pokemon);
+
+    expect(markup).toContain('class="battle-combatant-heading"');
+    expect(markup).toContain('Rival &lt;May&gt;');
+    expect(markup).toContain('Torchic');
+    expect(markup).toContain('Lv.5');
+    expect(markup).toContain(`${pokemon.currentHp}/${pokemon.maxHp} HP`);
+    expect(markup).toContain('hp-bar-track');
   });
 
   it('syncs the battle party, active slot, and level-up jingle', () => {

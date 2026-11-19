@@ -102,7 +102,8 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Estado:** em andamento
 - **Data:** 2026-11-17
 - **Evidência:** Reaberta após feedback do usuário: a versão inicial (`#ds-menu` com 4 abas simples no topo) ainda não reproduz o layout real da tela inferior do Nintendo 3DS / Alpha Sapphire (PlayNav, cards de Equipe, categorias de Mochila e grade de Pokédex).
-- **Próximo passo:** Reconstruir layout dual-screen estilo Nintendo 3DS com tela superior limpa e tela inferior estilo PlayNav/ORAS ([engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md)).
+- **Atualização 2026-11-19:** `index.html` agora apresenta o dock PokéNav com Equipe, Mochila, Pokédex, Hora e Salvar; diálogos têm faixa de falante e batalhas usam cartões compactos no canto inferior. Helpers cobertos por testes; `npm run verify` e os 36 testes de `npm run test:e2e` passaram.
+- **Próximo passo:** Implementar a aba do Mapa de Hoenn e comparar a interface com o Azahar antes de fechar a fidelidade visual ([engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md)).
 
 ## P-012 Animações nativas da ROM (tabela overworld `0xef` em `a/0/2/1` e golpes em `a/0/0/8`)
 
