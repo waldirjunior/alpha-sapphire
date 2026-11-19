@@ -37,4 +37,9 @@ describe('câmera de follow do overworld', () => {
     expect(pose.eye.z).toBeLessThan(56);
     expect(pose.backgroundColor).not.toBe('#7dd3fc');
   });
+
+  it('preserva o fundo escuro da caverna fora da área especial de câmera', () => {
+    expect(followCameraPose('zone_0075', { x: 44, y: 0.5, z: 11 }).backgroundColor).toBe('#18221d');
+    expect(followCameraPose('zone_0071', { x: 57, y: 0.5, z: 35 }).backgroundColor).toBe('#17130d');
+  });
 });

@@ -16,6 +16,7 @@ import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import type { BattleEvent } from '../core/battleEvents';
 import { EventPresentation } from './eventPresentation';
 import { followCameraPose } from './cameraFollow';
+import { zoneEnvironment } from './zoneEnvironment';
 
 export { fixOrasMaterials };
 
@@ -37,6 +38,8 @@ export class SceneManager {
   private scene: THREE.Scene;
   private camera: THREE.PerspectiveCamera;
   private renderer: THREE.WebGLRenderer;
+  private hemisphereLight: THREE.HemisphereLight;
+  private directionalLight: THREE.DirectionalLight;
   private playerRoot: THREE.Group;
   private terrainGroup: THREE.Group;
   private tallGrassGroup: THREE.Group;
@@ -60,6 +63,7 @@ export class SceneManager {
   private playerTargetPos = new THREE.Vector3();
   private lastPlayerPos = { mapId: '', x: -1, z: -1 };
   private currentMapId = '';
+  private environmentMapId = '';
   private mapLoadVersion = 0;
   private currentBattleKey = '';
   private currentPlayerGender: 'male' | 'female' | null = null;
@@ -68,8 +72,6 @@ export class SceneManager {
 
   constructor(container: HTMLElement) {
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color('#7dd3fc');
-    this.scene.fog = new THREE.Fog('#93c5fd', 32, 95);
 
     this.camera = new THREE.PerspectiveCamera(
       45,
@@ -95,12 +97,13 @@ export class SceneManager {
         return pose;
       });
 
-    const hemi = new THREE.HemisphereLight(0xf0f9ff, 0x365314, 1.05);
-    this.scene.add(hemi);
+    this.hemisphereLight = new THREE.HemisphereLight(0xf0f9ff, 0x365314, 1.05);
+    this.scene.add(this.hemisphereLight);
 
-    const sun = new THREE.DirectionalLight(0xfffbeb, 1.35);
-    sun.position.set(20, 35, 20);
-    this.scene.add(sun);
+    this.directionalLight = new THREE.DirectionalLight(0xfffbeb, 1.35);
+    this.directionalLight.position.set(20, 35, 20);
+    this.scene.add(this.directionalLight);
+    this.applyZoneEnvironment('zone_0006');
 
     this.terrainGroup = new THREE.Group();
     this.tallGrassGroup = new THREE.Group();
@@ -139,6 +142,17 @@ export class SceneManager {
     this.camera.aspect = container.clientWidth / container.clientHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(container.clientWidth, container.clientHeight);
+  }
+
+  private applyZoneEnvironment(mapId: string): void {
+    const environment = zoneEnvironment(mapId);
+    this.scene.background = new THREE.Color(environment.backgroundColor);
+    this.scene.fog = new THREE.Fog(environment.fogColor, environment.fogNear, environment.fogFar);
+    this.hemisphereLight.color.set(environment.hemisphereSkyColor);
+    this.hemisphereLight.groundColor.set(environment.hemisphereGroundColor);
+    this.hemisphereLight.intensity = environment.hemisphereIntensity;
+    this.directionalLight.color.set(environment.directionalColor);
+    this.directionalLight.intensity = environment.directionalIntensity;
   }
 
   private buildTerrainPlaceholder(map: MapDefinition): void {
@@ -245,6 +259,10 @@ export class SceneManager {
 
     const map = maps[state.player.mapId];
     if (!map) return;
+    if (this.environmentMapId !== map.id) {
+      this.environmentMapId = map.id;
+      this.applyZoneEnvironment(map.id);
+    }
 
     const previousRegion = this.continuousRegion;
     if (!this.syncContinuous(map, maps) && this.currentMapId !== map.id) {
