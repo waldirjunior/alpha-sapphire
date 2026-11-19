@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import type { ZoneMapSource } from './adapter';
+import { zoneActorModelUrl, type ZoneMapSource } from './adapter';
 
 // Contrato dos 536 JSONs que o runtime consome. Falha aqui = o pipeline gerou um mapa que o jogo não sabe usar.
 
@@ -53,6 +53,18 @@ describe('zone map contracts', () => {
 
   it('keeps south ledges inside their zone', () => {
     expect(zonesFailing((zone) => (zone.southLedges ?? []).every((ledge) => inside(zone, ledge)))).toEqual([]);
+  });
+
+  it('resolves every actor model ID across all 536 zones to a valid MM index (0..509)', () => {
+    const invalid = [...ZONES.values()].flatMap((zone) =>
+      zone.npcs
+        .map((npc) => ({ id: `${zone.id}#${npc.id}`, model: npc.model, url: zoneActorModelUrl(npc.model) }))
+        .filter(({ url }) => {
+          const match = /^\/assets\/characters\/mm_(\d{4})\.glb$/.exec(url);
+          return !match || Number(match[1]) > 509;
+        }),
+    );
+    expect(invalid).toEqual([]);
   });
 });
 

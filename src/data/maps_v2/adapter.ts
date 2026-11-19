@@ -27,17 +27,17 @@ export function romFacing(value: number): Direction | undefined {
   return directions[value];
 }
 
-const BM_MODEL_COUNT = 380;
-
+// Tabela em DllField.cro (0xf5d04..0xf6ce4): 0x2000..0x205b -> MM 354..445 e 0x1000..0x103f -> MM 446..509 (a/0/2/1).
 export function zoneActorModelUrl(modelId: number): string {
-  const bank = modelId & 0xf000;
-  const index = modelId & 0x0fff;
-  if (Number.isInteger(modelId) && modelId >= 0 && modelId <= 0xffff &&
-    (bank === 0x1000 || bank === 0x2000) && index < BM_MODEL_COUNT) {
-    const name = `bm_${String(index).padStart(4, '0')}`;
-    return `/assets/objects/${name}/${name}.glb`;
+  let mmIndex = modelId;
+  if (Number.isInteger(modelId)) {
+    if (modelId >= 0x2000 && modelId <= 0x205b) {
+      mmIndex = 354 + (modelId - 0x2000);
+    } else if (modelId >= 0x1000 && modelId <= 0x103f) {
+      mmIndex = 446 + (modelId - 0x1000);
+    }
   }
-  return `/assets/characters/mm_${String(modelId).padStart(4, '0')}.glb`;
+  return `/assets/characters/mm_${String(mmIndex).padStart(4, '0')}.glb`;
 }
 
 function validateZone(source: ZoneMapSource): void {

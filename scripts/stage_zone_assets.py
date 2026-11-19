@@ -7,7 +7,7 @@ from urllib.parse import unquote
 
 from scripts.glb_native_clips import decode_glb, encode_glb
 from scripts.glb_uv_fix import fix_file
-from scripts.object_models import bm_model_index
+from scripts.object_models import mm_model_index
 
 SLICE = (6, 7, 13, 23, 24, 25, *range(223, 232))
 
@@ -106,8 +106,8 @@ def main() -> None:
     maps = {int(path.stem): json.loads(path.read_text()) for path in args.maps_dir.glob('[0-9][0-9][0-9][0-9].json')}
     if args.objects_only:
         object_ids = {index for map_data in maps.values() for npc in map_data['npcs']
-                      if (index := bm_model_index(npc['model'])) is not None}
-        missing = stage_object_models(args.models_dir, args.public_dir, object_ids)
+                      if npc['model'] >= 0x1000 and (index := mm_model_index(npc['model'])) is not None}
+        missing = stage_characters(args.models_dir, args.public_dir, object_ids)
         print(json.dumps({'objects': len(object_ids) - len(missing), 'missingObjects': missing}))
         return
     neighbors = json.loads((args.maps_dir / '_neighbors.json').read_text())['zones'] if args.include_neighbors else None
@@ -117,10 +117,10 @@ def main() -> None:
         name = f'gr_{index:04d}'
         copy_gr(args.models_dir / name / f'{name}.glb', args.public_dir / f'assets/maps/{name}/{name}.glb')
     actor_ids = {npc['model'] for zone in selected for npc in maps[zone]['npcs']}
-    object_ids = {index for model_id in actor_ids if (index := bm_model_index(model_id)) is not None}
-    character_ids = actor_ids - {model_id for model_id in actor_ids if bm_model_index(model_id) is not None}
+    character_ids = {mm_model_index(model_id) or model_id for model_id in actor_ids}
     missing_characters = stage_characters(args.models_dir, args.public_dir, character_ids)
-    missing_objects = stage_object_models(args.models_dir, args.public_dir, object_ids)
+    missing_objects: list[int] = []
+    object_ids: set[int] = set()
     tracks = stage_audio(args.audio_dir, args.public_dir,
                          json.loads((args.maps_dir.parent / 'zone_audio.json').read_text()), tuple(args.zones)) if args.audio_dir else []
     print(json.dumps({'zones': selected, 'grs': sorted(grs), 'characters': len(character_ids) - len(missing_characters),

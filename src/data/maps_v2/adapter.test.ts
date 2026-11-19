@@ -14,19 +14,25 @@ const fixture: ZoneMapSource = {
 };
 
 describe('zone map adapter', () => {
-  it('resolves object model banks to matching BM assets while preserving MM character ids', () => {
-    expect(zoneActorModelUrl(0x1000 | 57)).toBe('/assets/objects/bm_0057/bm_0057.glb');
-    expect(zoneActorModelUrl(0x2000 | 11)).toBe('/assets/objects/bm_0011/bm_0011.glb');
-    expect(zoneActorModelUrl(0x2000)).toBe('/assets/objects/bm_0000/bm_0000.glb');
+  it('resolves 0x2000 and 0x1000 object/pokemon banks to DllField MM character indices (never BM doors)', () => {
+    expect(zoneActorModelUrl(0x2000)).toBe('/assets/characters/mm_0354.glb');
+    expect(zoneActorModelUrl(0x200c)).toBe('/assets/characters/mm_0366.glb');
+    expect(zoneActorModelUrl(0x2049)).toBe('/assets/characters/mm_0427.glb');
+    expect(zoneActorModelUrl(0x205b)).toBe('/assets/characters/mm_0445.glb');
+    expect(zoneActorModelUrl(0x1000)).toBe('/assets/characters/mm_0446.glb');
+    expect(zoneActorModelUrl(0x102a)).toBe('/assets/characters/mm_0488.glb');
+    expect(zoneActorModelUrl(0x1039)).toBe('/assets/characters/mm_0503.glb');
+    expect(zoneActorModelUrl(0x103c)).toBe('/assets/characters/mm_0506.glb');
+    expect(zoneActorModelUrl(0x103f)).toBe('/assets/characters/mm_0509.glb');
     expect(zoneActorModelUrl(289)).toBe('/assets/characters/mm_0289.glb');
     expect(zoneActorModelUrl(0x2fff)).toBe('/assets/characters/mm_12287.glb');
     expect(zoneActorModelUrl(0x11039)).toBe('/assets/characters/mm_69689.glb');
   });
 
-  it('keeps the ROM model id and attaches the resolved object asset URL to the actor', () => {
-    const source = { ...fixture, npcs: [{ ...fixture.npcs[0], model: 0x1000 | 57 }] };
+  it('keeps the ROM model id and attaches the resolved MM asset URL to the actor', () => {
+    const source = { ...fixture, npcs: [{ ...fixture.npcs[0], model: 0x1039 }] };
     const map = adaptZoneMap(source);
-    expect(map.npcs?.[0]).toMatchObject({ model: 0x1000 | 57, modelUrl: '/assets/objects/bm_0057/bm_0057.glb' });
+    expect(map.npcs?.[0]).toMatchObject({ model: 0x1039, modelUrl: '/assets/characters/mm_0503.glb' });
   });
 
   it('preserves coordinates, rectangular warps, encounters and derived spawn without mutating source', () => {

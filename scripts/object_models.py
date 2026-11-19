@@ -7,13 +7,17 @@ import struct
 BM_MODEL_COUNT = 380
 
 
-def bm_model_index(model_id: int) -> int | None:
-    """Return the a/0/2/3 entry for an object actor ID, if it is in the BM bank."""
-    if type(model_id) is not int or not 0 <= model_id <= 0xFFFF:
+def mm_model_index(model_id: int) -> int | None:
+    """Resolve a ZO actor model ID to its a/0/2/1 (MM) index per DllField.cro."""
+    if type(model_id) is not int:
         return None
-    bank = model_id & 0xF000
-    index = model_id & 0x0FFF
-    return index if bank in (0x1000, 0x2000) and index < BM_MODEL_COUNT else None
+    if 0 <= model_id <= 353:
+        return model_id
+    if 0x2000 <= model_id <= 0x205B:
+        return 354 + (model_id - 0x2000)
+    if 0x1000 <= model_id <= 0x103F:
+        return 446 + (model_id - 0x1000)
+    return None
 
 
 def extract_bm_model_section(blob: bytes) -> bytes:

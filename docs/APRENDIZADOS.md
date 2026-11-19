@@ -1083,4 +1083,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Regra:** aguardar avanço da posição persistida após cada tecla, repetir somente quando não houver movimento e recalcular a rota se o estado avançar para outro tile; aguardar opacidade efetiva da cena em transições de zona. Evitar pausas fixas por tile em caminhadas longas.
 - **Evidência:** removida a espera fixa por passo e incluído recálculo após avanço inesperado; o corredor Littleroot–Lavaridge passou em 5,5 min, incluindo as mesmas transições e fixtures.
 
+## A-106 Correção de A-104: `0x2000..0x205b` e `0x1000..0x103f` vêm de `a/0/2/1` (`MM`) via tabela em `DllField.cro`, não de `a/0/2/3` (`BM`)
+
+- **Data:** 2026-11-19; P-017, substitui a regra de `A-104`.
+- **Contexto:** após a entrega de `A-104`, apareceram portas flutuantes em Littleroot (`0x1039`, Whismur de Zinnia) e na Rota 101 (`0x2049`, mochila do Prof. Birch; `0x103c`, Poochyena).
+- **Erro:** `A-104` assumiu sem prova binária que `model & 0x0fff` indexava `a/0/2/3` (`BM`, modelos de portas/janelas de prédios). Na tabela real de `DllField.cro` (`0xf5d04..0xf6ce4`, registros de 8 bytes `<4H`), os bancos de objetos e Pokémon de overworld continuam sendo índices de `a/0/2/1` (`MM`): `0x0000..0x0161` → `0..353`, `0x2000..0x205b` → `354..445` (`354 + (id - 0x2000)`) e `0x1000..0x103f` → `446..509` (`446 + (id - 0x1000)`).
+- **Regra:** resolver `0x2000..0x205b` e `0x1000..0x103f` para `/assets/characters/mm_XXXX.glb` segundo a tabela de `DllField.cro`; nunca mapear atores `npcs[].model` para `/assets/objects/bm_XXXX.glb`. Garantido por contrato em `src/data/maps_v2/zoneContracts.test.ts` cobrindo as 536 zonas e por `scripts/test_object_models.py`.
+
 

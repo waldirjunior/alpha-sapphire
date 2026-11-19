@@ -19,7 +19,7 @@ from scripts.convert_gr_to_glb import (
     run_spica,
 )
 from scripts.glb_uv_fix import fix_file
-from scripts.object_models import BM_MODEL_COUNT, bm_model_index, extract_bm_model_section
+from scripts.object_models import BM_MODEL_COUNT, extract_bm_model_section, mm_model_index
 
 ROOT = Path(__file__).resolve().parents[1]
 SPICA_EXPORT = _resolve_tool(
@@ -43,9 +43,11 @@ def object_model_indices(maps_dir: Path) -> list[int]:
     for path in maps_dir.glob("[0-9][0-9][0-9][0-9].json"):
         map_data = json.loads(path.read_text(encoding="utf-8"))
         for actor in map_data.get("npcs", []):
-            index = bm_model_index(actor.get("model"))
-            if index is not None:
-                indices.add(index)
+            model_id = actor.get("model")
+            if isinstance(model_id, int) and model_id >= 0x1000:
+                index = mm_model_index(model_id)
+                if index is not None:
+                    indices.add(index)
     return sorted(indices)
 
 
