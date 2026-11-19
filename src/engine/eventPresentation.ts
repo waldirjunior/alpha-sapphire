@@ -2,6 +2,7 @@ import type { PerspectiveCamera } from 'three';
 import type { AmxEffect } from '../core/amxTypes';
 import type { MapDefinition } from '../core/types';
 import { EventCamera, type EventCameraPose } from './eventCamera';
+import { followCameraPose, type CameraPoint, type FollowCameraPose } from './cameraFollow';
 import { EventFade } from './eventFade';
 import { EventTurns, type EventActorContext, type EventActorRoot } from './eventTurns';
 
@@ -14,7 +15,8 @@ export class EventPresentation {
 
   constructor(private readonly camera: PerspectiveCamera, canvas: { style: { opacity: string } },
     private readonly followTarget: () => EventCameraPose['target'], private readonly terrainReady: () => Promise<void> | null,
-    actorRoot?: EventActorRoot) {
+    actorRoot?: EventActorRoot,
+    private readonly cameraFollow: (target: CameraPoint) => FollowCameraPose = target => followCameraPose('', target)) {
     this.gameFov = camera.fov;
     this.motion = new EventCamera(() => this.pose ?? { eye: { x: camera.position.x, y: camera.position.y, z: camera.position.z },
       target: followTarget(), fov: camera.fov, roll: 0 }, pose => this.projectPose(pose));
@@ -24,9 +26,9 @@ export class EventPresentation {
 
   follow(): void {
     if (this.motion.active) return;
-    const target = this.followTarget();
-    this.camera.position.set(target.x, target.y + 8.5, target.z + 8);
-    this.camera.lookAt(target.x, target.y, target.z);
+    const pose = this.cameraFollow(this.followTarget());
+    this.camera.position.set(pose.eye.x, pose.eye.y, pose.eye.z);
+    this.camera.lookAt(pose.target.x, pose.target.y, pose.target.z);
   }
 
   get cameraActive(): boolean { return this.motion.active; }

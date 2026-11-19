@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PerspectiveCamera } from 'three';
+import { PerspectiveCamera, Vector3 } from 'three';
 import type { AmxEffect } from '../core/amxTypes';
 import type { MapDefinition } from '../core/types';
 import { EventPresentation } from './eventPresentation';
@@ -55,6 +55,18 @@ describe('serviços de apresentação AMX', () => {
     target.y = 21.5;
     presentation.follow();
     expect(camera.position.toArray()).toEqual([38, 30, 13]);
+  });
+  it('usa o enquadramento de follow observado em um ponto de oclusão', () => {
+    const camera = new PerspectiveCamera(45);
+    const target = { x: 78, y: 0.5, z: 48 };
+    const presentation = new EventPresentation(camera, { style: { opacity: '1' } }, () => target, () => null,
+      undefined, point => ({ eye: { x: point.x, y: point.y + 11.5, z: point.z + 2 },
+        target: { x: point.x, y: point.y + 1.5, z: point.z - 2 }, backgroundColor: '#000000' }));
+    presentation.follow();
+    expect(camera.position.toArray()).toEqual([78, 12, 50]);
+    const direction = camera.getWorldDirection(new Vector3());
+    expect(direction.y).toBeCloseTo(-10 / Math.sqrt(116));
+    expect(direction.z).toBeCloseTo(-4 / Math.sqrt(116));
   });
   it('projeta fade no canvas e reset cancela a apresentação', async () => {
     const { presentation, canvas } = fixture(() => Promise.resolve());

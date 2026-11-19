@@ -1,8 +1,9 @@
 # PRD-016 — Camadas físicas e oclusão nativas
 
 - **Data:** 2026-11-18; base `0d745b2`, P-017, A-084–A-086.
-- **Estado:** investigação delimitada e auditor offline implementado; seleção
-  multicamada, oclusão e aceite visual continuam abertos.
+- **Estado:** auditor offline implementado; câmeras/oclusão em6/445 aceitas
+  pelas referências P-021. Seleção multicamada, ponto15 e transição natural
+  continuam abertos.
 - **Decisão:** [ADR-007](../adrs/ADR-007-auditar-camadas-sem-inferir-visibilidade.md).
 
 ## Objetivo e critérios
@@ -16,7 +17,7 @@ promover um piso apenas porque coincide com um warp.
 - [x] Auditar todos os GRs e manter candidatos separados de decisões runtime.
 - [x] Rastrear a consulta de altura e os wrappers de visibilidade abaixo.
 - [ ] Fechar origem/lifetime do Y de referência, caches e contrato do hit.
-- [ ] Provar a política original de oclusão/câmera nos três pontos.
+- [x] Validar a oclusão/câmera em6(14,16) e445(78,48) pelas referências P-021;15(2,20) segue aberto.
 - [ ] Validar campanha natural e emulador; não substituídos pelos snapshots.
 
 ## Evidência estática
@@ -313,3 +314,38 @@ com objetos/seletores/registry e fechar o consumidor de culling. Demonstrar
 alvo e condição nos três pontos antes de teste red-green/gancho mínimo;
 comparar também a transição natural no emulador, não apenas o ponto parado.
 P-017 continua aberta; grounding, câmera, depth, alpha e colisões preservados.
+
+## Correção visual guiada pelas referências P-021 (2026-11-19)
+
+As capturas do Azahar resolvem as duas regras visuais do item2 do ROADMAP:
+em `z0006-littleroot-telhado`, `(14,16)`, telhado e chaminé realmente cobrem
+o avatar; em `z0445-mauville-hall`, `(78,48)`, o avatar aparece sob o arco,
+com o corredor emoldurado por vazio preto. O primeiro caso é oclusão esperada,
+não defeito. O segundo exigia aproximar/elevar a câmera para passar pelo arco.
+
+`followCameraPose` mantém o follow normal fora do corredor de Mauville e
+suaviza um perfil local ao redor de `(78,48)`: no centro, olho `(x,y+12,z+2)`
+e alvo `(x,y+2,z-2)`. A cor de fundo transita para preto nessa área, conforme
+a referência. As imagens estabelecem o resultado visual, não as coordenadas
+internas da câmera original; o perfil é uma calibração do port, sem alegação
+de recuperação da transformação nativa.
+
+Em `scenarios.ts`, Littleroot registra a oclusão esperada e o gate
+`avatarVisible` só passa quando existe silhueta mas ela está coberta; Mauville
+mantém o gate de avatar visível. O fundo preto ocupa64,9% dos pixels da
+referência Mauville; seu limite `maxVoidRatio=0.7` permite o recorte observado
+sem mascarar uma cena dominada por vazio. Capturas atuais: Littleroot
+`avatarVisibility=0.0474`, `avatarScreenShare=0.0049`; Mauville
+`avatarVisibility=0.8829`, `avatarScreenShare=0.0033`, `voidRatio=0.4573`.
+Os três gates relevantes passam nos dois cenários; `assetsLoaded` segue como
+defeito P-017 por modelos de atores ausentes.
+
+Red-green: os testes de `cameraFollow.test.ts`, `eventPresentation.test.ts`
+e `gates.test.ts` falhavam antes da implementação e passam depois. `npm run
+verify` passa com437 Vitest e224 testes Python (1 skip); build passa com o
+aviso de chunks grandes já conhecido. `ALPHA_E2E_PORT=5360 npm run test:e2e`
+passa31/31 (6 smoke e25 visuais); a porta padrão5320 estava ocupada por outro
+checkout. Capturas revistas antes de atualizar apenas os baselines locais dos
+dois cenários; `rom/visual-baselines/` e `rom/visual-report/` são ignorados.
+O terceiro ponto `z0015-mauville-patio`, campanha natural e comparação em
+transição no emulador continuam pendentes; P-017 permanece aberta.

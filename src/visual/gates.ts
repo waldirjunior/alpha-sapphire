@@ -2,19 +2,33 @@ import type { ProbeMetrics } from './probeReport';
 import type { VisualGate, VisualScenario } from './scenarios';
 
 export const GATE_LIMITS = {
-  /** Abaixo disso o avatar não é legível (telhado, parede ou terreno o encobrem). */
+  /** Legibilidade mínima nos pontos em que a referência original deixa o avatar exposto. */
   minAvatarVisibility: 0.7,
+  /** Área mínima da silhueta para distinguir a oclusão original de um avatar ausente. */
+  minOccludedAvatarScreenShare: 0.001,
+  /** Limite para aceitar uma oclusão que a captura original também apresenta. */
+  maxExpectedAvatarVisibility: 0.1,
   /** Acima disso a câmera mostra mais vazio do que cenário. */
   maxVoidRatio: 0.3,
   /** Folga, em tiles, entre a sola do modelo e o chão. */
   maxGroundGap: 0.02,
 } as const;
 
-const GATE_CHECKS: Record<VisualGate, (metrics: ProbeMetrics) => boolean> = {
-  assetsLoaded: (metrics) => metrics.failedAssets === 0,
-  avatarVisible: (metrics) => metrics.avatarVisibility >= GATE_LIMITS.minAvatarVisibility,
-  terrainPresent: (metrics) => metrics.voidRatio <= GATE_LIMITS.maxVoidRatio,
-  feetOnGround: (metrics) => Math.abs(metrics.groundGap) <= GATE_LIMITS.maxGroundGap,
+type ScenarioGate = Pick<VisualScenario, 'camera' | 'knownDefects' | 'expectedAvatarOcclusion' | 'maxVoidRatio'>;
+
+function avatarMatchesReference(scenario: ScenarioGate, metrics: ProbeMetrics): boolean {
+  if (scenario.expectedAvatarOcclusion === 'occluded') {
+    return metrics.avatarScreenShare >= GATE_LIMITS.minOccludedAvatarScreenShare &&
+      metrics.avatarVisibility <= GATE_LIMITS.maxExpectedAvatarVisibility;
+  }
+  return metrics.avatarVisibility >= GATE_LIMITS.minAvatarVisibility;
+}
+
+const GATE_CHECKS: Record<VisualGate, (scenario: ScenarioGate, metrics: ProbeMetrics) => boolean> = {
+  assetsLoaded: (_scenario, metrics) => metrics.failedAssets === 0,
+  avatarVisible: avatarMatchesReference,
+  terrainPresent: (scenario, metrics) => metrics.voidRatio <= (scenario.maxVoidRatio ?? GATE_LIMITS.maxVoidRatio),
+  feetOnGround: (_scenario, metrics) => Math.abs(metrics.groundGap) <= GATE_LIMITS.maxGroundGap,
 };
 
 // A sola só é mensurável de perto; o vazio só faz sentido no enquadramento do jogo.
@@ -40,10 +54,10 @@ function outcomeOf(passed: boolean, pendencia: string | undefined): GateOutcome 
   return pendencia ? 'known-defect' : 'regression';
 }
 
-export function evaluateGates(scenario: Pick<VisualScenario, 'camera' | 'knownDefects'>, metrics: ProbeMetrics): GateVerdict[] {
+export function evaluateGates(scenario: ScenarioGate, metrics: ProbeMetrics): GateVerdict[] {
   return CAMERA_GATES[scenario.camera].map((gate) => {
     const pendencia = scenario.knownDefects[gate];
-    return { gate, outcome: outcomeOf(GATE_CHECKS[gate](metrics), pendencia), ...(pendencia ? { pendencia } : {}) };
+    return { gate, outcome: outcomeOf(GATE_CHECKS[gate](scenario, metrics), pendencia), ...(pendencia ? { pendencia } : {}) };
   });
 }
 

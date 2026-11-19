@@ -15,6 +15,7 @@ import { NativeAnimationController } from './nativeAnimation';
 import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import type { BattleEvent } from '../core/battleEvents';
 import { EventPresentation } from './eventPresentation';
+import { followCameraPose } from './cameraFollow';
 
 export { fixOrasMaterials };
 
@@ -87,7 +88,12 @@ export class SceneManager {
     container.style.backgroundColor = '#000';
     this.events = new EventPresentation(this.camera, this.renderer.domElement,
       () => ({ x: this.playerRoot.position.x, y: this.playerRoot.position.y + 0.5, z: this.playerRoot.position.z }), () => this.terrainReady,
-      (map, actorId) => eventActorRoot(map, actorId, this.entitiesGroup, this.playerRoot));
+      (map, actorId) => eventActorRoot(map, actorId, this.entitiesGroup, this.playerRoot),
+      target => {
+        const pose = followCameraPose(this.currentMapId, target);
+        this.scene.background = new THREE.Color(pose.backgroundColor);
+        return pose;
+      });
 
     const hemi = new THREE.HemisphereLight(0xf0f9ff, 0x365314, 1.05);
     this.scene.add(hemi);
