@@ -47,8 +47,8 @@ export const stateNatives: Readonly<Record<string, AmxNativeDefinition>> = {
     return 0;
   } },
   MdlSetGPos: { arity: 4, execute: (w, [x, y, z, id]) => { Object.assign(actor(w, id), { x, y, z }); return 0; } },
-  MdlGetGPosX: { arity: 1, execute: (w, [id]) => cellFromFloat(actor(w, id).x) },
-  MdlGetGPosZ: { arity: 1, execute: (w, [id]) => cellFromFloat(actor(w, id).z) },
+  MdlGetGPosX: { arity: 1, execute: (w, [id]) => actor(w, id).x | 0 },
+  MdlGetGPosZ: { arity: 1, execute: (w, [id]) => actor(w, id).z | 0 },
   MdlGetMoveCode: { arity: 1, execute: (w, [id]) => actor(w, id).moveCode },
   MdlChangeMoveCode: { arity: 2, execute: (w, [id, code]) => { actor(w, id).moveCode = code; return 0; } },
   ItemAddCheck: { arity: 2, execute: (w, args) => addItem(w, args, false) },

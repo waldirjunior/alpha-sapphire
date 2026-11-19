@@ -69,6 +69,17 @@ describe('nativas de estado Pawn', () => {
     expect(result.world.actors).toEqual({});
     expect(result.world.effects).toEqual([]);
   });
+  it.each([
+    ['MdlGetGPosX', 104],
+    ['MdlGetGPosZ', 179],
+  ] as const)('%s retorna coordenada inteira de grade, não bits float32', (name, coordinate) => {
+    const world = createAmxWorld();
+    world.actors[7] = { x: 104, y: 0, z: 179, direction: 0, visible: true, moveCode: 0 };
+    const result = execute(syntheticBundle([{ name, args: [7] }]), world);
+    expect(result.status).toBe('completed');
+    expect(result.machines[0].pri).toBe(coordinate);
+    expect(result.world.actors[7]).toEqual(world.actors[7]);
+  });
   it('normaliza índice e valor de work para unsigned-16 como os wrappers CRO', () => {
     const world = createAmxWorld();
     const result = execute(syntheticBundle([{ name: 'WorkSet', args: [0x14000, -1] },
