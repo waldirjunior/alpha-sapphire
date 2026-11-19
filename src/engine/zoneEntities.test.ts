@@ -21,6 +21,24 @@ describe('grounded actors', () => {
     expect(expressions.set).toHaveBeenCalledOnce();
   });
 
+  it('applies active spawn flags when constructing and synchronizing NPC roots', () => {
+    const group = new Group();
+    const baseNpc = map.npcs?.[0];
+    if (!baseNpc) throw new Error('fixture NPC is missing');
+    const gatedMap = { ...map, npcs: [
+      { ...baseNpc, id: 'future-actor', spawnFlag: 612 },
+      { ...baseNpc, id: 'current-actor', spawnFlag: 623 },
+      { ...baseNpc, id: 'always-actor', spawnFlag: 0 },
+    ] };
+    appendMapEntities(gatedMap, group, vi.fn(), { 612: true });
+    expect(group.getObjectByName('future-actor')?.visible).toBe(false);
+    expect(group.getObjectByName('current-actor')?.visible).toBe(true);
+    expect(group.getObjectByName('always-actor')?.visible).toBe(true);
+
+    syncMapEntities(gatedMap, group, { set: vi.fn() }, { 612: false });
+    expect(group.getObjectByName('future-actor')?.visible).toBe(true);
+  });
+
   it('uses the existing horizontal presentation interpolation for Y, without overshoot or a second timer', () => {
     const actor = new Group();
     actor.position.set(0, 1, 0);

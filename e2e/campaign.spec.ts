@@ -1,10 +1,29 @@
 import { expect, test } from '@playwright/test';
-import { bootGame, finishIntro, pressUntil, walk } from './support/game';
+import { bootGame, dialogue, finishIntro, pressUntil, walk } from './support/game';
+import { corridorMap, corridorState, installCorridorNavigation, walkCorridorTo } from './support/corridorNavigation';
 import { trackPageErrors } from './support/pageErrors';
 
 const NO_ENCOUNTERS = 0.95;
 
-test('New Game avança pela campanha natural até Birch', async ({ page }) => {
+async function advanceVisibleEventDialogues(page: Parameters<typeof bootGame>[0]): Promise<void> {
+  for (let attempt = 0; attempt < 12; attempt += 1) {
+    const open = await dialogue(page).evaluate(element => element.classList.contains('open'));
+    if (!open) return;
+    await page.keyboard.press('Enter');
+  }
+  await expect(dialogue(page)).not.toHaveClass(/open/);
+}
+
+function expectHiddenSpawnFlags(flagIds: readonly number[], actors: NonNullable<Awaited<ReturnType<typeof corridorMap>>['npcs']>,
+  flags: Readonly<Record<number, boolean>>): void {
+  const represented = new Set(actors.map(actor => actor.spawnFlag));
+  for (const flag of flagIds) {
+    expect(represented.has(flag), `mapa não contém spawnFlag ${flag}`).toBe(true);
+    expect(flags[flag], `spawnFlag ${flag} ainda não está ativo`).toBe(true);
+  }
+}
+
+test('New Game avança naturalmente de Birch até Oldale e Route 102 sem NPCs futuros duplicados', async ({ page }) => {
   const errors = trackPageErrors(page);
   await bootGame(page, NO_ENCOUNTERS);
   await finishIntro(page);
@@ -38,8 +57,38 @@ test('New Game avança pela campanha natural até Birch', async ({ page }) => {
   await walk(page, 'ArrowLeft', 5);
   await walk(page, 'ArrowUp', 1);
   await expect.poll(() => page.locator('#hud-pos').textContent()).toContain('(13, 22)');
-  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('alpha_sapphire_web_save_v2') ?? 'null'));
-  expect(saved.state.player.mapId).toBe('zone_0227');
-  expect(saved.state.storyFlags.starter_chosen).toBe(true);
+  await advanceVisibleEventDialogues(page);
+  await installCorridorNavigation(page);
+  const labState = await corridorState(page);
+  expect(labState.player.mapId).toBe('zone_0227');
+  expect(labState.storyFlags.starter_chosen).toBe(true);
+  expect(labState.romEvents?.flags).toMatchObject({ 612: true, 824: true, 825: true });
+
+  await walk(page, 'ArrowUp', 1);
+  await walk(page, 'ArrowDown', 1);
+  await advanceVisibleEventDialogues(page);
+  await walkCorridorTo(page, 'zone_0023');
+  await advanceVisibleEventDialogues(page);
+  await expect.poll(() => page.locator('#hud-pos').textContent()).toContain('Route 101');
+  const littleroot = await corridorMap(page, 'zone_0006');
+  const campaignFlags = labState.romEvents?.flags ?? {};
+  expectHiddenSpawnFlags([824, 825], littleroot.npcs ?? [], campaignFlags);
+  const route101 = await corridorMap(page, 'zone_0023');
+  expectHiddenSpawnFlags([533, 534, 535, 603, 778, 779, 781], route101.npcs ?? [], campaignFlags);
+  expect(campaignFlags[780]).not.toBe(true);
+  expect(campaignFlags[602]).not.toBe(true);
+
+  await walkCorridorTo(page, 'zone_0007');
+  await advanceVisibleEventDialogues(page);
+  await expect.poll(() => page.locator('#hud-pos').textContent()).toContain('Oldale Town');
+  const oldale = await corridorMap(page, 'zone_0007');
+  expectHiddenSpawnFlags([619], oldale.npcs ?? [], campaignFlags);
+
+  await walkCorridorTo(page, 'zone_0024');
+  await advanceVisibleEventDialogues(page);
+  await expect.poll(() => page.locator('#hud-pos').textContent()).toContain('Route 102');
+  const route102 = await corridorMap(page, 'zone_0024');
+  expectHiddenSpawnFlags([618, 725], route102.npcs ?? [], campaignFlags);
+  expect((await corridorState(page)).player.mapId).toBe('zone_0024');
   expect(errors).toEqual([]);
 });

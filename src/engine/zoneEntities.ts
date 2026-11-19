@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { worldPosition } from '../core/boundaries';
 import { groundedWorldPosition } from '../core/groundHeight';
 import type { Direction, GridPosition, MapDefinition } from '../core/types';
+import { isNpcVisible } from '../core/spawnFlags';
 import { createWarpMarkers } from './zoneTerrain';
 import { npcActorId } from './eventHost';
 
@@ -22,21 +23,24 @@ export function advanceActorPosition(root: THREE.Object3D, target: THREE.Vector3
   root.position.lerp(target, 1 - Math.exp(-18 * dt));
 }
 
-export function syncMapEntities(map: MapDefinition, group: THREE.Group, expressions: ExpressionPort): void {
+export function syncMapEntities(map: MapDefinition, group: THREE.Group, expressions: ExpressionPort,
+  flags: Readonly<Record<number, boolean>> = {}): void {
   for (const npc of map.npcs ?? []) {
     const root = group.getObjectByName(npc.id);
     if (!root) continue;
     const pos = groundedWorldPosition(npc.pos, map);
     root.position.set(pos.x, pos.y, pos.z);
     root.rotation.y = FACING_YAW[npc.facing ?? 'down'];
-    root.visible = npc.visible !== false;
+    root.visible = isNpcVisible(npc, flags);
     expressions.set(root, npc.faceExpression);
   }
 }
 
-function addNpc(group: THREE.Group, pos: GridPosition & { y: number }, modelUrl: string, facing: Direction | undefined, load: ActorLoader, id?: string): void {
+function addNpc(group: THREE.Group, pos: GridPosition & { y: number }, modelUrl: string, facing: Direction | undefined,
+  load: ActorLoader, id?: string, visible = true): void {
   const root = new THREE.Group();
   if (id) root.name = id;
+  root.visible = visible;
   root.position.set(pos.x, pos.y, pos.z);
   root.rotation.y = FACING_YAW[facing ?? 'down'];
   const fallback = new THREE.Mesh(new THREE.CapsuleGeometry(0.3, 0.5, 4, 8),
@@ -58,9 +62,12 @@ function addSign(group: THREE.Group, pos: GridPosition & { y: number }): void {
   group.add(sign);
 }
 
-export function appendMapEntities(map: MapDefinition, group: THREE.Group, load: ActorLoader): void {
+export function appendMapEntities(map: MapDefinition, group: THREE.Group, load: ActorLoader,
+  flags: Readonly<Record<number, boolean>> = {}): void {
   group.add(createWarpMarkers({ ...map, warps: map.warps.map((warp) => ({ ...warp, from: worldPosition(warp.from, map) })) }));
-  for (const npc of map.npcs ?? []) addNpc(group, groundedWorldPosition(npc.pos, map), npc.modelUrl, npc.facing, load, npc.id);
+  for (const npc of map.npcs ?? []) {
+    addNpc(group, groundedWorldPosition(npc.pos, map), npc.modelUrl, npc.facing, load, npc.id, isNpcVisible(npc, flags));
+  }
   for (const item of map.interactables ?? []) {
     const pos = groundedWorldPosition(item.pos, map);
     if (item.kind === 'sign') { addSign(group, pos); continue; }
