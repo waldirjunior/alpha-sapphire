@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { calculateDamage, createPokemonInstance, genSixCatchShakeThreshold, startWildBattle } from '../core/battle';
+import { calculateDamage, createPokemonInstance, genSixCatchShakeThreshold, genSixCriticalCaptureOdds, startWildBattle } from '../core/battle';
+import { applyEntryHazards, createBattleField, setEntryHazard } from '../core/battleField';
 import { orderActions } from '../core/battleTurn';
 import { toBattleMove } from '../core/battlePokemon';
 import { getMoveByName, getSpeciesById } from '../core/dex';
+import { checkCanAct } from '../core/statusConditions';
 
 const alwaysMaxDamage = () => 1;
 
@@ -31,6 +33,32 @@ describe('Gen VI battle formula parity vectors', () => {
       genSixCatchShakeThreshold(poochyena)
     );
     expect(genSixCatchShakeThreshold({ ...poochyena, status: { kind: 'sleep', counter: 2 } })).toBeCloseTo(63333.4939, 3);
+  });
+
+  it('matches critical-capture byte thresholds for Pokédex progress', () => {
+    const bulbasaur = pokemon('bulbasaur', 5, 'Tackle');
+
+    expect(genSixCriticalCaptureOdds(bulbasaur, 30)).toBe(0);
+    expect(genSixCriticalCaptureOdds(bulbasaur, 151)).toBe(2);
+    expect(genSixCriticalCaptureOdds(bulbasaur, 601)).toBe(6);
+  });
+
+  it('matches the four-times Stealth Rock damage on a Charizard switch-in', () => {
+    const charizard = pokemon('charizard', 50, 'Tackle');
+    const field = setEntryHazard(createBattleField(), 'player', 'stealthRock').field;
+    const entering = applyEntryHazards(field, 'player', charizard).pokemon;
+
+    expect(entering.currentHp).toBe(charizard.currentHp - Math.floor(charizard.maxHp / 2));
+  });
+
+  it('matches a deterministic Gen VI 40-power confusion self-hit', () => {
+    const torchic = pokemon('torchic', 30, 'Tackle');
+    const confused = { ...torchic, volatile: { ...torchic.volatile, confusionTurns: 2 } };
+    const rolls = [0, 1];
+    const result = checkCanAct(confused, () => rolls.shift() ?? 1);
+
+    expect(result.canAct).toBe(false);
+    expect(result.pokemon.currentHp).toBe(torchic.currentHp - 17);
   });
 
   it('resolves +2 priority before a much faster −6 priority move', () => {

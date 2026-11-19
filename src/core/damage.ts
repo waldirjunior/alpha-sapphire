@@ -25,9 +25,10 @@ export interface DamageOptions {
   screen?: BattleScreen | null;
 }
 
-export function rollCritical(defender: PokemonInstance, move: DexMove, rng: Rng): boolean {
+export function rollCritical(defender: PokemonInstance, move: DexMove, rng: Rng, attacker?: PokemonInstance): boolean {
   if (CRIT_IMMUNE_ABILITIES.has(defender.ability)) return false;
-  const stage = Math.min(CRIT_CHANCE_BY_STAGE.length - 1, Math.max(0, move.critStage));
+  const modifier = (attacker?.ability === 'Super Luck' ? 1 : 0) + (attacker?.heldItem === 'Scope Lens' ? 1 : 0);
+  const stage = Math.min(CRIT_CHANCE_BY_STAGE.length - 1, Math.max(0, move.critStage + modifier));
   const chance = CRIT_CHANCE_BY_STAGE[stage] ?? 1;
   return chance >= 1 || rng() < chance;
 }
@@ -93,12 +94,16 @@ export function calculateDamage(
   const ratio = attackingStat(attacker, move, critical) / defendingStat(defender, move, critical, weather, weatherSuppressed);
   const base = Math.floor((((2 * attacker.level) / 5 + 2) * move.power * ratio) / 50) + 2;
   const randomFactor = 0.85 + 0.15 * Math.min(1, Math.max(0, rng()));
-  const critMultiplier = critical ? CRIT_MULTIPLIER : 1;
+  const critMultiplier = critical ? attackerCriticalMultiplier(attacker) : 1;
   const weatherMultiplier = weatherPowerMultiplier(move.type, weather, weatherSuppressed);
   const screenMultiplier = screenDamageMultiplier(screen, move.category, critical);
   const modifier = critMultiplier * stabFor(attacker, move) * effectiveness * burnFor(attacker, move)
     * starterAbilityFor(attacker, move) * weatherMultiplier * screenMultiplier * randomFactor;
   return Math.max(1, Math.floor(base * modifier));
+}
+
+function attackerCriticalMultiplier(attacker: PokemonInstance): number {
+  return attacker.ability === 'Sniper' ? 2.25 : CRIT_MULTIPLIER;
 }
 
 /** Gen V+: golpes 2–5 acertam 2/3 com 35% cada e 4/5 com 15% cada. */

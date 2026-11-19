@@ -2,8 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { createPokemonInstance, executeBattleTurn, healParty, startTrainerBattle, startWildBattle, throwPokeball, type PokemonInstance } from './battle';
 import { orderActions, resolveTurn, effectiveSpeed } from './battleTurn';
 import { resolveFaints, switchPlayerIn } from './battleParty';
-import { calculateDamage, rollHitCount } from './damage';
-import { genSixCatchShakeThreshold } from './battleCapture';
+import { calculateDamage, rollCritical, rollHitCount } from './damage';
+import { genSixCatchShakeThreshold, genSixCriticalCaptureOdds, rollGenSixCapture } from './battleCapture';
+import { applyEntryHazards, createBattleField, setEntryHazard } from './battleField';
 import { getMoveByName, getSpeciesById } from './dex';
 import { executeMove, rollAccuracy, spendPp } from './moveExecution';
 import { toBattleMove } from './battlePokemon';
@@ -369,6 +370,92 @@ describe('weather and Gen VI abilities', () => {
   });
 });
 
+describe('critical modifiers', () => {
+  it('adds Super Luck and Scope Lens crit stages and applies Sniper damage', () => {
+    const target = pokemon('wurmple', 20, 'Tackle');
+    const user = pokemon('torchic', 30, 'Tackle');
+    expect(rollCritical(target, move('Tackle'), always(0.12), { ...user, ability: 'Super Luck' })).toBe(true);
+    expect(rollCritical(target, move('Tackle'), always(0.13), { ...user, heldItem: 'Scope Lens' })).toBe(false);
+    const normal = calculateDamage(user, target, move('Tackle'), always(1), { critical: true });
+    const sniper = calculateDamage({ ...user, ability: 'Sniper' }, target, move('Tackle'), always(1), { critical: true });
+
+    expect(sniper).toBeGreaterThan(normal);
+  });
+});
+
+describe('entry hazards and volatile move effects', () => {
+  it('stacks Spikes to three layers and applies grounded damage', () => {
+    let field = createBattleField();
+    for (let layer = 0; layer < 4; layer += 1) field = setEntryHazard(field, 'player', 'spikes').field;
+    const target = { ...pokemon('wurmple', 10, 'Tackle'), maxHp: 96, currentHp: 96 };
+    const result = applyEntryHazards(field, 'player', target);
+
+    expect(field.hazards.player.spikes).toBe(3);
+    expect(result.pokemon.currentHp).toBe(72);
+    expect(applyEntryHazards(field, 'player', { ...target, ability: 'Levitate' }).pokemon.currentHp).toBe(96);
+  });
+
+  it('applies Stealth Rock by type effectiveness and Toxic Spikes on entry', () => {
+    let field = createBattleField();
+    field = setEntryHazard(field, 'player', 'stealthRock').field;
+    field = setEntryHazard(field, 'player', 'toxicSpikes').field;
+    field = setEntryHazard(field, 'player', 'toxicSpikes').field;
+    const target = pokemon('torchic', 10, 'Tackle');
+    const result = applyEntryHazards(field, 'player', target);
+
+    expect(result.pokemon.currentHp).toBe(target.currentHp - Math.floor(target.maxHp / 4));
+    expect(result.pokemon.status).toEqual({ kind: 'toxic', counter: 1 });
+    expect(result.field.hazards.player.toxicSpikes).toBe(2);
+  });
+
+  it('clears volatile effects on switch, while major status remains', () => {
+    const seeded = { ...pokemon('torchic', 10, 'Tackle'), status: { kind: 'burn' as const, counter: 0 },
+      volatile: { confusionTurns: 3, leechSeeded: true, tauntTurns: 2, protectStreak: 1, protecting: false } };
+    const battle = startWildBattle([seeded, pokemon('mudkip', 10, 'Tackle')], pokemon('wurmple', 10, 'Tackle'));
+    const active = { ...battle.player, ...seeded };
+    const ready = { ...battle, player: active, playerParty: [active, ...battle.playerParty.slice(1)] };
+    const switched = switchPlayerIn(ready, 1);
+
+    expect(switched.playerParty[0]).toMatchObject({ status: { kind: 'burn' }, volatile: { confusionTurns: 0, leechSeeded: false, tauntTurns: 0 } });
+  });
+
+  it('confuses for a ROM duration and resolves a 40-power self-hit', () => {
+    const user = pokemon('zigzagoon', 20, 'Tackle');
+    const target = pokemon('torchic', 20, 'Confusion');
+    const confused = executeMove(user, target, move('Confusion'), always(0)).target;
+    const result = checkCanAct({ ...confused, volatile: { ...confused.volatile, confusionTurns: 2 } }, always(0));
+
+    expect(confused.volatile.confusionTurns).toBe(2);
+    expect(result.canAct).toBe(false);
+    expect(result.pokemon.currentHp).toBeLessThan(target.currentHp);
+  });
+
+  it('sets Leech Seed and Taunt, and Swagger/Flatter raise stats and confuse', () => {
+    const user = pokemon('zigzagoon', 20, 'Tackle');
+    const target = pokemon('torchic', 20, 'Tackle');
+    const seeded = executeMove(user, target, move('Leech Seed'), always(0)).target;
+    const taunted = executeMove(user, target, move('Taunt'), always(0)).target;
+    const swagger = executeMove(user, target, move('Swagger'), always(0)).target;
+    const flatter = executeMove(user, target, move('Flatter'), always(0)).target;
+
+    expect(seeded.volatile.leechSeeded).toBe(true);
+    expect(taunted.volatile.tauntTurns).toBe(3);
+    expect(swagger).toMatchObject({ stages: { atk: 2 }, volatile: { confusionTurns: 2 } });
+    expect(flatter).toMatchObject({ stages: { spa: 1 }, volatile: { confusionTurns: 2 } });
+  });
+
+  it('protects against an attack and forces a trainer replacement with Roar', () => {
+    const protectedBattle = startWildBattle(pokemon('torchic', 20, 'Protect'), pokemon('wurmple', 20, 'Tackle'));
+    const protectedTurn = executeBattleTurn(protectedBattle, 0, always(0));
+    const trainer = startTrainerBattle(pokemon('torchic', 20, 'Roar'), [pokemon('wurmple', 20, 'Tackle'), pokemon('zigzagoon', 20, 'Tackle')], 'Treinador');
+    const playerFirst = { ...trainer, player: { ...trainer.player, speed: 999 }, playerParty: trainer.playerParty.map((p, i) => i ? p : { ...p, speed: 999 }) };
+    const forced = executeBattleTurn(playerFirst, 0, always(0.9));
+
+    expect(protectedTurn.enemy.currentHp).toBe(protectedBattle.enemy.currentHp);
+    expect(forced.enemyActive).toBe(1);
+  });
+});
+
 describe('Gen VI capture formula', () => {
   it('uses species catch rate, remaining HP and status multipliers for shake checks', () => {
     const wild = pokemon('poochyena', 5, 'Tackle');
@@ -389,5 +476,14 @@ describe('Gen VI capture formula', () => {
     expect(caught.status).toBe('caught');
     expect(escaped.status).toBe('ongoing');
     expect(escaped.turn).toBe(2);
+  });
+
+  it('adds the Pokédex based critical-capture odds and single shake check', () => {
+    const target = pokemon('bulbasaur', 5, 'Tackle');
+    expect(target.species.catchRate).toBe(45);
+    expect(genSixCriticalCaptureOdds(target, 30)).toBe(0);
+    expect(genSixCriticalCaptureOdds(target, 151)).toBe(2);
+    expect(rollGenSixCapture(target, always(0), 151)).toBe(true);
+    expect(throwPokeball(startWildBattle(pokemon('torchic', 5, 'Scratch'), target), always(0), 151).status).toBe('caught');
   });
 });

@@ -17,6 +17,18 @@ export interface MajorStatus {
   counter: number;
 }
 
+export interface BattleVolatileState {
+  confusionTurns: number;
+  leechSeeded: boolean;
+  tauntTurns: number;
+  protectStreak: number;
+  protecting: boolean;
+}
+
+export function neutralVolatileState(): BattleVolatileState {
+  return { confusionTurns: 0, leechSeeded: false, tauntTurns: 0, protectStreak: 0, protecting: false };
+}
+
 export interface PokemonInstance {
   species: DexSpecies;
   ability: string;
@@ -36,6 +48,7 @@ export interface PokemonInstance {
   speed: number;
   moves: BattleMove[];
   status: MajorStatus | null;
+  volatile: BattleVolatileState;
   stages: StatStages;
   ivs: StatSpread;
   evs: StatSpread;
@@ -104,6 +117,7 @@ export function createPokemonInstance(
     currentHp: stats.maxHp,
     moves: moveIds.map((id) => toBattleMove(getMoveById(id))),
     status: null,
+    volatile: neutralVolatileState(),
     stages: NEUTRAL_STAGES,
     ivs,
     evs,
@@ -117,7 +131,7 @@ export function createPokemonInstance(
 /** Sai de campo: estágios zeram e o contador do tóxico volta a 1/16 (Gen VI). */
 export function withdrawFromBattle(pokemon: PokemonInstance): PokemonInstance {
   const status = pokemon.status?.kind === 'toxic' ? { kind: 'toxic' as const, counter: 1 } : pokemon.status;
-  return { ...pokemon, stages: NEUTRAL_STAGES, status };
+  return { ...pokemon, stages: NEUTRAL_STAGES, status, volatile: neutralVolatileState() };
 }
 
 export function restoreAtPokemonCenter(pokemon: PokemonInstance): PokemonInstance {

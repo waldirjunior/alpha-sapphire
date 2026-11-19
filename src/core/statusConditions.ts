@@ -1,10 +1,11 @@
-import type { BattleMove, MajorStatus, MajorStatusKind, PokemonInstance } from './battlePokemon';
+import { neutralVolatileState, type BattleMove, type MajorStatus, type MajorStatusKind, type PokemonInstance } from './battlePokemon';
 import type { ElementalType } from './typeChart';
 import { weatherChipDamage, type BattleWeather } from './battleField';
+import { statStageMultiplier } from './statStages';
 
 export type Rng = () => number;
 
-// Ids de infligir da ROM (Move6.Inflict, pk3DS MoveEditor6); 6+ são voláteis ainda não simulados (P-010).
+// Ids 6+ da ROM são voláteis; o subconjunto entregue nesta etapa é tratado em moveExecution.
 const INFLICT_KINDS: Readonly<Record<number, MajorStatusKind>> = {
   1: 'paralysis',
   2: 'sleep',
@@ -85,7 +86,37 @@ export function checkCanAct(pokemon: PokemonInstance, rng: Rng): { pokemon: Poke
   if (status?.kind === 'paralysis' && rng() < FULL_PARALYSIS_CHANCE) {
     return { pokemon, canAct: false, message: `${name} está paralisado e não consegue se mover!` };
   }
-  return { pokemon, canAct: true, message: null };
+  return checkConfusion(pokemon, rng);
+}
+
+function checkConfusion(pokemon: PokemonInstance, rng: Rng): { pokemon: PokemonInstance; canAct: boolean; message: string | null } {
+  const volatile = pokemon.volatile ?? neutralVolatileState();
+  if (volatile.confusionTurns <= 0) return { pokemon, canAct: true, message: null };
+  const name = pokemon.species.name;
+  if (volatile.confusionTurns <= 1) {
+    return { pokemon: { ...pokemon, volatile: { ...volatile, confusionTurns: 0 } }, canAct: true, message: `${name} saiu de sua confusão!` };
+  }
+  const next = { ...pokemon, volatile: { ...volatile, confusionTurns: volatile.confusionTurns - 1 } };
+  if (rng() >= 0.5) return { pokemon: next, canAct: true, message: null };
+  const damage = confusionDamage(pokemon, rng);
+  const sturdySaved = pokemon.ability === 'Sturdy' && pokemon.currentHp === pokemon.maxHp && damage >= pokemon.currentHp;
+  const currentHp = sturdySaved ? 1 : Math.max(0, pokemon.currentHp - damage);
+  return { pokemon: { ...next, currentHp }, canAct: false, message: `${name} se machucou na confusão!` };
+}
+
+function confusionDamage(pokemon: PokemonInstance, rng: Rng): number {
+  const attack = Math.max(1, Math.floor(pokemon.attack * statStageMultiplier(pokemon.stages.atk)));
+  const defense = Math.max(1, Math.floor(pokemon.defense * statStageMultiplier(pokemon.stages.def)));
+  const base = Math.floor((((2 * pokemon.level / 5 + 2) * 40 * (attack / defense)) / 50) + 2);
+  const random = 0.85 + 0.15 * Math.min(1, Math.max(0, rng()));
+  return Math.max(1, Math.floor(base * random));
+}
+
+export function advanceVolatileTurn(pokemon: PokemonInstance): PokemonInstance {
+  const volatile = pokemon.volatile ?? neutralVolatileState();
+  const tauntTurns = Math.max(0, volatile.tauntTurns - 1);
+  if (tauntTurns === volatile.tauntTurns && !volatile.protecting) return pokemon;
+  return { ...pokemon, volatile: { ...volatile, tauntTurns, protecting: false } };
 }
 
 /** Dano residual de fim de turno (Gen VI): queimadura/veneno 1/8, tóxico n/16 crescente. */
@@ -93,16 +124,29 @@ export function applyResidualDamage(
   pokemon: PokemonInstance,
   weather: BattleWeather | null = null,
   weatherSuppressed = false
-): { pokemon: PokemonInstance; message: string | null } {
-  const status = pokemon.status;
-  if (pokemon.currentHp === 0) return { pokemon, message: null };
-  const statusDamage = statusResidual(pokemon, status);
-  const weatherDamage = weatherChipDamage(statusDamage.pokemon, weather, weatherSuppressed);
-  if (weatherDamage === 0 || statusDamage.pokemon.currentHp === 0) return statusDamage;
+): { pokemon: PokemonInstance; message: string | null; leechSeedDrain: number } {
+  if (pokemon.currentHp === 0) return { pokemon, message: null, leechSeedDrain: 0 };
+  const seed = leechSeedResidual(pokemon);
+  const statusDamage = seed.pokemon.currentHp > 0
+    ? statusResidual(seed.pokemon, seed.pokemon.status)
+    : { pokemon: seed.pokemon, message: null };
+  const weatherDamage = statusDamage.pokemon.currentHp > 0
+    ? weatherChipDamage(statusDamage.pokemon, weather, weatherSuppressed) : 0;
   const currentHp = Math.max(0, statusDamage.pokemon.currentHp - weatherDamage);
-  const weatherResult = { ...statusDamage.pokemon, currentHp };
-  const weatherMessage = `${pokemon.species.name} sofreu ${weatherDamage} de dano do clima.`;
-  return { pokemon: weatherResult, message: [statusDamage.message, weatherMessage].filter(Boolean).join(' ') };
+  const weatherMessage = weatherDamage > 0 && statusDamage.pokemon.currentHp > 0
+    ? `${pokemon.species.name} sofreu ${weatherDamage} de dano do clima.` : null;
+  const result = weatherDamage > 0 ? { ...statusDamage.pokemon, currentHp } : statusDamage.pokemon;
+  return { pokemon: result, message: [seed.message, statusDamage.message, weatherMessage].filter(Boolean).join(' ') || null, leechSeedDrain: seed.damage };
+}
+
+function leechSeedResidual(pokemon: PokemonInstance): { pokemon: PokemonInstance; damage: number; message: string | null } {
+  if (!pokemon.volatile?.leechSeeded || pokemon.currentHp === 0) return { pokemon, damage: 0, message: null };
+  const damage = Math.min(pokemon.currentHp, Math.max(1, Math.floor(pokemon.maxHp / 8)));
+  return {
+    pokemon: { ...pokemon, currentHp: pokemon.currentHp - damage },
+    damage,
+    message: `${pokemon.species.name} perdeu ${damage} HP para Leech Seed.`,
+  };
 }
 
 function statusResidual(pokemon: PokemonInstance, status: MajorStatus | null): { pokemon: PokemonInstance; message: string | null } {
