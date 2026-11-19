@@ -49,6 +49,22 @@ assets locais ausentes). `ALPHA_E2E_PORT=5392 npx playwright test
 e2e/smoke.spec.ts`: 6/6 passaram. O build ainda avisa sobre chunks acima de
 500 kB. Campanha natural e paridade completa continuam em P-013.
 
+## Campanha natural até Petalburg (2026-11-19)
+
+`MdlGetGPosX/Z` agora retorna células inteiras de grade; regressões em
+`amxNativeState.test.ts` confirmam o PRI bruto. `e2e/campaign.spec.ts` segue o
+New Game com teclas desde Birch até Route 102 e cruza a borda natural para
+Petalburg (`zone_0013`) por teclas, mantendo os gates ROM observados sem injetar
+estado ou disparar warp manualmente. A rota 102 só possui um warp ROM explícito
+de retorno a Oldale; Petalburg é alcançada pela borda de zona.
+Isso não afirma que todos os gatilhos e cutscenes dessas zonas estejam
+implementados ou validados no Azahar.
+
+`npm run verify`: 540 Vitest em 77 arquivos, build e 233 testes Python passaram
+(um skip por assets locais ausentes no worktree). `ALPHA_E2E_PORT=5480 npx
+playwright test e2e/campaign.spec.ts e2e/smoke.spec.ts`: 8/8 passaram. O aviso
+conhecido de chunk acima de 500 kB permanece; P-013 continua aberta.
+
 Continuam pendentes: memória fora das 19 imagens, bancos GameText/MsgLoad, warp
 AMX/ABI de `_MapChangeCore`, query de construções no init de Littleroot,
 persistência/projeções de save/party/bag e paridade de todos os ramos.

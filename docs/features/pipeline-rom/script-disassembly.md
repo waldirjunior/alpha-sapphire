@@ -123,7 +123,7 @@ esse trecho com halt sintético, sem alegar execução da missão inteira.
 | `MdlSetVisible` | actor,visible | Atualiza visibilidade booleana |
 | `MdlDel` | actor | Remove ator da VM e registra tombstone por zona, persistido via storyFlags; host retorna0 como comando sem resultado observado, sem completion opaca (ADR-006/A-050) |
 | `MdlSetGPos` | **x,y,z,actor** | Atualiza posição bruta; não usa a ordem do runner normalizado |
-| `MdlGetGPosX`, `MdlGetGPosZ` | actor | Retorna posição como célula float32; unidades são inferidas, sem escala gráfica |
+| `MdlGetGPosX`, `MdlGetGPosZ` | actor | Retorna coordenadas inteiras de grade X/Z |
 | `MdlGetMoveCode`, `MdlChangeMoveCode` | actor / actor,code | Consulta/atualiza código de movimento, não interpreta ACMD |
 | `ItemAddCheck`, `ItemAdd` | item,count | Testa/adiciona quantidade, retorna 0/1; limite adotado de 999 por item |
 | `PokePartyGetCount` | excludeEgg | Conta party; não zero exclui ovos (inferência ainda sem oráculo) |

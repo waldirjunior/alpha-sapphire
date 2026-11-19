@@ -23,7 +23,7 @@ function expectHiddenSpawnFlags(flagIds: readonly number[], actors: NonNullable<
   }
 }
 
-test('New Game avança naturalmente de Birch até Oldale e Route 102 sem NPCs futuros duplicados', async ({ page }) => {
+test('New Game avança naturalmente de Birch até Petalburg sem NPCs futuros duplicados', async ({ page }) => {
   const errors = trackPageErrors(page);
   await bootGame(page, NO_ENCOUNTERS);
   await finishIntro(page);
@@ -89,6 +89,19 @@ test('New Game avança naturalmente de Birch até Oldale e Route 102 sem NPCs fu
   await expect.poll(() => page.locator('#hud-pos').textContent()).toContain('Route 102');
   const route102 = await corridorMap(page, 'zone_0024');
   expectHiddenSpawnFlags([618, 725], route102.npcs ?? [], campaignFlags);
-  expect((await corridorState(page)).player.mapId).toBe('zone_0024');
+  const route102State = await corridorState(page);
+  expect(route102State.player.mapId).toBe('zone_0024');
+
+  const petalburgSteps = await walkCorridorTo(page, 'zone_0013');
+  expect(petalburgSteps).toBeGreaterThan(0);
+  await advanceVisibleEventDialogues(page);
+  await expect.poll(() => page.locator('#hud-pos').textContent(), { timeout: 10_000 }).toContain('Petalburg City');
+  const petalburgState = await corridorState(page);
+  expect(petalburgState.player.mapId).toBe('zone_0013');
+  expect(petalburgState.romEvents?.flags).toMatchObject({ 618: true, 725: true, 773: true });
+  expect(petalburgState.romEvents?.flags[774]).not.toBe(true);
+  const petalburg = await corridorMap(page, 'zone_0013');
+  expectHiddenSpawnFlags([773], petalburg.npcs ?? [], petalburgState.romEvents?.flags ?? {});
+  expect(petalburgState.romEvents?.vars).toEqual(route102State.romEvents?.vars);
   expect(errors).toEqual([]);
 });

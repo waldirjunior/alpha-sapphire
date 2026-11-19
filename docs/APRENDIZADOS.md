@@ -1098,4 +1098,13 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Evidência:** `src/core/spawnFlags.test.ts` cobre 612/824/825, flag zero e as flags 550/780 limpas; `src/engine/zoneEntities.test.ts` verifica criação e sincronização. `e2e/campaign.spec.ts` completa Birch → laboratório → Oldale → Route 102 e valida o estado dos gates sem erros de página; `e2e/corridor.spec.ts` preserva o corredor e suas fixtures.
 - **Limite:** a flag 602 está setada no save local após a abertura, mas setá-la no bootstrap esconde `zone_0023:npc:0` e impede a escolha do inicial no Playwright; o ramo exato que a limpa antes do encontro no Azahar ainda precisa de comparação. P-013 continua aberta.
 
+## A-108 `MdlGetGPosX/Z` retorna coordenadas inteiras da grade
+
+- **Data:** 2026-11-19; P-013, `src/core/amxNativeState.ts`.
+- **Contexto:** chamadas reais da zona 24 (`Route 102`) guardam o retorno de `MdlGetGPosX/Z` e subtraem pares para calcular deslocamentos.
+- **Erro:** o adapter aplicava `cellFromFloat` às coordenadas dos atores, transformando por exemplo `104` em `1120927744`; o `sub.alt` seguinte operava sobre os bits float32, não sobre posições de grade.
+- **Regra:** `MdlGetGPosX/Z` devolve a célula signed inteira de X/Z do ator. Cobrir o PRI diretamente nos testes de `amxNativeState`; não interpretar o retorno como float32.
+- **Evidência:** em `src/data/zone_scripts/0024.json`, o `map` chama X/Z nos offsets 2956/2980 e 3004/3028, guarda os retornos e executa `sub.alt` em 3060/3084. `e2e/campaign.spec.ts` também percorre a ligação natural zona 24→13, mantendo ativos 618/725 e 773, com 774 limpa.
+- **Limite:** a sequência de código prova o tipo inteiro esperado pelas operações do script; não valida a apresentação dos demais efeitos da cena nem a paridade da história no Azahar.
+
 
