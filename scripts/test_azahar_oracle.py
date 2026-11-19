@@ -167,13 +167,15 @@ class VisualReferenceTest(unittest.TestCase):
         self.assertEqual(pixels[1:4], bytes([0, 10, 20]))
         self.assertEqual(pixels[239 * stride + 1 : 239 * stride + 4], bytes([239, 10, 20]))
 
-    def test_load_visual_scenarios_parses_all_25_entries(self) -> None:
+    def test_load_visual_scenarios_parses_all_28_entries_and_reference_height(self) -> None:
         scenarios = load_visual_scenarios(Path(__file__).resolve().parent.parent / "src" / "visual" / "scenarios.ts")
-        self.assertEqual(len(scenarios), 25)
+        self.assertEqual(len(scenarios), 28)
         self.assertEqual(scenarios[0], {"id": "avatar-brendan", "zone": 6, "x": 17, "z": 14})
         self.assertEqual(scenarios[1], {"id": "avatar-may", "zone": 6, "x": 17, "z": 14})
         self.assertEqual(scenarios[2], {"id": "z0006-littleroot-spawn", "zone": 6, "x": 19, "z": 1})
         self.assertEqual(scenarios[-1], {"id": "z0018-lilycove", "zone": 18, "x": 20, "z": 21})
+        upper_floor = next(item for item in scenarios if item["id"] == "z0015-mauville-patio-upper-floor")
+        self.assertEqual(upper_floor["referenceGroundY"], 7.5)
 
 
 class _FakeRpc:

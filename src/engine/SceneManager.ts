@@ -282,7 +282,7 @@ export class SceneManager {
 
     syncMapEntities(map, this.entitiesGroup, this.characterExpressions);
     this.characterExpressions.set(this.playerRoot, state.player.faceExpression);
-    const target = groundedWorldPosition(state.player.pos, map);
+    const target = groundedWorldPosition(state.player.pos, map, state.player.groundY);
     this.playerTargetPos.set(target.x, target.y, target.z);
     const continuous = previousRegion && previousRegion === map.continuousRegion &&
       this.playerRoot.position.distanceToSquared(this.playerTargetPos) < 2.5;

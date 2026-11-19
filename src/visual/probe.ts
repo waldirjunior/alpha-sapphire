@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { loadBattleTables } from '../core/battleTables';
 import { createInitialState } from '../core/gameState';
 import type { GameState, MapDefinition } from '../core/types';
+import { groundHeight } from '../core/groundHeight';
 import { bundledBattleTableLoader } from '../data/battle/loader';
 import { zoneMapId } from '../data/maps_v2/loader';
 import type { SceneInspection, SceneManager } from '../engine/SceneManager';
@@ -22,7 +23,10 @@ function nextFrame(): Promise<void> {
 
 function scenarioState(scenario: VisualScenario, mapId: string, maps: Record<string, MapDefinition>): GameState {
   const base = createInitialState(mapId, maps);
-  return { ...base, player: { ...base.player, pos: { x: scenario.x, z: scenario.z }, facing: scenario.facing, gender: scenario.gender ?? 'male' } };
+  const pos = { x: scenario.x, z: scenario.z };
+  const groundY = scenario.referenceGroundY ?? groundHeight(maps[mapId], pos) ?? undefined;
+  return { ...base, player: { ...base.player, pos, facing: scenario.facing,
+    gender: scenario.gender ?? 'male', groundY } };
 }
 
 async function buildScene(scenario: VisualScenario, container: HTMLElement): Promise<SceneManager> {

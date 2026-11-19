@@ -145,16 +145,20 @@ def crop_top_screen_png(png_bytes: bytes, top_height: int = TOP_SCREEN_HEIGHT) -
     return PNG_MAGIC + _png_chunk(b"IHDR", new_ihdr) + _png_chunk(b"IDAT", zlib.compress(raw_scanlines[: top_height * stride])) + _png_chunk(b"IEND", b"")
 
 
-def load_visual_scenarios(scenarios_ts: Path = SCENARIOS_PATH) -> list[dict[str, int | str]]:
+def load_visual_scenarios(scenarios_ts: Path = SCENARIOS_PATH) -> list[dict[str, int | float | str]]:
     """Extrai `(id, zone, x, z)` dos cenários declarados em `src/visual/scenarios.ts`."""
-    scenarios: list[dict[str, int | str]] = []
+    scenarios: list[dict[str, int | float | str]] = []
     for match in SCENARIO_CALL_RE.finditer(scenarios_ts.read_text()):
         kind, _quote, scenario_id, raw_args = match.groups()
         if kind == "closeup":
             scenarios.append({"id": scenario_id, "zone": 6, "x": 17, "z": 14})
         else:
             zone_s, x_s, z_s = [part.strip() for part in raw_args.split(",")[:3]]
-            scenarios.append({"id": scenario_id, "zone": int(zone_s), "x": int(x_s), "z": int(z_s)})
+            item: dict[str, int | float | str] = {"id": scenario_id, "zone": int(zone_s), "x": int(x_s), "z": int(z_s)}
+            ground_y = re.search(r"referenceGroundY:\s*(-?\d+(?:\.\d+)?)", raw_args)
+            if ground_y:
+                item["referenceGroundY"] = float(ground_y.group(1))
+            scenarios.append(item)
     return scenarios
 
 
@@ -189,7 +193,12 @@ def capture_visual_references(
     for item in scenarios:
         scenario_id = str(item["id"])
         zone, x, z = int(item["zone"]), int(item["x"]), int(item["z"])
-        ox, oz, scale, height = zone_transform(zone, x, z, None)
+        reference_y = item.get("referenceGroundY")
+        if isinstance(reference_y, (int, float)):
+            ox, oz, scale, _height = zone_transform(zone, x, z, 0.0)
+            height = float(reference_y) * scale
+        else:
+            ox, oz, scale, height = zone_transform(zone, x, z, None)
         relocated = relocate_save(base_bytes, zone, x, z, height, origin_x=ox, origin_z=oz, units_per_tile=scale)
         save_path(home).write_bytes(relocated)
         with AzaharSession(movie=movie, speed_percent=speed_percent) as session:

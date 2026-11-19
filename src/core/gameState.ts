@@ -3,13 +3,27 @@ import { DIRECTION_DELTAS, stepPosition, stepWarp } from './warps';
 import { boundaryTarget, stepBoundary } from './boundaries';
 import type { BoundaryLink } from './types';
 import { southLedgeLanding } from './ledges';
+import { groundHeight, selectGroundHeight } from './groundHeight';
+
+function playerGroundReference(state: GameState, map: MapDefinition): number {
+  return state.player.groundY ?? groundHeight(map, state.player.pos) ?? 0;
+}
+
+function positionPlayerOnFloor(player: GameState['player'], map: MapDefinition, pos: GridPosition, referenceY: number): GameState['player'] {
+  const groundY = selectGroundHeight(map, pos, referenceY);
+  return { ...player, groundY: groundY ?? undefined };
+}
 
 function crossBoundary(state: GameState, direction: Direction, maps: Record<string, MapDefinition>, link: BoundaryLink): GameState {
   const target = maps[link.targetMapId];
   const pos = boundaryTarget(state.player.pos, link);
-  const walkable = target && isWalkable(maps[state.player.mapId], state.player.pos) && isWalkable(target, pos);
-  return { ...state, player: { ...state.player, facing: direction,
-    ...(walkable ? { mapId: target.id, pos } : {}) } };
+  const source = maps[state.player.mapId];
+  if (!target || !source || !pos || !isWalkable(source, state.player.pos) || !isWalkable(target, pos)) {
+    return { ...state, player: { ...state.player, facing: direction } };
+  }
+  const referenceY = playerGroundReference(state, source);
+  const player = positionPlayerOnFloor({ ...state.player, mapId: target.id, pos, facing: direction }, target, pos, referenceY);
+  return { ...state, player };
 }
 
 export function createInitialState(
@@ -17,12 +31,16 @@ export function createInitialState(
   maps?: Record<string, MapDefinition>
 ): GameState {
   const spawn = maps?.[startMapId]?.spawnPos;
+  const map = maps?.[startMapId];
+  const pos = spawn ? { ...spawn } : { x: 5, z: 5 };
+  const groundY = map ? groundHeight(map, pos) : null;
   return {
     player: {
       id: 'local-player',
       mapId: startMapId,
-      pos: spawn ? { ...spawn } : { x: 5, z: 5 },
+      pos,
       facing: 'down',
+      ...(groundY === null ? {} : { groundY }),
     },
     storyFlags: {
       intro_completed: false,
@@ -57,6 +75,7 @@ export function movePlayer(
   if (!currentMap) return state;
 
   const warp = stepWarp(state, direction, currentMap);
+  const referenceY = playerGroundReference(state, currentMap);
   const nextPos = (warp ? undefined : southLedgeLanding(currentMap, state.player.pos, direction)) ?? stepPosition(state.player.pos, direction);
   const boundary = !warp && stepBoundary(state.player.pos, direction, currentMap);
   if (boundary) return crossBoundary(state, direction, maps, boundary);
@@ -79,21 +98,17 @@ export function movePlayer(
         },
       };
     }
-    return {
-      ...state,
-      player: {
-        ...state.player,
-        mapId: warp.targetMapId,
-        pos: { ...warp.targetPos },
-        facing: warp.faceDirection ?? direction,
-      },
-    };
+    const targetMap = maps[warp.targetMapId];
+    const targetPos = { ...warp.targetPos };
+    const player = positionPlayerOnFloor({ ...state.player, mapId: targetMap.id,
+      pos: targetPos, facing: warp.faceDirection ?? direction }, targetMap, targetPos, referenceY);
+    return { ...state, player };
   }
 
   return {
     ...state,
     player: {
-      ...state.player,
+      ...positionPlayerOnFloor(state.player, currentMap, nextPos, referenceY),
       pos: nextPos,
       facing: direction,
     },

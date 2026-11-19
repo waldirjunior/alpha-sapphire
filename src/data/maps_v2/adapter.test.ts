@@ -73,6 +73,17 @@ describe('zone map adapter', () => {
     }
   });
 
+  it('copies bounded alternate floor heights and rejects invalid candidate cells', () => {
+    const source = { ...fixture, groundHeightCandidates: [{ x: 1, z: 1, heights: [0, 7.5] }] };
+    const map = adaptZoneMap(source);
+    expect(map.groundHeightCandidates).toEqual(source.groundHeightCandidates);
+    expect(map.groundHeightCandidates?.[0].heights).not.toBe(source.groundHeightCandidates[0].heights);
+    for (const candidate of [{ x: 2, z: 1, heights: [7.5] }, { x: 1, z: 1, heights: [] },
+      { x: 1.5, z: 1, heights: [7.5] }, { x: 1, z: 1, heights: [Infinity] }]) {
+      expect(() => adaptZoneMap({ ...source, groundHeightCandidates: [candidate] })).toThrow(/candidato de piso/);
+    }
+  });
+
   it('loads only the requested JSON, deduplicates requests and retries failures', async () => {
     const load = vi.fn().mockRejectedValueOnce(new Error('offline')).mockResolvedValue(fixture);
     const unused = vi.fn();

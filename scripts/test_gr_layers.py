@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 from scripts.audit_ground_layers import audit_maps
-from scripts.gr_ground import ground_grid
+from scripts.gr_ground import ground_candidates_grid, ground_grid
 from scripts.gr_layers import physical_layers
 from scripts.test_gr_ground import collision_blob, plane
 
@@ -32,6 +32,12 @@ class GrLayerTests(unittest.TestCase):
         self.assertEqual(layers[0]['permissions'][20][2], 0x20000004)
         self.assertEqual(ground_grid(layers[0]['triangles'])[20][2], 0)
         self.assertEqual(layers[1]['collisionSection'], 8)
+
+    def test_height_candidates_include_section_two_and_secondary_collision_sections(self):
+        layers = physical_layers(layered_gr([0, 135]))
+        triangles = [triangle for layer in layers for triangle in layer['triangles']]
+        candidates = ground_candidates_grid(triangles)
+        self.assertEqual(candidates[20][2], [0, 7.5])
 
     def test_one_and_four_layers_match_native_loader_bounds(self):
         for heights in ([18], [0, 18, 36, 54]):
