@@ -2,15 +2,16 @@ import type { BattleMove, PokemonInstance } from './battlePokemon';
 import { calculateDamage, moveEffectiveness, rollCritical, rollHitCount } from './damage';
 import type { DexStatChange } from './dex';
 import { accuracyStageMultiplier, applyStageDelta, STAT_LABELS, statsForRomId } from './statStages';
-import { statusKindForMove, tryInflictStatus, type Rng } from './statusConditions';
-import type { BattleScreen, BattleScreenState, BattleWeather, BattleWeatherState } from './battleField';
+import { rollInRange, statusKindForMove, tryInflictStatus, type Rng } from './statusConditions';
+import type { BattleHazards, BattleScreen, BattleScreenState, BattleWeather, BattleWeatherState, EntryHazard } from './battleField';
 
 export interface MoveOutcome {
   user: PokemonInstance;
   target: PokemonInstance;
   messages: string[];
   flinched: boolean;
-  fieldUpdate?: { weather?: BattleWeatherState | null; screen?: BattleScreen };
+  fieldUpdate?: { weather?: BattleWeatherState | null; screen?: BattleScreen; hazard?: EntryHazard; clearHazards?: 'user' | 'both'; clearScreens?: boolean };
+  forceSwitch?: boolean;
 }
 
 export interface MoveExecutionContext {
@@ -18,6 +19,7 @@ export interface MoveExecutionContext {
   weatherSuppressed?: boolean;
   userScreens?: BattleScreenState;
   targetScreens?: BattleScreenState;
+  targetHazards?: BattleHazards;
 }
 
 export const ALWAYS_HITS_ACCURACY = 101;
@@ -30,6 +32,10 @@ const QUALITY_INFLICT = 1;
 const QUALITY_STAGES = 2;
 const QUALITY_HEAL = 3;
 const QUALITY_RAISE_USER = 7;
+const QUALITY_SWAGGER = 5;
+const QUALITY_FIELD = 11;
+const QUALITY_FORCE_SWITCH = 12;
+const QUALITY_PROTECT = 13;
 
 export function targetsFoe(move: BattleMove): boolean {
   return FOE_TARGETS.has(move.target);
@@ -73,9 +79,13 @@ export function executeMove(
 function executeStatusMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, context: MoveExecutionContext): MoveOutcome {
   const used = `${user.species.name} usou ${move.name}!`;
   if (move.quality === 10) return setWeather(user, target, move, context.weather ?? null, used);
+  if (move.quality === QUALITY_FIELD && hazardForMove(move.name)) return setEntryHazardMove(user, target, move, context.targetHazards, used);
   if (move.quality === 11) return setScreen(user, target, move, context.userScreens, used);
   if (move.quality === QUALITY_HEAL) return healUser(user, target, move, used);
   if (move.quality === QUALITY_INFLICT) return inflictFromStatusMove(user, target, move, rng, used);
+  if (move.quality === QUALITY_FORCE_SWITCH) return { user, target, messages: [used], flinched: false, forceSwitch: true };
+  if (move.quality === QUALITY_SWAGGER) return swaggerMove(user, target, move, rng, used);
+  if (move.quality === QUALITY_PROTECT) return executeQualityThirteen(user, target, move, rng, used);
   if (move.quality === QUALITY_STAGES) {
     const selfTarget = move.target === SELF_TARGET;
     const changed = applyStatChanges(selfTarget ? user : target, move.statChanges, rng, true);
@@ -83,6 +93,72 @@ function executeStatusMove(user: PokemonInstance, target: PokemonInstance, move:
     return { ...outcome, messages: [used, ...orFailed(changed.messages)], flinched: false };
   }
   return { user, target, messages: [used, `O efeito de ${move.name} ainda não é simulado (P-010).`], flinched: false };
+}
+
+function setEntryHazardMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, current: BattleHazards | undefined, used: string): MoveOutcome {
+  const hazard = hazardForMove(move.name);
+  if (!hazard) return unsupportedMove(user, target, move, used);
+  if (current && hazardAtCapacity(current, hazard)) return { user, target, messages: [used, 'Mas não teve efeito!'], flinched: false };
+  return { user, target, messages: [used, 'Perigos espalhados pelo lado adversário!'], flinched: false, fieldUpdate: { hazard } };
+}
+
+function hazardAtCapacity(current: BattleHazards, hazard: EntryHazard): boolean {
+  if (hazard === 'spikes') return current.spikes >= 3;
+  if (hazard === 'toxicSpikes') return current.toxicSpikes >= 2;
+  return current[hazard];
+}
+
+function hazardForMove(name: string): EntryHazard | null {
+  const hazards: Readonly<Record<string, EntryHazard>> = {
+    'Stealth Rock': 'stealthRock', Spikes: 'spikes', 'Toxic Spikes': 'toxicSpikes', 'Sticky Web': 'stickyWeb',
+  };
+  return hazards[name] ?? null;
+}
+
+function swaggerMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, used: string): MoveOutcome {
+  const changed = applyStatChanges(target, move.statChanges, rng, true);
+  const confused = inflictConfusion(changed.pokemon, move, rng);
+  return { user, target: confused.target, messages: [used, ...orFailed(changed.messages), confused.message ?? 'Mas não teve efeito!'], flinched: false };
+}
+
+function executeQualityThirteen(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, used: string): MoveOutcome {
+  if (move.name === 'Protect' || move.name === 'Detect') return protectMove(user, target, rng, used);
+  if (move.name === 'Taunt') return tauntMove(user, target, used);
+  if (move.name === 'Defog') return { user, target, messages: [used, 'Os perigos e barreiras foram dissipados!'], flinched: false,
+    fieldUpdate: { clearHazards: 'both', clearScreens: true } };
+  return unsupportedMove(user, target, move, used);
+}
+
+function protectMove(user: PokemonInstance, target: PokemonInstance, rng: Rng, used: string): MoveOutcome {
+  const volatile = user.volatile;
+  const successChance = 1 / (2 ** volatile.protectStreak);
+  if (Math.min(0.999999, Math.max(0, rng())) >= successChance) {
+    return { user: { ...user, volatile: { ...volatile, protectStreak: 0, protecting: false } }, target,
+      messages: [used, `${user.species.name} não conseguiu se proteger!`], flinched: false };
+  }
+  const protectedUser = { ...user, volatile: { ...volatile, protectStreak: volatile.protectStreak + 1, protecting: true } };
+  return { user: protectedUser, target, messages: [used, `${user.species.name} se protegeu!`], flinched: false };
+}
+
+function tauntMove(user: PokemonInstance, target: PokemonInstance, used: string): MoveOutcome {
+  const result = inflictTaunt(target);
+  return { user, target: result.target, messages: [used, result.message ?? 'Mas não teve efeito!'], flinched: false };
+}
+
+function inflictConfusion(target: PokemonInstance, move: BattleMove, rng: Rng): { target: PokemonInstance; message: string | null } {
+  if (target.currentHp === 0 || target.ability === 'Own Tempo' || target.volatile.confusionTurns > 0) return { target, message: null };
+  const turns = rollInRange(move.turnMin || 2, move.turnMax || 5, rng);
+  return { target: { ...target, volatile: { ...target.volatile, confusionTurns: turns } }, message: `${target.species.name} ficou confuso!` };
+}
+
+function inflictTaunt(target: PokemonInstance): { target: PokemonInstance; message: string | null } {
+  if (target.currentHp === 0 || target.volatile.tauntTurns > 0) return { target, message: null };
+  return { target: { ...target, volatile: { ...target.volatile, tauntTurns: 3 } }, message: `${target.species.name} foi provocado!` };
+}
+
+function inflictLeechSeed(target: PokemonInstance): { target: PokemonInstance; message: string | null } {
+  if (target.currentHp === 0 || target.volatile.leechSeeded || target.species.types.includes('grass')) return { target, message: null };
+  return { target: { ...target, volatile: { ...target.volatile, leechSeeded: true } }, message: `${target.species.name} foi semeado!` };
 }
 
 function setWeather(
@@ -169,6 +245,14 @@ function healUser(user: PokemonInstance, target: PokemonInstance, move: BattleMo
 }
 
 function inflictFromStatusMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, used: string): MoveOutcome {
+  if (move.inflict === 6) {
+    const result = inflictConfusion(target, move, rng);
+    return { user, target: result.target, messages: [used, result.message ?? 'Mas não teve efeito!'], flinched: false };
+  }
+  if (move.inflict === 18) {
+    const result = inflictLeechSeed(target);
+    return { user, target: result.target, messages: [used, result.message ?? 'Mas não teve efeito!'], flinched: false };
+  }
   const kind = statusKindForMove(move);
   if (!kind) {
     return { user, target, messages: [used, `O efeito de ${move.name} ainda não é simulado (P-010).`], flinched: false };
@@ -213,7 +297,7 @@ function executeDamagingMove(user: PokemonInstance, target: PokemonInstance, mov
   let total = 0;
   let crits = 0;
   for (let hit = 0; hit < hits && defender.currentHp > 0; hit += 1) {
-    const critical = rollCritical(defender, move, rng);
+    const critical = rollCritical(defender, move, rng, user);
     const dmg = calculateDamage(user, defender, move, rng, damageOptions(move, context, critical));
     defender = applySturdy(defender, dmg);
     total += dmg;
@@ -223,7 +307,8 @@ function executeDamagingMove(user: PokemonInstance, target: PokemonInstance, mov
   const hitNote = hits > 1 ? ` em ${hits} golpes` : '';
   const critNote = crits > 0 ? ' Acerto crítico!' : '';
   const messages = [`${user.species.name} usou ${move.name} e causou ${total} de dano${hitNote}!${effNote}${critNote}`];
-  return applyAfterDamage({ user, target: defender, messages, flinched: false }, move, total, rng);
+  const outcome = applyAfterDamage({ user, target: defender, messages, flinched: false }, move, total, rng);
+  return move.name === 'Rapid Spin' && total > 0 ? { ...outcome, fieldUpdate: { clearHazards: 'user' } } : outcome;
 }
 
 function damageOptions(move: BattleMove, context: MoveExecutionContext, critical: boolean) {
@@ -266,6 +351,10 @@ function applyHpSideEffects(outcome: MoveOutcome, move: BattleMove, damage: numb
 }
 
 function applySecondaryStatus(outcome: MoveOutcome, move: BattleMove, rng: Rng): MoveOutcome {
+  if (move.inflict === 6 && outcome.target.currentHp > 0 && rng() * 100 < move.inflictPercent) {
+    const result = inflictConfusion(outcome.target, move, rng);
+    return result.message ? { ...outcome, target: result.target, messages: [...outcome.messages, result.message] } : outcome;
+  }
   const kind = statusKindForMove(move);
   if (!kind || outcome.target.currentHp === 0 || rng() * 100 >= move.inflictPercent) return outcome;
   const result = tryInflictStatus(outcome.target, kind, move, rng);

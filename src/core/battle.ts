@@ -1,5 +1,5 @@
 import type { WildEncounterEntry } from '../data/pokemon/route101';
-import { activateEntryAbility, firstHealthyIndex, switchPlayerIn, validateParty, withPokemon, type BattleState } from './battleParty';
+import { activateEntryAbility, firstHealthyIndex, resolveFaints, switchPlayerIn, validateParty, withPokemon, type BattleState } from './battleParty';
 import { restoreAtPokemonCenter, withdrawFromBattle, type PokemonInstance } from './battlePokemon';
 import { hasUsableMove, resolveTurn } from './battleTurn';
 import { replaceMove } from './levelUp';
@@ -16,7 +16,7 @@ export {
 } from './battlePokemon';
 export type { BattleAction, BattleState, BattleStatus, PendingMoveLearn } from './battleTurn';
 export { calculateDamage, getTypeEffectiveness } from './damage';
-export { genSixCatchShakeThreshold } from './battleCapture';
+export { genSixCatchShakeThreshold, genSixCriticalCaptureOdds } from './battleCapture';
 export { gainExperience, replaceMove } from './levelUp';
 export { evolveAfterBattle, timeOfDayFromHour, useEvolutionItem, type TimeOfDay } from './evolution';
 
@@ -141,11 +141,11 @@ export function updateActivePlayer(state: BattleState, pokemon: PokemonInstance)
 export function switchActivePokemon(state: BattleState, partyIndex: number, rng: Rng = Math.random): BattleState {
   if (state.status !== 'ongoing') return state;
   const switched = switchPlayerIn(state, partyIndex);
-  if (state.pendingSwitch) return { ...switched, pendingSwitch: false };
+  if (state.pendingSwitch) return resolveFaints({ ...switched, pendingSwitch: false });
   return resolveTurn(switched, null, rng);
 }
 
-export function throwPokeball(state: BattleState, rng: Rng = Math.random): BattleState {
+export function throwPokeball(state: BattleState, rng: Rng = Math.random, caughtSpeciesCount = 0): BattleState {
   if (state.status !== 'ongoing' || state.pendingSwitch) return state;
   if (state.isTrainer) {
     return {
@@ -153,7 +153,7 @@ export function throwPokeball(state: BattleState, rng: Rng = Math.random): Battl
       log: [...state.log, 'Você não pode capturar o Pokémon de outro treinador!'],
     };
   }
-  if (rollGenSixCapture(state.enemy, rng)) {
+  if (rollGenSixCapture(state.enemy, rng, caughtSpeciesCount)) {
     return {
       ...state,
       status: 'caught',

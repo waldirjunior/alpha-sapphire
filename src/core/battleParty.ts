@@ -3,7 +3,7 @@ import { expYield } from './experience';
 import { gainExperience } from './levelUp';
 import { addEvs } from './statSpread';
 import type { BattleEvent } from './battleEvents';
-import type { BattleFieldState } from './battleField';
+import { applyEntryHazards, type BattleFieldSide, type BattleFieldState } from './battleField';
 
 export const MAX_PARTY_SIZE = 6;
 const LUCKY_EGG = 'Lucky Egg';
@@ -93,11 +93,37 @@ export function switchPlayerIn(state: BattleState, partyIndex: number): BattleSt
     participants,
     log: [...state.log, `Vai, ${entering.species.name}!`],
   };
-  return activateEntryAbility(switched, 'player');
+  return activateEntryAbility(applyHazardsOnEntry(switched, 'player'), 'player');
+}
+
+export function switchEnemyIn(state: BattleState, partyIndex: number, forced = false): BattleState {
+  const incoming = state.enemyParty[partyIndex];
+  if (!incoming || incoming.currentHp === 0 || partyIndex === state.enemyActive) {
+    throw new RangeError(`Troca inválida para o slot inimigo ${partyIndex} (ativo ${state.enemyActive}, time de ${state.enemyParty.length}).`);
+  }
+  const withdrawn = replaceAt(state.enemyParty, state.enemyActive, withdrawFromBattle(state.enemy));
+  const entering = withdrawFromBattle(incoming);
+  const sent = {
+    ...state,
+    enemy: entering,
+    enemyActive: partyIndex,
+    enemyParty: replaceAt(withdrawn, partyIndex, entering),
+    participants: state.player.currentHp > 0 ? [state.playerActive] : [],
+    log: [...state.log, forced
+      ? `${state.trainerName ?? 'O oponente'} foi forçado a trocar para ${entering.species.name}!`
+      : `${state.trainerName ?? 'O oponente'} enviou ${entering.species.name} (Lv.${entering.level})!`],
+  };
+  return activateEntryAbility(applyHazardsOnEntry(sent, 'enemy'), 'enemy');
+}
+
+function applyHazardsOnEntry(state: BattleState, side: BattleFieldSide): BattleState {
+  const entry = applyEntryHazards(state.field, side, pokemonOf(state, side));
+  const updated = withPokemon({ ...state, field: entry.field }, side, entry.pokemon);
+  return appendLog(updated, entry.messages);
 }
 
 export function activateEntryAbility(state: BattleState, side: BattleSide): BattleState {
-  if (pokemonOf(state, side).ability !== 'Intimidate') return state;
+  if (pokemonOf(state, side).currentHp === 0 || pokemonOf(state, side).ability !== 'Intimidate') return state;
   const targetSide = opposite(side);
   const target = pokemonOf(state, targetSide);
   const atk = Math.max(-6, target.stages.atk - 1);
@@ -108,17 +134,7 @@ export function activateEntryAbility(state: BattleState, side: BattleSide): Batt
 }
 
 function sendNextEnemy(state: BattleState, nextIndex: number): BattleState {
-  const entering = withdrawFromBattle(state.enemyParty[nextIndex] ?? state.enemy);
-  const participants = state.player.currentHp > 0 ? [state.playerActive] : [];
-  const sent = {
-    ...state,
-    enemy: entering,
-    enemyActive: nextIndex,
-    enemyParty: replaceAt(state.enemyParty, nextIndex, entering),
-    participants,
-    log: [...state.log, `${state.trainerName ?? 'O oponente'} enviou ${entering.species.name} (Lv.${entering.level})!`],
-  };
-  return activateEntryAbility(sent, 'enemy');
+  return switchEnemyIn(state, nextIndex);
 }
 
 interface ExpRecipient {
@@ -177,7 +193,10 @@ function resolvePlayerFaint(state: BattleState): BattleState {
 
 /** Ao fim do turno: inimigo derrotado dá XP e o treinador envia o próximo; desmaio do jogador força troca ou derrota. */
 export function resolveFaints(state: BattleState): BattleState {
+  if (state.status !== 'ongoing') return state;
   const afterEnemy = state.enemy.currentHp === 0 ? resolveEnemyFaint(state) : state;
   if (afterEnemy.status !== 'ongoing') return afterEnemy;
-  return afterEnemy.player.currentHp === 0 ? resolvePlayerFaint(afterEnemy) : afterEnemy;
+  if (afterEnemy.enemy.currentHp === 0) return resolveFaints(afterEnemy);
+  if (afterEnemy.player.currentHp !== 0) return afterEnemy;
+  return resolvePlayerFaint(afterEnemy);
 }

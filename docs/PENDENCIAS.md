@@ -104,11 +104,31 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
   dano 72/108/162 e limiares 53335,91/63333,49. `npm run verify` passou: 508
   Vitest, cobertura `src/core` 96,20% linhas/87,08% branches, build e 233
   testes Python (1 skip).
-- **Ainda não simulado:** `quality` 5 (Swagger/Flatter), hazards de `quality`
-  11, 12 (forçar troca) e 13 (Protect, Substitute, golpes de dois turnos etc. —
-  90 golpes); `inflict` ≥ 6 (confusão, atração, Leech Seed, Taunt, Disable,
-  Yawn, Perish Song etc.); Super Luck/Sniper/Scope Lens; críticos da mecânica de
-  captura; bônus de troca na XP e evoluções por troca (não há troca no jogo);
+- **Atualização 2026-11-19 (hazards e status voláteis):** Stealth Rock,
+  Spikes (3 camadas), Toxic Spikes (2) e Sticky Web agora ficam por lado,
+  aplicam dano/status/queda de Speed na entrada e são limpos por Rapid Spin
+  (lado do usuário) ou Defog (ambos); tipo Poison aterrado absorve Toxic
+  Spikes. Confusão usa auto-dano físico tipeless de 40 BP e duração da tabela
+  ROM; Leech Seed drena 1/8 e cura o usuário ativo; Taunt dura três turnos;
+  Swagger/Flatter combinam estágios com confusão. Troca limpa voláteis, Protect/
+  Detect reduz sucesso pela metade a cada uso consecutivo, e Roar/Whirlwind
+  forçam substituição aleatória ou fazem o selvagem fugir. Super Luck e Scope
+  Lens sobem o estágio crítico; Sniper aplica ×2,25; captura crítica usa a
+  faixa Pokédex e um shake check. Vetores determinísticos em
+  `src/core/battleMechanics.test.ts`, `src/core/battleGen6Volatiles.test.ts` e
+  `src/ai/battleParity.test.ts`. `npm run verify` passou: 530 testes Vitest,
+  build e 233 testes Python (1 skip); a catraca de cobertura de `src/core`
+  passou.
+- **Ainda não simulado:** Substitute, outros voláteis (`atração`, Disable,
+  Yawn, Perish Song etc.) e golpes restantes ainda sem efeito; habilidades e itens
+  segurados restantes; IA de troca do treinador; bônus de troca na XP e
+  evoluções por troca (não há troca no jogo); evoluções por sexo, item segurado,
+  local, afeição, clima, Beauty, Shedinja e 3DS invertido; IVs/natureza aleatórios
+  ainda não aplicados aos selvagens em `main.ts` (`rollIvs`/`rollNature` prontos);
+  UI de item evolutivo e de cancelar evolução. O cálculo de captura crítica
+  recebe `caughtSpeciesCount`; o host ainda não fornece a contagem de espécies
+  únicas da Pokédex. Golpes não simulados registram "ainda não é simulado
+  (P-010)" no log.
   evoluções por sexo, item segurado, local, afeição, clima, Beauty, Shedinja e
   3DS invertido; IVs/natureza aleatórios ainda não aplicados aos selvagens em
   `main.ts` (`rollIvs`/`rollNature` prontos); UI de item evolutivo e de cancelar

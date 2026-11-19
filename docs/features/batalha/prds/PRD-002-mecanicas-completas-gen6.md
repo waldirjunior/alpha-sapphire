@@ -22,6 +22,14 @@ voláteis, hazards, troca forçada, itens e habilidades ainda não simulados.
   o estado puro da batalha e o RNG injetável.
 - **RF-06:** Captura usa catch rate da espécie, HP, status e os quatro shake
   checks da Geração VI.
+- **RF-07:** Hazards pertencem ao lado do campo, acumulam até os limites Gen VI,
+  aplicam seus efeitos ao entrar ou trocar e são removidos por Rapid Spin/Defog.
+- **RF-08:** Confusão, Leech Seed, Taunt, Swagger e Flatter têm duração e efeitos
+  voláteis corretos; voláteis são limpos ao retirar o Pokémon.
+- **RF-09:** Protect/Detect usam chance decrescente em usos consecutivos;
+  Roar/Whirlwind provocam troca forçada quando há substituto.
+- **RF-10:** Super Luck, Scope Lens e Sniper modificam críticos; captura crítica
+  usa progresso da Pokédex e um shake check.
 
 ## 3. Critérios de Aceite
 
@@ -30,7 +38,7 @@ voláteis, hazards, troca forçada, itens e habilidades ainda não simulados.
 - [x] `npm run verify` passa; cobertura de `src/core/` fica em 96,20% de linhas e 87,08% de branches.
 - [ ] Implementar os itens restantes listados em `P-010`; a pendência continua aberta.
 
-## 4. Entrega parcial — 2026-11-19
+## 4. Entrega parcial — 2026-11-19 (campo e captura)
 
 O core agora aplica os brackets de prioridade da ROM, golpes OHKO com ajuste de
 accuracy por nível, Sturdy, Levitate, Intimidate e Blaze/Torrent/Overgrow.
@@ -40,7 +48,27 @@ aplicável. Reflect e Light Screen reduzem dano e golpes críticos ignoram as
 telas. Captura usa catch rate da espécie, HP, status e quatro shake checks Gen VI.
 
 `npm run verify`: 508 testes Vitest passaram, build passou e 233 testes Python
-passaram (1 skip por ausência de `public/assets/maps`). A implementação ainda
-não cobre hazards, confusão e outros status voláteis, Protect/Substitute,
-forçar troca, críticos de captura, itens segurados em combate nem as demais
-habilidades e condições de evolução registradas em `P-010`.
+passaram (1 skip por ausência de `public/assets/maps`). Naquele ponto, ainda
+faltavam hazards, confusão e outros status voláteis, Protect/Substitute, forçar
+troca, críticos de captura, itens segurados em combate e as demais habilidades
+e condições de evolução registradas em `P-010`.
+
+## 5. Entrega parcial — 2026-11-19 (hazards, voláteis e críticos)
+
+O campo armazena Stealth Rock, Spikes, Toxic Spikes e Sticky Web por lado.
+Aplicam dano por efetividade/grounding e efeitos de entrada nas trocas;
+Rapid Spin limpa o lado do usuário, Defog limpa os dois lados e as telas, e
+Poison aterrado absorve Toxic Spikes. Confusão usa auto-dano físico de 40 BP;
+Leech Seed drena e cura o Pokémon ativo do lado oposto; Taunt, Swagger e Flatter
+usam voláteis que saem ao trocar. Protect/Detect reduzem a chance pela metade
+em usos consecutivos; Roar/Whirlwind escolhem um substituto saudável ou fazem
+um encontro selvagem fugir. Super Luck/Scope Lens aumentam o estágio crítico e
+Sniper aplica o multiplicador Gen VI. A captura crítica usa a contagem de
+espécies registradas e resolve um único shake check.
+
+`battleMechanics.test.ts`, `battleGen6Volatiles.test.ts` e
+`src/ai/battleParity.test.ts` cobrem os casos com RNG determinístico. O core
+recebe `caughtSpeciesCount` como argumento opcional em `throwPokeball`; o host
+ainda não fornece a contagem de espécies únicas da Pokédex. `npm run verify`
+passou com 530 testes Vitest, build e 233 testes Python (1 skip); a catraca de
+cobertura de `src/core` passou.
