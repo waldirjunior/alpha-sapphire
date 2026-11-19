@@ -20,6 +20,11 @@ export function visualBaselineDir(): string {
   return process.env.ALPHA_VISUAL_BASELINE_DIR ?? path.join(mainCheckoutRoot(), 'rom', 'visual-baselines');
 }
 
+/** Capturas de referência 400×240 tiradas no emulador; ficam em `rom/` do checkout principal. */
+export function visualReferenceDir(): string {
+  return process.env.ALPHA_VISUAL_REFERENCE_DIR ?? path.join(mainCheckoutRoot(), 'rom', 'visual-reference');
+}
+
 /** Capturas e relatórios da execução atual, por checkout. */
 export function visualReportDir(): string {
   return path.resolve('rom', 'visual-report');

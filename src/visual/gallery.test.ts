@@ -25,4 +25,16 @@ describe('visual gallery', () => {
   it('escapes text that comes from scenario records', () => {
     expect(renderGallery([DEFECT])).toContain('defeito conhecido (P-017 &lt;telhado&gt;)');
   });
+
+  it('renders original emulator reference side-by-side only when present', () => {
+    const withRef: GalleryEntry = { ...ACCEPTED, referenceImage: 'references/z0007-oldale.png' };
+    const htmlWithRef = renderGallery([withRef]);
+    expect(htmlWithRef).toContain('<div class="compare">');
+    expect(htmlWithRef).toContain('<img src="captures/z0007-oldale.png" alt="z0007-oldale (port)" loading="lazy">');
+    expect(htmlWithRef).toContain('<img src="references/z0007-oldale.png" alt="z0007-oldale (original)" loading="lazy">');
+
+    const htmlWithoutRef = renderGallery([ACCEPTED]);
+    expect(htmlWithoutRef).not.toContain('<div class="compare">');
+    expect(htmlWithoutRef).toContain('<img src="captures/z0007-oldale.png" alt="z0007-oldale" loading="lazy">');
+  });
 });

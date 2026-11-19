@@ -1,0 +1,40 @@
+{
+  "zoneId": 6,
+  "mapId": "zone_0006",
+  "start": { "x": 17, "z": 14 },
+  "steps": [
+    { "direction": "down", "after": { "x": 17, "z": 15 } },
+    { "direction": "down", "after": { "x": 17, "z": 16 } },
+    { "direction": "right", "after": { "x": 18, "z": 16 } },
+    { "direction": "right", "after": { "x": 19, "z": 16 } },
+    { "direction": "up", "after": { "x": 19, "z": 15 } },
+    { "direction": "up", "after": { "x": 19, "z": 14 } },
+    { "direction": "up", "after": { "x": 19, "z": 13 } },
+    { "direction": "left", "after": { "x": 18, "z": 13 } },
+    { "direction": "left", "after": { "x": 17, "z": 13 } },
+    { "direction": "up", "after": { "x": 17, "z": 12 } },
+    { "direction": "up", "after": { "x": 17, "z": 12 } }
+  ],
+  "distinctCells": [
+    { "x": 17, "z": 14 },
+    { "x": 17, "z": 15 },
+    { "x": 17, "z": 16 },
+    { "x": 18, "z": 16 },
+    { "x": 19, "z": 16 },
+    { "x": 19, "z": 15 },
+    { "x": 19, "z": 14 },
+    { "x": 19, "z": 13 },
+    { "x": 18, "z": 13 },
+    { "x": 17, "z": 13 },
+    { "x": 17, "z": 12 }
+  ],
+  "divergences": [
+    {
+      "id": "npc-6-spawn-flag-612",
+      "from": { "x": 20, "z": 16 },
+      "direction": "up",
+      "emulatorCell": { "x": 20, "z": 15 },
+      "note": "No Azahar (save pós-intro), flag 612 oculta zone_0006:npc:6 e permite atravessar (20,16)->(20,15); adaptZoneMap sem projectEventActors mantém o ator visível e bloqueante."
+    }
+  ]
+}

@@ -2,20 +2,20 @@
 
 Retrato do estado verificado. **Edite as linhas; não acrescente seções nem relatos de entrega** — o relato vai para o PRD da frente. O tamanho deste arquivo é limitado por `src/docsContract.test.ts`. Histórico até 2026-11-18: [historico/STATUS-ate-2026-11-18.md](historico/STATUS-ate-2026-11-18.md).
 
-Verificado em 2026-11-18 na `main`, macOS e Linux (headless via Xvfb). Todo trabalho anterior está na `main`; as branches de worker já estavam integradas e foram removidas.
+Verificado em 2026-11-18 (macOS; suporte headless Linux validado anteriormente na `main`). Todo trabalho anterior está na `main`.
 
 ## Placar
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 418 em 64 arquivos, todos passando | `npm test` |
-| Cobertura de `src/core` | 95,9% linhas, 85,6% branches (catraca em 95/85) | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 213 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
+| Testes unitários (Vitest) | 421 em 64 arquivos, todos passando | `npm test` |
+| Cobertura de `src/core` | 95,9% linhas, 85,4% branches (catraca em 95/85) | `npm run test:coverage` |
+| Testes do pipeline e do oráculo (Python) | 223 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
 | Jogo real no browser (smoke) | 5 de 5 fluxos | `npm run test:e2e` |
-| Cenários visuais | 25 de 25 estáveis; **2 de 25 aceitos** sem defeito conhecido | `npm run test:e2e`, galeria em `rom/visual-report/index.html` |
+| Cenários visuais | 25 de 25 estáveis com referência do emulador lado a lado; **2 de 25 aceitos** sem defeito conhecido | `npm run test:e2e`, galeria em `rom/visual-report/index.html` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
 
-Defeitos visuais registrados nos cenários: 23 com atores de ID de objeto sem modelo (P-017), 2 com avatar encoberto por telhado ou parede (P-017). Pés de Brendan e May (`sw_parts02`) e orientação V de corpo/faces (`A-099`) corrigidos e verificados em todos os 25 cenários (`groundGap = -0,0001` nos close-ups).
+Defeitos visuais registrados nos cenários: 23 com atores de ID de objeto sem modelo (P-017), 2 com avatar encoberto por telhado ou parede (P-017). Pés de Brendan e May (`sw_parts02`) e orientação V de corpo/faces (`A-099`) corrigidos e verificados em todos os 25 cenários (`groundGap = -0,0001` nos close-ups). Referências 400×240 do Azahar capturadas para todos os 25 cenários em `rom/visual-reference/`.
 
 ## O que funciona
 
@@ -24,16 +24,16 @@ Defeitos visuais registrados nos cenários: 23 com atores de ID de objeto sem mo
 - **Eventos**: VM Pawn/AMX executa scripts da ROM — diálogo de NPC, warp natural 6 → 227, remoção de atores com hide-flags persistentes, expressões faciais.
 - **Batalha**: encontros por zona, turnos, dano, status, XP, level-up, evolução, time de até 6 e IA de treinador, tudo puro em `src/core/`.
 - **Apresentação**: mapas e personagens em GLB com clipes nativos de overworld e batalha, materiais PICA parciais, BGM por zona, save em `localStorage`.
+- **Oráculo (Azahar 2126.2)**: roteiros `intro_to_first_save` e `continue_game`, relocalização de saves `main` entre zonas/matrizes (`scripts/oras_save.py`), 25 capturas de referência em `rom/visual-reference/`, leitura da posição viva via RPC (`0x08187BD4`/`0x08187BF4`) e traço diferencial de movimento em Littleroot (`src/ai/traces/littleroot_movement.json`) verificado contra `movePlayer`.
 
 ## Limites conhecidos
 
 | Limite | Pendência |
 | --- | --- |
-| Campanha desde New Game não roda de forma natural: init, callbacks AMX e vários nativos de apresentação pendentes. Cada nativo pendente exige um Enter extra do jogador. | P-013 |
+| Campanha desde New Game não roda de forma natural: init, callbacks AMX, visibilidade inicial por `spawnFlag` (ex.: flag `612` em `zone_0006:npc:6`) e vários nativos pendentes. Cada nativo pendente exige um Enter extra do jogador. | P-013 |
 | Permissões de movimento (ledges laterais, bike, Surf), camadas de piso e oclusão por prédios. | P-017 |
 | Atores com ID de objeto (pedras, itens, bagas) aparecem como fallback. | P-017 |
 | Iluminação, LUTs e combiners RGB dos materiais; exterior preto em cavernas. | P-007 |
-| O emulador já roda por script, mas ainda não há save controlável, captura de referência nem teste diferencial: nenhuma paridade foi medida contra o original. | P-021 |
 | `src/game.ts` tem 708 linhas e 0% de cobertura unitária; só o smoke e2e o protege. | P-020 |
 | HUD de desenvolvimento em vez dos menus do 3DS; arenas de batalha geométricas; efeitos sonoros ausentes. | P-011, P-014, P-008 |
 

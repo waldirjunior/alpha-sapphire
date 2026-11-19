@@ -1,16 +1,17 @@
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import type { GalleryEntry } from '../src/visual/gallery';
 import { evaluateGates, gateFailures, type GateVerdict } from '../src/visual/gates';
 import { metricDrift, roundMetrics } from '../src/visual/metricsBaseline';
 import type { ProbeMetrics, ProbeOutcome, ProbeReport } from '../src/visual/probeReport';
 import { VISUAL_SCENARIOS, type VisualScenario } from '../src/visual/scenarios';
-import { visualReportDir } from './support/checkoutPaths';
+import { visualReferenceDir, visualReportDir } from './support/checkoutPaths';
 import { trackPageErrors } from './support/pageErrors';
 
 const METRICS_DIR = path.resolve('e2e', 'visual-metrics');
 const CAPTURES_DIR = path.join(visualReportDir(), 'captures');
+const REFERENCES_DIR = path.join(visualReportDir(), 'references');
 
 async function runProbe(page: Page, scenario: VisualScenario): Promise<ProbeReport> {
   await page.goto(`/visual.html?scenario=${scenario.id}`);
@@ -23,7 +24,20 @@ async function runProbe(page: Page, scenario: VisualScenario): Promise<ProbeRepo
 async function saveCapture(page: Page, report: ProbeReport, verdicts: readonly GateVerdict[]): Promise<void> {
   mkdirSync(CAPTURES_DIR, { recursive: true });
   await page.locator('#app canvas').screenshot({ path: path.join(CAPTURES_DIR, `${report.scenario}.png`) });
-  const entry: GalleryEntry = { scenario: report.scenario, image: `captures/${report.scenario}.png`, metrics: report.metrics, verdicts };
+  const sourceReference = path.join(visualReferenceDir(), `${report.scenario}.png`);
+  let referenceImage: string | undefined;
+  if (existsSync(sourceReference)) {
+    mkdirSync(REFERENCES_DIR, { recursive: true });
+    copyFileSync(sourceReference, path.join(REFERENCES_DIR, `${report.scenario}.png`));
+    referenceImage = `references/${report.scenario}.png`;
+  }
+  const entry: GalleryEntry = {
+    scenario: report.scenario,
+    image: `captures/${report.scenario}.png`,
+    ...(referenceImage ? { referenceImage } : {}),
+    metrics: report.metrics,
+    verdicts,
+  };
   writeFileSync(path.join(CAPTURES_DIR, `${report.scenario}.json`), JSON.stringify(entry, null, 2));
 }
 

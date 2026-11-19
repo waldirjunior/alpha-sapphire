@@ -1,7 +1,7 @@
 # PRD-002 — Infraestrutura do oráculo: emulador dirigido por script
 
 - **Módulo:** [validacao-emulador](../README.md)
-- **Estado:** Base entregue; captura de referência e teste diferencial em aberto
+- **Estado:** Entregue (passos 1 a 5 concluídos; perguntas de movimento seguem no item 7 da fila / PRD-015)
 - **Data:** 2026-11-18
 - **ADRs relacionados:** [ADR-001](../adrs/ADR-001-oraculo-emulador-e-tabelas-abertas.md)
 - **Pendência:** P-021
@@ -35,10 +35,10 @@ Cada passo é uma sessão curta. Faça em ordem; a verificação diz quando acab
 | --- | --- | --- | --- |
 | 1 | *(Concluído)* Roteiros `intro_to_first_save` e `continue_game`. | `scripts/azahar_movies.py`: `175` `A` rápidos + `5` espaçados (`wait(150)`) + `2 × Delete` (`tap(264, 72)`) + `'a'` (`tap(55, 148)`) + `Enter` (`tap(259, 110)`), caminhão e menu `X` → Save. | Confirmado por `continue_game --at 50 --speed 400` carregando no jogo em ~21 s emulados. |
 | 2 | *(Concluído)* `scripts/oras_save.py`: leitura e relocalização de saves `main` (`0x76000`). | Tabela `0x42454546` em `0x75E10`, 58 blocos `<IHH` em `0x75E14`, `BLK 4` (`Situation`) + `BLK 10` (`Overworld Actors`), `groundHeights * 18` via `src/data/maps_v2/<zone>.json`. | `scripts/test_oras_save.py` (6 testes) e cargas verificadas no Azahar em `zone 6 (17, 14)`, `zone 7 (18, 5)` e `zone 227 (14, 12)`. |
-| 3 | 25 capturas de referência, uma por cenário de `src/visual/scenarios.ts`, em `rom/visual-reference/<id>.png`. | Para cada cenário: editar o save (passo 2), `continue_game`, capturar. O frame traz as duas telas; a de cima é o recorte 400×240 superior. | Galeria `rom/visual-report/index.html` mostra port e original lado a lado; diferenças de câmera, escala e cor anotadas por cenário no PRD de validacao-visual. |
-| 4 | Endereço da posição viva do jogador na memória. | Com o jogador em célula conhecida, varrer o heap pelo padrão de floats (x·18, y, z·18) com `rpc.read`, andar um passo por filme e repetir até sobrar um endereço. | Função `player_cell(rpc)` devolve a mesma célula que o save após salvar. |
-| 5 | Teste diferencial de movimento: mesma sequência de D-pad no emulador e no core, comparando a célula a cada passo. | Roteiro `continue_game` + passos; amostrar `player_cell` em alta frequência e registrar a sequência de células distintas; gravar o traço em JSON versionado (números, não assets) e comparar em um teste Vitest em `src/ai/` contra `movePlayer`. | Teste verde para Littleroot; primeiro caso divergente registrado como pendência com o traço. |
-| 6 | Ledges laterais, Surf e bike respondidos por observação (itens 9 e 10 da fila do ROADMAP). | Teleportar ao ponto em dúvida e reproduzir a entrada. | Regra implementada no core com teste e traço do emulador como evidência. |
+| 3 | *(Concluído)* 25 capturas de referência, uma por cenário de `src/visual/scenarios.ts`, em `rom/visual-reference/<id>.png`. | `crop_top_screen_png`, `load_visual_scenarios` e `capture-references` em `scripts/azahar_oracle.py`; comparação lado a lado em `src/visual/gallery.ts` e `e2e/visual.spec.ts`. | 25 recortes 400×240 gerados e inspecionados; `npm run test:e2e` (30/30) monta `rom/visual-report/index.html` com 25 cartões `.compare` e diferenças anotadas em [PRD-001](../../validacao-visual/prds/PRD-001-regressao-visual-e-smoke.md). |
+| 4 | *(Concluído)* Endereço da posição viva do jogador na memória (`player_world_position` e `player_cell`). | Varredura RAM via RPC + confirmação em `zone 6` e `zone 7`: `PLAYER_ZONE_ADDR = 0x08187BD4` (`u32`) e `PLAYER_WORLD_POS_ADDR = 0x08187BF4` (`<fff`). | `LiveMemoryPositionTest` em `scripts/test_azahar_oracle.py`; após caminhar e salvar em Littleroot (`X -> Save`), `player_cell(rpc)` retorna `(15, 14)`, idêntico a `oras_save inspect`. |
+| 5 | *(Concluído)* Teste diferencial de movimento em Littleroot (`zone 6`). | Roteiro D-pad (`14` frames CTM/passo a 100%) amostrado a 25 Hz via `player_world_position` (`compress_cell_trace`) gravado em `src/ai/traces/littleroot_movement.json` e testado em `src/ai/emulatorParity.test.ts`. | 11 células distintas `(17,14)→(17,12)` + colisão `(17,11)` passam 100% em `movePlayer`; primeira divergência documentada em `(20,15)` (`zone_0006:npc:6`, `spawnFlag=612`). |
+| 6 | *(Item da fila PRD-015)* Ledges laterais, Surf e bike respondidos por observação. | Usar o oráculo agora entregue sobre os trechos correspondentes da ROM. | Executado no item dedicado da fila em [ROADMAP](../../../ROADMAP.md). |
 
 ### Dicas para o passo 1
 

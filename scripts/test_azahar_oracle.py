@@ -4,11 +4,14 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import zlib
 from pathlib import Path
 
 from scripts.azahar_movie import (AZAHAR_REVISION, HEADER_SIZE, Step, build_movie, button_mask, encode_inputs, hold,
                                   pad_updates, press, tap, wait)
 from scripts.azahar_movies import MOVIES
+from scripts.azahar_oracle import (PLAYER_WORLD_POS_ADDR, PLAYER_ZONE_ADDR, compress_cell_trace, crop_top_screen_png,
+                                   load_visual_scenarios, player_cell, player_world_position)
 from scripts.azahar_rpc import HEADER, PORT as RPC_PORT, PROCESS_LIST, READ_MEMORY, decode_reply, encode_request, parse_process_list
 from scripts.azahar_session import (PROFILE_SETTINGS, EmulatorProcess, apply_settings, launch_command, rpc_port_in_use,
                                     save_path)
@@ -125,6 +128,86 @@ class LaunchTest(unittest.TestCase):
             sock.bind(("0.0.0.0", RPC_PORT))
             self.assertTrue(rpc_port_in_use())
         self.assertFalse(rpc_port_in_use())
+
+
+def _make_png(width: int, height: int) -> bytes:
+    def chunk(tag: bytes, payload: bytes) -> bytes:
+        crc = zlib.crc32(tag + payload) & 0xFFFFFFFF
+        return struct.pack(">I", len(payload)) + tag + payload + struct.pack(">I", crc)
+
+    scanlines = b"".join(b"\x00" + bytes([y % 251, 10, 20]) * width for y in range(height))
+    ihdr = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+    return b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr) + chunk(b"IDAT", zlib.compress(scanlines)) + chunk(b"IEND", b"")
+
+
+def _png_info(png_bytes: bytes) -> tuple[int, int, bytes]:
+    pos = 8
+    width = height = 0
+    idat = bytearray()
+    while pos < len(png_bytes):
+        length, tag = struct.unpack_from(">I4s", png_bytes, pos)
+        payload = png_bytes[pos + 8 : pos + 8 + length]
+        if tag == b"IHDR":
+            width, height = struct.unpack_from(">II", payload)
+        elif tag == b"IDAT":
+            idat.extend(payload)
+        pos += 12 + length
+    return width, height, zlib.decompress(bytes(idat))
+
+
+class VisualReferenceTest(unittest.TestCase):
+    def test_crop_top_screen_png_slices_400x480_to_400x240(self) -> None:
+        raw_png = _make_png(400, 480)
+        cropped = crop_top_screen_png(raw_png, top_height=240)
+        self.assertTrue(cropped.startswith(b"\x89PNG\r\n\x1a\n"))
+        width, height, pixels = _png_info(cropped)
+        self.assertEqual((width, height), (400, 240))
+        stride = 1 + 400 * 3
+        self.assertEqual(len(pixels), 240 * stride)
+        self.assertEqual(pixels[1:4], bytes([0, 10, 20]))
+        self.assertEqual(pixels[239 * stride + 1 : 239 * stride + 4], bytes([239, 10, 20]))
+
+    def test_load_visual_scenarios_parses_all_25_entries(self) -> None:
+        scenarios = load_visual_scenarios(Path(__file__).resolve().parent.parent / "src" / "visual" / "scenarios.ts")
+        self.assertEqual(len(scenarios), 25)
+        self.assertEqual(scenarios[0], {"id": "avatar-brendan", "zone": 6, "x": 17, "z": 14})
+        self.assertEqual(scenarios[1], {"id": "avatar-may", "zone": 6, "x": 17, "z": 14})
+        self.assertEqual(scenarios[2], {"id": "z0006-littleroot-spawn", "zone": 6, "x": 19, "z": 1})
+        self.assertEqual(scenarios[-1], {"id": "z0018-lilycove", "zone": 18, "x": 20, "z": 21})
+
+
+class _FakeRpc:
+    def __init__(self, memory: dict[int, bytes]) -> None:
+        self._memory = memory
+
+    def read(self, address: int, size: int) -> bytes:
+        chunk = self._memory[address]
+        if len(chunk) != size:
+            raise AssertionError(f"Esperado size={len(chunk)}, recebido {size}")
+        return chunk
+
+
+class LiveMemoryPositionTest(unittest.TestCase):
+    def test_reads_world_position_and_converts_to_zone_cell(self) -> None:
+        rpc = _FakeRpc({
+            PLAYER_ZONE_ADDR: struct.pack("<I", 6),
+            PLAYER_WORLD_POS_ADDR: struct.pack("<fff", 1755.0, 2.0, 3141.0),
+        })
+        self.assertEqual(player_world_position(rpc), (1755.0, 2.0, 3141.0))
+        self.assertEqual(player_cell(rpc, zone_id=6), (17, 14))
+        self.assertEqual(player_cell(rpc), (17, 14))
+
+    def test_rejects_non_finite_live_coordinates(self) -> None:
+        rpc = _FakeRpc({PLAYER_WORLD_POS_ADDR: struct.pack("<fff", float("nan"), 0.0, 3141.0)})
+        with self.assertRaisesRegex(ValueError, "Coordenada viva inválida"):
+            player_world_position(rpc)
+
+    def test_compresses_consecutive_duplicate_sampled_cells(self) -> None:
+        raw = [(17, 14), (17, 14), (17, 15), (17, 15), (18, 15), (17, 15)]
+        self.assertEqual(
+            compress_cell_trace(raw),
+            [{"x": 17, "z": 14}, {"x": 17, "z": 15}, {"x": 18, "z": 15}, {"x": 17, "z": 15}],
+        )
 
 
 if __name__ == "__main__":
