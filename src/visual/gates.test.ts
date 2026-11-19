@@ -32,6 +32,22 @@ describe('visual gates', () => {
     expect(gateFailures(evaluateGates({ ...GAME, knownDefects: {} }, occluded))).toEqual([expect.stringContaining('avatarVisible: regressão')]);
   });
 
+  it('aceita a oclusão do avatar quando ela coincide com a referência capturada', () => {
+    const scenario = { ...GAME, knownDefects: {}, expectedAvatarOcclusion: 'occluded' as const };
+    expect(outcomes(scenario, { ...HEALTHY, avatarVisibility: 0.02, avatarScreenShare: 0.01 }).avatarVisible).toBe('pass');
+  });
+
+  it('reprova uma oclusão esperada quando o avatar não foi renderizado', () => {
+    const scenario = { ...GAME, knownDefects: {}, expectedAvatarOcclusion: 'occluded' as const };
+    expect(outcomes(scenario, { ...HEALTHY, avatarVisibility: 0, avatarScreenShare: 0 }).avatarVisible).toBe('regression');
+  });
+
+  it('usa a margem de vazio comprovada pela referência do Mauville Hall', () => {
+    const scenario = { ...GAME, knownDefects: {}, maxVoidRatio: 0.7 };
+    expect(outcomes(scenario, { ...HEALTHY, voidRatio: 0.65 }).terrainPresent).toBe('pass');
+    expect(outcomes(scenario, { ...HEALTHY, voidRatio: 0.71 }).terrainPresent).toBe('regression');
+  });
+
   it('keeps the suite green while a registered defect persists', () => {
     const floating = { ...HEALTHY, groundGap: 0.085 };
     const verdicts = evaluateGates({ ...CLOSEUP, knownDefects: { feetOnGround: 'P-019' } }, floating);
@@ -87,5 +103,14 @@ describe('visual scenarios', () => {
     for (const scenario of VISUAL_SCENARIOS) {
       for (const pendencia of Object.values(scenario.knownDefects)) expect(pendencia).toMatch(/^P-\d{3}\b/);
     }
+  });
+
+  it('registra a oclusão esperada no telhado e o void original do hall', () => {
+    const roof = VISUAL_SCENARIOS.find((scenario) => scenario.id === 'z0006-littleroot-telhado');
+    const hall = VISUAL_SCENARIOS.find((scenario) => scenario.id === 'z0445-mauville-hall');
+    expect(roof?.expectedAvatarOcclusion).toBe('occluded');
+    expect(roof?.knownDefects.avatarVisible).toBeUndefined();
+    expect(hall?.knownDefects.avatarVisible).toBeUndefined();
+    expect(hall?.maxVoidRatio).toBe(0.7);
   });
 });
