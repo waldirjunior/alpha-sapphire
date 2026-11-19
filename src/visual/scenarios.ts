@@ -16,6 +16,8 @@ export interface VisualScenario {
   gender?: 'male' | 'female';
   /** Estado de oclusão confirmado na captura original do oráculo. */
   expectedAvatarOcclusion?: 'occluded';
+  /** Y em tiles usado como referência para selecionar entre pisos físicos sobrepostos. */
+  referenceGroundY?: number;
   /** Máximo de vazio da captura quando o oráculo mostra o mundo recortado em preto. */
   maxVoidRatio?: number;
   /** Portão → pendência que explica por que ele falha hoje. O teste exige que continue falhando até ser removido daqui. */
@@ -26,11 +28,13 @@ interface OverworldOptions {
   knownDefects?: KnownDefects;
   expectedAvatarOcclusion?: 'occluded';
   maxVoidRatio?: number;
+  referenceGroundY?: number;
 }
 
 function overworld(id: string, zone: number, x: number, z: number, options: OverworldOptions = {}): VisualScenario {
   return { id, zone, x, z, facing: 'down', camera: 'game', knownDefects: options.knownDefects ?? {},
     ...(options.expectedAvatarOcclusion ? { expectedAvatarOcclusion: options.expectedAvatarOcclusion } : {}),
+    ...(options.referenceGroundY === undefined ? {} : { referenceGroundY: options.referenceGroundY }),
     ...(options.maxVoidRatio === undefined ? {} : { maxVoidRatio: options.maxVoidRatio }) };
 }
 
@@ -53,6 +57,8 @@ export const VISUAL_SCENARIOS: readonly VisualScenario[] = [
   overworld('z0011-verdanturf', 11, 16, 22),
   overworld('z0445-mauville-hall', 445, 78, 48, { maxVoidRatio: 0.7 }),
   overworld('z0015-mauville-patio', 15, 17, 22),
+  overworld('z0015-mauville-patio-entry', 15, 2, 20),
+  overworld('z0015-mauville-patio-upper-floor', 15, 14, 9, { referenceGroundY: 7.5 }),
   overworld('z0014-slateport', 14, 31, 22),
   overworld('z0037-route111', 37, 31, 66),
   overworld('z0039-route112', 39, 79, 65),
@@ -63,6 +69,7 @@ export const VISUAL_SCENARIOS: readonly VisualScenario[] = [
   overworld('z0084-jagged-pass', 84, 38, 29),
   overworld('z0009-lavaridge', 9, 20, 21),
   overworld('z0047-route119', 47, 42, 22),
+  overworld('z0046-route119-bridge-upper-floor', 46, 23, 40, { referenceGroundY: 15.5 }),
   overworld('z0018-lilycove', 18, 20, 21),
 ];
 

@@ -23,6 +23,14 @@ describe('câmera de follow do overworld', () => {
     });
   });
 
+  it('desloca o follow para o lado aberto do pátio de Mauville conforme a referência', () => {
+    expect(followCameraPose('zone_0015', { x: 2, y: 0.5, z: 20 })).toEqual({
+      eye: { x: 10, y: 9, z: 28 },
+      target: { x: 2, y: 0.5, z: 20 },
+      backgroundColor: '#7dd3fc',
+    });
+  });
+
   it('suaviza a passagem pela borda da zona da câmera do hall', () => {
     const pose = followCameraPose('zone_0445', { x: 79, y: 0.5, z: 48 });
     expect(pose.eye.z).toBeGreaterThan(50);

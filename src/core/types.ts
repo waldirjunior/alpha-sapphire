@@ -69,8 +69,15 @@ export interface BoundaryLink {
   inferred: boolean;
 }
 
+export interface GroundHeightCandidate {
+  x: number;
+  z: number;
+  heights: number[];
+}
+
 export interface MapDefinition {
   groundHeights?: (number | null)[][];
+  groundHeightCandidates?: readonly GroundHeightCandidate[];
   southLedges?: readonly GridPosition[];
   lateralLedges?: readonly LateralLedge[];
   surfTiles?: readonly GridPosition[];
@@ -110,6 +117,8 @@ export interface ActiveDialogue {
 
 export interface PlayerState {
   faceExpression?: number;
+  /** Altura do último piso selecionado, em tiles; preserva a referência entre passos e warps. */
+  groundY?: number;
   id: string;
   mapId: string;
   pos: GridPosition;

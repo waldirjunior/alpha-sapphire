@@ -1,22 +1,33 @@
 from pathlib import Path
 
 from scripts.extract_gr_maps import collision_layers, read_gr_permissions
-from scripts.gr_ground import read_gr_ground
+from scripts.gr_ground import ground_candidates_grid, ground_grid, read_gr_ground
+from scripts.gr_layers import physical_layers
 from scripts.map_matrix import EMPTY, GR_TILES, WORLD_UNITS_PER_TILE, owns_tile
 
 
 def gr_grid(gr_id: int, directory: Path, cache: dict) -> tuple:
     if gr_id not in cache:
-        width, height, permissions = read_gr_permissions(directory / f'{gr_id:04d}.bin')
+        path = directory / f'{gr_id:04d}.bin'
+        blob = path.read_bytes()
+        width, height, permissions = read_gr_permissions(path)
         if (width, height) != (40, 40):
             raise ValueError(f'GR {gr_id}: grid {(width, height)}, esperado 40x40')
         collisions, terrain = collision_layers(permissions)
-        cache[gr_id] = (width, height, collisions, terrain, permissions, read_gr_ground(directory / f'{gr_id:04d}.bin'))
+        if len(blob) >= 4 and int.from_bytes(blob[2:4], 'little') in (7, 9, 11, 13):
+            layers = physical_layers(blob)
+            ground = ground_grid(layers[0]['triangles'])
+            triangles = [triangle for layer in layers for triangle in layer['triangles']]
+            candidates = ground_candidates_grid(triangles)
+        else:
+            ground = read_gr_ground(path)
+            candidates = [[[height] if height is not None else [] for height in row] for row in ground]
+        cache[gr_id] = (width, height, collisions, terrain, permissions, ground, candidates)
     return cache[gr_id]
 
 
 def compose_row(matrix: dict, zone: int, x0: int, z: int, width: int, directory: Path, cache: dict) -> tuple:
-    collisions, terrain, south_ledge_columns, lateral_ledge_columns, surf_columns, ground = [], [], [], [], [], []
+    collisions, terrain, south_ledge_columns, lateral_ledge_columns, surf_columns, ground, candidates = [], [], [], [], [], [], []
     for x in range(x0, x0 + width):
         gr_id = matrix['grIds'][(z // GR_TILES) * matrix['width'] + x // GR_TILES]
         if gr_id == EMPTY or not owns_tile(matrix, zone, x, z):
@@ -25,8 +36,9 @@ def compose_row(matrix: dict, zone: int, x0: int, z: int, width: int, directory:
             lateral_ledge_columns.append(None)
             surf_columns.append(False)
             ground.append(None)
+            candidates.append([])
             continue
-        _, _, gr_collisions, gr_terrain, permissions, gr_ground = gr_grid(gr_id, directory, cache)
+        _, _, gr_collisions, gr_terrain, permissions, gr_ground, gr_candidates = gr_grid(gr_id, directory, cache)
         collisions.append(gr_collisions[z % GR_TILES][x % GR_TILES])
         terrain.append(gr_terrain[z % GR_TILES][x % GR_TILES])
         ground.append(gr_ground[z % GR_TILES][x % GR_TILES])
@@ -35,7 +47,8 @@ def compose_row(matrix: dict, zone: int, x0: int, z: int, width: int, directory:
             south_ledge_columns.append(x - x0)
         lateral_ledge_columns.append({0x72020021: 'right', 0x73020021: 'left'}.get(permission))
         surf_columns.append(permission == 0x3D1A0006)
-    return collisions, terrain, south_ledge_columns, lateral_ledge_columns, surf_columns, ground
+        candidates.append(gr_candidates[z % GR_TILES][x % GR_TILES])
+    return collisions, terrain, south_ledge_columns, lateral_ledge_columns, surf_columns, ground, candidates
 
 
 def compose_tiles(matrix: dict, zone: int, bounds: tuple, directory: Path, cache: dict) -> dict:
@@ -45,11 +58,18 @@ def compose_tiles(matrix: dict, zone: int, bounds: tuple, directory: Path, cache
     lateral_ledges = [{'x': x, 'z': z, 'direction': direction} for z, row in enumerate(rows)
                       for x, direction in enumerate(row[3]) if direction]
     surf_tiles = [{'x': x, 'z': z} for z, row in enumerate(rows) for x, is_surf in enumerate(row[4]) if is_surf]
+    candidates = [{'x': x, 'z': z, 'heights': heights} for z, row in enumerate(rows)
+                  for x, heights in enumerate(row[6]) if needs_height_candidates(heights, row[5][x])]
     return {'width': width, 'height': height, 'collisions': [row[0] for row in rows],
             'terrain': [row[1] for row in rows], 'groundHeights': [row[5] for row in rows],
+            **({'groundHeightCandidates': candidates} if candidates else {}),
             **({'southLedges': ledges} if ledges else {}),
             **({'lateralLedges': lateral_ledges} if lateral_ledges else {}),
             **({'surfTiles': surf_tiles} if surf_tiles else {})}
+
+
+def needs_height_candidates(heights: list[float], primary: float | None) -> bool:
+    return bool(heights) and (len(heights) > 1 or primary is None or abs(heights[0] - primary) > 1e-4)
 
 
 def matrix_chunks(matrix: dict, bounds: tuple) -> list[dict]:

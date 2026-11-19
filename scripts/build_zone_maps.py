@@ -52,15 +52,18 @@ def build_zone_map(zone: int, zones: dict, matrices: dict, bounds: dict, gr_dir:
     tiles = compose_tiles(matrix, zone, rect, gr_dir, cache)
     warps = convert_warps(zone, zones, bounds)
     spawn, spawn_policy = select_spawn(tiles['collisions'], warps)
+    source = {'zoSha256': record['sha256'], 'mapArea': record['mapArea'], 'textFile': record['textFile'],
+              'matrixId': record['mapMatrix'], 'matrix': matrix, 'worldUnitsPerTile': 18,
+              'originTile': {'x': rect[0], 'z': rect[1]},
+              'groundHeightPolicy': 'gr-coll2-cell-center-unique-v1',
+              'boundsPolicy': 'zone-grid' if matrix['zoneIds'] else 'occupied-gr-extent',
+              'chunks': matrix_chunks(matrix, rect)}
+    if tiles.get('groundHeightCandidates'):
+        source['groundHeightCandidatesPolicy'] = 'gr-coll-all-layers-cell-center-nearest-reference-v1'
     return {'schemaVersion': 2, 'id': f'zone_{zone:04d}', 'zone': zone, 'name': record['name'], **tiles,
             'spawnPos': spawn, 'spawnDerived': True, 'spawnPolicy': spawn_policy, 'warps': warps,
             'npcs': local_npcs(record['npcs'], rect), 'encounters': record['encounters'],
-            'source': {'zoSha256': record['sha256'], 'mapArea': record['mapArea'], 'textFile': record['textFile'],
-                       'matrixId': record['mapMatrix'], 'matrix': matrix, 'worldUnitsPerTile': 18,
-                       'originTile': {'x': rect[0], 'z': rect[1]},
-                       'groundHeightPolicy': 'gr-coll2-cell-center-unique-v1',
-                       'boundsPolicy': 'zone-grid' if matrix['zoneIds'] else 'occupied-gr-extent',
-                       'chunks': matrix_chunks(matrix, rect)}}
+            'source': source}
 
 
 def compare_references(maps: list[dict], reference_dir: Path) -> list[dict]:

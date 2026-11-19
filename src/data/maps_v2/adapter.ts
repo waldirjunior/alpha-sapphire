@@ -1,4 +1,4 @@
-import type { Direction, GridPosition, LateralLedge, MapDefinition } from '../../core/types';
+import type { Direction, GridPosition, GroundHeightCandidate, LateralLedge, MapDefinition } from '../../core/types';
 import type { ZoneEncounterSlot } from '../../core/wildPokemon';
 
 export interface ZoneMapSource {
@@ -11,6 +11,7 @@ export interface ZoneMapSource {
   collisions: number[][];
   terrain: number[][];
   groundHeights?: (number | null)[][];
+  groundHeightCandidates?: GroundHeightCandidate[];
   southLedges?: GridPosition[];
   lateralLedges?: LateralLedge[];
   surfTiles?: GridPosition[];
@@ -21,7 +22,7 @@ export interface ZoneMapSource {
     rom: { faceDirection: number; transitionEffect: number } }[];
   npcs: { id: number; model: number; script: number; spawnFlag: number; faceDirection: number; pos: GridPosition }[];
   encounters: ZoneEncounterSlot[];
-  source: { originTile?: GridPosition; chunks: { grId: number; localTile: GridPosition }[] };
+  source: { originTile?: GridPosition; groundHeightCandidatesPolicy?: string; chunks: { grId: number; localTile: GridPosition }[] };
 }
 
 export function romFacing(value: number): Direction | undefined {
@@ -54,6 +55,12 @@ function validateZone(source: ZoneMapSource): void {
     source.groundHeights.some(row => row.length !== source.width || row.some(value => value !== null && !Number.isFinite(value))))) {
     throw new Error(`Mapa ${source.id}: alturas exigem grid width×height finito ou null`);
   }
+  const invalidHeightCandidate = source.groundHeightCandidates?.find(({ x, z, heights }) =>
+    !Number.isInteger(x) || !Number.isInteger(z) || x < 0 || z < 0 || x >= source.width || z >= source.height ||
+    heights.length === 0 || heights.some(height => !Number.isFinite(height)));
+  if (invalidHeightCandidate) {
+    throw new Error(`Mapa ${source.id}: candidato de piso (${invalidHeightCandidate.x},${invalidHeightCandidate.z}) exige altura finita em uma célula válida`);
+  }
   const invalidLedge = source.southLedges?.find(({ x, z }) => !Number.isInteger(x) || !Number.isInteger(z) || source.collisions[z]?.[x] !== 1);
   if (invalidLedge) {
     throw new Error(`Mapa ${source.id}: ledge sul (${invalidLedge.x},${invalidLedge.z}) exige coordenadas inteiras em tile bloqueado`);
@@ -80,6 +87,7 @@ export function adaptZoneMap(source: ZoneMapSource): MapDefinition {
     id: source.id, zoneId: source.zone, name: source.name, width: source.width, height: source.height,
     collisions: source.collisions.map((row) => [...row]), terrain: source.terrain.map((row) => [...row]),
     groundHeights: source.groundHeights?.map(row => [...row]),
+    groundHeightCandidates: source.groundHeightCandidates?.map(candidate => ({ ...candidate, heights: [...candidate.heights] })),
     southLedges: source.southLedges?.map(pos => ({ ...pos })),
     lateralLedges: source.lateralLedges?.map(ledge => ({ ...ledge })),
     surfTiles: source.surfTiles?.map(pos => ({ ...pos })),

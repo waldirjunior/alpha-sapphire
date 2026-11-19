@@ -113,4 +113,11 @@ describe('visual scenarios', () => {
     expect(hall?.knownDefects.avatarVisible).toBeUndefined();
     expect(hall?.maxVoidRatio).toBe(0.7);
   });
+
+  it('covers the Mauville patio entrance and upper floors in Mauville and Route 119', () => {
+    const byId = new Map(VISUAL_SCENARIOS.map((scenario) => [scenario.id, scenario]));
+    expect(byId.get('z0015-mauville-patio-entry')).toMatchObject({ zone: 15, x: 2, z: 20 });
+    expect(byId.get('z0015-mauville-patio-upper-floor')).toMatchObject({ zone: 15, x: 14, z: 9, referenceGroundY: 7.5 });
+    expect(byId.get('z0046-route119-bridge-upper-floor')).toMatchObject({ zone: 46, x: 23, z: 40, referenceGroundY: 15.5 });
+  });
 });

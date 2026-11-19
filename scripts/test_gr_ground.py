@@ -4,7 +4,7 @@ import unittest
 import tempfile
 from pathlib import Path
 
-from scripts.gr_ground import collision_triangles, ground_grid, read_gr_ground
+from scripts.gr_ground import collision_triangles, ground_candidates_grid, ground_grid, read_gr_ground
 
 
 def collision_blob(triangles):
@@ -64,6 +64,12 @@ class GrGroundTests(unittest.TestCase):
     def test_overlapping_physical_layers_remain_unknown_not_max_or_min(self):
         grid = ground_grid(collision_triangles(collision_blob(plane(0) + plane(135))))
         self.assertIsNone(grid[20][2])
+
+    def test_candidate_grid_preserves_distinct_physical_heights_and_deduplicates_partition_faces(self):
+        overlap = ground_candidates_grid(collision_triangles(collision_blob(plane(0) + plane(135))))
+        repeated = ground_candidates_grid(collision_triangles(collision_blob(plane(18) * 16)))
+        self.assertEqual(overlap[20][2], [0, 7.5])
+        self.assertEqual(repeated[16][14], [1])
 
     def test_missing_surface_and_vertical_wall_remain_unknown(self):
         wall = [((0, 0, 0), (0, 36, 0), (0, 36, 36))]

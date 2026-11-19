@@ -68,6 +68,43 @@ describe('gameState', () => {
     expect(next.player.pos).toEqual({ x: 5, z: 8 });
   });
 
+  it('carries the selected bridge floor across movement and follows a continuous ramp height', () => {
+    const layeredMap: MapDefinition = {
+      id: 'layered', name: 'Layered', width: 4, height: 4,
+      collisions: Array.from({ length: 4 }, () => Array(4).fill(0)), warps: [],
+      groundHeights: Array.from({ length: 4 }, () => Array(4).fill(0)),
+      groundHeightCandidates: [
+        { x: 2, z: 1, heights: [0, 7.5] },
+        { x: 3, z: 1, heights: [0, 7.25] },
+      ],
+    };
+    const start = createInitialState('layered', { layered: layeredMap });
+    const high = movePlayer({ ...start, player: { ...start.player, pos: { x: 1, z: 1 }, groundY: 7.5 } }, 'right', { layered: layeredMap });
+    const ramp = movePlayer(high, 'right', { layered: layeredMap });
+    expect(high.player.groundY).toBe(7.5);
+    expect(ramp.player.groundY).toBe(7.25);
+  });
+
+  it('uses the incoming actor height when a warp lands on a layered interior floor', () => {
+    const outside: MapDefinition = {
+      id: 'outside', name: 'Outside', width: 4, height: 4,
+      collisions: Array.from({ length: 4 }, () => Array(4).fill(0)),
+      warps: [{ from: { x: 1, z: 1 }, targetMapId: 'interior', targetPos: { x: 2, z: 2 } }],
+      groundHeights: Array.from({ length: 4 }, () => Array(4).fill(0)),
+    };
+    const interior: MapDefinition = {
+      id: 'interior', name: 'Interior', width: 4, height: 4,
+      collisions: Array.from({ length: 4 }, () => Array(4).fill(0)), warps: [],
+      groundHeights: Array.from({ length: 4 }, () => Array(4).fill(0)),
+      groundHeightCandidates: [{ x: 2, z: 2, heights: [0, 7.5] }],
+    };
+    const initial = createInitialState('outside', { outside, interior });
+    const start = { ...initial, player: { ...initial.player, pos: { x: 1, z: 2 }, groundY: 7.4 } };
+    const arrived = movePlayer(start, 'up', { outside, interior });
+    expect(arrived.player.mapId).toBe('interior');
+    expect(arrived.player.groundY).toBe(7.5);
+  });
+
   it('uses map spawnPos and traverses extracted 40x40 Hoenn maps', () => {
     let state = createInitialState('littleroot_town', EXTRACTED_MAPS);
     expect(state.player.pos).toEqual({ x: 20, z: 14 });

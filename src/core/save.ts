@@ -60,6 +60,8 @@ function isValidGameState(value: unknown): value is GameState {
   const expression = value.player.faceExpression;
   if (expression !== undefined && (typeof expression !== 'number' ||
     !Number.isInteger(expression) || expression < 0 || expression > 7)) return false;
+  const groundY = value.player.groundY;
+  if (groundY !== undefined && (typeof groundY !== 'number' || !Number.isFinite(groundY))) return false;
   return (
     typeof value.player.mapId === 'string' &&
     isObjectRecord(value.player.pos) &&

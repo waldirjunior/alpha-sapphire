@@ -40,6 +40,16 @@ def triangle_height(triangle: tuple, x: float, z: float) -> float | None:
 
 
 def ground_grid(triangles: list[tuple]) -> list[list[float | None]]:
+    candidates = height_candidate_sets(triangles)
+    return [[unique_height(cell) for cell in row] for row in candidates]
+
+
+def ground_candidates_grid(triangles: list[tuple]) -> list[list[list[float]]]:
+    candidates = height_candidate_sets(triangles)
+    return [[unique_heights(cell) for cell in row] for row in candidates]
+
+
+def height_candidate_sets(triangles: list[tuple]) -> list[list[set[float]]]:
     candidates = [[set() for _ in range(GR_TILES)] for _ in range(GR_TILES)]
     center = GR_TILES / 2 - 0.5
     for triangle in triangles:
@@ -50,7 +60,18 @@ def ground_grid(triangles: list[tuple]) -> list[list[float | None]]:
                 height = triangle_height(triangle, (x - center) * WORLD_UNITS_PER_TILE, (z - center) * WORLD_UNITS_PER_TILE)
                 if height is not None:
                     candidates[z][x].add(round(height, 6))
-    return [[unique_height(cell) for cell in row] for row in candidates]
+    return candidates
+
+
+def unique_heights(candidates: set[float]) -> list[float]:
+    ordered = sorted(candidates)
+    groups: list[list[float]] = []
+    for height in ordered:
+        if not groups or height - groups[-1][0] > 1e-4:
+            groups.append([height])
+            continue
+        groups[-1].append(height)
+    return [round(sum(group) / len(group), 6) for group in groups]
 
 
 def unique_height(candidates: set[float]) -> float | None:

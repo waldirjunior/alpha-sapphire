@@ -36,6 +36,15 @@ describe('save serialization', () => {
     expect(loaded?.caughtCount).toBe(1);
   });
 
+  it('persists the selected floor height and rejects a malformed height reference', () => {
+    const state = createInitialState('route_101');
+    state.player.groundY = 7.5;
+    const party = [createPokemonInstance(SPECIES.torchic, 5)];
+    expect(deserializeSave(serializeSave({ version: 1, state, party, caughtCount: 0 }))?.state.player.groundY).toBe(7.5);
+    const invalid = { ...state, player: { ...state.player, groundY: '7.5' } };
+    expect(deserializeSave(JSON.stringify({ version: 1, state: invalid, party, caughtCount: 0 }))).toBeNull();
+  });
+
   it('restores numeric ROM flags and unsigned-16 works independently of manual story flags', () => {
     const state = { ...createInitialState('zone_0006'), romEvents: { flags: { 123: true }, vars: { 16384: 3 } } };
     const party = [createPokemonInstance(SPECIES.torchic, 5)];
