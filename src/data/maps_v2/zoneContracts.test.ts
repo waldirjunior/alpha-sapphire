@@ -55,6 +55,14 @@ describe('zone map contracts', () => {
     expect(zonesFailing((zone) => (zone.southLedges ?? []).every((ledge) => inside(zone, ledge)))).toEqual([]);
   });
 
+  it('keeps lateral ledges on blocked cells and observed Surf tiles on raw GR floor', () => {
+    expect(zonesFailing((zone) => (zone.lateralLedges ?? []).every((ledge) =>
+      inside(zone, ledge) && zone.collisions[ledge.z][ledge.x] === 1 &&
+      (ledge.direction === 'left' || ledge.direction === 'right')))).toEqual([]);
+    expect(zonesFailing((zone) => (zone.surfTiles ?? []).every((tile) =>
+      inside(zone, tile) && zone.collisions[tile.z][tile.x] === 0))).toEqual([]);
+  });
+
   it('resolves every actor model ID across all 536 zones to a valid MM index (0..509)', () => {
     const invalid = [...ZONES.values()].flatMap((zone) =>
       zone.npcs

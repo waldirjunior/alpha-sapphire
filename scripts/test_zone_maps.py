@@ -93,6 +93,27 @@ class ZoneCompositionTests(unittest.TestCase):
         self.assertEqual(result['collisions'][7][12], 1)
         self.assertEqual(result['collisions'][5][50], 1)
 
+    def test_extracts_only_observed_lateral_ledges_and_surf_water_words(self):
+        matrix = parse_matrix(matrix_blob())
+        values = [0x20000004] * 1600
+        values[5 * 40 + 10] = 0x72020021
+        values[6 * 40 + 11] = 0x73020021
+        values[7 * 40 + 12] = 0x74020021
+        values[8 * 40 + 13] = 0x72000021
+        values[9 * 40 + 14] = 0x3D1A0006
+        with tempfile.TemporaryDirectory() as folder:
+            grid = struct.pack('<HH1600I', 40, 40, *values)
+            for gr in (3, 4):
+                (Path(folder) / f'{gr:04}.bin').write_bytes(
+                    b'GR' + struct.pack('<HII', 1, 12, 12 + len(grid)) + grid)
+            result = compose_tiles(matrix, 10, (0, 0, 80, 40), Path(folder), {})
+        self.assertEqual(result.get('lateralLedges'), [
+            {'x': 10, 'z': 5, 'direction': 'right'}, {'x': 11, 'z': 6, 'direction': 'left'}])
+        self.assertEqual(result.get('surfTiles'), [{'x': 14, 'z': 9}])
+        self.assertEqual(result['collisions'][5][10], 1)
+        self.assertEqual(result['collisions'][6][11], 1)
+        self.assertEqual(result['collisions'][9][14], 0)
+
     def test_masks_neighbor_zone_even_when_gr_has_walkable_tiles(self):
         matrix = parse_matrix(matrix_blob())
         grid = (40, 40, [[0] * 40 for _ in range(40)], [[2] * 40 for _ in range(40)], [[0] * 40 for _ in range(40)], [[0] * 40 for _ in range(40)])

@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { createInitialState, movePlayer } from '../../core/gameState';
+import { createInitialState, isWalkable, movePlayer } from '../../core/gameState';
 import { createAmxWorld } from '../../core/amxMemory';
 import { createAmxState, runAmx } from '../../core/amxRunner';
 import type { AmxBundle } from '../../core/amxTypes';
@@ -42,6 +42,43 @@ function route121ProgressFixture() {
   return runAmx(bundle, createAmxState(bundle, 'fixture', 0, createAmxWorld(0, 50)));
 }
 
+it('follows the observed 72 and 73 ledge directions in the extracted corridor maps', async () => {
+  const maps = await corridorMaps([45, 52]);
+  const route118 = checkpoint('zone_0045', { x: 18, z: 22 }, maps);
+  const east = movePlayer(route118, 'right', maps);
+  expect(east.player.pos).toEqual({ x: 20, z: 22 });
+  expect(maps.zone_0045.collisions[22][19]).toBe(1);
+  expect(movePlayer(checkpoint('zone_0045', { x: 20, z: 22 }, maps), 'left', maps).player.pos)
+    .toEqual({ x: 20, z: 22 });
+
+  const route123 = checkpoint('zone_0052', { x: 79, z: 28 }, maps);
+  expect(movePlayer(route123, 'left', maps).player.pos).toEqual({ x: 77, z: 28 });
+  expect(movePlayer(checkpoint('zone_0052', { x: 77, z: 28 }, maps), 'right', maps).player.pos)
+    .toEqual({ x: 77, z: 28 });
+  expect(maps.zone_0052.collisions[28][78]).toBe(1);
+});
+
+it('keeps observed GR water blocked on foot and preserves the collision grid', async () => {
+  const maps = await corridorMaps([45]);
+  const route118 = maps.zone_0045;
+  const shore = checkpoint('zone_0045', { x: 41, z: 16 }, maps);
+
+  expect(route118.collisions[16][42]).toBe(0);
+  expect(route118.surfTiles).toContainEqual({ x: 42, z: 16 });
+  expect(isWalkable(route118, { x: 42, z: 16 })).toBe(false);
+  expect(movePlayer(shore, 'right', maps).player.pos).toEqual({ x: 41, z: 16 });
+});
+
+it('preserves the observed foot refusals at 6e and 6f without claiming bike access', async () => {
+  const maps = await corridorMaps([47, 18]);
+  expect(maps.zone_0047.collisions[22][41]).toBe(1);
+  expect(movePlayer(checkpoint('zone_0047', { x: 42, z: 22 }, maps), 'left', maps).player.pos)
+    .toEqual({ x: 42, z: 22 });
+  expect(maps.zone_0018.collisions[13][74]).toBe(1);
+  expect(movePlayer(checkpoint('zone_0018', { x: 74, z: 12 }, maps), 'down', maps).player.pos)
+    .toEqual({ x: 74, z: 12 });
+});
+
 it('preserves native MM contacts and the Route122 leg instead of inventing Route123 to Route121', async () => {
   const maps = await corridorMaps([45, 47, 46, 48, 49, 50, 51, 52, 18]);
   expect(maps.zone_0045.name).toBe('Route 118');
@@ -58,15 +95,14 @@ it('preserves native MM contacts and the Route122 leg instead of inventing Route
   expect(maps.zone_0051.warps.map(w => w.targetMapId)).toEqual(['zone_0086', 'zone_0050', 'zone_0052']);
 });
 
-it('navigates the current core from Mauville to Route119 south without claiming Surf or terrain parity', async () => {
+it('walks from the native Mauville spawn to Route118, then stops at water without Surf', async () => {
   const maps = await corridorMaps([15, 445, 45, 47]);
-  let state = checkpoint('zone_0015', { x: 17, z: 22 }, maps);
-  for (const target of ['zone_0445', 'zone_0045', 'zone_0047']) {
-    const next = reachZone(state, target, maps);
-    expect(next).toBeDefined();
-    if (next) state = next;
-  }
-  expect(state.player).toMatchObject({ mapId: 'zone_0047', pos: { x: 37, z: 90 } });
+  const start = createInitialState('zone_0015', maps);
+  const route118 = reachZone(start, 'zone_0045', maps);
+
+  expect(route118?.player.mapId).toBe('zone_0045');
+  expect(route118 && maps.zone_0045.surfTiles?.length).toBeGreaterThan(0);
+  expect(route118 && reachZone(route118, 'zone_0047', maps)).toBeUndefined();
 });
 
 it.each([false, true])('keeps Route119 south to north blocked, actors omitted only in diagnostic=%s', async diagnostic => {

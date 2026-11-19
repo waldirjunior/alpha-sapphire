@@ -5,6 +5,7 @@ import {
   findTriggeredTrainer,
   interact,
   isTallGrass,
+  isWalkable,
   movePlayer,
 } from './gameState';
 import type { MapDefinition } from './types';
@@ -47,6 +48,16 @@ describe('gameState', () => {
     state = movePlayer(state, 'left', TEST_MAPS);
     expect(state.player.pos).toEqual({ x: 1, z: 5 });
     expect(state.player.facing).toBe('left');
+  });
+
+  it('keeps the observed Surf water code blocked on foot despite its raw GR collision value', () => {
+    const waterMap = { ...TEST_MAPS.littleroot_town, surfTiles: [{ x: 6, z: 5 }] };
+    const maps = { ...TEST_MAPS, littleroot_town: waterMap };
+    const state = createInitialState('littleroot_town', maps);
+
+    expect(waterMap.collisions[5][6]).toBe(0);
+    expect(isWalkable(waterMap, { x: 6, z: 5 })).toBe(false);
+    expect(movePlayer(state, 'right', maps).player.pos).toEqual({ x: 5, z: 5 });
   });
 
   it('triggers warp transition between maps', () => {
