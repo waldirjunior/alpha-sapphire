@@ -1076,4 +1076,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro:** procurar os IDs altos no banco MM (`a/0/2/1`) deixava pedidos como 8192 e 4153 sem modelo; passar o contêiner BM inteiro ao conversor também falha porque o Spica precisa da primeira seção BCH, não das seções posteriores.
 - **Regra:** somente prefixos `0x1000` e `0x2000` com sufixo abaixo de 380 resolvem para a mesma entrada numerada de `a/0/2/3`; `scripts/object_models.py` extrai sua primeira seção BCH, `scripts/convert_object_models.py` gera GLBs locais e `scripts/stage_zone_assets.py --objects-only` os copia para `public/assets/objects/`. Mantenha ROM, modelos convertidos e capturas locais e ignorados pelo Git.
 
+## A-105 Corredor e2e longo deve sincronizar pelo estado, não por pausa fixa a cada tile
+
+- **Data:** 2026-11-19; PRD-006–013, `e2e/corridor.spec.ts`.
+- **Erro reproduzido:** manter `waitForTimeout(45)` após cada movimento fez o trajeto completo exceder o timeout de 360 s sem falha de navegação; o page snapshot ainda mostrava o jogador percorrendo o caminho esperado.
+- **Regra:** aguardar avanço da posição persistida após cada tecla, repetir somente quando não houver movimento e recalcular a rota se o estado avançar para outro tile; aguardar opacidade efetiva da cena em transições de zona. Evitar pausas fixas por tile em caminhadas longas.
+- **Evidência:** removida a espera fixa por passo e incluído recálculo após avanço inesperado; o corredor Littleroot–Lavaridge passou em 5,5 min, incluindo as mesmas transições e fixtures.
+
 
