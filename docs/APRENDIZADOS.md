@@ -1069,4 +1069,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro:** `gr_gr_0511` (`27/30` materiais), `gr_gr_0512` (`9/12`) e `gr_gr_0506` (`8/31`) saem do Spica/PICA com `emissiveFactor=[1, 1, 1]` sem `emissiveTexture`; no `MeshStandardMaterial` do Three.js isso soma branco puro sobre o difuso.
 - **Regra:** em `fixOrasMaterials` (`src/engine/picaMaterials.ts`), zerar `mat.emissive` sempre que houver `mat.map` sem `mat.emissiveMap`; renderizar tufos 3D via `InstancedMesh` em `src/engine/tallGrass.ts` sobre células `terrain === 2`; e resolver falas/cura/reabastecimento determinísticos em `src/core/npcInteractions.ts` quando a zona ainda não tiver imagem AMX carregada.
 
+## A-104 Corredor e2e longo deve sincronizar pelo estado, não por pausa fixa a cada tile
+
+- **Data:** 2026-11-19; PRD-006–013, `e2e/corridor.spec.ts`.
+- **Erro reproduzido:** manter `waitForTimeout(45)` após cada movimento fez o trajeto completo exceder o timeout de 360 s sem falha de navegação; o page snapshot ainda mostrava o jogador percorrendo o caminho esperado.
+- **Regra:** aguardar avanço da posição persistida após cada tecla, repetir somente quando não houver movimento e recalcular a rota se o estado avançar para outro tile; aguardar opacidade efetiva da cena em transições de zona. Evitar pausas fixas por tile em caminhadas longas.
+- **Evidência:** removida a espera fixa por passo e incluído recálculo após avanço inesperado; o corredor Littleroot–Lavaridge passou em 5,5 min, incluindo as mesmas transições e fixtures.
+
 

@@ -33,3 +33,18 @@ externa bloqueada de cada lado: a ponte liga Oldale x=1 a Route102 x=78 nas
 linhas 20–22. O offset 78 faz o passo medir um tile mundial e não altera os grids.
 As bordas intra-MM são automáticas; outras ligações entre matrizes não são inferidas.
 Flags/VM/diálogos e paridade no emulador permanecem em P-013/P-017.
+
+## Corredor ampliado versionado (2026-11-19)
+
+`e2e/corridor.spec.ts` inicia no spawn natural de Littleroot após a intro e
+percorre Petalburg, Rustboro, Verdanturf, Mauville, Slateport, Fallarbor,
+Meteor Falls, o bondinho e Lavaridge por teclado. Antes de cada trecho
+condicional, confirma o bloqueio; depois usa apenas as fixtures já evidenciadas
+nos PRDs 010–013: tombstones derivados de Rock Smash, fatias AMX limitadas para
+Rusturf/Route110/flag 666 e `_MapChangeCore` pós-demo para o bondinho. O teste
+recarrega o save nos marcos e não grava capturas.
+
+Verificação em `corridor-e2e`: `npx playwright test e2e/corridor.spec.ts` —
+1 teste passou em 5,5 min; `npm run verify` — 429 Vitest passaram, build passou
+com o aviso conhecido de chunks acima de 500 kB e 224 testes Python passaram
+com 1 skip por ausência de assets locais no worktree.
