@@ -17,6 +17,8 @@ export interface DexSpecies {
   dexNumber: number;
   form: number;
   name: string;
+  /** Estágio evolutivo extraído da ROM; 3 representa uma forma final. */
+  evolutionStage: number;
   types: readonly ElementalType[];
   baseStats: DexBaseStats;
   abilities: readonly string[];
@@ -59,6 +61,7 @@ export interface DexMove {
   target: number;
   /** Estágio de crítico do golpe (0 normal, 1 alta taxa como Slash/Crabhammer, 3+ sempre). */
   critStage: number;
+  contact: boolean;
   statChanges: readonly DexStatChange[];
 }
 
@@ -91,6 +94,7 @@ function toDexSpecies(raw: RawSpecies): DexSpecies {
     ...rest,
     id: speciesSlug(raw.name, raw.form),
     dexNumber: species,
+    evolutionStage: raw.evolutionStage ?? 3,
     types: [...new Set(types.map(toElementalType))],
   };
 }
@@ -104,6 +108,7 @@ function toDexMove(raw: RawMove): DexMove {
   return {
     ...rest,
     healPercent: toSignedByte(healing),
+    contact: ((raw.flags ?? 0) & 0x10000) !== 0,
     type: toElementalType(raw.type),
     category: toMoveCategory(raw.category, raw.name),
   };

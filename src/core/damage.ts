@@ -1,5 +1,7 @@
 import type { BattleMove, PokemonInstance } from './battlePokemon';
 import type { DexMove } from './dex';
+import { abilityImmunity, attackingAbilityMultiplier, defendingAbilityMultiplier, movePowerAbilityMultiplier, stabMultiplier } from './battleAbilities';
+import { lifeOrbMultiplier } from './battleHeldItems';
 import { statStageMultiplier } from './statStages';
 import { rollInRange, type Rng } from './statusConditions';
 import { getTypeEffectivenessAgainst, type ElementalType } from './typeChart';
@@ -12,7 +14,6 @@ import {
 } from './battleField';
 
 export const STRUGGLE_MOVE_ID = 165;
-const STAB = 1.5;
 // Gen VI: estágio 0 = 1/16, 1 = 1/8, 2 = 1/2, 3+ = sempre; dano crítico ×1.5.
 const CRIT_CHANCE_BY_STAGE: readonly number[] = [1 / 16, 1 / 8, 1 / 2, 1];
 const CRIT_MULTIPLIER = 1.5;
@@ -40,6 +41,7 @@ export function getTypeEffectiveness(moveType: ElementalType, defenderTypes: rea
 
 /** Struggle é "sem tipo" na Gen VI: ignora efetividade e STAB. */
 export function moveEffectiveness(move: DexMove, defender: PokemonInstance): number {
+  if (abilityImmunity(defender, move.type)) return 0;
   if (move.type === 'ground' && defender.ability === 'Levitate') return 0;
   return move.id === STRUGGLE_MOVE_ID ? 1 : getTypeEffectiveness(move.type, defender.species.types);
 }
@@ -50,7 +52,7 @@ function attackingStat(attacker: PokemonInstance, move: DexMove, critical: boole
   const raw = physical ? attacker.attack : attacker.spAtk;
   const rawStage = physical ? attacker.stages.atk : attacker.stages.spa;
   const stage = critical ? Math.max(0, rawStage) : rawStage;
-  return Math.max(1, Math.floor(raw * statStageMultiplier(stage)));
+  return Math.max(1, Math.floor(raw * statStageMultiplier(stage) * attackingAbilityMultiplier(attacker, move)));
 }
 
 function defendingStat(
@@ -65,14 +67,15 @@ function defendingStat(
   const rawStage = physical ? defender.stages.def : defender.stages.spd;
   const stage = critical ? Math.min(0, rawStage) : rawStage;
   const sandstormBoost = physical ? 1 : rockSpecialDefenseMultiplier(defender, weather, weatherSuppressed);
-  return Math.max(1, Math.floor(raw * statStageMultiplier(stage) * sandstormBoost));
+  return Math.max(1, Math.floor(raw * statStageMultiplier(stage) * sandstormBoost * defendingAbilityMultiplier(defender)));
 }
 
 function stabFor(attacker: PokemonInstance, move: DexMove): number {
-  return move.id !== STRUGGLE_MOVE_ID && attacker.species.types.includes(move.type) ? STAB : 1;
+  return stabMultiplier(attacker, move);
 }
 
 function burnFor(attacker: PokemonInstance, move: DexMove): number {
+  if (attacker.ability === 'Guts' && attacker.status) return 1;
   return attacker.status?.kind === 'burn' && move.category === 'physical' ? BURN_PHYSICAL_MULTIPLIER : 1;
 }
 
@@ -92,13 +95,14 @@ export function calculateDamage(
   const effectiveness = moveEffectiveness(move, defender);
   if (effectiveness === 0 || move.power === 0) return 0;
   const ratio = attackingStat(attacker, move, critical) / defendingStat(defender, move, critical, weather, weatherSuppressed);
-  const base = Math.floor((((2 * attacker.level) / 5 + 2) * move.power * ratio) / 50) + 2;
+  const power = move.power * movePowerAbilityMultiplier(attacker, move);
+  const base = Math.floor((((2 * attacker.level) / 5 + 2) * power * ratio) / 50) + 2;
   const randomFactor = 0.85 + 0.15 * Math.min(1, Math.max(0, rng()));
   const critMultiplier = critical ? attackerCriticalMultiplier(attacker) : 1;
   const weatherMultiplier = weatherPowerMultiplier(move.type, weather, weatherSuppressed);
   const screenMultiplier = screenDamageMultiplier(screen, move.category, critical);
   const modifier = critMultiplier * stabFor(attacker, move) * effectiveness * burnFor(attacker, move)
-    * starterAbilityFor(attacker, move) * weatherMultiplier * screenMultiplier * randomFactor;
+    * starterAbilityFor(attacker, move) * lifeOrbMultiplier(attacker) * weatherMultiplier * screenMultiplier * randomFactor;
   return Math.max(1, Math.floor(base * modifier));
 }
 

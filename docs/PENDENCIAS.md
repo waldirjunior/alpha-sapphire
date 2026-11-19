@@ -129,11 +129,22 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
   geração, as quatro opções e o cancelamento/aceite. `npm run verify` passou com
   544 testes Vitest, build e 233 testes Python (1 skip); o smoke Playwright
   passou (7/7).
-- **Ainda não simulado:** Substitute, outros voláteis (`atração`, Disable,
-  Yawn, Perish Song etc.) e golpes restantes ainda sem efeito; habilidades e
-  itens segurados restantes; IA de troca do treinador; bônus de troca na XP e
-  evoluções por troca (não há troca no jogo); evoluções por sexo, item segurado,
-  local, afeição, clima, Beauty, Shedinja e 3DS invertido; UI de item evolutivo;
+- **Atualização 2026-11-19 (Substitute, itens, habilidades e troca da IA):**
+  Substitute paga 1/4 do HP máximo, absorve dano e impede status; Fly, Dig e
+  Solar Beam guardam o golpe carregado e executam no turno seguinte. Leftovers,
+  Life Orb, Focus Sash, Choice Band/Specs/Scarf, Sitrus/Oran Berry e Eviolite
+  aplicam seus efeitos, incluindo consumo de sash/berries e trava de golpe dos
+  itens Choice. Technician, Guts, Adaptability, Huge/Pure Power, Rock Head,
+  Speed Boost, Static, Flame Body, Poison Point, Flash Fire, Water Absorb e
+  Volt Absorb entram no cálculo/turno; a IA de treinador troca quando um reserva
+  tem vantagem clara. `battleGen6Completion.test.ts` cobre as mecânicas e
+  `src/ai/battleParity.test.ts` fixa vetores determinísticos de dano.
+  `npm run verify` passou: 555 testes Vitest, build e 233 testes Python (1 skip);
+  a catraca de cobertura de `src/core` passou.
+- **Ainda não simulado:** outros voláteis (`atração`, Disable, Yawn, Perish Song
+  etc.) e golpes restantes ainda sem efeito; bônus de troca na XP e evoluções por
+  troca (não há troca no jogo); evoluções por sexo, item segurado, local,
+  afeição, clima, Beauty, Shedinja e 3DS invertido; UI de item evolutivo;
   taxas reais de slot de encontro e sub-tabelas de surf/pesca/horda; IVs fixos
   por classe de treinador. O cálculo de captura crítica recebe
   `caughtSpeciesCount`, mas o host ainda não fornece a contagem de espécies
