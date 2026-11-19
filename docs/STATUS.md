@@ -8,7 +8,7 @@ Verificado em 2026-11-19 (macOS; suporte headless Linux validado anteriormente n
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 473 em 72 arquivos, todos passando | `npm test` |
+| Testes unitários (Vitest) | 486 em 74 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | 95,9% linhas, 85,4% branches (catraca em 95/85) | `npm run test:coverage` |
 | Testes do pipeline e do oráculo (Python) | 232 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
 | Jogo real no browser (smoke + campanha + corredor) | 6 smoke (`e2e/smoke.spec.ts`), campanha New Game → Birch (`e2e/campaign.spec.ts`) e corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
@@ -30,10 +30,10 @@ Atores com ID de objeto (`0x1000`/`0x2000` via `a/0/2/1` e tabela em `DllField.c
 
 | Limite | Pendência |
 | --- | --- |
-| Campanha após o laboratório de Birch ainda depende de mais eventos/callbacks AMX; New Game → Rota 101 → batalha inicial → laboratório já roda naturalmente (`e2e/campaign.spec.ts`), e diálogo de NPC fecha com 1 Enter (`TalkMdlMsg_Seq` + `LastKeyWait`). | P-013 |
+| Campanha após o laboratório de Birch ainda depende de mais eventos/callbacks AMX; `spawnFlag` inicial (331 flags do bootstrap em `createInitialAmxFlags`), New Game → Rota 101 → batalha inicial → laboratório → Oldale → Rota 102 já rodam (`e2e/campaign.spec.ts`), e diálogo de NPC fecha com 1 Enter (`TalkMdlMsg_Seq` + `LastKeyWait`). | P-013 |
 | Permissões de movimento para bike e Surf (ledges laterais 72/73 já fechados) e oclusão residual por prédios (ex.: `z0015-mauville-patio`). | P-017 |
-| Iluminação, LUTs e combiners RGB dos materiais; exterior preto em cavernas. | P-007 |
-| HUD de desenvolvimento em vez dos menus do 3DS; arenas de batalha geométricas; efeitos sonoros ausentes. | P-011, P-014, P-008 |
+| Combiners RGB e valores de luz nativos PICA ainda parciais; ambiente e fundo por zona (cavernas escuras, exteriores Hoenn) já aplicados em `zoneEnvironment.ts`. | P-007 |
+| Dock PokéNav/menus estilo 3DS (`P-011`) entregues; falta aba do Mapa de Hoenn e paridade visual pixel a pixel com Azahar. Arenas de batalha geométricas e efeitos sonoros ausentes. | P-011, P-014, P-008 |
 
 ## Frentes pausadas
 
