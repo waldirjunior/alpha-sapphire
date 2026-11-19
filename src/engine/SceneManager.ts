@@ -2,59 +2,24 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BattleState } from '../core/battle';
 import type { PokemonType } from '../data/pokemon/species';
-import { createBattleArena, type BattleArena } from './battleArena';
+import { createBattleArena, updateBattleCamera, type BattleArena } from './battleArena';
 import type { GameState, MapDefinition } from '../core/types';
 import { loadZoneTerrain } from './zoneTerrain';
+import { buildTallGrassGroup } from './tallGrass';
 import { advanceActorPosition, appendMapEntities, eventActorRoot, syncMapEntities, FACING_YAW } from './zoneEntities';
 import { CharacterExpressions } from './characterExpressions';
 import { ContinuousTerrain } from './continuousTerrain';
 import { groundedWorldPosition } from '../core/groundHeight';
-import { applyNativePicaAlpha, picaMaterialModelUrl } from './picaMaterials';
+import { fixOrasMaterials, picaMaterialModelUrl } from './picaMaterials';
 import { NativeAnimationController } from './nativeAnimation';
 import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import type { BattleEvent } from '../core/battleEvents';
 import { EventPresentation } from './eventPresentation';
 
+export { fixOrasMaterials };
+
 const ORAS_TILE_UNITS = 18;
 const POKEMON_SCALE = 1 / 25;
-
-// P-007: .glb de mapas gerados por convert_gr_to_glb.py trazem `extras.pica` e o
-// alphaMode/alphaCutoff derivados do BlendFunction/AlphaTest do PICA200. Nesse caso o
-// GLTFLoader já configurou transparência e recorte; só falta impedir depthWrite em BLEND.
-function applyPicaAlphaState(mat: THREE.MeshStandardMaterial): void {
-  if (applyNativePicaAlpha(mat)) return;
-  if (mat.transparent) mat.depthWrite = false;
-}
-
-// Modelos sem metadado PICA (personagens, Pokémon) mantêm a heurística anterior.
-function applyLegacyAlphaState(mat: THREE.MeshStandardMaterial): void {
-  if (!mat.map) return;
-  if (/kage|shadow/i.test(mat.name)) {
-    mat.transparent = true;
-    mat.alphaTest = 0.02;
-    mat.depthWrite = false;
-    return;
-  }
-  mat.alphaTest = 0.45;
-  mat.transparent = false;
-}
-
-export function fixOrasMaterials(root: THREE.Object3D, preserveGltfAlpha = false): void {
-  root.traverse((obj) => {
-    if (!(obj instanceof THREE.Mesh)) return;
-    const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
-    for (const mat of mats) {
-      if (!(mat instanceof THREE.MeshStandardMaterial)) continue;
-      mat.side = THREE.DoubleSide;
-      mat.roughness = 0.92;
-      mat.metalness = 0.0;
-      if (mat.map) mat.map.colorSpace = THREE.SRGBColorSpace;
-      if (preserveGltfAlpha || mat.userData.pica === true) applyPicaAlphaState(mat);
-      else applyLegacyAlphaState(mat);
-      mat.needsUpdate = true;
-    }
-  });
-}
 
 export interface SceneInspection {
   readonly scene: THREE.Scene;
@@ -73,6 +38,7 @@ export class SceneManager {
   private renderer: THREE.WebGLRenderer;
   private playerRoot: THREE.Group;
   private terrainGroup: THREE.Group;
+  private tallGrassGroup: THREE.Group;
   private entitiesGroup: THREE.Group;
   private battleGroup: THREE.Group;
   private battleArena!: BattleArena;
@@ -131,7 +97,9 @@ export class SceneManager {
     this.scene.add(sun);
 
     this.terrainGroup = new THREE.Group();
+    this.tallGrassGroup = new THREE.Group();
     this.entitiesGroup = new THREE.Group();
+    this.entitiesGroup.add(this.tallGrassGroup);
     this.scene.add(this.terrainGroup, this.entitiesGroup);
 
     this.playerRoot = new THREE.Group();
@@ -216,6 +184,8 @@ export class SceneManager {
   private resetEntities(): void {
     this.characterExpressions.clear(this.entitiesGroup);
     this.entitiesGroup.clear();
+    this.tallGrassGroup.clear();
+    this.entitiesGroup.add(this.tallGrassGroup);
     for (const actor of this.entityActors) actor.dispose();
     this.entityActors = [];
     this.renderedZones.clear();
@@ -223,6 +193,8 @@ export class SceneManager {
 
   private buildEntities(map: MapDefinition, append = false): void {
     if (!append) this.resetEntities();
+    const grass = buildTallGrassGroup(map);
+    if (grass) this.tallGrassGroup.add(grass);
     appendMapEntities(map, this.entitiesGroup,
       (url, target) => this.loadCharacterModel(url, target, false, '/assets/characters/npc/npc.glb'));
   }
@@ -318,6 +290,7 @@ export class SceneManager {
     const active = battle !== null;
     this.inBattle = active;
     this.terrainGroup.visible = !active;
+    this.tallGrassGroup.visible = !active;
     this.entitiesGroup.visible = !active;
     this.playerRoot.visible = !active;
     this.battleGroup.visible = active;
@@ -328,8 +301,7 @@ export class SceneManager {
       return;
     }
 
-    this.camera.position.set(-3.6, 2.5, 4.4);
-    this.camera.lookAt(0.4, 0.8, -0.4);
+    updateBattleCamera(this.camera, this.clock.elapsedTime);
 
     const key = `${battle.playerActive}:${battle.enemyActive}:${battle.player.species.id}:${battle.enemy.species.id}`;
     if (this.currentBattleKey === key) return;
@@ -346,11 +318,12 @@ export class SceneManager {
     this.battleLoads = [];
   }
 
-  public async playBattleEvents(events: readonly BattleEvent[]): Promise<void> {
+  public async playBattleEvents(events: readonly BattleEvent[], enemyMoveType: PokemonType = 'normal'): Promise<void> {
     const version = this.battleLoadVersion;
     await Promise.all(this.battleLoads);
     for (const event of events) {
       if (!this.inBattle || version !== this.battleLoadVersion) return;
+      if (event.type === 'move' && event.side === 'enemy') this.playAttackEffect(enemyMoveType, 'enemy');
       const slot = event.side === 'player' ? this.battlePlayerSlot : this.battleEnemySlot;
       await this.battleActors.get(slot)?.playEvent(event);
     }
@@ -361,11 +334,19 @@ export class SceneManager {
     this.battleGroup.add(this.battleArena.group);
   }
 
-  public playAttackEffect(type: PokemonType): void {
+  public playAttackEffect(type: PokemonType, attacker: 'player' | 'enemy' = 'player'): void {
     if (!this.inBattle) return;
-    const from = this.battlePlayerSlot.position.clone().setY(1);
-    const to = this.battleEnemySlot.position.clone().setY(1);
-    this.battleArena.effects.play(type, from, to);
+    const fromSlot = attacker === 'player' ? this.battlePlayerSlot : this.battleEnemySlot;
+    const toSlot = attacker === 'player' ? this.battleEnemySlot : this.battlePlayerSlot;
+    this.battleArena.effects.play(type, fromSlot.position.clone().setY(1), toSlot.position.clone().setY(1));
+  }
+
+  public playPokeballEffect(): void {
+    if (!this.inBattle) return;
+    this.battleArena.effects.playPokeball(
+      this.battlePlayerSlot.position.clone().setY(1.1),
+      this.battleEnemySlot.position.clone().setY(0.8)
+    );
   }
 
   private loadCharacterModel(url: string, target: THREE.Group, isPlayer = false, fallbackUrl?: string): void {
@@ -479,6 +460,7 @@ export class SceneManager {
       this.playerAnim?.mixer.update(dt);
       for (const actor of this.entityActors) actor.mixer.update(dt);
     } else {
+      updateBattleCamera(this.camera, this.clock.elapsedTime);
       for (const actor of this.battleActors.values()) actor.mixer.update(dt);
       this.battleArena.effects.update(dt);
     }

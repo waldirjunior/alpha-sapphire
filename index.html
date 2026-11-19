@@ -217,6 +217,7 @@
         background: transparent;
         pointer-events: none;
         align-items: flex-end;
+        padding: 6px;
       }
       #battle-overlay.open,
       #intro-overlay.open {
@@ -235,6 +236,10 @@
         box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
       }
       #battle-card {
+        width: min(760px, calc(100% - 16px));
+        padding: 10px 14px;
+        gap: 6px;
+        background: rgba(15, 23, 42, 0.88);
         border-color: #f59e0b;
       }
       .intro-genders {
@@ -288,35 +293,42 @@
       .truck-shaking {
         animation: truckShake 0.45s infinite;
       }
+      .battle-status-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
       .battle-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 12px;
-        padding: 10px 12px;
+        gap: 10px;
+        padding: 5px 10px;
         border-radius: 8px;
-        background: #1e293b;
+        background: rgba(30, 41, 59, 0.92);
+        font-size: 12px;
       }
       #battle-log {
-        min-height: 70px;
-        max-height: 110px;
+        min-height: 28px;
+        max-height: 44px;
         overflow-y: auto;
-        font-size: 13px;
-        line-height: 1.5;
+        font-size: 12px;
+        line-height: 1.35;
         color: #cbd5e1;
       }
       #battle-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 6px;
       }
       #battle-actions button {
-        padding: 8px 14px;
+        padding: 6px 11px;
         border-radius: 8px;
         border: 1px solid #38bdf8;
         background: #1e293b;
         color: #f8fafc;
         cursor: pointer;
+        font-size: 12px;
         font-weight: 600;
       }
       #battle-actions button:hover {
@@ -360,8 +372,10 @@
 
     <div id="battle-overlay" role="dialog" aria-modal="true">
       <div id="battle-card">
-        <div class="battle-row" id="battle-enemy"></div>
-        <div class="battle-row" id="battle-player"></div>
+        <div class="battle-status-grid">
+          <div class="battle-row" id="battle-enemy"></div>
+          <div class="battle-row" id="battle-player"></div>
+        </div>
         <div id="battle-log"></div>
         <div id="battle-actions"></div>
       </div>

@@ -25,10 +25,7 @@ import type { Direction } from './core/types';
 import { zoneMaps, startingMapId, saveStorageKey } from './data/maps_v2/runtime';
 import { stepWarp } from './core/warps';
 import { transitionMap } from './engine/mapTransition';
-import { grassTableFromZone } from './core/wildPokemon';
-
-import { getSpeciesByDex } from './core/dex';
-import { buildZoneEncounterTables, generatePokemon, resolveEncounterTable, type ZoneEncounterSource } from './core/wildPokemon';
+import { generatePokemon, grassTableFromZone, resolveEncounterTable } from './core/wildPokemon';
 import { MAP_ENCOUNTERS, type WildEncounterEntry } from './data/pokemon/route101';
 import { findRosterSpecies, SPECIES } from './data/pokemon/species';
 import { SceneManager } from './engine/SceneManager';
@@ -38,27 +35,16 @@ import { JINGLES, leveledUpDuring, resolveCurrentMusic } from './core/battleAudi
 import { MAP_ZONE_IDS } from './data/audio/mapZones';
 import { createGameEvents } from './engine/gameEvents';
 import { facingNpc, mapEntryReason } from './engine/eventHost';
+import { resolveNpcInteraction } from './core/npcInteractions';
+import { loadZoneTextLines } from './engine/zoneTextBank';
+import { loadZoneEncounters, resolveRosterSpeciesId } from './engine/zoneEncounterLoader';
 
 const MAPS = zoneMaps.maps;
 const START_MAP_ID = startingMapId(window.location.search);
 let moving = false;
 
-// Zonas extraídas da ROM (src/data/zones/*.json, A-009) são opcionais: sem elas vale MAP_ENCOUNTERS.
-const ZONE_FILES = import.meta.glob<ZoneEncounterSource>('./data/zones/*.json', { import: 'default' });
 let zoneEncounterTables: Record<string, WildEncounterEntry[]> = {};
-
-function resolveRosterSpeciesId(dexNumber: number, form: number): string | null {
-  const species = getSpeciesByDex(dexNumber, form);
-  return findRosterSpecies(species.id) ? species.id : null;
-}
-
-async function loadZoneEncounters(mapIds: readonly string[]): Promise<void> {
-  const wanted = Object.entries(ZONE_FILES).filter(([path]) => mapIds.some((mapId) => path.endsWith(`_${mapId}.json`)));
-  const zones = await Promise.all(wanted.map(([, load]) => load()));
-  zoneEncounterTables = buildZoneEncounterTables(zones, resolveRosterSpeciesId);
-}
-
-void loadZoneEncounters(Object.keys(MAPS));
+void loadZoneEncounters(Object.keys(MAPS)).then((tables) => { zoneEncounterTables = tables; });
 
 const app = document.getElementById('app');
 const hudPos = document.getElementById('hud-pos');
@@ -226,7 +212,7 @@ function renderBattle(): void {
         battleActions.querySelectorAll('button').forEach((button) => { button.disabled = true; });
         sceneManager.playAttackEffect(move.type);
         try {
-          await sceneManager.playBattleEvents(next.events ?? []);
+          await sceneManager.playBattleEvents(next.events ?? [], before.enemy.moves[0]?.type ?? 'normal');
           if (activeBattle === before) activeBattle = next;
         } finally {
           battleAnimating = false;
@@ -279,6 +265,7 @@ function renderBattle(): void {
         const consumed = consumePokeball(bag);
         if (!consumed.ok) return;
         bag = consumed.bag;
+        sceneManager.playPokeballEffect();
         activeBattle = throwPokeball(activeBattle);
         syncPartyFromBattle();
         if (activeBattle.status === 'caught') {
@@ -596,7 +583,14 @@ window.addEventListener('keydown', async (event) => {
     const npc = !state.activeDialogue && facingNpc(state.player, MAPS[state.player.mapId]);
     if (npc) {
       if (!await zoneEvents.interact(npc)) {
-        state = { ...state, activeDialogue: { sourceId: npc.id, text: 'Olá! Bem-vindo a Hoenn.' } };
+        const lines = await loadZoneTextLines(MAPS[state.player.mapId]?.zoneId);
+        const outcome = resolveNpcInteraction(npc, state.player.mapId, lines);
+        if (outcome.healed) { party = healParty(party); playJingle(JINGLES.heal); }
+        if (outcome.restockItems) {
+          bag = addBagItem(bag, 'potions', outcome.restockItems.potions);
+          bag = addBagItem(bag, 'pokeballs', outcome.restockItems.pokeballs);
+        }
+        state = { ...state, activeDialogue: { sourceId: npc.id, text: outcome.text } };
         syncUi();
       }
       return;

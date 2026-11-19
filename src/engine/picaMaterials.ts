@@ -29,3 +29,40 @@ export function applyNativePicaAlpha(material: THREE.MeshStandardMaterial): bool
   material.blendDstAlpha = profile.alphaBlend === 'source-alpha' ? THREE.OneMinusSrcAlphaFactor : THREE.ZeroFactor;
   return true;
 }
+
+function applyPicaAlphaState(mat: THREE.MeshStandardMaterial): void {
+  if (applyNativePicaAlpha(mat)) return;
+  if (mat.transparent) mat.depthWrite = false;
+}
+
+function applyLegacyAlphaState(mat: THREE.MeshStandardMaterial): void {
+  if (!mat.map) return;
+  if (/kage|shadow/i.test(mat.name)) {
+    mat.transparent = true;
+    mat.alphaTest = 0.02;
+    mat.depthWrite = false;
+    return;
+  }
+  mat.alphaTest = 0.45;
+  mat.transparent = false;
+}
+
+export function fixOrasMaterials(root: THREE.Object3D, preserveGltfAlpha = false): void {
+  root.traverse((obj) => {
+    if (!(obj instanceof THREE.Mesh)) return;
+    const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+    for (const mat of mats) {
+      if (!(mat instanceof THREE.MeshStandardMaterial)) continue;
+      mat.side = THREE.DoubleSide;
+      mat.roughness = 0.92;
+      mat.metalness = 0.0;
+      if (mat.map) {
+        mat.map.colorSpace = THREE.SRGBColorSpace;
+        if (!mat.emissiveMap) mat.emissive.setScalar(0);
+      }
+      if (preserveGltfAlpha || mat.userData.pica === true) applyPicaAlphaState(mat);
+      else applyLegacyAlphaState(mat);
+      mat.needsUpdate = true;
+    }
+  });
+}

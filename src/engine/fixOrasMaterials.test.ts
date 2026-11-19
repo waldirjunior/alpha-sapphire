@@ -71,4 +71,15 @@ describe('fixOrasMaterials (P-007)', () => {
     expect(mat.side).toBe(THREE.DoubleSide);
     expect(mat.map?.colorSpace).toBe(THREE.SRGBColorSpace);
   });
+
+  it('zera emissiveFactor branco sem emissiveTexture para não estourar texturas de interiores', () => {
+    const washed = textured('Comb10');
+    washed.emissive = new THREE.Color(1, 1, 1);
+    fixOrasMaterials(meshWith(washed));
+    expect(washed.emissive.getHex()).toBe(0x000000);
+
+    const untextured = new THREE.MeshStandardMaterial({ name: 'glow', emissive: new THREE.Color(1, 1, 1) });
+    fixOrasMaterials(meshWith(untextured));
+    expect(untextured.emissive.getHex()).toBe(0xffffff);
+  });
 });

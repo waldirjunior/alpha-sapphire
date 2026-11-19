@@ -76,3 +76,24 @@ test('grama alta inicia batalha selvagem; golpe e fuga devolvem ao mapa', async 
   await expectHud(page, 'Route 101 · Brendan (14, 4)');
   expect(errors).toEqual([]);
 });
+
+test('enfermeira Joy no Centro Pokémon cura a equipe ao interagir', async ({ page }) => {
+  const errors = trackPageErrors(page);
+  await bootGame(page, NO_ENCOUNTERS);
+  await finishIntro(page);
+  await page.evaluate(() => {
+    const raw = window.localStorage.getItem('alpha_sapphire_web_save_v2');
+    const save = JSON.parse(raw ?? 'null');
+    save.state.activeDialogue = undefined;
+    save.state.player = { ...save.state.player, mapId: 'zone_0228', pos: { x: 19, z: 16 }, facing: 'up' };
+    save.party[0].currentHp = 2;
+    window.localStorage.setItem('alpha_sapphire_web_save_v2', JSON.stringify(save));
+  });
+  await page.reload();
+  await expectHud(page, 'Oldale Town · Brendan (19, 16)');
+  await pressUntil(page, 'Enter', async () => ((await dialogue(page).textContent()) ?? '').includes('Enfermeira Joy:'), 5);
+  await expect(dialogue(page)).toContainText('Enfermeira Joy:');
+  const hpAfter = await page.evaluate(() => JSON.parse(window.localStorage.getItem('alpha_sapphire_web_save_v2') ?? 'null').party[0].currentHp);
+  expect(hpAfter).toBeGreaterThan(2);
+  expect(errors).toEqual([]);
+});
