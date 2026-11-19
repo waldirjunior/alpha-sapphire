@@ -35,7 +35,8 @@ test('diálogo da ROM abre no NPC, fecha e devolve o controle', async ({ page })
   await walk(page, 'ArrowDown', 1);
   await pressUntil(page, 'Enter', async () => ((await dialogue(page).textContent()) ?? '').includes('Are you off to catch Pokémon?'), 4);
   await expectBlocked(page, 'ArrowRight');
-  await pressUntil(page, 'Enter', async () => (await dialogue(page).textContent()) === '', 4);
+  await page.keyboard.press('Enter');
+  await expect(dialogue(page)).toHaveText('');
   await walk(page, 'ArrowRight', 1);
   await expectHud(page, 'Littleroot Town · Brendan (20, 1)');
   expect(errors).toEqual([]);

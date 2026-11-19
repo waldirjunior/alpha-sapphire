@@ -37,9 +37,10 @@ sem declarar que os serviços opacos foram implementados ou validados na ROM.
 - Preservar flags/vars do mundo AMX entre invocações na mesma sessão. Recriar
   atores por zona e projetar posição/direção/visibilidade de NPCs no renderer.
   NPC visível ocupa o tile; invisível não bloqueia movimento nem interação.
-- `TalkMdlMsg_Seq.args[0]` seleciona a linha do banco StoryText da zona. A janela
-  pausa até tecla; `LastKeyWait` e `_ABKeyWait` também exigem entrada explícita.
-  Texto ausente é erro nomeado, não diálogo genérico inventado como se fosse ROM.
+- `TalkMdlMsg_Seq.args[0]` seleciona e exibe a linha do banco StoryText da zona,
+  depois retorna ao script. `LastKeyWait` ou `_ABKeyWait` controla a pausa até a
+  tecla; a mesma mensagem não exige duas confirmações. Texto ausente é erro
+  nomeado, não diálogo genérico inventado como se fosse ROM.
 - `_Suspend/HALT 12` consome exatamente os frames fornecidos pela porta do host;
   no navegador, um frame corresponde a um `requestAnimationFrame`, não a uma
   suposição de taxa fixa em milissegundos.

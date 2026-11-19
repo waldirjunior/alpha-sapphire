@@ -1,6 +1,6 @@
 # PRD-003 — Execução AMX da abertura
 
-- **Estado:** Implementado no escopo headless abaixo; integração/paridade em P-013
+- **Estado:** VM e recortes do host implementados; campanha/paridade em P-013
 - **Data:** 2026-11-17
 - **Fase:** 2, continuação de PRD-002/RF-04
 - **Decisão:** [ADR-003](../adrs/ADR-003-vm-pawn-e-efeitos-do-host.md)
@@ -31,10 +31,23 @@
 
 [ADR-004](../adrs/ADR-004-host-conservador-de-eventos.md) registra o recorte aprovado:
 NPCs de `maps_v2` usam vínculo AMX único com fallback explícito; `entities/case 1`
-roda na entrada, atores são projetados e texto StoryText pausa até tecla.
+roda na entrada, atores são projetados e texto StoryText é exibido. O texto
+retorna ao script; `LastKeyWait` ou `_ABKeyWait` recebe a confirmação do jogador.
 ACMD/câmera/olhar usam confirmação manual de stub, não execução de apresentação.
 Smoke real em Littleroot confirmou script 14/linha 6 após cinco confirmações,
 com zero pageerror; 160 Vitest/25 arquivos e build passaram.
+
+## Diálogo do NPC com uma confirmação (2026-11-19)
+
+O host completa `TalkMdlMsg_Seq` depois de exibir o texto e deixa a pausa para
+`LastKeyWait` ou `_ABKeyWait`. O teste sintético reproduz o ciclo do host com
+ambos os natives de espera; o smoke de Littleroot confirma que um Enter fecha o
+texto e devolve o controle ao jogador.
+
+`npm run verify`: 442 Vitest, build e 229 testes Python passaram (um skip por
+assets locais ausentes). `ALPHA_E2E_PORT=5392 npx playwright test
+e2e/smoke.spec.ts`: 6/6 passaram. O build ainda avisa sobre chunks acima de
+500 kB. Campanha natural e paridade completa continuam em P-013.
 
 Continuam pendentes: memória fora das 19 imagens, bancos GameText/MsgLoad, warp
 AMX/ABI de `_MapChangeCore`, query de construções no init de Littleroot,
