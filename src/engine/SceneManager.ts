@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BattleState } from '../core/battle';
 import type { PokemonType } from '../data/pokemon/species';
-import { createBattleArena, updateBattleCamera, type BattleArena } from './battleArena';
+import { createBattleArena, playBattleAttack, playBattlePokeball, replaceBattleArena, updateBattleCamera, type BattleArena } from './battleArena';
 import type { GameState, MapDefinition } from '../core/types';
 import { loadZoneTerrain } from './zoneTerrain';
 import { buildTallGrassGroup } from './tallGrass';
@@ -64,6 +64,7 @@ export class SceneManager {
   private playerTargetPos = new THREE.Vector3();
   private lastPlayerPos = { mapId: '', x: -1, z: -1 };
   private currentMapId = '';
+  private currentMapName = '';
   private environmentMapId = '';
   private mapLoadVersion = 0;
   private currentBattleKey = '';
@@ -261,6 +262,7 @@ export class SceneManager {
 
     const map = maps[state.player.mapId];
     if (!map) return;
+    this.currentMapName = map.name;
     if (this.environmentMapId !== map.id) {
       this.environmentMapId = map.id;
       this.applyZoneEnvironment(map.id);
@@ -325,10 +327,12 @@ export class SceneManager {
     if (!battle) {
       this.currentBattleKey = '';
       this.clearBattleAnimations();
+      this.battleArena.cameraMotion.cancel();
       return;
     }
 
-    updateBattleCamera(this.camera, this.clock.elapsedTime);
+    this.battleArena = replaceBattleArena(this.battleGroup, this.battleArena, this.currentMapName, this.currentMapId);
+    updateBattleCamera(this.camera, this.clock.elapsedTime, this.battleArena.cameraMotion);
 
     const key = `${battle.playerActive}:${battle.enemyActive}:${battle.player.species.id}:${battle.enemy.species.id}`;
     if (this.currentBattleKey === key) return;
@@ -363,18 +367,13 @@ export class SceneManager {
 
   public playAttackEffect(type: PokemonType, attacker: 'player' | 'enemy' = 'player'): void {
     if (!this.inBattle) return;
-    const fromSlot = attacker === 'player' ? this.battlePlayerSlot : this.battleEnemySlot;
-    const toSlot = attacker === 'player' ? this.battleEnemySlot : this.battlePlayerSlot;
-    this.battleArena.effects.play(type, fromSlot.position.clone().setY(1), toSlot.position.clone().setY(1));
+    playBattleAttack(this.battleArena, type, attacker, this.battlePlayerSlot, this.battleEnemySlot);
   }
 
   public playPokeballEffect(captured = false): void {
     if (!this.inBattle) return;
     this.playSfx(resolveBattleSfx({ type: 'pokeball', captured }));
-    this.battleArena.effects.playPokeball(
-      this.battlePlayerSlot.position.clone().setY(1.1),
-      this.battleEnemySlot.position.clone().setY(0.8)
-    );
+    playBattlePokeball(this.battleArena, this.battlePlayerSlot, this.battleEnemySlot);
   }
 
   public playSfx(cue: SfxCue | null): void { if (cue) this.emitSfx(cue); }
@@ -490,7 +489,7 @@ export class SceneManager {
       this.playerAnim?.mixer.update(dt);
       for (const actor of this.entityActors) actor.mixer.update(dt);
     } else {
-      updateBattleCamera(this.camera, this.clock.elapsedTime);
+      updateBattleCamera(this.camera, this.clock.elapsedTime, this.battleArena.cameraMotion, dt);
       for (const actor of this.battleActors.values()) actor.mixer.update(dt);
       this.battleArena.effects.update(dt);
     }
