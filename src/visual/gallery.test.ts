@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { galleryScore, renderGallery, type GalleryEntry } from './gallery';
+import { galleryScore, renderGallery, scenarioPhase, type GalleryEntry } from './gallery';
 
 const METRICS = { voidRatio: 0.126, avatarVisibility: 0.418, avatarScreenShare: 0.01, groundGap: 0.0859, failedAssets: 0 };
 
@@ -36,5 +36,27 @@ describe('visual gallery', () => {
     const htmlWithoutRef = renderGallery([ACCEPTED]);
     expect(htmlWithoutRef).not.toContain('<div class="compare">');
     expect(htmlWithoutRef).toContain('<img src="captures/z0007-oldale.png" alt="z0007-oldale" loading="lazy">');
+  });
+
+  it('groups scenarios into phase tabs and tags each card with its phase', () => {
+    expect(scenarioPhase('avatar-brendan')).toBe('avatars');
+    expect(scenarioPhase('z0006-littleroot-spawn')).toBe('inicio');
+    expect(scenarioPhase('z0016-rustboro')).toBe('oeste');
+    expect(scenarioPhase('z0037-route111')).toBe('centro');
+    expect(scenarioPhase('z0015-mauville-patio-upper-floor')).toBe('leste');
+    expect(scenarioPhase('z0046-route119-bridge-upper-floor')).toBe('leste');
+
+    const html = renderGallery([
+      entry('avatar-brendan', [{ gate: 'avatarVisible', outcome: 'pass' }]),
+      ACCEPTED,
+      entry('z0046-route119-bridge-upper-floor', [{ gate: 'avatarVisible', outcome: 'pass' }]),
+    ]);
+    expect(html).toContain('role="tablist"');
+    expect(html).toContain('data-phase="all"');
+    expect(html).toContain('data-phase="avatars"');
+    expect(html).toContain('data-phase="inicio"');
+    expect(html).toContain('data-phase="leste"');
+    expect(html).toContain('<figure data-phase="avatars">');
+    expect(html).toContain('<figure data-phase="leste">');
   });
 });
