@@ -3,6 +3,7 @@ import { expYield } from './experience';
 import { gainExperience } from './levelUp';
 import { addEvs } from './statSpread';
 import type { BattleEvent } from './battleEvents';
+import type { BattleFieldState } from './battleField';
 
 export const MAX_PARTY_SIZE = 6;
 const LUCKY_EGG = 'Lucky Egg';
@@ -28,6 +29,7 @@ export interface BattleState {
   /** Jogador precisa escolher substituto após desmaio (troca forçada, sem ação inimiga). */
   pendingSwitch: boolean;
   pendingMoves: PendingMoveLearn[];
+  field: BattleFieldState;
   /** Exp. Share (item-chave Gen VI): quem não lutou recebe metade da XP e os EVs. */
   expShare: boolean;
   /** Índices do time que subiram de nível nesta batalha (candidatos à evolução ao final). */
@@ -83,7 +85,7 @@ export function switchPlayerIn(state: BattleState, partyIndex: number): BattleSt
   const withdrawn = replaceAt(state.playerParty, state.playerActive, withdrawFromBattle(state.player));
   const entering = withdrawFromBattle(incoming);
   const participants = state.participants.includes(partyIndex) ? state.participants : [...state.participants, partyIndex];
-  return {
+  const switched = {
     ...state,
     playerParty: replaceAt(withdrawn, partyIndex, entering),
     player: entering,
@@ -91,12 +93,24 @@ export function switchPlayerIn(state: BattleState, partyIndex: number): BattleSt
     participants,
     log: [...state.log, `Vai, ${entering.species.name}!`],
   };
+  return activateEntryAbility(switched, 'player');
+}
+
+export function activateEntryAbility(state: BattleState, side: BattleSide): BattleState {
+  if (pokemonOf(state, side).ability !== 'Intimidate') return state;
+  const targetSide = opposite(side);
+  const target = pokemonOf(state, targetSide);
+  const atk = Math.max(-6, target.stages.atk - 1);
+  if (atk === target.stages.atk) return state;
+  const lowered = { ...target, stages: { ...target.stages, atk } };
+  const updated = withPokemon(state, targetSide, lowered);
+  return { ...updated, log: [...updated.log, `${target.species.name} teve o Ataque reduzido por Intimidate!`] };
 }
 
 function sendNextEnemy(state: BattleState, nextIndex: number): BattleState {
   const entering = withdrawFromBattle(state.enemyParty[nextIndex] ?? state.enemy);
   const participants = state.player.currentHp > 0 ? [state.playerActive] : [];
-  return {
+  const sent = {
     ...state,
     enemy: entering,
     enemyActive: nextIndex,
@@ -104,6 +118,7 @@ function sendNextEnemy(state: BattleState, nextIndex: number): BattleState {
     participants,
     log: [...state.log, `${state.trainerName ?? 'O oponente'} enviou ${entering.species.name} (Lv.${entering.level})!`],
   };
+  return activateEntryAbility(sent, 'enemy');
 }
 
 interface ExpRecipient {

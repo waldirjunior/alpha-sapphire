@@ -1,9 +1,11 @@
 import type { WildEncounterEntry } from '../data/pokemon/route101';
-import { firstHealthyIndex, switchPlayerIn, validateParty, withPokemon, type BattleState } from './battleParty';
+import { activateEntryAbility, firstHealthyIndex, switchPlayerIn, validateParty, withPokemon, type BattleState } from './battleParty';
 import { restoreAtPokemonCenter, withdrawFromBattle, type PokemonInstance } from './battlePokemon';
 import { hasUsableMove, resolveTurn } from './battleTurn';
 import { replaceMove } from './levelUp';
 import type { Rng } from './statusConditions';
+import { createBattleField, type BattleWeather } from './battleField';
+import { rollGenSixCapture } from './battleCapture';
 
 export {
   createPokemonInstance,
@@ -14,6 +16,7 @@ export {
 } from './battlePokemon';
 export type { BattleAction, BattleState, BattleStatus, PendingMoveLearn } from './battleTurn';
 export { calculateDamage, getTypeEffectiveness } from './damage';
+export { genSixCatchShakeThreshold } from './battleCapture';
 export { gainExperience, replaceMove } from './levelUp';
 export { evolveAfterBattle, timeOfDayFromHour, useEvolutionItem, type TimeOfDay } from './evolution';
 
@@ -61,6 +64,7 @@ function leadIndex(party: readonly PokemonInstance[], owner: string): number {
 
 export interface BattleOptions {
   expShare?: boolean;
+  weather?: BattleWeather;
 }
 
 function createBattle(
@@ -77,7 +81,7 @@ function createBattle(
   const player = playerParty[playerActive] ?? playerParty[0];
   const enemy = enemyParty[enemyActive] ?? enemyParty[0];
   if (!player || !enemy) throw new Error('Batalha sem combatentes.');
-  return {
+  const battle: BattleState = {
     player,
     enemy,
     playerParty,
@@ -87,6 +91,7 @@ function createBattle(
     participants: [playerActive],
     pendingSwitch: false,
     pendingMoves: [],
+    field: createBattleField(options.weather),
     expShare: options.expShare ?? false,
     leveledUp: [],
     turn: 1,
@@ -94,6 +99,7 @@ function createBattle(
     log: [firstLine(enemy)],
     ...(trainerName ? { isTrainer: true, trainerName } : {}),
   };
+  return activateEntryAbility(activateEntryAbility(battle, 'player'), 'enemy');
 }
 
 /** Aceita um Pokémon ou o time inteiro (até 6); o primeiro de pé entra em campo. */
@@ -147,9 +153,7 @@ export function throwPokeball(state: BattleState, rng: Rng = Math.random): Battl
       log: [...state.log, 'Você não pode capturar o Pokémon de outro treinador!'],
     };
   }
-  const hpRatio = state.enemy.currentHp / state.enemy.maxHp;
-  const catchChance = Math.min(0.9, Math.max(0.25, 0.85 - hpRatio * 0.55));
-  if (rng() < catchChance) {
+  if (rollGenSixCapture(state.enemy, rng)) {
     return {
       ...state,
       status: 'caught',

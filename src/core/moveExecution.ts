@@ -3,12 +3,21 @@ import { calculateDamage, moveEffectiveness, rollCritical, rollHitCount } from '
 import type { DexStatChange } from './dex';
 import { accuracyStageMultiplier, applyStageDelta, STAT_LABELS, statsForRomId } from './statStages';
 import { statusKindForMove, tryInflictStatus, type Rng } from './statusConditions';
+import type { BattleScreen, BattleScreenState, BattleWeather, BattleWeatherState } from './battleField';
 
 export interface MoveOutcome {
   user: PokemonInstance;
   target: PokemonInstance;
   messages: string[];
   flinched: boolean;
+  fieldUpdate?: { weather?: BattleWeatherState | null; screen?: BattleScreen };
+}
+
+export interface MoveExecutionContext {
+  weather?: BattleWeatherState | null;
+  weatherSuppressed?: boolean;
+  userScreens?: BattleScreenState;
+  targetScreens?: BattleScreenState;
 }
 
 export const ALWAYS_HITS_ACCURACY = 101;
@@ -37,19 +46,34 @@ export function spendPp(user: PokemonInstance, moveIndex: number, target: Pokemo
 
 export function rollAccuracy(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng): boolean {
   if (move.accuracy === ALWAYS_HITS_ACCURACY || !targetsFoe(move)) return true;
-  const threshold = move.accuracy * accuracyStageMultiplier(user.stages.accuracy, target.stages.evasion);
+  const threshold = move.quality === 9 ? ohkoAccuracy(user, target, move) : move.accuracy * accuracyStageMultiplier(user.stages.accuracy, target.stages.evasion);
+  if (threshold === 0) return false;
   return Math.min(0.999999, Math.max(0, rng())) * 100 < threshold;
 }
 
-export function executeMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng): MoveOutcome {
+export function executeMove(
+  user: PokemonInstance,
+  target: PokemonInstance,
+  move: BattleMove,
+  rng: Rng,
+  context: MoveExecutionContext = {}
+): MoveOutcome {
   if (!rollAccuracy(user, target, move, rng)) {
     return { user, target, messages: [`${user.species.name} usou ${move.name}, mas errou!`], flinched: false };
   }
-  return move.category === 'status' ? executeStatusMove(user, target, move, rng) : executeDamagingMove(user, target, move, rng);
+  if (move.quality === 9) {
+    if (moveEffectiveness(move, target) === 0) return ineffectiveMove(user, target, move);
+    return executeOneHitKnockout(user, target, move);
+  }
+  return move.category === 'status'
+    ? executeStatusMove(user, target, move, rng, context)
+    : executeDamagingMove(user, target, move, rng, context);
 }
 
-function executeStatusMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng): MoveOutcome {
+function executeStatusMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, context: MoveExecutionContext): MoveOutcome {
   const used = `${user.species.name} usou ${move.name}!`;
+  if (move.quality === 10) return setWeather(user, target, move, context.weather ?? null, used);
+  if (move.quality === 11) return setScreen(user, target, move, context.userScreens, used);
   if (move.quality === QUALITY_HEAL) return healUser(user, target, move, used);
   if (move.quality === QUALITY_INFLICT) return inflictFromStatusMove(user, target, move, rng, used);
   if (move.quality === QUALITY_STAGES) {
@@ -59,6 +83,77 @@ function executeStatusMove(user: PokemonInstance, target: PokemonInstance, move:
     return { ...outcome, messages: [used, ...orFailed(changed.messages)], flinched: false };
   }
   return { user, target, messages: [used, `O efeito de ${move.name} ainda não é simulado (P-010).`], flinched: false };
+}
+
+function setWeather(
+  user: PokemonInstance,
+  target: PokemonInstance,
+  move: BattleMove,
+  current: BattleWeatherState | null,
+  used: string
+): MoveOutcome {
+  const kind = weatherForMove(move.name);
+  if (!kind) return unsupportedMove(user, target, move, used);
+  if (current?.kind === kind) return { user, target, messages: [used, 'Mas não teve efeito!'], flinched: false };
+  return { user, target, messages: [used, weatherStartMessage(kind)], flinched: false, fieldUpdate: { weather: { kind, turns: 5 } } };
+}
+
+function setScreen(
+  user: PokemonInstance,
+  target: PokemonInstance,
+  move: BattleMove,
+  current: BattleScreenState | undefined,
+  used: string
+): MoveOutcome {
+  const kind = screenForMove(move.name);
+  if (!kind) return unsupportedMove(user, target, move, used);
+  if ((current?.[kind] ?? 0) > 0) return { user, target, messages: [used, 'Mas não teve efeito!'], flinched: false };
+  return { user, target, messages: [used, `O ${move.name} protegeu o time!`], flinched: false, fieldUpdate: { screen: kind } };
+}
+
+function unsupportedMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, used: string): MoveOutcome {
+  return { user, target, messages: [used, `O efeito de ${move.name} ainda não é simulado (P-010).`], flinched: false };
+}
+
+function weatherForMove(name: string): BattleWeather | null {
+  const weather: Readonly<Record<string, BattleWeather>> = {
+    'Sunny Day': 'sun',
+    'Rain Dance': 'rain',
+    Sandstorm: 'sandstorm',
+    Hail: 'hail',
+  };
+  return weather[name] ?? null;
+}
+
+function screenForMove(name: string): BattleScreen | null {
+  if (name === 'Reflect') return 'reflect';
+  return name === 'Light Screen' ? 'lightScreen' : null;
+}
+
+function weatherStartMessage(weather: BattleWeather): string {
+  const messages: Readonly<Record<BattleWeather, string>> = {
+    sun: 'A luz do sol ficou intensa!',
+    rain: 'Começou a chover!',
+    sandstorm: 'Uma tempestade de areia começou!',
+    hail: 'Começou a cair granizo!',
+  };
+  return messages[weather];
+}
+
+function ohkoAccuracy(user: PokemonInstance, target: PokemonInstance, move: BattleMove): number {
+  if (user.level < target.level) return 0;
+  const base = move.name === 'Sheer Cold' && !user.species.types.includes('ice') ? 20 : move.accuracy;
+  return Math.min(100, base + user.level - target.level);
+}
+
+function executeOneHitKnockout(user: PokemonInstance, target: PokemonInstance, move: BattleMove): MoveOutcome {
+  const used = `${user.species.name} usou ${move.name}!`;
+  if (target.ability === 'Sturdy') return { user, target, messages: [used, `A habilidade Sturdy de ${target.species.name} impediu o nocaute!`], flinched: false };
+  return { user, target: { ...target, currentHp: 0 }, messages: [used, 'Nocaute em um golpe!'], flinched: false };
+}
+
+function ineffectiveMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove): MoveOutcome {
+  return { user, target, messages: [`${user.species.name} usou ${move.name}, mas não afeta ${target.species.name}...`], flinched: false };
 }
 
 function orFailed(messages: string[]): string[] {
@@ -108,7 +203,7 @@ function stageMessage(pokemon: PokemonInstance, label: string, applied: number, 
   return `${label} de ${name}${size} ${applied > 0 ? 'subiu' : 'caiu'}!`;
 }
 
-function executeDamagingMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng): MoveOutcome {
+function executeDamagingMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, context: MoveExecutionContext): MoveOutcome {
   const effectiveness = moveEffectiveness(move, target);
   if (effectiveness === 0) {
     return { user, target, messages: [`${user.species.name} usou ${move.name}, mas não afeta ${target.species.name}...`], flinched: false };
@@ -119,8 +214,8 @@ function executeDamagingMove(user: PokemonInstance, target: PokemonInstance, mov
   let crits = 0;
   for (let hit = 0; hit < hits && defender.currentHp > 0; hit += 1) {
     const critical = rollCritical(defender, move, rng);
-    const dmg = calculateDamage(user, defender, move, rng, { critical });
-    defender = { ...defender, currentHp: Math.max(0, defender.currentHp - dmg) };
+    const dmg = calculateDamage(user, defender, move, rng, damageOptions(move, context, critical));
+    defender = applySturdy(defender, dmg);
     total += dmg;
     crits += critical ? 1 : 0;
   }
@@ -129,6 +224,26 @@ function executeDamagingMove(user: PokemonInstance, target: PokemonInstance, mov
   const critNote = crits > 0 ? ' Acerto crítico!' : '';
   const messages = [`${user.species.name} usou ${move.name} e causou ${total} de dano${hitNote}!${effNote}${critNote}`];
   return applyAfterDamage({ user, target: defender, messages, flinched: false }, move, total, rng);
+}
+
+function damageOptions(move: BattleMove, context: MoveExecutionContext, critical: boolean) {
+  return {
+    critical,
+    weather: context.weather?.kind ?? null,
+    weatherSuppressed: context.weatherSuppressed ?? false,
+    screen: activeScreen(move, context.targetScreens),
+  };
+}
+
+function activeScreen(move: BattleMove, screens: BattleScreenState | undefined): BattleScreen | null {
+  if (move.category === 'physical') return (screens?.reflect ?? 0) > 0 ? 'reflect' : null;
+  return (screens?.lightScreen ?? 0) > 0 ? 'lightScreen' : null;
+}
+
+function applySturdy(target: PokemonInstance, damage: number): PokemonInstance {
+  const hpAfterHit = Math.max(0, target.currentHp - damage);
+  const sturdySaved = target.ability === 'Sturdy' && target.currentHp === target.maxHp && hpAfterHit === 0;
+  return { ...target, currentHp: sturdySaved ? 1 : hpAfterHit };
 }
 
 function applyAfterDamage(outcome: MoveOutcome, move: BattleMove, damage: number, rng: Rng): MoveOutcome {
