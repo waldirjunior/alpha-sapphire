@@ -25,6 +25,22 @@ describe('Gen VI battle formula parity vectors', () => {
     expect(calculateDamage(blaze, wurmple, ember, alwaysMaxDamage, { weather: 'sun' })).toBe(162);
   });
 
+  it('matches deterministic damage vectors for new abilities and held-item modifiers', () => {
+    const torchic = pokemon('torchic', 30, 'Scratch');
+    const wurmple = pokemon('wurmple', 30, 'Tackle');
+    const scratch = toBattleMove(getMoveByName('Scratch'));
+    const emberUser = pokemon('torchic', 30, 'Ember');
+    const ember = toBattleMove(getMoveByName('Ember'));
+    const values = [
+      calculateDamage({ ...torchic, ability: 'Technician' }, wurmple, scratch, alwaysMaxDamage),
+      calculateDamage({ ...emberUser, ability: 'Adaptability' }, wurmple, ember, alwaysMaxDamage),
+      calculateDamage({ ...torchic, heldItem: 'Choice Band' }, wurmple, scratch, alwaysMaxDamage),
+      calculateDamage({ ...torchic, heldItem: 'Life Orb' }, wurmple, scratch, alwaysMaxDamage),
+    ];
+
+    expect(values).toEqual([28, 96, 28, 24]);
+  });
+
   it('matches the Gen VI four-shake catch threshold for a full-health Poochyena', () => {
     const poochyena = pokemon('poochyena', 5, 'Tackle');
 

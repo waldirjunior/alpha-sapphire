@@ -1,4 +1,4 @@
-import { selectTrainerMoveIndex, selectWildMoveIndex } from './battleAi';
+import { chooseTrainerAction, selectTrainerMoveIndex, selectWildMoveIndex } from './battleAi';
 import {
   appendLog,
   opposite,
@@ -14,10 +14,11 @@ import { toBattleMove, type BattleMove, type PokemonInstance } from './battlePok
 import { STRUGGLE_MOVE_ID } from './damage';
 import { getMoveById } from './dex';
 import { healthEvents } from './battleEvents';
-import { executeMove, spendPp, targetsFoe, type MoveExecutionContext, type MoveOutcome } from './moveExecution';
-import { statStageMultiplier } from './statStages';
+import { executeMove, isChargeMove, spendPp, targetsFoe, type MoveExecutionContext, type MoveOutcome } from './moveExecution';
+import { applyStageDelta, statStageMultiplier } from './statStages';
 import { advanceVolatileTurn, applyResidualDamage, checkCanAct, rollInRange, type Rng } from './statusConditions';
 import { advanceBattleField, clearEntryHazards, setEntryHazard } from './battleField';
+import { applyEndTurnHeldItem, choiceSpeedMultiplier, isChoiceMoveBlocked, lockChoiceMove } from './battleHeldItems';
 
 export type { BattleSide, BattleState, BattleStatus, PendingMoveLearn } from './battleParty';
 
@@ -25,6 +26,7 @@ export type { BattleSide, BattleState, BattleStatus, PendingMoveLearn } from './
 export interface BattleAction {
   side: BattleSide;
   moveIndex: number | null;
+  switchIndex?: number;
 }
 
 const struggle = (): BattleMove => toBattleMove(getMoveById(STRUGGLE_MOVE_ID));
@@ -35,16 +37,37 @@ export function hasUsableMove(pokemon: PokemonInstance): boolean {
 }
 
 export function selectEnemyMoveIndex(state: BattleState, rng: Rng): number | null {
+  const chargeMoveId = state.enemy.volatile.chargeMoveId;
+  if (chargeMoveId !== undefined && chargeMoveId !== null) {
+    return state.enemy.moves.findIndex((move) => move.id === chargeMoveId);
+  }
   return state.isTrainer ? selectTrainerMoveIndex(state.enemy, state.player, rng) : selectWildMoveIndex(state.enemy, rng);
 }
 
+function selectEnemyAction(state: BattleState, rng: Rng): BattleAction {
+  const chargeMoveId = state.enemy.volatile.chargeMoveId;
+  if (chargeMoveId !== undefined && chargeMoveId !== null) return { side: 'enemy', moveIndex: selectEnemyMoveIndex(state, rng) };
+  if (state.isTrainer) {
+    const decision = chooseTrainerAction(state.enemyParty, state.enemyActive, state.player, rng);
+    return decision.kind === 'switch'
+      ? { side: 'enemy', moveIndex: null, switchIndex: decision.partyIndex }
+      : { side: 'enemy', moveIndex: decision.moveIndex };
+  }
+  return { side: 'enemy', moveIndex: selectWildMoveIndex(state.enemy, rng) };
+}
+
 function moveFor(pokemon: PokemonInstance, moveIndex: number | null): BattleMove {
+  const chargeMoveId = pokemon.volatile.chargeMoveId;
+  if (chargeMoveId !== undefined && chargeMoveId !== null) {
+    return pokemon.moves.find((move) => move.id === chargeMoveId) ?? toBattleMove(getMoveById(chargeMoveId));
+  }
   return (moveIndex === null ? undefined : pokemon.moves[moveIndex]) ?? struggle();
 }
 
 export function effectiveSpeed(pokemon: PokemonInstance): number {
   const staged = Math.floor(pokemon.speed * statStageMultiplier(pokemon.stages.spe));
-  return pokemon.status?.kind === 'paralysis' ? Math.floor(staged * PARALYSIS_SPEED_MULTIPLIER) : staged;
+  const held = Math.floor(staged * choiceSpeedMultiplier(pokemon));
+  return pokemon.status?.kind === 'paralysis' ? Math.floor(held * PARALYSIS_SPEED_MULTIPLIER) : held;
 }
 
 /** Prioridade (−7..+5) decide primeiro; depois velocidade efetiva; empate sorteado. */
@@ -68,18 +91,29 @@ function performAction(state: BattleState, action: BattleAction, flinched: boole
   if (!check.canAct) return { state: { ...resetProtectStreak(next, action.side), events: [...(next.events ?? []),
     ...healthEvents(action.side, actor.currentHp, check.pokemon.currentHp)] }, flinchedSide: null };
 
+  const charging = check.pokemon.volatile.chargeMoveId !== undefined && check.pokemon.volatile.chargeMoveId !== null;
   const move = moveFor(check.pokemon, action.moveIndex);
+  const moveIndex = charging ? check.pokemon.moves.findIndex((slot) => slot.id === move.id) : action.moveIndex;
+  if (isChoiceMoveBlocked(check.pokemon, move)) {
+    const lockedName = getMoveById(check.pokemon.volatile.choiceLockMoveId ?? move.id).name;
+    return { state: appendLog(next, [`${check.pokemon.species.name} só pode usar ${lockedName} por causa do item Choice!`]), flinchedSide: null };
+  }
   const prepared = isProtectionMove(move) ? check.pokemon : clearProtectStreak(check.pokemon);
-  const user = action.moveIndex === null ? prepared : spendPp(prepared, action.moveIndex, pokemonOf(next, foeSide));
+  const spent = charging || moveIndex === null ? prepared : spendPp(prepared, moveIndex, pokemonOf(next, foeSide));
+  const user = !charging && moveIndex !== null ? lockChoiceMove(spent, move) : spent;
   if (user.volatile.tauntTurns > 0 && move.category === 'status') {
     next = withPokemon(next, action.side, clearProtectStreak(user));
     return { state: appendLog(next, [`${user.species.name} não pode usar ${move.name} por causa de Taunt!`]), flinchedSide: null };
   }
-  if (targetsProtectedPokemon(next, action.side, move)) {
-    next = withPokemon(next, action.side, user);
+  const beginsCharge = !charging && isChargeMove(move);
+  if (targetsProtectedPokemon(next, action.side, move) && !beginsCharge) {
+    const protectedUser = charging
+      ? { ...user, volatile: { ...user.volatile, chargeMoveId: null } }
+      : user;
+    next = withPokemon(next, action.side, protectedUser);
     return { state: appendLog(next, [`${pokemonOf(next, foeSide).species.name} se protegeu!`]), flinchedSide: null };
   }
-  const struggleNote = action.moveIndex === null ? `${user.species.name} não tem mais PP!` : null;
+  const struggleNote = action.moveIndex === null && !charging ? `${user.species.name} não tem mais PP!` : null;
   const context = moveContext(next, action.side, foeSide);
   const outcome = executeMove(user, pokemonOf(next, foeSide), move, rng, context);
   next = withPokemon(withPokemon(next, action.side, outcome.user), foeSide, outcome.target);
@@ -153,11 +187,19 @@ function applyEndOfTurn(state: BattleState, order: readonly BattleSide[]): Battl
     const weatherSuppressed = [current.player.ability, current.enemy.ability].some((ability) => ability === 'Air Lock' || ability === 'Cloud Nine');
     const residual = applyResidualDamage(pokemonOf(current, side), current.field.weather?.kind ?? null, weatherSuppressed);
     const aged = advanceVolatileTurn(residual.pokemon);
-    let next = appendLog(withPokemon(current, side, aged), [residual.message]);
+    const item = applyEndTurnHeldItem(aged);
+    const boosted = applySpeedBoost(item.pokemon);
+    let next = appendLog(withPokemon(current, side, boosted), [residual.message, item.message]);
     if (residual.leechSeedDrain > 0) next = healOpposingActive(next, side, residual.leechSeedDrain);
     return { ...next, events: [...(next.events ?? []),
-      ...healthEvents(side, pokemonOf(current, side).currentHp, residual.pokemon.currentHp)] };
+      ...healthEvents(side, pokemonOf(current, side).currentHp, boosted.currentHp)] };
   }, state);
+}
+
+function applySpeedBoost(pokemon: PokemonInstance): PokemonInstance {
+  if (pokemon.ability !== 'Speed Boost' || pokemon.currentHp === 0) return pokemon;
+  const result = applyStageDelta(pokemon.stages, 'spe', 1);
+  return result.applied === 0 ? pokemon : { ...pokemon, stages: result.stages };
 }
 
 function healOpposingActive(state: BattleState, seededSide: BattleSide, amount: number): BattleState {
@@ -175,9 +217,15 @@ function ageBattleField(state: BattleState): BattleState {
 
 /** Resolve um turno; `playerAction === null` = jogador gastou o turno (troca ou Poké Ball). */
 export function resolveTurn(state: BattleState, playerAction: BattleAction | null, rng: Rng): BattleState {
-  const enemyAction: BattleAction = { side: 'enemy', moveIndex: selectEnemyMoveIndex(state, rng) };
-  const actions = playerAction ? orderActions(state, playerAction, enemyAction, rng) : [enemyAction];
-  let current: BattleState = { ...state, events: [] };
+  const selectedEnemyAction = selectEnemyAction(state, rng);
+  const enemySwitch = selectedEnemyAction.switchIndex;
+  let current: BattleState = {
+    ...(enemySwitch === undefined ? state : switchEnemyIn(state, enemySwitch)),
+    events: [],
+  };
+  const enemyAction = enemySwitch === undefined ? selectedEnemyAction : null;
+  const actions = playerAction && enemyAction ? orderActions(current, playerAction, enemyAction, rng)
+    : playerAction ? [playerAction] : enemyAction ? [enemyAction] : [];
   let flinchedSide: BattleSide | null = null;
   for (const action of actions) {
     if (current.status !== 'ongoing') break;
@@ -186,7 +234,10 @@ export function resolveTurn(state: BattleState, playerAction: BattleAction | nul
     flinchedSide = result.flinchedSide;
   }
   if (current.status !== 'ongoing') return { ...current, turn: current.turn + 1 };
-  const residualOrder: BattleSide[] = playerAction ? actions.map((action) => action.side) : ['enemy', 'player'];
+  const residualOrder = actions.map((action) => action.side);
+  for (const side of ['player', 'enemy'] as const) {
+    if (!residualOrder.includes(side)) residualOrder.push(side);
+  }
   const resolved = resolveFaints(ageBattleField(applyEndOfTurn(current, residualOrder)));
   return { ...resolved, turn: resolved.turn + 1 };
 }

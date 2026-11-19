@@ -23,10 +23,24 @@ export interface BattleVolatileState {
   tauntTurns: number;
   protectStreak: number;
   protecting: boolean;
+  substituteHp?: number;
+  chargeMoveId?: number | null;
+  choiceLockMoveId?: number | null;
+  flashFireActive?: boolean;
 }
 
 export function neutralVolatileState(): BattleVolatileState {
-  return { confusionTurns: 0, leechSeeded: false, tauntTurns: 0, protectStreak: 0, protecting: false };
+  return {
+    confusionTurns: 0,
+    leechSeeded: false,
+    tauntTurns: 0,
+    protectStreak: 0,
+    protecting: false,
+    substituteHp: 0,
+    chargeMoveId: null,
+    choiceLockMoveId: null,
+    flashFireActive: false,
+  };
 }
 
 export interface PokemonInstance {

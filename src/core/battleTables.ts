@@ -15,6 +15,7 @@ export interface RawSpecies {
   species: number;
   form: number;
   name: string;
+  evolutionStage?: number;
   types: readonly string[];
   baseStats: RawBaseStats;
   abilities: readonly string[];
@@ -55,6 +56,7 @@ export interface RawMove {
   healing: number;
   target: number;
   critStage: number;
+  flags?: number;
   statChanges: readonly RawStatChange[];
 }
 

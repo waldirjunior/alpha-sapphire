@@ -120,21 +120,27 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
   `src/ai/battleParity.test.ts`. `npm run verify` passou: 530 testes Vitest,
   build e 233 testes Python (1 skip); a catraca de cobertura de `src/core`
   passou.
-- **Ainda não simulado:** Substitute, outros voláteis (`atração`, Disable,
-  Yawn, Perish Song etc.) e golpes restantes ainda sem efeito; habilidades e itens
-  segurados restantes; IA de troca do treinador; bônus de troca na XP e
-  evoluções por troca (não há troca no jogo); evoluções por sexo, item segurado,
-  local, afeição, clima, Beauty, Shedinja e 3DS invertido; IVs/natureza aleatórios
+- **Atualização 2026-11-19 (Substitute, itens, habilidades e troca da IA):**
+  Substitute paga 1/4 do HP máximo, absorve dano e impede status; Fly, Dig e
+  Solar Beam guardam o golpe carregado e executam no turno seguinte. Leftovers,
+  Life Orb, Focus Sash, Choice Band/Specs/Scarf, Sitrus/Oran Berry e Eviolite
+  aplicam seus efeitos, incluindo consumo de sash/berries e trava de golpe dos
+  itens Choice. Technician, Guts, Adaptability, Huge/Pure Power, Rock Head,
+  Speed Boost, Static, Flame Body, Poison Point, Flash Fire, Water Absorb e
+  Volt Absorb entram no cálculo/turno; a IA de treinador troca quando um reserva
+  tem vantagem clara. `battleGen6Completion.test.ts` cobre as mecânicas e
+  `src/ai/battleParity.test.ts` fixa vetores determinísticos de dano.
+  `npm run verify` passou: 555 testes Vitest, build e 233 testes Python (1 skip);
+  a catraca de cobertura de `src/core` passou.
+- **Ainda não simulado:** outros voláteis (`atração`, Disable, Yawn, Perish Song
+  etc.) e golpes restantes ainda sem efeito; bônus de troca na XP e evoluções por
+  troca (não há troca no jogo); evoluções por sexo, item segurado, local,
+  afeição, clima, Beauty, Shedinja e 3DS invertido; IVs/natureza aleatórios
   ainda não aplicados aos selvagens em `main.ts` (`rollIvs`/`rollNature` prontos);
   UI de item evolutivo e de cancelar evolução. O cálculo de captura crítica
   recebe `caughtSpeciesCount`; o host ainda não fornece a contagem de espécies
   únicas da Pokédex. Golpes não simulados registram "ainda não é simulado
   (P-010)" no log.
-  evoluções por sexo, item segurado, local, afeição, clima, Beauty, Shedinja e
-  3DS invertido; IVs/natureza aleatórios ainda não aplicados aos selvagens em
-  `main.ts` (`rollIvs`/`rollNature` prontos); UI de item evolutivo e de cancelar
-  evolução; IA de troca do treinador; demais habilidades e itens segurados.
-  Golpes não simulados registram "ainda não é simulado (P-010)" no log.
 - **Próximo passo:** Expandir o motor de batalha conforme [batalha/PRD-002](features/batalha/prds/PRD-002-mecanicas-completas-gen6.md).
 
 ## P-011 HUD de desenvolvimento em vez de menus estilo Nintendo 3DS

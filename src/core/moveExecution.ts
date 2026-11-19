@@ -1,5 +1,8 @@
 import type { BattleMove, PokemonInstance } from './battlePokemon';
 import { calculateDamage, moveEffectiveness, rollCritical, rollHitCount } from './damage';
+import { abilityImmunity, activateTypeImmunity, triggerContactAbility } from './battleAbilities';
+import { triggerThresholdBerry } from './battleHeldItems';
+import { getMoveById } from './dex';
 import type { DexStatChange } from './dex';
 import { accuracyStageMultiplier, applyStageDelta, STAT_LABELS, statsForRomId } from './statStages';
 import { rollInRange, statusKindForMove, tryInflictStatus, type Rng } from './statusConditions';
@@ -12,6 +15,7 @@ export interface MoveOutcome {
   flinched: boolean;
   fieldUpdate?: { weather?: BattleWeatherState | null; screen?: BattleScreen; hazard?: EntryHazard; clearHazards?: 'user' | 'both'; clearScreens?: boolean };
   forceSwitch?: boolean;
+  hitSubstitute?: boolean;
 }
 
 export interface MoveExecutionContext {
@@ -36,6 +40,7 @@ const QUALITY_SWAGGER = 5;
 const QUALITY_FIELD = 11;
 const QUALITY_FORCE_SWITCH = 12;
 const QUALITY_PROTECT = 13;
+const CHARGE_MOVE_NAMES: ReadonlySet<string> = new Set(['Fly', 'Dig', 'Solar Beam']);
 
 export function targetsFoe(move: BattleMove): boolean {
   return FOE_TARGETS.has(move.target);
@@ -51,6 +56,7 @@ export function spendPp(user: PokemonInstance, moveIndex: number, target: Pokemo
 }
 
 export function rollAccuracy(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng): boolean {
+  if (isUntargetableInCharge(target, move)) return false;
   if (move.accuracy === ALWAYS_HITS_ACCURACY || !targetsFoe(move)) return true;
   const threshold = move.quality === 9 ? ohkoAccuracy(user, target, move) : move.accuracy * accuracyStageMultiplier(user.stages.accuracy, target.stages.evasion);
   if (threshold === 0) return false;
@@ -64,16 +70,49 @@ export function executeMove(
   rng: Rng,
   context: MoveExecutionContext = {}
 ): MoveOutcome {
-  if (!rollAccuracy(user, target, move, rng)) {
-    return { user, target, messages: [`${user.species.name} usou ${move.name}, mas errou!`], flinched: false };
+  const charge = prepareCharge(user, target, move);
+  if (charge) return charge;
+  const readyUser = clearCompletedCharge(user, move);
+  if (targetsFoe(move) && move.category === 'status' && (target.volatile.substituteHp ?? 0) > 0) {
+    return { user: readyUser, target, messages: [`O substituto de ${target.species.name} protegeu o alvo!`], flinched: false };
+  }
+  if (!rollAccuracy(readyUser, target, move, rng)) {
+    return { user: readyUser, target, messages: [`${readyUser.species.name} usou ${move.name}, mas errou!`], flinched: false };
   }
   if (move.quality === 9) {
-    if (moveEffectiveness(move, target) === 0) return ineffectiveMove(user, target, move);
-    return executeOneHitKnockout(user, target, move);
+    if (moveEffectiveness(move, target) === 0) return ineffectiveMove(readyUser, target, move);
+    return executeOneHitKnockout(readyUser, target, move);
   }
   return move.category === 'status'
-    ? executeStatusMove(user, target, move, rng, context)
-    : executeDamagingMove(user, target, move, rng, context);
+    ? executeStatusMove(readyUser, target, move, rng, context)
+    : executeDamagingMove(readyUser, target, move, rng, context);
+}
+
+function prepareCharge(user: PokemonInstance, target: PokemonInstance, move: BattleMove): MoveOutcome | null {
+  if (!isChargeMove(move) || user.volatile.chargeMoveId === move.id) return null;
+  const phrase = move.name === 'Fly' ? 'começou a voar' : move.name === 'Dig' ? 'cavou para baixo' : 'começou a absorver luz';
+  return {
+    user: { ...user, volatile: { ...user.volatile, chargeMoveId: move.id } },
+    target,
+    messages: [`${user.species.name} ${phrase}!`],
+    flinched: false,
+  };
+}
+
+export function isChargeMove(move: BattleMove): boolean {
+  return CHARGE_MOVE_NAMES.has(move.name);
+}
+
+function clearCompletedCharge(user: PokemonInstance, move: BattleMove): PokemonInstance {
+  if (user.volatile.chargeMoveId !== move.id) return user;
+  return { ...user, volatile: { ...user.volatile, chargeMoveId: null } };
+}
+
+function isUntargetableInCharge(target: PokemonInstance, move: BattleMove): boolean {
+  const chargedMoveId = target.volatile.chargeMoveId;
+  if (chargedMoveId === undefined || chargedMoveId === null) return false;
+  const chargedName = getMoveById(chargedMoveId).name;
+  return targetsFoe(move) && move.category !== 'status' && (chargedName === 'Fly' || chargedName === 'Dig');
 }
 
 function executeStatusMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, context: MoveExecutionContext): MoveOutcome {
@@ -124,9 +163,23 @@ function swaggerMove(user: PokemonInstance, target: PokemonInstance, move: Battl
 function executeQualityThirteen(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, used: string): MoveOutcome {
   if (move.name === 'Protect' || move.name === 'Detect') return protectMove(user, target, rng, used);
   if (move.name === 'Taunt') return tauntMove(user, target, used);
+  if (move.name === 'Substitute') return substituteMove(user, target, used);
   if (move.name === 'Defog') return { user, target, messages: [used, 'Os perigos e barreiras foram dissipados!'], flinched: false,
     fieldUpdate: { clearHazards: 'both', clearScreens: true } };
   return unsupportedMove(user, target, move, used);
+}
+
+function substituteMove(user: PokemonInstance, target: PokemonInstance, used: string): MoveOutcome {
+  const cost = Math.max(1, Math.floor(user.maxHp / 4));
+  if ((user.volatile.substituteHp ?? 0) > 0 || user.currentHp <= cost) {
+    return { user, target, messages: [used, 'Mas não teve efeito!'], flinched: false };
+  }
+  const created = {
+    ...user,
+    currentHp: user.currentHp - cost,
+    volatile: { ...user.volatile, substituteHp: cost },
+  };
+  return { user: created, target, messages: [used, `${user.species.name} criou um substituto!`], flinched: false };
 }
 
 function protectMove(user: PokemonInstance, target: PokemonInstance, rng: Rng, used: string): MoveOutcome {
@@ -224,7 +277,11 @@ function ohkoAccuracy(user: PokemonInstance, target: PokemonInstance, move: Batt
 
 function executeOneHitKnockout(user: PokemonInstance, target: PokemonInstance, move: BattleMove): MoveOutcome {
   const used = `${user.species.name} usou ${move.name}!`;
-  if (target.ability === 'Sturdy') return { user, target, messages: [used, `A habilidade Sturdy de ${target.species.name} impediu o nocaute!`], flinched: false };
+  if (target.ability === 'Sturdy') {
+    return { user, target, messages: [used, `A habilidade Sturdy de ${target.species.name} impediu o nocaute!`], flinched: false };
+  }
+  const saved = saveFromLethalHit(target);
+  if (saved) return { user, target: saved.pokemon, messages: [used, saved.message], flinched: false };
   return { user, target: { ...target, currentHp: 0 }, messages: [used, 'Nocaute em um golpe!'], flinched: false };
 }
 
@@ -288,6 +345,11 @@ function stageMessage(pokemon: PokemonInstance, label: string, applied: number, 
 }
 
 function executeDamagingMove(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, context: MoveExecutionContext): MoveOutcome {
+  const immunity = abilityImmunity(target, move.type);
+  if (immunity) {
+    const activated = activateTypeImmunity(target, immunity);
+    return { user, target: activated.pokemon, messages: [`${user.species.name} usou ${move.name}!`, activated.message], flinched: false };
+  }
   const effectiveness = moveEffectiveness(move, target);
   if (effectiveness === 0) {
     return { user, target, messages: [`${user.species.name} usou ${move.name}, mas não afeta ${target.species.name}...`], flinched: false };
@@ -296,19 +358,41 @@ function executeDamagingMove(user: PokemonInstance, target: PokemonInstance, mov
   let defender = target;
   let total = 0;
   let crits = 0;
+  let hitSubstitute = false;
+  const berryMessages: string[] = [];
+  const survivalMessages: string[] = [];
   for (let hit = 0; hit < hits && defender.currentHp > 0; hit += 1) {
+    const hpBeforeHit = defender.currentHp;
     const critical = rollCritical(defender, move, rng, user);
     const dmg = calculateDamage(user, defender, move, rng, damageOptions(move, context, critical));
-    defender = applySturdy(defender, dmg);
+    const resolved = applyDamageHit(defender, dmg);
+    defender = resolved.pokemon;
+    hitSubstitute ||= resolved.hitSubstitute;
+    if (resolved.message) survivalMessages.push(resolved.message);
+    if (defender.currentHp < hpBeforeHit) {
+      const berry = triggerThresholdBerry(defender);
+      defender = berry.pokemon;
+      if (berry.message) berryMessages.push(berry.message);
+    }
     total += dmg;
     crits += critical ? 1 : 0;
   }
   const effNote = effectiveness > 1 ? ' (Super efetivo!)' : effectiveness < 1 ? ' (Pouco efetivo...)' : '';
   const hitNote = hits > 1 ? ` em ${hits} golpes` : '';
   const critNote = crits > 0 ? ' Acerto crítico!' : '';
-  const messages = [`${user.species.name} usou ${move.name} e causou ${total} de dano${hitNote}!${effNote}${critNote}`];
-  const outcome = applyAfterDamage({ user, target: defender, messages, flinched: false }, move, total, rng);
-  return move.name === 'Rapid Spin' && total > 0 ? { ...outcome, fieldUpdate: { clearHazards: 'user' } } : outcome;
+  const messages = [
+    `${user.species.name} usou ${move.name} e causou ${total} de dano${hitNote}!${effNote}${critNote}`,
+    ...survivalMessages,
+    ...berryMessages,
+  ];
+  const outcome = applyAfterDamage({ user, target: defender, messages, flinched: false, hitSubstitute }, move, total, rng);
+  const contact = contactAbilityForHits(outcome, move, rng, hits, total);
+  const withContact = {
+    ...outcome,
+    user: contact.attacker,
+    messages: contact.message ? [...outcome.messages, contact.message] : outcome.messages,
+  };
+  return move.name === 'Rapid Spin' && total > 0 ? { ...withContact, fieldUpdate: { clearHazards: 'user' } } : withContact;
 }
 
 function damageOptions(move: BattleMove, context: MoveExecutionContext, critical: boolean) {
@@ -325,14 +409,52 @@ function activeScreen(move: BattleMove, screens: BattleScreenState | undefined):
   return (screens?.lightScreen ?? 0) > 0 ? 'lightScreen' : null;
 }
 
-function applySturdy(target: PokemonInstance, damage: number): PokemonInstance {
+function applyDamageHit(target: PokemonInstance, damage: number): { pokemon: PokemonInstance; hitSubstitute: boolean; message: string | null } {
+  const substituteHp = target.volatile.substituteHp ?? 0;
+  if (substituteHp > 0) {
+    return {
+      pokemon: { ...target, volatile: { ...target.volatile, substituteHp: Math.max(0, substituteHp - damage) } },
+      hitSubstitute: true,
+      message: null,
+    };
+  }
   const hpAfterHit = Math.max(0, target.currentHp - damage);
-  const sturdySaved = target.ability === 'Sturdy' && target.currentHp === target.maxHp && hpAfterHit === 0;
-  return { ...target, currentHp: sturdySaved ? 1 : hpAfterHit };
+  const saved = hpAfterHit === 0 ? saveFromLethalHit(target) : null;
+  return { pokemon: saved?.pokemon ?? { ...target, currentHp: hpAfterHit }, hitSubstitute: false, message: saved?.message ?? null };
+}
+
+function contactAbilityForHits(
+  outcome: MoveOutcome,
+  move: BattleMove,
+  rng: Rng,
+  hits: number,
+  damage: number
+): { attacker: PokemonInstance; message: string | null } {
+  let attacker = outcome.user;
+  let message: string | null = null;
+  if (!move.contact || damage === 0) return { attacker, message };
+  for (let hit = 0; hit < hits && outcome.target.currentHp > 0 && attacker.status === null; hit += 1) {
+    const result = triggerContactAbility(outcome.target, attacker, move, rng);
+    attacker = result.attacker;
+    message = result.message ?? message;
+  }
+  return { attacker, message };
+}
+
+function saveFromLethalHit(target: PokemonInstance): { pokemon: PokemonInstance; message: string } | null {
+  if (target.currentHp !== target.maxHp) return null;
+  if (target.ability === 'Sturdy') {
+    return { pokemon: { ...target, currentHp: 1 }, message: `A habilidade Sturdy de ${target.species.name} impediu o nocaute!` };
+  }
+  if (target.heldItem === 'Focus Sash') {
+    return { pokemon: { ...target, currentHp: 1, heldItem: null }, message: `${target.species.name} aguentou o golpe com Focus Sash!` };
+  }
+  return null;
 }
 
 function applyAfterDamage(outcome: MoveOutcome, move: BattleMove, damage: number, rng: Rng): MoveOutcome {
   const withHp = applyHpSideEffects(outcome, move, damage);
+  if (withHp.hitSubstitute) return { ...withHp, flinched: false };
   const withStatus = applySecondaryStatus(withHp, move, rng);
   const withStages = applySecondaryStages(withStatus, move, rng);
   const flinched = withStages.target.currentHp > 0 && move.flinchPercent > 0 && rng() * 100 < move.flinchPercent;
@@ -342,8 +464,11 @@ function applyAfterDamage(outcome: MoveOutcome, move: BattleMove, damage: number
 function applyHpSideEffects(outcome: MoveOutcome, move: BattleMove, damage: number): MoveOutcome {
   const { user } = outcome;
   let delta = 0;
-  if (move.recoilPercent !== 0) delta += Math.sign(move.recoilPercent) * Math.max(1, Math.floor((damage * Math.abs(move.recoilPercent)) / 100));
+  if (move.recoilPercent !== 0 && !(user.ability === 'Rock Head' && move.recoilPercent < 0)) {
+    delta += Math.sign(move.recoilPercent) * Math.max(1, Math.floor((damage * Math.abs(move.recoilPercent)) / 100));
+  }
   if (move.healPercent < 0) delta -= Math.max(1, Math.floor((user.maxHp * -move.healPercent) / 100));
+  if (user.heldItem === 'Life Orb' && damage > 0) delta -= Math.max(1, Math.floor(user.maxHp / 10));
   if (delta === 0) return outcome;
   const currentHp = Math.max(0, Math.min(user.maxHp, user.currentHp + delta));
   const note = delta > 0 ? `${user.species.name} drenou ${currentHp - user.currentHp} HP.` : `${user.species.name} sofreu ${user.currentHp - currentHp} de dano de recuo.`;
