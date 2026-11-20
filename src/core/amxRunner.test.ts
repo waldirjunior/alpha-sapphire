@@ -103,9 +103,20 @@ describe('VM Pawn com disassembly real ORAS', () => {
   it('preserva as aridades ROM do fluxo map/case 2 de Roxanne', () => {
     const rows = roxanne.programs.map.instructions;
     const nativeAt = (name: string, offset: number) => rows.find(row => row.offset === offset && row.native?.name === name);
+    const selectorCalls = [204, 248, 280, 360, 448].map(offset => {
+      const index = rows.findIndex(row => row.offset === offset);
+      return rows.slice(index - 3, index).map(row => [row.mnemonic, row.operands[0]]);
+    });
     for (const offset of [204, 248, 280, 360, 448]) {
       expect(nativeAt('PokePartyGetParam', offset)?.argumentBytes).toBe(12);
     }
+    expect(selectorCalls).toEqual([
+      [['push.p.c', 0], ['push.p.c', 8], ['push.p.s', -8]],
+      [['push.p.c', 0], ['push.p.c', 49], ['push.p.s', -8]],
+      [['push.p.c', 0], ['push.p.c', 44], ['push.p.s', -8]],
+      [['push.p.c', 0], ['push.p.c', 53], ['push.p.s', -8]],
+      [['push.p.c', 0], ['push.p.c', 0], ['push.p.s', -8]],
+    ]);
     expect(nativeAt('_CallTrainerBattleCore', 1892)?.argumentBytes).toBe(28);
     expect(nativeAt('BadgeGetFlag', 7280)?.argumentBytes).toBe(4);
     expect(nativeAt('BadgeSetFlag', 9188)?.argumentBytes).toBe(4);

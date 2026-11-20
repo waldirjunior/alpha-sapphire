@@ -11,7 +11,8 @@ export class EventFade {
     const reveal = effect.name === '_FadeRequestIn';
     if (!reveal && effect.name !== 'FadeRequestOut') return undefined;
     const frames = effect.args[reveal ? 1 : 2];
-    if (effect.args[0] !== 0 || (!reveal && effect.args[1] !== 0) || frames < 0) return undefined;
+    const mode = effect.args[1];
+    if (effect.args[0] !== 0 || (!reveal && mode !== 0 && mode !== 2) || frames < 0) return undefined;
     this.animation = { frames, elapsed: 0, reveal };
     this.project(reveal ? 0 : 1);
     if (frames === 0) { this.project(reveal ? 1 : 0); this.animation = null; }

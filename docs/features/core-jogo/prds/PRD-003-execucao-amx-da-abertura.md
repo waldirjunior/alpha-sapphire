@@ -124,3 +124,38 @@ e a pausa explícita; campanha Playwright passa 1/1 e smoke 7/7. `npm run
 verify` passa com 637 testes Vitest, build e 249 testes Python (um skip por
 assets locais ausentes). P-013 continua aberta até validar o Fade mode 2 no
 emulador e decodificar seletores de party e dados/callbacks de treinador.
+
+## Fade mode 2 e primeira consulta natural de party (2026-11-20)
+
+Azahar 2126.2 iniciou a ROM com um save local copiado e relocalizado por
+`scripts/oras_save.py` a `zone_0441 (18,38)`. O RPC leu zona `441` e posição
+mundial `(333,2,693)`. A captura anterior ao primeiro A mostra o interior
+visível; a captura após um A mostra as duas telas pretas. Esse é o fluxo da
+cena natural cujo AMX chama `FadeRequestOut(0,2,30)` em `map` offset `7068` e
+consulta `FadeIsEnd` em loop na função `2232`. As capturas `mode2-before-a.png`
+e `mode2-after-one-a.png` ficam somente no diretório ignorado
+`rom/emulator/roxanne-probe/`.
+
+`EventFade` aceita agora o modo 2 e anima para preto durante os 30 frames. A
+regressão unitária prova o progresso em 15/30 frames e o retorno de `FadeIsEnd`;
+`e2e/campaign.spec.ts` segue o init até `WorkSet(16553,1)`, chega diante de
+Roxanne e inicia sua interação natural. O teste para na primeira consulta real
+`PokePartyGetParam(0,8,0)` e confirma que outro Enter não altera `romEvents` ou
+`storyFlags` nem abre a batalha.
+
+O disassembly de `map` função `128` mostra a iteração pelos slots da party e os
+seletores `8`, `49`, `44`, `53` e `0`. O wrapper `DllField.cro` em `0x4e618`
+confirma que o segundo argumento seleciona rotinas diferentes: `44` lê o bit 0
+do byte `0x15` do registro, `53` lê o byte `0x2f`, `8` combina bits do estado
+interno e `0` lê um `u16` no início do registro, comparado pelo script a
+`374/375/376`. O CRO não dá nomes semânticos a esses campos; nenhum foi ligado
+ao party do host. Os wrappers de `_CallTrainerBattleCore`, `BadgeSetFlag` e
+`GymSetVictoryInfo` continuam sem retorno presumido, equipe inventada ou
+mutação de recompensa. A campanha avançou até a primeira query sem ABI de campo;
+diálogo posterior, batalha, callback e badge seguem em P-013.
+
+`npm run verify` passou: 639 Vitest em 85 arquivos, build e 250 testes Python
+(um skip por assets locais ausentes no worktree). `npx playwright test
+e2e/campaign.spec.ts --reporter=list` passou 1/1 em 4,7 min. Smoke não foi
+repetido porque o host de eventos não mudou; a suíte completa Playwright não foi
+executada nesta etapa.
