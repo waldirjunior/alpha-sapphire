@@ -1114,4 +1114,17 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Regra:** ao converter Pokémon, derivar `texCoord` e `wrapS/wrapT` dos vínculos e samplers DAE exportados do BCH; inverter `V` nos canais UV produzidos pelo Blender sem alterar imagens, cores de vértice ou topologia. Não ocultar meshes `OpenMouth`/`CloseMouth` só pelo nome: a amostra Torchic não tem canais de visibilidade nos clipes e a pose ativa ainda exige evidência. Os combiners PICA RGB e um diff de faixa `COLOR_0` em `Zigzagoon/Body01` continuam sem prova de correspondência e não são corrigidos por extrapolação.
 - **Evidência:** comparação do BCH `a/0/0/8` com os DAE/GLBs de Torchic, Poochyena, Treecko e Mudkip; 240/243 materiais tinham `texCoord` incorreto e 213/243 tinham wrap diferente no lote catalogado. `scripts/pokemon_glb_materials.py` e `scripts/test_pokemon_glb_materials.py` cobrem o remapeamento, o flip e os wraps; 89 GLBs locais foram normalizados, 41 URLs nativas promovidas por hash e oito GLBs legados atualizados. Chromium mostrou a batalha Torchic vs Poochyena sem erro de página e a captura `/tmp/pokemon-fix-check.png` foi inspecionada.
 
+## A-110 Restaurar RGB Pokémon por triângulo exige preservar o alpha do GLB
+
+- **Data:** 2026-11-19; P-007, sucede a investigação incompleta de `A-109`.
+- **Erro:** copiar `COLOR_0` RGBA inteiro do DAE para `Zigzagoon/Body01` mudaria alpha em vértices que não têm diferença RGB. O GLB mostra RGB branco, enquanto o BCH/DAE tem RGB entre `0,5098` e `1`; só quatro vértices da segunda primitive diferem em RGB.
+- **Regra:** exigir correspondência única por posição, UV e triângulo; substituir apenas RGB e manter alpha do GLB. Se o contexto do triângulo não resolver uma cor única, deixar a primitive sem correção. O DAE de referência também identifica fontes `COLOR_0` de buffer/fixas/ausentes, mas não reconstrói os combiners, LUTs ou a iluminação PICA.
+- **Evidência:** 41 modelos/243 bindings auditados; somente `pokemon/0263/0` `Body01` tinha faixa RGB divergente. A referência única restaurou quatro vértices e a faixa final passou a coincidir com a nativa, mantendo alpha. Fontes de combiner observadas: `Constant`, `FragmentSecondaryColor`, `Previous`, `PreviousBuffer`, `PrimaryColor` e `Texture0..2`; fontes de `COLOR_0`: `buffer`, `fixed` e `absent`.
+
+## A-111 A boca aberta só é ocultada quando existe variante fechada
+
+- **Data:** 2026-11-19; P-012, continua `A-109`.
+- **Regra:** como os clipes GLTF não expõem canais de visibilidade, usar `CloseMouth` como default somente quando o modelo também contém `OpenMouth`; ocultar todas as variantes `OpenMouth` pareadas e preservar olhos, íris e modelos sem par. Isso define só o estado inicial e não anima expressões durante ataques.
+- **Evidência:** Torchic exporta `CloseMouthSkin` e `OpenMouthSkin` com uma primitive secundária de boca aberta; o inventário dos 41 GLBs não encontrou canais de visibilidade. Playwright conferiu `Eye` nos oito modelos Zigzagoon, Poochyena, Torchic, Treecko, Mudkip, Wurmple, Lotad e Ralts, além de `LIris`/`RIris` em Treecko e Lotad.
+
 

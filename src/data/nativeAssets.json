@@ -1,46 +1,46 @@
 {
   "pokemon": {
-    "tentacool": "/assets/native/pokemon/tentacool-aa6c9920a28a.glb",
-    "krabby": "/assets/native/pokemon/krabby-73d76fb93e70.glb",
-    "goldeen": "/assets/native/pokemon/goldeen-e606fb11b9b4.glb",
-    "magikarp": "/assets/native/pokemon/magikarp-9e2c588e2454.glb",
-    "marill": "/assets/native/pokemon/marill-6614dc413ce0.glb",
-    "azumarill": "/assets/native/pokemon/azumarill-837464ca024f.glb",
-    "treecko": "/assets/native/pokemon/treecko-6513dd4274df.glb",
-    "grovyle": "/assets/native/pokemon/grovyle-92ac79d5e151.glb",
-    "sceptile": "/assets/native/pokemon/sceptile-0f7968ab107d.glb",
-    "torchic": "/assets/native/pokemon/torchic-4a5e5cf602e2.glb",
-    "combusken": "/assets/native/pokemon/combusken-29ecde377f63.glb",
-    "blaziken": "/assets/native/pokemon/blaziken-d707b319b58b.glb",
-    "mudkip": "/assets/native/pokemon/mudkip-e3d891798e07.glb",
-    "marshtomp": "/assets/native/pokemon/marshtomp-b3b44c858d15.glb",
-    "swampert": "/assets/native/pokemon/swampert-59e4fb9a88be.glb",
-    "poochyena": "/assets/native/pokemon/poochyena-36cae4b09282.glb",
-    "zigzagoon": "/assets/native/pokemon/zigzagoon-57aaa498ca2f.glb",
-    "wurmple": "/assets/native/pokemon/wurmple-ae19e1a30361.glb",
-    "lotad": "/assets/native/pokemon/lotad-1efeadd27b53.glb",
-    "taillow": "/assets/native/pokemon/taillow-17fe02c0eee7.glb",
-    "wingull": "/assets/native/pokemon/wingull-db2d0437afd1.glb",
-    "pelipper": "/assets/native/pokemon/pelipper-395fd28dafed.glb",
-    "ralts": "/assets/native/pokemon/ralts-14de0d81b815.glb",
-    "surskit": "/assets/native/pokemon/surskit-e02b29c62692.glb",
-    "masquerain": "/assets/native/pokemon/masquerain-d4395fd00c51.glb",
-    "wailmer": "/assets/native/pokemon/wailmer-014f42520deb.glb",
-    "corphish": "/assets/native/pokemon/corphish-bc47cb7fcaaa.glb",
-    "kyogre": "/assets/native/pokemon/kyogre-24cd04181c4b.glb",
-    "kyogre-1": "/assets/native/pokemon/kyogre-1-4c471e492418.glb",
-    "groudon": "/assets/native/pokemon/groudon-e15fb00b62fd.glb",
-    "groudon-1": "/assets/native/pokemon/groudon-1-72454f455952.glb",
-    "shellos": "/assets/native/pokemon/shellos-a32ad10ca6ce.glb",
-    "chatot": "/assets/native/pokemon/chatot-3510041f7c56.glb",
-    "lillipup": "/assets/native/pokemon/lillipup-08094eec1083.glb",
-    "pidove": "/assets/native/pokemon/pidove-1c27918f15a9.glb",
-    "tympole": "/assets/native/pokemon/tympole-56b56bb25f6a.glb",
-    "sewaddle": "/assets/native/pokemon/sewaddle-640a5cd9a2d0.glb",
-    "zorua": "/assets/native/pokemon/zorua-2038efc30146.glb",
-    "gothita": "/assets/native/pokemon/gothita-f5b704edb2b7.glb",
-    "frillish": "/assets/native/pokemon/frillish-0b0c7721dbc7.glb",
-    "clauncher": "/assets/native/pokemon/clauncher-d1e34f888aea.glb"
+    "tentacool": "/assets/native/pokemon/tentacool-a0e2d0f0ccce.glb",
+    "krabby": "/assets/native/pokemon/krabby-481a6cc40ab7.glb",
+    "goldeen": "/assets/native/pokemon/goldeen-1490150ba716.glb",
+    "magikarp": "/assets/native/pokemon/magikarp-fac805c33784.glb",
+    "marill": "/assets/native/pokemon/marill-216885080787.glb",
+    "azumarill": "/assets/native/pokemon/azumarill-6a014fa0eb79.glb",
+    "treecko": "/assets/native/pokemon/treecko-05b495880c9a.glb",
+    "grovyle": "/assets/native/pokemon/grovyle-3577f12eae06.glb",
+    "sceptile": "/assets/native/pokemon/sceptile-6c14ec7f97c6.glb",
+    "torchic": "/assets/native/pokemon/torchic-3424f5bba86f.glb",
+    "combusken": "/assets/native/pokemon/combusken-bcf886a8f478.glb",
+    "blaziken": "/assets/native/pokemon/blaziken-c8ed87f6392a.glb",
+    "mudkip": "/assets/native/pokemon/mudkip-ee62f0eb4a4b.glb",
+    "marshtomp": "/assets/native/pokemon/marshtomp-7c2137f0ae00.glb",
+    "swampert": "/assets/native/pokemon/swampert-e8f037ce0d29.glb",
+    "poochyena": "/assets/native/pokemon/poochyena-bcdcbfc116c9.glb",
+    "zigzagoon": "/assets/native/pokemon/zigzagoon-407dd336f84b.glb",
+    "wurmple": "/assets/native/pokemon/wurmple-b4156d7eeade.glb",
+    "lotad": "/assets/native/pokemon/lotad-08a0df91db06.glb",
+    "taillow": "/assets/native/pokemon/taillow-1ea9b772b263.glb",
+    "wingull": "/assets/native/pokemon/wingull-1e80e11e2b67.glb",
+    "pelipper": "/assets/native/pokemon/pelipper-1f01967046a4.glb",
+    "ralts": "/assets/native/pokemon/ralts-60fc61b33c6f.glb",
+    "surskit": "/assets/native/pokemon/surskit-1066cf5d99f1.glb",
+    "masquerain": "/assets/native/pokemon/masquerain-d836804778a1.glb",
+    "wailmer": "/assets/native/pokemon/wailmer-8eb86e5e2d65.glb",
+    "corphish": "/assets/native/pokemon/corphish-0ee072d91fef.glb",
+    "kyogre": "/assets/native/pokemon/kyogre-d714c7b639f0.glb",
+    "kyogre-1": "/assets/native/pokemon/kyogre-1-138c9c65ad1c.glb",
+    "groudon": "/assets/native/pokemon/groudon-aad0530fe72e.glb",
+    "groudon-1": "/assets/native/pokemon/groudon-1-9fc810fc867e.glb",
+    "shellos": "/assets/native/pokemon/shellos-4489b9bc0c2e.glb",
+    "chatot": "/assets/native/pokemon/chatot-3720a81146b8.glb",
+    "lillipup": "/assets/native/pokemon/lillipup-1805b236fe2d.glb",
+    "pidove": "/assets/native/pokemon/pidove-9a5ab52193ca.glb",
+    "tympole": "/assets/native/pokemon/tympole-44251bea7f24.glb",
+    "sewaddle": "/assets/native/pokemon/sewaddle-33235564fd79.glb",
+    "zorua": "/assets/native/pokemon/zorua-520179575c22.glb",
+    "gothita": "/assets/native/pokemon/gothita-22b877b07bf9.glb",
+    "frillish": "/assets/native/pokemon/frillish-b5913e73907b.glb",
+    "clauncher": "/assets/native/pokemon/clauncher-71710ef9aa1a.glb"
   },
   "characters": {
     "/assets/characters/mm_0000.glb": "/assets/native/characters/mm_0000-57b2903d4593.glb",
@@ -1780,8 +1780,8 @@
     },
     {
       "id": "pokemon/0072/0",
-      "url": "/assets/native/pokemon/tentacool-aa6c9920a28a.glb",
-      "sha256": "aa6c9920a28a365f36716a8ef2730fbcf2fd2117e3bc48eb43905720c7d7a504",
+      "url": "/assets/native/pokemon/tentacool-a0e2d0f0ccce.glb",
+      "sha256": "a0e2d0f0ccce911f4adbe165ecca1cc58c92bba35477d67359c85bbc66f8d458",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0072_00/pm0072_00.glb",
       "clips": [
@@ -1794,8 +1794,8 @@
     },
     {
       "id": "pokemon/0098/0",
-      "url": "/assets/native/pokemon/krabby-73d76fb93e70.glb",
-      "sha256": "73d76fb93e70e4e13040b639cf239b987d38bb6d0a6d5ffa9e3ec1557c102a21",
+      "url": "/assets/native/pokemon/krabby-481a6cc40ab7.glb",
+      "sha256": "481a6cc40ab7a473bf4b73ceaa3853502637484a0b04938703cf8f368985b7ab",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0098_00/pm0098_00.glb",
       "clips": [
@@ -1808,8 +1808,8 @@
     },
     {
       "id": "pokemon/0118/0",
-      "url": "/assets/native/pokemon/goldeen-e606fb11b9b4.glb",
-      "sha256": "e606fb11b9b455008c77770016f0948778733ecf455adfc8d63f5bda138a0304",
+      "url": "/assets/native/pokemon/goldeen-1490150ba716.glb",
+      "sha256": "1490150ba71668970d8ea1faae97182c2c8a75909d67e5835119aff33ac6de30",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0118_00/pm0118_00.glb",
       "clips": [
@@ -1822,8 +1822,8 @@
     },
     {
       "id": "pokemon/0129/0",
-      "url": "/assets/native/pokemon/magikarp-9e2c588e2454.glb",
-      "sha256": "9e2c588e245467dd6add02abac9aaa6aa40d064c99803c76a0662a360434e42f",
+      "url": "/assets/native/pokemon/magikarp-fac805c33784.glb",
+      "sha256": "fac805c337847108f16120341d5b65a9d0bc8fa90cb0e871add375d297602d3a",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0129_00/pm0129_00.glb",
       "clips": [
@@ -1834,8 +1834,8 @@
     },
     {
       "id": "pokemon/0183/0",
-      "url": "/assets/native/pokemon/marill-6614dc413ce0.glb",
-      "sha256": "6614dc413ce008fc8df6bc0fc9366e9681eeed61e3777c67cef58b4d50c3ba44",
+      "url": "/assets/native/pokemon/marill-216885080787.glb",
+      "sha256": "216885080787b2de82ac54757621ae8cba129a8a70c96cfa2c8bb913971cc272",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0183_00/pm0183_00.glb",
       "clips": [
@@ -1848,8 +1848,8 @@
     },
     {
       "id": "pokemon/0184/0",
-      "url": "/assets/native/pokemon/azumarill-837464ca024f.glb",
-      "sha256": "837464ca024f78e5da2fcda2c3bc7d0670b2220c6f13db4f423fd330214f994d",
+      "url": "/assets/native/pokemon/azumarill-6a014fa0eb79.glb",
+      "sha256": "6a014fa0eb7995e98ed0de7a5813d7ffc17268112db33d1f736c3847ae40875a",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0184_00/pm0184_00.glb",
       "clips": [
@@ -1862,8 +1862,8 @@
     },
     {
       "id": "pokemon/0252/0",
-      "url": "/assets/native/pokemon/treecko-6513dd4274df.glb",
-      "sha256": "6513dd4274dfae4effb4433fc01f48f7f9c9b80d29ef5c32d3b13e402ffd82b1",
+      "url": "/assets/native/pokemon/treecko-05b495880c9a.glb",
+      "sha256": "05b495880c9ae83a24a1f36f43afa205bafa9d28ee109559a22dcf8adb4efa43",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0252_00/pm0252_00.glb",
       "clips": [
@@ -1876,8 +1876,8 @@
     },
     {
       "id": "pokemon/0253/0",
-      "url": "/assets/native/pokemon/grovyle-92ac79d5e151.glb",
-      "sha256": "92ac79d5e151e98d49de0f65150e02b8bafa60df9a25565fd2454210b31413c3",
+      "url": "/assets/native/pokemon/grovyle-3577f12eae06.glb",
+      "sha256": "3577f12eae06b32e1c18b7dffe80de540862977b7cdeeb72d0719ae62f8b508d",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0253_00/pm0253_00.glb",
       "clips": [
@@ -1890,8 +1890,8 @@
     },
     {
       "id": "pokemon/0254/0",
-      "url": "/assets/native/pokemon/sceptile-0f7968ab107d.glb",
-      "sha256": "0f7968ab107d5973228ef3f593440091e5c18a556b7a3f71fc1bfe261a2ce340",
+      "url": "/assets/native/pokemon/sceptile-6c14ec7f97c6.glb",
+      "sha256": "6c14ec7f97c6c82a6cb20648ea09c7f6dfd0a148014cc5c6b447bf10fbd5b2b0",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0254_00/pm0254_00.glb",
       "clips": [
@@ -1904,8 +1904,8 @@
     },
     {
       "id": "pokemon/0255/0",
-      "url": "/assets/native/pokemon/torchic-4a5e5cf602e2.glb",
-      "sha256": "4a5e5cf602e21169ed3cca41a147b50cd7467e02cd8251902f5cc78cd466c720",
+      "url": "/assets/native/pokemon/torchic-3424f5bba86f.glb",
+      "sha256": "3424f5bba86fe065f57ebb3710360a1ab58aad929f085623a2b1f0377f5cd619",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0255_00/pm0255_00.glb",
       "clips": [
@@ -1918,8 +1918,8 @@
     },
     {
       "id": "pokemon/0256/0",
-      "url": "/assets/native/pokemon/combusken-29ecde377f63.glb",
-      "sha256": "29ecde377f630ec6dca2ed057e8b92081a75b6cf4b238bbaf10a2cf7555c7361",
+      "url": "/assets/native/pokemon/combusken-bcf886a8f478.glb",
+      "sha256": "bcf886a8f478f09d1d6e1d91e911857caa3f99ef5e3d94142b07fd0ed5972956",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0256_00/pm0256_00.glb",
       "clips": [
@@ -1932,8 +1932,8 @@
     },
     {
       "id": "pokemon/0257/0",
-      "url": "/assets/native/pokemon/blaziken-d707b319b58b.glb",
-      "sha256": "d707b319b58b3ef60564f0df54481aa9c1b5e455dae296b1d7f385c28fbdbde6",
+      "url": "/assets/native/pokemon/blaziken-c8ed87f6392a.glb",
+      "sha256": "c8ed87f6392a44b4bd0c1960bd986ce22545042987a71fdb66761e78ef9d4f76",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0257_00/pm0257_00.glb",
       "clips": [
@@ -1946,8 +1946,8 @@
     },
     {
       "id": "pokemon/0258/0",
-      "url": "/assets/native/pokemon/mudkip-e3d891798e07.glb",
-      "sha256": "e3d891798e07997ad7bd8e4cdaa0c656e834b92b0e68d3d6cdbba1e310c46df6",
+      "url": "/assets/native/pokemon/mudkip-ee62f0eb4a4b.glb",
+      "sha256": "ee62f0eb4a4ba97a83d9d60521b84586ad9fdee16b24e19039da93c21e7655fe",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0258_00/pm0258_00.glb",
       "clips": [
@@ -1960,8 +1960,8 @@
     },
     {
       "id": "pokemon/0259/0",
-      "url": "/assets/native/pokemon/marshtomp-b3b44c858d15.glb",
-      "sha256": "b3b44c858d15ddc36fec05667bea1e503014e2967f8f4a13160ae3038c13d61f",
+      "url": "/assets/native/pokemon/marshtomp-7c2137f0ae00.glb",
+      "sha256": "7c2137f0ae00b1902f3e0356869400ea7131cbecea7f58cb69c2d1a410f9598f",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0259_00/pm0259_00.glb",
       "clips": [
@@ -1974,8 +1974,8 @@
     },
     {
       "id": "pokemon/0260/0",
-      "url": "/assets/native/pokemon/swampert-59e4fb9a88be.glb",
-      "sha256": "59e4fb9a88be6281f4bfb669602d311e2539daac13694c8b207334e1006b30d6",
+      "url": "/assets/native/pokemon/swampert-e8f037ce0d29.glb",
+      "sha256": "e8f037ce0d29a019756e63553f53affcb80d4bf8541dead38e717f1486296419",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0260_00/pm0260_00.glb",
       "clips": [
@@ -1988,8 +1988,8 @@
     },
     {
       "id": "pokemon/0261/0",
-      "url": "/assets/native/pokemon/poochyena-36cae4b09282.glb",
-      "sha256": "36cae4b092822dbf4a197d99ed1c59d0e7f1e17919d3313ca62503d47f8e6c9b",
+      "url": "/assets/native/pokemon/poochyena-bcdcbfc116c9.glb",
+      "sha256": "bcdcbfc116c997e58063b55d3b7f07614c4c239b5c1ab06a5d13803ba7185d6b",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0261_00/pm0261_00.glb",
       "clips": [
@@ -2002,8 +2002,8 @@
     },
     {
       "id": "pokemon/0263/0",
-      "url": "/assets/native/pokemon/zigzagoon-57aaa498ca2f.glb",
-      "sha256": "57aaa498ca2f5311c123f320076f235c41a21b0c7a351eefc02ee7de39c3455f",
+      "url": "/assets/native/pokemon/zigzagoon-407dd336f84b.glb",
+      "sha256": "407dd336f84b81a49bf528227edc4087fccefa572b49f6376a0298d9a7f7004f",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0263_00/pm0263_00.glb",
       "clips": [
@@ -2016,8 +2016,8 @@
     },
     {
       "id": "pokemon/0265/0",
-      "url": "/assets/native/pokemon/wurmple-ae19e1a30361.glb",
-      "sha256": "ae19e1a30361d817e51baaebf7f2fb0fb2c318b8a81d03cee8602352f5b31c3d",
+      "url": "/assets/native/pokemon/wurmple-b4156d7eeade.glb",
+      "sha256": "b4156d7eeade3a40a1f2f1522de61bcdf6fc6ec7b89d676f9fbe133cbb57b3ac",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0265_00/pm0265_00.glb",
       "clips": [
@@ -2030,8 +2030,8 @@
     },
     {
       "id": "pokemon/0270/0",
-      "url": "/assets/native/pokemon/lotad-1efeadd27b53.glb",
-      "sha256": "1efeadd27b539529fd564724e62514bb4b698629eca0cb4865de7e0ea2bda758",
+      "url": "/assets/native/pokemon/lotad-08a0df91db06.glb",
+      "sha256": "08a0df91db06159a06fad8a17010d1ebbe760de7d709ac7650bd655a660537c2",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0270_00/pm0270_00.glb",
       "clips": [
@@ -2044,8 +2044,8 @@
     },
     {
       "id": "pokemon/0276/0",
-      "url": "/assets/native/pokemon/taillow-17fe02c0eee7.glb",
-      "sha256": "17fe02c0eee778e3ec6e5581b738442bdd99bb436a82b85b330afd04daacb9bd",
+      "url": "/assets/native/pokemon/taillow-1ea9b772b263.glb",
+      "sha256": "1ea9b772b26351a048916a993e6ddf9125520973c599562830449d741dfe9905",
       "native": false,
       "source": "rom/extracted/models/pokemon/pm0276_00/pm0276_00.glb",
       "clips": [
@@ -2054,8 +2054,8 @@
     },
     {
       "id": "pokemon/0278/0",
-      "url": "/assets/native/pokemon/wingull-db2d0437afd1.glb",
-      "sha256": "db2d0437afd1c39a089630ee605aa4e88722a0a155b07dc7be9e00a83430710d",
+      "url": "/assets/native/pokemon/wingull-1e80e11e2b67.glb",
+      "sha256": "1e80e11e2b679f0cf64436e00984ad8ff50ff8ed256b246c91e7ac256cea7b5e",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0278_00/pm0278_00.glb",
       "clips": [
@@ -2068,8 +2068,8 @@
     },
     {
       "id": "pokemon/0279/0",
-      "url": "/assets/native/pokemon/pelipper-395fd28dafed.glb",
-      "sha256": "395fd28dafed711250cb4cf1a013b6c21f5e7696c774e0143dd51bebd8644e5b",
+      "url": "/assets/native/pokemon/pelipper-1f01967046a4.glb",
+      "sha256": "1f01967046a4ce83e3f8682d86a1fb19db7fa8aebd6b8d0b89d08f622e3e1822",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0279_00/pm0279_00.glb",
       "clips": [
@@ -2082,8 +2082,8 @@
     },
     {
       "id": "pokemon/0280/0",
-      "url": "/assets/native/pokemon/ralts-14de0d81b815.glb",
-      "sha256": "14de0d81b815c244c2c76d89545d4d164e54590835eb1cbc8777987d34708a19",
+      "url": "/assets/native/pokemon/ralts-60fc61b33c6f.glb",
+      "sha256": "60fc61b33c6f88cc6d2a4066c47707e031aecccef3bfaef958fb73206da1f9d6",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0280_00/pm0280_00.glb",
       "clips": [
@@ -2096,8 +2096,8 @@
     },
     {
       "id": "pokemon/0283/0",
-      "url": "/assets/native/pokemon/surskit-e02b29c62692.glb",
-      "sha256": "e02b29c626923e1a244d011df5128bf6a979327c824c6652f2ceb9929e64535d",
+      "url": "/assets/native/pokemon/surskit-1066cf5d99f1.glb",
+      "sha256": "1066cf5d99f1aeb3427e1b00fdad0030a905cd00c2dd866c03c6ce3a30deab04",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0283_00/pm0283_00.glb",
       "clips": [
@@ -2110,8 +2110,8 @@
     },
     {
       "id": "pokemon/0284/0",
-      "url": "/assets/native/pokemon/masquerain-d4395fd00c51.glb",
-      "sha256": "d4395fd00c51df71032fb01ffc511673965d372d33838a109253a1dfadb53090",
+      "url": "/assets/native/pokemon/masquerain-d836804778a1.glb",
+      "sha256": "d836804778a1e7ad273701b22244aeae83cd97b60d050cd63b0d6dffb31acb0b",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0284_00/pm0284_00.glb",
       "clips": [
@@ -2124,8 +2124,8 @@
     },
     {
       "id": "pokemon/0320/0",
-      "url": "/assets/native/pokemon/wailmer-014f42520deb.glb",
-      "sha256": "014f42520debf271ae2729028d900c2eba9370ddb900d2af3f880d6dbd13fe8e",
+      "url": "/assets/native/pokemon/wailmer-8eb86e5e2d65.glb",
+      "sha256": "8eb86e5e2d655f631ef1eb2fc0954420adb31db2d5770a97371630878005605b",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0320_00/pm0320_00.glb",
       "clips": [
@@ -2138,8 +2138,8 @@
     },
     {
       "id": "pokemon/0341/0",
-      "url": "/assets/native/pokemon/corphish-bc47cb7fcaaa.glb",
-      "sha256": "bc47cb7fcaaa861caa13a829d8c0b8206a793abc50e8a91e31305c7a671d53ac",
+      "url": "/assets/native/pokemon/corphish-0ee072d91fef.glb",
+      "sha256": "0ee072d91fefd83eba7de63109aa729c54192ccfec49f0f0fe630d8f4ffd5d32",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0341_00/pm0341_00.glb",
       "clips": [
@@ -2152,8 +2152,8 @@
     },
     {
       "id": "pokemon/0382/0",
-      "url": "/assets/native/pokemon/kyogre-24cd04181c4b.glb",
-      "sha256": "24cd04181c4bcc1b415930c4e4eb5dc5afbf6bb8028031020845a2d461fd31e1",
+      "url": "/assets/native/pokemon/kyogre-d714c7b639f0.glb",
+      "sha256": "d714c7b639f0b5bbabe3c19f076d8534570ac202104d26b411f9ed507aeffdbb",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0382_00/pm0382_00.glb",
       "clips": [
@@ -2166,8 +2166,8 @@
     },
     {
       "id": "pokemon/0382/1",
-      "url": "/assets/native/pokemon/kyogre-1-4c471e492418.glb",
-      "sha256": "4c471e4924182de935378221a40d9615e822dcaff397e69e1b6ef3c19cfdedeb",
+      "url": "/assets/native/pokemon/kyogre-1-138c9c65ad1c.glb",
+      "sha256": "138c9c65ad1c95f0d9e84e1c9a0cc27f653c9a668139c3377bf8d015e7f36d5d",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0382_51/pm0382_51.glb",
       "clips": [
@@ -2180,8 +2180,8 @@
     },
     {
       "id": "pokemon/0383/0",
-      "url": "/assets/native/pokemon/groudon-e15fb00b62fd.glb",
-      "sha256": "e15fb00b62fdd5ebc36f4a672eec036bee211ba734bbefe8e17b2f0f7f7d5bf9",
+      "url": "/assets/native/pokemon/groudon-aad0530fe72e.glb",
+      "sha256": "aad0530fe72ed88a8108be92f6b5b61398a4fb3646836d22bf7d87de31065ac0",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0383_00/pm0383_00.glb",
       "clips": [
@@ -2194,8 +2194,8 @@
     },
     {
       "id": "pokemon/0383/1",
-      "url": "/assets/native/pokemon/groudon-1-72454f455952.glb",
-      "sha256": "72454f4559529b3d9dda3b060b22a8207e0aac5b3a64404390c6b6d823e10f92",
+      "url": "/assets/native/pokemon/groudon-1-9fc810fc867e.glb",
+      "sha256": "9fc810fc867eaa63fe16a12a0882347f2dbb620c84e2388dedb60a34a4e252d6",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0383_51/pm0383_51.glb",
       "clips": [
@@ -2208,8 +2208,8 @@
     },
     {
       "id": "pokemon/0422/0",
-      "url": "/assets/native/pokemon/shellos-a32ad10ca6ce.glb",
-      "sha256": "a32ad10ca6cea87ca3b1d34ed54eba4475cbb1cdc7d5e03dfea73147602ff464",
+      "url": "/assets/native/pokemon/shellos-4489b9bc0c2e.glb",
+      "sha256": "4489b9bc0c2efc86198950913842caa1c51cc46935bc14a3241678de5b08dcd1",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0422_11/pm0422_11.glb",
       "clips": [
@@ -2222,8 +2222,8 @@
     },
     {
       "id": "pokemon/0441/0",
-      "url": "/assets/native/pokemon/chatot-3510041f7c56.glb",
-      "sha256": "3510041f7c563c3a5d3b8124d85a0664c7e3a050516d2c0e1c21c2f206588436",
+      "url": "/assets/native/pokemon/chatot-3720a81146b8.glb",
+      "sha256": "3720a81146b883c2965c8ace4c592aea8b1c8c41490df4dfeea2ef7735292696",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0441_00/pm0441_00.glb",
       "clips": [
@@ -2236,8 +2236,8 @@
     },
     {
       "id": "pokemon/0506/0",
-      "url": "/assets/native/pokemon/lillipup-08094eec1083.glb",
-      "sha256": "08094eec1083d1c304c0ed7957f638bb82895409ee36a720b3d1d6aa089b2b47",
+      "url": "/assets/native/pokemon/lillipup-1805b236fe2d.glb",
+      "sha256": "1805b236fe2d4cb3ee44a2baafb115b3ac45b8914b621b8c3a85459b9c4098f8",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0506_00/pm0506_00.glb",
       "clips": [
@@ -2250,8 +2250,8 @@
     },
     {
       "id": "pokemon/0519/0",
-      "url": "/assets/native/pokemon/pidove-1c27918f15a9.glb",
-      "sha256": "1c27918f15a9f6ed25767f93091010952e75110776d1fee83ca83cd2f634f437",
+      "url": "/assets/native/pokemon/pidove-9a5ab52193ca.glb",
+      "sha256": "9a5ab52193cabec8974239666b05c7648ac29200df0782bd319a6934eea649e3",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0519_00/pm0519_00.glb",
       "clips": [
@@ -2264,8 +2264,8 @@
     },
     {
       "id": "pokemon/0535/0",
-      "url": "/assets/native/pokemon/tympole-56b56bb25f6a.glb",
-      "sha256": "56b56bb25f6a3f735f3f47cfe14146c4fdd03f3604e2071f89842b0ddb4e0a79",
+      "url": "/assets/native/pokemon/tympole-44251bea7f24.glb",
+      "sha256": "44251bea7f24d21ea320a7665cc6a824dea1e702ed208be242efdc5043bd47fc",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0535_00/pm0535_00.glb",
       "clips": [
@@ -2276,8 +2276,8 @@
     },
     {
       "id": "pokemon/0540/0",
-      "url": "/assets/native/pokemon/sewaddle-640a5cd9a2d0.glb",
-      "sha256": "640a5cd9a2d00db654d8161428572cc989d3ea8763c912400b5ad22ebb44ed31",
+      "url": "/assets/native/pokemon/sewaddle-33235564fd79.glb",
+      "sha256": "33235564fd796c13af0d715c4439f035db9c2532a8bf97770634501e6a4d5cf2",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0540_00/pm0540_00.glb",
       "clips": [
@@ -2290,8 +2290,8 @@
     },
     {
       "id": "pokemon/0570/0",
-      "url": "/assets/native/pokemon/zorua-2038efc30146.glb",
-      "sha256": "2038efc3014612295b309c9313c462f0023640280f9bb9dcf299659c7e3183c3",
+      "url": "/assets/native/pokemon/zorua-520179575c22.glb",
+      "sha256": "520179575c2238737a3f7f053b63595747031c7670dbbf6c7d7a2d201d890cad",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0570_00/pm0570_00.glb",
       "clips": [
@@ -2304,8 +2304,8 @@
     },
     {
       "id": "pokemon/0574/0",
-      "url": "/assets/native/pokemon/gothita-f5b704edb2b7.glb",
-      "sha256": "f5b704edb2b7cf4df1400cf8a392232ceae5af727712121b996ca1e1b65505c4",
+      "url": "/assets/native/pokemon/gothita-22b877b07bf9.glb",
+      "sha256": "22b877b07bf9208fe8ccb83e834f22a579343838661386a80140d8bb2e926dfc",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0574_00/pm0574_00.glb",
       "clips": [
@@ -2318,8 +2318,8 @@
     },
     {
       "id": "pokemon/0592/0",
-      "url": "/assets/native/pokemon/frillish-0b0c7721dbc7.glb",
-      "sha256": "0b0c7721dbc702a1e906bf333de846d3b82e13614a6c135ab25577f6913201f2",
+      "url": "/assets/native/pokemon/frillish-b5913e73907b.glb",
+      "sha256": "b5913e73907bf326f87a153c7cc1a83d450be7212194d82ed6d59e92bf8ca0a8",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0592_00/pm0592_00.glb",
       "clips": [
@@ -2332,8 +2332,8 @@
     },
     {
       "id": "pokemon/0692/0",
-      "url": "/assets/native/pokemon/clauncher-d1e34f888aea.glb",
-      "sha256": "d1e34f888aea30e2fe4bfcc1b34e952d69c57d3f42b0f439d1239ccbd09fec89",
+      "url": "/assets/native/pokemon/clauncher-71710ef9aa1a.glb",
+      "sha256": "71710ef9aa1a1e0a31adc195ddd1e28525e05aa06bd20f0e700d0dea076bb3c8",
       "native": true,
       "source": "rom/extracted/models/clips_merged/pokemon/pm0756_00/pm0756_00.glb",
       "clips": [

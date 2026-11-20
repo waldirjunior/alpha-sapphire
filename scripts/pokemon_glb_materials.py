@@ -7,6 +7,7 @@ import struct
 import xml.etree.ElementTree as ET
 
 from glb_native_clips import decode_glb, encode_glb
+from pica_vertex_colors import dae_color_reference, normalize_vertex_colors
 
 COLLADA_NS = '{http://www.collada.org/2005/11/COLLADASchema}'
 WRAP_MODES = {'WRAP': 10497, 'REPEAT': 10497, 'MIRROR': 33648, 'MIRRORED_REPEAT': 33648,
@@ -201,6 +202,27 @@ def assign_pica_samplers(scene: dict, material_sampling: dict[str, dict]) -> int
     return assigned
 
 
+def restore_pokemon_vertex_colors(blob: bytes, dae: bytes, marker: dict) -> bytes:
+    proof = marker.get('vertexColorProof')
+    dae_sha = hashlib.sha256(dae).hexdigest()
+    if proof is not None:
+        if proof.get('daeSha256') != dae_sha:
+            raise ValueError('Pokémon vertex color evidence was built from different COLLADA data')
+        return blob
+
+    references = dae_color_reference(dae)
+    evidence = {'inputSha256': hashlib.sha256(blob).hexdigest(), 'daeSha256': dae_sha,
+                'referenceSha256': hashlib.sha256(json.dumps(references, sort_keys=True).encode()).hexdigest(),
+                'alphaPolicy': 'preserve-glb-alpha'}
+    corrected, materials = normalize_vertex_colors(blob, references, evidence,
+                                                    require_matching_alpha=False)
+    scene, binary = decode_glb(corrected)
+    scene['asset']['extras'][GLTF_UV_FLIP_MARKER]['vertexColorProof'] = {
+        **evidence, 'evidenceSha256': hashlib.sha256(json.dumps(evidence, sort_keys=True).encode()).hexdigest(),
+        'materials': materials}
+    return encode_glb(scene, binary)
+
+
 def normalize_pokemon_glb(blob: bytes, dae: bytes) -> bytes:
     scene, source_binary = decode_glb(blob)
     extras = scene.setdefault('asset', {}).setdefault('extras', {})
@@ -213,7 +235,7 @@ def normalize_pokemon_glb(blob: bytes, dae: bytes) -> bytes:
         if marker.get('daeSha256') is not None and marker['daeSha256'] != dae_sha:
             raise ValueError('Normalized Pokémon GLB was built from different COLLADA evidence; regenerate it from the original GLB')
         validate_material_sampling(scene, material_sampling)
-        return blob
+        return restore_pokemon_vertex_colors(blob, dae, marker)
 
     binary = bytearray(source_binary)
     uv_accessors = flip_uv_v(scene, binary)
@@ -227,4 +249,5 @@ def normalize_pokemon_glb(blob: bytes, dae: bytes) -> bytes:
                                    'daeSha256': dae_sha,
                                    'materialSampling': material_sampling,
                                    'uvAccessors': uv_accessors, 'materials': material_count}
-    return encode_glb(scene, bytes(binary))
+    normalized = encode_glb(scene, bytes(binary))
+    return restore_pokemon_vertex_colors(normalized, dae, extras[GLTF_UV_FLIP_MARKER])

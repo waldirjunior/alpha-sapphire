@@ -61,10 +61,13 @@ def dae_sources(mesh: ET.Element) -> dict:
 def dae_triangle_rows(mesh: ET.Element, triangles: ET.Element) -> list:
     sources = dae_sources(mesh)
     inputs = triangles.findall('c:input', NS)
-    position = mesh.find('c:vertices/c:input[@semantic="POSITION"]', NS).get('source')[1:]
-    vertex = next(i for i in inputs if i.get('semantic') == 'VERTEX')
-    uv = next(i for i in inputs if i.get('semantic') == 'TEXCOORD' and i.get('set') == '0')
-    color = next(i for i in inputs if i.get('semantic') == 'COLOR')
+    vertex = next((i for i in inputs if i.get('semantic') == 'VERTEX'), None)
+    uv = next((i for i in inputs if i.get('semantic') == 'TEXCOORD' and i.get('set') == '0'), None)
+    color = next((i for i in inputs if i.get('semantic') == 'COLOR'), None)
+    vertices = mesh.find('c:vertices/c:input[@semantic="POSITION"]', NS)
+    if vertex is None or uv is None or color is None or vertices is None:
+        return []
+    position = vertices.get('source')[1:]
     indices = list(map(int, triangles.find('c:p', NS).text.split()))
     stride = 1 + max(int(i.get('offset', 0)) for i in inputs)
     offsets = [int(i.get('offset', 0)) for i in (vertex, uv, color)]
@@ -85,8 +88,12 @@ def dae_color_reference(blob: bytes) -> dict[str, list]:
     references = {}
     for mesh in root.findall('.//c:library_geometries/c:geometry/c:mesh', NS):
         for triangles in mesh.findall('c:triangles', NS):
-            name = names[bindings[triangles.get('material')]]
-            references.setdefault(name, []).extend(dae_triangle_rows(mesh, triangles))
+            target = bindings.get(triangles.get('material'))
+            if target not in names:
+                continue
+            rows = dae_triangle_rows(mesh, triangles)
+            if rows:
+                references.setdefault(names[target], []).extend(rows)
     return references
 
 
@@ -154,7 +161,8 @@ def triangle_colors(rows: list, indices: list | None, references: list) -> list 
     return [next(iter(colors)) for colors in resolved] if all(len(c) == 1 for c in resolved) else None
 
 
-def primitive_colors(scene: dict, binary: bytes, primitive: dict, buckets: dict, references: list) -> tuple | None:
+def primitive_colors(scene: dict, binary: bytes, primitive: dict, buckets: dict,
+                     references: list, require_matching_alpha: bool) -> tuple | None:
     attrs = primitive['attributes']
     if 'POSITION' not in attrs or 'TEXCOORD_0' not in attrs:
         return None
@@ -167,7 +175,7 @@ def primitive_colors(scene: dict, binary: bytes, primitive: dict, buckets: dict,
               triangle_colors(rows, triangle_index_rows(scene, binary, primitive, len(rows)), references))
     if native is None:
         return None
-    if any(abs(a[3]-b[3]) > 1e-6 for a, b in zip(old, native)):
+    if require_matching_alpha and any(abs(a[3]-b[3]) > 1e-6 for a, b in zip(old, native)):
         return None
     restored = [[*color[:3], original[3]] for color, original in zip(native, old)]
     changed = sum(any(abs(a-b) > 1e-6 for a, b in zip(before, after)) for before, after in zip(old, restored))
@@ -184,11 +192,13 @@ def append_color_accessor(scene: dict, binary: bytes, rows: list) -> tuple[bytes
     return padded + values, len(accessors)-1
 
 
-def restore_material(scene: dict, binary: bytes, index: int, rows: list) -> tuple:
+def restore_material(scene: dict, binary: bytes, index: int, rows: list,
+                     require_matching_alpha: bool) -> tuple:
     primitives = [p for mesh in scene['meshes'] for p in mesh['primitives'] if p.get('material') == index]
     buckets = reference_buckets(rows)
     try:
-        mapped = [primitive_colors(scene, binary, primitive, buckets, rows) for primitive in primitives]
+        mapped = [primitive_colors(scene, binary, primitive, buckets, rows,
+                                   require_matching_alpha) for primitive in primitives]
     except ValueError:
         mapped = [None]
     if not mapped or any(colors is None for colors in mapped):
@@ -202,7 +212,8 @@ def restore_material(scene: dict, binary: bytes, index: int, rows: list) -> tupl
                     'vertices': sum(len(colors) for colors, _ in mapped), 'primitives': len(primitives)}
 
 
-def normalize_vertex_colors(blob: bytes, references: dict, evidence: dict) -> tuple[bytes, list]:
+def normalize_vertex_colors(blob: bytes, references: dict, evidence: dict,
+                            require_matching_alpha: bool = True) -> tuple[bytes, list]:
     scene, binary = decode_glb(blob)
     proof = hashlib.sha256(json.dumps(evidence, sort_keys=True).encode()).hexdigest()
     marker = scene['asset'].get('extras', {}).get(MARKER)
@@ -216,7 +227,8 @@ def normalize_vertex_colors(blob: bytes, references: dict, evidence: dict) -> tu
     for index, material in enumerate(scene['materials']):
         name = material.get('name')
         if name in references:
-            binary, report = restore_material(scene, binary, index, references[name])
+            binary, report = restore_material(scene, binary, index, references[name],
+                                              require_matching_alpha)
             reports.append({'material': name, **report})
     if not any(report['status'] == 'restored' for report in reports):
         return blob, reports
