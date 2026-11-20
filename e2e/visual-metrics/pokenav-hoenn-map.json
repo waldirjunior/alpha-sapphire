@@ -1,7 +1,10 @@
 {
-  "bottomScreenHeight": 328,
-  "mapWidth": 555,
-  "mapHeight": 185,
+  "screenWidth": 320,
+  "screenHeight": 240,
+  "mapWidth": 214,
+  "mapHeight": 171,
+  "areaNavTitleCount": 1,
+  "iconCount": 4,
   "locationCount": 90,
   "connectionCount": 92,
   "playerMarkerCount": 1,

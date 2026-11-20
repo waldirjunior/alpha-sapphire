@@ -12,7 +12,7 @@ Verificado em 2026-11-20 (macOS; suporte headless Linux validado anteriormente n
 | Cobertura de `src/core` | acima da catraca de 95% linhas / 85% branches | `npm run test:coverage` |
 | Testes do pipeline e do oráculo (Python) | 250 passando (1 skip só em worktree sem `public/assets/maps`) | `npm run test:py` |
 | Jogo real no browser (smoke + campanha + corredor) | 7 smoke e campanha 1/1 (`e2e/campaign.spec.ts`; cena natural pausa em `FadeRequestOut(0,2,30)` antes da interação Roxanne); corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
-| Cenários visuais | 28/28 cenas do mundo aceitas; 1 comparação UI do PokéNav instrumentada com diferença conhecida (P-011), ainda sem paridade | `npm run test:e2e`, galeria e comparação em `rom/visual-report/` |
+| Cenários visuais | 28/28 cenas do mundo aceitas; AreaNav 320×240 e 4 ícones comparados/revisados, com diferença de arte ainda aberta (P-011) | `npm run test:e2e`, galeria e comparação em `rom/visual-report/` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
 
 Atores `0x1000`/`0x2000` renderizam modelo real (`failedAssets = 0`); câmera/oclusão em `z0006-littleroot-telhado` e `z0445-mauville-hall` batem com Azahar; cenários Mauville/Route 119 aceitos. Pés Brendan/May e V de corpo/faces (`A-099`) corrigidos. Refs 400×240 em `rom/visual-reference/`.

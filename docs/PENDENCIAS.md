@@ -201,7 +201,19 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
   do local e o dock web. O baseline Chromium revisado protege contra regressão;
   não atesta paridade.
 - **Verificação:** `ALPHA_E2E_PORT=5513 npx playwright test e2e/visual.spec.ts e2e/pokemonBattleModels.spec.ts --workers=3` passou (31/31). `npm run verify` passou (634 Vitest, build e 249 Python; 1 skip).
-- **Próximo passo:** Reproduzir a arte e a composição da AreaNav observadas e repetir a comparação antes de fechar a fidelidade visual ([engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md)).
+- **Implementação/recomparação 2026-11-20:** A aba Mapa agora renderiza um painel 320×240 com título AreaNav, mapa texturizado, local selecionado e quatro ícones decorativos. O cenário seleciona Littleroot, igual à referência do Azahar; métricas e baseline Chromium foram atualizadas após inspeção lado a lado em `rom/visual-report/pokenav-hoenn-map-comparison.html` (capturas locais ignoradas pelo Git).
+- **Gap residual:** A forma, o detalhe costeiro e a textura do mapa ainda diferem do original; os quatro ícones são formas visuais sem equivalência nem ação ligada. A captura comprova a composição, mas não identifica os recursos nativos ou a semântica dos ícones.
+- **Verificação:** `npm run verify` passou (638 Vitest, build e 250 Python; 1 skip); os 36 testes passaram com:
+  ```sh
+  ALPHA_PUBLIC_DIR=/Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/alpha-sapphire/public \
+  ALPHA_E2E_PORT=5513 npx playwright test e2e/visual.spec.ts e2e/smoke.spec.ts --workers=1
+  ```
+  Depois da revisão da captura, a baseline foi aprovada com:
+  ```sh
+  ALPHA_PUBLIC_DIR=/Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/alpha-sapphire/public \
+  ALPHA_E2E_PORT=5513 npm run visual:approve -- --grep 'visual pokenav-hoenn-map' --workers=1
+  ```
+- **Próximo passo:** Identificar e extrair de forma reproduzível a arte nativa da AreaNav e repetir a comparação; manter os ícones sem binding até confirmar os recursos e handlers na ROM ou no emulador ([engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md)).
 
 ## P-012 Animações nativas da ROM (tabela overworld `0xef` em `a/0/2/1` e golpes em `a/0/0/8`)
 

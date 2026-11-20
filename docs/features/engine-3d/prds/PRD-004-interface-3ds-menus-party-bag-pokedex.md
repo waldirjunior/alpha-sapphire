@@ -108,3 +108,29 @@ versionado.
 Verificação: `ALPHA_E2E_PORT=5513 npx playwright test e2e/visual.spec.ts
 e2e/pokemonBattleModels.spec.ts --workers=3` passou com 31/31; `npm run verify`
 passou com 634 testes Vitest e 249 testes Python (1 skip), incluindo build.
+
+## 8. Composição AreaNav — 2026-11-20
+
+`areaNav.ts` compõe o painel no recorte 320×240 observado no Azahar, com o
+título AreaNav, mapa Hoenn, rótulo da localização e quatro ícones decorativos.
+O cenário `pokenav-hoenn-map` agora seleciona Littleroot para comparar o mesmo
+estado que a referência; `e2e/visual.spec.ts` verifica dimensões, título, ícones,
+marcador, seleção e captura. O JSON de métricas foi atualizado e a baseline
+Chromium foi regravada depois da revisão da captura lado a lado.
+
+A implementação usa um preenchimento vetorial texturizado e formas de ícone
+temporárias. A costa, os detalhes do mapa e os glifos continuam diferentes do
+Azahar; os ícones não têm nomes de ação nem bindings. P-011 permanece aberto até
+identificar e extrair os recursos originais com pipeline reproduzível.
+
+Verificação: `npm run verify` passou com 638 testes Vitest, build e 250 testes
+Python (1 skip); os 36 testes Playwright passaram. A captura foi inspecionada
+antes da aprovação da baseline:
+
+```sh
+ALPHA_PUBLIC_DIR=/Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/alpha-sapphire/public \
+ALPHA_E2E_PORT=5513 npx playwright test e2e/visual.spec.ts e2e/smoke.spec.ts --workers=1
+
+ALPHA_PUBLIC_DIR=/Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/alpha-sapphire/public \
+ALPHA_E2E_PORT=5513 npm run visual:approve -- --grep 'visual pokenav-hoenn-map' --workers=1
+```
