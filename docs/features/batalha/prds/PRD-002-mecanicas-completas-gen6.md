@@ -191,3 +191,17 @@ das taxas está registrada em [A-117](../../../APRENDIZADOS.md). `npm run verify
 passou com 639 testes Vitest, build (aviso herdado de chunks acima de 500 kB) e
 252 testes Python (1 skip pela ausência de `public/assets/maps` no worktree). O
 smoke `e2e/smoke.spec.ts` passou em 7/7, incluindo batalha selvagem, golpe e fuga.
+
+## 11. Entrega parcial — 2026-11-20 (extração de IVs de treinador)
+
+`scripts/extract_battle_tables.py` agora lê classe de treinador em `a/0/3/6`,
+classe nominal em `a/0/7/3/0021.bin` e os campos de espécie, forma, nível e
+byte IV em `a/0/3/8`. A regeneração produziu 949 registros em
+`src/data/battle/trainers.json`; os testes sintéticos verificam classe, offsets,
+preservação do byte IV e rejeição de equipes malformadas.
+
+O byte IV foi mantido literal porque ainda não há evidência ROM/emulador para a
+regra que o converte aos seis IVs do Pokémon. A rotina do host também não tem
+vínculo comprovado entre IDs dos eventos AMX e esses registros. O próximo passo
+é observar um Pokémon adversário em batalha no Azahar via RPC, rastrear a
+conversão no runtime e então integrar o ID confirmado ao `TrainerSpec`.
