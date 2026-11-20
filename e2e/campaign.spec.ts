@@ -135,5 +135,20 @@ test('New Game avança naturalmente de Birch até Rustboro sem NPCs futuros dupl
   await advanceVisibleEventDialogues(page);
   expect((await corridorState(page)).player.mapId).toBe('zone_0016');
   await expect.poll(() => page.locator('#hud-pos').textContent(), { timeout: 10_000 }).toContain('Rustboro City');
+
+  const gymSteps = await walkCorridorTo(page, 'zone_0285', { x: 14, z: 24 });
+  expect(gymSteps).toBeGreaterThan(0);
+  await advanceVisibleEventDialogues(page);
+  const gymState = await corridorState(page);
+  expect(gymState.player.mapId).toBe('zone_0285');
+  expect(gymState.player.pos).toEqual({ x: 14, z: 24 });
+  const gym = await corridorMap(page, 'zone_0285');
+  expect(gym.warps).toContainEqual(expect.objectContaining({
+    from: { x: 14, z: 24 }, targetMapId: 'zone_0016',
+  }));
+  expect(gym.npcs?.map(actor => actor.script)).toEqual(expect.arrayContaining([10095, 10117, 10129]));
+  expectHiddenSpawnFlags([710, 552], gym.npcs ?? [], gymState.romEvents?.flags ?? {});
+  const roxanne = gym.npcs?.find(actor => actor.id.endsWith(':6'));
+  expect(roxanne).toMatchObject({ script: 2, spawnFlag: 0, visible: true });
   expect(errors).toEqual([]);
 });

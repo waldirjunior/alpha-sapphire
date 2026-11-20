@@ -90,3 +90,22 @@ persistência/projeções de save/party/bag e paridade de todos os ramos.
 Não se exige nesta etapa um host gráfico pronto, ABI ACMD decodificada,
 concorrência da ROM ou paridade no emulador. Completar todos os serviços/ramos e
 ligar a execução ao jogo ativo são próximos passos de P-013, não aceites implícitos.
+
+## Entrada natural no Ginásio de Rustboro (2026-11-20)
+
+`e2e/campaign.spec.ts` continua de Rustboro (`zone_0016`) até o warp ROM em
+`(47,61)` e entra em `zone_0285` em `(14,24)` somente por teclas. O destino
+contém o warp de retorno para `zone_0016`; o teste também confere os scripts de
+treinador `10095`, `10117` e `10129`, os hide-flags ativos `710`/`552` e a
+visibilidade de Roxanne (ator 6, script `2`, spawnFlag `0`). Nenhuma escrita de
+posição/flag, warp manual ou mudança em `zoneEvents.ts`/`src/core/amx*` foi
+necessária: o host atravessou o warp e projetou as visibilidades extraídas.
+
+O disassembly marca o binding de Roxanne/script `2` como ambíguo entre
+`entities/case 2` e `map/case 2`; não escolhemos um candidato. A presença visual
+da líder não valida a interação ou a batalha, que seguem em P-013.
+
+`npm run verify`: 600 testes Vitest, build e 241 testes Python passaram (um
+skip por assets locais ausentes). `ALPHA_E2E_PORT=5510 npx playwright test
+e2e/campaign.spec.ts e2e/smoke.spec.ts`: 8/8 passaram. O aviso de chunks acima
+de 500 kB permanece.
