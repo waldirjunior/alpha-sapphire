@@ -419,11 +419,11 @@ export class SceneManager {
       if (!this.inBattle || version !== this.battleLoadVersion) return;
       const model = gltf.scene;
       model.scale.setScalar(POKEMON_SCALE);
-      preparePokemonBattleModel(model);
+      const expressionPlayer = preparePokemonBattleModel(model, speciesId);
       target.clear();
       target.add(model);
       const mixer = new THREE.AnimationMixer(model);
-      this.battleActors.set(target, new NativeAnimationController(mixer, gltf.animations));
+      this.battleActors.set(target, new NativeAnimationController(mixer, gltf.animations, expressionPlayer ?? undefined));
       mixer.update(0);
     }).catch((error: unknown) => {
       if (!this.inBattle || version !== this.battleLoadVersion) return;
@@ -491,7 +491,7 @@ export class SceneManager {
       for (const actor of this.entityActors) actor.mixer.update(dt);
     } else {
       updateBattleCamera(this.camera, this.clock.elapsedTime, this.battleArena.cameraMotion, dt);
-      for (const actor of this.battleActors.values()) actor.mixer.update(dt);
+      for (const actor of this.battleActors.values()) actor.update(dt);
       this.battleArena.effects.update(dt);
     }
     if (!this.inBattle) this.events.tick();

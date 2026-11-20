@@ -1,0 +1,4464 @@
+{
+  "schemaVersion": 1,
+  "pokemon": {
+    "tentacool": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 21,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 22,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 24,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 25,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 64,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 65,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 67,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 68,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 50,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 51,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 54,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 55,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 0.5,
+              "y": 0.5
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "krabby": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 55,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 56,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 58,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 59,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 9,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 10,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "goldeen": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 85,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 86,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 87,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 13,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 3,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "magikarp": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 15,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 28,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 29,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        }
+      }
+    },
+    "marill": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 4,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 26,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 27,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 28,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 6,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 8,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 18,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 40,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 12,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 4,
+              "x": 0.5,
+              "y": 0.5
+            },
+            {
+              "frame": 34,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 36,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "azumarill": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 6,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 7,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 9,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 48,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 50,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 51,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 4,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 5,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 41,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 43,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 44,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 4,
+              "x": 0.5,
+              "y": 0.5
+            },
+            {
+              "frame": 31,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "treecko": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 8,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 10,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 12,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 60,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 62,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 65,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 5,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 7,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 8,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 44,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 46,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 47,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 4,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 30,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "grovyle": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 5,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 6,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 30,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 32,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 33,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 5,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 6,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 51,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 53,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 54,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 12,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 26,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "sceptile": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 7,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 9,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 10,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 37,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 39,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 40,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 6,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 8,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 9,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 49,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 51,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 52,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 10,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 11,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "torchic": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "meshVisibility": {
+            "pm0255_00_CloseMouthSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              }
+            ],
+            "pm0255_00_OpenMouthSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              }
+            ],
+            "pm0255_01_CloseMouthSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              }
+            ],
+            "pm0255_01_OpenMouthSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              }
+            ]
+          }
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 33,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 37,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 38,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 48,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 50,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 51,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "meshVisibility": {
+            "pm0255_00_CloseMouthSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 29,
+                "visible": false
+              },
+              {
+                "frame": 37,
+                "visible": true
+              }
+            ],
+            "pm0255_00_OpenMouthSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 29,
+                "visible": true
+              },
+              {
+                "frame": 37,
+                "visible": false
+              }
+            ],
+            "pm0255_01_CloseMouthSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 29,
+                "visible": false
+              },
+              {
+                "frame": 37,
+                "visible": true
+              }
+            ],
+            "pm0255_01_OpenMouthSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 29,
+                "visible": true
+              },
+              {
+                "frame": 37,
+                "visible": false
+              }
+            ]
+          }
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 19,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 50,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 51,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 53,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 54,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "meshVisibility": {
+            "pm0255_00_CloseMouthSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 20,
+                "visible": false
+              },
+              {
+                "frame": 54,
+                "visible": true
+              }
+            ],
+            "pm0255_00_OpenMouthSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 20,
+                "visible": true
+              },
+              {
+                "frame": 54,
+                "visible": false
+              }
+            ],
+            "pm0255_01_CloseMouthSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 20,
+                "visible": false
+              },
+              {
+                "frame": 54,
+                "visible": true
+              }
+            ],
+            "pm0255_01_OpenMouthSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 20,
+                "visible": true
+              },
+              {
+                "frame": 54,
+                "visible": false
+              }
+            ]
+          }
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 20,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "meshVisibility": {
+            "pm0255_00_CloseMouthSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 14,
+                "visible": true
+              }
+            ],
+            "pm0255_00_OpenMouthSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 14,
+                "visible": false
+              }
+            ],
+            "pm0255_01_CloseMouthSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 14,
+                "visible": true
+              }
+            ],
+            "pm0255_01_OpenMouthSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 14,
+                "visible": false
+              }
+            ]
+          }
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 1,
+              "y": 0.75
+            }
+          ],
+          "meshVisibility": {
+            "pm0255_00_CloseMouthSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 5,
+                "visible": false
+              }
+            ],
+            "pm0255_00_OpenMouthSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 5,
+                "visible": true
+              }
+            ],
+            "pm0255_01_CloseMouthSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 5,
+                "visible": false
+              }
+            ],
+            "pm0255_01_OpenMouthSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 5,
+                "visible": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "combusken": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 7,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 27,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 29,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 31,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 53,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 56,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 58,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 18,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 42,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 46,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 12,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 20,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 20,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 35,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "blaziken": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 4,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 6,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 32,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 34,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 36,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 8,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 10,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 12,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 48,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 51,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 53,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 64,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 66,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 68,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 12,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 5,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 13,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 22,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 24,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "mudkip": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 4,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 6,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 48,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 48,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 49,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 50,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 51,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 0.5,
+              "y": 0.5
+            },
+            {
+              "frame": 29,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "marshtomp": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 4,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 6,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 30,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 32,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 33,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 5,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 7,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 43,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 45,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 46,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 13,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "poochyena": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 6,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 38,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 41,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 42,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 18,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 55,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 7,
+              "x": 0.5,
+              "y": 0.5
+            },
+            {
+              "frame": 38,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "zigzagoon": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 4,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 5,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 38,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 39,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 42,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 43,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 63,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 64,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 66,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 67,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 11,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 12,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 15,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 45,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 46,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 48,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 49,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 4,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 5,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 21,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "wurmple": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 11,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 12,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 5,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "lotad": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 17,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 31,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 35,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 38,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 11,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 12,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 20,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 38,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 5,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 6,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "taillow": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 27,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 29,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 31,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 33,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 12,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 14,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 20,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 53,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 55,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 57,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 59,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 4,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "wingull": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 5,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 7,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 50,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 52,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 54,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 6,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 8,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 10,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 63,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 65,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 67,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 11,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 13,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 37,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "pelipper": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 15,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 61,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 63,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 64,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 4,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 7,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 68,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 70,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 71,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "ralts": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 50,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 53,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 54,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 3,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 20,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 46,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 56,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 57,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 20,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "surskit": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 36,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 39,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 40,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 50,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 53,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 54,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "masquerain": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        0.5,
+        0.5
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 44,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 47,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 48,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "wailmer": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 59,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 61,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "corphish": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 12,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 33,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "kyogre": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 10,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 71,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 74,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 75,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 8,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 60,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 63,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 64,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 22,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 23,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 10,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "kyogre-1": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 71,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 74,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 75,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 62,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 64,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 65,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 22,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 23,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 10,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "groudon": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 61,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 63,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 64,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 56,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 58,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 59,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 3,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 9,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "groudon-1": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 45,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 46,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "chatot": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 4,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 5,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 7,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 8,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 32,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 33,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 35,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 36,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 7,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 8,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 16,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 46,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 47,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 51,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 52,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 6,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 7,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 52,
+              "x": 1,
+              "y": 0.5
+            }
+          ]
+        }
+      }
+    },
+    "tympole": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 42,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 45,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 46,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 16,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        }
+      }
+    },
+    "sewaddle": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 6,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 7,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 9,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 10,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 35,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 36,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 38,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 39,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 6,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 7,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 9,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 10,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 51,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 52,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 54,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 55,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 15,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "zorua": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 26,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 27,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 19,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 17,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "frillish": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 56,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 58,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 59,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 54,
+              "x": 1,
+              "y": 0.5
+            },
+            {
+              "frame": 56,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 57,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 11,
+              "x": 1,
+              "y": 0.25
+            },
+            {
+              "frame": 12,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 1,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    },
+    "clauncher": {
+      "fps": 30,
+      "eyeBaseTranslation": [
+        1,
+        0
+      ],
+      "actions": {
+        "idle": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "physical": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 6,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 45,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "special": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 5,
+              "x": 0.5,
+              "y": 0
+            },
+            {
+              "frame": 60,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "damage": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0.75
+            },
+            {
+              "frame": 18,
+              "x": 1,
+              "y": 0
+            }
+          ]
+        },
+        "faint": {
+          "eyeTranslations": [
+            {
+              "frame": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "frame": 2,
+              "x": 1,
+              "y": 0.75
+            }
+          ]
+        }
+      }
+    }
+  }
+}

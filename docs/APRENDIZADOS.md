@@ -1127,4 +1127,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Regra:** como os clipes GLTF não expõem canais de visibilidade, usar `CloseMouth` como default somente quando o modelo também contém `OpenMouth`; ocultar todas as variantes `OpenMouth` pareadas e preservar olhos, íris e modelos sem par. Isso define só o estado inicial e não anima expressões durante ataques.
 - **Evidência:** Torchic exporta `CloseMouthSkin` e `OpenMouthSkin` com uma primitive secundária de boca aberta; o inventário dos 41 GLBs não encontrou canais de visibilidade. Playwright conferiu `Eye` nos oito modelos Zigzagoon, Poochyena, Torchic, Treecko, Mudkip, Wurmple, Lotad e Ralts, além de `LIris`/`RIris` em Treecko e Lotad.
 
+## A-112 Curvas de expressão Pokémon acompanham o relógio do clipe nativo
+
+- **Data:** 2026-11-20; P-012.
+- **Regra:** ler visibilidade da seção BCH `2 + índice` e transformação de material da seção `20 + índice`, associando-as ao índice GF1 do mesmo nome de ação. Amostrar pelas taxas nativas do perfil e restaurar o estado inicial ao trocar/resetar clipe; para `Eye`, reproduzir apenas a translação Texture0 que foi extraída, sem inferir combiner, iluminação ou outros eixos.
+- **Evidência:** `scripts/pokemon_battle_expressions.py` gerou 36 perfis/176 ações de PB nativos. Torchic confirma boca aberta nos frames 29–36 do clipe físico e curvas de `Eye`; teste unitário usa frame 29 extraído e verifica a restauração no idle. `npm run verify` (628 Vitest, build, 245 Python/1 skip) e Playwright (30/30) passaram; inspeção local de batalha em `/tmp/pokemon-expression-idle.png` e `/tmp/pokemon-expression-attack.png`, sem baseline aprovada.
+- **Limite:** só Torchic tinha curvas de visibilidade de boca entre os perfis extraídos; isso valida o transporte no engine, não paridade observada no Azahar. Combiner RGB PICA, cinco perfis ausentes e aparência de todos os frames permanecem em aberto.
+
 

@@ -83,5 +83,11 @@ test('modelos de Pokémon renderizam textura nativa em batalha Torchic vs Poochy
   await models;
   await page.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
   await page.screenshot({ path: '/tmp/pokemon-fix-check.png' });
+  await page.locator('#app canvas').screenshot({ path: '/tmp/pokemon-expression-idle.png' });
+  const physicalMove = page.locator('#battle-actions button').first();
+  await expect(physicalMove).toContainText('Scratch');
+  await physicalMove.click();
+  await page.waitForTimeout(1_050);
+  await page.locator('#app canvas').screenshot({ path: '/tmp/pokemon-expression-attack.png' });
   expect(errors).toEqual([]);
 });

@@ -46,6 +46,29 @@ describe('native animation events', () => {
     controller.dispose();
   });
 
+  it('exposes the current event clip time for synchronized material and visibility frames', () => {
+    const { controller, mixer } = fixture();
+    controller.playEvent({ type: 'move', side: 'player', category: 'physical' });
+    mixer.update(1 / 30);
+    expect(controller.activeTime).toBeCloseTo(1 / 30);
+    controller.dispose();
+  });
+
+  it('sends clip time to an optional synchronized presentation callback', () => {
+    const mixer = new THREE.AnimationMixer(new THREE.Object3D());
+    const clips = ['idle', 'physical'].map(name => new THREE.AnimationClip(name, 1, []));
+    const syncFrame = vi.fn();
+    const disposeFrame = vi.fn();
+    const controller = new NativeAnimationController(mixer, clips, { update: syncFrame, dispose: disposeFrame });
+    controller.playEvent({ type: 'move', side: 'player', category: 'physical' });
+
+    controller.update(1 / 30);
+
+    expect(syncFrame).toHaveBeenLastCalledWith('physical', 1 / 30);
+    controller.dispose();
+    expect(disposeFrame).toHaveBeenCalledOnce();
+  });
+
   it('does not invent a missing native clip and releases pending playback on disposal', async () => {
     const { controller } = fixture(['idle', 'physical']);
     await controller.playEvent({ type: 'faint', side: 'enemy' });

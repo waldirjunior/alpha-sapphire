@@ -6,15 +6,33 @@ export function characterClip(clips: THREE.AnimationClip[], moving: boolean): TH
   return native ?? THREE.AnimationClip.findByName(clips, moving ? 'walk' : 'idle') ?? undefined;
 }
 
+export interface AnimationFrameDriver {
+  update(clip: string, elapsedSeconds: number): void;
+  dispose(): void;
+}
+
 export class NativeAnimationController {
   private current: THREE.AnimationAction | null = null;
   private complete: (() => void) | null = null;
   private disposed = false;
   public activeClip = '';
 
-  constructor(public readonly mixer: THREE.AnimationMixer, private readonly clips: THREE.AnimationClip[]) {
+  public get activeTime(): number {
+    return this.current?.time ?? 0;
+  }
+
+  constructor(
+    public readonly mixer: THREE.AnimationMixer,
+    private readonly clips: THREE.AnimationClip[],
+    private readonly frameDriver?: AnimationFrameDriver,
+  ) {
     mixer.addEventListener('finished', this.onFinished);
     this.idle();
+  }
+
+  public update(deltaSeconds: number): void {
+    this.mixer.update(deltaSeconds);
+    this.frameDriver?.update(this.activeClip, this.activeTime);
   }
 
   private onFinished = (event: { action: THREE.AnimationAction }): void => {
@@ -63,6 +81,7 @@ export class NativeAnimationController {
     this.disposed = true;
     this.mixer.removeEventListener('finished', this.onFinished);
     this.mixer.stopAllAction();
+    this.frameDriver?.dispose();
     this.complete?.();
     this.complete = null;
   }
