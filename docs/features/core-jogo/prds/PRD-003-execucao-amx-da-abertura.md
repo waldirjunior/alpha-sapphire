@@ -65,6 +65,24 @@ implementados ou validados no Azahar.
 playwright test e2e/campaign.spec.ts e2e/smoke.spec.ts`: 8/8 passaram. O aviso
 conhecido de chunk acima de 500 kB permanece; P-013 continua aberta.
 
+## Campanha natural até Rustboro (2026-11-20)
+
+`e2e/campaign.spec.ts` segue de Petalburg (`zone_0013`) por Route 104 sul
+(`zone_0027`), Petalburg Woods (`zone_0082`), Route 104 norte (`zone_0026`) e
+chega a Rustboro (`zone_0016`) com entradas de teclado. O teste percorre os
+warps extraídos da ROM e a saída contínua para Rustboro sem fixture ou escrita
+de posição/flags. Também verifica que os atores com hide-flags já ativas
+`773`, `624/706/1066` e `826` ficam ocultos após a projeção do AMX.
+
+A caminhada não depende de um gate de evento nesses trechos. As cutscenes e os
+triggers narrativos da floresta continuam em P-013; chegar a Rustboro não prova
+que o resgate de Peeko ou os demais ramos de história estejam implementados.
+
+`npm run verify` passou (Vitest com cobertura, build e 241 testes Python; um
+skip porque os assets locais não estão neste checkout). `ALPHA_E2E_PORT=5504
+npx playwright test e2e/campaign.spec.ts e2e/smoke.spec.ts` passou 8/8. O aviso
+existente de chunks acima de 500 kB permanece.
+
 Continuam pendentes: memória fora das 19 imagens, bancos GameText/MsgLoad, warp
 AMX/ABI de `_MapChangeCore`, query de construções no init de Littleroot,
 persistência/projeções de save/party/bag e paridade de todos os ramos.

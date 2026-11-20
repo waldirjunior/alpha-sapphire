@@ -16,14 +16,16 @@ async function advanceVisibleEventDialogues(page: Parameters<typeof bootGame>[0]
 
 function expectHiddenSpawnFlags(flagIds: readonly number[], actors: NonNullable<Awaited<ReturnType<typeof corridorMap>>['npcs']>,
   flags: Readonly<Record<number, boolean>>): void {
-  const represented = new Set(actors.map(actor => actor.spawnFlag));
   for (const flag of flagIds) {
-    expect(represented.has(flag), `mapa não contém spawnFlag ${flag}`).toBe(true);
+    const matching = actors.filter(actor => actor.spawnFlag === flag);
+    expect(matching.length, `mapa não contém spawnFlag ${flag}`).toBeGreaterThan(0);
     expect(flags[flag], `spawnFlag ${flag} ainda não está ativo`).toBe(true);
+    expect(matching.every(actor => actor.visible === false), `spawnFlag ${flag} ainda está visível`).toBe(true);
   }
 }
 
-test('New Game avança naturalmente de Birch até Petalburg sem NPCs futuros duplicados', async ({ page }) => {
+test('New Game avança naturalmente de Birch até Rustboro sem NPCs futuros duplicados', async ({ page }) => {
+  test.setTimeout(300_000);
   const errors = trackPageErrors(page);
   await bootGame(page, NO_ENCOUNTERS);
   await finishIntro(page);
@@ -103,5 +105,35 @@ test('New Game avança naturalmente de Birch até Petalburg sem NPCs futuros dup
   const petalburg = await corridorMap(page, 'zone_0013');
   expectHiddenSpawnFlags([773], petalburg.npcs ?? [], petalburgState.romEvents?.flags ?? {});
   expect(petalburgState.romEvents?.vars).toEqual(route102State.romEvents?.vars);
+
+  const route104SouthSteps = await walkCorridorTo(page, 'zone_0027');
+  expect(route104SouthSteps).toBeGreaterThan(0);
+  await advanceVisibleEventDialogues(page);
+  expect((await corridorState(page)).player.mapId).toBe('zone_0027');
+  expect((await corridorMap(page, 'zone_0027')).name).toBe('Route 104');
+
+  const woodsSteps = await walkCorridorTo(page, 'zone_0082');
+  expect(woodsSteps).toBeGreaterThan(0);
+  await advanceVisibleEventDialogues(page);
+  const woodsState = await corridorState(page);
+  expect(woodsState.player.mapId).toBe('zone_0082');
+  expect((await corridorMap(page, 'zone_0082')).name).toBe('Petalburg Woods');
+  expectHiddenSpawnFlags([624, 706, 1066], (await corridorMap(page, 'zone_0082')).npcs ?? [],
+    woodsState.romEvents?.flags ?? {});
+
+  const route104NorthSteps = await walkCorridorTo(page, 'zone_0026');
+  expect(route104NorthSteps).toBeGreaterThan(0);
+  await advanceVisibleEventDialogues(page);
+  const route104NorthState = await corridorState(page);
+  expect(route104NorthState.player.mapId).toBe('zone_0026');
+  expect((await corridorMap(page, 'zone_0026')).name).toBe('Route 104');
+  expectHiddenSpawnFlags([826], (await corridorMap(page, 'zone_0026')).npcs ?? [],
+    route104NorthState.romEvents?.flags ?? {});
+
+  const rustboroSteps = await walkCorridorTo(page, 'zone_0016');
+  expect(rustboroSteps).toBeGreaterThan(0);
+  await advanceVisibleEventDialogues(page);
+  expect((await corridorState(page)).player.mapId).toBe('zone_0016');
+  await expect.poll(() => page.locator('#hud-pos').textContent(), { timeout: 10_000 }).toContain('Rustboro City');
   expect(errors).toEqual([]);
 });
