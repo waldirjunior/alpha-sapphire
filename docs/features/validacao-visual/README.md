@@ -14,9 +14,9 @@ Rede de proteção contra regressão de imagem e de fluxo: roda o jogo de produ�
 | Suíte | Arquivo | Garante |
 | --- | --- | --- |
 | Smoke do jogo real | `e2e/smoke.spec.ts` | Intro, movimento em grade, bloqueio por NPC, diálogo da ROM, warp de porta, save/reload e batalha selvagem funcionam com teclado, sem erro de página, console ou HTTP. |
-| Cenários visuais | `e2e/visual.spec.ts` | Cada cenário de `src/visual/scenarios.ts` renderiza a cena de produção em pose fixa e passa por três verificações. |
+| Cenários visuais | `e2e/visual.spec.ts` | Os cenários de mundo renderizam a cena de produção em pose fixa e passam por três verificações. `POKENAV_MAP_SCENARIOS` também captura a tela do Mapa, verifica métricas DOM e grava uma comparação local com o Azahar quando há referência. |
 
-As três verificações de um cenário:
+As três verificações dos cenários de mundo:
 
 1. **Portões de qualidade** — limites absolutos sobre métricas da cena (`src/visual/gates.ts`):
    - `assetsLoaded`: nenhum asset falhou ao carregar;
@@ -25,6 +25,13 @@ As três verificações de um cenário:
    - `feetOnGround`: sola do modelo a no máximo 0,02 tile do chão (detecta pés ausentes ou avatar enterrado), medido só nos close-ups.
 2. **Métricas versionadas** — os números do cenário não podem se afastar de `e2e/visual-metrics/<id>.json` além da tolerância.
 3. **Imagem de referência** — o frame não pode diferir do baseline local em mais de 0,2% dos pixels.
+
+O cenário UI `pokenav-hoenn-map` mede o tamanho do painel e do SVG, a
+quantidade de locais e conexões, o marcador do jogador e o local selecionado.
+Suas métricas ficam em `e2e/visual-metrics/pokenav-hoenn-map.json`; a captura e
+a comparação local ficam em `rom/visual-report/`. O baseline de screenshot
+protege contra regressão do port. A comparação manual com Azahar é a evidência
+de fidelidade e pode continuar apontando uma diferença conhecida.
 
 ## Defeito conhecido não é teste desligado
 
@@ -45,7 +52,15 @@ Assim o placar de [STATUS.md](../../STATUS.md) (cenários aceitos / total) só a
 
 ## Novo cenário
 
-Acrescente uma linha em `src/visual/scenarios.ts` (zona, célula, câmera) e rode `npm run visual:approve`. Use uma célula livre de NPCs. Um defeito visual novo sempre entra primeiro como cenário que falha.
+Para uma cena de mundo, acrescente uma linha em `VISUAL_SCENARIOS` de
+`src/visual/scenarios.ts` (zona, célula e câmera) e use uma célula livre de
+NPCs. Inspecione as capturas e a comparação com o Azahar antes de atualizar o
+baseline.
+
+Para uma tela do PokéNav, acrescente um item em `POKENAV_MAP_SCENARIOS`, inclua
+as métricas esperadas em `e2e/visual-metrics/<id>.json` e inspecione a captura e
+`rom/visual-report/<id>-comparison.html` antes de atualizar o baseline.
+Um defeito visual novo sempre entra primeiro como cenário que falha.
 
 ## Onde ficam os arquivos
 
