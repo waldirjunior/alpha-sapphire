@@ -82,3 +82,29 @@ Verificação: `npm run verify` passou com 594 testes Vitest e 241 testes Python
 com 7/7 e `ALPHA_E2E_PORT=5500 npm run test:e2e -- --workers=1` passou com
 39/39. As capturas da galeria foram inspecionadas sem regravar baselines.
 Continua pendente a comparação visual com o Azahar.
+
+## 7. Comparação visual da AreaNav — 2026-11-20
+
+`POKENAV_MAP_SCENARIOS` declara `pokenav-hoenn-map`. O teste Playwright abre a
+aba **Mapa**, seleciona Route 101 e verifica a posição em Littleroot, o local
+selecionado, os marcadores e as métricas de tamanho/contagem. Os números ficam
+em `e2e/visual-metrics/pokenav-hoenn-map.json`; a captura do port fica em
+`rom/visual-report/captures/pokenav-hoenn-map.png`.
+
+A referência Azahar `rom/visual-reference/pokenav-hoenn-map-azahar.png` é o
+recorte 320×240 da tela inferior; o frame duplo original está em
+`rom/visual-reference/pokenav-hoenn-map-azahar-full.png`. Ambos vieram do save
+local avançado, em uma cópia temporária do perfil relocalizada para Littleroot.
+A comparação revisada está em
+`rom/visual-report/pokenav-hoenn-map-comparison.html`.
+
+O Azahar mostra a AreaNav texturizada, o nome da cidade atual e quatro ícones
+na faixa inferior. O port mostra um mapa vetorial com conexões, marcador,
+detalhes do local selecionado e o dock do PokéNav web. O cenário e o baseline
+Chromium dão uma reprodução executável e protegem contra regressões; a
+diferença visual mantém P-011 aberto. Nenhum PNG derivado da ROM foi
+versionado.
+
+Verificação: `ALPHA_E2E_PORT=5513 npx playwright test e2e/visual.spec.ts
+e2e/pokemonBattleModels.spec.ts --workers=3` passou com 31/31; `npm run verify`
+passou com 634 testes Vitest e 249 testes Python (1 skip), incluindo build.

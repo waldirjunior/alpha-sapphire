@@ -30,8 +30,28 @@ export interface PokemonBattleVisualScenario {
   enemySpecies: 'poochyena';
 }
 
+export interface PokeNavVisualScenario {
+  id: string;
+  tab: 'map';
+  selectedLocationId: string;
+  selectedLocationName: string;
+  playerLocationName: string;
+  referenceImage: string;
+}
+
 export const POKEMON_BATTLE_SCENARIOS: readonly PokemonBattleVisualScenario[] = [
   { id: 'pokemon-battle-torchic-poochyena', playerSpecies: 'torchic', enemySpecies: 'poochyena' },
+];
+
+export const POKENAV_MAP_SCENARIOS: readonly PokeNavVisualScenario[] = [
+  {
+    id: 'pokenav-hoenn-map',
+    tab: 'map',
+    selectedLocationId: 'route-101',
+    selectedLocationName: 'Route 101',
+    playerLocationName: 'Littleroot Town',
+    referenceImage: 'pokenav-hoenn-map-azahar.png',
+  },
 ];
 
 interface OverworldOptions {

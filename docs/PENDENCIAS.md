@@ -186,7 +186,20 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Atualização 2026-11-19:** Aba `Mapa` do PokéNav adicionada com 34 rotas, cidades/vilas e marcos nomeados, marcador da zona atual e detalhes selecionáveis. `npm run verify` passou (489 Vitest; 233 Python, 1 skip), smoke/campanha passaram (8/8) e `npm run test:e2e -- --workers=1` passou (37/37); relatório visual e captura de Littleroot inspecionados.
 - **Atualização 2026-11-20 (Pokédex):** A aba mostra contadores persistentes de Vistos/Capturados e percorre o catálogo de espécies carregado das tabelas da ROM, com estado `Capturado`, `Visto` ou `---`. `menus.test.ts` cobre contadores, estados e espécies fora do time; `npm run verify` passou (594 Vitest, build, 241 Python, 1 skip) e o smoke Playwright passou (7/7).
 - **Verificação visual 2026-11-20:** `ALPHA_E2E_PORT=5500 npm run test:e2e -- --workers=1` passou (39/39); capturas da galeria foram inspecionadas e nenhuma baseline foi regravada.
-- **Próximo passo:** Comparar o mapa e a interface com o Azahar antes de fechar a fidelidade visual ([engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md)).
+- **Comparação Azahar 2026-11-20:** O cenário `pokenav-hoenn-map` abre a aba
+  Mapa, seleciona Route 101 e registra tamanho do painel/mapa, locais,
+  conexões e marcadores em [métricas](../e2e/visual-metrics/pokenav-hoenn-map.json).
+  A captura inferior (320×240) está em
+  `rom/visual-reference/pokenav-hoenn-map-azahar.png`; o frame duplo original
+  está em `rom/visual-reference/pokenav-hoenn-map-azahar-full.png`. Ambas vieram
+  de uma cópia do perfil/save relocalizada para Littleroot; o perfil original
+  não foi alterado. As capturas do port e do Azahar foram inspecionadas em
+  `rom/visual-report/pokenav-hoenn-map-comparison.html`. O original mostra a
+  AreaNav texturizada e quatro ícones; o port mostra o mapa vetorial, detalhes
+  do local e o dock web. O baseline Chromium revisado protege contra regressão;
+  não atesta paridade.
+- **Verificação:** `ALPHA_E2E_PORT=5513 npx playwright test e2e/visual.spec.ts e2e/pokemonBattleModels.spec.ts --workers=3` passou (31/31). `npm run verify` passou (634 Vitest, build e 249 Python; 1 skip).
+- **Próximo passo:** Reproduzir a arte e a composição da AreaNav observadas e repetir a comparação antes de fechar a fidelidade visual ([engine-3d/PRD-004](features/engine-3d/prds/PRD-004-interface-3ds-menus-party-bag-pokedex.md)).
 
 ## P-012 Animações nativas da ROM (tabela overworld `0xef` em `a/0/2/1` e golpes em `a/0/0/8`)
 
