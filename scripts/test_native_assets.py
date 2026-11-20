@@ -13,6 +13,14 @@ from promote_native_assets import ALIASES, character_ids, publish_asset, prepare
 from test_glb_native_clips import fixture
 
 
+def normalized_pokemon_fixture():
+    scene, binary = fixture()
+    scene.setdefault('asset', {}).setdefault('extras', {})['pokemonMaterialNormalization'] = {
+        'version': 1, 'sourceSha256': '0' * 64, 'evidenceSha256': '1' * 64,
+        'uvAccessors': 1, 'materials': 1}
+    return scene, binary
+
+
 class NativeAssetTests(unittest.TestCase):
     def test_character_selection_includes_the_additional_staged_npcs(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -51,7 +59,7 @@ class NativeAssetTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             source = root / 'model.glb'
-            scene, binary = fixture()
+            scene, binary = normalized_pokemon_fixture()
             source.write_bytes(encode_glb(scene, binary))
             url, digest = publish_asset(root, source, 'pokemon', 'treecko')
             self.assertEqual(publish_asset(root, source, 'pokemon', 'treecko'), (url, digest))
@@ -65,10 +73,31 @@ class NativeAssetTests(unittest.TestCase):
     def test_promotion_rejects_nonfinite_animation_or_geometry_before_publishing(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            scene, binary = fixture()
+            scene, binary = normalized_pokemon_fixture()
             source = root / 'invalid.glb'
             source.write_bytes(encode_glb(scene, struct.pack('<f', float('nan')) + binary[4:]))
             with self.assertRaisesRegex(ValueError, 'Non-finite output accessor 0'):
+                publish_asset(root, source, 'pokemon', 'treecko')
+            self.assertFalse((root / 'public').exists())
+
+    def test_promotion_rejects_incomplete_pokemon_normalization_marker(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / 'model.glb'
+            scene, binary = fixture()
+            scene.setdefault('asset', {}).setdefault('extras', {})['pokemonMaterialNormalization'] = {'version': 1}
+            source.write_bytes(encode_glb(scene, binary))
+            with self.assertRaisesRegex(ValueError, 'source-backed UV/wrap correction'):
+                publish_asset(root, source, 'pokemon', 'treecko')
+            self.assertFalse((root / 'public').exists())
+
+    def test_promotion_rejects_pokemon_without_source_backed_uv_and_wrap_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / 'model.glb'
+            scene, binary = fixture()
+            source.write_bytes(encode_glb(scene, binary))
+            with self.assertRaisesRegex(ValueError, 'source-backed UV/wrap correction'):
                 publish_asset(root, source, 'pokemon', 'treecko')
             self.assertFalse((root / 'public').exists())
 
@@ -78,7 +107,7 @@ class NativeAssetTests(unittest.TestCase):
             (root / 'src/data/battle').mkdir(parents=True)
             (root / 'src/data/battle/species.json').write_text(json.dumps([
                 {'species': 276, 'form': 0, 'name': 'Taillow'}]))
-            scene, binary = fixture()
+            scene, binary = normalized_pokemon_fixture()
             (root / 'base.glb').write_bytes(encode_glb(scene, binary))
             model = {'id': 'pokemon/0276/0', 'kind': 'pokemon', 'species': 276, 'status': 'failed',
                      'error': 'zero parent scale', 'base_glb': 'base.glb', 'mapping': {'variant': 0}}

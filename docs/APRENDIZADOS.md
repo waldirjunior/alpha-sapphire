@@ -1107,4 +1107,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Evidência:** em `src/data/zone_scripts/0024.json`, o `map` chama X/Z nos offsets 2956/2980 e 3004/3028, guarda os retornos e executa `sub.alt` em 3060/3084. `e2e/campaign.spec.ts` também percorre a ligação natural zona 24→13, mantendo ativos 618/725 e 773, com 774 limpa.
 - **Limite:** a sequência de código prova o tipo inteiro esperado pelas operações do script; não valida a apresentação dos demais efeitos da cena nem a paridade da história no Azahar.
 
+## A-109 Exportação DAE→Blender→GLB precisa preservar a amostragem PICA dos Pokémon
+
+- **Data:** 2026-11-19; P-005/P-007.
+- **Erro:** os 41 modelos do catálogo mantinham texturas byte a byte iguais às da ROM, mas o Blender invertia `V` de todos os canais UV. Além disso, o COLLADA ligava a textura a `UV0` com `input_set=3`; como os conjuntos DAE são `0,3,4,5`, o GLB correspondente é `TEXCOORD_1`, embora o material convertido deixasse `texCoord=0`. Samplers PICA `Mirror` também viravam `REPEAT` (`10497`) em vez de `MIRRORED_REPEAT` (`33648`). Isso explica o recorte espelhado da face e as manchas de Torchic/Poochyena; `COLOR_0` RGB era branco nesses dois modelos e não explica a regressão observada.
+- **Regra:** ao converter Pokémon, derivar `texCoord` e `wrapS/wrapT` dos vínculos e samplers DAE exportados do BCH; inverter `V` nos canais UV produzidos pelo Blender sem alterar imagens, cores de vértice ou topologia. Não ocultar meshes `OpenMouth`/`CloseMouth` só pelo nome: a amostra Torchic não tem canais de visibilidade nos clipes e a pose ativa ainda exige evidência. Os combiners PICA RGB e um diff de faixa `COLOR_0` em `Zigzagoon/Body01` continuam sem prova de correspondência e não são corrigidos por extrapolação.
+- **Evidência:** comparação do BCH `a/0/0/8` com os DAE/GLBs de Torchic, Poochyena, Treecko e Mudkip; 240/243 materiais tinham `texCoord` incorreto e 213/243 tinham wrap diferente no lote catalogado. `scripts/pokemon_glb_materials.py` e `scripts/test_pokemon_glb_materials.py` cobrem o remapeamento, o flip e os wraps; 89 GLBs locais foram normalizados, 41 URLs nativas promovidas por hash e oito GLBs legados atualizados. Chromium mostrou a batalha Torchic vs Poochyena sem erro de página e a captura `/tmp/pokemon-fix-check.png` foi inspecionada.
+
 

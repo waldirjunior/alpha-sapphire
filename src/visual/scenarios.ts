@@ -24,6 +24,16 @@ export interface VisualScenario {
   knownDefects: KnownDefects;
 }
 
+export interface PokemonBattleVisualScenario {
+  id: string;
+  playerSpecies: 'torchic';
+  enemySpecies: 'poochyena';
+}
+
+export const POKEMON_BATTLE_SCENARIOS: readonly PokemonBattleVisualScenario[] = [
+  { id: 'pokemon-battle-torchic-poochyena', playerSpecies: 'torchic', enemySpecies: 'poochyena' },
+];
+
 interface OverworldOptions {
   knownDefects?: KnownDefects;
   expectedAvatarOcclusion?: 'occluded';

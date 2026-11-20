@@ -15,6 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from unpack_garc import decompress_lz11
+from pokemon_glb_materials import normalize_pokemon_glb
 
 SPICA_EXPORT = Path(
     os.environ.get(
@@ -184,6 +185,7 @@ def scan_pokemon_models(garc_path: Path, out_dir: Path, all_species: bool) -> No
                         ["blender", "--background", "--python-exit-code", "1", "--python", str(py_path), "--", str(dae_path), str(glb_path)],
                         check=True,
                     )
+                    glb_path.write_bytes(normalize_pokemon_glb(glb_path.read_bytes(), dae_path.read_bytes()))
                     for png in tmp_path.glob("*.png"):
                         shutil.copy2(png, sp_out / png.name)
             except subprocess.CalledProcessError as e:

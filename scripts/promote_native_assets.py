@@ -10,6 +10,7 @@ from pathlib import Path
 from character_face_uv import normalize_character_faces, supported_face
 from glb_native_clips import decode_glb
 from native_motions import motion_slots, package_sections
+from pokemon_glb_materials import GLTF_UV_FLIP_MARKER
 from validate_native_manifest import validate_model, verify_float_accessors
 
 ZONE_IDS = (*range(6, 17), *range(23, 31))
@@ -55,6 +56,15 @@ def publish_asset(root: Path, source: Path, kind: str, name: str,
             raise ValueError(f"Character source {source} does not match face evidence {face_evidence['source_glb']}")
         blob = normalize_character_faces(blob, face_evidence)
     scene, binary = decode_glb(blob)
+    if kind == 'pokemon':
+        marker = scene.get('asset', {}).get('extras', {}).get(GLTF_UV_FLIP_MARKER)
+        marker_valid = (marker is not None and marker.get('version') == 1
+                        and re.fullmatch(r'[0-9a-f]{64}', str(marker.get('sourceSha256', '')))
+                        and re.fullmatch(r'[0-9a-f]{64}', str(marker.get('evidenceSha256', '')))
+                        and isinstance(marker.get('uvAccessors'), int) and marker['uvAccessors'] > 0
+                        and isinstance(marker.get('materials'), int) and marker['materials'] > 0)
+        if not marker_valid:
+            raise ValueError(f'Pokémon GLB {source} lacks source-backed UV/wrap correction; regenerate it from its COLLADA model')
     verify_float_accessors(scene, binary)
     digest = hashlib.sha256(blob).hexdigest()
     relative = Path(f'assets/native/{kind}/{name}-{digest[:12]}.glb')
