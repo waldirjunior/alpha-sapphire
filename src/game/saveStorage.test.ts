@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createInitialBag } from '../core/bag';
 import { createPokemonInstance } from '../core/battle';
+import { createPokedex } from '../core/pokedex';
 import { createInitialState } from '../core/gameState';
 import { SPECIES } from '../data/pokemon/species';
 import { clearSavedGame, loadSavedGame, storeSavedGame } from './saveStorage';
@@ -19,6 +20,7 @@ describe('game save storage', () => {
       party: [createPokemonInstance(SPECIES.torchic, 5)],
       bag: createInitialBag(),
       caughtCount: 0,
+      pokedex: createPokedex([createPokemonInstance(SPECIES.torchic, 5)]),
     };
 
     expect(loadSavedGame(storage, 'slot')).toBeNull();

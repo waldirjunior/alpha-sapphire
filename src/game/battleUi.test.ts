@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createPokemonInstance, startTrainerBattle, startWildBattle } from '../core/battle';
+import { createPokedex } from '../core/pokedex';
 import { SPECIES } from '../data/pokemon/species';
 import { countCaughtSpecies, createBattleCombatantMarkup, createHpBarMarkup, resolveBattleMusicContext, syncPartyFromBattle } from './battleUi';
 
@@ -51,12 +52,12 @@ describe('battle HP bar markup', () => {
     expect(jingles).toEqual(['me_xy_lvup']);
   });
 
-  it('counts unique Pokédex species in the party', () => {
-    const repeated = createPokemonInstance(SPECIES.torchic, 5);
-    const party = [repeated, { ...repeated, level: 6 }, createPokemonInstance(SPECIES.mudkip, 5)];
+  it('uses all caught Pokédex species for critical capture odds', () => {
+    const pokedex = createPokedex([createPokemonInstance(SPECIES.torchic, 5)]);
+    const withStoredSpecies = { ...pokedex, caughtSpecies: ['torchic', 'mudkip', 'ralts'] };
 
-    expect(countCaughtSpecies(party)).toBe(2);
-    expect(countCaughtSpecies([])).toBe(0);
+    expect(countCaughtSpecies(withStoredSpecies)).toBe(3);
+    expect(countCaughtSpecies(createPokedex([]))).toBe(0);
   });
 
   it('resolves trainer music context automatically when a trainer battle starts', () => {
