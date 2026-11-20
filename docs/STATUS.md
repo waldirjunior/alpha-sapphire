@@ -8,10 +8,10 @@ Verificado em 2026-11-20 (macOS; suporte headless Linux validado anteriormente n
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 628 em 84 arquivos, todos passando | `npm test` |
+| Testes unitários (Vitest) | 628 em 85 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | acima da catraca de 95% linhas / 85% branches | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 245 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
-| Jogo real no browser (smoke + campanha + corredor) | 7 smoke (`e2e/smoke.spec.ts`), campanha New Game → Ginásio de Rustboro (`e2e/campaign.spec.ts`) e corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
+| Testes do pipeline e do oráculo (Python) | 248 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
+| Jogo real no browser (smoke + campanha + corredor) | 7 smoke (`e2e/smoke.spec.ts`), campanha New Game → entrada do Ginásio real `zone_0441` (`e2e/campaign.spec.ts`; cena chega ao primeiro ACMD sem reproduzir a animação) e corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
 | Cenários visuais | 28 de 28 estáveis com referência do emulador lado a lado; **28 de 28 aceitos** sem defeito conhecido | `npm run test:e2e`, galeria em `rom/visual-report/index.html` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
 
@@ -30,7 +30,7 @@ Atores com ID de objeto (`0x1000`/`0x2000` via `a/0/2/1` e tabela em `DllField.c
 
 | Limite | Pendência |
 | --- | --- |
-| Campanha até o Ginásio de Rustboro (`zone_0285`, via Oldale, Petalburg e Petalburg Woods) roda por teclas (`e2e/campaign.spec.ts`), com `spawnFlag` inicial (331 flags) e ABI de `MdlGetGPosX/Z` em inteiros; interação/batalha de Roxanne e eventos seguintes dependem de mais callbacks AMX. | P-013 |
+| Campanha New Game → entrada do Ginásio de Rustboro (`zone_0441`, via Oldale, Petalburg e Petalburg Woods) roda por teclas (`e2e/campaign.spec.ts`), com `spawnFlag` inicial (331 flags) e ABI de `MdlGetGPosX/Z` em inteiros; cena mostra solicitação ACMD sem reproduzir animação, antes da interação/batalha de Roxanne. | P-013 |
 | Permissões de movimento para bike e Surf (ledges laterais 72/73 já fechados) e oclusão residual por prédios (ex.: `z0015-mauville-patio`). | P-017 |
 | Combiners RGB e valores de luz nativos PICA ainda parciais; ambiente e fundo por zona (cavernas escuras, exteriores Hoenn) já aplicados em `zoneEnvironment.ts`. | P-007 |
 | Dock PokéNav/menus estilo 3DS com Mapa de Hoenn (90 locais) entregues (`P-011`; falta comparação visual com Azahar); SFX procedurais integrados (`P-008`; falta extração de BCSAR nativo). Arenas de batalha e mecânicas Gen VI restantes em aberto. | P-011, P-014, P-008, P-010 |

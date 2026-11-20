@@ -24,9 +24,11 @@ function expectHiddenSpawnFlags(flagIds: readonly number[], actors: NonNullable<
   }
 }
 
-test('New Game avança naturalmente de Birch até Rustboro sem NPCs futuros duplicados', async ({ page }) => {
+test('New Game caminha até a entrada do Ginásio de Rustboro e registra a pausa AMX', async ({ page }) => {
   test.setTimeout(300_000);
   const errors = trackPageErrors(page);
+  const warnings: string[] = [];
+  page.on('console', message => { if (message.type() === 'warning') warnings.push(message.text()); });
   await bootGame(page, NO_ENCOUNTERS);
   await finishIntro(page);
   await walk(page, 'ArrowUp', 1);
@@ -136,19 +138,24 @@ test('New Game avança naturalmente de Birch até Rustboro sem NPCs futuros dupl
   expect((await corridorState(page)).player.mapId).toBe('zone_0016');
   await expect.poll(() => page.locator('#hud-pos').textContent(), { timeout: 10_000 }).toContain('Rustboro City');
 
-  const gymSteps = await walkCorridorTo(page, 'zone_0285', { x: 14, z: 24 });
+  const gymWarningsAtEntry = warnings.length;
+  const gymSteps = await walkCorridorTo(page, 'zone_0441', { x: 18, z: 38 });
   expect(gymSteps).toBeGreaterThan(0);
   await advanceVisibleEventDialogues(page);
   const gymState = await corridorState(page);
-  expect(gymState.player.mapId).toBe('zone_0285');
-  expect(gymState.player.pos).toEqual({ x: 14, z: 24 });
-  const gym = await corridorMap(page, 'zone_0285');
+  expect(gymState.player.mapId).toBe('zone_0441');
+  expect(gymState.player.pos).toEqual({ x: 18, z: 38 });
+  const gym = await corridorMap(page, 'zone_0441');
   expect(gym.warps).toContainEqual(expect.objectContaining({
-    from: { x: 14, z: 24 }, targetMapId: 'zone_0016',
+    from: { x: 18, z: 38 }, targetMapId: 'zone_0016',
   }));
-  expect(gym.npcs?.map(actor => actor.script)).toEqual(expect.arrayContaining([10095, 10117, 10129]));
-  expectHiddenSpawnFlags([710, 552], gym.npcs ?? [], gymState.romEvents?.flags ?? {});
-  const roxanne = gym.npcs?.find(actor => actor.id.endsWith(':6'));
-  expect(roxanne).toMatchObject({ script: 2, spawnFlag: 0, visible: true });
+  expect(gym.name).toBe('Rustboro City');
+  const roxanne = gym.npcs?.find(actor => actor.id.endsWith(':1'));
+  expect(roxanne).toMatchObject({ script: 2, spawnFlag: 0 });
+  await expect.poll(() => warnings.slice(gymWarningsAtEntry).join('\n')).toContain('EVCameraSetDstParam');
+  await page.keyboard.press('Enter');
+  await expect.poll(() => warnings.slice(gymWarningsAtEntry).join('\n')).toContain('MdlAcmdSet');
+  await expect(page.locator('#battle-overlay')).not.toHaveClass(/open/);
+  expect((await corridorState(page)).player.mapId).toBe('zone_0441');
   expect(errors).toEqual([]);
 });

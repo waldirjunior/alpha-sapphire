@@ -36,7 +36,7 @@ function fixture(calls: readonly [string, number[]][]) {
   const talk = image(calls);
   const programs: ZoneEventPrograms = {
     zoneId: 6, bundle: { 'zone:0006:entities': init, 'zone:0006:map': talk },
-    zone: { programs: { entities: init.program, map: talk.program }, bindings: [
+    zone: { entitySourceSha256: 'synthetic', programs: { entities: init.program, map: talk.program }, bindings: [
       { kind: 'npcs', entityId: 7, scriptId: 14, matches: [{ program: 'map' }] },
     ] },
   };

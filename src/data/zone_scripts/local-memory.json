@@ -39,6 +39,14 @@
     "zone:0385:entities": {
       "sha256": "634105739339f2aa6f8e5d6696868faf652f56b28677044a37b048cd4f51641a",
       "file": "zone_0385_entities.json"
+    },
+    "zone:0441:entities": {
+      "sha256": "ffc672f7a41aad0b49b7dae63cd86e40a8cb6c24f1b7f604ad8149eb4c228f57",
+      "file": "zone_0441_entities.json"
+    },
+    "zone:0441:map": {
+      "sha256": "73a0cdd51cfd40dd1c89b85362636ae66c364d6abb59cdbc25fb27f9935c0a02",
+      "file": "zone_0441_map.json"
     }
   }
 }

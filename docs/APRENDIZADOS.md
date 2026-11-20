@@ -1142,4 +1142,10 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Regra:** copiar temporariamente o payload para um nome `.bcwav` antes de chamar `vgmstream-cli`, e usar `-i` para exportar uma reprodução só; validar WAV por canais, frequência e frames. O WAV segue sendo um sample do banco, não a composição completa do CSEQ.
 - **Evidência:** `scripts/test_convert_bcsar_cwav.py` exige extensão temporária `.bcwav` e argumento `-i`; a saída real tem 32768 Hz, 9789 frames, 0,299 s e abre com o módulo `wave` de Python.
 
+## A-114 A identidade da zona deve ser confirmada pelo interior da ROM
+
+- **Data:** 2026-11-20; ROADMAP #3/P-013, binding de evento AMX.
+- **Erro:** `zone_0285` foi tratada como o Ginásio porque o warp da cidade entrava nela e o disassembly mostrava NPC6/script2; essa zona é o Poké Mart, e o Ginásio é `zone_0441`.
+- **Regra:** antes de vincular um evento pelo nome da cidade ou número de NPC/script, confira texto e ZO da zona interior, destino do warp e dispatch AMX dos candidatos. Para `zone_0441`, a fala de Roxanne em `textFile=563`, ZO SHA `e992a801ec694c5173c663ce89260d1370d6259c1ce0b2b588a955527bc9f05b` e `map/case 2` (`tableOffset=6248`, case→`6028`, função→`7248`) identificam o fluxo; `entities/case 2` (`tableOffset=120`, case→`60`, função→`316`) não tem nativas. O AMX map inclui `_CallTrainerBattleCore` em `1892` e o emulador mostrou a fala de desafio ao interagir com a líder. O SHA da fonte de entidades do mapa é `0d5908f71c51a9bbac17e39527dfadfb303a64dfd8f4befdd66e4c905373c72b`; `loader.test.ts` cobre essa prova e recusa a NPC6/2 do Poké Mart.
+
 
