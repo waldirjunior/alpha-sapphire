@@ -1,6 +1,6 @@
 # Roadmap
 
-O objetivo e a definição de pronto estão em [VISAO.md](VISAO.md); o estado medido, em [STATUS.md](STATUS.md). Este arquivo diz **o que fazer a seguir** (fila) e **em que fase** o projeto está. Versão anterior, com o relato de cada entrega: [historico/ROADMAP-ate-2026-11-18.md](historico/ROADMAP-ate-2026-11-18.md).
+O objetivo e a definição de pronto estão em [VISAO.md](VISAO.md); o estado medido, em [STATUS.md](STATUS.md). Este arquivo diz **o que fazer a seguir** (fila) e **em que fase** o projeto está. Versão anterior, com o relato de cada entrega: [historico/ROADMAP-ate-2026-11-18.md](historico/ROADMAP-ate-2026-11-18.md). Passagem de bastão detalhada (2026-11-20): [historico/HANDOFF-2026-11-20.md](historico/HANDOFF-2026-11-20.md).
 
 ## Fila de execução
 
@@ -8,7 +8,13 @@ Pegue o primeiro item não bloqueado. Cada item termina quando a verificação i
 
 | # | Resultado | Verificação | Ref. |
 | --- | --- | --- | --- |
-| 1 | Permissões de movimento restantes (bike e Surf) fechadas por observação no emulador com save avançado ORAS, dispensando as fixtures do corredor (ledges laterais 72/73 já fechados). | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
+| 1 | *(Bloqueado por save ORAS avançado)* Permissões de movimento restantes (bike e Surf) fechadas por observação no emulador. | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
+| 2 | SFX nativos de `sango_sound.bcsar` (`CWAV`/`CSEQ` do slice) convertidos e ligados ao `BgmPlayer.playSfx` com fallback procedural. | Testes em `scripts/test_extract_bcsar_sfx.py` + `audioPlayer.test.ts` + smoke E2E. | P-008 |
+| 3 | Binding do script 2 no Ginásio de Rustboro (`zone_0285`) resolvido para interação/batalha natural da Roxanne e entrega da Stone Badge. | Regressão AMX + `e2e/campaign.spec.ts` vencendo o 1º ginásio. | PRD-003, P-013 |
+| 4 | Combiners RGB PICA em `Zigzagoon/Body01`, expressões dinâmicas de Pokémon em batalha e paridade visual PokéNav/Mapa vs Azahar. | `scripts/test_pokemon_glb_materials.py` + `e2e/pokemonBattleModels.spec.ts` + `e2e/visual.spec.ts`. | P-007, P-011, P-012 |
+| 5 | Taxas reais por slot/surf/pesca nos encontros, IVs por classe de treinador, golpes `quality` 13 restantes e UI de item evolutivo. | `battleMechanics.test.ts` + `src/ai/battleParity.test.ts` + `src/game/`. | PRD-002, P-010 |
+| 6 | Arenas 3D e texturas reais de batalha extraídas da ROM substituindo as variantes procedurais. | Extrator Python + `battleArena.test.ts` + captura E2E revisada. | P-014 |
+| 7 | Servidor de salas multiplayer (Fase 4) reutilizando `src/core/` puro sem dependências de browser. | Testes de protocolo/sala no core + build/verify passando. | Fase 4 |
 
 Regras da fila:
 

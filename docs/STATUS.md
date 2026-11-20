@@ -2,7 +2,7 @@
 
 Retrato do estado verificado. **Edite as linhas; não acrescente seções nem relatos de entrega** — o relato vai para o PRD da frente. O tamanho deste arquivo é limitado por `src/docsContract.test.ts`. Histórico até 2026-11-18: [historico/STATUS-ate-2026-11-18.md](historico/STATUS-ate-2026-11-18.md).
 
-Verificado em 2026-11-19 (macOS; suporte headless Linux validado anteriormente na `main`). Todo trabalho anterior está na `main`.
+Verificado em 2026-11-20 (macOS; suporte headless Linux validado anteriormente na `main`). Todo trabalho anterior está na `main` (handoff em [historico/HANDOFF-2026-11-20.md](historico/HANDOFF-2026-11-20.md)).
 
 ## Placar
 
