@@ -1,12 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import * as THREE from 'three';
 import type { PokemonType } from '../data/pokemon/species';
+import { BattleEventPresenter, planBattleEventPresentation } from './battleEventPresentation';
 import {
   BattleCameraMotion,
   createBattleArena,
+  createBattleSlots,
+  damageReactionFrame,
   getMoveEffectStyle,
   MOVE_EFFECT_STYLES,
   MoveEffects,
+  normalizePokeballShakes,
+  parabolicFlightPoint,
+  pokeballShakeFrame,
   resolveBattleArenaBiome,
   updateBattleCamera,
 } from './battleArena';
@@ -48,12 +54,103 @@ describe('battleArena', () => {
 
   it('anima lançamento parabólico de Poké Ball e remove ao concluir', () => {
     const effects = new MoveEffects();
-    effects.playPokeball(new THREE.Vector3(-1.6, 1, 1.4), new THREE.Vector3(1.6, 0.8, -1.4));
+    const target = new THREE.Group();
+    effects.playPokeball(
+      new THREE.Vector3(-1.6, 1, 1.4),
+      new THREE.Vector3(1.6, 0.8, -1.4),
+      target,
+      false,
+      2
+    );
     expect(effects.activeCount).toBe(1);
     effects.update(0.25);
     expect(effects.activeCount).toBe(1);
     effects.update(2);
     expect(effects.activeCount).toBe(0);
+    expect(target.visible).toBe(true);
+  });
+
+  it('esconde o alvo capturado depois de flash, três balanços e confirmação', () => {
+    const effects = new MoveEffects();
+    const target = new THREE.Group();
+    effects.playPokeball(new THREE.Vector3(-1, 1, 1), new THREE.Vector3(1, 0.8, -1), target, true, 3);
+    effects.update(2);
+    expect(effects.activeCount).toBe(0);
+    expect(target.visible).toBe(false);
+  });
+
+  it('calcula a trajetória parabólica sem alterar os pontos de origem e destino', () => {
+    const from = { x: -1, y: 1, z: 2 };
+    const to = { x: 1, y: 0.5, z: -2 };
+
+    expect(parabolicFlightPoint(from, to, 0)).toEqual(from);
+    expect(parabolicFlightPoint(from, to, 1)).toEqual(to);
+    expect(parabolicFlightPoint(from, to, 0.5).y).toBeGreaterThan((from.y + to.y) / 2);
+    expect(from).toEqual({ x: -1, y: 1, z: 2 });
+  });
+
+  it('limita a captura a um a três balanços e calcula recuo/flash por progresso', () => {
+    expect(normalizePokeballShakes(0)).toBe(1);
+    expect(normalizePokeballShakes(2.9)).toBe(2);
+    expect(normalizePokeballShakes(4)).toBe(3);
+    expect(Math.abs(pokeballShakeFrame(0.25).roll)).toBeGreaterThan(0);
+
+    const hit = damageReactionFrame(0.5, 1);
+    expect(hit.offsetX).toBeGreaterThan(0);
+    expect(hit.flash).toBeGreaterThan(0);
+    expect(damageReactionFrame(0.5, -1).offsetX).toBeLessThan(0);
+    expect(damageReactionFrame(1, 1)).toEqual({ offsetX: 0, flash: 0 });
+  });
+
+  it('só inicia o efeito do golpe no evento de dano do alvo', () => {
+    const steps = planBattleEventPresentation([
+      { type: 'move', side: 'player', category: 'physical' },
+      { type: 'damage', side: 'enemy' },
+      { type: 'faint', side: 'enemy' },
+      { type: 'move', side: 'enemy', category: 'special' },
+      { type: 'damage', side: 'player' },
+    ], { type: 'fire', attacker: 'player' }, 'water');
+
+    expect(steps.map((step) => step.attack)).toEqual([
+      null,
+      { type: 'fire', attacker: 'player' },
+      null,
+      null,
+      { type: 'water', attacker: 'enemy' },
+    ]);
+  });
+
+  it('sincroniza o impacto com o clipe de dano e recua o alvo', async () => {
+    const arena = createBattleArena();
+    const playerSlot = new THREE.Group();
+    const enemySlot = new THREE.Group();
+    playerSlot.position.x = -1.6;
+    enemySlot.position.x = 1.6;
+    const observations: boolean[] = [];
+    const presenter = new BattleEventPresenter({
+      getVersion: () => 1,
+      isCurrent: (version) => version === 1,
+      waitForModels: async () => {},
+      getArena: () => arena,
+      getSlot: (side) => side === 'player' ? playerSlot : enemySlot,
+      playSfx: () => {},
+      playNativeEvent: async (slot, event) => {
+        if (event.type === 'move') observations.push(arena.effects.activeCount === 0);
+        if (event.type === 'damage') observations.push(slot.children.some((child) => child instanceof THREE.PointLight));
+      },
+    });
+    presenter.queueAttack('fire', 'player');
+
+    await presenter.play([
+      { type: 'move', side: 'player', category: 'physical' },
+      { type: 'damage', side: 'enemy' },
+    ], 'normal');
+    expect(observations).toEqual([true, true]);
+    arena.effects.update(0.2);
+    expect(enemySlot.position.x).toBeGreaterThan(1.6);
+    arena.effects.update(0.3);
+    expect(enemySlot.position.x).toBe(1.6);
+    arena.effects.dispose();
   });
 
   it('monta arena com cúpula de fundo, luzes e grupo de efeitos', () => {
@@ -62,6 +159,14 @@ describe('battleArena', () => {
     expect(arena.group.children).toContain(arena.effects.group);
     expect(arena.group.children.some((c) => c instanceof THREE.DirectionalLight)).toBe(true);
     expect(arena.group.children.some((c) => c instanceof THREE.Mesh && c.name === 'battle-sky-dome')).toBe(true);
+  });
+
+  it('posiciona e orienta os slots de batalha para jogador e adversário', () => {
+    const { playerSlot, enemySlot } = createBattleSlots();
+    expect(playerSlot.position.toArray()).toEqual([-1.6, 0, 1.4]);
+    expect(enemySlot.position.toArray()).toEqual([1.6, 0, -1.4]);
+    expect(playerSlot.rotation.y).toBeCloseTo(Math.PI * 0.75);
+    expect(enemySlot.rotation.y).toBeCloseTo(-Math.PI * 0.25);
   });
 
   it('classifica as quatro famílias ambientais de arena a partir da zona', () => {

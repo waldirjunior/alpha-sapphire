@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BattleState } from '../core/battle';
 import type { PokemonType } from '../data/pokemon/species';
-import { createBattleArena, playBattleAttack, playBattlePokeball, replaceBattleArena, updateBattleCamera, type BattleArena } from './battleArena';
+import { createBattleArena, createBattleSlots, playBattlePokeball, replaceBattleArena, updateBattleCamera, type BattleArena } from './battleArena';
 import type { GameState, MapDefinition } from '../core/types';
 import { loadZoneTerrain } from './zoneTerrain';
 import { buildTallGrassGroup } from './tallGrass';
@@ -16,6 +16,7 @@ import { NativeAnimationController } from './nativeAnimation';
 import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import type { BattleEvent } from '../core/battleEvents';
 import { resolveBattleSfx, type SfxCue } from '../core/battleAudio';
+import { BattleEventPresenter } from './battleEventPresentation';
 import { EventPresentation } from './eventPresentation';
 import { followCameraPose } from './cameraFollow';
 import { zoneEnvironment } from './zoneEnvironment';
@@ -61,6 +62,15 @@ export class SceneManager {
   private battleActors = new Map<THREE.Group, NativeAnimationController>();
   private battleLoads: Promise<void>[] = [];
   private battleLoadVersion = 0;
+  private readonly battleEventPresenter = new BattleEventPresenter({
+    getVersion: () => this.battleLoadVersion,
+    isCurrent: (version) => this.inBattle && version === this.battleLoadVersion,
+    waitForModels: async () => { await Promise.all(this.battleLoads); },
+    getArena: () => this.battleArena,
+    getSlot: (side) => side === 'player' ? this.battlePlayerSlot : this.battleEnemySlot,
+    playSfx: (event) => this.playSfx(resolveBattleSfx(event)),
+    playNativeEvent: (slot, event) => this.battleActors.get(slot)?.playEvent(event) ?? Promise.resolve(),
+  });
   private walkUntilMs = 0;
   private playerTargetPos = new THREE.Vector3();
   private lastPlayerPos = { mapId: '', x: -1, z: -1 };
@@ -124,12 +134,9 @@ export class SceneManager {
 
     this.battleGroup = new THREE.Group();
     this.battleGroup.visible = false;
-    this.battlePlayerSlot = new THREE.Group();
-    this.battlePlayerSlot.position.set(-1.6, 0, 1.4);
-    this.battlePlayerSlot.rotation.y = Math.PI * 0.75;
-    this.battleEnemySlot = new THREE.Group();
-    this.battleEnemySlot.position.set(1.6, 0, -1.4);
-    this.battleEnemySlot.rotation.y = -Math.PI * 0.25;
+    const battleSlots = createBattleSlots();
+    this.battlePlayerSlot = battleSlots.playerSlot;
+    this.battleEnemySlot = battleSlots.enemySlot;
     this.buildBattleArena();
     this.battleGroup.add(this.battlePlayerSlot, this.battleEnemySlot);
     this.scene.add(this.battleGroup);
@@ -345,20 +352,13 @@ export class SceneManager {
 
   private clearBattleAnimations(): void {
     this.battleLoadVersion++;
+    this.battleEventPresenter.clear();
     for (const actor of this.battleActors.values()) actor.dispose();
     this.battleActors.clear();
     this.battleLoads = [];
   }
-  public async playBattleEvents(events: readonly BattleEvent[], enemyMoveType: PokemonType = 'normal'): Promise<void> {
-    const version = this.battleLoadVersion;
-    await Promise.all(this.battleLoads);
-    for (const event of events) {
-      if (!this.inBattle || version !== this.battleLoadVersion) return;
-      this.playSfx(resolveBattleSfx(event));
-      if (event.type === 'move' && event.side === 'enemy') this.playAttackEffect(enemyMoveType, 'enemy');
-      const slot = event.side === 'player' ? this.battlePlayerSlot : this.battleEnemySlot;
-      await this.battleActors.get(slot)?.playEvent(event);
-    }
+  public playBattleEvents(events: readonly BattleEvent[], enemyMoveType: PokemonType = 'normal'): Promise<void> {
+    return this.battleEventPresenter.play(events, enemyMoveType);
   }
 
   private buildBattleArena(): void {
@@ -368,13 +368,13 @@ export class SceneManager {
 
   public playAttackEffect(type: PokemonType, attacker: 'player' | 'enemy' = 'player'): void {
     if (!this.inBattle) return;
-    playBattleAttack(this.battleArena, type, attacker, this.battlePlayerSlot, this.battleEnemySlot);
+    this.battleEventPresenter.queueAttack(type, attacker);
   }
 
-  public playPokeballEffect(captured = false): void {
+  public playPokeballEffect(captured = false, shakes = captured ? 3 : 1): void {
     if (!this.inBattle) return;
     this.playSfx(resolveBattleSfx({ type: 'pokeball', captured }));
-    playBattlePokeball(this.battleArena, this.battlePlayerSlot, this.battleEnemySlot);
+    playBattlePokeball(this.battleArena, this.battlePlayerSlot, this.battleEnemySlot, captured, shakes);
   }
 
   public playSfx(cue: SfxCue | null): void { if (cue) this.emitSfx(cue); }
