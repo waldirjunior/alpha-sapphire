@@ -1155,4 +1155,23 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Regra:** siga o `CSEQ` pelo item ID de banco na tabela `0x2101`, leia os itens de archive (`0x05`) no `CBNK` indicado e resolva cada archive pelo `0x2103` antes de rotular um CWAV. O sample identificado continua sendo apenas uma amostra do banco; não prova a sequência composta nem a nota/instrumento executados.
 - **Evidência:** `SEQ_SE_RECOVERY` (som 343, `fileId=285`) referencia `0x03000051` → banco 81/`CBNK fileId=1716`; o CBNK referencia `0x0500005D` → archive 93/`CWAR fileId=3187`. `file_3109_wave_000.cwav` é do archive 15 e não corresponde a essa cadeia.
 
+## A-116 ABI de batalha e badge exige leitura dos wrappers CRO
+
+- **Data:** 2026-11-20; ROADMAP #3/P-013, natives de `zone_0441`.
+- **Contexto:** os callsites AMX identificados em A-114 exigem party, batalha de
+  treinador e gravação da badge; os nomes e chamadas AMX não bastam para executar
+  esses serviços com segurança.
+- **Evidência:** `DllField.cro` tem SHA-256
+  `9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925`.
+  Os wrappers em `0x4e618`, `0x5b4e0`, `0x4c07c`, `0x4c0ac` e `0x56e40`
+  confirmam respectivamente 3, 7, 1, 1 e 1 argumentos de pilha. A batalha
+  copia três `u16`, um `u32` e três `u8`; os wrappers de badge recebem `u16` e
+  consultam/alteram o bitfield em `save+0x3418`; `GymSetVictoryInfo` recebe um
+  `u16` e consulta a party.
+- **Regra:** registre aridade e formato apenas quando confirmados no wrapper CRO.
+  Não deduza valores de retorno, campos de party, identidade da equipe, callback
+  de vitória ou conclusão de batalha pelo nome da native ou pelo script. Pare o
+  host sem mutação até comprovar esses contratos no código original ou no
+  emulador; os próximos dados necessários seguem em P-013.
+
 

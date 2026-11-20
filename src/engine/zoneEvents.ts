@@ -13,6 +13,7 @@ import { resolveZoneSfx, type SfxCue } from '../core/battleAudio';
 
 interface TextSource { zone: number; lines: string[] }
 const texts = import.meta.glob<TextSource>('../data/texts/zones/*.json', { import: 'default' });
+const pendingGymNatives = new Set(['PokePartyGetParam', '_CallTrainerBattleCore', 'BadgeGetFlag', 'BadgeSetFlag', 'GymSetVictoryInfo']);
 export interface ZoneEventAssets { programs: ZoneEventPrograms | null; lines: readonly string[] }
 
 async function loadZoneEventAssets(zoneId: number): Promise<ZoneEventAssets> {
@@ -255,6 +256,7 @@ export class ZoneEvents {
     if (effect?.name === '_CallWildBattleWithoutField' && this.ports.battle) {
       return this.startBattle(state, effect.args, generation);
     }
+    if (effect && pendingGymNatives.has(effect.name)) return this.deferNative(effect);
     const value = effect && await this.messages.request(effect);
     if (generation !== this.generation) return null;
     if (value !== undefined) return { kind: 'native-result', value };
@@ -344,6 +346,13 @@ export class ZoneEvents {
     const args = pending?.kind === 'native' ? `(${pending.effect.args.join(',')})` : '';
     this.ports.report(`Apresentação pendente: ${name}${args}; script suspenso sem bloquear movimento. ${approved
       ? `Enter fornece retorno ${this.completionValue} sem reproduzir o efeito` : 'Retorno sem ABI validada; confirmação indisponível'} (P-013).`);
+    return null;
+  }
+
+  private deferNative(effect: AmxEffect): null {
+    this.completionValue = null;
+    this.presentationPaused = true;
+    this.ports.report(`Nativa AMX sem implementação: ${effect.name}(${effect.args.join(',')}); retorno não presumido, script suspenso (P-013).`);
     return null;
   }
 

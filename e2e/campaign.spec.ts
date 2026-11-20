@@ -24,7 +24,7 @@ function expectHiddenSpawnFlags(flagIds: readonly number[], actors: NonNullable<
   }
 }
 
-test('New Game caminha até a entrada do Ginásio de Rustboro e registra a pausa AMX', async ({ page }) => {
+test('New Game chega ao Ginásio de Rustboro e registra o bloqueio natural de P-013', async ({ page }) => {
   test.setTimeout(300_000);
   const errors = trackPageErrors(page);
   const warnings: string[] = [];
@@ -156,6 +156,23 @@ test('New Game caminha até a entrada do Ginásio de Rustboro e registra a pausa
   await page.keyboard.press('Enter');
   await expect.poll(() => warnings.slice(gymWarningsAtEntry).join('\n')).toContain('MdlAcmdSet');
   await expect(page.locator('#battle-overlay')).not.toHaveClass(/open/);
-  expect((await corridorState(page)).player.mapId).toBe('zone_0441');
+  await walkCorridorTo(page, 'zone_0441', { x: 19, z: 6 });
+  await walk(page, 'ArrowUp', 1);
+  const beforeRoxanne = await corridorState(page);
+  expect(beforeRoxanne.player).toMatchObject({ mapId: 'zone_0441', pos: { x: 19, z: 5 }, facing: 'up' });
+  for (let attempt = 0; attempt < 20 && !warnings.slice(gymWarningsAtEntry).join('\n').includes('FadeRequestOut(0,2,30)'); attempt += 1) {
+    await page.keyboard.press('Enter');
+    await advanceVisibleEventDialogues(page);
+    await page.waitForTimeout(150);
+  }
+  await expect.poll(() => warnings.slice(gymWarningsAtEntry).join('\n')).toContain('FadeRequestOut(0,2,30)');
+  await expect.poll(() => warnings.slice(gymWarningsAtEntry).join('\n')).toContain('confirmação indisponível (P-013)');
+  const pausedAtFade = await corridorState(page);
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(150);
+  const afterFadeInput = await corridorState(page);
+  expect(afterFadeInput.romEvents).toEqual(pausedAtFade.romEvents);
+  expect(afterFadeInput.player.mapId).toBe('zone_0441');
+  await expect(page.locator('#battle-overlay')).not.toHaveClass(/open/);
   expect(errors).toEqual([]);
 });
