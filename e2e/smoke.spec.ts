@@ -64,10 +64,13 @@ test('grama alta inicia batalha selvagem; golpe e fuga devolvem ao mapa', async 
   await bootGame(page, ALWAYS_ENCOUNTER);
   await finishIntro(page);
   await relocateSave(page, 'zone_0023', 13, 4);
+  const arenaModel = page.waitForResponse(response =>
+    response.url().endsWith('/assets/battle-arenas/grass/grass.glb'));
   await walk(page, 'ArrowRight', 1);
   const overlay = page.locator('#battle-overlay');
   await expect(overlay).toHaveClass(/open/);
   await expect(page.locator('#battle-enemy')).toContainText('Selvagem:');
+  expect((await arenaModel).status()).toBe(200);
   const logBefore = await page.locator('#battle-log').textContent();
   await page.locator('#battle-actions button').first().click();
   await expect(page.locator('#battle-log')).not.toHaveText(logBefore ?? '', { timeout: 30_000 });
