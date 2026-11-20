@@ -10,7 +10,7 @@ Verificado em 2026-11-20 (macOS; suporte headless Linux validado anteriormente n
 | --- | --- | --- |
 | Testes unitários (Vitest) | 634 em 85 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | acima da catraca de 95% linhas / 85% branches | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 248 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
+| Testes do pipeline e do oráculo (Python) | 249 rodados, 248 passando; 1 skip quando `public/assets/maps` não existe no checkout | `npm run test:py` |
 | Jogo real no browser (smoke + campanha + corredor) | 7 smoke (`e2e/smoke.spec.ts`), campanha New Game → Ginásio `zone_0441` (`e2e/campaign.spec.ts`; até ACMD sem animação) e corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
 | Cenários visuais | 28 de 28 estáveis com referência do emulador lado a lado; **28 de 28 aceitos** sem defeito conhecido | `npm run test:e2e`, galeria em `rom/visual-report/index.html` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
