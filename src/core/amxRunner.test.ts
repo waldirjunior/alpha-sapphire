@@ -6,6 +6,7 @@ import zone227 from '../data/zone_scripts/0227.json';
 import global78 from '../data/zone_scripts/global_0078.json';
 import global47 from '../data/zone_scripts/global_0047.json';
 import route101 from '../data/zone_scripts/0023.json';
+import roxanne from '../data/zone_scripts/0441.json';
 import opening from '../data/zone_scripts/opening-memory.json';
 import { createAmxState, runAmx, resumeAmx } from './amxRunner';
 import { createAmxWorld } from './amxMemory';
@@ -97,6 +98,23 @@ describe('VM Pawn com disassembly real ORAS', () => {
       if (!/^zone:(0006|0223|0225|0227):/.test(id)) continue;
       for (const entry of entries) expect(getAmxNativeSignature(entry.name), `${id}/${entry.name}`).toMatchObject({ arity: entry.arity });
     }
+  });
+
+  it('preserva as aridades ROM do fluxo map/case 2 de Roxanne', () => {
+    const rows = roxanne.programs.map.instructions;
+    const nativeAt = (name: string, offset: number) => rows.find(row => row.offset === offset && row.native?.name === name);
+    for (const offset of [204, 248, 280, 360, 448]) {
+      expect(nativeAt('PokePartyGetParam', offset)?.argumentBytes).toBe(12);
+    }
+    expect(nativeAt('_CallTrainerBattleCore', 1892)?.argumentBytes).toBe(28);
+    expect(nativeAt('BadgeGetFlag', 7280)?.argumentBytes).toBe(4);
+    expect(nativeAt('BadgeSetFlag', 9188)?.argumentBytes).toBe(4);
+    expect(nativeAt('GymSetVictoryInfo', 9204)?.argumentBytes).toBe(4);
+    expect(getAmxNativeSignature('PokePartyGetParam')).toMatchObject({ arity: 3, channel: 'pokemon' });
+    expect(getAmxNativeSignature('_CallTrainerBattleCore')).toMatchObject({ arity: 7, channel: 'pokemon' });
+    expect(getAmxNativeSignature('BadgeGetFlag')).toMatchObject({ arity: 1, channel: 'pokemon' });
+    expect(getAmxNativeSignature('BadgeSetFlag')).toMatchObject({ arity: 1, channel: 'pokemon' });
+    expect(getAmxNativeSignature('GymSetVictoryInfo')).toMatchObject({ arity: 1, channel: 'pokemon' });
   });
 
   it('fixtures de memória correspondem aos hashes do disassembly versionado', () => {

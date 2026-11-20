@@ -150,6 +150,15 @@ describe('nativas de estado Pawn', () => {
     expect(result.machines[0].pri).toBe(0);
   });
 
+  it('mantém PokePartyGetParam pendente sem fabricar um valor para a consulta ROM', () => {
+    const result = execute(syntheticBundle([{ name: 'PokePartyGetParam', args: [0, 8, 0] }]), createAmxWorld());
+    expect(result.status).toBe('await-input');
+    expect(result.awaiting).toMatchObject({ kind: 'native', effect: {
+      name: 'PokePartyGetParam', channel: 'pokemon', args: [0, 8, 0],
+    } });
+    expect(result.world.party).toEqual([]);
+  });
+
   it.each([0, 1])('preserva resposta %s de YesNoWin_Seq e escreve o retorno no estado Pawn', value => {
     const bundle = syntheticBundle([{ name: 'YesNoWin_Seq', args: [0, 0, 0, 0] }],
       [{ offset: 0, size: 8, mnemonic: 'stor.pri', operands: [0] }]);

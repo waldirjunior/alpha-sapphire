@@ -99,6 +99,19 @@ describe('ciclo de vida do host de zonas', () => {
     expect(f.ports.silentAudio).toHaveBeenCalledWith(123456);
   });
 
+  it('suspende PokePartyGetParam sem produzir retorno nem alterar o time AMX', async () => {
+    const f = fixture([['PokePartyGetParam', [0, 8, 0]]]);
+    const events = new ZoneEvents(f.ports, async () => f.assets);
+
+    await events.enter();
+    await events.interact(f.npc());
+
+    expect(events.pendingEffect).toBe('PokePartyGetParam');
+    expect(events.canAdvance).toBe(false);
+    expect(f.worlds.at(-1)?.party).toEqual([]);
+    expect(f.ports.report).toHaveBeenCalledWith(expect.stringContaining('PokePartyGetParam(0,8,0)'));
+  });
+
   it('liga seleção AMX do inicial ao time e aguarda a primeira batalha antes de retomar o script', async () => {
     const f = fixture([['_FieldClose', [1, 1]], ['_CallPoke3Select', [0]], ['WorkGet', [16432]],
       ['PokePartyAdd', [258, 1]], ['_CallWildBattleWithoutField', [-1, 0, 1, 0]], ['FlagSet', [700]]]);

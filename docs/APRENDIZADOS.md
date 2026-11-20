@@ -1148,4 +1148,23 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro:** `zone_0285` foi tratada como o Ginásio porque o warp da cidade entrava nela e o disassembly mostrava NPC6/script2; essa zona é o Poké Mart, e o Ginásio é `zone_0441`.
 - **Regra:** antes de vincular um evento pelo nome da cidade ou número de NPC/script, confira texto e ZO da zona interior, destino do warp e dispatch AMX dos candidatos. Para `zone_0441`, a fala de Roxanne em `textFile=563`, ZO SHA `e992a801ec694c5173c663ce89260d1370d6259c1ce0b2b588a955527bc9f05b` e `map/case 2` (`tableOffset=6248`, case→`6028`, função→`7248`) identificam o fluxo; `entities/case 2` (`tableOffset=120`, case→`60`, função→`316`) não tem nativas. O AMX map inclui `_CallTrainerBattleCore` em `1892` e o emulador mostrou a fala de desafio ao interagir com a líder. O SHA da fonte de entidades do mapa é `0d5908f71c51a9bbac17e39527dfadfb303a64dfd8f4befdd66e4c905373c72b`; `loader.test.ts` cobre essa prova e recusa a NPC6/2 do Poké Mart.
 
+## A-115 ABI de batalha e badge exige leitura dos wrappers CRO
+
+- **Data:** 2026-11-20; ROADMAP #3/P-013, natives de `zone_0441`.
+- **Contexto:** os callsites AMX identificados em A-114 exigem party, batalha de
+  treinador e gravação da badge; os nomes e chamadas AMX não bastam para executar
+  esses serviços com segurança.
+- **Evidência:** `DllField.cro` tem SHA-256
+  `9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925`.
+  Os wrappers em `0x4e618`, `0x5b4e0`, `0x4c07c`, `0x4c0ac` e `0x56e40`
+  confirmam respectivamente 3, 7, 1, 1 e 1 argumentos de pilha. A batalha
+  copia três `u16`, um `u32` e três `u8`; os wrappers de badge recebem `u16` e
+  consultam/alteram o bitfield em `save+0x3418`; `GymSetVictoryInfo` recebe um
+  `u16` e consulta a party.
+- **Regra:** registre aridade e formato apenas quando confirmados no wrapper CRO.
+  Não deduza valores de retorno, campos de party, identidade da equipe, callback
+  de vitória ou conclusão de batalha pelo nome da native ou pelo script. Pare o
+  host sem mutação até comprovar esses contratos no código original ou no
+  emulador; os próximos dados necessários seguem em P-013.
+
 

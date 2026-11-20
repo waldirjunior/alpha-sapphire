@@ -91,21 +91,36 @@ Não se exige nesta etapa um host gráfico pronto, ABI ACMD decodificada,
 concorrência da ROM ou paridade no emulador. Completar todos os serviços/ramos e
 ligar a execução ao jogo ativo são próximos passos de P-013, não aceites implícitos.
 
-## Entrada natural no Ginásio de Rustboro (2026-11-20)
+## Entrada natural no Ginásio de Rustboro e binding de Roxanne (2026-11-20)
 
-`e2e/campaign.spec.ts` continua de Rustboro (`zone_0016`) até o warp ROM em
-`(47,61)` e entra em `zone_0285` em `(14,24)` somente por teclas. O destino
-contém o warp de retorno para `zone_0016`; o teste também confere os scripts de
-treinador `10095`, `10117` e `10129`, os hide-flags ativos `710`/`552` e a
-visibilidade de Roxanne (ator 6, script `2`, spawnFlag `0`). Nenhuma escrita de
-posição/flag, warp manual ou mudança em `zoneEvents.ts`/`src/core/amx*` foi
-necessária: o host atravessou o warp e projetou as visibilidades extraídas.
+A rota `(47,61)` de Rustboro (`zone_0016`) entra no Poké Mart (`zone_0285`),
+não no Ginásio. O Ginásio é `zone_0441`, alcançado pelo warp `(62,24)` em
+`(18,38)`; `textFile=563` contém as falas de Roxanne e da Stone Badge. O
+disassembly e a observação no Azahar identificam o dispatch `map/case 2` da
+líder. `loader.test.ts` aceita esse vínculo somente para a zona e o SHA ROM
+esperados. A correção da identificação e os hashes estão em A-114 e P-013.
 
-O disassembly marca o binding de Roxanne/script `2` como ambíguo entre
-`entities/case 2` e `map/case 2`; não escolhemos um candidato. A presença visual
-da líder não valida a interação ou a batalha, que seguem em P-013.
+`e2e/campaign.spec.ts` chega a `zone_0441` por teclas e acompanha o início
+natural da cena. O fluxo avança câmera/ACMD suportados e para em
+`FadeRequestOut(0,2,30)` (`map` offset `7068`); o significado do modo 2 não foi
+confirmado, então o teste verifica a pausa e ausência de mutação. A cena para
+antes da conversa com Roxanne. A entrada no Ginásio não prova interação,
+batalha ou badge.
 
-`npm run verify`: 600 testes Vitest, build e 241 testes Python passaram (um
-skip por assets locais ausentes). `ALPHA_E2E_PORT=5510 npx playwright test
-e2e/campaign.spec.ts e2e/smoke.spec.ts`: 8/8 passaram. O aviso de chunks acima
-de 500 kB permanece.
+## ABI CRO das natives de Roxanne (2026-11-20)
+
+O `map` real de `zone_0441` chama `PokePartyGetParam` com três células nos
+offsets `204/248/280/360/448`, `_CallTrainerBattleCore` com sete células em
+`1892`, e `BadgeGetFlag`, `BadgeSetFlag` e `GymSetVictoryInfo` com uma célula
+em `7280/9188/9204`. Os wrappers correspondentes em `DllField.cro`
+(`SHA-256 9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925`)
+confirmam a contagem e o formato de `_CallTrainerBattleCore` (três `u16`, um
+`u32`, três `u8`). Isso não identifica os campos consultados da party, a equipe
+de Roxanne, o callback/resultado da batalha ou a persistência host da badge.
+
+O runner conhece essas assinaturas e o host suspende os cinco pedidos sem
+presumir retorno ou mutar party/badge. Regressões AMX validam as aridades da ROM
+e a pausa explícita; campanha Playwright passa 1/1 e smoke 7/7. `npm run
+verify` passa com 637 testes Vitest, build e 249 testes Python (um skip por
+assets locais ausentes). P-013 continua aberta até validar o Fade mode 2 no
+emulador e decodificar seletores de party e dados/callbacks de treinador.

@@ -8,10 +8,10 @@ Verificado em 2026-11-20 (macOS; suporte headless Linux validado anteriormente n
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 634 em 85 arquivos, todos passando | `npm test` |
+| Testes unitários (Vitest) | 637 em 85 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | acima da catraca de 95% linhas / 85% branches | `npm run test:coverage` |
 | Testes do pipeline e do oráculo (Python) | 249 passando (1 skip só em worktree sem `public/assets/maps`) | `npm run test:py` |
-| Jogo real no browser (smoke + campanha + corredor) | 7 smoke (`e2e/smoke.spec.ts`), campanha New Game → Ginásio `zone_0441` (`e2e/campaign.spec.ts`; até ACMD sem animação) e corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
+| Jogo real no browser (smoke + campanha + corredor) | 7 smoke e campanha 1/1 (`e2e/campaign.spec.ts`; cena natural pausa em `FadeRequestOut(0,2,30)` antes da interação Roxanne); corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
 | Cenários visuais | 28 de 28 estáveis com referência do emulador lado a lado; **28 de 28 aceitos** sem defeito conhecido | `npm run test:e2e`, galeria em `rom/visual-report/index.html` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
 
@@ -30,7 +30,7 @@ Atores `0x1000`/`0x2000` renderizam modelo real (`failedAssets = 0`); câmera/oc
 
 | Limite | Pendência |
 | --- | --- |
-| Campanha chega a `zone_0441` por teclas; ACMD sem animação; batalha/badge da Roxanne bloqueadas por natives ausentes. | P-013 |
+| Campanha chega a `zone_0441`; cena natural pausa em `FadeRequestOut(0,2,30)` antes da interação; batalha/badge da Roxanne bloqueadas. | P-013 |
 | Bike/Surf e oclusão residual (ex.: `z0015-mauville-patio`). | P-017 |
 | Combiners RGB / luz PICA parciais; ambiente por zona já em `zoneEnvironment.ts`. | P-007 |
 | PokéNav vs Azahar; SFX BCSAR além de `343`; arenas ROM; Gen VI residual. | P-011, P-014, P-008, P-010 |
