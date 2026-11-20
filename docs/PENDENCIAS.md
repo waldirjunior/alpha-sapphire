@@ -59,12 +59,29 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
 - **Validação:** 12 capturas A/B visíveis dos GR0004/0005/0006 inspecionadas, incluindo folhagem/casas/solo; zero erros/warnings/HTTP>=400. Cenário estático sintético com o configurador real, não caminhada ou emulador. 328 Vitest/49 arquivos, build e 168 Python sem skips passaram (GLB_MAPS_DIR aponta ao principal); warning de chunks e diagnóstico de câmera AMX herdados.
 - **Pendente:** combiners RGB completos, iluminação fragmentária, LUTs/toon, projeção/Texture1/Texture2 e transformações não identidade; interiores e paridade visual ainda exigem validação específica. A busca CRO limitada não recuperou o dispatch de materiais. A-074 resolve os três diffs COLOR_0 por correspondência de vértice/triângulo com BCH/DAE, sem provar shader RGB. Pés permanecem limitação de geometria, sem malha inventada.
 - **Continuação COLOR_0/RGB (A-074/A-075):** 336 GLBs/4.547 materiais,329 URLs imutáveis;38 vértices restaurados em MM0180/MM0181/MM0319 com SHA, correspondência de triângulo e clone COLOR_0, zero diffs de range comparáveis. Nos336 BCHs auditados: zero luzes/cenas/shaders embutidos; LUTs de alguns atores não resolvem o ambiente. A-118 encontrou biblioteca externa com 13 shaders especializados e `a/0/0/3` slot138 com 16 luzes; a biblioteca PC inspecionada não contém `0@DefaultShader`, e não há binding provado entre o BM, `LightSetIndex=0` e callback0x2ee38. Não alterados PBR, exposição, saturação ou shaders.
+- **Loader PICA (2026-11-20, A-TMP-Codex):** `ExeFS/code.bin` (SHA-256
+  `b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16`)
+  contém RTTI de `H3dLightSet`, `H3dModel`, `H3dResShader`, `H3dEnvironment` e
+  `SceneSystem`, além das strings `rom:/g3d_common/gfl_DefaultShader.bcsdr`,
+  `rom:/g3d_common/nwgfx_DefaultShader.bcsdr` e
+  `rom:/g3d_common/gfl_DefaultShader.bchsdr`. As classes e caminhos delimitam
+  candidatos do renderer; a busca de referências diretas não ligou os caminhos
+  ao `LightSetIndex` de um material nem ao upload do shader. P-007 continua
+  aberto; a próxima evidência executável é seguir um callsite de
+  carregamento/modelo até o upload ou observar essa seleção em runtime.
+  Detalhes em [pica-materials.md](features/pipeline-rom/pica-materials.md#exefs-loader-name-triage-a-tmp-codex).
 - **Validação adicional:** seis close-ups A/B e oito imagens da caminhada por teclado em Littleroot inspecionados;32 passos idênticos por fase desde save pós-intro derivado, sem alterar estado durante a caminhada. Comparação antes de P-007 vs aliases atuais, não prova de nova luz/emulador. Zero erros de página/console/rede/HTTP; três warnings P-013 por fase. Telhado ainda oculta avatar em(14,16). 333 Vitest/build/175 Python sem skips passaram; evidência ignorada `rom/pica-rgb-validation/{browser,walk}/`.
 - **Ambiente por zona (2026-11-19):** `zoneEnvironment` seleciona luz, fog e fundo para o exterior, Rusturf Tunnel (`zone_0075`), Meteor Falls (`zone_0071`) e os cinco interiores registrados. `SceneManager` aplica o perfil na troca de mapa; `followCameraPose` preserva o fundo da zona durante eventos. Rusturf usa luz fria reduzida e fundo escuro; Meteor Falls mantém a luz quente; exteriores mantêm o céu Hoenn com intensidade ambiente/direcional menor. Os perfis ajustam a cena observada e não afirmam recuperar os valores RGB nativos; A-075 continua aberto.
 - **Validação visual (2026-11-19):** referências Azahar de Rusturf, Meteor Falls e Littleroot foram comparadas às capturas; Petalburg Woods foi revisada como caso externo afetado pela luz diurna. Rusturf não mostra mais a faixa de céu azul. Após revisar as imagens, só os baselines locais de `z0075-rusturf-tunnel` e `z0082-petalburg-woods` foram regenerados; nenhum PNG foi versionado e as métricas numéricas permaneceram inalteradas. `ALPHA_E2E_PORT=5444 npx playwright test e2e/visual.spec.ts --workers=3`: 28/28 cenários passaram. `npm run verify`: 479 Vitest, build e 233 testes Python passaram, com 1 skip.
 - **Pokémon — RGB de vértices e combiners (2026-11-19, A-110):** a auditoria dos 41 modelos catalogados/243 materiais encontrou diferença de faixa RGB somente em `Zigzagoon/Body01` (nativo `0,5098..1`, GLB branco). A referência DAE do BCH resolve por triângulo quatro vértices divergentes; o normalizador restaura apenas RGB e preserva alpha. A faixa final coincide com a nativa. Os demais `COLOR_0` vêm de buffer, valor fixo ou estão ausentes; as fontes de combiner observadas são `Constant`, `FragmentSecondaryColor`, `Previous`, `PreviousBuffer`, `PrimaryColor` e `Texture0..2`. O shader RGB completo continua sem prova. Reprocessados 89 GLBs locais e promovidos os 41 URLs nativos por hash.
 - **Validação desta entrega:** `npm run verify` passou (565 Vitest, build e 241 Python; 1 skip). `ALPHA_E2E_PORT=5490 npx playwright test e2e/pokemonBattleModels.spec.ts e2e/smoke.spec.ts` passou 9/9. A suíte completa passou 38/39: `campaign.spec.ts` excedeu 120 s enquanto o corredor de 5,8 min rodava em paralelo; o mesmo teste isolado passou em 53,6 s. Captura da batalha inspecionada; baselines não foram regravados.
-- **Próximo passo:** localizar o carregador/binding que conecta as luzes do BM `a/0/0/3` e o programa usado por `0@DefaultShader` ao `LightSetIndex` do modelo; rastrear valores até o callback e comparar com emulador antes de mapear RGB/projeção/multi-textura ou lightmap. A busca está delimitada em [pica-materials.md](features/pipeline-rom/pica-materials.md#external-light-data-and-shader-library-follow-up-a-117); P-007 permanece em andamento.
+- **Próximo passo:** seguir um callsite candidato em `ExeFS/code.bin` até
+  provar se as strings `gfl_DefaultShader` são usadas e como o carregador
+  conecta a luz do BM `a/0/0/3` ao `LightSetIndex` do material; rastrear os
+  valores do callback e comparar a saída com Azahar ou renderer nativo. Só
+  então avaliar RGB, projeção, multi-textura ou lightmap. A evidência atual e o
+  limite da busca estão em [pica-materials.md](features/pipeline-rom/pica-materials.md#exefs-loader-name-triage-a-tmp-codex);
+  P-007 permanece em andamento.
 
 ## P-008 Áudio da ROM (`RomFS/sound/*.bcstm`) não integrado
 
@@ -203,6 +220,15 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
   não atesta paridade.
 - **Verificação:** `ALPHA_E2E_PORT=5513 npx playwright test e2e/visual.spec.ts e2e/pokemonBattleModels.spec.ts --workers=3` passou (31/31). `npm run verify` passou (634 Vitest, build e 249 Python; 1 skip).
 - **Implementação/recomparação 2026-11-20:** A aba Mapa agora renderiza um painel 320×240 com título AreaNav, mapa texturizado, local selecionado e quatro ícones decorativos. O cenário seleciona Littleroot, igual à referência do Azahar; métricas e baseline Chromium foram atualizadas após inspeção lado a lado em `rom/visual-report/pokenav-hoenn-map-comparison.html` (capturas locais ignoradas pelo Git).
+- **Toque no Azahar (2026-11-20):** com cópia integral do perfil em
+  `/tmp/alpha-sapphire-pokenav-observation-2`, `continue_game` chegou à AreaNav
+  em Rustboro. Capturas locais em `rom/visual-report/pokenav-icon-probe/`
+  registram toques em `(80,224)`, `(112,224)`, `(144,224)` e `(176,224)` sem
+  mudança visível; toques isolados em `(180,218)` e `(180,224)` também não
+  mudaram a tela. Uma sequência anterior, após outros toques e `B`, mostrou o
+  Cartão de Treinador em `(180,224)`, mas a repetição isolada não reproduziu a
+  transição. Essa ocorrência não identifica um ícone nem autoriza binding; os
+  quatro handlers continuam sem semântica comprovada.
 - **Gap residual:** A forma, o detalhe costeiro e a textura do mapa ainda diferem do original; os quatro ícones são formas visuais sem equivalência nem ação ligada. A captura comprova a composição, mas não identifica os recursos nativos ou a semântica dos ícones.
 - **Verificação:** `npm run verify` passou (638 Vitest, build e 250 Python; 1 skip); os 36 testes passaram com:
   ```sh

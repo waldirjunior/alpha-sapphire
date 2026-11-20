@@ -134,3 +134,27 @@ ALPHA_E2E_PORT=5513 npx playwright test e2e/visual.spec.ts e2e/smoke.spec.ts --w
 ALPHA_PUBLIC_DIR=/Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/alpha-sapphire/public \
 ALPHA_E2E_PORT=5513 npm run visual:approve -- --grep 'visual pokenav-hoenn-map' --workers=1
 ```
+
+## 9. Investigação dos toques da AreaNav — 2026-11-20
+
+Uma nova cópia temporária do perfil Azahar chegou à AreaNav em Rustboro.
+Capturas ignoradas pelo Git ficam em
+`rom/visual-report/pokenav-icon-probe/`. Toques em `(80,224)`, `(112,224)`,
+`(144,224)`, `(176,224)`, além de `(180,218)` e `(180,224)` em execuções
+isoladas, mantiveram a tela. Uma sequência com toques anteriores e `B` mostrou
+o Cartão de Treinador após `(180,224)`, mas a mesma coordenada isolada não
+reproduziu a transição.
+
+Esse resultado não identifica um dos quatro ícones. Nenhum nome, ação ou
+handler foi ligado aos glifos e nenhuma baseline foi aprovada. Próximo passo:
+calibrar a coordenada de toque contra um controle conhecido e repetir cada
+ícone em uma execução isolada, registrando também o estado de entrada.
+
+Verificação: o comando abaixo passou com 31/31. As capturas do mapa e da
+batalha foram inspecionadas; nenhuma baseline foi regravada ou aprovada.
+
+```sh
+ALPHA_PUBLIC_DIR=/Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/alpha-sapphire/public \
+ALPHA_E2E_PORT=56871 npx playwright test e2e/pokemonBattleModels.spec.ts \
+e2e/visual.spec.ts --workers=1
+```
