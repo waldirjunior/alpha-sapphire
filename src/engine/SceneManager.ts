@@ -8,6 +8,7 @@ import { loadZoneTerrain } from './zoneTerrain';
 import { buildTallGrassGroup } from './tallGrass';
 import { advanceActorPosition, appendMapEntities, eventActorRoot, syncMapEntities, FACING_YAW } from './zoneEntities';
 import { CharacterExpressions } from './characterExpressions';
+import { preparePokemonBattleModel } from './pokemonModelSetup';
 import { ContinuousTerrain } from './continuousTerrain';
 import { groundedWorldPosition } from '../core/groundHeight';
 import { fixOrasMaterials, picaMaterialModelUrl } from './picaMaterials';
@@ -418,7 +419,7 @@ export class SceneManager {
       if (!this.inBattle || version !== this.battleLoadVersion) return;
       const model = gltf.scene;
       model.scale.setScalar(POKEMON_SCALE);
-      fixOrasMaterials(model, true);
+      preparePokemonBattleModel(model);
       target.clear();
       target.add(model);
       const mixer = new THREE.AnimationMixer(model);
