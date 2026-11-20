@@ -127,6 +127,7 @@ export function advanceVolatileTurn(pokemon: PokemonInstance, rng: Rng = Math.ra
   const encoreTurns = Math.max(0, (volatile.encoreTurns ?? 0) - 1);
   const yawnTurns = Math.max(0, (volatile.yawnTurns ?? 0) - 1);
   const perishSongTurns = Math.max(0, (volatile.perishSongTurns ?? 0) - 1);
+  const partialTrapTurns = Math.max(0, (volatile.partialTrapTurns ?? 0) - 1);
   const nextVolatile = {
     ...volatile,
     tauntTurns,
@@ -136,6 +137,7 @@ export function advanceVolatileTurn(pokemon: PokemonInstance, rng: Rng = Math.ra
     encoreMoveId: encoreTurns > 0 ? volatile.encoreMoveId ?? null : null,
     yawnTurns,
     perishSongTurns,
+    partialTrapTurns,
     protecting: false,
   };
   const messages: string[] = [];
@@ -172,20 +174,23 @@ export function applyResidualDamage(
 ): { pokemon: PokemonInstance; message: string | null; leechSeedDrain: number } {
   if (pokemon.currentHp === 0) return { pokemon, message: null, leechSeedDrain: 0 };
   const seed = leechSeedResidual(pokemon);
-  const statusDamage = seed.pokemon.currentHp > 0
-    ? statusResidual(seed.pokemon, seed.pokemon.status)
-    : { pokemon: seed.pokemon, message: null };
+  const trap = seed.pokemon.currentHp > 0 ? partialTrapResidual(seed.pokemon) : { pokemon: seed.pokemon, message: null };
+  const statusDamage = trap.pokemon.currentHp > 0
+    ? statusResidual(trap.pokemon, trap.pokemon.status)
+    : { pokemon: trap.pokemon, message: null };
   const weatherDamage = statusDamage.pokemon.currentHp > 0
     ? weatherChipDamage(statusDamage.pokemon, weather, weatherSuppressed) : 0;
   const currentHp = Math.max(0, statusDamage.pokemon.currentHp - weatherDamage);
   const weatherMessage = weatherDamage > 0 && statusDamage.pokemon.currentHp > 0
     ? `${pokemon.species.name} sofreu ${weatherDamage} de dano do clima.` : null;
   const result = weatherDamage > 0 ? { ...statusDamage.pokemon, currentHp } : statusDamage.pokemon;
-  return { pokemon: result, message: [seed.message, statusDamage.message, weatherMessage].filter(Boolean).join(' ') || null, leechSeedDrain: seed.damage };
+  return { pokemon: result, message: [seed.message, trap.message, statusDamage.message, weatherMessage].filter(Boolean).join(' ') || null, leechSeedDrain: seed.damage };
 }
 
 function leechSeedResidual(pokemon: PokemonInstance): { pokemon: PokemonInstance; damage: number; message: string | null } {
-  if (!pokemon.volatile?.leechSeeded || pokemon.currentHp === 0) return { pokemon, damage: 0, message: null };
+  if (!pokemon.volatile?.leechSeeded || pokemon.currentHp === 0 || pokemon.ability === 'Magic Guard') {
+    return { pokemon, damage: 0, message: null };
+  }
   const damage = Math.min(pokemon.currentHp, Math.max(1, Math.floor(pokemon.maxHp / 8)));
   return {
     pokemon: { ...pokemon, currentHp: pokemon.currentHp - damage },
@@ -194,16 +199,29 @@ function leechSeedResidual(pokemon: PokemonInstance): { pokemon: PokemonInstance
   };
 }
 
+function partialTrapResidual(pokemon: PokemonInstance): { pokemon: PokemonInstance; message: string | null } {
+  if ((pokemon.volatile.partialTrapTurns ?? 0) <= 0 || pokemon.currentHp === 0 || pokemon.ability === 'Magic Guard') {
+    return { pokemon, message: null };
+  }
+  const damage = Math.min(pokemon.currentHp, Math.max(1, Math.floor(pokemon.maxHp / 8)));
+  return {
+    pokemon: { ...pokemon, currentHp: pokemon.currentHp - damage },
+    message: `${pokemon.species.name} perdeu ${damage} HP por estar preso.`,
+  };
+}
+
 function statusResidual(pokemon: PokemonInstance, status: MajorStatus | null): { pokemon: PokemonInstance; message: string | null } {
   if (!status) return { pokemon, message: null };
   if (status.kind === 'burn' || status.kind === 'poison') {
+    if (pokemon.ability === 'Magic Guard') return { pokemon, message: null };
     const damage = Math.max(1, Math.floor(pokemon.maxHp / BURN_POISON_FRACTION));
     const verb = status.kind === 'burn' ? 'sofre com a queimadura' : 'sofre com o veneno';
     return residual(pokemon, damage, status, verb);
   }
   if (status.kind !== 'toxic') return { pokemon, message: null };
-  const damage = Math.max(1, Math.floor((pokemon.maxHp * status.counter) / TOXIC_DENOMINATOR));
   const nextStatus = { kind: 'toxic' as const, counter: Math.min(TOXIC_MAX_COUNTER, status.counter + 1) };
+  if (pokemon.ability === 'Magic Guard') return { pokemon: { ...pokemon, status: nextStatus }, message: null };
+  const damage = Math.max(1, Math.floor((pokemon.maxHp * status.counter) / TOXIC_DENOMINATOR));
   return residual(pokemon, damage, nextStatus, 'sofre com o veneno');
 }
 

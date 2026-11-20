@@ -45,6 +45,12 @@ voláteis, hazards, troca forçada, itens e habilidades ainda não simulados.
 - **RF-16:** Knock Off remove item removível e recebe o bônus de dano Gen VI;
   U-turn/Volt Switch trocam para um reserva saudável após acertar; Sucker Punch
   só acerta quando o alvo escolheu um golpe que causa dano.
+- **RF-17:** Drizzle, Drought, Sand Stream e Snow Warning iniciam clima ao entrar;
+  Moxie, Sheer Force (incluindo a remoção do recuo de Life Orb), Magic Guard,
+  Natural Cure, Rough Skin e Iron Barbs aplicam seus efeitos Gen VI.
+- **RF-18:** Bind, Wrap, Fire Spin e Whirlpool prendem por 4–5 turnos e causam
+  dano residual de 1/8 do HP máximo e impedem troca voluntária; Baton Pass
+  transfere estágios e Substitute.
 
 ## 3. Critérios de Aceite
 
@@ -59,6 +65,10 @@ voláteis, hazards, troca forçada, itens e habilidades ainda não simulados.
   determinísticos em `src/core/`.
 - [x] Knock Off, U-turn, Volt Switch e Sucker Punch cobertos por testes e vetores
   determinísticos em `src/core/` e `src/ai/battleParity.test.ts`.
+- [x] Habilidades de entrada, Moxie, Sheer Force, Magic Guard, Natural Cure,
+  Rough Skin e Iron Barbs cobertos por testes determinísticos em `src/core/`.
+- [x] Aprisionamento parcial e Baton Pass cobertos por testes determinísticos;
+  vetores de dano registrados em `src/ai/battleParity.test.ts`.
 - [ ] Implementar os itens restantes listados em `P-010`; a pendência continua aberta.
 
 ## 4. Entrega parcial — 2026-11-19 (campo e captura)
@@ -138,3 +148,23 @@ guardados fora da equipe; capturas são registradas mesmo com a equipe cheia.
 Saves antigos recebem uma lista inicial derivada do time presente. `save.test.ts`
 e `battleUi.test.ts` cobrem a migração e a fonte da contagem; `npm run verify`
 passou com 594 testes Vitest e 241 Python (1 skip), além do build.
+
+## 9. Entrega parcial — 2026-11-20 (habilidades, aprisionamento e Baton Pass)
+
+Drizzle, Drought, Sand Stream e Snow Warning iniciam cinco turnos de clima ao
+entrar em campo. Moxie aumenta Attack após um nocaute direto; Sheer Force aumenta
+em 30% o dano de golpes com efeito secundário e suprime esse efeito e o recuo de
+Life Orb. Magic Guard impede dano indireto, Natural Cure limpa status ao sair,
+e Rough Skin/Iron Barbs
+causam 1/8 do HP máximo por contato.
+
+Bind, Wrap, Fire Spin e Whirlpool aplicam aprisionamento de 4–5 turnos, causam
+1/8 do HP máximo por turno e impedem a troca voluntária; Ghost é imune. Baton
+Pass troca para um reserva e carrega os estágios e o Substitute. Os testes em
+`battleGen6FinalBlock.test.ts` cobrem as mecânicas; `src/ai/battleParity.test.ts`
+fixa os vetores `[42, 54, 8, 15]` para dano normal, Sheer Force, Iron Barbs e
+dano de aprisionamento. As regras de habilidades foram conferidas na
+[implementação Gen VI do Pokémon Showdown](https://github.com/smogon/pokemon-showdown/blob/master/data/mods/gen6/abilities.ts)
+e em suas [descrições Gen VI](https://github.com/smogon/pokemon-showdown/blob/master/data/text/abilities.ts).
+`npm run verify` passou com 624 testes Vitest, build e
+241 testes Python (1 skip).

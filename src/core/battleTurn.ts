@@ -11,7 +11,7 @@ import {
   type BattleSide,
   type BattleState,
 } from './battleParty';
-import { toBattleMove, type BattleMove, type PokemonInstance } from './battlePokemon';
+import { isPartiallyTrapped, toBattleMove, type BattleMove, type PokemonInstance } from './battlePokemon';
 import { STRUGGLE_MOVE_ID } from './damage';
 import { getMoveById } from './dex';
 import { healthEvents } from './battleEvents';
@@ -140,7 +140,9 @@ function performAction(state: BattleState, action: BattleAction, targetAction: B
     ...healthEvents(action.side, actor.currentHp, outcome.user.currentHp)] };
   next = appendLog(next, [struggleNote, ...outcome.messages]);
   if (outcome.forceSwitch && pokemonOf(next, foeSide).currentHp > 0) next = forceSwitch(next, foeSide, rng);
-  if (outcome.switchUser && pokemonOf(next, action.side).currentHp > 0) next = switchToNextHealthy(next, action.side);
+  if (outcome.switchUser && pokemonOf(next, action.side).currentHp > 0) {
+    next = switchToNextHealthy(next, action.side, outcome.batonPass === true);
+  }
   return { state: next, flinchedSide: outcome.flinched ? foeSide : null };
 }
 
@@ -189,12 +191,16 @@ function moveContext(state: BattleState, userSide: BattleSide, targetSide: Battl
   };
 }
 
-function switchToNextHealthy(state: BattleState, side: BattleSide): BattleState {
+function switchToNextHealthy(state: BattleState, side: BattleSide, batonPass = false): BattleState {
+  const activePokemon = pokemonOf(state, side);
+  if (isPartiallyTrapped(activePokemon)) {
+    return appendLog(state, [`${activePokemon.species.name} está preso e não pode trocar!`]);
+  }
   const party = side === 'player' ? state.playerParty : state.enemyParty;
   const active = side === 'player' ? state.playerActive : state.enemyActive;
   const next = firstHealthyIndex(party, active);
   if (next < 0) return state;
-  return side === 'player' ? switchPlayerIn(state, next) : switchEnemyIn(state, next);
+  return side === 'player' ? switchPlayerIn(state, next, batonPass) : switchEnemyIn(state, next, false, batonPass);
 }
 
 function applyFieldUpdate(state: BattleState, side: BattleSide, outcome: MoveOutcome): BattleState {

@@ -67,6 +67,7 @@ export function chooseTrainerAction(
   const active = party[activeIndex];
   if (!active) return { kind: 'move', moveIndex: null };
   const moveIndex = selectTrainerMoveIndex(active, target, rng);
+  if ((active.volatile.partialTrapTurns ?? 0) > 0) return { kind: 'move', moveIndex };
   const outgoing = bestDamageScore(active, target);
   const incoming = bestDamageScore(target, active);
   if (incoming === 0 || outgoing > incoming * 0.5) return { kind: 'move', moveIndex };

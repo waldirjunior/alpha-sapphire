@@ -1,6 +1,6 @@
 import type { WildEncounterEntry } from '../data/pokemon/route101';
 import { activateEntryAbility, firstHealthyIndex, resolveFaints, switchPlayerIn, validateParty, withPokemon, type BattleState } from './battleParty';
-import { restoreAtPokemonCenter, withdrawFromBattle, type PokemonInstance } from './battlePokemon';
+import { isPartiallyTrapped, prepareBattleEntry, restoreAtPokemonCenter, type PokemonInstance } from './battlePokemon';
 import { hasUsableMove, resolveTurn } from './battleTurn';
 import { replaceMove } from './levelUp';
 import type { Rng } from './statusConditions';
@@ -53,7 +53,7 @@ function isPartyList(input: PartyInput): input is readonly PokemonInstance[] {
 function toParty(input: PartyInput, owner: string): PokemonInstance[] {
   const party = isPartyList(input) ? [...input] : [input];
   validateParty(party, owner);
-  return party.map(withdrawFromBattle);
+  return party.map(prepareBattleEntry);
 }
 
 function leadIndex(party: readonly PokemonInstance[], owner: string): number {
@@ -140,6 +140,10 @@ export function updateActivePlayer(state: BattleState, pokemon: PokemonInstance)
 /** Troca forçada (após desmaio) não dá turno ao inimigo; troca voluntária sim. */
 export function switchActivePokemon(state: BattleState, partyIndex: number, rng: Rng = Math.random): BattleState {
   if (state.status !== 'ongoing') return state;
+  if (state.player.currentHp > 0 && isPartiallyTrapped(state.player)) {
+    const blocked = { ...state, log: [...state.log, `${state.player.species.name} está preso e não pode trocar!`] };
+    return resolveTurn(blocked, null, rng);
+  }
   const switched = switchPlayerIn(state, partyIndex);
   if (state.pendingSwitch) return resolveFaints({ ...switched, pendingSwitch: false });
   return resolveTurn(switched, null, rng);
