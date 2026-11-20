@@ -1,6 +1,6 @@
 import type { WildEncounterEntry } from '../data/pokemon/route101';
 import { activateEntryAbility, firstHealthyIndex, resolveFaints, switchPlayerIn, validateParty, withPokemon, type BattleState } from './battleParty';
-import { isPartiallyTrapped, prepareBattleEntry, restoreAtPokemonCenter, type PokemonInstance } from './battlePokemon';
+import { isEscapeBlocked, isPartiallyTrapped, prepareBattleEntry, restoreAtPokemonCenter, type PokemonInstance } from './battlePokemon';
 import { hasUsableMove, resolveTurn } from './battleTurn';
 import { replaceMove } from './levelUp';
 import type { Rng } from './statusConditions';
@@ -119,6 +119,9 @@ export function runFromBattle(state: BattleState): BattleState {
       ...state,
       log: [...state.log, 'Não é possível fugir de uma batalha contra treinador!'],
     };
+  }
+  if (isEscapeBlocked(state.player)) {
+    return { ...state, log: [...state.log, `${state.player.species.name} está preso e não pode fugir!`] };
   }
   return {
     ...state,

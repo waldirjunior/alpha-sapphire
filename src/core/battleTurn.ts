@@ -139,6 +139,7 @@ function performAction(state: BattleState, action: BattleAction, targetAction: B
     ...healthEvents(foeSide, pokemonOf(state, foeSide).currentHp, outcome.target.currentHp),
     ...healthEvents(action.side, actor.currentHp, outcome.user.currentHp)] };
   next = appendLog(next, [struggleNote, ...outcome.messages]);
+  if (outcome.escapeBattle) next = { ...next, status: 'fled' };
   if (outcome.forceSwitch && pokemonOf(next, foeSide).currentHp > 0) next = forceSwitch(next, foeSide, rng);
   if (outcome.switchUser && pokemonOf(next, action.side).currentHp > 0) {
     next = switchToNextHealthy(next, action.side, outcome.batonPass === true);
@@ -187,6 +188,7 @@ function moveContext(state: BattleState, userSide: BattleSide, targetSide: Battl
     userScreens: state.field.screens[userSide],
     targetScreens: state.field.screens[targetSide],
     targetHazards: state.field.hazards[targetSide],
+    trainerBattle: state.isTrainer === true,
     targetMoveCategory: targetAction ? moveFor(pokemonOf(state, targetSide), targetAction.moveIndex).category : null,
   };
 }

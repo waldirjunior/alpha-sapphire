@@ -113,7 +113,7 @@ def build_personal(stats: tuple[int, ...], form_index: int = 0, form_count: int 
 class BattleTablesTest(unittest.TestCase):
     def test_parse_trainer_record_preserves_class_and_rom_iv_byte(self) -> None:
         metadata = bytearray(24)
-        struct.pack_into("<HH", metadata, 0, 1, 129)
+        struct.pack_into("<HH", metadata, 0, 0, 129)
         metadata[6:8] = bytes([2, 2])
         team = struct.pack("<BBHHH", 40, 1, 5, 261, 0) + struct.pack("<BBHHH", 120, 2, 7, 263, 1)
 
@@ -128,6 +128,35 @@ class BattleTablesTest(unittest.TestCase):
                 {"speciesId": 263, "form": 1, "level": 7, "ivByte": 120},
             ],
         })
+
+    def test_parse_trainer_record_reads_explicit_moves_and_held_item(self) -> None:
+        metadata = bytearray(24)
+        struct.pack_into("<HH", metadata, 0, 3, 129)
+        metadata[7] = 1
+        member = struct.pack("<BBHHH", 40, 1, 5, 261, 0)
+        member += struct.pack("<H4H", 210, 33, 81, 0, 0)
+
+        trainer = parse_trainer_record(17, bytes(metadata), member, ["None"] * 129 + ["Youngster"])
+
+        self.assertEqual(trainer["party"][0], {
+            "speciesId": 261,
+            "form": 0,
+            "level": 5,
+            "ivByte": 40,
+            "heldItemId": 210,
+            "moveIds": [33, 81],
+        })
+
+    def test_parse_trainer_record_reads_held_item_without_custom_moves(self) -> None:
+        metadata = bytearray(24)
+        struct.pack_into("<HH", metadata, 0, 2, 129)
+        metadata[7] = 1
+        member = struct.pack("<BBHHHH", 40, 1, 5, 261, 0, 210)
+
+        trainer = parse_trainer_record(17, bytes(metadata), member, ["None"] * 129 + ["Youngster"])
+
+        self.assertEqual(trainer["party"][0]["heldItemId"], 210)
+        self.assertNotIn("moveIds", trainer["party"][0])
 
     def test_parse_trainer_tables_rejects_party_count_mismatch(self) -> None:
         metadata = bytearray(24)

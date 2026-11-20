@@ -185,17 +185,20 @@ def parse_trainer_record(
 ) -> dict[str, object]:
     if len(metadata) != TRAINER_HEADER_SIZE:
         raise ValueError(f"Treinador {trainer_id}: cabeçalho com {len(metadata)} bytes; esperado {TRAINER_HEADER_SIZE}")
+    trainer_format = struct.unpack_from("<H", metadata, 0)[0]
     class_id = struct.unpack_from("<H", metadata, 2)[0]
     party_count = metadata[7]
-    if party_count == 0 or len(team_blob) % party_count:
+    if party_count == 0:
         raise ValueError(
-            f"Treinador {trainer_id}: contagem da equipe {party_count} não divide os {len(team_blob)} bytes"
+            f"Treinador {trainer_id}: contagem da equipe {party_count} inválida para {len(team_blob)} bytes"
         )
-    member_size = len(team_blob) // party_count
-    if member_size < TRAINER_MEMBER_SIZE_MIN:
+    has_moves = bool(trainer_format & 1)
+    has_item = bool(trainer_format & 2)
+    member_size = TRAINER_MEMBER_SIZE_MIN + (8 if has_moves else 0) + (2 if has_item else 0)
+    if len(team_blob) != member_size * party_count:
         raise ValueError(
-            f"Treinador {trainer_id}: contagem da equipe {party_count} produz registro de {member_size} bytes; "
-            f"mínimo {TRAINER_MEMBER_SIZE_MIN}"
+            f"Treinador {trainer_id}: contagem da equipe {party_count} com formato {trainer_format} "
+            f"espera {member_size * party_count} bytes; recebidos {len(team_blob)}"
         )
     if class_id >= len(class_names):
         raise ValueError(f"Treinador {trainer_id}: classe {class_id} fora da tabela de {len(class_names)} nomes")
@@ -203,12 +206,23 @@ def parse_trainer_record(
     party = []
     for member_index in range(party_count):
         offset = member_index * member_size
-        party.append({
+        member = {
             "speciesId": struct.unpack_from("<H", team_blob, offset + 4)[0],
             "form": struct.unpack_from("<H", team_blob, offset + 6)[0],
             "level": struct.unpack_from("<H", team_blob, offset + 2)[0],
             "ivByte": team_blob[offset],
-        })
+        }
+        extra_offset = offset + TRAINER_MEMBER_SIZE_MIN
+        if has_item:
+            held_item_id = struct.unpack_from("<H", team_blob, extra_offset)[0]
+            if held_item_id:
+                member["heldItemId"] = held_item_id
+            extra_offset += 2
+        if has_moves:
+            move_ids = [move_id for move_id in struct.unpack_from("<4H", team_blob, extra_offset) if move_id]
+            if move_ids:
+                member["moveIds"] = move_ids
+        party.append(member)
     return {"id": trainer_id, "classId": class_id, "className": class_names[class_id], "party": party}
 
 

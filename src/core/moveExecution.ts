@@ -1,4 +1,4 @@
-import type { BattleMove, PokemonInstance } from './battlePokemon';
+import { isEscapeBlocked, type BattleMove, type PokemonInstance } from './battlePokemon';
 import { moveEffectiveness } from './damage';
 import { getMoveById } from './dex';
 import { accuracyStageMultiplier } from './statStages';
@@ -18,6 +18,7 @@ export interface MoveOutcome {
   switchUser?: boolean;
   batonPass?: boolean;
   hitSubstitute?: boolean;
+  escapeBattle?: boolean;
 }
 
 export interface MoveExecutionContext {
@@ -27,6 +28,7 @@ export interface MoveExecutionContext {
   targetScreens?: BattleScreenState;
   targetHazards?: BattleHazards;
   targetMoveCategory?: BattleMove['category'] | null;
+  trainerBattle?: boolean;
 }
 
 export const ALWAYS_HITS_ACCURACY = 101;
@@ -129,7 +131,7 @@ function executeStatusMove(user: PokemonInstance, target: PokemonInstance, move:
   if (move.quality === QUALITY_INFLICT) return inflictFromStatusMove(user, target, move, rng, used);
   if (move.quality === QUALITY_FORCE_SWITCH) return { user, target, messages: [used], flinched: false, forceSwitch: true };
   if (move.quality === QUALITY_SWAGGER) return swaggerMove(user, target, move, rng, used);
-  if (move.quality === QUALITY_PROTECT) return executeQualityThirteen(user, target, move, rng, used);
+  if (move.quality === QUALITY_PROTECT) return executeQualityThirteen(user, target, move, rng, used, context);
   if (move.name === 'Attract') return attractMove(user, target, used);
   if (move.name === 'Yawn') return yawnMove(user, target, used);
   if (move.name === 'Perish Song') return perishSongMove(user, target, used);
@@ -168,8 +170,17 @@ function swaggerMove(user: PokemonInstance, target: PokemonInstance, move: Battl
   return { user, target: confused.target, messages: [used, ...orFailed(changed.messages), confused.message ?? 'Mas não teve efeito!'], flinched: false };
 }
 
-function executeQualityThirteen(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, used: string): MoveOutcome {
+function executeQualityThirteen(
+  user: PokemonInstance,
+  target: PokemonInstance,
+  move: BattleMove,
+  rng: Rng,
+  used: string,
+  context: MoveExecutionContext,
+): MoveOutcome {
   if (move.name === 'Splash') return { user, target, messages: [used, 'Mas não teve efeito!'], flinched: false };
+  if (move.name === 'Teleport') return teleportMove(user, target, used, context.trainerBattle === true);
+  if (isEscapeTrap(move.name)) return escapeTrapMove(user, target, used);
   if (move.name === 'Protect' || move.name === 'Detect') return protectMove(user, target, rng, used);
   if (move.name === 'Baton Pass') return { user, target, messages: [used], flinched: false, switchUser: true, batonPass: true };
   if (move.name === 'Taunt') return tauntMove(user, target, used);
@@ -179,6 +190,24 @@ function executeQualityThirteen(user: PokemonInstance, target: PokemonInstance, 
   if (move.name === 'Defog') return { user, target, messages: [used, 'Os perigos e barreiras foram dissipados!'], flinched: false,
     fieldUpdate: { clearHazards: 'both', clearScreens: true } };
   return unsupportedMove(user, target, move, used);
+}
+
+function teleportMove(user: PokemonInstance, target: PokemonInstance, used: string, trainerBattle: boolean): MoveOutcome {
+  if (trainerBattle) return { user, target, messages: [used, 'Não é possível fugir de uma batalha contra treinador!'], flinched: false };
+  if (isEscapeBlocked(user)) return { user, target, messages: [used, `${user.species.name} está preso e não pode fugir!`], flinched: false };
+  return { user, target, messages: [used, `${user.species.name} fugiu da batalha!`], flinched: false, escapeBattle: true };
+}
+
+function escapeTrapMove(user: PokemonInstance, target: PokemonInstance, used: string): MoveOutcome {
+  if (target.currentHp === 0 || isEscapeBlocked(target)) {
+    return { user, target, messages: [used, 'Mas não teve efeito!'], flinched: false };
+  }
+  const trapped = { ...target, volatile: { ...target.volatile, escapeBlocked: true } };
+  return { user, target: trapped, messages: [used, `${target.species.name} não poderá fugir!`], flinched: false };
+}
+
+function isEscapeTrap(name: string): boolean {
+  return name === 'Mean Look' || name === 'Spider Web' || name === 'Block';
 }
 
 function substituteMove(user: PokemonInstance, target: PokemonInstance, used: string): MoveOutcome {

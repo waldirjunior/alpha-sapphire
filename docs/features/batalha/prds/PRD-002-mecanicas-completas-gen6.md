@@ -220,3 +220,20 @@ Mauville aparecem, entre outros, Focus Energy, Curse, Rest, Aqua Ring, Block,
 Helping Hand, Mirror Move, Teleport, Spider Web e Bestow; vários exigem estado
 de crítico, turno residual, alvo aliado ou fuga/troca. Próximo passo: confirmar
 cada comportamento via runtime Azahar ou CRO antes de escolher outra regra.
+
+## 13. Entrega parcial — 2026-11-20 (quality 13: fuga)
+
+O parser de treinadores lê o formato do registro e preserva `moveIds` e
+`heldItemId` quando esses campos aparecem no GARC ROM; a regeneração produziu
+949 treinadores, 284 membros com moveset explícito e 78 com item. Registros sem
+lista explícita continuam usando os golpes do learnset ROM até o nível do
+Pokémon. O cruzamento encontrou Teleport no moveset padrão do Ralts do treinador
+18 e, nos encontros do corredor, Teleport, Block e Spider Web.
+
+Os textos ROM de `src/data/texts/gametext/0016.json` (linhas 100, 169, 212 e
+335) comprovam fuga de batalha selvagem com Teleport e bloqueio de fuga por
+Mean Look, Spider Web e Block. `battleQualityThirteen.test.ts` cobre a fuga, a
+falha contra treinador e o bloqueio de fuga; `scripts/test_pipeline.py` cobre os
+campos customizados de moveset/item. O teste foi escrito antes do código. O
+warp de campo do Teleport e a interação de bloqueio com troca voluntária,
+retirada do usuário e Ghost continuam pendentes de observação Azahar em P-010.
