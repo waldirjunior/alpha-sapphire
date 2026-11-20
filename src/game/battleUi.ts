@@ -14,7 +14,7 @@ import {
 } from '../core/battle';
 import { createInitialState } from '../core/gameState';
 import type { GameState, MapDefinition } from '../core/types';
-import { JINGLES, leveledUpDuring, type SfxCue } from '../core/battleAudio';
+import { classifyBattleMusic, JINGLES, leveledUpDuring, type BattleMusicKind, type SfxCue } from '../core/battleAudio';
 import { SPECIES } from '../data/pokemon/species';
 import type { BattleEvent } from '../core/battleEvents';
 import { evolveAfterBattleWithPrompt, getPendingMovePrompt } from './battleProgression';
@@ -64,6 +64,14 @@ export interface BattleUiHost {
 
 export type BattlePartyHost = Pick<BattleUiHost,
   'getBattle' | 'getParty' | 'setParty' | 'setActivePartyIndex' | 'playJingle'>;
+
+export function countCaughtSpecies(party: readonly PokemonInstance[]): number {
+  return new Set(party.map((member) => member.species.dexNumber)).size;
+}
+
+export function resolveBattleMusicContext(battle: BattleState | null): BattleMusicKind | null {
+  return battle ? classifyBattleMusic(battle) : null;
+}
 
 export function createHpBarMarkup(currentHp: number, maxHp: number): string {
   const ratio = maxHp > 0 ? Math.max(0, Math.min(1, currentHp / maxHp)) : 0;
@@ -285,7 +293,7 @@ function throwWildBall(host: BattleUiHost): void {
   const consumed = consumePokeball(host.getBag());
   if (!consumed.ok) return;
   host.setBag(consumed.bag);
-  const next = throwPokeball(battle);
+  const next = throwPokeball(battle, Math.random, countCaughtSpecies(host.getParty()));
   host.scene.playPokeballEffect(next.status === 'caught');
   host.setBattle(next);
   syncPartyFromBattle(host);

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { createPokemonInstance, startWildBattle } from '../core/battle';
+import { createPokemonInstance, startTrainerBattle, startWildBattle } from '../core/battle';
 import { SPECIES } from '../data/pokemon/species';
-import { createBattleCombatantMarkup, createHpBarMarkup, syncPartyFromBattle } from './battleUi';
+import { countCaughtSpecies, createBattleCombatantMarkup, createHpBarMarkup, resolveBattleMusicContext, syncPartyFromBattle } from './battleUi';
 
 describe('battle HP bar markup', () => {
   it('clamps HP ratio and rounds to a percentage', () => {
@@ -49,5 +49,23 @@ describe('battle HP bar markup', () => {
     expect(party[0]?.level).toBe(6);
     expect(activeIndex).toBe(0);
     expect(jingles).toEqual(['me_xy_lvup']);
+  });
+
+  it('counts unique Pokédex species in the party', () => {
+    const repeated = createPokemonInstance(SPECIES.torchic, 5);
+    const party = [repeated, { ...repeated, level: 6 }, createPokemonInstance(SPECIES.mudkip, 5)];
+
+    expect(countCaughtSpecies(party)).toBe(2);
+    expect(countCaughtSpecies([])).toBe(0);
+  });
+
+  it('resolves trainer music context automatically when a trainer battle starts', () => {
+    const battle = startTrainerBattle(
+      createPokemonInstance(SPECIES.torchic, 5),
+      createPokemonInstance(SPECIES.poochyena, 3),
+      'Team Aqua Grunt'
+    );
+
+    expect(resolveBattleMusicContext(battle)).toBe('aqua_magma');
   });
 });

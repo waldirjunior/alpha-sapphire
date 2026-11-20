@@ -74,6 +74,31 @@ function withScenes(base: ReturnType<typeof image>, rows: readonly number[][]) {
 }
 
 describe('ciclo de vida do host de zonas', () => {
+  it('reproduz SEPlay reconhecido como cue e não o envia ao host silencioso', async () => {
+    const f = fixture([['SEPlay', [393216]], ['FlagSet', [702]]]);
+    const playSfx = vi.fn();
+    const events = new ZoneEvents({ ...f.ports, playSfx }, async () => f.assets);
+
+    await events.enter();
+    await events.interact(f.npc());
+
+    expect(playSfx).toHaveBeenCalledWith('dialogue-confirm');
+    expect(f.ports.silentAudio).not.toHaveBeenCalled();
+    expect(f.worlds.at(-1)?.flags[702]).toBe(true);
+  });
+
+  it('mantém o diagnóstico silencioso para IDs SEPlay sem mapeamento', async () => {
+    const f = fixture([['SEPlay', [123456]]]);
+    const playSfx = vi.fn();
+    const events = new ZoneEvents({ ...f.ports, playSfx }, async () => f.assets);
+
+    await events.enter();
+    await events.interact(f.npc());
+
+    expect(playSfx).not.toHaveBeenCalled();
+    expect(f.ports.silentAudio).toHaveBeenCalledWith(123456);
+  });
+
   it('liga seleção AMX do inicial ao time e aguarda a primeira batalha antes de retomar o script', async () => {
     const f = fixture([['_FieldClose', [1, 1]], ['_CallPoke3Select', [0]], ['WorkGet', [16432]],
       ['PokePartyAdd', [258, 1]], ['_CallWildBattleWithoutField', [-1, 0, 1, 0]], ['FlagSet', [700]]]);

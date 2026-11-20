@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { classifyBattleMusic, leveledUpDuring, resolveBattleMusic, resolveBattleSfx, resolveCurrentMusic } from './battleAudio';
+import { classifyBattleMusic, leveledUpDuring, resolveBattleMusic, resolveBattleSfx, resolveCurrentMusic, resolveZoneSfx } from './battleAudio';
 
 describe('battle music adapter (P-008)', () => {
   it('classifies the eight supported battle contexts', () => {
@@ -52,6 +52,14 @@ describe('battle music adapter (P-008)', () => {
     expect(resolveBattleSfx({ type: 'faint', side: 'enemy' })).toBe('faint');
     expect(resolveBattleSfx({ type: 'pokeball', captured: false })).toBe('pokeball-throw');
     expect(resolveBattleSfx({ type: 'pokeball', captured: true })).toBe('pokeball-capture');
+  });
+
+  it('maps the observed early-game SEPlay IDs to procedural cues', () => {
+    expect(resolveZoneSfx(0x060000)).toBe('dialogue-confirm');
+    expect(resolveZoneSfx(0x060061)).toBe('menu-select');
+    expect(resolveZoneSfx(0x0a00dd)).toBe('zone-warp');
+    expect(resolveZoneSfx(0x0a0240)).toBe('battle-hit');
+    expect(resolveZoneSfx(123456)).toBeNull();
   });
 
 });

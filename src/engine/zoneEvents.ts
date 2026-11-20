@@ -9,7 +9,7 @@ import { classifyEventRequest, npcActorId, projectEventActors } from './eventHos
 import { EventMessageBanks } from './eventMessages';
 import type { EventWarp } from './eventWarp';
 import type { EventActorContext } from './eventTurns';
-import type { SfxCue } from '../core/battleAudio';
+import { resolveZoneSfx, type SfxCue } from '../core/battleAudio';
 
 interface TextSource { zone: number; lines: string[] }
 const texts = import.meta.glob<TextSource>('../data/texts/zones/*.json', { import: 'default' });
@@ -248,6 +248,7 @@ export class ZoneEvents {
     const generation = this.generation;
     const effect = state.awaiting?.kind === 'native' ? state.awaiting.effect : undefined;
     if (effect?.name === 'MdlAdd') return this.addActor(state, effect.args[0]);
+    if (effect?.name === 'SEPlay') return this.playSoundEffect(effect.args[0] ?? -1);
     if (effect?.name === '_CallPoke3Select' && this.ports.chooseStarter) {
       return this.chooseStarter(state, generation);
     }
@@ -281,6 +282,13 @@ export class ZoneEvents {
     }
     if (request.kind === 'silent-audio') this.ports.silentAudio(request.soundId);
     return { kind: 'native-result', value: request.kind === 'complete' ? request.value : 0 };
+  }
+
+  private playSoundEffect(soundId: number): AmxInput {
+    const cue = resolveZoneSfx(soundId);
+    if (cue && this.ports.playSfx) this.ports.playSfx(cue);
+    else this.ports.silentAudio(soundId);
+    return { kind: 'native-result', value: 0 };
   }
 
   private async chooseStarter(state: AmxState, generation: number): Promise<AmxInput | null> {

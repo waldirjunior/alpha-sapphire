@@ -12,12 +12,12 @@ import { SPECIES } from './data/pokemon/species';
 import { SceneManager } from './engine/SceneManager';
 import { BgmPlayer } from './engine/audioPlayer';
 import { bgmUrl, resolveMapBgm, type ZoneAudioEntry } from './core/zoneAudio';
-import { resolveCurrentMusic, type SfxCue } from './core/battleAudio';
+import { resolveCurrentMusic, type BattleMusicKind, type SfxCue } from './core/battleAudio';
 import { MAP_ZONE_IDS } from './data/audio/mapZones';
 import { createGameEvents } from './engine/gameEvents';
 import { loadZoneEncounters } from './engine/zoneEncounterLoader';
 import { bindGameInput } from './game/input';
-import { renderBattle as renderBattleUi, syncPartyFromBattle as syncPartyUi } from './game/battleUi';
+import { renderBattle as renderBattleUi, resolveBattleMusicContext, syncPartyFromBattle as syncPartyUi } from './game/battleUi';
 import {
   bindMenuEvents,
   renderDsPanel as renderMenuPanel,
@@ -89,6 +89,7 @@ let bag = saved?.bag ?? createInitialBag();
 let activePartyIndex = 0;
 let caughtCount = saved?.caughtCount ?? 0;
 let activeBattle: BattleState | null = null;
+let activeBattleMusicContext: BattleMusicKind | null = null;
 let battleAnimating = false;
 let activeTrainerId: string | null = null;
 let openDsTab: MenuTab | null = null;
@@ -108,9 +109,15 @@ function zoneTrackFor(mapId: string): string | null {
   return resolveMapBgm(mapId, mapZones, zoneAudio);
 }
 
+function setActiveBattle(battle: BattleState | null): void {
+  activeBattle = battle;
+  activeBattleMusicContext = resolveBattleMusicContext(battle);
+}
+
 /** Batalha aberta (tema/fanfarra) tem prioridade sobre a BGM da zona; `play` ignora a mesma faixa. */
 function syncMusic(): void {
-  const track = resolveCurrentMusic(activeBattle, zoneTrackFor(state.player.mapId));
+  const battle = activeBattle ? { ...activeBattle, context: activeBattleMusicContext ?? undefined } : null;
+  const track = resolveCurrentMusic(battle, zoneTrackFor(state.player.mapId));
   document.body.dataset.bgm = track ?? '';
   if (track) void bgmPlayer.play(bgmUrl(import.meta.env.BASE_URL, track));
   else bgmPlayer.stop();
@@ -173,7 +180,7 @@ function startEventBattle(args: readonly number[], amxParty: readonly AmxPokemon
   return new Promise(resolve => {
     resolveEventBattle = resolve;
     const enemy = createWildBattlePokemon(SPECIES.poochyena, 3);
-    activeBattle = startWildBattle(party, enemy);
+    setActiveBattle(startWildBattle(party, enemy));
     syncPartyFromBattle();
     renderBattle();
   });
@@ -266,7 +273,7 @@ const battleHost = {
   promptActions: battlePromptActions,
   scene: sceneManager,
   getBattle: () => activeBattle,
-  setBattle: (battle: BattleState | null) => { activeBattle = battle; },
+  setBattle: setActiveBattle,
   isAnimating: () => battleAnimating,
   setAnimating: (value: boolean) => { battleAnimating = value; },
   getParty: () => party,
@@ -376,7 +383,7 @@ const inputHost = {
   getState: () => state,
   setState: (nextState: typeof state) => { state = nextState; },
   getBattle: () => activeBattle,
-  setBattle: (battle: BattleState) => { activeBattle = battle; },
+  setBattle: (battle: BattleState) => { setActiveBattle(battle); },
   getIntroStep: () => introStep,
   getMoving: () => moving,
   setMoving: (value: boolean) => { moving = value; },

@@ -7,6 +7,14 @@ export type SfxCue = 'dialogue-confirm' | 'menu-open' | 'menu-select' | 'wall-bu
   'heal-chime' | 'battle-hit' | 'pokeball-throw' | 'pokeball-capture' | 'faint';
 export type BattleSfxEvent = BattleEvent | { type: 'pokeball'; captured: boolean };
 
+// IDs from the opening zone scripts use procedural aliases until native BCSAR effects are mapped.
+const ZONE_SFX_CUES: Readonly<Record<number, SfxCue>> = {
+  0x060000: 'dialogue-confirm',
+  0x060061: 'menu-select',
+  0x0a00dd: 'zone-warp',
+  0x0a0240: 'battle-hit',
+};
+
 export type BattleMusicKind = 'wild' | 'trainer' | 'rival' | 'gym_leader' | 'aqua_magma' | 'elite_four' | 'champion' | 'legendary';
 
 export interface BattleMusicSource {
@@ -88,4 +96,8 @@ export function resolveBattleSfx(event: BattleSfxEvent): SfxCue | null {
   if (event.type === 'damage') return 'battle-hit';
   if (event.type === 'faint') return 'faint';
   return null;
+}
+
+export function resolveZoneSfx(soundId: number): SfxCue | null {
+  return ZONE_SFX_CUES[soundId] ?? null;
 }
