@@ -158,7 +158,7 @@ describe('battleArena', () => {
     expect(arena.biome).toBe('grass');
     expect(arena.group.children).toContain(arena.effects.group);
     expect(arena.group.children.some((c) => c instanceof THREE.DirectionalLight)).toBe(true);
-    expect(arena.group.children.some((c) => c instanceof THREE.Mesh && c.name === 'battle-sky-dome')).toBe(true);
+    expect(arena.group.getObjectByName('battle-sky-dome')).toBeInstanceOf(THREE.Mesh);
   });
 
   it('posiciona e orienta os slots de batalha para jogador e adversário', () => {
@@ -183,9 +183,9 @@ describe('battleArena', () => {
     const cave = createBattleArena('cave');
     const indoor = createBattleArena('indoor');
 
-    expect(water.group.children.some((child) => child.name === 'battle-water-ripple')).toBe(true);
-    expect(cave.group.children.some((child) => child.name === 'battle-rock-spire')).toBe(true);
-    expect(indoor.group.children.some((child) => child.name === 'battle-gym-line')).toBe(true);
+    expect(water.group.getObjectByName('battle-water-ripple')).toBeInstanceOf(THREE.Mesh);
+    expect(cave.group.getObjectByName('battle-rock-spire')).toBeInstanceOf(THREE.Mesh);
+    expect(indoor.group.getObjectByName('battle-gym-line')).toBeInstanceOf(THREE.Mesh);
     const grassHemisphere = grass.group.children.find((child) => child instanceof THREE.HemisphereLight);
     const waterHemisphere = water.group.children.find((child) => child instanceof THREE.HemisphereLight);
     const caveSun = cave.group.children.find((child) => child instanceof THREE.DirectionalLight);
@@ -196,7 +196,7 @@ describe('battleArena', () => {
     expect(caveSun?.intensity).toBeLessThan(1);
     expect(water.group.getObjectByName('battle-platform-base')?.type).toBe('Mesh');
     expect(indoor.group.getObjectByName('battle-platform-top')?.type).toBe('Mesh');
-    expect(indoor.group.children.some((child) => child.name === 'battle-sky-dome')).toBe(true);
+    expect(indoor.group.getObjectByName('battle-sky-dome')).toBeInstanceOf(THREE.Mesh);
   });
 
   it('move a câmera para o ataque e retorna ao enquadramento de espera', () => {

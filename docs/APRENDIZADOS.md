@@ -1221,4 +1221,12 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   aparente no script. Um callback de batalha/badge também exige estado de saída
   observado, não apenas a sequência posterior de nativas no AMX.
 
+## A-120 BCHs dos campos de batalha ORAS ficam em `a/1/3/6`
+
+- **Data:** 2026-11-20; P-014, primeira conversão de arena nativa.
+- **Contexto:** substituir fundos procedurais por modelos de batalha exportados com SpicaExport.
+- **Erro potencial:** procurar apenas nos GRs de mapas (`a/0/3/9`) ou converter slots numerados sem confirmar o conteúdo produz ambientes de mapa ou modelos incorretos.
+- **Evidência:** `RomFS/a/1/3/6` é GARC; slots 11 e 12 começam com `BCH\0` e contêm as tags `btl_F_kusa` e `btl_F_mizu`. SpicaExport lê um modelo/textura no primeiro e um modelo/duas texturas no segundo.
+- **Regra:** use `scripts/extract_battle_arenas.py`, valide magic BCH e tag esperada antes de exportar slot 11/12, e mantenha GLB/PNG em `public/assets/battle-arenas/` ignorado pelo Git.
+
 

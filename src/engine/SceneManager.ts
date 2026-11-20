@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BattleState } from '../core/battle';
 import type { PokemonType } from '../data/pokemon/species';
 import { createBattleArena, createBattleSlots, playBattlePokeball, replaceBattleArena, updateBattleCamera, type BattleArena } from './battleArena';
+import { loadBattleArenaModel } from './battleArenaAssets';
 import type { GameState, MapDefinition } from '../core/types';
 import { loadZoneTerrain } from './zoneTerrain';
 import { buildTallGrassGroup } from './tallGrass';
@@ -338,8 +339,8 @@ export class SceneManager {
       this.battleArena.cameraMotion.cancel();
       return;
     }
-
     this.battleArena = replaceBattleArena(this.battleGroup, this.battleArena, this.currentMapName, this.currentMapId);
+    loadBattleArenaModel(this.battleArena, this.gltfLoader, () => this.battleArena);
     updateBattleCamera(this.camera, this.clock.elapsedTime, this.battleArena.cameraMotion);
 
     const key = `${battle.playerActive}:${battle.enemyActive}:${battle.player.species.id}:${battle.enemy.species.id}`;
@@ -360,7 +361,6 @@ export class SceneManager {
   public playBattleEvents(events: readonly BattleEvent[], enemyMoveType: PokemonType = 'normal'): Promise<void> {
     return this.battleEventPresenter.play(events, enemyMoveType);
   }
-
   private buildBattleArena(): void {
     this.battleArena = createBattleArena();
     this.battleGroup.add(this.battleArena.group);
