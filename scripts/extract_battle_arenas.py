@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import shutil
+import struct
 import subprocess
 import sys
 import tempfile
@@ -31,11 +33,15 @@ SPICA_EXPORT = _resolve_tool(
 class BattleArenaSource:
     slot: int
     tag: str
+    container_magic: bytes = b"BCH\x00"
+    package_entry: int | None = None
 
 
 BATTLE_ARENA_SOURCES = {
     "grass": BattleArenaSource(slot=11, tag="btl_F_kusa"),
     "water": BattleArenaSource(slot=12, tag="btl_F_mizu"),
+    "cave": BattleArenaSource(slot=44, tag="btl_G_c_a1", container_magic=b"BG", package_entry=0),
+    "gym": BattleArenaSource(slot=78, tag="btl_G_gym1", container_magic=b"BG", package_entry=0),
 }
 
 
@@ -45,15 +51,45 @@ def load_battle_arena_sources(unpacked_dir: Path) -> dict[str, Path]:
         path = unpacked_dir / f"{source.slot:04d}.bin"
         if not path.is_file():
             raise FileNotFoundError(f"Campo ORAS {source.tag} não encontrado no slot {source.slot:04d} de a/1/3/6")
-        validate_battle_arena_model(path.read_bytes(), source, path)
-        sources[biome] = path
+        sources[biome] = load_battle_arena_model(path, biome, source)
     return sources
+
+
+def load_battle_arena_model(path: Path, biome: str, source: BattleArenaSource) -> Path:
+    blob = path.read_bytes()
+    if source.container_magic == b"BG":
+        return extract_bg_model(blob, path, biome, source)
+    validate_battle_arena_model(blob, source, path)
+    return path
+
+
+def extract_bg_model(blob: bytes, path: Path, biome: str, source: BattleArenaSource) -> Path:
+    if blob[:2] != source.container_magic or len(blob) < 4 or source.package_entry is None:
+        raise ValueError(f"{path}: esperado pacote BG de a/1/3/6 para {source.tag}")
+
+    count = struct.unpack_from("<H", blob, 2)[0]
+    table_end = 4 + count * 8
+    if table_end > len(blob):
+        raise ValueError(f"{path}: tabela BG truncada para {source.tag}; esperado até {table_end} bytes, recebido {len(blob)}")
+    if source.package_entry >= count:
+        raise ValueError(f"{path}: entrada BG {source.package_entry} ausente para {source.tag}; pacote tem {count}")
+
+    start, end = struct.unpack_from("<II", blob, 4 + source.package_entry * 8)
+    if start < table_end or end < start or end > len(blob):
+        raise ValueError(f"{path}: offset BG inválido na entrada {source.package_entry} para {source.tag}")
+
+    model = blob[start:end]
+    validate_battle_arena_model(model, source, path)
+    output = path.parent / f"{biome}-{source.slot:04d}-arena.bch"
+    output.write_bytes(model)
+    return output
 
 
 def validate_battle_arena_model(blob: bytes, source: BattleArenaSource, path: Path) -> None:
     if blob[:4] != b"BCH\x00":
         raise ValueError(f"{path}: esperado modelo BCH no slot {source.slot:04d} de a/1/3/6")
-    if source.tag.encode("ascii") not in blob:
+    tag = re.escape(source.tag.encode("ascii"))
+    if re.search(rb"(?<![A-Za-z0-9_])" + tag + rb"(?![A-Za-z0-9_])", blob) is None:
         raise ValueError(f"{path}: tag {source.tag} ausente no slot {source.slot:04d} de a/1/3/6")
 
 
