@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createPokemonInstance } from './battle';
 import { createInitialState } from './gameState';
+import { createPokedex } from './pokedex';
 import { SPECIES } from '../data/pokemon/species';
 import { deserializeSave, serializeSave } from './save';
 
@@ -16,7 +17,7 @@ describe('save serialization', () => {
     const state = createInitialState('route_101');
     state.player.faceExpression = faceExpression;
     const party = [createPokemonInstance(SPECIES.torchic, 5)];
-    expect(deserializeSave(serializeSave({ version: 1, state, party, caughtCount: 0 }))?.state.player.faceExpression)
+    expect(deserializeSave(serializeSave({ version: 1, state, party, caughtCount: 0, pokedex: createPokedex(party) }))?.state.player.faceExpression)
       .toBe(faceExpression);
   });
 
@@ -27,20 +28,42 @@ describe('save serialization', () => {
       createPokemonInstance(SPECIES.poochyena, 2),
     ];
 
-    const raw = serializeSave({ version: 1, state, party, caughtCount: 1 });
+    const pokedex = { seenSpecies: ['torchic', 'poochyena'], caughtSpecies: ['torchic'] };
+    const raw = serializeSave({ version: 1, state, party, caughtCount: 1, pokedex });
     const loaded = deserializeSave(raw);
 
     expect(loaded).not.toBeNull();
     expect(loaded?.state.player.mapId).toBe('route_101');
     expect(loaded?.party.map((p) => p.species.id)).toEqual(['torchic', 'poochyena']);
     expect(loaded?.caughtCount).toBe(1);
+    expect(loaded?.pokedex).toEqual(pokedex);
   });
+
+  it('backfills a Pokédex from the party when loading a legacy save', () => {
+    const state = createInitialState('route_101');
+    const party = [createPokemonInstance(SPECIES.torchic, 5)];
+    const legacy = { version: 1, state, party, caughtCount: 3 };
+
+    expect(deserializeSave(JSON.stringify(legacy))?.pokedex).toEqual({
+      seenSpecies: ['torchic'],
+      caughtSpecies: ['torchic'],
+    });
+  });
+
+  it.each([{ seenSpecies: ['torchic'], caughtSpecies: 'torchic' }, { seenSpecies: [1], caughtSpecies: [] }])(
+    'rejects malformed Pokédex state %j',
+    pokedex => {
+      const state = createInitialState('route_101');
+      const party = [createPokemonInstance(SPECIES.torchic, 5)];
+      expect(deserializeSave(JSON.stringify({ version: 1, state, party, caughtCount: 0, pokedex }))).toBeNull();
+    },
+  );
 
   it('persists the selected floor height and rejects a malformed height reference', () => {
     const state = createInitialState('route_101');
     state.player.groundY = 7.5;
     const party = [createPokemonInstance(SPECIES.torchic, 5)];
-    expect(deserializeSave(serializeSave({ version: 1, state, party, caughtCount: 0 }))?.state.player.groundY).toBe(7.5);
+    expect(deserializeSave(serializeSave({ version: 1, state, party, caughtCount: 0, pokedex: createPokedex(party) }))?.state.player.groundY).toBe(7.5);
     const invalid = { ...state, player: { ...state.player, groundY: '7.5' } };
     expect(deserializeSave(JSON.stringify({ version: 1, state: invalid, party, caughtCount: 0 }))).toBeNull();
   });
@@ -48,7 +71,7 @@ describe('save serialization', () => {
   it('restores numeric ROM flags and unsigned-16 works independently of manual story flags', () => {
     const state = { ...createInitialState('zone_0006'), romEvents: { flags: { 123: true }, vars: { 16384: 3 } } };
     const party = [createPokemonInstance(SPECIES.torchic, 5)];
-    const loaded = deserializeSave(serializeSave({ version: 1, state, party, caughtCount: 0 }));
+    const loaded = deserializeSave(serializeSave({ version: 1, state, party, caughtCount: 0, pokedex: createPokedex(party) }));
     expect(loaded?.state.romEvents).toEqual({ flags: { 123: true }, vars: { 16384: 3 } });
     expect(loaded?.state.storyFlags.starter_chosen).toBe(false);
   });

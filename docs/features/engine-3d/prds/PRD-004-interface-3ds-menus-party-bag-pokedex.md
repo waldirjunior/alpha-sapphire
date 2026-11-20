@@ -62,3 +62,23 @@ incluindo os cenários visuais.
 
 O PRD continua em andamento: falta comparar o mapa e a interface com o Azahar
 antes de declarar paridade visual.
+
+## 6. Pokédex persistente — 2026-11-20
+
+`src/core/pokedex.ts` guarda em estado imutável os IDs de espécies vistas e
+capturadas. `SaveData` grava as duas listas; saves anteriores sem o campo
+Pokédex são carregados com as espécies do time inicial como vistas e
+capturadas. O host registra o inimigo ativo ao iniciar/atualizar uma batalha,
+marca capturas e registra como capturada toda espécie que passa a integrar o
+time, incluindo evoluções.
+
+A aba Pokédex apresenta contadores reais de Vistos/Capturados e status por
+espécie a partir do catálogo da ROM. `pokedex.test.ts`, `save.test.ts` e
+`menus.test.ts` cobrem estado, migração e apresentação; `battleUi.test.ts`
+cobre a contagem persistida usada nas capturas críticas.
+
+Verificação: `npm run verify` passou com 594 testes Vitest e 241 testes Python
+(1 skip); `ALPHA_E2E_PORT=5500 npx playwright test e2e/smoke.spec.ts` passou
+com 7/7 e `ALPHA_E2E_PORT=5500 npm run test:e2e -- --workers=1` passou com
+39/39. As capturas da galeria foram inspecionadas sem regravar baselines.
+Continua pendente a comparação visual com o Azahar.

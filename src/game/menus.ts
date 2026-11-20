@@ -1,15 +1,17 @@
 import type { BagState } from '../core/bag';
 import { usePotion } from '../core/bag';
 import type { BattleState, PokemonInstance } from '../core/battle';
+import type { PokedexState } from '../core/pokedex';
 import {
   HOENN_LOCATIONS,
   HOENN_MAP_CONNECTIONS,
   HOENN_MAP_VIEWBOX,
   resolveHoennLocation,
 } from '../core/hoennMap';
-import { SPECIES } from '../data/pokemon/species';
 import { createHpBarMarkup } from './battleUi';
 import { bindAudioControls, type AudioControlsHost } from './audioControls';
+import { renderPokedexTab } from './pokedexMenu';
+export { pokedexCounts, pokedexEntries, pokedexSpeciesStatus } from './pokedexMenu';
 
 export type MenuTab = 'party' | 'bag' | 'pokedex' | 'time' | 'map';
 export type BagPocket = 'items' | 'balls' | 'key';
@@ -74,6 +76,7 @@ export interface MenuHost {
   setOpenTab(tab: MenuTab | null): void;
   getActiveBattle(): BattleState | null;
   getParty(): PokemonInstance[];
+  getPokedex(): PokedexState;
   getBag(): BagState;
   setBag(bag: BagState): void;
   setParty(party: PokemonInstance[]): void;
@@ -218,7 +221,7 @@ export function renderDsPanel(host: MenuHost): void {
     return;
   }
   panel.classList.remove('hoenn-map-open');
-  renderPokedexTab(host.getParty(), panel);
+  renderPokedexTab(host.getPokedex(), panel);
 }
 
 function renderMenuTabButton(button: HTMLButtonElement, openTab: MenuTab | null): void {
@@ -477,18 +480,4 @@ function renderBagTab(host: MenuHost, panel: HTMLElement): void {
     row.innerHTML = `<div><strong>${item.label}</strong><div style="color:#94a3b8">${item.desc}</div></div><span>x${item.count}</span>`;
     panel.appendChild(row);
   });
-}
-
-function renderPokedexTab(party: PokemonInstance[], panel: HTMLElement): void {
-  const grid = document.createElement('div');
-  grid.className = 'oras-dex-grid';
-  const ownedIds = new Set(party.map((pokemon) => pokemon.species.id));
-  for (const species of Object.values(SPECIES)) {
-    const hasIt = ownedIds.has(species.id);
-    const cell = document.createElement('div');
-    cell.className = `ds-item${hasIt ? ' caught' : ''}`;
-    cell.innerHTML = `<div><strong>#${species.dexNumber} ${species.name}</strong><div style="color:#94a3b8">${species.types.join('/')}</div></div><span>${hasIt ? 'Registrado' : '---'}</span>`;
-    grid.appendChild(cell);
-  }
-  panel.appendChild(grid);
 }

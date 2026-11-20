@@ -14,6 +14,7 @@ import {
 } from '../core/battle';
 import { createInitialState } from '../core/gameState';
 import type { GameState, MapDefinition } from '../core/types';
+import { recordCaughtSpecies, recordEvolution, type PokedexState } from '../core/pokedex';
 import { classifyBattleMusic, JINGLES, leveledUpDuring, type BattleMusicKind, type SfxCue } from '../core/battleAudio';
 import { SPECIES } from '../data/pokemon/species';
 import type { BattleEvent } from '../core/battleEvents';
@@ -42,6 +43,8 @@ export interface BattleUiHost {
   setAnimating(value: boolean): void;
   getParty(): PokemonInstance[];
   setParty(party: PokemonInstance[]): void;
+  getPokedex(): PokedexState;
+  setPokedex(pokedex: PokedexState): void;
   getActivePartyIndex(): number;
   setActivePartyIndex(index: number): void;
   getActiveTrainerId(): string | null;
@@ -65,8 +68,8 @@ export interface BattleUiHost {
 export type BattlePartyHost = Pick<BattleUiHost,
   'getBattle' | 'getParty' | 'setParty' | 'setActivePartyIndex' | 'playJingle'>;
 
-export function countCaughtSpecies(party: readonly PokemonInstance[]): number {
-  return new Set(party.map((member) => member.species.dexNumber)).size;
+export function countCaughtSpecies(pokedex: PokedexState): number {
+  return pokedex.caughtSpecies.length;
 }
 
 export function resolveBattleMusicContext(battle: BattleState | null): BattleMusicKind | null {
@@ -293,12 +296,13 @@ function throwWildBall(host: BattleUiHost): void {
   const consumed = consumePokeball(host.getBag());
   if (!consumed.ok) return;
   host.setBag(consumed.bag);
-  const next = throwPokeball(battle, Math.random, countCaughtSpecies(host.getParty()));
+  const next = throwPokeball(battle, Math.random, countCaughtSpecies(host.getPokedex()));
   host.scene.playPokeballEffect(next.status === 'caught');
   host.setBattle(next);
   syncPartyFromBattle(host);
   if (next.status === 'caught') {
     host.incrementCaughtCount();
+    host.setPokedex(recordCaughtSpecies(host.getPokedex(), next.enemy.species.id));
     const party = host.getParty();
     if (party.length < 6) host.setParty([...party, next.enemy]);
   }
@@ -322,8 +326,9 @@ async function closeBattle(host: BattleUiHost): Promise<void> {
     });
   }
   if (battle && battle.status !== 'defeat') {
+    const previousParty = host.getParty();
     const evolved = await evolveAfterBattleWithPrompt(
-      host.getParty(),
+      previousParty,
       battle.leveledUp,
       timeOfDayFromHour(new Date().getHours()),
       async (pokemon, target) => showBattlePrompt(
@@ -336,6 +341,7 @@ async function closeBattle(host: BattleUiHost): Promise<void> {
         ]
       )
     );
+    recordPartyEvolutions(host, previousParty, evolved);
     host.setParty(evolved);
   }
   hideBattlePrompt(host);
@@ -347,6 +353,17 @@ async function closeBattle(host: BattleUiHost): Promise<void> {
   host.renderIntro();
   host.syncUi();
   host.onClose?.(battle);
+}
+
+function recordPartyEvolutions(
+  host: BattleUiHost,
+  previousParty: readonly PokemonInstance[],
+  evolvedParty: readonly PokemonInstance[],
+): void {
+  evolvedParty.forEach((pokemon, index) => {
+    if (previousParty[index]?.species.id === pokemon.species.id) return;
+    host.setPokedex(recordEvolution(host.getPokedex(), pokemon.species.id));
+  });
 }
 
 function resetAfterDefeat(host: BattleUiHost): void {

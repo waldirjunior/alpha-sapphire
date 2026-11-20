@@ -155,6 +155,10 @@ export function getSpeciesByPersonalIndex(personalIndex: number): DexSpecies {
   return species;
 }
 
+export function listDexSpecies(): DexSpecies[] {
+  return [...speciesIndexes().byPersonal.values()].sort((a, b) => a.dexNumber - b.dexNumber || a.form - b.form);
+}
+
 export function getSpeciesByDex(dexNumber: number, form = 0): DexSpecies {
   const species = speciesIndexes().byDexForm.get(`${dexNumber}:${form}`);
   if (!species) {

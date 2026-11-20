@@ -6,6 +6,7 @@ import {
 } from './core/battle';
 import type { AmxPokemon } from './core/amxTypes';
 import { createInitialState } from './core/gameState';
+import { createPokedex, recordCaughtSpecies, recordSeenSpecies } from './core/pokedex';
 import { zoneMaps, startingMapId, saveStorageKey } from './data/maps_v2/runtime';
 import type { WildEncounterEntry } from './data/pokemon/route101';
 import { SPECIES } from './data/pokemon/species';
@@ -85,6 +86,7 @@ const sceneManager = new SceneManager(app, cue => bgmPlayer.playSfx(cue));
 let state = saved?.state ?? createInitialState(START_MAP_ID, MAPS);
 let starterId: 'treecko' | 'torchic' | 'mudkip' = 'torchic';
 let party = saved?.party ?? [createPokemonInstance(SPECIES[starterId], 5)];
+let pokedex = saved?.pokedex ?? createPokedex(party);
 let bag = saved?.bag ?? createInitialBag();
 let activePartyIndex = 0;
 let caughtCount = saved?.caughtCount ?? 0;
@@ -110,6 +112,7 @@ function zoneTrackFor(mapId: string): string | null {
 }
 
 function setActiveBattle(battle: BattleState | null): void {
+  if (battle) pokedex = recordSeenSpecies(pokedex, battle.enemy.species.id);
   activeBattle = battle;
   activeBattleMusicContext = resolveBattleMusicContext(battle);
 }
@@ -134,7 +137,12 @@ void import('./data/zone_audio.json').then((module) => {
 });
 
 function persistSave(): void {
-  storeSavedGame(window.localStorage, SAVE_STORAGE_KEY, { version: 1, state, party, bag, caughtCount });
+  storeSavedGame(window.localStorage, SAVE_STORAGE_KEY, { version: 1, state, party, bag, caughtCount, pokedex });
+}
+
+function setParty(nextParty: typeof party): void {
+  party = nextParty;
+  for (const pokemon of nextParty) pokedex = recordCaughtSpecies(pokedex, pokemon.species.id);
 }
 
 function setStarterChoiceVisible(visible: boolean): void {
@@ -200,6 +208,7 @@ function startNewGame(): void {
   clearSavedGame(window.localStorage, SAVE_STORAGE_KEY);
   state = createInitialState(START_MAP_ID, MAPS);
   party = [createPokemonInstance(SPECIES[starterId], 5)];
+  pokedex = createPokedex(party);
   bag = createInitialBag();
   caughtCount = 0;
   introStep = 'birch';
@@ -277,7 +286,9 @@ const battleHost = {
   isAnimating: () => battleAnimating,
   setAnimating: (value: boolean) => { battleAnimating = value; },
   getParty: () => party,
-  setParty: (nextParty: typeof party) => { party = nextParty; },
+  setParty,
+  getPokedex: () => pokedex,
+  setPokedex: (nextPokedex: typeof pokedex) => { pokedex = nextPokedex; },
   getActivePartyIndex: () => activePartyIndex,
   setActivePartyIndex: (index: number) => { activePartyIndex = index; },
   getActiveTrainerId: () => activeTrainerId,
@@ -310,9 +321,10 @@ const menuHost = {
   },
   getActiveBattle: () => activeBattle,
   getParty: () => party,
+  getPokedex: () => pokedex,
   getBag: () => bag,
   setBag: (nextBag: typeof bag) => { bag = nextBag; },
-  setParty: (nextParty: typeof party) => { party = nextParty; },
+  setParty,
   getActiveBagPocket: () => activeBagPocket,
   setActiveBagPocket: (pocket: typeof activeBagPocket) => { activeBagPocket = pocket; },
   getPlayerMap: () => {
@@ -388,7 +400,7 @@ const inputHost = {
   getMoving: () => moving,
   setMoving: (value: boolean) => { moving = value; },
   getParty: () => party,
-  setParty: (nextParty: typeof party) => { party = nextParty; },
+  setParty,
   getBag: () => bag,
   setBag: (nextBag: typeof bag) => { bag = nextBag; },
   setActiveTrainerId: (id: string) => { activeTrainerId = id; },

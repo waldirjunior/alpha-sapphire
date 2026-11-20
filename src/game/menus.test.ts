@@ -4,6 +4,9 @@ import {
   formatPlayNavTime,
   menuTabFrom,
   menuTabPresentation,
+  pokedexCounts,
+  pokedexEntries,
+  pokedexSpeciesStatus,
   splitDialogueSpeaker,
   toggleMenuTab,
 } from './menus';
@@ -18,6 +21,7 @@ import {
 } from './audioPreferences';
 import { bindAudioControls, type AudioControlsHost } from './audioControls';
 import type { BagState } from '../core/bag';
+import type { PokedexState } from '../core/pokedex';
 
 class FakeAudioControl implements EventTarget {
   readonly listeners = new Map<string, () => void>();
@@ -92,6 +96,26 @@ describe('game menus', () => {
     expect(toggleMenuTab('party', 'party')).toBeNull();
     expect(toggleMenuTab('party', 'bag')).toBe('bag');
     expect(toggleMenuTab(null, 'pokedex')).toBe('pokedex');
+  });
+
+  it('shows Pokédex totals and individual seen/caught status from persistent state', () => {
+    const pokedex: PokedexState = {
+      seenSpecies: ['torchic', 'poochyena', 'zigzagoon'],
+      caughtSpecies: ['torchic', 'poochyena'],
+    };
+
+    expect(pokedexCounts(pokedex)).toEqual({ seen: 3, caught: 2 });
+    expect(pokedexSpeciesStatus(pokedex, 'torchic')).toBe('Capturado');
+    expect(pokedexSpeciesStatus(pokedex, 'zigzagoon')).toBe('Visto');
+    expect(pokedexSpeciesStatus(pokedex, 'mudkip')).toBe('---');
+  });
+
+  it('lists the ROM species catalog and applies saved status beyond the current party roster', () => {
+    const entries = pokedexEntries({ seenSpecies: ['bulbasaur'], caughtSpecies: [] });
+
+    expect(entries.length).toBeGreaterThan(8);
+    expect(entries.find(({ species }) => species.id === 'bulbasaur')?.status).toBe('Visto');
+    expect(entries.find(({ species }) => species.id === 'torchic')?.status).toBe('---');
   });
 
   it('provides labeled X-menu tiles for the touch screen', () => {

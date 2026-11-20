@@ -1,5 +1,6 @@
 import type { BagState } from './bag';
 import type { PokemonInstance } from './battle';
+import { createPokedex, restorePokedex, type PokedexState } from './pokedex';
 import type { GameState } from './types';
 
 export interface SaveData {
@@ -8,6 +9,7 @@ export interface SaveData {
   party: PokemonInstance[];
   bag?: BagState;
   caughtCount: number;
+  pokedex: PokedexState;
 }
 
 function isObjectRecord(value: unknown): value is Record<string, unknown> {
@@ -81,7 +83,14 @@ function isValidBagState(value: unknown): value is BagState {
   );
 }
 
-export function serializeSave(data: SaveData): string {
+function isValidPokedex(value: unknown): value is PokedexState {
+  return isObjectRecord(value) && Array.isArray(value.seenSpecies) &&
+    value.seenSpecies.every((speciesId) => typeof speciesId === 'string' && speciesId.length > 0) &&
+    Array.isArray(value.caughtSpecies) &&
+    value.caughtSpecies.every((speciesId) => typeof speciesId === 'string' && speciesId.length > 0);
+}
+
+export function serializeSave(data: Omit<SaveData, 'pokedex'> & { pokedex?: PokedexState }): string {
   return JSON.stringify(data);
 }
 
@@ -93,14 +102,19 @@ export function deserializeSave(raw: string): SaveData | null {
     if (!Array.isArray(parsed.party) || parsed.party.length === 0) return null;
     if (!parsed.party.every(isValidPokemonInstance)) return null;
     if (typeof parsed.caughtCount !== 'number') return null;
+    if ('pokedex' in parsed && !isValidPokedex(parsed.pokedex)) return null;
 
     const bag = isValidBagState(parsed.bag) ? parsed.bag : undefined;
+    const pokedex = isValidPokedex(parsed.pokedex)
+      ? restorePokedex(parsed.pokedex.seenSpecies, parsed.pokedex.caughtSpecies)
+      : createPokedex(parsed.party);
     return {
       version: 1,
       state: parsed.state,
       party: parsed.party,
       ...(bag ? { bag } : {}),
       caughtCount: parsed.caughtCount,
+      pokedex,
     };
   } catch {
     return null;

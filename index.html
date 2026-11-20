@@ -256,6 +256,17 @@
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 8px;
       }
+      .oras-dex-summary {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        margin-bottom: 8px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: #102d4e;
+        color: #dbeafe;
+        font-weight: 700;
+      }
       .ds-item {
         display: flex;
         justify-content: space-between;
@@ -268,6 +279,9 @@
       }
       .ds-item.caught {
         border-color: #22c55e;
+      }
+      .ds-item.seen {
+        border-color: #38bdf8;
       }
       .oras-time-card {
         min-height: 66px;

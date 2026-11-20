@@ -129,3 +129,12 @@ determinísticos de Knock Off com/sem item, U-turn, Volt Switch e Sucker Punch e
 `[45, 30, 32, 46, 37]`. `npm run verify` passou com 578 testes Vitest, build
 (aviso de chunks acima de 500 kB) e 240 testes Python (1 skip por ausência de
 `public/assets/maps`); a catraca de cobertura do core passou.
+
+## 8. Captura crítica com Pokédex persistente — 2026-11-20
+
+`battleUi` agora passa a quantidade de espécies em `caughtSpecies` para
+`throwPokeball`. A lista vem do estado persistido, portanto inclui Pokémon
+guardados fora da equipe; capturas são registradas mesmo com a equipe cheia.
+Saves antigos recebem uma lista inicial derivada do time presente. `save.test.ts`
+e `battleUi.test.ts` cobrem a migração e a fonte da contagem; `npm run verify`
+passou com 594 testes Vitest e 241 Python (1 skip), além do build.
