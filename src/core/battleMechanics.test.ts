@@ -384,6 +384,17 @@ describe('critical modifiers', () => {
 });
 
 describe('entry hazards and volatile move effects', () => {
+  it('treats Splash as the ROM-described no-effect move', () => {
+    const user = pokemon('magikarp', 10, 'Splash');
+    const target = pokemon('poochyena', 10, 'Tackle');
+
+    const outcome = executeMove(user, target, move('Splash'), always(0));
+
+    expect(outcome.user).toBe(user);
+    expect(outcome.target).toBe(target);
+    expect(outcome.messages).toEqual(['Magikarp usou Splash!', 'Mas não teve efeito!']);
+  });
+
   it('stacks Spikes to three layers and applies grounded damage', () => {
     let field = createBattleField();
     for (let layer = 0; layer < 4; layer += 1) field = setEntryHazard(field, 'player', 'spikes').field;

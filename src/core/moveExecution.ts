@@ -169,6 +169,7 @@ function swaggerMove(user: PokemonInstance, target: PokemonInstance, move: Battl
 }
 
 function executeQualityThirteen(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, used: string): MoveOutcome {
+  if (move.name === 'Splash') return { user, target, messages: [used, 'Mas não teve efeito!'], flinched: false };
   if (move.name === 'Protect' || move.name === 'Detect') return protectMove(user, target, rng, used);
   if (move.name === 'Baton Pass') return { user, target, messages: [used], flinched: false, switchUser: true, batonPass: true };
   if (move.name === 'Taunt') return tauntMove(user, target, used);

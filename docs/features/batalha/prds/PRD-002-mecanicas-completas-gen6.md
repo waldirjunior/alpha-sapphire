@@ -205,3 +205,18 @@ regra que o converte aos seis IVs do Pokémon. A rotina do host também não tem
 vínculo comprovado entre IDs dos eventos AMX e esses registros. O próximo passo
 é observar um Pokémon adversário em batalha no Azahar via RPC, rastrear a
 conversão no runtime e então integrar o ID confirmado ao `TrainerSpec`.
+
+## 12. Entrega parcial — 2026-11-20 (quality 13: Splash)
+
+Splash (ID 150) agora retorna “Mas não teve efeito!” sem alterar usuário ou
+alvo. A tabela ROM de golpes o classifica com `quality=13`; a descrição em
+`a/0/7/3/0016.bin`, linha 150, diz que o movimento não tem efeito, e a tabela de
+encontros ROM inclui Magikarp em Route 104. `battleMechanics.test.ts` e
+`src/ai/battleParity.test.ts` verificam o estado imutável e a mensagem; os dois
+testes foram executados antes do código e falharam com o fallback P-010.
+
+Continuam sem simulação os demais quality 13. Em encontros do corredor até
+Mauville aparecem, entre outros, Focus Energy, Curse, Rest, Aqua Ring, Block,
+Helping Hand, Mirror Move, Teleport, Spider Web e Bestow; vários exigem estado
+de crítico, turno residual, alvo aliado ou fuga/troca. Próximo passo: confirmar
+cada comportamento via runtime Azahar ou CRO antes de escolher outra regra.
