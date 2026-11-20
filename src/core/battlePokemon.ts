@@ -10,6 +10,7 @@ export interface BattleMove extends DexMove {
 }
 
 export type MajorStatusKind = 'paralysis' | 'sleep' | 'freeze' | 'burn' | 'poison' | 'toxic';
+export type PokemonGender = 'male' | 'female' | 'genderless';
 
 export interface MajorStatus {
   kind: MajorStatusKind;
@@ -27,6 +28,13 @@ export interface BattleVolatileState {
   chargeMoveId?: number | null;
   choiceLockMoveId?: number | null;
   flashFireActive?: boolean;
+  disableMoveId?: number | null;
+  disableTurns?: number;
+  yawnTurns?: number;
+  perishSongTurns?: number;
+  infatuated?: boolean;
+  encoreMoveId?: number | null;
+  encoreTurns?: number;
 }
 
 export function neutralVolatileState(): BattleVolatileState {
@@ -40,6 +48,13 @@ export function neutralVolatileState(): BattleVolatileState {
     chargeMoveId: null,
     choiceLockMoveId: null,
     flashFireActive: false,
+    disableMoveId: null,
+    disableTurns: 0,
+    yawnTurns: 0,
+    perishSongTurns: 0,
+    infatuated: false,
+    encoreMoveId: null,
+    encoreTurns: 0,
   };
 }
 
@@ -70,6 +85,8 @@ export interface PokemonInstance {
   friendship: number;
   /** Valor de personalidade (Wurmple usa (PV >> 16) % 10 para decidir a evolução). */
   personality: number;
+  gender?: PokemonGender;
+  lastMoveId?: number | null;
   heldItem: string | null;
 }
 
@@ -121,6 +138,7 @@ export function createPokemonInstance(
   const nature = options.nature ?? 0;
   const stats = computeStats({ species, level, ivs, evs, nature });
   const totalExp = totalExpForLevel(toGrowthRate(species.growthRate), level);
+  const personality = options.personality ?? 0;
   return {
     species,
     ability: species.abilities[0] ?? '',
@@ -137,15 +155,25 @@ export function createPokemonInstance(
     evs,
     nature,
     friendship: species.baseFriendship,
-    personality: options.personality ?? 0,
+    personality,
+    gender: genderFromPersonality(species.genderRatio, personality),
+    lastMoveId: null,
     heldItem: options.heldItem ?? null,
   };
+}
+
+export function genderFromPersonality(ratio: number | undefined, personality: number): PokemonGender {
+  const threshold = ratio ?? 127;
+  if (threshold === 255) return 'genderless';
+  if (threshold === 0) return 'male';
+  if (threshold === 254) return 'female';
+  return (personality & 0xff) < threshold ? 'female' : 'male';
 }
 
 /** Sai de campo: estágios zeram e o contador do tóxico volta a 1/16 (Gen VI). */
 export function withdrawFromBattle(pokemon: PokemonInstance): PokemonInstance {
   const status = pokemon.status?.kind === 'toxic' ? { kind: 'toxic' as const, counter: 1 } : pokemon.status;
-  return { ...pokemon, stages: NEUTRAL_STAGES, status, volatile: neutralVolatileState() };
+  return { ...pokemon, stages: NEUTRAL_STAGES, status, lastMoveId: null, volatile: neutralVolatileState() };
 }
 
 export function restoreAtPokemonCenter(pokemon: PokemonInstance): PokemonInstance {

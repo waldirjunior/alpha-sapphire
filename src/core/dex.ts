@@ -20,6 +20,7 @@ export interface DexSpecies {
   /** Estágio evolutivo extraído da ROM; 3 representa uma forma final. */
   evolutionStage: number;
   types: readonly ElementalType[];
+  genderRatio?: number;
   baseStats: DexBaseStats;
   abilities: readonly string[];
   growthRate: string;
@@ -96,6 +97,7 @@ function toDexSpecies(raw: RawSpecies): DexSpecies {
     dexNumber: species,
     evolutionStage: raw.evolutionStage ?? 3,
     types: [...new Set(types.map(toElementalType))],
+    genderRatio: raw.genderRatio,
   };
 }
 

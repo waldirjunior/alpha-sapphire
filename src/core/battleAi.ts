@@ -17,9 +17,12 @@ function pickIndex<T>(items: readonly T[], rng: Rng): T | undefined {
 
 function usableMoveIndexes(pokemon: PokemonInstance): number[] {
   const locked = pokemon.volatile.choiceLockMoveId;
+  const encoreLocked = (pokemon.volatile.encoreTurns ?? 0) > 0 ? pokemon.volatile.encoreMoveId : null;
   return pokemon.moves.flatMap((move, idx) => {
     const allowed = !isChoiceItem(pokemon.heldItem) || locked === undefined || locked === null || locked === move.id;
-    return move.currentPp > 0 && allowed ? [idx] : [];
+    const disabled = (pokemon.volatile.disableTurns ?? 0) > 0 && pokemon.volatile.disableMoveId === move.id;
+    const encored = encoreLocked === null || encoreLocked === undefined || encoreLocked === move.id;
+    return move.currentPp > 0 && allowed && !disabled && encored ? [idx] : [];
   });
 }
 

@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { calculateDamage, createPokemonInstance, genSixCatchShakeThreshold, genSixCriticalCaptureOdds, startWildBattle } from '../core/battle';
+import { calculateDamage, createPokemonInstance, executeBattleTurn, genSixCatchShakeThreshold, genSixCriticalCaptureOdds, startWildBattle } from '../core/battle';
 import { applyEntryHazards, createBattleField, setEntryHazard } from '../core/battleField';
 import { orderActions } from '../core/battleTurn';
 import { toBattleMove } from '../core/battlePokemon';
 import { getMoveByName, getSpeciesById } from '../core/dex';
 import { checkCanAct } from '../core/statusConditions';
+import { executeMove } from '../core/moveExecution';
 
 const alwaysMaxDamage = () => 1;
 
@@ -39,6 +40,32 @@ describe('Gen VI battle formula parity vectors', () => {
     ];
 
     expect(values).toEqual([28, 96, 28, 24]);
+  });
+
+  it('matches deterministic Gen VI vectors for Knock Off, pivot attacks, and Sucker Punch', () => {
+    const target = pokemon('wurmple', 30, 'Tackle');
+    const knockOffUser = pokemon('torchic', 30, 'Knock Off');
+    const knockOff = toBattleMove(getMoveByName('Knock Off'));
+    const heldTarget = { ...target, heldItem: 'Leftovers' };
+    const knockOffHeld = executeMove(knockOffUser, heldTarget, knockOff, alwaysMaxDamage);
+    const knockOffEmpty = executeMove(knockOffUser, target, knockOff, alwaysMaxDamage);
+    const uTurnUser = pokemon('torchic', 30, 'U-turn');
+    const voltSwitchUser = pokemon('pikachu', 30, 'Volt Switch');
+    const uTurn = executeMove(uTurnUser, target, toBattleMove(getMoveByName('U-turn')), alwaysMaxDamage);
+    const voltSwitch = executeMove(voltSwitchUser, target, toBattleMove(getMoveByName('Volt Switch')), alwaysMaxDamage);
+    const suckerTurn = executeBattleTurn(startWildBattle(pokemon('torchic', 30, 'Sucker Punch'), target), 0, alwaysMaxDamage);
+    const values = [
+      heldTarget.currentHp - knockOffHeld.target.currentHp,
+      target.currentHp - knockOffEmpty.target.currentHp,
+      target.currentHp - uTurn.target.currentHp,
+      target.currentHp - voltSwitch.target.currentHp,
+      target.currentHp - suckerTurn.enemy.currentHp,
+    ];
+
+    expect(knockOffHeld.target.heldItem).toBeNull();
+    expect(uTurn.switchUser).toBe(true);
+    expect(voltSwitch.switchUser).toBe(true);
+    expect(values).toEqual([45, 30, 32, 46, 37]);
   });
 
   it('matches the Gen VI four-shake catch threshold for a full-health Poochyena', () => {
