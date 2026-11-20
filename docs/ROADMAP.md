@@ -9,7 +9,7 @@ Pegue o primeiro item não bloqueado. Cada item termina quando a verificação i
 | # | Resultado | Verificação | Ref. |
 | --- | --- | --- | --- |
 | 1 | *(Bloqueado por save ORAS avançado)* Permissões de movimento restantes (bike e Surf) fechadas por observação no emulador. | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
-| 3 | Interação/batalha natural da Roxanne e entrega da Stone Badge em `zone_0441` (binding `map/case 2` já resolvido; faltam natives `PokePartyGetParam`/`_CallTrainerBattleCore`/badge). | Regressão AMX + `e2e/campaign.spec.ts` vencendo o 1º ginásio. | PRD-003, P-013, A-114 |
+| 3 | Interação/batalha natural da Roxanne e entrega da Stone Badge em `zone_0441` (binding e ABI CRO registrados; campanha pausa em `FadeRequestOut(0,2,30)`; faltam modo fade, seletores de party, equipe/callback e badge). | Regressão AMX + `e2e/campaign.spec.ts` vencendo o 1º ginásio. | PRD-003, P-013, A-114, A-116 |
 | 4 | Combiners RGB PICA restantes e paridade visual PokéNav/Mapa vs Azahar (expressões dinâmicas de batalha já no runtime via curvas BCH). | `scripts/test_pokemon_glb_materials.py` + `e2e/pokemonBattleModels.spec.ts` + `e2e/visual.spec.ts`. | P-007, P-011, P-012, A-112 |
 | 5 | Taxas reais por slot/surf/pesca nos encontros, IVs por classe de treinador, golpes `quality` 13 restantes e UI de item evolutivo. | `battleMechanics.test.ts` + `src/ai/battleParity.test.ts` + `src/game/`. | PRD-002, P-010 |
 | 6 | Arenas 3D e texturas reais de batalha extraídas da ROM substituindo as variantes procedurais. | Extrator Python + `battleArena.test.ts` + captura E2E revisada. | P-014 |
