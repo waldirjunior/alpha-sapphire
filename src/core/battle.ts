@@ -175,14 +175,19 @@ export function executeBattleTurn(state: BattleState, playerMoveIndex: number, r
   if (!hasUsableMove(state.player)) {
     return resolveTurn(state, { side: 'player', moveIndex: null }, rng);
   }
-  const move = state.player.moves[playerMoveIndex];
+  const encoreMoveId = state.player.volatile.encoreMoveId;
+  const encoreIndex = (state.player.volatile.encoreTurns ?? 0) > 0 && encoreMoveId !== undefined && encoreMoveId !== null
+    ? state.player.moves.findIndex((slot) => slot.id === encoreMoveId && slot.currentPp > 0)
+    : -1;
+  const selectedIndex = encoreIndex >= 0 ? encoreIndex : playerMoveIndex;
+  const move = state.player.moves[selectedIndex];
   if (!move) {
     throw new RangeError(`Golpe ${playerMoveIndex} inexistente para ${state.player.species.name} (tem ${state.player.moves.length}).`);
   }
   if (move.currentPp === 0) {
     return { ...state, log: [...state.log, `Não há PP restante para ${move.name}!`] };
   }
-  return resolveTurn(state, { side: 'player', moveIndex: playerMoveIndex }, rng);
+  return resolveTurn(state, { side: 'player', moveIndex: selectedIndex }, rng);
 }
 
 /** Resolve um golpe pendente de aprendizado: `slot` substituído, ou `null` para desistir. */

@@ -17,6 +17,7 @@ export interface RawSpecies {
   name: string;
   evolutionStage?: number;
   types: readonly string[];
+  genderRatio?: number;
   baseStats: RawBaseStats;
   abilities: readonly string[];
   growthRate: string;

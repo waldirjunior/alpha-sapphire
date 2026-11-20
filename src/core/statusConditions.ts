@@ -86,6 +86,9 @@ export function checkCanAct(pokemon: PokemonInstance, rng: Rng): { pokemon: Poke
   if (status?.kind === 'paralysis' && rng() < FULL_PARALYSIS_CHANCE) {
     return { pokemon, canAct: false, message: `${name} está paralisado e não consegue se mover!` };
   }
+  if (pokemon.volatile.infatuated && rng() < 0.5) {
+    return { pokemon, canAct: false, message: `${name} está apaixonado e não consegue se mover!` };
+  }
   return checkConfusion(pokemon, rng);
 }
 
@@ -112,11 +115,53 @@ function confusionDamage(pokemon: PokemonInstance, rng: Rng): number {
   return Math.max(1, Math.floor(base * random));
 }
 
-export function advanceVolatileTurn(pokemon: PokemonInstance): PokemonInstance {
+export interface VolatileTurnResult {
+  pokemon: PokemonInstance;
+  messages: string[];
+}
+
+export function advanceVolatileTurn(pokemon: PokemonInstance, rng: Rng = Math.random): VolatileTurnResult {
   const volatile = pokemon.volatile ?? neutralVolatileState();
   const tauntTurns = Math.max(0, volatile.tauntTurns - 1);
-  if (tauntTurns === volatile.tauntTurns && !volatile.protecting) return pokemon;
-  return { ...pokemon, volatile: { ...volatile, tauntTurns, protecting: false } };
+  const disableTurns = Math.max(0, (volatile.disableTurns ?? 0) - 1);
+  const encoreTurns = Math.max(0, (volatile.encoreTurns ?? 0) - 1);
+  const yawnTurns = Math.max(0, (volatile.yawnTurns ?? 0) - 1);
+  const perishSongTurns = Math.max(0, (volatile.perishSongTurns ?? 0) - 1);
+  const nextVolatile = {
+    ...volatile,
+    tauntTurns,
+    disableTurns,
+    disableMoveId: disableTurns > 0 ? volatile.disableMoveId ?? null : null,
+    encoreTurns,
+    encoreMoveId: encoreTurns > 0 ? volatile.encoreMoveId ?? null : null,
+    yawnTurns,
+    perishSongTurns,
+    protecting: false,
+  };
+  const messages: string[] = [];
+  const perishExpired = (volatile.perishSongTurns ?? 0) === 1;
+  const currentHp = perishExpired ? 0 : pokemon.currentHp;
+  if ((volatile.perishSongTurns ?? 0) > 0) messages.push(perishMessage(pokemon, perishSongTurns));
+  const status = yawnExpiredStatus(pokemon, yawnTurns, currentHp, rng, messages);
+  return { pokemon: { ...pokemon, currentHp, status, volatile: nextVolatile }, messages };
+}
+
+function perishMessage(pokemon: PokemonInstance, turns: number): string {
+  return `A contagem de Perish Song de ${pokemon.species.name} caiu para ${turns}!`;
+}
+
+function yawnExpiredStatus(
+  pokemon: PokemonInstance,
+  yawnTurns: number,
+  currentHp: number,
+  rng: Rng,
+  messages: string[]
+): MajorStatus | null {
+  const hadYawn = (pokemon.volatile.yawnTurns ?? 0) > 0;
+  if (!hadYawn || yawnTurns > 0 || currentHp === 0 || pokemon.status) return pokemon.status;
+  if (['Insomnia', 'Vital Spirit', 'Sweet Veil'].includes(pokemon.ability)) return pokemon.status;
+  messages.push(`${pokemon.species.name} adormeceu!`);
+  return { kind: 'sleep', counter: rollInRange(2, 4, rng) };
 }
 
 /** Dano residual de fim de turno (Gen VI): queimadura/veneno 1/8, tóxico n/16 crescente. */

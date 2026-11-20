@@ -40,6 +40,11 @@ voláteis, hazards, troca forçada, itens e habilidades ainda não simulados.
   Volt Absorb afetam dano, status ou fim de turno.
 - **RF-14:** A IA de treinador pode trocar para um Pokémon saudável do time quando
   a desvantagem do ativo é clara e o reserva oferece resposta melhor.
+- **RF-15:** Disable, Yawn, Perish Song, Attract e Encore mantêm duração,
+  condições de aplicação e efeito por turno, e são limpos ao trocar.
+- **RF-16:** Knock Off remove item removível e recebe o bônus de dano Gen VI;
+  U-turn/Volt Switch trocam para um reserva saudável após acertar; Sucker Punch
+  só acerta quando o alvo escolheu um golpe que causa dano.
 
 ## 3. Critérios de Aceite
 
@@ -50,6 +55,10 @@ voláteis, hazards, troca forçada, itens e habilidades ainda não simulados.
 - [x] Itens segurados e habilidades adicionais cobertos por testes determinísticos em `src/core/`.
 - [x] IA de treinador escolhe troca vantajosa com vetor determinístico em `src/core/`.
 - [x] Vetores de dano dos novos modificadores registrados em `src/ai/battleParity.test.ts`.
+- [x] Voláteis Disable, Yawn, Perish Song, Attract e Encore cobertos por testes
+  determinísticos em `src/core/`.
+- [x] Knock Off, U-turn, Volt Switch e Sucker Punch cobertos por testes e vetores
+  determinísticos em `src/core/` e `src/ai/battleParity.test.ts`.
 - [ ] Implementar os itens restantes listados em `P-010`; a pendência continua aberta.
 
 ## 4. Entrega parcial — 2026-11-19 (campo e captura)
@@ -104,3 +113,19 @@ Adaptability, Choice Band e Life Orb. A implementação segue a referência púb
 do [simulador Pokémon Showdown para Gen VI](https://github.com/smogon/pokemon-showdown/tree/master/data/mods/gen6).
 `npm run verify`: 555 testes Vitest passaram, build passou e 233 testes Python
 passaram (1 skip); a catraca de cobertura de `src/core` passou.
+
+## 7. Entrega parcial — 2026-11-19 (voláteis e golpes utilitários)
+
+O core passou a guardar o último golpe usado e a derivar gênero pela tabela da
+ROM. Disable e Encore consomem essa memória; Yawn tem atraso de um turno,
+Perish Song conta três turnos, Attract trava a ação com chance de 50%, e todos
+os voláteis saem ao trocar. Knock Off recebe ×1,5 contra item removível e o
+remove após o acerto. U-turn/Volt Switch trocam pelo primeiro reserva saudável
+depois do dano; Sucker Punch verifica a categoria da ação escolhida pelo alvo.
+
+`battleGen6NextBlock.test.ts` cobre os efeitos, durações, bloqueios, trocas e
+condições de falha. `src/ai/battleParity.test.ts` fixa os danos máximos
+determinísticos de Knock Off com/sem item, U-turn, Volt Switch e Sucker Punch em
+`[45, 30, 32, 46, 37]`. `npm run verify` passou com 578 testes Vitest, build
+(aviso de chunks acima de 500 kB) e 240 testes Python (1 skip por ausência de
+`public/assets/maps`); a catraca de cobertura do core passou.

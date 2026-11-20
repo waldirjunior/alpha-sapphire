@@ -144,8 +144,21 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
   `src/ai/battleParity.test.ts` fixa vetores determinísticos de dano.
   `npm run verify` passou: 555 testes Vitest, build e 233 testes Python (1 skip);
   a catraca de cobertura de `src/core` passou.
-- **Ainda não simulado:** outros voláteis (`atração`, Disable, Yawn, Perish Song
-  etc.) e golpes restantes ainda sem efeito; bônus de troca na XP e evoluções por
+- **Atualização 2026-11-19 (voláteis e golpes utilitários):** Disable bloqueia
+  o último golpe usado por quatro turnos; Yawn adormece o alvo no fim do turno
+  seguinte; Perish Song aplica contagem 3→0 aos Pokémon ativos; Attract deriva
+  gênero de genderRatio/personality da tabela ROM e imobiliza 50% do tempo;
+  Encore força o último golpe usado por três turnos. Knock Off remove item
+  removível e recebe ×1,5 no dano; U-turn/Volt Switch causam dano e trocam
+  automaticamente pelo primeiro reserva saudável; Sucker Punch falha quando o
+  alvo escolheu um golpe de status. Testes em
+  `battleGen6NextBlock.test.ts` e vetores determinísticos de dano em
+  `src/ai/battleParity.test.ts` cobrem o bloco.
+  `npm run verify` passou: 578 testes Vitest, catraca de cobertura do core,
+  build (com aviso de chunks acima de 500 kB) e 240 testes Python (1 skip por
+  ausência de `public/assets/maps`).
+- **Ainda não simulado:** outros voláteis e golpes restantes ainda sem efeito;
+  bônus de troca na XP e evoluções por
   troca (não há troca no jogo); evoluções por sexo, item segurado, local,
   afeição, clima, Beauty, Shedinja e 3DS invertido; UI de item evolutivo;
   taxas reais de slot de encontro e sub-tabelas de surf/pesca/horda; IVs fixos
