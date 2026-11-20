@@ -41,7 +41,7 @@ O extrator valida o `fileSize @0x0C` do CWAV aninhado antes de separar o sample.
 
 ### Converter samples CWAV para WAV
 
-[convert_bcsar_cwav.py](../../../scripts/convert_bcsar_cwav.py) usa `vgmstream-cli` para decodificar cada entrada `CWAV` do manifesto para PCM WAV. Os nomes preservam o `fileId` e o índice do sample, por exemplo `file_0001_wave_000.wav`; `conversion-manifest.json` registra origem e saída. Instale `vgmstream-cli` e rode:
+[convert_bcsar_cwav.py](../../../scripts/convert_bcsar_cwav.py) usa `vgmstream-cli` para decodificar entradas `CWAV` do manifesto para PCM WAV. Por padrão, os nomes preservam `fileId` e índice do sample, por exemplo `file_0001_wave_000.wav`; `--asset SOURCE=OUTPUT.wav` seleciona um sample e permite nomeá-lo pelo índice/rótulo BCSAR. `conversion-manifest.json` registra origem e saída. O conversor apresenta os bytes como `.bcwav` temporário, pois o binário local rejeitou a extensão `.cwav`, e usa `-i` para não repetir o loop do sample. Instale `vgmstream-cli` e rode:
 
 ```sh
 python3 scripts/convert_bcsar_cwav.py \
@@ -49,7 +49,9 @@ python3 scripts/convert_bcsar_cwav.py \
   --out-dir rom/extracted/audio/bcsar_sfx/wav
 ```
 
-Essa conversão torna cada sample reproduzível no navegador, mas não monta o efeito da sequência. CSEQ exige sequenciador, CBNK e CWAR; o `vgmstream-cli` disponível nesta sessão não lista `cseq` entre os formatos suportados. Não atribua um sample CWAV a uma sequência sem resolver as relações de instrumento e wave.
+Esta sessão converteu um sample real: `file_3109_wave_000.cwav` (`fileId=3109`, CWAR wave 0) para `bcsar_343_SEQ_SE_RECOVERY.wav`. O `CSEQ file_0285.cseq` de `343 SEQ_SE_RECOVERY` aponta para o banco BCSAR 3 (`file_1638.cbnk`); a tabela do banco inclui wave archive 15 (`fileId=3109`) e waves 0–29. O WAV validado tem mono, 32768 Hz, 9789 frames (0,299 s), 19622 bytes e pico PCM 32424. Isso confirma a relação do sample ao banco usado pela sequência, não a composição completa nem a seleção exata de instrumento/nota do CSEQ.
+
+O `vgmstream-cli` disponível não suporta `cseq`; CSEQ exige sequenciador, CBNK e CWAR para virar a execução composta. A saída CWAV é um sample reproduzível, não uma gravação fiel da sequência inteira. A reprodução web procura `/assets/audio/sfx/bcsar_<índice>_<rótulo>.wav`; quando o WAV está ausente ou não decodifica, toca o padrão procedural do cue.
 
 Comando reproduzível a partir da raiz do checkout, apontando `--bcsar` ao dump local da ROM:
 
@@ -76,9 +78,9 @@ Os números abaixo são índices na tabela `0x2100`, não valores literais aceit
 
 O scan literal também encontra `0x000A001D` (69), `0x00060017` (17), `0x000A0000` (13) e outros valores de campo; não se deve tratar o valor de `SEPlay` como índice BCSAR sem resolver a codificação/runtime que conecta os dois espaços. `0x000A0240`, anotado anteriormente como hit, também não aparece no corpus atual. O extrator cataloga os IDs e os rótulos BCSAR em separado para preservar essa distinção.
 
-Os `.cseq`, `.cbnk`, `.cwar` e `.cwav` crus não são reproduzíveis diretamente pelo navegador; a conversão CWAV acima gera WAVs de samples, não sequências compostas. `BgmPlayer.playSfx(cue, {index, label, url?})` pode tocar um WAV identificado por índice/rótulo BCSAR; sem `url`, procura `/assets/audio/sfx/bcsar_<índice>_<rótulo>.wav`. Se o arquivo faltar ou não decodificar, toca o padrão procedural do cue. O `url` explícito permite apontar para uma saída CWAV apenas quando a relação entre aquele sample e o efeito foi demonstrada.
+Os `.cseq`, `.cbnk`, `.cwar` e `.cwav` crus não são reproduzíveis diretamente pelo navegador; a conversão CWAV acima gera WAVs de samples, não sequências compostas. `battleAudio.ts` cataloga os índices/rótulos e resolve aliases de `SfxCue`: diálogo→261, menu abrir→262, seleção→265, captura→270, recuperação→343, bloqueio de parede→413 e warp→1481. A porta fechar (1480) fica catalogada sem cue de runtime; `battle-hit` não aponta para `SEQ_SE_FLD_WALL_HIT`. O alias de warp→rótulo de porta é semântico, não prova a interpretação do literal `SEPlay` nem uma equivalência de runtime. `SceneManager.playSfx` passa a referência ao `BgmPlayer`; se o WAV faltar ou não decodificar, o cue mantém o fallback procedural. No slice local, só o sample de `343` foi convertido e colocado no `public/assets/audio/sfx/` ignorado pelo Git; os outros aliases ainda caem no fallback até seus WAVs serem convertidos.
 
-Os aliases literais `SEPlay` em `resolveZoneSfx` continuam a selecionar cues procedurais. Eles não são convertidos em índices BCSAR: o índice e o rótulo precisam ser passados separadamente com evidência da relação. `SEQ_SE_MESSAGE`, `SEQ_SE_DECIDE1`, `SEQ_SE_SELECT1`, `SEQ_SE_CATCH`, `SEQ_SE_RECOVERY`, `SEQ_SE_FLD_WALL_HIT` e os rótulos de porta seguem catalogados, mas ainda não foram provados como alvos dos IDs literais `SEPlay` do slice.
+Os aliases literais `SEPlay` em `resolveZoneSfx` continuam a selecionar os mesmos cues de domínio; eles não são decodificados em índices BCSAR. A tabela de `SfxCue` escolhe um rótulo nativo separado pela semântica do alias, sem declarar que o literal de origem é o índice BCSAR. Resolver a codificação/dispatch de `SEPlay`, tocar as oito sequências compostas e identificar os WAVs de todos os alvos seguem como resíduos de P-008.
 
 ## Validação
 

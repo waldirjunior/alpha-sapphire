@@ -1134,4 +1134,12 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Evidência:** `scripts/pokemon_battle_expressions.py` gerou 36 perfis/176 ações de PB nativos. Torchic confirma boca aberta nos frames 29–36 do clipe físico e curvas de `Eye`; teste unitário usa frame 29 extraído e verifica a restauração no idle. `npm run verify` (628 Vitest, build, 245 Python/1 skip) e Playwright (30/30) passaram; inspeção local de batalha em `/tmp/pokemon-expression-idle.png` e `/tmp/pokemon-expression-attack.png`, sem baseline aprovada.
 - **Limite:** só Torchic tinha curvas de visibilidade de boca entre os perfis extraídos; isso valida o transporte no engine, não paridade observada no Azahar. Combiner RGB PICA, cinco perfis ausentes e aparência de todos os frames permanecem em aberto.
 
+## A-113 O `vgmstream-cli` local precisa receber CWAV extraído como `.bcwav` e sem loop para gerar SFX curto
+
+- **Data:** 2026-11-20; P-008, conversão BCSAR.
+- **Contexto:** conversão do sample ORAS `file_3109_wave_000.cwav` com `vgmstream-cli` r2168 no macOS.
+- **Erro:** embora o arquivo seja CWAV/DSP-ADPCM e a ferramenta liste `cwav`, o binário retornou `failed opening` para o caminho `.cwav`; os mesmos bytes decodificaram quando apresentados com sufixo `.bcwav`. O modo padrão expandiu o loop e gerou 10,5 s a partir do stream de 0,299 s.
+- **Regra:** copiar temporariamente o payload para um nome `.bcwav` antes de chamar `vgmstream-cli`, e usar `-i` para exportar uma reprodução só; validar WAV por canais, frequência e frames. O WAV segue sendo um sample do banco, não a composição completa do CSEQ.
+- **Evidência:** `scripts/test_convert_bcsar_cwav.py` exige extensão temporária `.bcwav` e argumento `-i`; a saída real tem 32768 Hz, 9789 frames, 0,299 s e abre com o módulo `wave` de Python.
+
 

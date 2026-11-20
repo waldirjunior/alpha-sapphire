@@ -7,7 +7,40 @@ export type SfxCue = 'dialogue-confirm' | 'menu-open' | 'menu-select' | 'wall-bu
   'heal-chime' | 'battle-hit' | 'pokeball-throw' | 'pokeball-capture' | 'faint';
 export type BattleSfxEvent = BattleEvent | { type: 'pokeball'; captured: boolean };
 
-// IDs from the opening zone scripts use procedural aliases until native BCSAR effects are mapped.
+export interface BcsarSfxReference {
+  index: number;
+  label: string;
+  url?: string;
+}
+
+const BCSAR_SFX = {
+  message: { index: 261, label: 'SEQ_SE_MESSAGE' },
+  decide: { index: 262, label: 'SEQ_SE_DECIDE1' },
+  select: { index: 265, label: 'SEQ_SE_SELECT1' },
+  catch: { index: 270, label: 'SEQ_SE_CATCH' },
+  recovery: { index: 343, label: 'SEQ_SE_RECOVERY' },
+  wallHit: { index: 413, label: 'SEQ_SE_FLD_WALL_HIT' },
+  doorClose: { index: 1480, label: 'SEQ_SE_KW_DOORCLOSE' },
+  doorOpen: { index: 1481, label: 'SEQ_SE_KW_DOOROPEN' },
+} satisfies Readonly<Record<string, BcsarSfxReference>>;
+
+export const BCSAR_SFX_REFERENCES: readonly BcsarSfxReference[] = Object.values(BCSAR_SFX);
+
+const NATIVE_SFX_BY_CUE: Readonly<Partial<Record<SfxCue, BcsarSfxReference>>> = {
+  'dialogue-confirm': BCSAR_SFX.message,
+  'menu-open': BCSAR_SFX.decide,
+  'menu-select': BCSAR_SFX.select,
+  'pokeball-capture': BCSAR_SFX.catch,
+  'heal-chime': BCSAR_SFX.recovery,
+  'wall-bump': BCSAR_SFX.wallHit,
+  'zone-warp': BCSAR_SFX.doorOpen,
+};
+
+export function resolveBcsarSfxReference(cue: SfxCue): BcsarSfxReference | undefined {
+  return NATIVE_SFX_BY_CUE[cue];
+}
+
+// These cue aliases do not decode literal SEPlay IDs into BCSAR indices.
 const ZONE_SFX_CUES: Readonly<Record<number, SfxCue>> = {
   0x060000: 'dialogue-confirm',
   0x060061: 'menu-select',

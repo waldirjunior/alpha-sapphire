@@ -36,8 +36,13 @@ class ConvertBcsarCwavTests(unittest.TestCase):
             root = Path(directory)
             source = self.make_input(root)
             output = root / "wav"
+            decoder_inputs: list[tuple[str, bytes]] = []
+            decoder_arguments: list[list[str]] = []
 
             def decode(arguments: list[str], **_kwargs: object) -> SimpleNamespace:
+                decoder_arguments.append(arguments)
+                decoder_source = Path(arguments[-1])
+                decoder_inputs.append((decoder_source.suffix, decoder_source.read_bytes()))
                 write_wave(Path(arguments[arguments.index("-o") + 1]))
                 return SimpleNamespace(returncode=0, stdout="", stderr="")
 
@@ -45,6 +50,8 @@ class ConvertBcsarCwavTests(unittest.TestCase):
                 manifest = convert_cwav_assets(source, output, "vgmstream-cli")
 
             self.assertEqual(run.call_count, 1)
+            self.assertEqual(decoder_inputs, [(".bcwav", b"CWAV synthetic fixture")])
+            self.assertIn("-i", decoder_arguments[0])
             self.assertEqual(manifest["convertedCount"], 1)
             asset = manifest["assets"][0]
             self.assertEqual(asset["fileId"], 12)
@@ -52,6 +59,28 @@ class ConvertBcsarCwavTests(unittest.TestCase):
             self.assertEqual(asset["path"], "sample.wav")
             self.assertTrue((output / "sample.wav").is_file())
             self.assertTrue((output / "conversion-manifest.json").is_file())
+
+    def test_converts_only_the_selected_sample_with_a_bcsar_sound_name(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = self.make_input(root)
+            output = root / "wav"
+
+            def decode(arguments: list[str], **_kwargs: object) -> SimpleNamespace:
+                write_wave(Path(arguments[arguments.index("-o") + 1]))
+                return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+            with patch("scripts.convert_bcsar_cwav.subprocess.run", side_effect=decode) as run:
+                manifest = convert_cwav_assets(
+                    source, output, "vgmstream-cli",
+                    output_names={"sample.cwav": "bcsar_343_SEQ_SE_RECOVERY.wav"},
+                )
+
+            self.assertEqual(run.call_count, 1)
+            self.assertEqual(manifest["convertedCount"], 1)
+            self.assertEqual(manifest["assets"][0]["path"], "bcsar_343_SEQ_SE_RECOVERY.wav")
+            self.assertTrue((output / "bcsar_343_SEQ_SE_RECOVERY.wav").is_file())
+            self.assertFalse((output / "sample.wav").exists())
 
     def test_rejects_decoder_output_that_is_not_a_playable_wave(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

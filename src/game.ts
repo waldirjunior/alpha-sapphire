@@ -82,7 +82,7 @@ let audioPreferences = loadAudioPreferences(window.localStorage);
 bgmPlayer.setVolume(audioPreferences.volume / 100);
 bgmPlayer.setMuted(audioPreferences.muted);
 bgmPlayer.attachUnlock(window);
-const sceneManager = new SceneManager(app, cue => bgmPlayer.playSfx(cue));
+const sceneManager = new SceneManager(app, (cue, native) => bgmPlayer.playSfx(cue, native));
 let state = saved?.state ?? createInitialState(START_MAP_ID, MAPS);
 let starterId: 'treecko' | 'torchic' | 'mudkip' = 'torchic';
 let party = saved?.party ?? [createPokemonInstance(SPECIES[starterId], 5)];

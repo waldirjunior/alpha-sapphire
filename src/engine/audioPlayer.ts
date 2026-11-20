@@ -1,4 +1,4 @@
-import type { SfxCue } from '../core/battleAudio';
+import type { BcsarSfxReference, SfxCue } from '../core/battleAudio';
 
 // P-008: BGM por Web Audio. Navegadores só liberam o AudioContext após um gesto do usuário,
 // então a faixa pedida antes disso fica pendente e começa no primeiro keydown/pointerdown.
@@ -23,12 +23,6 @@ interface SfxPattern {
   waveform: OscillatorType;
   amplitude: number;
   notes: readonly SfxNote[];
-}
-
-export interface BcsarSfxReference {
-  index: number;
-  label: string;
-  url?: string;
 }
 
 const SFX_PATTERNS: Readonly<Record<SfxCue, SfxPattern>> = {

@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { classifyBattleMusic, leveledUpDuring, resolveBattleMusic, resolveBattleSfx, resolveCurrentMusic, resolveZoneSfx } from './battleAudio';
+import {
+  BCSAR_SFX_REFERENCES,
+  classifyBattleMusic,
+  leveledUpDuring,
+  resolveBattleMusic,
+  resolveBattleSfx,
+  resolveBcsarSfxReference,
+  resolveCurrentMusic,
+  resolveZoneSfx,
+} from './battleAudio';
 
 describe('battle music adapter (P-008)', () => {
   it('classifies the eight supported battle contexts', () => {
@@ -60,6 +69,18 @@ describe('battle music adapter (P-008)', () => {
     expect(resolveZoneSfx(0x0a00dd)).toBe('zone-warp');
     expect(resolveZoneSfx(0x0a0240)).toBe('battle-hit');
     expect(resolveZoneSfx(123456)).toBeNull();
+  });
+
+  it('resolves cue aliases to labeled BCSAR references without mapping battle-hit', () => {
+    expect(resolveBcsarSfxReference('dialogue-confirm')).toMatchObject({ index: 261, label: 'SEQ_SE_MESSAGE' });
+    expect(resolveBcsarSfxReference('menu-open')).toMatchObject({ index: 262, label: 'SEQ_SE_DECIDE1' });
+    expect(resolveBcsarSfxReference('menu-select')).toMatchObject({ index: 265, label: 'SEQ_SE_SELECT1' });
+    expect(resolveBcsarSfxReference('pokeball-capture')).toMatchObject({ index: 270, label: 'SEQ_SE_CATCH' });
+    expect(resolveBcsarSfxReference('heal-chime')).toMatchObject({ index: 343, label: 'SEQ_SE_RECOVERY' });
+    expect(resolveBcsarSfxReference('wall-bump')).toMatchObject({ index: 413, label: 'SEQ_SE_FLD_WALL_HIT' });
+    expect(resolveBcsarSfxReference('zone-warp')).toMatchObject({ index: 1481, label: 'SEQ_SE_KW_DOOROPEN' });
+    expect(resolveBcsarSfxReference('battle-hit')).toBeUndefined();
+    expect(BCSAR_SFX_REFERENCES).toContainEqual({ index: 1480, label: 'SEQ_SE_KW_DOORCLOSE' });
   });
 
 });

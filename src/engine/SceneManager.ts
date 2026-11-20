@@ -15,7 +15,7 @@ import { fixOrasMaterials, picaMaterialModelUrl } from './picaMaterials';
 import { NativeAnimationController } from './nativeAnimation';
 import { characterModelUrl, pokemonModelUrl } from './nativeAssets';
 import type { BattleEvent } from '../core/battleEvents';
-import { resolveBattleSfx, type SfxCue } from '../core/battleAudio';
+import { resolveBattleSfx, resolveBcsarSfxReference, type BcsarSfxReference, type SfxCue } from '../core/battleAudio';
 import { BattleEventPresenter } from './battleEventPresentation';
 import { EventPresentation } from './eventPresentation';
 import { followCameraPose } from './cameraFollow';
@@ -83,7 +83,7 @@ export class SceneManager {
   private playerLoadVersion = 0;
   private inBattle = false;
 
-  constructor(container: HTMLElement, private readonly emitSfx: (cue: SfxCue) => void = () => {}) {
+  constructor(container: HTMLElement, private readonly emitSfx: (cue: SfxCue, native?: BcsarSfxReference) => void = () => {}) {
     this.scene = new THREE.Scene();
 
     this.camera = new THREE.PerspectiveCamera(
@@ -377,7 +377,7 @@ export class SceneManager {
     playBattlePokeball(this.battleArena, this.battlePlayerSlot, this.battleEnemySlot, captured, shakes);
   }
 
-  public playSfx(cue: SfxCue | null): void { if (cue) this.emitSfx(cue); }
+  public playSfx(cue: SfxCue | null): void { if (cue) this.emitSfx(cue, resolveBcsarSfxReference(cue)); }
 
   private loadCharacterModel(url: string, target: THREE.Group, isPlayer = false, fallbackUrl?: string): void {
     const version = isPlayer ? ++this.playerLoadVersion : 0;
