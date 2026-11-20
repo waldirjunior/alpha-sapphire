@@ -15,6 +15,10 @@ import struct
 import sys
 from pathlib import Path
 
+# A-117: keep every slot so the adapter can index the documented ORAS method groups.
+ENCOUNTER_FORMAT = "oras-61-slot-v1"
+ENCOUNTER_SLOT_COUNT = 61
+
 
 def parse_zo_sections(zo_path: Path) -> list[bytes]:
     data = zo_path.read_bytes()
@@ -117,10 +121,15 @@ def parse_entities(sec: bytes) -> dict:
 
 
 def parse_encounters(sec: bytes) -> list[dict]:
-    if len(sec) < 0x10:
+    if len(sec) <= 0x10:
         return []
+
+    slot_count = (len(sec) - 0x10) // 4
+    if (len(sec) - 0x10) % 4 or slot_count != ENCOUNTER_SLOT_COUNT:
+        raise ValueError(f"ZoneEncounters: esperado {ENCOUNTER_SLOT_COUNT} slots ORAS após o header de 16 bytes, recebido {slot_count}")
+
     out = []
-    for off in range(0x10, len(sec) - 3, 4):
+    for off in range(0x10, len(sec), 4):
         lvl_min, lvl_max, spec_form = struct.unpack_from("<BBH", sec, off)
         out.append(
             {
@@ -130,7 +139,7 @@ def parse_encounters(sec: bytes) -> list[dict]:
                 "levelMax": lvl_max,
             }
         )
-    return [e for e in out if e["species"] or e["levelMin"] or e["levelMax"]]
+    return out
 
 
 def main() -> int:
@@ -164,11 +173,13 @@ def main() -> int:
             **entities,
             "encounters": encounters,
         }
+        if encounters:
+            payload["encounterFormat"] = ENCOUNTER_FORMAT
         (args.out_dir / f"{zone['zone']:03d}_{slug}.json").write_text(
             json.dumps(payload, indent=1, ensure_ascii=False) + "\n", encoding="utf-8"
         )
 
-    print(f"{len(catalog)} zonas extraídas: {total_warps} warps, {total_enc} encontros")
+    print(f"{len(catalog)} zonas extraídas: {total_warps} warps, {total_enc} slots de encontro")
     return 0
 
 

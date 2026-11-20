@@ -8,9 +8,9 @@ Verificado em 2026-11-20 (macOS; suporte headless Linux validado anteriormente n
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 638 em 85 arquivos, todos passando | `npm test` |
+| Testes unitários (Vitest) | 639 em 85 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | acima da catraca de 95% linhas / 85% branches | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 250 passando (1 skip só em worktree sem `public/assets/maps`) | `npm run test:py` |
+| Testes do pipeline e do oráculo (Python) | 252 passando (1 skip só em worktree sem `public/assets/maps`) | `npm run test:py` |
 | Jogo real no browser (smoke + campanha + corredor) | 7 smoke e campanha 1/1 (`e2e/campaign.spec.ts`; cena natural pausa em `FadeRequestOut(0,2,30)` antes da interação Roxanne); corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
 | Cenários visuais | 28/28 cenas do mundo aceitas; 1 comparação UI do PokéNav instrumentada com diferença conhecida (P-011), ainda sem paridade | `npm run test:e2e`, galeria e comparação em `rom/visual-report/` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
@@ -22,7 +22,7 @@ Atores `0x1000`/`0x2000` renderizam modelo real (`failedAssets = 0`); câmera/oc
 - **Mundo**: 536 zonas em `src/data/maps_v2/`, sob demanda, com colisão, terreno, altura, warps, NPCs e bordas contínuas.
 - **Corredor jogável**: Littleroot → Petalburg → Rustboro → Verdanturf → Mauville → Slateport → Fallarbor → Meteor Falls → bondinho → Lavaridge (trechos com fixture pós-evento: [PRD-010](features/engine-3d/prds/PRD-010-corredor-rustboro-verdanturf.md)–[PRD-013](features/engine-3d/prds/PRD-013-bondinho-mt-chimney-lavaridge.md)). Leste até Lilycove só em trechos ([PRD-014](features/engine-3d/prds/PRD-014-trechos-leste-mauville-lilycove.md)).
 - **Eventos**: VM Pawn/AMX — diálogo, warp 6 → 227, hide-flags, expressões e serviços (Joy, Mãe, Poké Mart). Campanha natural até Ginásio `zone_0441` (Mart é `zone_0285`; binding Roxanne `map/case 2`).
-- **Batalha**: encontros com IVs/natureza, Substitute, 2 turnos, aprisionamento parcial, Baton Pass, pivots, itens, habilidades (clima/Moxie/Sheer Force/Magic Guard/Natural Cure/Rough Skin), hazards, voláteis, Protect/troca, captura + crítico via Pokédex, UI de golpes/evolução e IA com troca (`battleParity.test.ts`).
+- **Batalha**: encontros usam taxas de slot ORAS em 150 zonas (grama no host; adaptadores para grama alta, Surf, Rock Smash, pesca e hordas), IVs/natureza, Substitute, 2 turnos, aprisionamento parcial, Baton Pass, pivots, itens, habilidades (clima/Moxie/Sheer Force/Magic Guard/Natural Cure/Rough Skin), hazards, voláteis, Protect/troca, captura + crítico via Pokédex, UI de golpes/evolução e IA com troca (`battleParity.test.ts`).
 - **Apresentação**: 41 Pokémon GLB normalizados + curvas BCH boca/olhos (36 perfis); grama 3D; arenas/VFX; Pokébola; BGM/fanfarras; `SEPlay` roteado; 8 samples CWAV BCSAR ligados a cues com fallback procedural; volume/mudo; save `localStorage`.
 - **Oráculo (Azahar 2126.2)**: roteiros intro/continue, `oras_save.py`, 25 refs visuais, RPC de posição e traço Littleroot vs `movePlayer`.
 
@@ -33,7 +33,7 @@ Atores `0x1000`/`0x2000` renderizam modelo real (`failedAssets = 0`); câmera/oc
 | Campanha chega a `zone_0441`; cena natural pausa em `FadeRequestOut(0,2,30)` antes da interação; batalha/badge da Roxanne bloqueadas. | P-013 |
 | Bike/Surf e oclusão residual (ex.: `z0015-mauville-patio`). | P-017 |
 | Combiners RGB / luz PICA parciais; ambiente por zona já em `zoneEnvironment.ts`. | P-007 |
-| PokéNav vs Azahar; composição CSEQ/dispatch de SFX BCSAR; arenas ROM; Gen VI residual. | P-011, P-014, P-008, P-010 |
+| PokéNav vs Azahar; composição CSEQ/dispatch de SFX BCSAR; arenas ROM; IVs por classe de treinador, ativação de outros métodos de encontro e residual Gen VI. | P-011, P-014, P-008, P-010 |
 
 ## Frentes pausadas
 

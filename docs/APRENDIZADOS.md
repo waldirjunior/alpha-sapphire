@@ -1174,4 +1174,12 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   host sem mutação até comprovar esses contratos no código original ou no
   emulador; os próximos dados necessários seguem em P-013.
 
+## A-117 Encontros ORAS: preservar os 61 slots e separar chance da subtabela da taxa do slot
+
+- **Data:** 2026-11-20; ROADMAP #5/P-010, extração e seleção de encontros.
+- **Contexto:** `scripts/extract_zones.py` lê os registros ORAS de 4 bytes após o header de 16 bytes da seção 3 de cada ZO (`a/0/1/3`).
+- **Erro:** remover slots vazios ou atribuir peso 1 a cada espécie perde a posição que identifica método e taxa do slot; a chance de uma subtabela de horda também não é uma taxa individual de espécie.
+- **Evidência:** 150 das 536 zonas têm seção de encontros com 61 registros (`0x10 + 61 × 4`); [pk3DS RSWE.cs](https://github.com/kwsch/pk3DS/blob/master/pk3DS.WinForms/Subforms/Gen6/RSWE.cs) lista a ordem: 12 grama, 12 grama alta, 3 Swarm, 5 Surf, 5 Rock Smash, 3 por vara e 5 por horda A/B/C. Os rótulos em [RSWE.Designer.cs](https://github.com/kwsch/pk3DS/blob/master/pk3DS.WinForms/Subforms/Gen6/RSWE.Designer.cs) mostram `[10×9, 5, 4, 1]` para grama/grama alta, `[50, 30, 15, 4, 1]` para Surf/Rock Smash, `[60, 35, 5]` para as varas e chances de horda `60/35/5`; Swarm aparece como `?%`.
+- **Regra:** preservar os 61 slots e marcar o formato antes de classificá-los no core. Aplicar taxa por slot apenas quando a fonte a mostra; manter chance de horda como metadado separado e deixar Swarm sem peso até provar sua taxa. Os gatilhos dos métodos e a taxa-base do encontro exigem evidência própria.
+
 

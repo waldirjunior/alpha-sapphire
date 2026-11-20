@@ -51,6 +51,8 @@ voláteis, hazards, troca forçada, itens e habilidades ainda não simulados.
 - **RF-18:** Bind, Wrap, Fire Spin e Whirlpool prendem por 4–5 turnos e causam
   dano residual de 1/8 do HP máximo e impedem troca voluntária; Baton Pass
   transfere estágios e Substitute.
+- **RF-19:** Encontros ORAS preservam os 61 slots do ZO, separam os métodos e
+  usam as probabilidades por slot conhecidas para selecionar espécies.
 
 ## 3. Critérios de Aceite
 
@@ -69,6 +71,9 @@ voláteis, hazards, troca forçada, itens e habilidades ainda não simulados.
   Rough Skin e Iron Barbs cobertos por testes determinísticos em `src/core/`.
 - [x] Aprisionamento parcial e Baton Pass cobertos por testes determinísticos;
   vetores de dano registrados em `src/ai/battleParity.test.ts`.
+- [x] ZO mantém os 61 slots ORAS e classifica grama, grama alta, Swarm, Surf,
+  Rock Smash, varas e hordas; o adapter aplica pesos reais em grama, Surf,
+  Rock Smash e varas e retém a chance das três subtabelas de horda.
 - [ ] Implementar os itens restantes listados em `P-010`; a pendência continua aberta.
 
 ## 4. Entrega parcial — 2026-11-19 (campo e captura)
@@ -168,3 +173,21 @@ dano de aprisionamento. As regras de habilidades foram conferidas na
 e em suas [descrições Gen VI](https://github.com/smogon/pokemon-showdown/blob/master/data/text/abilities.ts).
 `npm run verify` passou com 624 testes Vitest, build e
 241 testes Python (1 skip).
+
+## 10. Entrega parcial — 2026-11-20 (taxas e métodos de encontro ORAS)
+
+O extrator conserva as 61 posições da seção de encontros do ZO e marca o
+formato `oras-61-slot-v1` em 150 zonas. O adapter separa as tabelas de grama,
+grama alta, Swarm, Surf, Rock Smash, Old Rod, Good Rod, Super Rod e hordas A/B/C.
+As taxas de slot são aplicadas para grama, Surf, Rock Smash e varas; os grupos
+de horda guardam as chances 60/35/5. O host usa pesos reais na seleção de
+grama; não há gatilhos de Surf, pesca ou Rock Smash, batalha de horda ou taxa
+de slot confirmada para Swarm neste trabalho.
+
+`scripts/test_extract_zones.py` verifica que a extração mantém a ordem completa
+e rejeita uma tabela truncada. `wildPokemon.test.ts` cobre as taxas por método,
+a separação da seleção de grama e as três chances de horda. A origem da ordem e
+das taxas está registrada em [A-117](../../../APRENDIZADOS.md). `npm run verify`
+passou com 639 testes Vitest, build (aviso herdado de chunks acima de 500 kB) e
+252 testes Python (1 skip pela ausência de `public/assets/maps` no worktree). O
+smoke `e2e/smoke.spec.ts` passou em 7/7, incluindo batalha selvagem, golpe e fuga.

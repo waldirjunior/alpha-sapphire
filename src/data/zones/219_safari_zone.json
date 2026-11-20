@@ -444,5 +444,6 @@
    "levelMin": 15,
    "levelMax": 15
   }
- ]
+ ],
+ "encounterFormat": "oras-61-slot-v1"
 }

@@ -34,5 +34,13 @@ export function createZoneMapLoader(
 
 export const getZoneMap = createZoneMapLoader(
   import.meta.glob<ZoneMapSource>('./[0-9][0-9][0-9][0-9].json', { import: 'default' }),
-  async (source, map) => ({ ...map, ...zonePlacement(source.id), encounters: await getZoneEncounters(source.zone) })
+  async (source, map) => {
+    const encounterSource = await getZoneEncounters(source.zone);
+    return {
+      ...map,
+      ...zonePlacement(source.id),
+      encounters: encounterSource.encounters,
+      encounterFormat: encounterSource.encounterFormat,
+    };
+  }
 );

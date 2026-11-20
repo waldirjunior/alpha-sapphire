@@ -6,6 +6,8 @@ import { MAX_IV } from './statSpread';
 import {
   buildZoneEncounterTables,
   createSeededRng,
+  encounterSubtableFromZone,
+  encounterTableFromZone,
   generatePokemon,
   grassTableFromZone,
   mapIdForZoneName,
@@ -48,6 +50,54 @@ describe('seeded generation of wild and trainer Pokémon', () => {
 });
 
 describe('zone encounter adapter (src/data/zones)', () => {
+  it('uses ROM slot rates and keeps surf and fishing subtables separate from grass', () => {
+    const encounters = Array.from({ length: 61 }, () => slot(0, 0));
+    encounters[0] = slot(261, 2);
+    encounters[9] = slot(261, 2);
+    encounters[10] = slot(263, 2);
+    encounters[11] = slot(265, 2);
+    encounters[27] = slot(261, 3);
+    encounters[37] = slot(261, 4);
+    encounters[46] = slot(261, 5);
+    const source: ZoneEncounterSource = {
+      name: 'Route 101',
+      encounterFormat: 'oras-61-slot-v1',
+      encounters,
+    };
+    const resolveNonzero = (dex: number): string | null => {
+      if (dex === 0) throw new Error('slot ORAS vazio não deve ser resolvido');
+      return ROSTER_BY_DEX.get(dex) ?? null;
+    };
+
+    expect(grassTableFromZone(source, resolveNonzero)).toEqual([
+      { speciesId: 'poochyena', minLevel: 2, maxLevel: 2, weight: 15 },
+      { speciesId: 'zigzagoon', minLevel: 2, maxLevel: 2, weight: 4 },
+      { speciesId: 'wurmple', minLevel: 2, maxLevel: 2, weight: 1 },
+    ]);
+    expect(encounterTableFromZone(source, 'surf', resolveNonzero)).toEqual([
+      { speciesId: 'poochyena', minLevel: 3, maxLevel: 3, weight: 50 },
+    ]);
+    expect(encounterTableFromZone(source, 'old_rod', resolveNonzero)).toEqual([
+      { speciesId: 'poochyena', minLevel: 4, maxLevel: 4, weight: 60 },
+    ]);
+    const grassRates = [10, 10, 10, 10, 10, 10, 10, 10, 10, 5, 4, 1];
+    expect(encounterSubtableFromZone(source, 'grass').slots.map(({ slotRate }) => slotRate)).toEqual(grassRates);
+    expect(encounterSubtableFromZone(source, 'tall_grass').slots.map(({ slotRate }) => slotRate)).toEqual(grassRates);
+    expect(encounterSubtableFromZone(source, 'surf').slots.map(({ slotRate }) => slotRate)).toEqual([50, 30, 15, 4, 1]);
+    expect(encounterSubtableFromZone(source, 'rock_smash').slots.map(({ slotRate }) => slotRate)).toEqual([50, 30, 15, 4, 1]);
+    for (const method of ['old_rod', 'good_rod', 'super_rod'] as const) {
+      expect(encounterSubtableFromZone(source, method).slots.map(({ slotRate }) => slotRate)).toEqual([60, 35, 5]);
+    }
+    const horde = encounterSubtableFromZone(source, 'horde_a');
+    expect(horde.tableRate).toBe(60);
+    expect(horde.slots).toHaveLength(5);
+    expect(horde.slots[0]).toMatchObject({ slotIndex: 46, methodSlot: 0, slotRate: null });
+    expect(encounterSubtableFromZone(source, 'horde_b').tableRate).toBe(35);
+    expect(encounterSubtableFromZone(source, 'horde_c').tableRate).toBe(5);
+    expect(encounterSubtableFromZone(source, 'swarm').slots).toHaveLength(3);
+    expect(encounterTableFromZone(source, 'swarm', resolveAll)).toEqual([]);
+  });
+
   it('reads only the grass sub-table and aggregates repeated slots as weight', () => {
     expect(grassTableFromZone(ROUTE_101, resolveAll)).toEqual([
       { speciesId: 'wurmple', minLevel: 2, maxLevel: 2, weight: 2 },

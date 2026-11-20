@@ -164,19 +164,20 @@ Lacunas abertas no projeto. Um item novo entra no fim com o próximo número (`P
   `npm run verify` passou: 578 testes Vitest, catraca de cobertura do core,
   build (com aviso de chunks acima de 500 kB) e 240 testes Python (1 skip por
   ausência de `public/assets/maps`).
-- **Ainda não simulado:** voláteis e golpes fora dos blocos entregues ainda sem
-  efeito;
-  bônus de troca na XP e evoluções por
-  troca (não há troca no jogo); evoluções por sexo, item segurado, local,
-  afeição, clima, Beauty, Shedinja e 3DS invertido; UI de item evolutivo;
-  taxas reais de slot de encontro e sub-tabelas de surf/pesca/horda; IVs fixos
-  por classe de treinador. O host fornece ao cálculo de captura crítica a
+- **Ainda não simulado:** voláteis e efeitos de golpes fora dos blocos entregues;
+  bônus de troca na XP e evoluções por troca (não há troca no jogo), sexo, item
+  segurado, local, afeição, clima, Beauty, Shedinja e 3DS invertido; UI de item
+  evolutivo; chance-base de encontro (`ENCOUNTER_RATE = 0.2`), gatilhos de Surf,
+  Rock Smash, pesca, Swarm e hordas, batalha com vários Pokémon de horda, taxa de
+  slot de Swarm ainda desconhecida e IVs fixos por classe de treinador. O host
+  fornece ao cálculo de captura crítica a
   contagem persistida de espécies únicas da Pokédex, incluindo as que estão
   fora do time. Golpes não simulados registram "ainda não é simulado (P-010)"
   no log.
 - **Atualização 2026-11-19 (host):** `battleUi` conta espécies únicas por número da Pokédex antes de lançar a Poké Ball, e o host resolve o contexto musical ao receber uma batalha de treinador: `trainer`, `rival`, `aqua_magma`, `gym_leader`, `elite_four` ou `champion`. `battleUi.test.ts` cobre a contagem sem duplicatas e a resolução de contexto; `battleAudio.test.ts` cobre as seis classes. A captura conta a Pokédex atualmente exibida pelo jogo (espécies do time), não espécies guardadas fora dele. `npm run verify` passou (568 Vitest, build, 240 Python, 1 skip) e smoke Playwright passou (7/7).
 - **Atualização 2026-11-20 (Pokédex persistente):** [core/pokedex.ts](../src/core/pokedex.ts) rastreia espécies vistas/capturadas sem mutação; o save persiste ambas as listas e migra saves antigos a partir do time. Inimigos ativos de batalhas selvagens e de treinador entram como vistos; capturas e Pokémon adicionados/evoluídos no time entram como capturados. A captura crítica agora recebe o tamanho do registro persistido, incluindo espécies fora do time. `pokedex.test.ts`, `save.test.ts` e `battleUi.test.ts` cobrem registro, migração e contagem.
 - **Atualização 2026-11-20 (habilidades, aprisionamento e Baton Pass):** Drizzle, Drought, Sand Stream e Snow Warning iniciam cinco turnos de clima ao entrar; Moxie aumenta Attack após nocaute direto, Sheer Force aplica ×1,3, remove efeitos secundários e o recuo de Life Orb, Magic Guard bloqueia dano indireto, Natural Cure remove status ao sair e Rough Skin/Iron Barbs causam 1/8 do HP máximo por contato. Bind, Wrap, Fire Spin e Whirlpool prendem por 4–5 turnos, causam 1/8 do HP máximo por turno e bloqueiam troca voluntária; Ghost é imune. Baton Pass transfere estágios e Substitute. `battleGen6FinalBlock.test.ts` cobre as regras; `src/ai/battleParity.test.ts` fixa `[42, 54, 8, 15]` para dano normal, Sheer Force, Iron Barbs e aprisionamento. `npm run verify` passou: 624 testes Vitest, build e 241 testes Python (1 skip).
+- **Atualização 2026-11-20 (slots e métodos de encontro ORAS):** a extração das 536 zonas encontra 150 tabelas com 61 slots cada. `scripts/extract_zones.py` preserva todas as posições e marca `oras-61-slot-v1`; `src/core/wildPokemon.ts` as separa em grama, grama alta, Swarm, Surf, Rock Smash, Old/Good/Super Rod e hordas A/B/C. Taxas confirmadas no editor pk3DS: grama/grama alta `[10×9, 5, 4, 1]`, Surf/Rock Smash `[50, 30, 15, 4, 1]`, varas `[60, 35, 5]`; hordas guardam chances de subtabela 60/35/5. O host agora sorteia slots de grama com esses pesos. Ordem e valores estão ligados ao [A-117](APRENDIZADOS.md#a-117-encontros-oras-preservar-os-61-slots-e-separar-chance-de-subtabela-da-taxa-do-slot); `scripts/test_extract_zones.py` e `wildPokemon.test.ts` cobrem preservação, pesos e separação. `npm run verify` passou: 639 testes Vitest, build com aviso herdado de chunks acima de 500 kB e 252 testes Python (1 skip por ausência de `public/assets/maps`); Playwright `e2e/smoke.spec.ts` passou (7/7), inclusive batalha selvagem na grama alta, golpe e fuga.
 - **Próximo passo:** Expandir o motor de batalha conforme [batalha/PRD-002](features/batalha/prds/PRD-002-mecanicas-completas-gen6.md).
 
 ## P-011 HUD de desenvolvimento em vez de menus estilo Nintendo 3DS

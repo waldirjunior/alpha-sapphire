@@ -233,7 +233,11 @@ function startWildEncounter(host: GameInputHost): void {
   const currentMap = host.maps[state.player.mapId];
   if (!currentMap) return;
   const table = currentMap.encounters
-    ? grassTableFromZone({ name: currentMap.name, encounters: currentMap.encounters }, resolveRosterSpeciesId)
+    ? grassTableFromZone({
+      name: currentMap.name,
+      encounterFormat: currentMap.encounterFormat,
+      encounters: currentMap.encounters,
+    }, resolveRosterSpeciesId)
     : resolveEncounterTable(state.player.mapId, host.getEncounterTables(), MAP_ENCOUNTERS);
   const encounter = table ? rollWildEncounter(table) : null;
   const species = encounter ? findRosterSpecies(encounter.speciesId) : undefined;

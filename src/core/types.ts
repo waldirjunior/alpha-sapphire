@@ -1,4 +1,4 @@
-import type { ZoneEncounterSlot } from './wildPokemon';
+import type { ZoneEncounterSlot, ZoneEncounterSource } from './wildPokemon';
 
 export type Direction = 'up' | 'down' | 'left' | 'right';
 
@@ -90,6 +90,7 @@ export interface MapDefinition {
   spawnDerived?: boolean;
   spawnPolicy?: string;
   npcs?: MapNpc[];
+  encounterFormat?: ZoneEncounterSource['encounterFormat'];
   encounters?: readonly ZoneEncounterSlot[];
   modelChunks?: { modelUrl: string; offset: GridPosition }[];
   id: string;
