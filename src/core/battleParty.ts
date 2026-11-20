@@ -1,9 +1,9 @@
-import { refreshStats, withdrawFromBattle, type PokemonInstance } from './battlePokemon';
+import { prepareBattleEntry, refreshStats, withdrawFromBattle, type PokemonInstance } from './battlePokemon';
 import { expYield } from './experience';
 import { gainExperience } from './levelUp';
 import { addEvs } from './statSpread';
 import type { BattleEvent } from './battleEvents';
-import { applyEntryHazards, type BattleFieldSide, type BattleFieldState } from './battleField';
+import { applyEntryHazards, type BattleFieldSide, type BattleFieldState, type BattleWeather } from './battleField';
 
 export const MAX_PARTY_SIZE = 6;
 const LUCKY_EGG = 'Lucky Egg';
@@ -77,13 +77,13 @@ export function appendLog(state: BattleState, messages: readonly (string | null)
 }
 
 /** Coloca `partyIndex` em campo; quem sai perde estágios (Gen VI) e entra como participante. */
-export function switchPlayerIn(state: BattleState, partyIndex: number): BattleState {
+export function switchPlayerIn(state: BattleState, partyIndex: number, batonPass = false): BattleState {
   const incoming = state.playerParty[partyIndex];
   if (!incoming || incoming.currentHp === 0 || partyIndex === state.playerActive) {
     throw new RangeError(`Troca inválida para o slot ${partyIndex} (ativo ${state.playerActive}, time de ${state.playerParty.length}).`);
   }
   const withdrawn = replaceAt(state.playerParty, state.playerActive, withdrawFromBattle(state.player));
-  const entering = withdrawFromBattle(incoming);
+  const entering = incomingForSwitch(state.player, incoming, batonPass);
   const participants = state.participants.includes(partyIndex) ? state.participants : [...state.participants, partyIndex];
   const switched = {
     ...state,
@@ -91,25 +91,25 @@ export function switchPlayerIn(state: BattleState, partyIndex: number): BattleSt
     player: entering,
     playerActive: partyIndex,
     participants,
-    log: [...state.log, `Vai, ${entering.species.name}!`],
+    log: [...state.log, ...naturalCureMessage(state.player), `Vai, ${entering.species.name}!`],
   };
   return activateEntryAbility(applyHazardsOnEntry(switched, 'player'), 'player');
 }
 
-export function switchEnemyIn(state: BattleState, partyIndex: number, forced = false): BattleState {
+export function switchEnemyIn(state: BattleState, partyIndex: number, forced = false, batonPass = false): BattleState {
   const incoming = state.enemyParty[partyIndex];
   if (!incoming || incoming.currentHp === 0 || partyIndex === state.enemyActive) {
     throw new RangeError(`Troca inválida para o slot inimigo ${partyIndex} (ativo ${state.enemyActive}, time de ${state.enemyParty.length}).`);
   }
   const withdrawn = replaceAt(state.enemyParty, state.enemyActive, withdrawFromBattle(state.enemy));
-  const entering = withdrawFromBattle(incoming);
+  const entering = incomingForSwitch(state.enemy, incoming, batonPass);
   const sent = {
     ...state,
     enemy: entering,
     enemyActive: partyIndex,
     enemyParty: replaceAt(withdrawn, partyIndex, entering),
     participants: state.player.currentHp > 0 ? [state.playerActive] : [],
-    log: [...state.log, forced
+    log: [...state.log, ...naturalCureMessage(state.enemy), forced
       ? `${state.trainerName ?? 'O oponente'} foi forçado a trocar para ${entering.species.name}!`
       : `${state.trainerName ?? 'O oponente'} enviou ${entering.species.name} (Lv.${entering.level})!`],
   };
@@ -123,15 +123,49 @@ function applyHazardsOnEntry(state: BattleState, side: BattleFieldSide): BattleS
 }
 
 export function activateEntryAbility(state: BattleState, side: BattleSide): BattleState {
-  if (pokemonOf(state, side).currentHp === 0 || pokemonOf(state, side).ability !== 'Intimidate') return state;
+  const entering = pokemonOf(state, side);
+  if (entering.currentHp === 0) return state;
+  const weather = ENTRY_WEATHER[entering.ability];
+  let next = state;
+  if (weather) {
+    next = {
+      ...state,
+      field: { ...state.field, weather: { kind: weather.kind, turns: 5 } },
+      log: [...state.log, weather.message],
+    };
+  }
+  if (entering.ability !== 'Intimidate') return next;
   const targetSide = opposite(side);
-  const target = pokemonOf(state, targetSide);
+  const target = pokemonOf(next, targetSide);
   const atk = Math.max(-6, target.stages.atk - 1);
-  if (atk === target.stages.atk) return state;
+  if (atk === target.stages.atk) return next;
   const lowered = { ...target, stages: { ...target.stages, atk } };
-  const updated = withPokemon(state, targetSide, lowered);
+  const updated = withPokemon(next, targetSide, lowered);
   return { ...updated, log: [...updated.log, `${target.species.name} teve o Ataque reduzido por Intimidate!`] };
 }
+
+function incomingForSwitch(outgoing: PokemonInstance, incoming: PokemonInstance, batonPass: boolean): PokemonInstance {
+  const entering = prepareBattleEntry(incoming);
+  if (!batonPass) return entering;
+  return {
+    ...entering,
+    stages: outgoing.stages,
+    volatile: { ...entering.volatile, substituteHp: outgoing.volatile.substituteHp ?? 0 },
+  };
+}
+
+function naturalCureMessage(pokemon: PokemonInstance): string[] {
+  return pokemon.ability === 'Natural Cure' && pokemon.status
+    ? [`${pokemon.species.name} curou suas condições de status com Natural Cure!`]
+    : [];
+}
+
+const ENTRY_WEATHER: Readonly<Record<string, { kind: BattleWeather; message: string }>> = {
+  Drizzle: { kind: 'rain', message: 'A chuva começou a cair!' },
+  Drought: { kind: 'sun', message: 'A luz do sol ficou intensa!' },
+  'Sand Stream': { kind: 'sandstorm', message: 'Uma tempestade de areia começou!' },
+  'Snow Warning': { kind: 'hail', message: 'Começou a nevar!' },
+};
 
 function sendNextEnemy(state: BattleState, nextIndex: number): BattleState {
   return switchEnemyIn(state, nextIndex);

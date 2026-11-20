@@ -1,5 +1,21 @@
-import { genderFromPersonality, type PokemonGender, type PokemonInstance } from './battlePokemon';
+import { genderFromPersonality, type BattleMove, type PokemonGender, type PokemonInstance } from './battlePokemon';
 import type { MoveOutcome } from './moveExecution';
+import { rollInRange, type Rng } from './statusConditions';
+
+export function inflictPartialTrap(
+  target: PokemonInstance,
+  move: BattleMove,
+  rng: Rng
+): { target: PokemonInstance; message: string | null } {
+  if (target.currentHp === 0 || target.species.types.includes('ghost') || (target.volatile.partialTrapTurns ?? 0) > 0) {
+    return { target, message: null };
+  }
+  const turns = rollInRange(4, 5, rng);
+  return {
+    target: { ...target, volatile: { ...target.volatile, partialTrapTurns: turns } },
+    message: `${target.species.name} ficou preso por ${move.name}!`,
+  };
+}
 
 export function disableMove(user: PokemonInstance, target: PokemonInstance, used: string): MoveOutcome {
   const lastMoveId = target.lastMoveId;

@@ -1,9 +1,10 @@
 import type { BattleMove, PokemonInstance } from './battlePokemon';
 import { calculateDamage, moveEffectiveness, rollCritical, rollHitCount } from './damage';
-import { abilityImmunity, activateTypeImmunity, triggerContactAbility } from './battleAbilities';
+import { abilityImmunity, activateTypeImmunity, sheerForceApplies, triggerContactAbility, triggerMoxie } from './battleAbilities';
 import { triggerThresholdBerry } from './battleHeldItems';
 import { applyStatChanges, inflictConfusion } from './battleMoveEffects';
 import { statusKindForMove, tryInflictStatus, type Rng } from './statusConditions';
+import { inflictPartialTrap } from './battleVolatileMoves';
 import type { BattleScreen, BattleScreenState } from './battleField';
 import type { MoveExecutionContext, MoveOutcome } from './moveExecution';
 
@@ -18,7 +19,7 @@ export function executeOneHitKnockout(user: PokemonInstance, target: PokemonInst
   }
   const saved = saveFromLethalHit(target);
   if (saved) return { user, target: saved.pokemon, messages: [used, saved.message], flinched: false };
-  return { user, target: { ...target, currentHp: 0 }, messages: [used, 'Nocaute em um golpe!'], flinched: false };
+  return withMoxie({ user, target: { ...target, currentHp: 0 }, messages: [used, 'Nocaute em um golpe!'], flinched: false }, true);
 }
 
 export function executeDamagingMove(
@@ -59,7 +60,8 @@ function damageHits(
   const hit = applyHits(user, target, move, damageMove, rng, context, hits);
   const outcome = summarizeHits(user, move, hit, effectiveness, hits);
   const hpEffects = applyAfterDamage(outcome, move, hit.damage, rng);
-  const withContact = addContactEffect(hpEffects, move, rng, hits, hit.damage);
+  const boosted = withMoxie(hpEffects, hit.knockedOut);
+  const withContact = addContactEffect(boosted, move, rng, hit.landedHits, hit.damage);
   const postHit = removeKnockedOffItem(withContact, move);
   const switched = (move.name === 'U-turn' || move.name === 'Volt Switch') && hit.damage > 0
     ? { ...postHit, switchUser: true }
@@ -74,6 +76,8 @@ interface HitSummary {
   hitSubstitute: boolean;
   berryMessages: string[];
   survivalMessages: string[];
+  knockedOut: boolean;
+  landedHits: number;
 }
 
 function applyHits(
@@ -91,12 +95,16 @@ function applyHits(
   let hitSubstitute = false;
   const berryMessages: string[] = [];
   const survivalMessages: string[] = [];
+  let knockedOut = false;
+  let landedHits = 0;
   for (let hit = 0; hit < hits && defender.currentHp > 0; hit += 1) {
     const hpBeforeHit = defender.currentHp;
     const critical = rollCritical(defender, move, rng, user);
     const damageForHit = calculateDamage(user, defender, damageMove, rng, damageOptions(move, context, critical));
+    landedHits += 1;
     const result = applyDamageHit(defender, damageForHit);
     defender = result.pokemon;
+    knockedOut ||= !result.hitSubstitute && defender.currentHp === 0;
     hitSubstitute ||= result.hitSubstitute;
     if (result.message) survivalMessages.push(result.message);
     const berry = defender.currentHp < hpBeforeHit ? triggerThresholdBerry(defender) : null;
@@ -105,7 +113,7 @@ function applyHits(
     damage += damageForHit;
     criticals += critical ? 1 : 0;
   }
-  return { target: defender, damage, criticals, hitSubstitute, berryMessages, survivalMessages };
+  return { target: defender, damage, criticals, hitSubstitute, berryMessages, survivalMessages, knockedOut, landedHits };
 }
 
 function summarizeHits(
@@ -124,6 +132,16 @@ function summarizeHits(
     ...hit.berryMessages,
   ];
   return { user, target: hit.target, messages, flinched: false, hitSubstitute: hit.hitSubstitute };
+}
+
+function withMoxie(outcome: MoveOutcome, knockedOut: boolean): MoveOutcome {
+  if (!knockedOut) return outcome;
+  const result = triggerMoxie(outcome.user);
+  return {
+    ...outcome,
+    user: result.pokemon,
+    messages: result.message ? [...outcome.messages, result.message] : outcome.messages,
+  };
 }
 
 function canRemoveHeldItem(pokemon: PokemonInstance): boolean {
@@ -180,20 +198,21 @@ function saveFromLethalHit(target: PokemonInstance): { pokemon: PokemonInstance;
 
 function addContactEffect(outcome: MoveOutcome, move: BattleMove, rng: Rng, hits: number, damage: number): MoveOutcome {
   let attacker = outcome.user;
-  let message: string | null = null;
+  const messages: string[] = [];
   if (move.contact && damage > 0) {
-    for (let hit = 0; hit < hits && outcome.target.currentHp > 0 && attacker.status === null; hit += 1) {
+    for (let hit = 0; hit < hits && attacker.currentHp > 0; hit += 1) {
       const result = triggerContactAbility(outcome.target, attacker, move, rng);
       attacker = result.attacker;
-      message = result.message ?? message;
+      messages.push(...result.messages);
     }
   }
-  return { ...outcome, user: attacker, messages: message ? [...outcome.messages, message] : outcome.messages };
+  return { ...outcome, user: attacker, messages: [...outcome.messages, ...messages] };
 }
 
 function applyAfterDamage(outcome: MoveOutcome, move: BattleMove, damage: number, rng: Rng): MoveOutcome {
   const withHp = applyHpSideEffects(outcome, move, damage);
   if (withHp.hitSubstitute) return { ...withHp, flinched: false };
+  if (sheerForceApplies(withHp.user, move)) return { ...withHp, flinched: false };
   const withStatus = applySecondaryStatus(withHp, move, rng);
   const withStages = applySecondaryStages(withStatus, move, rng);
   const flinched = withStages.target.currentHp > 0 && move.flinchPercent > 0 && rng() * 100 < move.flinchPercent;
@@ -203,11 +222,16 @@ function applyAfterDamage(outcome: MoveOutcome, move: BattleMove, damage: number
 function applyHpSideEffects(outcome: MoveOutcome, move: BattleMove, damage: number): MoveOutcome {
   const { user } = outcome;
   let delta = 0;
-  if (move.recoilPercent !== 0 && !(user.ability === 'Rock Head' && move.recoilPercent < 0)) {
+  const recoilBlocked = move.recoilPercent < 0 && ['Rock Head', 'Magic Guard'].includes(user.ability);
+  if (move.recoilPercent !== 0 && !recoilBlocked) {
     delta += Math.sign(move.recoilPercent) * Math.max(1, Math.floor((damage * Math.abs(move.recoilPercent)) / 100));
   }
-  if (move.healPercent < 0) delta -= Math.max(1, Math.floor((user.maxHp * -move.healPercent) / 100));
-  if (user.heldItem === 'Life Orb' && damage > 0) delta -= Math.max(1, Math.floor(user.maxHp / 10));
+  if (move.healPercent < 0 && user.ability !== 'Magic Guard') {
+    delta -= Math.max(1, Math.floor((user.maxHp * -move.healPercent) / 100));
+  }
+  if (user.heldItem === 'Life Orb' && damage > 0 && user.ability !== 'Magic Guard' && !sheerForceApplies(user, move)) {
+    delta -= Math.max(1, Math.floor(user.maxHp / 10));
+  }
   if (delta === 0) return outcome;
   const currentHp = Math.max(0, Math.min(user.maxHp, user.currentHp + delta));
   const note = delta > 0 ? `${user.species.name} drenou ${currentHp - user.currentHp} HP.` : `${user.species.name} sofreu ${user.currentHp - currentHp} de dano de recuo.`;
@@ -215,6 +239,10 @@ function applyHpSideEffects(outcome: MoveOutcome, move: BattleMove, damage: numb
 }
 
 function applySecondaryStatus(outcome: MoveOutcome, move: BattleMove, rng: Rng): MoveOutcome {
+  if (move.inflict === 8 && outcome.target.currentHp > 0 && rng() * 100 < move.inflictPercent) {
+    const result = inflictPartialTrap(outcome.target, move, rng);
+    return result.message ? { ...outcome, target: result.target, messages: [...outcome.messages, result.message] } : outcome;
+  }
   if (move.inflict === 6 && outcome.target.currentHp > 0 && rng() * 100 < move.inflictPercent) {
     const result = inflictConfusion(outcome.target, move, rng);
     return result.message ? { ...outcome, target: result.target, messages: [...outcome.messages, result.message] } : outcome;

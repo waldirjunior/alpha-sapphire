@@ -16,6 +16,7 @@ export interface MoveOutcome {
   fieldUpdate?: { weather?: BattleWeatherState | null; screen?: BattleScreen; hazard?: EntryHazard; clearHazards?: 'user' | 'both'; clearScreens?: boolean };
   forceSwitch?: boolean;
   switchUser?: boolean;
+  batonPass?: boolean;
   hitSubstitute?: boolean;
 }
 
@@ -169,6 +170,7 @@ function swaggerMove(user: PokemonInstance, target: PokemonInstance, move: Battl
 
 function executeQualityThirteen(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, used: string): MoveOutcome {
   if (move.name === 'Protect' || move.name === 'Detect') return protectMove(user, target, rng, used);
+  if (move.name === 'Baton Pass') return { user, target, messages: [used], flinched: false, switchUser: true, batonPass: true };
   if (move.name === 'Taunt') return tauntMove(user, target, used);
   if (move.name === 'Disable') return disableMove(user, target, used);
   if (move.name === 'Encore') return encoreMove(user, target, used);

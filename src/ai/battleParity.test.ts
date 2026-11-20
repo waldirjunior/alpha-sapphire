@@ -4,7 +4,7 @@ import { applyEntryHazards, createBattleField, setEntryHazard } from '../core/ba
 import { orderActions } from '../core/battleTurn';
 import { toBattleMove } from '../core/battlePokemon';
 import { getMoveByName, getSpeciesById } from '../core/dex';
-import { checkCanAct } from '../core/statusConditions';
+import { applyResidualDamage, checkCanAct } from '../core/statusConditions';
 import { executeMove } from '../core/moveExecution';
 
 const alwaysMaxDamage = () => 1;
@@ -40,6 +40,24 @@ describe('Gen VI battle formula parity vectors', () => {
     ];
 
     expect(values).toEqual([28, 96, 28, 24]);
+  });
+
+  it('matches deterministic vectors for Sheer Force, contact damage, and partial trapping', () => {
+    const torchic = pokemon('torchic', 30, 'Ember');
+    const target = pokemon('wurmple', 60, 'Tackle');
+    const ember = toBattleMove(getMoveByName('Ember'));
+    const tackle = toBattleMove(getMoveByName('Tackle'));
+    const contact = executeMove(torchic, { ...target, ability: 'Iron Barbs' }, tackle, () => 0.99);
+    const bind = executeMove(torchic, target, toBattleMove(getMoveByName('Bind')), () => 0.5);
+    const residual = applyResidualDamage(bind.target);
+    const values = [
+      calculateDamage(torchic, target, ember, alwaysMaxDamage),
+      calculateDamage({ ...torchic, ability: 'Sheer Force' }, target, ember, alwaysMaxDamage),
+      torchic.currentHp - contact.user.currentHp,
+      bind.target.currentHp - residual.pokemon.currentHp,
+    ];
+
+    expect(values).toEqual([42, 54, 8, 15]);
   });
 
   it('matches deterministic Gen VI vectors for Knock Off, pivot attacks, and Sucker Punch', () => {

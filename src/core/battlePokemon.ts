@@ -35,6 +35,7 @@ export interface BattleVolatileState {
   infatuated?: boolean;
   encoreMoveId?: number | null;
   encoreTurns?: number;
+  partialTrapTurns?: number;
 }
 
 export function neutralVolatileState(): BattleVolatileState {
@@ -55,6 +56,7 @@ export function neutralVolatileState(): BattleVolatileState {
     infatuated: false,
     encoreMoveId: null,
     encoreTurns: 0,
+    partialTrapTurns: 0,
   };
 }
 
@@ -172,8 +174,23 @@ export function genderFromPersonality(ratio: number | undefined, personality: nu
 
 /** Sai de campo: estágios zeram e o contador do tóxico volta a 1/16 (Gen VI). */
 export function withdrawFromBattle(pokemon: PokemonInstance): PokemonInstance {
-  const status = pokemon.status?.kind === 'toxic' ? { kind: 'toxic' as const, counter: 1 } : pokemon.status;
-  return { ...pokemon, stages: NEUTRAL_STAGES, status, lastMoveId: null, volatile: neutralVolatileState() };
+  const status = pokemon.ability === 'Natural Cure' ? null
+    : pokemon.status?.kind === 'toxic' ? { kind: 'toxic' as const, counter: 1 } : pokemon.status;
+  return prepareBattleEntry({ ...pokemon, status });
+}
+
+export function prepareBattleEntry(pokemon: PokemonInstance): PokemonInstance {
+  return {
+    ...pokemon,
+    status: pokemon.status?.kind === 'toxic' ? { kind: 'toxic', counter: 1 } : pokemon.status,
+    stages: NEUTRAL_STAGES,
+    lastMoveId: null,
+    volatile: neutralVolatileState(),
+  };
+}
+
+export function isPartiallyTrapped(pokemon: PokemonInstance): boolean {
+  return (pokemon.volatile.partialTrapTurns ?? 0) > 0;
 }
 
 export function restoreAtPokemonCenter(pokemon: PokemonInstance): PokemonInstance {
