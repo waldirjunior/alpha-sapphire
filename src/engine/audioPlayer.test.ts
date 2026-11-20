@@ -196,6 +196,20 @@ describe('BgmPlayer', () => {
     expect(FakeContext.last.oscillators).toHaveLength(0);
   });
 
+  it('loads the labeled door-close sample through its domain cue', async () => {
+    const fetchMock = stubFetch();
+    const player = new BgmPlayer();
+    await player.unlock();
+    player.playSfx('door-close', {
+      index: 1480,
+      label: 'SEQ_SE_KW_DOORCLOSE',
+    });
+
+    await vi.waitFor(() => expect(FakeContext.last.sources).toHaveLength(1));
+    expect(fetchMock).toHaveBeenCalledWith('/assets/audio/sfx/bcsar_1480_SEQ_SE_KW_DOORCLOSE.wav');
+    expect(FakeContext.last.sources[0]).toMatchObject({ started: true, buffer: { bytes: 8 } });
+  });
+
   it('falls back to the procedural cue when the BCSAR asset is unavailable', async () => {
     const fetchMock = stubFetch(404);
     const player = new BgmPlayer();

@@ -31,6 +31,7 @@ const SFX_PATTERNS: Readonly<Record<SfxCue, SfxPattern>> = {
   'menu-select': { waveform: 'square', amplitude: 0.09, notes: [{ frequency: 760, seconds: 0.055 }] },
   'wall-bump': { waveform: 'triangle', amplitude: 0.16, notes: [{ frequency: 190, seconds: 0.085 }] },
   'zone-warp': { waveform: 'sine', amplitude: 0.13, notes: [{ frequency: 360, seconds: 0.09 }, { frequency: 540, seconds: 0.12 }] },
+  'door-close': { waveform: 'sine', amplitude: 0.13, notes: [{ frequency: 540, seconds: 0.09 }, { frequency: 360, seconds: 0.12 }] },
   'heal-chime': { waveform: 'sine', amplitude: 0.15, notes: [
     { frequency: 523, seconds: 0.08 }, { frequency: 659, seconds: 0.08 }, { frequency: 784, seconds: 0.08 }, { frequency: 1047, seconds: 0.19 },
   ] },

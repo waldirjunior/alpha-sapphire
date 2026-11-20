@@ -1148,4 +1148,11 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Erro:** `zone_0285` foi tratada como o Ginásio porque o warp da cidade entrava nela e o disassembly mostrava NPC6/script2; essa zona é o Poké Mart, e o Ginásio é `zone_0441`.
 - **Regra:** antes de vincular um evento pelo nome da cidade ou número de NPC/script, confira texto e ZO da zona interior, destino do warp e dispatch AMX dos candidatos. Para `zone_0441`, a fala de Roxanne em `textFile=563`, ZO SHA `e992a801ec694c5173c663ce89260d1370d6259c1ce0b2b588a955527bc9f05b` e `map/case 2` (`tableOffset=6248`, case→`6028`, função→`7248`) identificam o fluxo; `entities/case 2` (`tableOffset=120`, case→`60`, função→`316`) não tem nativas. O AMX map inclui `_CallTrainerBattleCore` em `1892` e o emulador mostrou a fala de desafio ao interagir com a líder. O SHA da fonte de entidades do mapa é `0d5908f71c51a9bbac17e39527dfadfb303a64dfd8f4befdd66e4c905373c72b`; `loader.test.ts` cobre essa prova e recusa a NPC6/2 do Poké Mart.
 
+## A-115 A amostra CWAV de uma sequência deve seguir as referências encadeadas do BCSAR
+
+- **Data:** 2026-11-20; P-008, conversão dos SFX BCSAR.
+- **Erro:** a amostra `file_3109_wave_000.cwav` foi atribuída a `SEQ_SE_RECOVERY` porque vinha do archive 15 e de um banco presumido; a tabela da sequência aponta para outro banco e outro archive.
+- **Regra:** siga o `CSEQ` pelo item ID de banco na tabela `0x2101`, leia os itens de archive (`0x05`) no `CBNK` indicado e resolva cada archive pelo `0x2103` antes de rotular um CWAV. O sample identificado continua sendo apenas uma amostra do banco; não prova a sequência composta nem a nota/instrumento executados.
+- **Evidência:** `SEQ_SE_RECOVERY` (som 343, `fileId=285`) referencia `0x03000051` → banco 81/`CBNK fileId=1716`; o CBNK referencia `0x0500005D` → archive 93/`CWAR fileId=3187`. `file_3109_wave_000.cwav` é do archive 15 e não corresponde a essa cadeia.
+
 

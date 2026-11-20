@@ -49,9 +49,22 @@ python3 scripts/convert_bcsar_cwav.py \
   --out-dir rom/extracted/audio/bcsar_sfx/wav
 ```
 
-Esta sessão converteu um sample real: `file_3109_wave_000.cwav` (`fileId=3109`, CWAR wave 0) para `bcsar_343_SEQ_SE_RECOVERY.wav`. O `CSEQ file_0285.cseq` de `343 SEQ_SE_RECOVERY` aponta para o banco BCSAR 3 (`file_1638.cbnk`); a tabela do banco inclui wave archive 15 (`fileId=3109`) e waves 0–29. O WAV validado tem mono, 32768 Hz, 9789 frames (0,299 s), 19622 bytes e pico PCM 32424. Isso confirma a relação do sample ao banco usado pela sequência, não a composição completa nem a seleção exata de instrumento/nota do CSEQ.
+No BCSAR local, a cadeia do `CSEQ` do som segue a tabela de bancos por item ID (`0x03`), e o `CBNK` aponta para o wave archive (`0x05`). O wave archive abaixo tem um único `CWAV` extraído; o arquivo WAV local é só esse sample, não a sequência composta:
 
-O `vgmstream-cli` disponível não suporta `cseq`; CSEQ exige sequenciador, CBNK e CWAR para virar a execução composta. A saída CWAV é um sample reproduzível, não uma gravação fiel da sequência inteira. A reprodução web procura `/assets/audio/sfx/bcsar_<índice>_<rótulo>.wav`; quando o WAV está ausente ou não decodifica, toca o padrão procedural do cue.
+| Som | `CSEQ` fileId | Bank item ID → `CBNK` fileId | Wave item ID → `CWAR` fileId | WAV local |
+|---|---:|---|---|---|
+| `261 SEQ_SE_MESSAGE` | 203 | `0x03000005` → 1640 | `0x05000011` → 3111 | `bcsar_261_SEQ_SE_MESSAGE.wav` |
+| `262 SEQ_SE_DECIDE1` | 204 | `0x03000007` → 1642 | `0x05000013` → 3113 | `bcsar_262_SEQ_SE_DECIDE1.wav` |
+| `265 SEQ_SE_SELECT1` | 207 | `0x0300000C` → 1647 | `0x05000018` → 3118 | `bcsar_265_SEQ_SE_SELECT1.wav` |
+| `270 SEQ_SE_CATCH` | 212 | `0x03000012` → 1653 | `0x0500001E` → 3124 | `bcsar_270_SEQ_SE_CATCH.wav` |
+| `343 SEQ_SE_RECOVERY` | 285 | `0x03000051` → 1716 | `0x0500005D` → 3187 | `bcsar_343_SEQ_SE_RECOVERY.wav` |
+| `413 SEQ_SE_FLD_WALL_HIT` | 353 | `0x03000099` → 1788 | `0x050000A5` → 3259 | `bcsar_413_SEQ_SE_FLD_WALL_HIT.wav` |
+| `1480 SEQ_SE_KW_DOORCLOSE` | 1417 | `0x030004AC` → 2831 | `0x050004B8` → 4302 | `bcsar_1480_SEQ_SE_KW_DOORCLOSE.wav` |
+| `1481 SEQ_SE_KW_DOOROPEN` | 1418 | `0x030004AD` → 2832 | `0x050004B9` → 4303 | `bcsar_1481_SEQ_SE_KW_DOOROPEN.wav` |
+
+A associação anterior de `343` a `file_3109_wave_000.cwav` estava errada: esse é o wave archive 15, mas o `CSEQ file_0285.cseq` aponta ao banco de índice 81 (`file_1716.cbnk`) e ao archive 93 (`fileId=3187`). O WAV correto de `343` foi convertido novamente. Os oito samples convertidos são PCM mono a 32728 Hz; duram de 0,130 s (`270`) a 0,920 s (`343`).
+
+O `vgmstream-cli` local (r2168) lista `CWAV`, não `CSEQ`; a tentativa `vgmstream-cli -m file_0203.cseq` retorna `failed opening`. Não há sequenciador CSEQ instalado neste worktree, então a composição ficou bloqueada nesta sessão. A reprodução web procura `/assets/audio/sfx/bcsar_<índice>_<rótulo>.wav`; quando o WAV está ausente ou não decodifica, toca o padrão procedural do cue. CWAV é sample do banco, não uma gravação fiel da sequência nem prova de que o instrumento/nota selecionado usa aquele sample.
 
 Comando reproduzível a partir da raiz do checkout, apontando `--bcsar` ao dump local da ROM:
 
@@ -78,7 +91,7 @@ Os números abaixo são índices na tabela `0x2100`, não valores literais aceit
 
 O scan literal também encontra `0x000A001D` (69), `0x00060017` (17), `0x000A0000` (13) e outros valores de campo; não se deve tratar o valor de `SEPlay` como índice BCSAR sem resolver a codificação/runtime que conecta os dois espaços. `0x000A0240`, anotado anteriormente como hit, também não aparece no corpus atual. O extrator cataloga os IDs e os rótulos BCSAR em separado para preservar essa distinção.
 
-Os `.cseq`, `.cbnk`, `.cwar` e `.cwav` crus não são reproduzíveis diretamente pelo navegador; a conversão CWAV acima gera WAVs de samples, não sequências compostas. `battleAudio.ts` cataloga os índices/rótulos e resolve aliases de `SfxCue`: diálogo→261, menu abrir→262, seleção→265, captura→270, recuperação→343, bloqueio de parede→413 e warp→1481. A porta fechar (1480) fica catalogada sem cue de runtime; `battle-hit` não aponta para `SEQ_SE_FLD_WALL_HIT`. O alias de warp→rótulo de porta é semântico, não prova a interpretação do literal `SEPlay` nem uma equivalência de runtime. `SceneManager.playSfx` passa a referência ao `BgmPlayer`; se o WAV faltar ou não decodificar, o cue mantém o fallback procedural. No slice local, só o sample de `343` foi convertido e colocado no `public/assets/audio/sfx/` ignorado pelo Git; os outros aliases ainda caem no fallback até seus WAVs serem convertidos.
+Os `.cseq`, `.cbnk`, `.cwar` e `.cwav` crus não são reproduzíveis diretamente pelo navegador; a conversão CWAV acima gera WAVs de samples, não sequências compostas. `battleAudio.ts` cataloga os índices/rótulos e resolve aliases de `SfxCue`: diálogo→261, menu abrir→262, seleção→265, captura→270, recuperação→343, bloqueio de parede→413, warp→1481 e `door-close`→1480. `door-close` tem referência e saída WAV, mas ainda não tem produtor de cue no host; o warp genérico continua tocando o alias semântico de porta aberta. `battle-hit` não aponta para `SEQ_SE_FLD_WALL_HIT`. `SceneManager.playSfx` passa referências ao `BgmPlayer`; se o WAV faltar ou não decodificar, o cue mantém o fallback procedural. Os oito WAVs deste slice ficam em `public/assets/audio/sfx/`, ignorado pelo Git.
 
 Os aliases literais `SEPlay` em `resolveZoneSfx` continuam a selecionar os mesmos cues de domínio; eles não são decodificados em índices BCSAR. A tabela de `SfxCue` escolhe um rótulo nativo separado pela semântica do alias, sem declarar que o literal de origem é o índice BCSAR. Resolver a codificação/dispatch de `SEPlay`, tocar as oito sequências compostas e identificar os WAVs de todos os alvos seguem como resíduos de P-008.
 

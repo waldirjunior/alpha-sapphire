@@ -82,6 +82,37 @@ class ConvertBcsarCwavTests(unittest.TestCase):
             self.assertTrue((output / "bcsar_343_SEQ_SE_RECOVERY.wav").is_file())
             self.assertFalse((output / "sample.wav").exists())
 
+    def test_converts_multiple_selected_samples_and_records_all_output_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = self.make_input(root)
+            (source / "second.cwav").write_bytes(b"second CWAV synthetic fixture")
+            manifest_path = source / "manifest.json"
+            manifest = json.loads(manifest_path.read_text())
+            manifest["assets"].append({
+                "fileId": 14, "signature": "CWAV", "extension": "cwav", "path": "second.cwav", "size": 30,
+            })
+            manifest_path.write_text(json.dumps(manifest))
+            output = root / "wav"
+
+            def decode(arguments: list[str], **_kwargs: object) -> SimpleNamespace:
+                write_wave(Path(arguments[arguments.index("-o") + 1]))
+                return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+            with patch("scripts.convert_bcsar_cwav.subprocess.run", side_effect=decode) as run:
+                result = convert_cwav_assets(source, output, "vgmstream-cli", {
+                    "sample.cwav": "bcsar_261_SEQ_SE_MESSAGE.wav",
+                    "second.cwav": "bcsar_262_SEQ_SE_DECIDE1.wav",
+                })
+
+            self.assertEqual(run.call_count, 2)
+            self.assertEqual(result["convertedCount"], 2)
+            self.assertEqual(
+                [asset["path"] for asset in result["assets"]],
+                ["bcsar_261_SEQ_SE_MESSAGE.wav", "bcsar_262_SEQ_SE_DECIDE1.wav"],
+            )
+            self.assertTrue((output / "conversion-manifest.json").is_file())
+
     def test_rejects_decoder_output_that_is_not_a_playable_wave(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

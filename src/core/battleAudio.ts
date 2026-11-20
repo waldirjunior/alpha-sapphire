@@ -4,7 +4,7 @@
 import type { BattleEvent } from './battleEvents';
 
 export type SfxCue = 'dialogue-confirm' | 'menu-open' | 'menu-select' | 'wall-bump' | 'zone-warp' |
-  'heal-chime' | 'battle-hit' | 'pokeball-throw' | 'pokeball-capture' | 'faint';
+  'door-close' | 'heal-chime' | 'battle-hit' | 'pokeball-throw' | 'pokeball-capture' | 'faint';
 export type BattleSfxEvent = BattleEvent | { type: 'pokeball'; captured: boolean };
 
 export interface BcsarSfxReference {
@@ -34,6 +34,7 @@ const NATIVE_SFX_BY_CUE: Readonly<Partial<Record<SfxCue, BcsarSfxReference>>> = 
   'heal-chime': BCSAR_SFX.recovery,
   'wall-bump': BCSAR_SFX.wallHit,
   'zone-warp': BCSAR_SFX.doorOpen,
+  'door-close': BCSAR_SFX.doorClose,
 };
 
 export function resolveBcsarSfxReference(cue: SfxCue): BcsarSfxReference | undefined {

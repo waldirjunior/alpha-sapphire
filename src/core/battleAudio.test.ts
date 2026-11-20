@@ -79,6 +79,7 @@ describe('battle music adapter (P-008)', () => {
     expect(resolveBcsarSfxReference('heal-chime')).toMatchObject({ index: 343, label: 'SEQ_SE_RECOVERY' });
     expect(resolveBcsarSfxReference('wall-bump')).toMatchObject({ index: 413, label: 'SEQ_SE_FLD_WALL_HIT' });
     expect(resolveBcsarSfxReference('zone-warp')).toMatchObject({ index: 1481, label: 'SEQ_SE_KW_DOOROPEN' });
+    expect(resolveBcsarSfxReference('door-close')).toMatchObject({ index: 1480, label: 'SEQ_SE_KW_DOORCLOSE' });
     expect(resolveBcsarSfxReference('battle-hit')).toBeUndefined();
     expect(BCSAR_SFX_REFERENCES).toContainEqual({ index: 1480, label: 'SEQ_SE_KW_DOORCLOSE' });
   });
