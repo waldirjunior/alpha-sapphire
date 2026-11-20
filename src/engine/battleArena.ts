@@ -1,169 +1,15 @@
 import * as THREE from 'three';
 import type { PokemonType } from '../data/pokemon/species';
-import { createParticleGeometry, getMoveEffectStyle, type MoveEffectStyle, type ParticleShape } from './battleMoveStyles';
+import { MoveEffects } from './battleArenaEffects';
 
 export { getMoveEffectStyle, MOVE_EFFECT_STYLES } from './battleMoveStyles';
 export type { MoveEffectStyle, ParticleShape } from './battleMoveStyles';
+export { MoveEffects } from './battleArenaEffects';
+export { damageReactionFrame, normalizePokeballShakes, parabolicFlightPoint, pokeballShakeFrame } from './battleArenaMotion';
 
 // P-014: arena estilizada e efeitos de golpe por tipo enquanto os modelos/partículas nativas completos não são extraídos.
 
 export type BattleArenaBiome = 'grass' | 'water' | 'cave' | 'indoor';
-
-interface Particle {
-  mesh: THREE.Mesh;
-  velocity: THREE.Vector3;
-  age: number;
-  lifetime: number;
-  lift: number;
-}
-
-interface ImpactRing {
-  mesh: THREE.Mesh;
-  age: number;
-  lifetime: number;
-}
-
-interface PokeballArc {
-  group: THREE.Group;
-  from: THREE.Vector3;
-  to: THREE.Vector3;
-  age: number;
-  duration: number;
-}
-
-function disposeObjectMaterials(root: THREE.Object3D): void {
-  root.traverse((obj) => {
-    if (!(obj instanceof THREE.Mesh)) return;
-    const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
-    for (const mat of mats) mat.dispose();
-  });
-}
-
-export class MoveEffects {
-  public readonly group = new THREE.Group();
-  private particles: Particle[] = [];
-  private rings: ImpactRing[] = [];
-  private pokeballs: PokeballArc[] = [];
-  private readonly geometries = new Map<ParticleShape, THREE.BufferGeometry>();
-  private readonly ringGeometry = new THREE.TorusGeometry(0.45, 0.05, 8, 28);
-
-  public get activeCount(): number {
-    return this.particles.length + this.rings.length + this.pokeballs.length;
-  }
-
-  public play(type: PokemonType, from: THREE.Vector3, to: THREE.Vector3): void {
-    const style = getMoveEffectStyle(type);
-    const direction = to.clone().sub(from).normalize();
-    for (let i = 0; i < style.count; i++) {
-      this.particles.push(this.spawn(style, from, direction));
-    }
-    this.rings.push(this.spawnRing(style.color, to));
-  }
-
-  public dispose(): void {
-    for (const geometry of this.geometries.values()) geometry.dispose();
-    this.ringGeometry.dispose();
-    disposeObjectMaterials(this.group);
-    this.geometries.clear();
-    this.particles = [];
-    this.rings = [];
-    this.pokeballs = [];
-    this.group.clear();
-  }
-
-  public playPokeball(from: THREE.Vector3, to: THREE.Vector3): void {
-    const ball = new THREE.Group();
-    const top = new THREE.Mesh(
-      new THREE.SphereGeometry(0.18, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2),
-      new THREE.MeshStandardMaterial({ color: '#ef4444', roughness: 0.35 })
-    );
-    const bottom = new THREE.Mesh(
-      new THREE.SphereGeometry(0.18, 12, 8, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2),
-      new THREE.MeshStandardMaterial({ color: '#f8fafc', roughness: 0.35 })
-    );
-    const band = new THREE.Mesh(
-      new THREE.TorusGeometry(0.18, 0.022, 6, 16),
-      new THREE.MeshStandardMaterial({ color: '#0f172a' })
-    );
-    band.rotation.x = Math.PI / 2;
-    ball.add(top, bottom, band);
-    ball.position.copy(from);
-    this.group.add(ball);
-    this.pokeballs.push({ group: ball, from: from.clone(), to: to.clone(), age: 0, duration: 0.65 });
-  }
-
-  private spawnRing(color: string, at: THREE.Vector3): ImpactRing {
-    const mat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.9 });
-    const mesh = new THREE.Mesh(this.ringGeometry, mat);
-    mesh.rotation.x = Math.PI / 2;
-    mesh.position.copy(at);
-    this.group.add(mesh);
-    return { mesh, age: 0, lifetime: 0.45 };
-  }
-
-  private spawn(style: MoveEffectStyle, from: THREE.Vector3, direction: THREE.Vector3): Particle {
-    const material = new THREE.MeshBasicMaterial({ color: style.color, transparent: true, side: THREE.DoubleSide });
-    const mesh = new THREE.Mesh(this.getGeometry(style.shape), material);
-    mesh.scale.setScalar(style.size * (0.6 + Math.random() * 0.8));
-    mesh.position.copy(from);
-    mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
-    const spread = new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.3, Math.random() - 0.5).multiplyScalar(0.9);
-    const velocity = direction.clone().add(spread).multiplyScalar(style.speed * (0.7 + Math.random() * 0.6));
-    this.group.add(mesh);
-    return { mesh, velocity, age: 0, lifetime: style.lifetime, lift: style.lift };
-  }
-
-  private getGeometry(shape: ParticleShape): THREE.BufferGeometry {
-    const cached = this.geometries.get(shape);
-    if (cached) return cached;
-    const geometry = createParticleGeometry(shape);
-    this.geometries.set(shape, geometry);
-    return geometry;
-  }
-
-  public update(dt: number): void {
-    this.particles = this.particles.filter((p) => {
-      p.age += dt;
-      if (p.age >= p.lifetime) {
-        this.group.remove(p.mesh);
-        (p.mesh.material as THREE.Material).dispose();
-        return false;
-      }
-      p.velocity.y += p.lift * dt;
-      p.mesh.position.addScaledVector(p.velocity, dt);
-      (p.mesh.material as THREE.MeshBasicMaterial).opacity = 1 - p.age / p.lifetime;
-      return true;
-    });
-
-    this.pokeballs = this.pokeballs.filter((b) => {
-      b.age += dt;
-      const t = Math.min(1, b.age / b.duration);
-      b.group.position.lerpVectors(b.from, b.to, t);
-      b.group.position.y += Math.sin(t * Math.PI) * 1.4;
-      b.group.rotation.z += dt * 10;
-      if (b.age >= b.duration) {
-        this.rings.push(this.spawnRing('#fef08a', b.to));
-        this.group.remove(b.group);
-        disposeObjectMaterials(b.group);
-        return false;
-      }
-      return true;
-    });
-
-    this.rings = this.rings.filter((r) => {
-      r.age += dt;
-      if (r.age >= r.lifetime) {
-        this.group.remove(r.mesh);
-        (r.mesh.material as THREE.Material).dispose();
-        return false;
-      }
-      const t = r.age / r.lifetime;
-      r.mesh.scale.setScalar(1 + t * 2.4);
-      (r.mesh.material as THREE.MeshBasicMaterial).opacity = 1 - t;
-      return true;
-    });
-  }
-}
 
 export interface BattleArena {
   group: THREE.Group;
@@ -432,6 +278,16 @@ export function createBattleArena(biome: BattleArenaBiome = 'grass'): BattleAren
   return { group, effects, biome, cameraMotion: new BattleCameraMotion() };
 }
 
+export function createBattleSlots(): { playerSlot: THREE.Group; enemySlot: THREE.Group } {
+  const playerSlot = new THREE.Group();
+  playerSlot.position.set(-1.6, 0, 1.4);
+  playerSlot.rotation.y = Math.PI * 0.75;
+  const enemySlot = new THREE.Group();
+  enemySlot.position.set(1.6, 0, -1.4);
+  enemySlot.rotation.y = -Math.PI * 0.25;
+  return { playerSlot, enemySlot };
+}
+
 export function replaceBattleArena(
   parent: THREE.Group,
   current: BattleArena,
@@ -462,10 +318,23 @@ export function playBattleAttack(
   arena.cameraMotion.playAttack(from, to);
 }
 
-export function playBattlePokeball(arena: BattleArena, playerSlot: THREE.Group, enemySlot: THREE.Group): void {
+export function playBattleDamage(arena: BattleArena, target: THREE.Group, attacker: THREE.Group): void {
+  arena.effects.playDamage(target, attacker);
+}
+
+export function playBattlePokeball(
+  arena: BattleArena,
+  playerSlot: THREE.Group,
+  enemySlot: THREE.Group,
+  captured = false,
+  shakes = captured ? 3 : 1
+): void {
   arena.effects.playPokeball(
     playerSlot.position.clone().setY(1.1),
-    enemySlot.position.clone().setY(0.8)
+    enemySlot.position.clone().setY(0.8),
+    enemySlot,
+    captured,
+    shakes
   );
 }
 
