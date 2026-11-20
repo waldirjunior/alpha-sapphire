@@ -47,8 +47,8 @@ export const POKENAV_MAP_SCENARIOS: readonly PokeNavVisualScenario[] = [
   {
     id: 'pokenav-hoenn-map',
     tab: 'map',
-    selectedLocationId: 'route-101',
-    selectedLocationName: 'Route 101',
+    selectedLocationId: 'littleroot-town',
+    selectedLocationName: 'Littleroot Town',
     playerLocationName: 'Littleroot Town',
     referenceImage: 'pokenav-hoenn-map-azahar.png',
   },

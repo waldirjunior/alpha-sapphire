@@ -10,9 +10,9 @@ Pegue o primeiro item não bloqueado. Cada item termina quando a verificação i
 | --- | --- | --- | --- |
 | 1 | *(Bloqueado por save ORAS avançado)* Permissões de movimento restantes (bike e Surf) fechadas por observação no emulador. | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
 | 3 | Interação/batalha natural da Roxanne e entrega da Stone Badge em `zone_0441` (binding e ABI CRO registrados; modo 2 do fade confirmado; campanha para em `PokePartyGetParam(0,8,0)`; faltam semântica dos seletores, equipe/callback e badge). | Regressão AMX + `e2e/campaign.spec.ts` avançando até a primeira nativa sem contrato; sem fixture de vitória. | PRD-003, P-013, A-114, A-116, A-119 |
-| 4 | Combiners RGB PICA restantes e paridade visual PokéNav/Mapa vs Azahar (expressões dinâmicas de batalha já no runtime via curvas BCH). | `scripts/test_pokemon_glb_materials.py` + `e2e/pokemonBattleModels.spec.ts` + `e2e/visual.spec.ts`. | P-007, P-011, P-012, A-112 |
-| 5 | Taxas reais por slot/surf/pesca nos encontros, IVs por classe de treinador, golpes `quality` 13 restantes e UI de item evolutivo. | `battleMechanics.test.ts` + `src/ai/battleParity.test.ts` + `src/game/`. | PRD-002, P-010 |
-| 6 | Arenas 3D e texturas reais de batalha extraídas da ROM substituindo as variantes procedurais. | Extrator Python + `battleArena.test.ts` + captura E2E revisada. | P-014 |
+| 4 | Binding de luz/combiners PICA e paridade residual PokéNav (AreaNav recomposta; ícones/semântica abertos; A-118/A-121). | `scripts/test_pokemon_glb_materials.py` + `e2e/pokemonBattleModels.spec.ts` + `e2e/visual.spec.ts`. | P-007, P-011, P-012, A-112, A-118, A-121 |
+| 5 | IVs por classe de treinador, golpes `quality` 13 restantes, UI de item evolutivo e ativação host dos métodos além da grama (taxas ORAS 61 slots já no core; A-117). | `battleMechanics.test.ts` + `src/ai/battleParity.test.ts` + `src/game/`. | PRD-002, P-010, A-117 |
+| 6 | Arenas cave/gym e paridade de texturas (grass/água ROM já integrados; A-120). | Extrator Python + `battleArena.test.ts` + captura E2E revisada. | P-014, A-120 |
 | 7 | Servidor de salas multiplayer (Fase 4) reutilizando `src/core/` puro sem dependências de browser. | Testes de protocolo/sala no core + build/verify passando. | Fase 4 |
 
 Regras da fila:

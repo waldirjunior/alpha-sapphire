@@ -1229,4 +1229,19 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Evidência:** `RomFS/a/1/3/6` é GARC; slots 11 e 12 começam com `BCH\0` e contêm as tags `btl_F_kusa` e `btl_F_mizu`. SpicaExport lê um modelo/textura no primeiro e um modelo/duas texturas no segundo.
 - **Regra:** use `scripts/extract_battle_arenas.py`, valide magic BCH e tag esperada antes de exportar slot 11/12, e mantenha GLB/PNG em `public/assets/battle-arenas/` ignorado pelo Git.
 
+## A-121 Captura da AreaNav comprova composição, não semântica dos ícones
+
+- **Data:** 2026-11-20; P-011, comparação da interface PokéNav.
+- **Contexto:** a referência 320×240 do Azahar mostra título, mapa e quatro
+  ícones, mas não explica os dados ou handlers que cada ícone representa.
+- **Erro a evitar:** inferir uma categoria ou ação pelo desenho e ligar o ícone
+  a filtros, Fly, berries ou outros estados sem uma fonte da ROM ou observação
+  interativa no emulador.
+- **Regra:** use a captura para reproduzir composição e aparência; mantenha os
+  ícones decorativos até identificar seus recursos e handlers na ROM ou observar
+  a ação correspondente no Azahar.
+- **Evidência:** `rom/visual-reference/pokenav-hoenn-map-azahar.png` mostra a
+  AreaNav em Littleroot; `e2e/visual.spec.ts` exige a mesma localização, o título
+  e quatro ícones no recorte do port, sem ligar os ícones a ações.
+
 

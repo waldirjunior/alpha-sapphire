@@ -16,9 +16,12 @@ const REFERENCES_DIR = path.join(visualReportDir(), 'references');
 const POKENAV_REFERENCES_DIR = visualReferenceDir();
 
 interface PokeNavMapMetrics {
-  bottomScreenHeight: number;
+  screenWidth: number;
+  screenHeight: number;
   mapWidth: number;
   mapHeight: number;
+  areaNavTitleCount: number;
+  iconCount: number;
   locationCount: number;
   connectionCount: number;
   playerMarkerCount: number;
@@ -26,9 +29,12 @@ interface PokeNavMapMetrics {
 }
 
 const POKENAV_METRIC_TOLERANCE: Record<keyof PokeNavMapMetrics, number> = {
-  bottomScreenHeight: 2,
+  screenWidth: 0,
+  screenHeight: 0,
   mapWidth: 4,
   mapHeight: 2,
+  areaNavTitleCount: 0,
+  iconCount: 0,
   locationCount: 0,
   connectionCount: 0,
   playerMarkerCount: 0,
@@ -91,8 +97,8 @@ function writePokeNavComparison(scenarioId: string, captureName: string, referen
   copyFileSync(referenceFile, path.join(REFERENCES_DIR, referenceName));
   const report = `<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>${scenarioId} · Azahar</title>
 <style>body{font:14px system-ui;margin:16px;background:#0f172a;color:#e2e8f0}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}figure{margin:0}img{max-width:100%;height:auto}figcaption{padding:8px 0}</style>
-<h1>${scenarioId}</h1><main><figure><img src="captures/${captureName}" alt="Mapa do PokéNav no port"><figcaption>Port web</figcaption></figure>
-<figure><img src="references/${referenceName}" alt="Tela do mapa capturada no Azahar"><figcaption>Azahar</figcaption></figure></main></html>`;
+<h1>${scenarioId}</h1><main><figure><img src="captures/${captureName}" alt="AreaNav no port"><figcaption>Port web</figcaption></figure>
+<figure><img src="references/${referenceName}" alt="AreaNav capturada no Azahar"><figcaption>Azahar</figcaption></figure></main></html>`;
   writeFileSync(path.join(visualReportDir(), `${scenarioId}-comparison.html`), report);
 }
 
@@ -119,20 +125,24 @@ for (const scenario of POKENAV_MAP_SCENARIOS) {
     const panel = page.locator('#ds-panel');
     await panel.locator(`[data-location-id="${scenario.selectedLocationId}"] circle`).click();
 
-    const metrics = await page.locator('#bottom-screen').evaluate((bottom): PokeNavMapMetrics => {
+    const metrics = await panel.evaluate((screen): PokeNavMapMetrics => {
       const bounds = (selector: string) => {
-        const rect = bottom.querySelector(selector)?.getBoundingClientRect();
+        const rect = screen.querySelector(selector)?.getBoundingClientRect();
         return { width: Math.round(rect?.width ?? 0), height: Math.round(rect?.height ?? 0) };
       };
-      const map = bounds('.hoenn-map-svg');
+      const panelBounds = screen.getBoundingClientRect();
+      const map = bounds('.areanav-map-frame');
       return {
-        bottomScreenHeight: Math.round(bottom.getBoundingClientRect().height),
+        screenWidth: Math.round(panelBounds.width),
+        screenHeight: Math.round(panelBounds.height),
         mapWidth: map.width,
         mapHeight: map.height,
-        locationCount: bottom.querySelectorAll('.hoenn-map-location').length,
-        connectionCount: bottom.querySelectorAll('.hoenn-map-route').length,
-        playerMarkerCount: bottom.querySelectorAll('.hoenn-player-marker').length,
-        selectedLocationCount: bottom.querySelectorAll('.hoenn-map-location.selected').length,
+        areaNavTitleCount: screen.querySelectorAll('.areanav-title').length,
+        iconCount: screen.querySelectorAll('.areanav-icon').length,
+        locationCount: screen.querySelectorAll('.hoenn-map-location').length,
+        connectionCount: screen.querySelectorAll('.hoenn-map-route').length,
+        playerMarkerCount: screen.querySelectorAll('.hoenn-player-marker').length,
+        selectedLocationCount: screen.querySelectorAll('.hoenn-map-location.selected').length,
       };
     });
     const metricsFile = path.join(METRICS_DIR, `${scenario.id}.json`);
@@ -148,14 +158,16 @@ for (const scenario of POKENAV_MAP_SCENARIOS) {
 
     mkdirSync(CAPTURES_DIR, { recursive: true });
     const captureName = `${scenario.id}.png`;
-    await page.locator('#bottom-screen').screenshot({ path: path.join(CAPTURES_DIR, captureName) });
+    await panel.screenshot({ path: path.join(CAPTURES_DIR, captureName) });
     writePokeNavComparison(scenario.id, captureName, scenario.referenceImage);
     expect.soft(pageErrors, 'erros de página ou console').toEqual([]);
     expect.soft(metricDriftMessages, 'métricas do Mapa do PokéNav').toEqual([]);
+    await expect.soft(panel.locator('.areanav-title')).toHaveText('AreaNav');
+    await expect.soft(panel.locator('.areanav-icon')).toHaveCount(4);
     await expect.soft(panel).toHaveClass(/hoenn-map-open/);
     await expect.soft(panel.locator('.hoenn-map-details')).toContainText(scenario.selectedLocationName);
     await expect.soft(panel.locator('.hoenn-player-marker')).toHaveAttribute('aria-label', `Sua posição: ${scenario.playerLocationName}`);
     await expect.soft(panel.locator(`[data-location-id="${scenario.selectedLocationId}"]`)).toHaveAttribute('aria-pressed', 'true');
-    await expect.soft(page.locator('#bottom-screen')).toHaveScreenshot(`${scenario.id}.png`);
+    await expect.soft(panel).toHaveScreenshot(`${scenario.id}.png`);
   });
 }

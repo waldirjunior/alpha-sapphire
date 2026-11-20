@@ -143,89 +143,118 @@
         display: block;
       }
       #ds-panel.hoenn-map-open {
-        max-height: clamp(220px, 36vh, 340px);
+        width: min(320px, 100%);
+        height: 240px;
+        min-height: 240px;
+        max-height: 240px;
+        margin: 0 auto;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+        border-radius: 4px;
+        background: #f5a33b;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.75);
       }
       .oras-hoenn-map {
-        display: grid;
-        grid-template-columns: minmax(0, 3fr) minmax(145px, 1fr);
-        align-items: stretch;
-        gap: 10px;
+        position: relative;
+        width: 100%; height: 100%; overflow: hidden;
+        background-color: #76c8ef;
+        background-image:
+          radial-gradient(circle, rgba(239, 251, 255, 0.55) 0 1px, transparent 1.4px),
+          linear-gradient(180deg, transparent 0 79%, #f7a33c 79% 100%);
+        background-size: 4px 4px, 100% 100%;
+      }
+      .areanav-title {
+        position: absolute; top: 6px; left: 6px; z-index: 2;
+        width: 128px; height: 21px; padding: 1px 8px 2px 24px;
+        border: 2px solid #628e33; border-radius: 4px 10px 3px 4px;
+        background: linear-gradient(180deg, #28372d, #070d11 58%, #17261e);
+        color: #f6fff0; font: 700 14px/14px system-ui, sans-serif;
+        text-shadow: 1px 1px #152719;
+        box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.55);
+      }
+      .areanav-title::before {
+        content: ""; position: absolute; left: 5px; top: 3px;
+        width: 12px; height: 12px; border: 2px solid #d7f8d4;
+        border-radius: 2px 6px 2px 2px;
+        background: linear-gradient(135deg, #2c9c73 0 48%, #1762ac 49% 100%);
+      }
+      .areanav-map-frame {
+        position: absolute; top: 18px; left: 31px;
+        width: min(214px, calc(100% - 42px)); height: 171px;
+        overflow: hidden; border: 2px solid #f6e6b7; border-radius: 8px;
+        background: #0878d1;
+        box-shadow: 0 0 0 1px #426c54, 1px 2px 3px rgba(0, 0, 0, 0.45);
       }
       .hoenn-map-svg {
-        width: 100%;
-        height: 185px;
-        border-radius: 10px;
-        background: radial-gradient(ellipse at 48% 46%, #164966, #0b2944 68%);
+        display: block; width: 100%; height: 100%;
+        background-color: #087bd2;
+        background-image:
+          radial-gradient(circle, rgba(161, 229, 248, 0.68) 0 1px, transparent 1.4px),
+          linear-gradient(135deg, rgba(2, 77, 180, 0.22), transparent 52%, rgba(75, 206, 239, 0.25));
+        background-size: 5px 5px, 100% 100%;
       }
       .hoenn-map-land {
-        fill: #5b9b74;
-        stroke: #a7d99a;
-        stroke-width: 3;
+        fill: url(#areanav-land-texture);
+        stroke: #e5f4d4;
+        stroke-width: 9;
         stroke-linejoin: round;
-        opacity: 0.82;
+        filter: drop-shadow(0 2px 2px rgba(12, 63, 104, 0.65));
       }
       .hoenn-map-route {
-        stroke: #b9d2aa;
-        stroke-width: 2;
-        stroke-dasharray: 5 7;
-        opacity: 0.55;
+        stroke: #f0fff2; stroke-width: 5; stroke-linecap: round;
+        stroke-dasharray: 8 7; opacity: 0.78;
       }
       .hoenn-map-route.road {
-        stroke: #ffe3a3;
-        stroke-width: 2.5;
-        stroke-dasharray: none;
-        opacity: 0.72;
+        stroke: #fff4c7; stroke-width: 7;
+        stroke-dasharray: none; opacity: 0.92;
       }
       .hoenn-map-location {
-        cursor: pointer;
-        outline: none;
+        cursor: pointer; outline: none;
       }
       .hoenn-map-location circle {
-        fill: #f6f3d5;
-        stroke: #2a5271;
-        stroke-width: 3;
-      }
-      .hoenn-map-location.city circle { fill: #ffcf69; }
-      .hoenn-map-location.town circle { fill: #d8f49a; }
-      .hoenn-map-location.landmark circle { fill: #f4a9a0; }
-      .hoenn-map-location.route circle { stroke-width: 2; }
-      .hoenn-map-location text,
-      .hoenn-player-marker text {
-        fill: #fff;
-        stroke: #102b41;
-        stroke-width: 4px;
-        paint-order: stroke;
-        font: 700 14px system-ui, sans-serif;
-        pointer-events: none;
-      }
-      .hoenn-map-location.route text {
-        fill: #ffe5a8;
-        font-size: 12px;
+        fill: #e7f5dd; stroke: #31764e; stroke-width: 5;
       }
       .hoenn-map-location.selected circle {
-        stroke: #fff;
-        stroke-width: 4;
-        filter: drop-shadow(0 0 4px #fff);
+        fill: #fff6ad; stroke: #8c5127; stroke-width: 8;
+        filter: drop-shadow(0 0 3px #fff);
       }
       .hoenn-map-location:focus circle { stroke: #7dd3fc; stroke-width: 5; }
       .hoenn-player-marker { pointer-events: none; }
       .hoenn-player-marker circle {
-        fill: rgba(56, 189, 248, 0.24);
-        stroke: #38bdf8;
-        stroke-width: 4;
+        fill: #f8df71; stroke: #315d42; stroke-width: 6;
       }
-      .hoenn-player-marker text { fill: #7dd3fc; }
       .hoenn-map-details {
-        display: grid;
-        align-content: center;
-        gap: 8px;
-        padding: 12px;
-        border-radius: 9px;
-        background: linear-gradient(145deg, #183e60, #102744);
-        border: 1px solid rgba(125, 211, 252, 0.55);
+        position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+        overflow: hidden; clip: rect(0, 0, 0, 0); clip-path: inset(50%);
+        white-space: nowrap; border: 0;
       }
-      .hoenn-map-details strong { color: #ffe4a3; font-size: 14px; }
-      .hoenn-map-details span { color: #d6e7f5; line-height: 1.45; }
+      .areanav-current-location {
+        position: absolute; right: 5px; bottom: 4px; z-index: 1;
+        max-width: calc(100% - 12px); overflow: hidden; text-overflow: ellipsis;
+        color: #fff; font: 700 12px/15px system-ui, sans-serif;
+        text-shadow: -1px -1px 1px #243b35, 1px 1px 2px #152e2e;
+      }
+      .areanav-icon-row {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 30px;
+        display: flex; justify-content: flex-start; align-items: center; gap: 11px;
+        padding-left: 45px;
+        border-top: 2px solid #fff1cf;
+        background: linear-gradient(180deg, #e8e7df, #99958b 68%, #5c5a55);
+      }
+      .areanav-icon {
+        width: 27px; height: 27px; display: grid; place-items: center;
+        border: 2px solid #fff; border-radius: 5px;
+        box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.65), inset 0 1px rgba(255, 255, 255, 0.62);
+      }
+      .areanav-icon:nth-child(1) { background: linear-gradient(140deg, #ffde57, #d58b1b); }
+      .areanav-icon:nth-child(2) { background: linear-gradient(140deg, #57c5ff, #2672c9); }
+      .areanav-icon:nth-child(3) { background: linear-gradient(140deg, #cc8dff, #8041c8); }
+      .areanav-icon:nth-child(4) { background: linear-gradient(140deg, #ff9ed0, #d73d87); }
+      .areanav-icon svg {
+        width: 17px; height: 17px; fill: none; stroke: #fff;
+        stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      }
       .oras-party-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
@@ -588,9 +617,7 @@
         #battle-overlay { padding: 8px; }
         #battle-card { width: min(460px, calc(100% - 12px)); }
         .battle-status-grid { grid-template-columns: 1fr; }
-        .oras-hoenn-map { grid-template-columns: 1fr; }
-        .hoenn-map-svg { height: 165px; }
-        #ds-panel.hoenn-map-open { max-height: clamp(245px, 42vh, 360px); }
+        #ds-panel.hoenn-map-open { width: min(320px, 100%); height: 240px; max-height: 240px; }
       }
     </style>
   </head>
