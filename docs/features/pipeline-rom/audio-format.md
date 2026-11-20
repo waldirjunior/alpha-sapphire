@@ -24,6 +24,48 @@ ZoneData[zona] u16 @0x08  ──►  code.bin tabela BGM[índice]  ──►  BC
 - **Entrada de som** (tabela `0x2100`, 1709 sons): `u32 fileId @0`, `u32 playerId @4`, `u8 volume @8`, ref de detalhe `@12` (`0x2201` stream, `0x2202` wave, `0x2203` sequência), `u32 flags @20`; com `flags & 1`, `u32 stringId @24` indexa a STRG. Os 256 primeiros sons são streams (`STRM_BGM_*` 0–210, `STRM_ME_*` 211–255).
 - **Entrada de arquivo** (tabela `0x2106`, 4518): ref `0x220D` = externo, seguida do nome `\0`-terminado (`bgm_sg_t_01.dspadpcm.bcstm`); `0x220C` = interno (no bloco FILE).
 
+## Arquivos internos de SFX: CSEQ, CBNK, CWAR e CWAV
+
+O parser [extract_bcsar_sfx.py](../../../scripts/extract_bcsar_sfx.py) percorre `INFO → 0x2100/0x2106 → FILE`, preservando os índices do archive. Para cada entrada `0x220A`, `0x220D` resolve para nome externo; `0x220C` aponta a um descritor interno de 12 B (`u16 tipo`, `u16 pad`, `s32 offset`, `u32 tamanho`). O payload fica em `FILE + 8 + offset`; o campo tipo varia entre entradas (foram observados `0` e `0x1F00`), portanto não é usado como assinatura do arquivo.
+
+Na ROM local examinada, `0x2100` contém 1709 sons: 256 streams e 1453 sequências (`detail ref 0x2203`). A entrada mantém `fileId @0`, `playerId @4`, volume em `@8`, referência de detalhe em `@12`, flags em `@20` e `stringId @24`; quando `flags & 1`, o `stringId` seleciona o rótulo STRG. O `fileId` indexa diretamente `0x2106`.
+
+| Assinatura | Quantidade encontrada pelo extrator | Saída | Observação |
+|---|---:|---|---|
+| `CSEQ` | 1436 | `file_NNNN.cseq` | Dados de sequência; precisam do sequenciador e dos instrumentos para virar o efeito audível. |
+| `CBNK` | 1424 | `file_NNNN.cbnk` | Bancos/instrumentos. |
+| `CWAR` | 1424 | `file_NNNN.cwar` | Arquivos de wave archive. |
+| `CWAV` | 1586 | `file_NNNN_wave_NNN.cwav` | Samples extraídos do contêiner CWAR; não são o efeito composto do CSEQ. |
+
+O extrator valida o `fileSize @0x0C` do CWAV aninhado antes de separar o sample. Os bytes ficam apenas no diretório local informado por `--out-dir`; `manifest.json` registra os arquivos extraídos, rótulos/índices das sequências e, com `--zone-scripts`, argumentos literais de `SEPlay` encontrados no disassembly JSON.
+
+Comando reproduzível a partir da raiz do checkout, apontando `--bcsar` ao dump local da ROM:
+
+```sh
+python3 scripts/extract_bcsar_sfx.py \
+  --bcsar rom/extracted/RomFS/sound/sango_sound.bcsar \
+  --out-dir rom/extracted/audio/bcsar_sfx \
+  --zone-scripts src/data/zone_scripts
+```
+
+### Rótulos relevantes e limites do mapeamento
+
+Os números abaixo são índices na tabela `0x2100`, não valores literais aceitos por `SEPlay`:
+
+| Uso pelo rótulo do BCSAR | Índice / rótulo | ID literal `SEPlay` observado |
+|---|---|---|
+| Texto/diálogo | `261 SEQ_SE_MESSAGE` | `0x00060000` (589 chamadas em 322 zonas; alias contextual já usado pelo host). |
+| Seleção/confirmação de menu | `262 SEQ_SE_DECIDE1`, `265 SEQ_SE_SELECT1` | `0x00060061` (1 chamada no script da zona 227; relação ao índice BCSAR não provada). |
+| Porta | `1481 SEQ_SE_KW_DOOROPEN`, `1480 SEQ_SE_KW_DOORCLOSE` | `0x000A001D` é candidato de efeito de campo (69 chamadas/39 zonas); a associação à porta não foi provada. |
+| Cura | `343 SEQ_SE_RECOVERY`; jingle `211 STRM_ME_KAIFUKU` | Nenhum literal `SEPlay` foi ligado com segurança ao rótulo. O jingle é `ME`, não `SE`. |
+| Hit | `413 SEQ_SE_FLD_WALL_HIT`; sons de batalha ficam entre `SEQ_SE_BT_*` | Não há rótulo único “battle hit”; os IDs de sequência de batalha não foram ligados aos eventos do host. |
+| Captura | `270 SEQ_SE_CATCH`; jingle `215 STRM_ME_POKEGET` | Nenhum literal `SEPlay` foi ligado com segurança ao rótulo. O jingle é `ME`, não `SE`. |
+| Warp | Não há rótulo `SEQ_SE_*WARP` | `0x000A00DD`, previamente anotado como warp, não aparece nos JSONs `zone_scripts` atuais; manter como não confirmado. |
+
+O scan literal também encontra `0x000A001D` (69), `0x00060017` (17), `0x000A0000` (13) e outros valores de campo; não se deve tratar o valor de `SEPlay` como índice BCSAR sem resolver a codificação/runtime que conecta os dois espaços. `0x000A0240`, anotado anteriormente como hit, também não aparece no corpus atual. O extrator cataloga os IDs e os rótulos BCSAR em separado para preservar essa distinção.
+
+Os `.cseq`, `.cbnk`, `.cwar` e `.cwav` não são fontes `WAV`/`MP3` reproduzíveis diretamente pelo navegador. Ainda não há conversão com sequenciador/instrumentos para os cues do slice; por isso `BgmPlayer.playSfx` segue com os cues procedurais como fallback e nenhum arquivo nativo foi ligado ao runtime nesta etapa.
+
 ## Validação
 
 | Zona | Nome | índice BGM | som | rótulo | arquivo |
