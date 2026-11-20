@@ -180,6 +180,47 @@ describe('BgmPlayer', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it('plays an explicitly identified BCSAR asset when available', async () => {
+    const fetchMock = stubFetch();
+    const player = new BgmPlayer();
+    await player.unlock();
+    player.playSfx('dialogue-confirm', {
+      index: 261,
+      label: 'SEQ_SE_MESSAGE',
+      url: '/assets/audio/sfx/message-sample.wav',
+    });
+
+    await vi.waitFor(() => expect(FakeContext.last.sources).toHaveLength(1));
+    expect(fetchMock).toHaveBeenCalledWith('/assets/audio/sfx/message-sample.wav');
+    expect(FakeContext.last.sources[0]).toMatchObject({ started: true, buffer: { bytes: 8 } });
+    expect(FakeContext.last.oscillators).toHaveLength(0);
+  });
+
+  it('falls back to the procedural cue when the BCSAR asset is unavailable', async () => {
+    const fetchMock = stubFetch(404);
+    const player = new BgmPlayer();
+    await player.unlock();
+    player.playSfx('menu-select', {
+      index: 265,
+      label: 'SEQ_SE_SELECT1',
+    });
+
+    await vi.waitFor(() => expect(FakeContext.last.oscillators).toHaveLength(1));
+    expect(fetchMock).toHaveBeenCalledWith('/assets/audio/sfx/bcsar_265_SEQ_SE_SELECT1.wav');
+    expect(FakeContext.last.oscillators[0]).toMatchObject({ type: 'square', started: true });
+  });
+
+  it('falls back when the asset request succeeds but the WAV cannot be decoded', async () => {
+    stubFetch(200);
+    const player = new BgmPlayer();
+    await player.unlock();
+    vi.spyOn(FakeContext.last, 'decodeAudioData').mockRejectedValue(new Error('HTML em vez de WAV'));
+    player.playSfx('wall-bump', { index: 413, label: 'SEQ_SE_FLD_WALL_HIT' });
+
+    await vi.waitFor(() => expect(FakeContext.last.oscillators).toHaveLength(1));
+    expect(FakeContext.last.oscillators[0]).toMatchObject({ type: 'triangle', started: true });
+  });
+
   it('does nothing for sound cues while muted, locked, or when WebAudio is unavailable', async () => {
     const player = new BgmPlayer();
     expect(() => player.playSfx('battle-hit')).not.toThrow();

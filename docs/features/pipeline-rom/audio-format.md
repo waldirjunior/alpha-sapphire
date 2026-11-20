@@ -39,6 +39,18 @@ Na ROM local examinada, `0x2100` contém 1709 sons: 256 streams e 1453 sequênci
 
 O extrator valida o `fileSize @0x0C` do CWAV aninhado antes de separar o sample. Os bytes ficam apenas no diretório local informado por `--out-dir`; `manifest.json` registra os arquivos extraídos, rótulos/índices das sequências e, com `--zone-scripts`, argumentos literais de `SEPlay` encontrados no disassembly JSON.
 
+### Converter samples CWAV para WAV
+
+[convert_bcsar_cwav.py](../../../scripts/convert_bcsar_cwav.py) usa `vgmstream-cli` para decodificar cada entrada `CWAV` do manifesto para PCM WAV. Os nomes preservam o `fileId` e o índice do sample, por exemplo `file_0001_wave_000.wav`; `conversion-manifest.json` registra origem e saída. Instale `vgmstream-cli` e rode:
+
+```sh
+python3 scripts/convert_bcsar_cwav.py \
+  --input-dir rom/extracted/audio/bcsar_sfx \
+  --out-dir rom/extracted/audio/bcsar_sfx/wav
+```
+
+Essa conversão torna cada sample reproduzível no navegador, mas não monta o efeito da sequência. CSEQ exige sequenciador, CBNK e CWAR; o `vgmstream-cli` disponível nesta sessão não lista `cseq` entre os formatos suportados. Não atribua um sample CWAV a uma sequência sem resolver as relações de instrumento e wave.
+
 Comando reproduzível a partir da raiz do checkout, apontando `--bcsar` ao dump local da ROM:
 
 ```sh
@@ -64,7 +76,9 @@ Os números abaixo são índices na tabela `0x2100`, não valores literais aceit
 
 O scan literal também encontra `0x000A001D` (69), `0x00060017` (17), `0x000A0000` (13) e outros valores de campo; não se deve tratar o valor de `SEPlay` como índice BCSAR sem resolver a codificação/runtime que conecta os dois espaços. `0x000A0240`, anotado anteriormente como hit, também não aparece no corpus atual. O extrator cataloga os IDs e os rótulos BCSAR em separado para preservar essa distinção.
 
-Os `.cseq`, `.cbnk`, `.cwar` e `.cwav` não são fontes `WAV`/`MP3` reproduzíveis diretamente pelo navegador. Ainda não há conversão com sequenciador/instrumentos para os cues do slice; por isso `BgmPlayer.playSfx` segue com os cues procedurais como fallback e nenhum arquivo nativo foi ligado ao runtime nesta etapa.
+Os `.cseq`, `.cbnk`, `.cwar` e `.cwav` crus não são reproduzíveis diretamente pelo navegador; a conversão CWAV acima gera WAVs de samples, não sequências compostas. `BgmPlayer.playSfx(cue, {index, label, url?})` pode tocar um WAV identificado por índice/rótulo BCSAR; sem `url`, procura `/assets/audio/sfx/bcsar_<índice>_<rótulo>.wav`. Se o arquivo faltar ou não decodificar, toca o padrão procedural do cue. O `url` explícito permite apontar para uma saída CWAV apenas quando a relação entre aquele sample e o efeito foi demonstrada.
+
+Os aliases literais `SEPlay` em `resolveZoneSfx` continuam a selecionar cues procedurais. Eles não são convertidos em índices BCSAR: o índice e o rótulo precisam ser passados separadamente com evidência da relação. `SEQ_SE_MESSAGE`, `SEQ_SE_DECIDE1`, `SEQ_SE_SELECT1`, `SEQ_SE_CATCH`, `SEQ_SE_RECOVERY`, `SEQ_SE_FLD_WALL_HIT` e os rótulos de porta seguem catalogados, mas ainda não foram provados como alvos dos IDs literais `SEPlay` do slice.
 
 ## Validação
 

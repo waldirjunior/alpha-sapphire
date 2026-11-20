@@ -25,6 +25,12 @@ interface SfxPattern {
   notes: readonly SfxNote[];
 }
 
+export interface BcsarSfxReference {
+  index: number;
+  label: string;
+  url?: string;
+}
+
 const SFX_PATTERNS: Readonly<Record<SfxCue, SfxPattern>> = {
   'dialogue-confirm': { waveform: 'sine', amplitude: 0.16, notes: [{ frequency: 620, seconds: 0.045 }, { frequency: 790, seconds: 0.065 }] },
   'menu-open': { waveform: 'square', amplitude: 0.11, notes: [{ frequency: 420, seconds: 0.055 }, { frequency: 560, seconds: 0.075 }] },
@@ -44,6 +50,7 @@ export class BgmPlayer {
   private context: AudioContext | null = null;
   private master: GainNode | null = null;
   private readonly buffers = new Map<string, Promise<AudioBuffer>>();
+  private readonly sfxBuffers = new Map<string, Promise<AudioBuffer>>();
   private current: PlayingTrack | null = null;
   private requestedUrl: string | null = null;
   private requestId = 0;
@@ -110,10 +117,57 @@ export class BgmPlayer {
     source.start();
   }
 
-  playSfx(cue: SfxCue): void {
+  playSfx(cue: SfxCue, native?: BcsarSfxReference): void {
+    if (!this.canPlaySfx()) return;
+    if (native) {
+      void this.playNativeSfx(cue, native);
+      return;
+    }
+    this.playProceduralSfx(cue);
+  }
+
+  private async playNativeSfx(cue: SfxCue, native: BcsarSfxReference): Promise<void> {
+    const context = this.context;
+    if (!context) return;
+    try {
+      const buffer = await this.loadSfxBuffer(native);
+      if (!this.canPlaySfx() || this.context !== context) return;
+      const source = context.createBufferSource();
+      source.buffer = buffer;
+      source.connect(this.master ?? context.destination);
+      source.start();
+    } catch {
+      this.playProceduralSfx(cue);
+    }
+  }
+
+  private loadSfxBuffer(native: BcsarSfxReference): Promise<AudioBuffer> {
+    const url = resolveBcsarSfxUrl(native);
+    const cached = this.sfxBuffers.get(url);
+    if (cached) return cached;
+    const context = this.ensureContext();
+    const loading = fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Efeito BCSAR ${native.label} (${native.index}) indisponível: ${url} (HTTP ${response.status}).`);
+        }
+        return response.arrayBuffer();
+      })
+      .then((bytes) => context.decodeAudioData(bytes));
+    loading.catch(() => this.sfxBuffers.delete(url));
+    this.sfxBuffers.set(url, loading);
+    return loading;
+  }
+
+  private canPlaySfx(): boolean {
+    const context = this.context;
+    return Boolean(context && context.state === 'running' && this.volume > 0 && !this.muted);
+  }
+
+  private playProceduralSfx(cue: SfxCue): void {
     const context = this.context;
     const pattern = SFX_PATTERNS[cue];
-    if (!context || context.state !== 'running' || this.volume === 0 || this.muted) return;
+    if (!context || !this.canPlaySfx()) return;
     try {
       const oscillator = context.createOscillator();
       const envelope = context.createGain();
@@ -193,6 +247,10 @@ export class BgmPlayer {
     track.gain.gain.linearRampToValueAtTime(0, now + this.fadeSeconds);
     track.source.stop(now + this.fadeSeconds);
   }
+}
+
+function resolveBcsarSfxUrl(native: BcsarSfxReference): string {
+  return native.url ?? `/assets/audio/sfx/bcsar_${native.index}_${encodeURIComponent(native.label)}.wav`;
 }
 
 function scheduleSfxNotes(oscillator: OscillatorNode, pattern: SfxPattern, start: number): void {
