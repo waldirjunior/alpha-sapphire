@@ -161,13 +161,47 @@ callback 0x2ee38) and `mmodel::EffectCycleLight` (name 0x100ec0, typeinfo
 native registrations. Their presence and callback arithmetic do not recover
 the GR light-set contents or DefaultShader dispatch. No ROM code was run.
 
-**Unknown/next evidence:** locate the external shader program and scene
-light/environment resources, trace their values through the callback and
-model binding, and compare the resulting fragment inputs with an emulator
-or native renderer. Projection, Texture1/Texture2, PreviousBuffer, runtime
-constant mutation, fog, and LUT dispatch remain explicit P-007 gaps. No
-brightness, saturation, color-space, unlit, or generic multi-texture fix was
-applied based on appearance.
+**Unknown/next evidence:** locate the generic `DefaultShader` program and the
+runtime loader/binding for the recovered light resource; trace selected
+values through the callback and model binding, then compare fragment inputs
+with an emulator or native renderer. Projection, Texture1/Texture2,
+PreviousBuffer, runtime constant mutation, fog, and LUT dispatch remain
+explicit P-007 gaps. No brightness, saturation, color-space, unlit, or
+generic multi-texture fix was applied based on appearance.
+
+## External light data and shader library follow-up (A-117)
+
+The zero-resource count above applies to the 336 staged model BCHs; it does
+not mean the ROM has no external light or shader data. GARC `a/0/0/3`, slot
+138, is a 691,072-byte `BM` container (12 sections; SHA-256
+`ae9175a8b3a028f0b4fb77d9d6fd242d8671d39fc03749fbbec3d483f3e751ff`). Its
+H3D section parses to 16 lights, one scene, one LUT, no models, and no shader
+programs. For example, `light_sun` is an enabled `FragmentDir` light with
+ambient `(199,208,226)`, diffuse `(79,104,98)`, direction
+`(0,-0.99681526,0.07974522)`, and transform translation `(100,100,-100)`;
+`light_night` has different ambient/diffuse colors. This proves the ROM
+contains named light definitions and values, not which scene or model selects
+them.
+
+GARC `a/0/0/8`, slot 1, is a 236,712-byte `PC` container (SHA-256
+`1e434f4ecc563bb8ded6c77b7a595e20c13304b8cfff05b8f207dac1e2720fe2`). Its
+embedded H3D section parses to 13 named shader records, including
+`0@BattleChar`, `0@PokePack`, `0@PokeFire`, and `0@RefrectShader`; none is
+`0@DefaultShader`. The `BattleChar` program exposes uniforms such as
+`MatAmbi`, `MatDiff`, `LightPowScale`, `DirLightVec`, `DirLightColor`, and
+`PointLightPos`, but the binary does not provide the runtime values uploaded
+to them. Other shader binaries in the scanned GARCs are also specialized
+records such as `0@BattleField`.
+
+The evidence chain still stops before runtime binding. The 336 model BCHs
+reference `0@DefaultShader` and `LightSetIndex=0`, while the `BM` resource has
+no models or `DefaultShader`; the bounded `PseudoLightingListener` callback
+at `DllField.cro:0x2ee38` processes eight dynamic light slots, but disassembly
+does not identify which resource entries populate them or bind them to a GR
+material. Therefore `light_sun` cannot yet be assigned to `LightSetIndex=0`
+or to a displayed zone, and no RGB/lightmap change is justified. P-007 stays
+open pending the loader/model binding and an emulator or native-renderer
+comparison.
 
 ## Reproduction
 

@@ -32,7 +32,7 @@ Atores `0x1000`/`0x2000` renderizam modelo real (`failedAssets = 0`); câmera/oc
 | --- | --- |
 | Campanha chega a `zone_0441`; cena natural pausa em `FadeRequestOut(0,2,30)` antes da interação; batalha/badge da Roxanne bloqueadas. | P-013 |
 | Bike/Surf e oclusão residual (ex.: `z0015-mauville-patio`). | P-017 |
-| Combiners RGB / luz PICA parciais; ambiente por zona já em `zoneEnvironment.ts`. | P-007 |
+| Combiners RGB / luz PICA parciais; `a/0/0/3` contém 16 luzes externas, sem binding provado para `LightSetIndex=0`; ambiente por zona já em `zoneEnvironment.ts`. | P-007 |
 | PokéNav vs Azahar; composição CSEQ/dispatch de SFX BCSAR; arenas ROM; Gen VI residual. | P-011, P-014, P-008, P-010 |
 
 ## Frentes pausadas

@@ -1174,4 +1174,25 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   host sem mutação até comprovar esses contratos no código original ou no
   emulador; os próximos dados necessários seguem em P-013.
 
+## A-117 Preset externo de luz não prova o binding do modelo PICA
+
+- **Data:** 2026-11-20; P-007, investigação de `DefaultShader` e ambiente.
+- **Erro evitado:** tratar as cores `light_sun`/`light_night` de um recurso
+  externo como valores do `LightSetIndex=0` de um GR, ou assumir que uma
+  referência `0@DefaultShader` contém o programa e os uniforms enviados.
+- **Regra:** rastrear o carregador, a seleção do LightSet e o upload dos
+  uniforms até o modelo antes de usar um preset na iluminação do Three.js.
+  Nomes, índices e aritmética de callback não estabelecem essa associação.
+- **Evidência:** GARC `a/0/0/3`, slot138, SHA-256
+  `ae9175a8b3a028f0b4fb77d9d6fd242d8671d39fc03749fbbec3d483f3e751ff`,
+  contém 16 definições de luz, uma cena, uma LUT, zero modelos e zero shaders;
+  `light_sun` tem ambiente `(199,208,226)`, difusa `(79,104,98)` e direção
+  `(0,-0.99681526,0.07974522)`. A biblioteca PC `a/0/0/8`, slot1, SHA-256
+  `1e434f4ecc563bb8ded6c77b7a595e20c13304b8cfff05b8f207dac1e2720fe2`,
+  contém 13 shaders nomeados, sem `0@DefaultShader`. O callback
+  `PseudoLightingListener` (`DllField.cro:0x2ee38`) itera oito slots
+  dinâmicos, mas o rastreio não liga esses slots às 16 definições nem ao
+  índice de luz do modelo. Detalhes em `pipeline-rom/pica-materials.md`;
+  nenhum RGB ou lightmap foi inferido.
+
 
