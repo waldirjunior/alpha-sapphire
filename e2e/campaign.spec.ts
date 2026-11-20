@@ -155,24 +155,27 @@ test('New Game chega ao Ginásio de Rustboro e registra o bloqueio natural de P-
   await expect.poll(() => warnings.slice(gymWarningsAtEntry).join('\n')).toContain('EVCameraSetDstParam');
   await page.keyboard.press('Enter');
   await expect.poll(() => warnings.slice(gymWarningsAtEntry).join('\n')).toContain('MdlAcmdSet');
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    if ((await corridorState(page)).romEvents?.vars[16553] === 1) break;
+    await page.keyboard.press('Enter');
+    await advanceVisibleEventDialogues(page);
+    await page.waitForTimeout(150);
+  }
+  await expect.poll(async () => (await corridorState(page)).romEvents?.vars[16553]).toBe(1);
   await expect(page.locator('#battle-overlay')).not.toHaveClass(/open/);
   await walkCorridorTo(page, 'zone_0441', { x: 19, z: 6 });
   await walk(page, 'ArrowUp', 1);
   const beforeRoxanne = await corridorState(page);
   expect(beforeRoxanne.player).toMatchObject({ mapId: 'zone_0441', pos: { x: 19, z: 5 }, facing: 'up' });
-  for (let attempt = 0; attempt < 20 && !warnings.slice(gymWarningsAtEntry).join('\n').includes('FadeRequestOut(0,2,30)'); attempt += 1) {
-    await page.keyboard.press('Enter');
-    await advanceVisibleEventDialogues(page);
-    await page.waitForTimeout(150);
-  }
-  await expect.poll(() => warnings.slice(gymWarningsAtEntry).join('\n')).toContain('FadeRequestOut(0,2,30)');
-  await expect.poll(() => warnings.slice(gymWarningsAtEntry).join('\n')).toContain('confirmação indisponível (P-013)');
-  const pausedAtFade = await corridorState(page);
+  await page.keyboard.press('Enter');
+  await expect.poll(() => warnings.slice(gymWarningsAtEntry).join('\n')).toContain('PokePartyGetParam(0,8,0)');
+  const pausedAtPartyQuery = await corridorState(page);
   await page.keyboard.press('Enter');
   await page.waitForTimeout(150);
-  const afterFadeInput = await corridorState(page);
-  expect(afterFadeInput.romEvents).toEqual(pausedAtFade.romEvents);
-  expect(afterFadeInput.player.mapId).toBe('zone_0441');
+  const afterPartyInput = await corridorState(page);
+  expect(afterPartyInput.romEvents).toEqual(pausedAtPartyQuery.romEvents);
+  expect(afterPartyInput.storyFlags).toEqual(pausedAtPartyQuery.storyFlags);
+  expect(afterPartyInput.player.mapId).toBe('zone_0441');
   await expect(page.locator('#battle-overlay')).not.toHaveClass(/open/);
   expect(errors).toEqual([]);
 });

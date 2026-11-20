@@ -36,10 +36,23 @@ describe('fade de eventos', () => {
     expect(project).toHaveBeenCalledTimes(calls);
     expect(fade.request(effect('FadeIsEnd'))).toBe(1);
   });
+  it('executa FadeRequestOut modo 2 como fade da imagem para preto', () => {
+    const project = vi.fn();
+    const fade = new EventFade(project);
+    expect(fade.request(effect('FadeRequestOut', [0, 2, 30]))).toBe(0);
+    expect(project).toHaveBeenLastCalledWith(1);
+    expect(fade.request(effect('FadeIsEnd'))).toBe(0);
+    for (let frame = 0; frame < 15; frame += 1) fade.tick();
+    expect(project).toHaveBeenLastCalledWith(0.5);
+    for (let frame = 0; frame < 15; frame += 1) fade.tick();
+    expect(project).toHaveBeenLastCalledWith(0);
+    expect(fade.request(effect('FadeIsEnd'))).toBe(1);
+  });
   it('não confirma outras telas, tipos ou durações não suportadas', () => {
     const fade = new EventFade(vi.fn());
     expect(fade.request(effect('FadeRequestOut', [1, 0, 4]))).toBeUndefined();
     expect(fade.request(effect('FadeRequestOut', [0, 1, 4]))).toBeUndefined();
+    expect(fade.request(effect('FadeRequestOut', [0, 3, 4]))).toBeUndefined();
     expect(fade.request(effect('_FadeRequestIn', [0, -1]))).toBeUndefined();
   });
 });

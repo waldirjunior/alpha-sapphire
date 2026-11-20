@@ -1203,4 +1203,22 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   índice de luz do modelo. Detalhes em `pipeline-rom/pica-materials.md`;
   nenhum RGB ou lightmap foi inferido.
 
+## A-119 O seletor AMX precisa ser seguido até o getter do registro Pokémon
+
+- **Data:** 2026-11-20; ROADMAP #3/P-013, query natural de party no Ginásio.
+- **Contexto:** a função ROM `zone_0441/map` 128 passa seletores diferentes a
+  `PokePartyGetParam`; o mesmo native e a mesma aridade não identificam o campo.
+- **Evidência:** em `DllField.cro` SHA-256
+  `9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925`, o
+  wrapper `0x4e618` despacha IDs 8/49/44/53/0 para getters distintos. O código
+  estático acessado por `static.crs` SHA-256
+  `b1976b7f480ffdeaa03cc842515472a89cc6e186d58d5022f64374a3b921005c` mostra
+  operações distintas sobre bits/bytes do registro. O script compara o valor
+  do seletor 0 com `374/375/376`; o código não nomeia os campos dos seletores.
+- **Regra:** preserve o seletor bruto até que o getter, o dado de origem e o
+  significado do campo estejam ligados por evidência; não converter seus
+  resultados em `species`, `hp`, `level` ou outra propriedade só pelo uso
+  aparente no script. Um callback de batalha/badge também exige estado de saída
+  observado, não apenas a sequência posterior de nativas no AMX.
+
 
