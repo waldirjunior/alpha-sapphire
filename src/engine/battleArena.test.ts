@@ -201,14 +201,33 @@ describe('battleArena', () => {
     expect(resolveBattleArenaBiome('Route 101', 'zone_0023')).toBe('grass');
     expect(resolveBattleArenaBiome('Route 109', 'zone_0032')).toBe('water');
     expect(resolveBattleArenaBiome('Granite Cave', 'zone_0078')).toBe('cave');
-    expect(resolveBattleArenaBiome('Mossdeep Gym', 'zone_0443')).toBe('gym');
-    expect(resolveBattleArenaBiome('Mossdeep City', 'zone_0443')).toBe('gym');
+    expect(resolveBattleArenaBiome('Mossdeep Gym', 'zone_0443')).toBe('gym7');
+    expect(resolveBattleArenaBiome('Mossdeep City', 'zone_0443')).toBe('gym7');
     expect(resolveBattleArenaBiome('Pokémon Center', 'zone_0228')).toBe('indoor');
   });
 
-  it('associa um modelo ROM a todos os cinco biomas de batalha', () => {
+  it('mapeia zonas ROM comprovadas para seu ginásio e usa gym1 como fallback', () => {
+    const gymZones = [
+      ['zone_0441', 'gym1'],
+      ['zone_0428', 'gym2'],
+      ['zone_0440', 'gym3'],
+      ['zone_0429', 'gym4'],
+      ...Array.from({ length: 9 }, (_, index) => [`zone_${String(431 + index).padStart(4, '0')}`, 'gym5']),
+      ['zone_0442', 'gym6'],
+      ['zone_0443', 'gym7'],
+      ['zone_0444', 'gym8'],
+    ] as const;
+    for (const [zoneId, gym] of gymZones) {
+      expect(resolveBattleArenaBiome('City', zoneId)).toBe(gym);
+    }
+    expect(resolveBattleArenaBiome('Lavaridge Town', 'zone_0430')).toBe('grass');
+    expect(resolveBattleArenaBiome('Unknown Gym')).toBe('gym1');
+  });
+
+  it('associa um modelo ROM aos biomas ambientais e mantém gym como alias', () => {
     for (const biome of ['grass', 'water', 'cave', 'gym', 'indoor'] as const) {
-      expect(battleArenaModelUrl(biome)).toBe(`/assets/battle-arenas/${biome}/${biome}.glb`);
+      const arena = biome === 'gym' ? 'gym1' : biome;
+      expect(battleArenaModelUrl(biome)).toBe(`/assets/battle-arenas/${arena}/${arena}.glb`);
     }
   });
 

@@ -277,7 +277,8 @@ function syncUi(): void {
 }
 
 const zoneEvents = createGameEvents(() => state, next => { state = next; }, MAPS, syncUi, app, sceneManager.events,
-  { chooseStarter: requestStarterChoice, battle: startEventBattle }, cue => sceneManager.playSfx(cue));
+  { chooseStarter: requestStarterChoice, battle: startEventBattle }, cue => sceneManager.playSfx(cue),
+  native => bgmPlayer.playNativeSfx(native));
 
 const battleHost = {
   overlay: battleOverlay,

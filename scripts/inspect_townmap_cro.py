@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import re
 import struct
 from dataclasses import asdict
@@ -29,6 +30,14 @@ TOWNMAP_CLASSES = (
     'TB_CursorView', 'TB_CursorListener', 'MapPosChangeListener',
 )
 CODE_BASE = 0x100000
+UI_RESOURCE_NAME = re.compile(
+    r'(?:townmap|pokenavi|poke_navi|poke_point|cursol|hero(?:ine)?_obj|map|navi|icon|button|btn)', re.I
+)
+COORDINATE_CODE_CANDIDATES = (
+    ('MapView vtable slot 0', 0x9BDC, 0x100),
+    ('MapView vtable slot 6', 0x9AC4, 0x100),
+    ('MapView helper', 0x9F54, 0x100),
+)
 
 
 class CroImage(RelocatedCroImage):
@@ -116,6 +125,110 @@ def _vtable_disassembly(image: CroImage, byte_limit: int = 0x80) -> list[dict[st
                          'slot': slot, 'offset': target,
                          'instructions': disassemble_arm(image.relocated(), target, byte_limit)})
     return rows
+
+
+def _arm_literal_float_references(blob: bytes, instructions) -> list[dict[str, object]]:
+    literals = []
+    for address, mnemonic, operands in instructions:
+        if not mnemonic.startswith('vldr'):
+            continue
+        match = re.search(r'\[pc,\s*#(-?(?:0x[\da-f]+|\d+))\]', operands, re.I)
+        if not match:
+            continue
+        data_offset = address + 8 + int(match.group(1), 0)
+        if data_offset < 0 or data_offset + 4 > len(blob):
+            continue
+        value = struct.unpack_from('<f', blob, data_offset)[0]
+        if math.isfinite(value):
+            literals.append({'instruction': address, 'data_offset': data_offset, 'value': value})
+    return literals
+
+
+def _coordinate_code_evidence(image: CroImage, disassemble: bool) -> list[dict[str, object]]:
+    if not disassemble:
+        return [{'candidate': name, 'file_offset': offset} for name, offset, _ in COORDINATE_CODE_CANDIDATES]
+    relocated = image.relocated()
+    rows = []
+    for name, offset, byte_count in COORDINATE_CODE_CANDIDATES:
+        instructions = disassemble_arm(relocated, offset, byte_count)
+        rows.append({
+            'candidate': name,
+            'file_offset': offset,
+            'direct_calls': [
+                {'instruction': address, 'target': operands}
+                for address, mnemonic, operands in instructions
+                if mnemonic in ('bl', 'blx') and operands.startswith('#')
+            ],
+            'literal_floats': _arm_literal_float_references(relocated, instructions),
+            'instructions': instructions,
+        })
+    return rows
+
+
+def _clyt_texture_names(blob: bytes) -> list[str]:
+    if len(blob) < 20 or blob[:4] != b'CLYT':
+        raise ValueError('Expected a CLYT layout with a 20-byte header')
+    bom, header_size = struct.unpack_from('<HH', blob, 4)
+    file_size, section_count = struct.unpack_from('<II', blob, 12)
+    if bom != 0xFEFF or header_size != 20 or not 20 <= file_size <= len(blob):
+        raise ValueError(f'Invalid CLYT header: bom={bom:#x}, header={header_size}, size={file_size}')
+    cursor = header_size
+    for _ in range(section_count):
+        if cursor + 8 > file_size:
+            raise ValueError(f'Truncated CLYT section at offset {cursor:#x}')
+        kind = blob[cursor:cursor + 4]
+        section_size = struct.unpack_from('<I', blob, cursor + 4)[0]
+        end = cursor + section_size
+        if section_size < 8 or end > file_size:
+            raise ValueError(f'CLYT section {kind!r} exceeds file size at offset {cursor:#x}')
+        if kind == b'txl1':
+            return _txl1_names(blob, cursor, section_size)
+        cursor = end
+    return []
+
+
+def _txl1_names(blob: bytes, cursor: int, section_size: int) -> list[str]:
+    if section_size < 12:
+        raise ValueError('CLYT txl1 section is shorter than its count field')
+    count = struct.unpack_from('<I', blob, cursor + 8)[0]
+    table_start = cursor + 12
+    table_end = table_start + count * 4
+    section_end = cursor + section_size
+    if table_end > section_end:
+        raise ValueError(f'CLYT txl1 has {count} offsets outside its section')
+    names = []
+    for index in range(count):
+        relative = struct.unpack_from('<I', blob, table_start + index * 4)[0]
+        start = table_start + relative
+        if start >= section_end:
+            raise ValueError(f'CLYT txl1 name {index} starts outside its section')
+        end = blob.find(b'\0', start, section_end)
+        if end < 0:
+            raise ValueError(f'CLYT txl1 name {index} is not NUL-terminated')
+        names.append(blob[start:end].decode('ascii', 'replace'))
+    return names
+
+
+def _layout_texture_dependencies(a_dir: Path, hit: ResourceHit) -> list[str]:
+    archive_path = a_dir.joinpath(*hit.archive.split('/')[1:])
+    archive_blob = archive_path.read_bytes()
+    entry = next((row for row in iter_garc_entries(archive_blob)
+                  if row.slot == hit.slot and row.subslot == hit.subslot), None)
+    if entry is None:
+        raise ValueError(f'{hit.archive} has no GARC payload at slot {hit.slot}/{hit.subslot}')
+    layout = _find_named_texture(entry.data, hit.container)
+    if layout is None:
+        raise ValueError(f'{hit.archive} cannot resolve named layout {hit.container}')
+    return _clyt_texture_names(layout)
+
+
+def _ui_resource_candidates(hits: Iterable[ResourceHit]) -> list[dict[str, object]]:
+    candidates = []
+    for hit in hits:
+        if hit.kind not in ('CLIM', 'FLIM', 'CLYT') or not UI_RESOURCE_NAME.search(hit.container):
+            continue
+        candidates.append(asdict(hit))
+    return candidates
 
 
 def _codebin_targets(binary: bytes, virtual_addresses: Iterable[int]):
@@ -262,6 +375,11 @@ def inspect(args: argparse.Namespace) -> dict[str, object]:
     callers = _codebin_targets(code_blob, code_targets) if args.disassemble else {}
     code_routines = _codebin_routines(code_blob, code_targets) if args.disassemble else []
     hits, scan_counts = _scan_romfs_a(romfs / 'a', args.extract_to)
+    map_lower_hit = next((hit for hit in hits
+                          if hit.archive == 'a/0/6/7' and hit.kind == 'CLYT'
+                          and hit.container.endswith('/map_lower.bclyt')), None)
+    map_lower_textures = (_layout_texture_dependencies(romfs / 'a', map_lower_hit)
+                          if map_lower_hit else [])
     loose_scan = _scan_loose_assets(romfs, ('shader', 'g3d_common'))
     summary = {
         'inputs': {str(path): {'size': path.stat().st_size, 'sha256': _sha(path)}
@@ -274,6 +392,8 @@ def inspect(args: argparse.Namespace) -> dict[str, object]:
                        'import_modules': 0xF0, 'external_relocations': 0xF8,
                        'internal_relocations': 0x128},
             'vtables': vtables,
+            'coordinate_candidates': _coordinate_code_evidence(townmap, args.disassemble),
+            'map_lower_texture_names': map_lower_textures,
         },
         'pseudo_lighting': {
             'callback': 0x2EE38, 'vtable': 0x1077E8,
@@ -284,7 +404,8 @@ def inspect(args: argparse.Namespace) -> dict[str, object]:
         'codebin': {'addresses': [0x4DDF14, 0x4DDE08],
                     'file_offsets': [0x3DDF14, 0x3DDE08], 'direct_callers': callers,
                     'routines': code_routines},
-        'resource_scan': {'counts': scan_counts, 'hits': [asdict(hit) for hit in hits]},
+        'resource_scan': {'counts': scan_counts, 'hits': [asdict(hit) for hit in hits],
+                          'ui_asset_candidates': _ui_resource_candidates(hits)},
         'loose_scan': loose_scan,
     }
     return summary

@@ -6,11 +6,15 @@ from pathlib import Path
 
 from scripts.inspect_townmap_cro import (
     CroImage,
+    _arm_literal_float_references,
     _find_named_texture,
+    _layout_texture_dependencies,
     _codebin_targets,
     _scan_loose_assets,
+    _ui_resource_candidates,
 )
 from scripts.townmap_probe_formats import (
+    ResourceHit,
     _apply_texture_color_key,
     decode_texture_dimensions,
     decompress_lz11_payload,
@@ -61,6 +65,34 @@ def synthetic_darc(child):
     return header + rows + name_pool + child
 
 
+def synthetic_darc_named(name, child):
+    file_table_offset = 0x1C
+    name_pool = b'\0\0' + name.encode('utf-16le') + b'\0\0'
+    file_table_length = 24 + len(name_pool)
+    data_offset = file_table_offset + file_table_length
+    file_size = data_offset + len(child)
+    header = struct.pack('<4sHHIIIII', b'darc', 0xFEFF, 0x1C, 1, file_size,
+                         file_table_offset, file_table_length, data_offset)
+    rows = struct.pack('<III', 0x01000000, 0, 2)
+    rows += struct.pack('<III', 2, data_offset, len(child))
+    return header + rows + name_pool + child
+
+
+def synthetic_clyt_texture_list(names):
+    offsets = []
+    names_blob = bytearray()
+    offset = 4 * len(names)
+    for name in names:
+        offsets.append(offset)
+        encoded = name.encode('ascii') + b'\0'
+        names_blob.extend(encoded)
+        offset += len(encoded)
+    section = struct.pack('<4sII', b'txl1', 12 + len(offsets) * 4 + len(names_blob), len(names))
+    section += struct.pack('<' + 'I' * len(offsets), *offsets) + names_blob
+    file_size = 20 + len(section)
+    return struct.pack('<4sHHIII', b'CLYT', 0xFEFF, 20, 0x02020000, file_size, 1) + section
+
+
 def synthetic_clim(width, height, fmt=9):
     footer = bytearray(40)
     footer[0:4] = b'CLIM'
@@ -74,6 +106,58 @@ def synthetic_clim(width, height, fmt=9):
 
 
 class InspectTownmapCroTests(unittest.TestCase):
+    def test_arm_vldr_literal_references_resolve_positive_and_negative_pc_offsets(self):
+        blob = bytearray(0x80)
+        struct.pack_into('<f', blob, 0x30, 12.5)
+        struct.pack_into('<f', blob, 0x40, -3.25)
+        instructions = [
+            (0x20, 'vldr', 's3, [pc, #0x8]'),
+            (0x50, 'vldr', 's2, [pc, #-0x18]'),
+            (0x24, 'ldr', 'r0, [pc, #0x8]'),
+        ]
+
+        literals = _arm_literal_float_references(bytes(blob), instructions)
+
+        self.assertEqual(literals, [
+            {'instruction': 0x20, 'data_offset': 0x30, 'value': 12.5},
+            {'instruction': 0x50, 'data_offset': 0x40, 'value': -3.25},
+        ])
+
+    def test_layout_texture_dependencies_follow_garc_darc_and_clyt_texture_list(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            a_dir = Path(temporary) / 'RomFS' / 'a'
+            archive_dir = a_dir / '0' / '6'
+            archive_dir.mkdir(parents=True)
+            layout = synthetic_clyt_texture_list(['poke_navi_map.bclim', 'map_city_icon01.bclim'])
+            darc = synthetic_darc_named('map_lower.bclyt', layout)
+            (archive_dir / '7').write_bytes(synthetic_garc(darc))
+            hit = ResourceHit(
+                'a/0/6/7', 0, 0,
+                'LZ11 payload / darc@0x0 / ./blyt/map_lower.bclyt',
+                'CLYT', 0,
+            )
+
+            names = _layout_texture_dependencies(a_dir, hit)
+
+        self.assertEqual(names, ['poke_navi_map.bclim', 'map_city_icon01.bclim'])
+
+    def test_ui_resource_candidates_keep_named_icons_and_map_assets(self):
+        hits = [
+            ResourceHit('a/0/6/7', 0, 0, 'DARC / ./timg/poke_point.bclim',
+                        'CLIM', 10, 12, 12, 9),
+            ResourceHit('a/2/4/4', 0, 1, 'DARC / ./timg/map_navi_s.bclim',
+                        'CLIM', 20, 46, 12, 3),
+            ResourceHit('a/2/4/4', 0, 1, 'DARC / ./blyt/other.bclyt',
+                        'CLYT', 30),
+        ]
+
+        candidates = _ui_resource_candidates(hits)
+
+        self.assertEqual([row['container'] for row in candidates], [
+            'DARC / ./timg/poke_point.bclim',
+            'DARC / ./timg/map_navi_s.bclim',
+        ])
+
     def test_cyan_texture_key_becomes_transparent_without_changing_other_alpha(self):
         rgba = bytes((0, 255, 255, 255, 17, 255, 221, 255, 68, 255, 255, 255, 255, 0, 0, 85))
 

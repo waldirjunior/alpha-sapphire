@@ -37,18 +37,35 @@ class BattleArenaSource:
     package_entry: int | None = None
 
 
+GYM_ARENA_SOURCES = {
+    f"gym{number}": BattleArenaSource(
+        slot=77 + number,
+        tag=f"btl_G_gym{number}",
+        container_magic=b"BG",
+        package_entry=0,
+    )
+    for number in range(1, 9)
+}
 BATTLE_ARENA_SOURCES = {
     "grass": BattleArenaSource(slot=11, tag="btl_F_kusa"),
     "water": BattleArenaSource(slot=12, tag="btl_F_mizu"),
     "cave": BattleArenaSource(slot=70, tag="btl_G_do_0", container_magic=b"BG", package_entry=0),
-    "gym": BattleArenaSource(slot=78, tag="btl_G_gym1", container_magic=b"BG", package_entry=0),
+    **GYM_ARENA_SOURCES,
     "indoor": BattleArenaSource(slot=136, tag="btl_O_heya_m", container_magic=b"BG", package_entry=0),
 }
 BATTLE_ARENA_STAGE_SOURCES = {
     "grass": BattleArenaSource(slot=150, tag="btl_O_kusa_m", container_magic=b"BG", package_entry=0),
     "water": BattleArenaSource(slot=139, tag="btl_O_mizu_m", container_magic=b"BG", package_entry=0),
     "cave": BattleArenaSource(slot=118, tag="btl_O_do_0_m", container_magic=b"BG", package_entry=0),
-    "gym": BattleArenaSource(slot=125, tag="btl_O_gym1_m", container_magic=b"BG", package_entry=0),
+    **{
+        f"gym{number}": BattleArenaSource(
+            slot=124 + number,
+            tag=f"btl_O_gym{number}_m",
+            container_magic=b"BG",
+            package_entry=0,
+        )
+        for number in range(1, 9)
+    },
 }
 
 

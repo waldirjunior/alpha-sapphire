@@ -7,7 +7,7 @@ Probe de `P-008` para os wrappers AMX em `DllField.cro`, o decoder compartilhado
 Na raiz do repositório, com a ROM extraída localmente e Capstone instalado:
 
 ```sh
-python3 scripts/inspect_audio_dispatch.py --rom-root /Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/alpha-sapphire/rom/extracted --report /tmp/audio-dispatch-report.json
+python3 scripts/inspect_audio_dispatch.py --rom-root /Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/alpha-sapphire/rom/extracted --report /tmp/audio-dispatch-report.json --seplay-map src/data/audio/seplay_map.json
 python3 -B -m unittest scripts/test_inspect_audio_dispatch.py
 ```
 
@@ -149,6 +149,108 @@ O scanner de `src/data/zone_scripts/*.json` encontrou 72 argumentos literais dis
 
 Este resultado prova a conversão numérica entre literal e BCSAR no corpus, não a semântica de jogo de cada efeito. O host removeu associações literais anteriores sem suporte; a evidência confirmou `0x00060000 → 261 SEQ_SE_MESSAGE`, mas não confirma que outros IDs sejam “selecionar”, “porta”, “warp” ou “hit”. O wrapper `MEPlay` e os caminhos `BGMStart*` também foram localizados e disassemblados; `MEPlay` chega ao decoder compartilhado via helper/tail branch, mas não faz parte do corpus `SEPlay` e não é usado para inferir os mapeamentos acima.
 
+## Cadeias CSEQ e amostras CWAV
+
+O detalhe BCSAR de cada sequência contém referências de banco nos offsets `+0x10`
+e `+0x74`. O conversor segue cada item `0x03` na tabela `0x2101` até `CBNK`,
+lê cada item `0x05` do banco e segue a tabela `0x2103` até `CWAR` e seus
+`CWAV`s extraídos. Uma sequência só recebe uma amostra de runtime quando todos
+os caminhos referenciados convergem para um único arquivo CWAV existente e o
+WAV PCM tem pico não zero. Isso não prova que o CSEQ executa aquele sample.
+
+A conversão local dos quatro alvos prioritários e das sequências com caminho
+único produziu 10 WAVs e nenhuma falha do `vgmstream-cli`. Os outros 68
+literais ambíguos não foram convertidos: escolher um deles atribuiria um
+sample específico à sequência sem prova. A coluna “CWAVs” enumera os arquivos
+candidatos extraídos de cada cadeia.
+
+| Literal | BCSAR | Rótulo | CWAVs candidatos | Resultado |
+|---|---:|---|---|---|
+| `0x00060000` | 261 | `SEQ_SE_MESSAGE` | `file_3110_wave_000.cwav`, `file_3111_wave_000.cwav` | ambíguo; samples convertidos para inspeção: `bcsar_261_SEQ_SE_MESSAGE_bank4_file_3110_wave_000.wav` (pico 32768), `bcsar_261_SEQ_SE_MESSAGE_bank5_file_3111_wave_000.wav` (pico 32010) |
+| `0x00060017` | 284 | `SEQ_SE_SYS_006` | `file_3133_wave_000.cwav`, `file_3134_wave_000.cwav` | ambíguo; samples convertidos para inspeção: `bcsar_284_SEQ_SE_SYS_006_bank27_file_3133_wave_000.wav` (pico 32353), `bcsar_284_SEQ_SE_SYS_006_bank28_file_3134_wave_000.wav` (pico 31178) |
+| `0x00060061` | 358 | `SEQ_SE_SYS_066` | `file_3157_wave_000.cwav`, `file_3201_wave_000.cwav` | ambíguo; samples convertidos para inspeção: `bcsar_358_SEQ_SE_SYS_066_bank95_file_3201_wave_000.wav` (pico 31840), `bcsar_358_SEQ_SE_SYS_066_bank51_file_3157_wave_000.wav` (pico 31958) |
+| `0x000A0000` | 380 | `SEQ_SE_FLD_001` | `file_3226_wave_000.cwav`, `file_3226_wave_001.cwav`, `file_3227_wave_000.cwav` | ambíguo (3 caminhos); sem seleção nem conversão |
+| `0x000A0010` | 396 | `SEQ_SE_FLD_017` | `file_3242_wave_000.cwav`, `file_3716_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A001D` | 409 | `SEQ_SE_FLD_KAIDAN` | `file_3254_wave_000.cwav`, `file_3255_wave_000.cwav` | ambíguo; samples convertidos para inspeção: `bcsar_409_SEQ_SE_FLD_KAIDAN_bank148_file_3254_wave_000.wav` (pico 32160), `bcsar_409_SEQ_SE_FLD_KAIDAN_bank149_file_3255_wave_000.wav` (pico 32425) |
+| `0x000A0027` | 419 | `SEQ_SE_FLD_149` | `file_3265_wave_000.cwav`, `file_3266_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0030` | 428 | `SEQ_SE_FLD_153` | `file_3283_wave_000.cwav`, `file_3716_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0031` | 429 | `SEQ_SE_FLD_154` | `file_3285_wave_000.cwav`, `file_3716_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0058` | 468 | `SEQ_SE_FLD_148` | `file_3323_wave_000.cwav`, `file_3324_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0082` | 510 | `SEQ_SE_FLD_075` | `file_3364_wave_000.cwav`, `file_3716_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0084` | 512 | `SEQ_SE_FLD_077` | `file_3252_wave_000.cwav`, `file_3365_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0087` | 515 | `SEQ_SE_FLD_080` | `file_3343_wave_000.cwav`, `file_3343_wave_001.cwav`, `file_3367_wave_000.cwav` | ambíguo (3 caminhos); sem seleção nem conversão |
+| `0x000A0096` | 530 | `SEQ_SE_FLD_309` | `file_3620_wave_000.cwav`, `file_3627_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A009A` | 534 | `SEQ_SE_FLD_338` | `file_3277_wave_000.cwav`, `file_3387_wave_000.cwav`, `file_3387_wave_001.cwav` | ambíguo (3 caminhos); sem seleção nem conversão |
+| `0x000A009C` | 536 | `SEQ_SE_FLD_096` | `file_3388_wave_000.cwav`, `file_3695_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A00A0` | 540 | `SEQ_SE_FLD_100` | `file_3370_wave_000.cwav`, `file_3390_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A00CE` | 586 | `SEQ_SE_FLD_137` | `file_3432_wave_000.cwav`, `file_3433_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A00D6` | 594 | `SEQ_SE_FLD_155` | `file_3440_wave_000.cwav`, `file_3441_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A00D9` | 597 | `SEQ_SE_FLD_158` | `file_3443_wave_000.cwav`, `file_3444_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A00DA` | 598 | `SEQ_SE_FLD_159` | `file_3444_wave_000.cwav`, `file_3445_wave_000.cwav`, `file_3445_wave_001.cwav` | ambíguo (3 caminhos); sem seleção nem conversão |
+| `0x000A00DB` | 599 | `SEQ_SE_FLD_160` | `file_3445_wave_000.cwav`, `file_3445_wave_001.cwav`, `file_3446_wave_000.cwav` | ambíguo (3 caminhos); sem seleção nem conversão |
+| `0x000A00DE` | 602 | `SEQ_SE_FLD_163` | `file_3449_wave_000.cwav`, `file_3619_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A00E0` | 604 | `SEQ_SE_FLD_165` | `file_3450_wave_000.cwav`, `file_3451_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A00E6` | 610 | `SEQ_SE_FLD_171` | `file_3456_wave_000.cwav`, `file_3457_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A00E7` | 611 | `SEQ_SE_FLD_172` | `file_3457_wave_000.cwav`, `file_3458_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A00F7` | 627 | `SEQ_SE_FLD_188` | `file_3473_wave_000.cwav`, `file_3474_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0100` | 636 | `SEQ_SE_FLD_197` | `file_3482_wave_000.cwav`, `file_3483_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0101` | 637 | `SEQ_SE_FLD_198` | `file_3483_wave_000.cwav`, `file_3621_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0106` | 642 | `SEQ_SE_FLD_340` | `file_3487_wave_000.cwav`, `file_3622_wave_000.cwav`, `file_3622_wave_001.cwav` | ambíguo (3 caminhos); sem seleção nem conversão |
+| `0x000A010B` | 647 | `SEQ_SE_FLD_341` | `file_3492_wave_000.cwav`, `file_3623_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0116` | 658 | `SEQ_SE_FLD_199` | `file_3505_wave_000.cwav`, `file_3716_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A011C` | 664 | `SEQ_SE_FLD_205` | `file_3510_wave_000.cwav`, `file_3511_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A011D` | 665 | `SEQ_SE_FLD_206` | `file_3511_wave_000.cwav`, `file_3512_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0121` | 669 | `SEQ_SE_FLD_210` | `file_3515_wave_000.cwav` | único; `bcsar_669_SEQ_SE_FLD_210.wav` (pico 32235) |
+| `0x000A0125` | 673 | `SEQ_SE_FLD_214` | `file_3519_wave_000.cwav`, `file_3520_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A012A` | 678 | `SEQ_SE_FLD_219` | `file_3524_wave_000.cwav`, `file_3525_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A012B` | 679 | `SEQ_SE_FLD_220` | `file_3525_wave_000.cwav`, `file_3526_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A012D` | 681 | `SEQ_SE_FLD_222` | `file_3527_wave_000.cwav`, `file_3528_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A012E` | 682 | `SEQ_SE_FLD_223` | `file_3528_wave_000.cwav`, `file_3529_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0130` | 684 | `SEQ_SE_FLD_225` | `file_3565_wave_000.cwav` | único; `bcsar_684_SEQ_SE_FLD_225.wav` (pico 28215) |
+| `0x000A0131` | 685 | `SEQ_SE_FLD_226` | `file_3565_wave_000.cwav`, `file_3694_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0132` | 686 | `SEQ_SE_FLD_227` | `file_3533_wave_000.cwav`, `file_3694_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0134` | 688 | `SEQ_SE_FLD_229` | `file_3534_wave_000.cwav`, `file_3535_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0135` | 689 | `SEQ_SE_FLD_230` | `file_3535_wave_000.cwav`, `file_3536_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0138` | 692 | `SEQ_SE_FLD_233` | `file_3538_wave_000.cwav`, `file_3538_wave_001.cwav`, `file_3539_wave_000.cwav` | ambíguo (3 caminhos); sem seleção nem conversão |
+| `0x000A0139` | 693 | `SEQ_SE_FLD_234` | `file_3539_wave_000.cwav`, `file_3540_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A013A` | 694 | `SEQ_SE_FLD_235` | `file_3540_wave_000.cwav`, `file_3915_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0141` | 701 | `SEQ_SE_FLD_242` | `file_3547_wave_000.cwav`, `file_3548_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0143` | 703 | `SEQ_SE_FLD_244` | `file_3549_wave_000.cwav`, `file_3550_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0145` | 705 | `SEQ_SE_FLD_246` | `file_3551_wave_000.cwav`, `file_3551_wave_001.cwav`, `file_3552_wave_000.cwav` | ambíguo (3 caminhos); sem seleção nem conversão |
+| `0x000A014D` | 713 | `SEQ_SE_FLD_254` | `file_3559_wave_000.cwav`, `file_3560_wave_000.cwav`, `file_3560_wave_001.cwav` | ambíguo (3 caminhos); sem seleção nem conversão |
+| `0x000A014E` | 714 | `SEQ_SE_FLD_255` | `file_3560_wave_000.cwav`, `file_3560_wave_001.cwav`, `file_3561_wave_000.cwav`, `file_3561_wave_001.cwav` | ambíguo (4 caminhos); sem seleção nem conversão |
+| `0x000A0152` | 718 | `SEQ_SE_FLD_259` | `file_3564_wave_000.cwav`, `file_3565_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0153` | 719 | `SEQ_SE_FLD_260` | `file_3565_wave_000.cwav`, `file_3566_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0154` | 720 | `SEQ_SE_FLD_261` | `file_3566_wave_000.cwav`, `file_3567_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0155` | 721 | `SEQ_SE_FLD_262` | `file_3567_wave_000.cwav`, `file_3568_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0156` | 722 | `SEQ_SE_FLD_263` | `file_3568_wave_000.cwav`, `file_3569_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0157` | 723 | `SEQ_SE_FLD_264` | `file_3569_wave_000.cwav`, `file_3570_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0158` | 724 | `SEQ_SE_FLD_265` | `file_3570_wave_000.cwav`, `file_3571_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A015A` | 726 | `SEQ_SE_FLD_267` | `file_3573_wave_000.cwav`, `file_3739_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A015C` | 728 | `SEQ_SE_FLD_269` | `file_3574_wave_000.cwav`, `file_3574_wave_001.cwav`, `file_3574_wave_002.cwav`, `file_3574_wave_003.cwav`, `file_3575_wave_000.cwav` | ambíguo (5 caminhos); sem seleção nem conversão |
+| `0x000A015D` | 729 | `SEQ_SE_FLD_270` | `file_3575_wave_000.cwav`, `file_3716_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A015E` | 730 | `SEQ_SE_FLD_271` | `file_3577_wave_000.cwav`, `file_3716_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A015F` | 731 | `SEQ_SE_FLD_272` | `file_3577_wave_000.cwav`, `file_3578_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0160` | 732 | `SEQ_SE_FLD_273` | `file_3578_wave_000.cwav`, `file_3579_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A017C` | 760 | `SEQ_SE_FLD_301` | `file_3606_wave_000.cwav`, `file_3607_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A017D` | 761 | `SEQ_SE_FLD_302` | `file_3607_wave_000.cwav`, `file_3608_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A017E` | 762 | `SEQ_SE_FLD_303` | `file_3608_wave_000.cwav`, `file_3609_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A017F` | 763 | `SEQ_SE_FLD_304` | `file_3609_wave_000.cwav`, `file_3610_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0180` | 764 | `SEQ_SE_FLD_305` | `file_3610_wave_000.cwav`, `file_3619_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+| `0x000A0182` | 766 | `SEQ_SE_FLD_307` | `file_3607_wave_000.cwav`, `file_3612_wave_000.cwav` | ambíguo (2 caminhos); sem seleção nem conversão |
+
+Os quatro alvos prioritários são todos ambíguos: `SEQ_SE_MESSAGE` tem
+`file_3110_wave_000.cwav` e `file_3111_wave_000.cwav`; `SEQ_SE_SYS_006` tem
+`file_3133_wave_000.cwav` e `file_3134_wave_000.cwav`; `SEQ_SE_SYS_066` tem
+`file_3201_wave_000.cwav` e `file_3157_wave_000.cwav`; `SEQ_SE_FLD_KAIDAN`
+tem `file_3254_wave_000.cwav` e `file_3255_wave_000.cwav`. Os oito arquivos
+foram decodificados com pico PCM não zero, mas não alimentam playback SEPlay.
+
+Os únicos literais do corpus que entram no catálogo `seplay_samples.json` são
+`0x000A0121 → 669 SEQ_SE_FLD_210` (`file_3515_wave_000.cwav`, pico 32235) e
+`0x000A0130 → 684 SEQ_SE_FLD_225` (`file_3565_wave_000.cwav`, pico 28215).
+O host deixa os outros 70 literais no modo silencioso conservador até que a
+seleção de banco/sample ou a sequência composta seja comprovada.
 ## `trdata` / `trclass` e BGM por classe
 
 `RomFS/a/0/3/6` contém 950 slots e 949 registros ativos; os 949 IDs/classes ativos conferem com `src/data/battle/trainers.json` (divergências: 0). `trdata` armazena `classId:u16 @0x02`; seu `u32 @0x0C` é zero em todos os registros ativos. `RomFS/a/0/3/7` contém 280 classes de `0x10` bytes; o argumento BGM está em `u32 @0x0C` do registro de classe.

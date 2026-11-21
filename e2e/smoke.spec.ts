@@ -30,6 +30,10 @@ test('movimento em grade anda um tile e para em um NPC', async ({ page }) => {
 
 test('diálogo da ROM abre no NPC, fecha e devolve o controle', async ({ page }) => {
   const errors = trackPageErrors(page);
+  const sfxStatuses: number[] = [];
+  page.on('response', response => {
+    if (new URL(response.url()).pathname.startsWith('/assets/audio/sfx/')) sfxStatuses.push(response.status());
+  });
   await bootGame(page, NO_ENCOUNTERS);
   await finishIntro(page);
   await walk(page, 'ArrowDown', 1);
@@ -40,6 +44,8 @@ test('diálogo da ROM abre no NPC, fecha e devolve o controle', async ({ page })
   await walk(page, 'ArrowRight', 1);
   await expectHud(page, 'Littleroot Town · Brendan (20, 1)');
   expect(errors).toEqual([]);
+  expect(sfxStatuses.length).toBeGreaterThan(0);
+  expect(sfxStatuses.every(status => status < 400)).toBe(true);
 });
 
 test('porta leva ao interior e o save sobrevive ao reload', async ({ page }) => {

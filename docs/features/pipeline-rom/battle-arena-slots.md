@@ -24,16 +24,40 @@ focar na identidade dos modelos.
   entre outras) e cenas `G` existem, mas não foi estabelecido vínculo com a
   seleção genérica de batalha. Não substituí os slots sem esse vínculo.
 - O ginásio tem variantes específicas: `G` 78–85 (`btl_G_gym1..gym8`) e `O`
-  125–132 (`btl_O_gym1..gym8_m`). O par atual 78/125 corresponde ao ginásio
-  `gym1` (Rustboro); o engine ainda não escolhe um par por ginásio. O interior
-  genérico usa `O` 136 (`btl_O_heya_m`); existem modelos `O` nomeados para
-  outras cenas, mas a associação por zona não foi verificada.
+  125–132 (`btl_O_gym1..gym8_m`). O engine seleciona a variante pelo ID de zona;
+  veja a tabela de associação abaixo. O interior genérico usa `O` 136
+  (`btl_O_heya_m`); existem modelos `O` nomeados para outras cenas, mas a
+  associação por zona não foi verificada.
 - Os quatro modelos `O` 118/125/139/150 são camadas de arena explícitas. Não
   confirmei camadas extras além delas: o BCH secundário `G` 70/e1 e o modelo
   `O` 150/e2 (`btl_O_kusa_ms`) retornaram `Models=0` no SpicaExport.
 - A confirmação foi feita por tags/estrutura do GARC e texturas BCH convertidas
   com SpicaExport. O Azahar não foi aberto; iluminação, câmera e paridade final
   continuam pendentes em P-014.
+
+## Zonas de ginásio e variantes ROM
+
+Os IDs e nomes abaixo aparecem em `maps_v2/<id>.json` e no arquivo de zona com
+o mesmo número em `src/data/zones/`. As zonas também estão no conjunto
+`GYM_ZONE_IDS` do engine. `gametext/0058.json`, itens `lines[1]`–`lines[8]`,
+relaciona os nomes dos líderes e das oito cidades com o texto “City Gym”; a
+ordem segue os oito ginásios de Hoenn. Petalburg usa nove zonas internas do
+mesmo map area (`183`), agrupadas no engine como `gym5`.
+
+| Zone ID | Nome em `maps_v2` e `zones` | Texto ROM (`gametext/0058`) | Arena | Slots G/O |
+| --- | --- | --- | --- | --- |
+| `zone_0441` | Rustboro City | Roxanne — Rustboro City Gym | `gym1` | 78 / 125 |
+| `zone_0428` | Dewford Town | Brawly — Dewford Town Gym | `gym2` | 79 / 126 |
+| `zone_0440` | Mauville City | Wattson — Mauville City Gym | `gym3` | 80 / 127 |
+| `zone_0429` | Lavaridge Town | Flannery — Lavaridge Town Gym | `gym4` | 81 / 128 |
+| `zone_0431`–`zone_0439` | Petalburg City | Norman — Petalburg City Gym | `gym5` | 82 / 129 |
+| `zone_0442` | Fortree City | Winona — Fortree City Gym | `gym6` | 83 / 130 |
+| `zone_0443` | Mossdeep City | Liza e Tate — Mossdeep City Gym | `gym7` | 84 / 131 |
+| `zone_0444` | Sootopolis City | Wallace — Sootopolis City Gym | `gym8` | 85 / 132 |
+
+`zone_0430` também está nomeada Lavaridge Town nos dados extraídos, mas não
+pertence a `GYM_ZONE_IDS`; por isso não recebe uma arena de ginásio. Os slots G
+e O identificam os modelos da arena e da plataforma, respectivamente.
 
 ## Inventário por slot
 

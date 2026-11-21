@@ -99,6 +99,33 @@ describe('ciclo de vida do host de zonas', () => {
     expect(f.ports.silentAudio).toHaveBeenCalledWith(123456);
   });
 
+  it('toca o CWAV nativo só quando a cadeia SEPlay resolve para um sample único', async () => {
+    const f = fixture([['SEPlay', [0x000A0121]]]);
+    const playNativeSfx = vi.fn();
+    const events = new ZoneEvents({ ...f.ports, playNativeSfx }, async () => f.assets);
+
+    await events.enter();
+    await events.interact(f.npc());
+
+    expect(playNativeSfx).toHaveBeenCalledWith({
+      index: 669,
+      label: 'SEQ_SE_FLD_210',
+      url: '/assets/audio/sfx/bcsar_669_SEQ_SE_FLD_210.wav',
+    });
+    expect(f.ports.silentAudio).not.toHaveBeenCalled();
+  });
+
+  it('silencia a sequência SEPlay que tem mais de uma cadeia CWAV', async () => {
+    const f = fixture([['SEPlay', [0x000A001D]]]);
+    const playNativeSfx = vi.fn();
+    const events = new ZoneEvents({ ...f.ports, playNativeSfx }, async () => f.assets);
+
+    await events.enter();
+    await events.interact(f.npc());
+
+    expect(playNativeSfx).not.toHaveBeenCalled();
+    expect(f.ports.silentAudio).toHaveBeenCalledWith(0x000A001D);
+  });
   it('suspende PokePartyGetParam sem produzir retorno nem alterar o time AMX', async () => {
     const f = fixture([['PokePartyGetParam', [0, 8, 0]]]);
     const events = new ZoneEvents(f.ports, async () => f.assets);

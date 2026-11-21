@@ -4,6 +4,7 @@ import unittest
 
 from scripts.inspect_audio_dispatch import (
     EXEFS_BASE_VA,
+    build_seplay_map,
     direct_flow_targets,
     read_dispatch_tables,
     read_garc_entries,
@@ -42,6 +43,18 @@ def make_single_entry_garc(payload: bytes) -> bytes:
 
 
 class InspectAudioDispatchTests(unittest.TestCase):
+    def test_builds_a_small_deterministic_lookup_for_verified_seplay_literals(self):
+        mappings = [
+            {"id": 393233, "hex": "0x00060011", "bcsar": {"soundIndex": 358, "label": "SEQ_SE_SYS_066"}},
+            {"id": 393216, "hex": "0x00060000", "bcsar": {"soundIndex": 261, "label": "SEQ_SE_MESSAGE"}},
+            {"id": 655360, "hex": "0x000A0000", "bcsar": None},
+        ]
+
+        self.assertEqual(build_seplay_map(mappings), {
+            "0x00060000": {"bcsarIndex": 261, "label": "SEQ_SE_MESSAGE"},
+            "0x00060011": {"bcsarIndex": 358, "label": "SEQ_SE_SYS_066"},
+        })
+
     def test_flow_targets_include_call_and_tail_branch(self):
         rows = [
             {"mnemonic": "bl", "operands": "#0x100120"},

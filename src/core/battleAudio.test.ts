@@ -8,6 +8,7 @@ import {
   resolveBcsarSfxReference,
   resolveCurrentMusic,
   resolveSePlayBcsarId,
+  resolveSePlayNativeSfx,
   resolveZoneSfx,
 } from './battleAudio';
 
@@ -81,6 +82,18 @@ describe('battle music adapter (P-008)', () => {
     expect(resolveSePlayBcsarId(0x000a0000, groups)).toBe(0x0100017c);
     expect(resolveSePlayBcsarId(0x00060002, groups)).toBeNull();
     expect(resolveSePlayBcsarId(0x00070000, groups)).toBeNull();
+  });
+
+  it('resolves only SEPlay literals with one decoded CWAV sample', () => {
+    expect(resolveSePlayNativeSfx(0x000A0121)).toEqual({
+      index: 669,
+      label: 'SEQ_SE_FLD_210',
+      url: '/assets/audio/sfx/bcsar_669_SEQ_SE_FLD_210.wav',
+    });
+    expect(resolveSePlayNativeSfx(0xAB0A0121)).toMatchObject({ index: 669, label: 'SEQ_SE_FLD_210' });
+    expect(resolveSePlayNativeSfx(0x000A001D)).toBeUndefined();
+    expect(resolveSePlayNativeSfx(0x00060017)).toBeUndefined();
+    expect(resolveSePlayNativeSfx(-1)).toBeUndefined();
   });
 
   it('resolves cue aliases to labeled BCSAR references without mapping battle-hit', () => {

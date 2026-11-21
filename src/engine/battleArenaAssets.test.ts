@@ -8,18 +8,27 @@ import {
   createBattleArena,
 } from './battleArena';
 
+const GYM_BIOMES = ['gym1', 'gym2', 'gym3', 'gym4', 'gym5', 'gym6', 'gym7', 'gym8'] as const;
+
 describe('battleArena ROM assets', () => {
-  it('resolves ROM arena and platform/distant models for all five biomes', () => {
+  it('resolves ROM arena and platform models for the environment biomes', () => {
     expect(battleArenaModelUrl('grass')).toBe('/assets/battle-arenas/grass/grass.glb');
     expect(battleArenaModelUrl('water')).toBe('/assets/battle-arenas/water/water.glb');
     expect(battleArenaModelUrl('cave')).toBe('/assets/battle-arenas/cave/cave.glb');
-    expect(battleArenaModelUrl('gym')).toBe('/assets/battle-arenas/gym/gym.glb');
+    expect(battleArenaModelUrl('gym')).toBe('/assets/battle-arenas/gym1/gym1.glb');
     expect(battleArenaModelUrl('indoor')).toBe('/assets/battle-arenas/indoor/indoor.glb');
     expect(battleArenaStageModelUrl('grass')).toBe('/assets/battle-arenas/grass/stage/stage.glb');
     expect(battleArenaStageModelUrl('water')).toBe('/assets/battle-arenas/water/stage/stage.glb');
     expect(battleArenaStageModelUrl('cave')).toBe('/assets/battle-arenas/cave/stage/stage.glb');
-    expect(battleArenaStageModelUrl('gym')).toBe('/assets/battle-arenas/gym/stage/stage.glb');
+    expect(battleArenaStageModelUrl('gym')).toBe('/assets/battle-arenas/gym1/stage/stage.glb');
     expect(battleArenaStageModelUrl('indoor')).toBeNull();
+  });
+
+  it('resolves separate ROM assets for each of the eight gyms', () => {
+    for (const biome of GYM_BIOMES) {
+      expect(battleArenaModelUrl(biome)).toBe(`/assets/battle-arenas/${biome}/${biome}.glb`);
+      expect(battleArenaStageModelUrl(biome)).toBe(`/assets/battle-arenas/${biome}/stage/stage.glb`);
+    }
   });
 
   it('keeps native ROM environment origin and fits stage layers to the battle field', () => {
@@ -78,7 +87,7 @@ describe('battleArena ROM assets', () => {
     warning.mockRestore();
   });
 
-  it('loads both ROM layers for mapped biomes and the indoor model for indoor battles', async () => {
+  it('loads both ROM layers for each mapped gym and the indoor model for indoor battles', async () => {
     const { loadBattleArenaModel } = await import('./battleArenaAssets');
     const requested: string[] = [];
     const loader = {
@@ -91,11 +100,31 @@ describe('battleArena ROM assets', () => {
     const indoor = createBattleArena('indoor');
 
     loadBattleArenaModel(cave, loader, () => cave);
+    for (const biome of GYM_BIOMES) {
+      const arena = createBattleArena(biome);
+      loadBattleArenaModel(arena, loader, () => arena);
+      const romModel = arena.romModel;
+      const romStage = arena.romStage;
+      if (!romModel || !romStage) throw new Error(`${biome}: modelo ou plataforma ROM ausente`);
+      expect(romModel.scale.x).toBeCloseTo(0.01);
+      const platformBounds = new THREE.Box3().setFromObject(romStage);
+      expect(Math.max(platformBounds.getSize(new THREE.Vector3()).x, platformBounds.getSize(new THREE.Vector3()).z))
+        .toBeCloseTo(12);
+      expect(platformBounds.min.y).toBeCloseTo(0);
+      expect(arena.fallbackGroup.visible).toBe(false);
+    }
     loadBattleArenaModel(indoor, loader, () => indoor);
 
+    const gymUrls = GYM_BIOMES.flatMap((biome) => {
+      return [
+        `/assets/battle-arenas/${biome}/${biome}.glb`,
+        `/assets/battle-arenas/${biome}/stage/stage.glb`,
+      ];
+    });
     expect(requested).toEqual([
       '/assets/battle-arenas/cave/cave.glb',
       '/assets/battle-arenas/cave/stage/stage.glb',
+      ...gymUrls,
       '/assets/battle-arenas/indoor/indoor.glb',
     ]);
     expect(cave.romModel).not.toBeNull();
