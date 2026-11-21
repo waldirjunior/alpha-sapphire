@@ -1268,6 +1268,13 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   ou observe a seleção/upload em runtime. Nomes, vtables e constantes de
   caminho delimitam a busca, mas não autorizam parâmetros de renderização.
 
+## A-125 Recursos UI 2D e shaders ficam em GARC → LZ11 → darc (com footer CLIM em `-0x28`)
+
+- **Data:** 2026-11-21; P-011 / P-007, sondagem `DllTownmap.cro` e GARCs de UI (`townmap-cro-probe.md`).
+- **Contexto:** varreduras no topo de slots GARC (`inspect_arenav_assets.py`) reportaram zero `CLYT`/`CLIM`/`DVLB` porque o container de entrada vem comprimido em `LZ11` e encapsulado em `darc`, enquanto texturas `.bclim` usam assinatura `CLIM`/`FLIM` no rodapé de 40 bytes (`-0x28`).
+- **Evidência:** [inspect_townmap_cro.py](../scripts/inspect_townmap_cro.py) descompactou `LZ11 → darc` e encontrou 413 `CLYT`, 9.974 `CLIM`/`FLIM` e 289 `DVLB` em `RomFS/a/`, incluindo `poke_navi_map.bclim` + `map_lower.bclyt` (`a/0/6/7:0`), `map.bclim` (`a/2/5/5:0`), `map_navi01..05.bclim` (`a/2/7/6:0`, subslots 0–6) e `.shbin` soltos em `RomFS/shader/`.
+- **Regra:** descompacte `LZ11`, percorra o `darc` e verifique assinaturas tanto em cabeçalhos quanto em rodapés `-0x28` ao procurar UIs 2D (`CLYT`/`CLIM`) ou shaders (`DVLB`); o próximo ID livre de aprendizado é `A-126`.
+
 ## A-124 A party de `lab_save.main` não está pronta para batalhar
 
 - **Data:** 2026-11-21; ROADMAP #3, entrada no Ginásio de Rustboro com Azahar.
