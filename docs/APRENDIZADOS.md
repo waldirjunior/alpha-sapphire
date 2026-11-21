@@ -1268,4 +1268,19 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   ou observe a seleção/upload em runtime. Nomes, vtables e constantes de
   caminho delimitam a busca, mas não autorizam parâmetros de renderização.
 
+## A-TMP-roxanne A party de `lab_save.main` não está pronta para batalhar
+
+- **Data:** 2026-11-21; ROADMAP #3, entrada no Ginásio de Rustboro com Azahar.
+- **Contexto:** `lab_save.main` foi copiado para um perfil temporário, relocalizado
+  a Rustboro e entrou no Ginásio pelo warp real `(62,24)` de `zone_0016`.
+- **Erro a evitar:** presumir que o starter salvo em Birch's Lab está com HP
+  suficiente para avançar pelo primeiro treinador do ginásio.
+- **Evidência:** a batalha ROM de Youngster Josh mostrou Geodude Lv. 7 e a
+  mensagem do jogo `a has no more Pokémon that can fight!`; a captura está em
+  `rom/emulator/roxanne-probe/w14-gym-first-trainer-battle.png`, local e
+  ignorada pelo Git. A party existe, mas o save não tem integrante apto a lutar.
+- **Regra:** antes de usar esse save para sondar Roxanne, cure a party em jogo e
+  preserve o estado curado na cópia temporária; não relocalize diretamente para
+  dentro de `zone_0441`.
+
 
