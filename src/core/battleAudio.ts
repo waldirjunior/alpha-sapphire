@@ -41,12 +41,9 @@ export function resolveBcsarSfxReference(cue: SfxCue): BcsarSfxReference | undef
   return NATIVE_SFX_BY_CUE[cue];
 }
 
-// These cue aliases do not decode literal SEPlay IDs into BCSAR indices.
+// P-008: only this literal has a cue with a matching BCSAR label in the verified dispatch.
 const ZONE_SFX_CUES: Readonly<Record<number, SfxCue>> = {
   0x060000: 'dialogue-confirm',
-  0x060061: 'menu-select',
-  0x0a00dd: 'zone-warp',
-  0x0a0240: 'battle-hit',
 };
 
 export type BattleMusicKind = 'wild' | 'trainer' | 'rival' | 'gym_leader' | 'aqua_magma' | 'elite_four' | 'champion' | 'legendary';
@@ -134,4 +131,13 @@ export function resolveBattleSfx(event: BattleSfxEvent): SfxCue | null {
 
 export function resolveZoneSfx(soundId: number): SfxCue | null {
   return ZONE_SFX_CUES[soundId] ?? null;
+}
+
+export function resolveSePlayBcsarId(
+  argument: number,
+  groups: Readonly<Record<number, readonly number[]>>,
+): number | null {
+  if (!Number.isInteger(argument) || argument < -0x80000000 || argument > 0xffffffff) return null;
+  const value = argument >>> 0;
+  return groups[(value >>> 16) & 0xff]?.[value & 0xffff] ?? null;
 }
