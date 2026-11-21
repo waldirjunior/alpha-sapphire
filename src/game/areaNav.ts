@@ -341,10 +341,22 @@ function updateMapSelection(
   updateMapDetails(details, location);
 }
 
-function bringSelectedLocationForward(svg: SVGSVGElement, locationId: string | null): void {
-  const selected = Array.from(svg.querySelectorAll<SVGGElement>('.hoenn-map-location'))
+export interface AreaNavSvgLayer<TMarker, TPlayer> {
+  querySelectorAll(selectors: string): Iterable<TMarker>;
+  querySelector(selectors: string): TPlayer | null;
+  insertBefore(node: TMarker, child: TPlayer | null): unknown;
+  appendChild(node: TMarker): unknown;
+}
+
+export function bringSelectedLocationForward<
+  TMarker extends { readonly dataset: { readonly locationId?: string } },
+  TPlayer,
+>(svg: AreaNavSvgLayer<TMarker, TPlayer>, locationId: string | null): void {
+  const selected = Array.from(svg.querySelectorAll('.hoenn-map-location'))
     .find((marker) => marker.dataset.locationId === locationId);
-  if (selected) svg.appendChild(selected);
+  const playerMarker = svg.querySelector('.hoenn-player-marker');
+  if (selected && playerMarker) svg.insertBefore(selected, playerMarker);
+  else if (selected) svg.appendChild(selected);
 }
 
 function updateMapDetails(details: HTMLElement, location: HoennLocation | undefined): void {

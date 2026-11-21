@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { bringSelectedLocationForward } from './areaNav';
 import {
   AREA_NAV_CLYT_LAYOUT,
   areaNavMarkerSize,
@@ -41,5 +42,35 @@ describe('AreaNav ROM assets', () => {
     setNativeMapAvailability(target, false);
 
     expect(calls).toEqual([['has-native-map', true], ['has-native-map', false]]);
+  });
+
+  it('keeps the player avatar marker above the selected location marker', () => {
+    const littleroot = { dataset: { locationId: 'littleroot-town' } };
+    const rustboro = { dataset: { locationId: 'rustboro-city' } };
+    const player = { dataset: {} };
+    const order: Array<{ dataset: { locationId?: string } }> = [littleroot, rustboro, player];
+    const svg = {
+      querySelectorAll: () => [littleroot, rustboro],
+      querySelector: () => player,
+      insertBefore: (node: typeof littleroot, child: typeof player | null) => {
+        const current = order.indexOf(node);
+        if (current >= 0) order.splice(current, 1);
+        const before = child ? order.indexOf(child) : -1;
+        order.splice(before >= 0 ? before : order.length, 0, node);
+      },
+      appendChild: (node: typeof littleroot) => {
+        const current = order.indexOf(node);
+        if (current >= 0) order.splice(current, 1);
+        order.push(node);
+      },
+    };
+
+    bringSelectedLocationForward(svg, 'littleroot-town');
+
+    expect(order.map((node) => node.dataset.locationId ?? 'player')).toEqual([
+      'rustboro-city',
+      'littleroot-town',
+      'player',
+    ]);
   });
 });
