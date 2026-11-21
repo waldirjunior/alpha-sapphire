@@ -1297,4 +1297,39 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   preserve o estado curado na cópia temporária; não relocalize diretamente para
   dentro de `zone_0441`.
 
+## A-127 Slots BCH de expressão não são limitados a Eye/Mouth
+
+- **Data:** 2026-11-21; P-012, perfis de expressão e exportação de Taillow.
+- **Contexto:** `scripts/pokemon_battle_expressions.py` lê PC/PB na GARC
+  `RomFS/a/0/0/8`; o Taillow `pm0276_00` usa model slot 3075 e motion slot 3080.
+- **Erro a evitar:** a falta de uma entrada no JSON não prova que o PB não tenha
+  BCH de visibilidade/material. O extrator antigo filtrava visibilidade por
+  `mouth` e materiais pelo nome exato `Eye`.
+- **Evidência — expressões:** os cinco PB auditados têm 74 seções e BCH de
+  visibilidade nos índices `[2, 10, 14, 18, 19]` e de materiais em
+  `[20, 28, 32, 36, 37]`; todos têm GF1 em 0/8/12/16/17 (idle, physical,
+  special, damage, faint). Gothita #574 (6307/6312) anima UV em `LEye` e
+  `REye`; Lillipup #506 (5731/5736) em `LEye`, `REye` e `Mouth`; Swampert
+  #260 (2899/2904) em `Eye00` e `Eye01`. Shellos #422 (4683/4688, tag
+  `pm0422_11`) contém UV em `AEye` e `BEye`, mas apenas `AEye` existe no GLB
+  base e pode ser aplicado com segurança. Pidove #519 (5835/5840) anima UV em
+  `LEye`/`REye` e visibilidade de `pm0519_00_LCloseWingSkin`,
+  `LWingSkin`, `RCloseWingSkin` e `RWingSkin` na seção 14. O JSON gerado agora
+  contém os 41 perfis do catálogo.
+- **Evidência — Taillow:** nas animações GF1 PB 0 e 8, `ScaleX/Y/Z` ficam zero
+  durante os 40 frames em `LArm`, `LForeArm`, `LHand`, `LFinger`, `RArm`,
+  `RForeArm`, `RHand` e `RFinger`, embora a escala de repouso BCH seja `(1,1,1)`.
+  `LForeArm` (SSC) é o primeiro filho que falha porque seu pai `LArm` recebe
+  escala zero; a cadeia direita tem o mesmo padrão. As curvas são canais sem
+  override de escala, não escala de repouso zero. `scripts/export_native_motion.cs`
+  agora remove apenas esses canais totalmente zero quando a escala BCH não é
+  zero, deixando a conversão usar a escala de repouso. A integração exportou os
+  cinco clipes com 4 imagens, 76 joints e 228 canais por clipe; a validação
+  confirmou BIN original preservado e accessors finitos.
+- **Regra:** descubra seções por índice e tipo de curva, associe curvas de UV a
+  materiais presentes no GLB base e não descarte nomes fora de `Eye`/`Mouth`.
+  Em GF1, interprete uma curva de escala inteiramente zero como canal ausente
+  apenas quando a escala correspondente de repouso BCH for diferente de zero;
+  preserve escalas de repouso realmente zero.
+
 

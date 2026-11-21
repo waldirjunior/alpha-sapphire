@@ -19,7 +19,7 @@
     "zigzagoon": "/assets/native/pokemon/zigzagoon-407dd336f84b.glb",
     "wurmple": "/assets/native/pokemon/wurmple-b4156d7eeade.glb",
     "lotad": "/assets/native/pokemon/lotad-08a0df91db06.glb",
-    "taillow": "/assets/native/pokemon/taillow-1ea9b772b263.glb",
+    "taillow": "/assets/native/pokemon/taillow-6cebab0583b1.glb",
     "wingull": "/assets/native/pokemon/wingull-1e80e11e2b67.glb",
     "pelipper": "/assets/native/pokemon/pelipper-1f01967046a4.glb",
     "ralts": "/assets/native/pokemon/ralts-60fc61b33c6f.glb",
@@ -2044,12 +2044,16 @@
     },
     {
       "id": "pokemon/0276/0",
-      "url": "/assets/native/pokemon/taillow-1ea9b772b263.glb",
-      "sha256": "1ea9b772b26351a048916a993e6ddf9125520973c599562830449d741dfe9905",
-      "native": false,
-      "source": "rom/extracted/models/pokemon/pm0276_00/pm0276_00.glb",
+      "url": "/assets/native/pokemon/taillow-6cebab0583b1.glb",
+      "sha256": "6cebab0583b1fd876e2d338cf949242ae49e77cea141f4c1b43f7f70dc1d1d04",
+      "native": true,
+      "source": "rom/extracted/models/clips_merged/pokemon/pm0276_00/pm0276_00.glb",
       "clips": [
-        "idle"
+        "idle",
+        "physical",
+        "special",
+        "damage",
+        "faint"
       ]
     },
     {
@@ -2401,10 +2405,6 @@
     {
       "id": "character/mm_0312",
       "reason": "MM has only the model section"
-    },
-    {
-      "id": "pokemon/0276/0",
-      "reason": "Unhandled exception. System.IO.InvalidDataException: Segment scale compensation has a zero parent scale."
     },
     {
       "id": "character/mm_4115",

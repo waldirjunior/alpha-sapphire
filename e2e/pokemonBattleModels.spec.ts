@@ -4,7 +4,9 @@ import { POKEMON_BATTLE_SCENARIOS } from '../src/visual/scenarios';
 import { bootGame, finishIntro, walk } from './support/game';
 import { trackPageErrors } from './support/pageErrors';
 
-const EXPRESSION_MODELS = ['zigzagoon', 'poochyena', 'torchic', 'treecko', 'mudkip', 'wurmple', 'lotad', 'ralts'] as const;
+const EXPRESSION_MODELS = [
+  'zigzagoon', 'poochyena', 'torchic', 'treecko', 'mudkip', 'wurmple', 'lotad', 'ralts', 'taillow',
+] as const;
 const nativeAssets = JSON.parse(readFileSync(new URL('../src/data/nativeAssets.json', import.meta.url), 'utf8')) as {
   pokemon: Record<string, string>;
 };

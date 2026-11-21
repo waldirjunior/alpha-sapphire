@@ -15342,10 +15342,56 @@
         "damage": 16,
         "faint": 17
       },
-      "status": "failed",
+      "status": "merged",
       "log": "rom/extracted/models/clips_merged/pokemon/pm0276_00/pm0276_00.log",
-      "returncode": 1,
-      "error": "Unhandled exception. System.IO.InvalidDataException: Segment scale compensation has a zero parent scale."
+      "returncode": 0,
+      "validation": {
+        "status": "passed",
+        "bytes": 1512192,
+        "output_sha256": "6cebab0583b1fd876e2d338cf949242ae49e77cea141f4c1b43f7f70dc1d1d04",
+        "base_binary_sha256": "cf257d9f3bb29808ddb30d49a47b9267aa9fd8a43cdfb2c4df63a6cca01880bc",
+        "base_preserved": true,
+        "all_float_accessors_finite": true,
+        "images": 4,
+        "skin_joints": 76,
+        "native_animations": [
+          {
+            "name": "idle",
+            "frames": 40,
+            "duration": 1.3333333730697632,
+            "channels": 228,
+            "variable_samplers": 213
+          },
+          {
+            "name": "physical",
+            "frames": 40,
+            "duration": 1.3333333730697632,
+            "channels": 228,
+            "variable_samplers": 213
+          },
+          {
+            "name": "special",
+            "frames": 62,
+            "duration": 2.066666603088379,
+            "channels": 228,
+            "variable_samplers": 213
+          },
+          {
+            "name": "damage",
+            "frames": 20,
+            "duration": 0.6666666865348816,
+            "channels": 228,
+            "variable_samplers": 213
+          },
+          {
+            "name": "faint",
+            "frames": 50,
+            "duration": 1.6666666269302368,
+            "channels": 228,
+            "variable_samplers": 213
+          }
+        ]
+      }
     },
     {
       "id": "pokemon/0278/0",

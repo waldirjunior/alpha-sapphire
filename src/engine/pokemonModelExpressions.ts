@@ -5,12 +5,14 @@ export interface PokemonExpressionTextureKey { readonly frame: number; readonly 
 
 export interface PokemonBattleExpressionAction {
   readonly eyeTranslations?: readonly PokemonExpressionTextureKey[];
+  readonly materialTranslations?: Readonly<Record<string, readonly PokemonExpressionTextureKey[]>>;
   readonly meshVisibility?: Readonly<Record<string, readonly PokemonExpressionVisibilityKey[]>>;
 }
 
 export interface PokemonBattleExpressionProfile {
   readonly fps: number;
   readonly eyeBaseTranslation?: readonly number[];
+  readonly materialBaseTranslations?: Readonly<Record<string, readonly number[]>>;
   readonly actions: Readonly<Record<string, PokemonBattleExpressionAction>>;
 }
 
@@ -28,6 +30,8 @@ interface VisibilityBinding {
 interface TextureBinding {
   readonly texture: Texture;
   readonly defaultOffset: Vector2;
+  readonly materialName: string;
+  readonly baseTranslation: readonly number[];
 }
 
 export function applyDefaultPokemonExpressions(root: Object3D): void {
@@ -47,7 +51,7 @@ export function bindPokemonBattleExpressions(
   profile: PokemonBattleExpressionProfile,
 ): PokemonBattleExpressionController {
   const visibility = bindVisibility(root, profile);
-  const textures = bindEyeTextures(root, profile);
+  const textures = bindMaterialTextures(root, profile);
   return {
     update: (clip, elapsedSeconds) => updateExpressionFrame(clip, elapsedSeconds, profile, visibility, textures),
     dispose: () => restoreExpressionDefaults(visibility, textures),
@@ -71,18 +75,29 @@ function bindVisibility(root: Object3D, profile: PokemonBattleExpressionProfile)
   });
 }
 
-function bindEyeTextures(root: Object3D, profile: PokemonBattleExpressionProfile): TextureBinding[] {
-  if (!profile.eyeBaseTranslation || !Object.values(profile.actions).some(action => action.eyeTranslations?.length)) return [];
-  const textures = new Set<Texture>();
+function bindMaterialTextures(root: Object3D, profile: PokemonBattleExpressionProfile): TextureBinding[] {
+  const baseTranslations = new Map<string, readonly number[]>();
+  if (profile.eyeBaseTranslation) baseTranslations.set('Eye', profile.eyeBaseTranslation);
+  for (const [name, translation] of Object.entries(profile.materialBaseTranslations ?? {})) {
+    baseTranslations.set(name, translation);
+  }
+  const bindings: TextureBinding[] = [];
   root.traverse(node => {
     if (!(node instanceof Mesh)) return;
     for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
-      if (material.name.toLowerCase() !== 'eye') continue;
+      const baseTranslation = baseTranslations.get(material.name);
+      if (!baseTranslation || !hasMaterialCurve(profile, material.name)) continue;
       const texture = eyeTexture(material);
-      if (texture) textures.add(texture);
+      if (texture) bindings.push({ texture, defaultOffset: texture.offset.clone(), materialName: material.name, baseTranslation });
     }
   });
-  return [...textures].map(texture => ({ texture, defaultOffset: texture.offset.clone() }));
+  return bindings;
+}
+
+function hasMaterialCurve(profile: PokemonBattleExpressionProfile, name: string): boolean {
+  return Object.values(profile.actions).some(action => name === 'Eye'
+    ? Boolean(action.eyeTranslations?.length)
+    : Boolean(action.materialTranslations?.[name]?.length));
 }
 
 function eyeTexture(material: Material): Texture | undefined {
@@ -104,11 +119,15 @@ function updateExpressionFrame(
     const keys = binding.framesByClip[clip];
     if (keys?.length) binding.node.visible = keyAt(keys, frame).visible;
   }
-  const translation = action.eyeTranslations?.length ? keyAt(action.eyeTranslations, frame) : undefined;
-  if (translation && profile.eyeBaseTranslation) {
-    const offsetX = profile.eyeBaseTranslation[0] - translation.x;
-    const offsetY = translation.y - profile.eyeBaseTranslation[1];
-    for (const binding of textures) binding.texture.offset.set(offsetX, offsetY);
+  for (const binding of textures) {
+    const keys = binding.materialName === 'Eye'
+      ? action.eyeTranslations
+      : action.materialTranslations?.[binding.materialName];
+    const translation = keys?.length ? keyAt(keys, frame) : undefined;
+    if (!translation) continue;
+    const offsetX = binding.baseTranslation[0] - translation.x;
+    const offsetY = translation.y - binding.baseTranslation[1];
+    binding.texture.offset.set(offsetX, offsetY);
   }
 }
 
