@@ -6,6 +6,7 @@
   "description": "Reconstrução web em Three.js de Pokémon Alpha Sapphire com pipeline de extração de ROM, testes automatizados e documentação para TCC.",
   "scripts": {
     "dev": "vite",
+    "server:multiplayer": "vite-node src/server/startMultiplayerServer.ts",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest run",
