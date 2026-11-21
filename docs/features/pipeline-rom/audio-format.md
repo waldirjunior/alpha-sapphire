@@ -77,23 +77,22 @@ python3 scripts/extract_bcsar_sfx.py \
 
 ### Rótulos relevantes e limites do mapeamento
 
-Os números abaixo são índices na tabela `0x2100`, não valores literais aceitos por `SEPlay`:
+Os números abaixo são índices na tabela `0x2100`, não valores literais aceitos por `SEPlay`. O wrapper ARM, a regra de dispatch e os 72 mapeamentos literais agora estão provados em [audio-dispatch-probe.md](audio-dispatch-probe.md):
 
 | Uso pelo rótulo do BCSAR | Índice / rótulo | ID literal `SEPlay` observado |
 |---|---|---|
-| Texto/diálogo | `261 SEQ_SE_MESSAGE` | `0x00060000` (589 chamadas em 322 zonas; alias contextual já usado pelo host). |
-| Seleção/confirmação de menu | `262 SEQ_SE_DECIDE1`, `265 SEQ_SE_SELECT1` | `0x00060061` (1 chamada no script da zona 227; relação ao índice BCSAR não provada). |
-| Porta | `1481 SEQ_SE_KW_DOOROPEN`, `1480 SEQ_SE_KW_DOORCLOSE` | `0x000A001D` é candidato de efeito de campo (69 chamadas/39 zonas); a associação à porta não foi provada. |
+| Mensagem | `261 SEQ_SE_MESSAGE` | `0x00060000` → som BCSAR 261 (589 chamadas). |
+| Efeito de sistema | `284 SEQ_SE_SYS_006`, `358 SEQ_SE_SYS_066` | `0x00060017`, `0x00060061`; veja a tabela completa na probe. |
 | Cura | `343 SEQ_SE_RECOVERY`; jingle `211 STRM_ME_KAIFUKU` | Nenhum literal `SEPlay` foi ligado com segurança ao rótulo. O jingle é `ME`, não `SE`. |
 | Hit | `413 SEQ_SE_FLD_WALL_HIT`; sons de batalha ficam entre `SEQ_SE_BT_*` | Não há rótulo único “battle hit”; os IDs de sequência de batalha não foram ligados aos eventos do host. |
 | Captura | `270 SEQ_SE_CATCH`; jingle `215 STRM_ME_POKEGET` | Nenhum literal `SEPlay` foi ligado com segurança ao rótulo. O jingle é `ME`, não `SE`. |
-| Warp | Não há rótulo `SEQ_SE_*WARP` | `0x000A00DD`, previamente anotado como warp, não aparece nos JSONs `zone_scripts` atuais; manter como não confirmado. |
+| Outros efeitos | Rótulos conforme dispatch | Todos os 72 literais do corpus resolvem numericamente para BCSAR/STRG; associação ao cue semântico do host continua separada. |
 
-O scan literal também encontra `0x000A001D` (69), `0x00060017` (17), `0x000A0000` (13) e outros valores de campo; não se deve tratar o valor de `SEPlay` como índice BCSAR sem resolver a codificação/runtime que conecta os dois espaços. `0x000A0240`, anotado anteriormente como hit, também não aparece no corpus atual. O extrator cataloga os IDs e os rótulos BCSAR em separado para preservar essa distinção.
+O decoder de `code.bin` usa os bits 16–23 como grupo e os bits 0–15 como índice local; consulta a tabela de grupo e retorna o ID BCSAR codificado. Por isso `0x00060061` resolve para `358 SEQ_SE_SYS_066`, não para `262` ou `265`; `0x000A001D` também tem um alvo exato, sem que isso prove que seja uma porta. `0x000A0240` não pertence ao corpus atual. O relatório lista o alvo BCSAR de cada literal e mantém sua semântica de jogo em aberto.
 
-Os `.cseq`, `.cbnk`, `.cwar` e `.cwav` crus não são reproduzíveis diretamente pelo navegador; a conversão CWAV acima gera WAVs de samples, não sequências compostas. `battleAudio.ts` cataloga os índices/rótulos e resolve aliases de `SfxCue`: diálogo→261, menu abrir→262, seleção→265, captura→270, recuperação→343, bloqueio de parede→413, warp→1481 e `door-close`→1480. `door-close` tem referência e saída WAV, mas ainda não tem produtor de cue no host; o warp genérico continua tocando o alias semântico de porta aberta. `battle-hit` não aponta para `SEQ_SE_FLD_WALL_HIT`. `SceneManager.playSfx` passa referências ao `BgmPlayer`; se o WAV faltar ou não decodificar, o cue mantém o fallback procedural. Os oito WAVs deste slice ficam em `public/assets/audio/sfx/`, ignorado pelo Git.
+Os `.cseq`, `.cbnk`, `.cwar` e `.cwav` crus não são reproduzíveis diretamente pelo navegador; a conversão CWAV acima gera WAVs de samples, não sequências compostas. `battleAudio.ts` mantém uma tabela separada de referências nativas para cues do host. Só `0x00060000` continua ligado a `dialogue-confirm`; os aliases `0x00060061`, `0x000A001D` e `0x000A0240` foram removidos porque suas associações semânticas anteriores não eram sustentadas. `SceneManager.playSfx` passa referências ao `BgmPlayer`; se o WAV faltar ou não decodificar, o cue mantém o fallback procedural. Os oito WAVs deste slice ficam em `public/assets/audio/sfx/`, ignorado pelo Git.
 
-Os aliases literais `SEPlay` em `resolveZoneSfx` continuam a selecionar os mesmos cues de domínio; eles não são decodificados em índices BCSAR. A tabela de `SfxCue` escolhe um rótulo nativo separado pela semântica do alias, sem declarar que o literal de origem é o índice BCSAR. Resolver a codificação/dispatch de `SEPlay`, tocar as oito sequências compostas e identificar os WAVs de todos os alvos seguem como resíduos de P-008.
+O mapa numérico `SEPlay → BCSAR` já está resolvido. Associar cada alvo a um cue de domínio, tocar as sequências compostas e identificar os WAVs de todos os alvos seguem fora da evidência desta etapa de `P-008`.
 
 ## Validação
 
@@ -123,11 +122,11 @@ As 536 zonas resolvem para um `.mp3` existente. Zona 0 (cópia técnica de Littl
 | Treinador | `STRM_BGM_VS_TRAINER_SG` (101) | `bgm_sg_vs_trainer_sg` |
 | Líder de ginásio | `STRM_BGM_VS_GYMLEADER_SG` (102) | `bgm_sg_vs_gymleader_sg` |
 | Rival | `STRM_BGM_VS_RIVAL_SG` (103) | `bgm_sg_vs_rival_sg` |
-| Equipe Aqua/Magma | pendente de confirmação no BCSAR (`A-027`) | `bgm_sg_vs_aqua_magma` |
+| Equipe Aqua / Magma | `STRM_BGM_VS_AQUA` (104) / `STRM_BGM_VS_MAGMA` (105) | `bgm_sg_vs_aqua_magma` (arquivo compartilhado) |
 | Elite Four | `STRM_BGM_VS_SHITENNO_SG` | `bgm_sg_vs_shitenno_sg` |
 | Campeão | `STRM_BGM_VS_CHAMP_SG` | `bgm_sg_vs_champ_sg` |
 | Pokémon lendário | `STRM_BGM_VS_LEGEND_SG` | `bgm_sg_vs_legend_sg` |
-| Vitória selvagem / treinador / ginásio | `STRM_BGM_WIN1/2/3` (125–127) | `bgm_sg_win1/2/3` — **inferência** pela ordem dos rótulos (`A-027`) |
+| Vitória | `STRM_BGM_WIN1/2/3` (125–127) | `bgm_sg_win1/2/3`; associação a tipo/resultado não provada pela ROM inspecionada |
 | Cura | `STRM_ME_KAIFUKU` (211) | `me_xy_kaifuku` |
 | Level-up | `STRM_ME_LVUP` (212) | `me_xy_lvup` |
 
@@ -135,4 +134,4 @@ O contexto explícito (`BattleMusicSource.context`) prevalece; na ausência dele
 
 ## Fora do escopo
 
-IDs de BGM selecionados por `trdata`, variações por evento/flag de história (ex.: Littleroot após o intro), ME (`STRM_ME_*`) e efeitos sonoros (SEQ/WSD no bloco FILE) permanecem fora do escopo desta etapa (`P-008`).
+O campo de classe em `trclass @0x0C` e seus valores BCSAR estão catalogados em [audio-dispatch-probe.md](audio-dispatch-probe.md), mas a seleção desse valor em todos os fluxos de batalha não foi provada. Também permanecem fora do escopo as variações por evento/flag de história (ex.: Littleroot após o intro), a associação de `WIN1/2/3` ao resultado e os efeitos compostos de SEQ/WSD no bloco FILE (`P-008`).
