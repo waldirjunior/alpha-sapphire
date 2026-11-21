@@ -159,3 +159,41 @@ diálogo posterior, batalha, callback e badge seguem em P-013.
 e2e/campaign.spec.ts --reporter=list` passou 1/1 em 4,7 min. Smoke não foi
 repetido porque o host de eventos não mudou; a suíte completa Playwright não foi
 executada nesta etapa.
+
+## Save de laboratório e primeiro treinador em Azahar (2026-11-21)
+
+`lab_save.main` foi inspecionado como `zone=227`, tile `(14,22)`; no Azahar a
+RAM confirmou `zone=227` em `0x08187BD4`. `first_save.main` inicia em `zone=6`,
+tile `(14,12)`. A partida do laboratório mostrou o sprite do Pokémon do jogador
+na batalha, mas a mensagem ROM foi `a has no more Pokémon that can fight!`;
+portanto há integrante na party, porém o save não serve para batalhar sem cura.
+O menu de `first_save.main` foi visto em Azahar, mas esta sondagem não leu a
+party desse save.
+
+Uma cópia temporária de `lab_save.main` foi relocalizada para Rustboro
+(`zone_0016`, `(62,25)`). O mapa confirma que essa célula é caminhável e que o
+warp `(62,24)` entra em `zone_0441`; `continue_game` e uma entrada real para
+norte chegaram naturalmente ao ginásio. A RAM antes da transição leu zona 16 e
+posição mundial `(2565,2,3339)` em `0x08187BF4`; depois leu zona 441 e
+`(351,2,693)`, local `(19.5,38.5)`. A entrada natural, a captura do ginásio,
+o diálogo do treinador e a batalha estão somente em
+`rom/emulator/roxanne-probe/w14-*.png` (local e ignorado pelo Git).
+
+Antes de Roxanne, o primeiro treinador do ginásio inicia uma batalha ROM com
+Youngster Josh: Geodude Lv. 7, correspondente ao primeiro integrante do trainer
+562 em `trainers.json`. A party do save do laboratório não tinha Pokémon apto a
+lutar, e esta tentativa não alcançou Roxanne. A campanha Playwright continua
+passando 1/1, mas o cenário verifica explicitamente a pausa em
+`PokePartyGetParam(0,8,0)`; não avançou além dessa native. Esta sondagem não
+observou retornos em RAM para seletores `0/8/44/49/53`, nem chamadas reais de
+`_CallTrainerBattleCore`, `BadgeGetFlag`, `BadgeSetFlag` ou `GymSetVictoryInfo`.
+A batalha de Youngster Josh não comprova o caminho de batalha AMX de Roxanne; IVs
+do adversário também não foram lidos. Nenhuma native foi implementada sem essas
+evidências.
+
+`npm run verify` passou: 649 Vitest em 87 arquivos, build e 263 testes Python
+(um skip por assets locais ausentes no worktree). O build mantém o aviso de
+chunk acima de 500 kB. `ALPHA_PUBLIC_DIR=.../public npx playwright test
+e2e/campaign.spec.ts --reporter=list` passou 1/1 em 1,7 min e confirmou o
+bloqueio na primeira query de party; o smoke não foi repetido porque o host de
+eventos não mudou.
