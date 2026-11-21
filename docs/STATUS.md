@@ -10,9 +10,9 @@ Verificado em 2026-11-21 (macOS; suporte headless Linux validado anteriormente n
 | --- | --- | --- |
 | Testes unitários (Vitest) | 714 em 93 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | acima da catraca de 95% linhas / 85% branches | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 312 passando, 2 skips | `npm run test:py` |
+| Testes do pipeline e do oráculo (Python) | 315 passando, 2 skips | `npm run test:py` |
 | Jogo real no browser (smoke + campanha + corredor) | 7 smoke e campanha 1/1 (`e2e/campaign.spec.ts`; fade modo 2 até `PokePartyGetParam(0,8,0)`); corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`); specs smoke + arenas 8/8; suíte completa 41/41 | `npm run test:e2e` |
-| Cenários visuais | 28/28 cenas do mundo aceitas; `pokenav-hoenn-map` integrado com mapa/marcadores/avatar ROM e aprovado (P-011 residual dos 4 glifos/toque) | `npm run test:e2e`, galeria e comparação em `rom/visual-report/` |
+| Cenários visuais | 28/28 cenas do mundo aceitas; `pokenav-hoenn-map` integrado com mapa/marcadores/avatar ROM e aprovado; glifos, ações e projeção nativa seguem abertos (sondagem estática sem prova, P-011) | `npm run test:e2e`, galeria e comparação em `rom/visual-report/` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
 
 Atores `0x1000`/`0x2000` renderizam modelo real (`failedAssets = 0`); câmera/oclusão em `z0006-littleroot-telhado` e `z0445-mauville-hall` batem com Azahar; cenários Mauville/Route 119 aceitos. Pés Brendan/May e V de corpo/faces (`A-099`) corrigidos. Refs 400×240 em `rom/visual-reference/`.

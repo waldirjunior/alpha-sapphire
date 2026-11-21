@@ -1383,7 +1383,7 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   até a seleção da luz e o upload; sem essa prova, não extraia iluminação de
   zona/horário nem altere `zoneEnvironment.ts`.
 
-## A-TMP-seplay-cwav Duas referências de banco podem deixar um `SEPlay` ambíguo
+## A-130 Duas referências de banco podem deixar um `SEPlay` ambíguo
 
 - **Data:** 2026-11-21; P-008, integração do dispatch literal e dos samples CWAV.
 - **Contexto:** o BCSAR liga as 72 chamadas literais do corpus ao índice/label
@@ -1400,4 +1400,22 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   Um sample de banco não prova a composição CSEQ nem substitui a observação do
   banco/instrumento escolhido; caso contrário, mantenha o `SEPlay` em silêncio.
 
+## A-131 Não confundir rótulos `map_navi` nem constantes de tela com glifos/projeção AreaNav
+
+- **Data:** 2026-11-21; ROADMAP #4/P-011, sondagem estática de `DllTownmap.cro`
+  e dos GARCs de UI.
+- **Erro a evitar:** confundir os cinco rótulos ingleses `map_navi01..05`
+  (“Places”, “Pokémon”, “Trainers”, “Bases”, “Berries”) ou outros recursos
+  genericamente chamados `icon` com os quatro glifos inferiores da AreaNav.
+  Também não trate os literais `160.0`/`120.0` usados pelo helper `0x9F54`
+  como projeção de coordenadas de Hoenn para a textura do mapa.
+- **Evidência:** `map_lower.bclyt` referencia exatamente onze texturas via
+  `txl1` e não lista esses quatro glifos. `MapView` em `0x9BDC`/`0x9AC4` e o
+  helper em `0x9F54` chamam import veneers sem nomes resolvidos; os offsets e
+  cálculos identificam candidatos de toque/hit-test, mas não revelam a tabela
+  mundo→texel nem os callbacks dos botões. Detalhes e reprodução em
+  [townmap-cro-probe.md](features/pipeline-rom/townmap-cro-probe.md).
+- **Regra:** sem ligar pane, textura e callback por evidência, mantenha os
+  glifos decorativos e não mude `areaNavNativeMapPoint`; use emulador ou novos
+  símbolos/referências de dados para fechar as ações e a coordenada nativa.
 
