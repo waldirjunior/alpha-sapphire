@@ -141,6 +141,7 @@ export interface MenuHost extends EvolutionItemMenuHost {
   getActiveBagPocket(): BagPocket;
   setActiveBagPocket(pocket: BagPocket): void;
   getPlayerMap(): { mapId: string; zoneName?: string };
+  getPlayerGender(): 'male' | 'female';
   getSelectedMapLocationId(): string | null;
   setSelectedMapLocationId(locationId: string): void;
 }

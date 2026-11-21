@@ -202,3 +202,40 @@ python3 scripts/inspect_arenav_assets.py \
 Os arquivos extraídos e PNGs de inspeção permaneceram fora do worktree e não
 foram versionados. Não foi executado e2e, pois esta entrega altera somente
 scripts e documentação; nenhuma captura ou baseline foi criada ou aprovada.
+
+## 11. Extração e integração da AreaNav — 2026-11-21
+
+`scripts/extract_arenav_ui.py` percorre GARC → LZ11 → DARC, extrai BCLIMs
+selecionados para PNG e decodifica as panes `pan1`, `pic1` e `txt1` de
+`map_lower.bclyt` para `map_lower.layout.json`. A saída local contém 16 arquivos:
+`poke_navi_map.png` (380×270 ETC1), `map_city_icon01..03.png`, os sprites
+`hero_obj.png`/`heroine_obj.png`, `map_navi01..05.png` do subslot inglês 1,
+`map.png` (320×240), `finger_icon.png` e o JSON com 335 panes. O CLYT confirma
+tela raiz 320×240, pane do mapa em `(0,15)` com 380×270 e pane de título 190×30.
+
+`areaNav.ts` mostra `poke_navi_map.png`, marcadores nativos para cidades e
+vilas, e o sprite Brendan/May conforme o gênero salvo; se o mapa falhar ao
+carregar, a composição vetorial anterior volta a aparecer. As coordenadas dos
+marcadores existentes são ajustadas visualmente à textura, pois `map_lower`
+não contém o vínculo entre cada local Hoenn e um pixel do mapa. O título textual
+AreaNav permanece no host: o arquivo consultado contém panes de texto, sem uma
+faixa bitmap com esse título. `pokenavi_logo.bclim` em `a/2/4/7` diz “POKEMON
+MULTI NAVI”, não “AreaNav”. A busca em `a/0/6/6..9`, `a/1/5/0`, slots
+181–186 de `a/1/5/2`, `a/2/4/4`, `a/2/4/7` e subslots 0–6 de `a/2/7/6` não
+identificou os quatro glifos quadrados da faixa inferior. `map_navi01..05`
+mostram “Places”, “Pokémon”, “Trainers”, “Bases” e “Berries”; não são essa
+faixa. Os quatro glifos permanecem decorativos e sem handlers, conforme A-121.
+
+Testes sintéticos em `scripts/test_extract_arenav_ui.py` cobrem bounds/nome de
+panes e extração DARC/BCLIM. `src/game/areaNav.test.ts` cobre medidas do CLYT,
+URLs, marcadores e retorno ao fallback. `npm run verify` passou com 702 testes
+Vitest, build e 289 testes Python (1 skip). O Playwright executou o cenário
+`pokenav-hoenn-map`: métricas, seleção e conteúdo passaram; a comparação de
+imagem reportou diferença de 41.405 pixels (54%) contra o snapshot anterior. A
+captura atual foi comparada com a referência Azahar e ficou em
+`/tmp/arenav-check.png`; o baseline não foi aprovado. A captura nova mostra o
+mapa Hoenn inteiro reduzido dentro da moldura, enquanto a referência Azahar
+mostra uma região ampliada/cortada e os glifos inferiores originais; por isso,
+o coordenador deve revisar o enquadramento antes de regravar o snapshot. Se a
+composição atual for aceita como resultado visual intencional, o baseline deve
+ser regravado depois dessa revisão. PNGs e relatórios locais ficam fora do Git.

@@ -1332,4 +1332,25 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   apenas quando a escala correspondente de repouso BCH for diferente de zero;
   preserve escalas de repouso realmente zero.
 
+## A-128 Recursos de AreaNav, subslot inglês e chroma-key ciano
+
+- **Data:** 2026-11-21; ROADMAP #4/P-011, extração da AreaNav.
+- **Contexto:** `a/2/7/6` guarda sete subarquivos de idioma na única entrada GARC
+  (`FATO` conta 1 slot; `BTAF` conta 7 subarquivos). O leitor GARC legado que
+  usa a contagem BTAF como número de slots falha ao avançar para o slot 1.
+- **Erro a evitar:** procurar `CLYT`/`CLIM` somente no início do slot GARC ou
+  tratar subslot 0 como idioma inglês. O DARC está dentro do payload LZ11; o
+  BCLIM tem footer de 40 bytes, e o subslot inglês `map_navi01..05` é 1.
+- **Evidência:** `scripts/extract_arenav_ui.py` percorre `GARC → LZ11 → DARC`,
+  lê as panes `pan1`/`pic1`/`txt1` de `map_lower.bclyt` e gera 16 PNG/JSON locais.
+  O subslot 1 mostra “Places”, “Pokémon”, “Trainers”, “Bases” e “Berries”; os
+  BCLIMs exportados incluem o mapa Hoenn, sprites Brendan/May e os três arquivos
+  `map_city_icon`. A captura portada usa o mapa e marcadores nativos. A busca não
+  identificou os quatro glifos inferiores; `pokenavi_logo` é “POKEMON MULTI NAVI”,
+  não o título AreaNav.
+- **Regra:** use os limites de seção CLYT e os bounds exportados; mantenha o mapa
+  vetorial como fallback quando o PNG local faltar e não associe ação aos quatro
+  glifos sem evidência independente (A-121). A posição dos locais no texture map
+  é apenas ajuste visual enquanto a tabela de coordenadas nativa não for ligada.
+
 

@@ -4,9 +4,18 @@ import {
   HOENN_MAP_VIEWBOX,
   resolveHoennLocation,
 } from '../core/hoennMap';
+import {
+  AREA_NAV_CLYT_LAYOUT,
+  areaNavMarkerTexture,
+  areaNavNativeMapPoint,
+  areaNavPlayerTexture,
+  areaNavTextureUrl,
+  setNativeMapAvailability,
+} from './areaNavAssets';
 
 interface AreaNavHost {
   getPlayerMap(): { mapId: string; zoneName?: string };
+  getPlayerGender(): 'male' | 'female';
   getSelectedMapLocationId(): string | null;
   setSelectedMapLocationId(locationId: string): void;
 }
@@ -26,10 +35,11 @@ export function renderAreaNavTab(host: AreaNavHost, panel: HTMLElement): void {
   const playerMap = host.getPlayerMap();
   const playerLocation = resolveHoennLocation(playerMap.mapId, playerMap.zoneName);
   const selected = HOENN_LOCATIONS.find(({ id }) => id === host.getSelectedMapLocationId()) ?? playerLocation;
+  const playerGender = host.getPlayerGender();
   const layout = createAreaNavLayout();
   const label = createLocationLabel(selected);
   const details = createMapDetails(selected ?? undefined);
-  const svg = createHoennSvg(playerLocation, selected?.id ?? null, (id) => {
+  const svg = createHoennSvg(playerLocation, selected?.id ?? null, playerGender, (id) => {
     const location = HOENN_LOCATIONS.find((entry) => entry.id === id);
     if (!location) return;
     host.setSelectedMapLocationId(id);
@@ -37,7 +47,7 @@ export function renderAreaNavTab(host: AreaNavHost, panel: HTMLElement): void {
   });
   const frame = document.createElement('div');
   frame.className = 'areanav-map-frame';
-  frame.append(svg, label);
+  frame.append(createNativeMapImage(frame, svg), svg, label);
   layout.append(createAreaNavTitle(), frame, details, createAreaNavIconRow());
   panel.appendChild(layout);
 }
@@ -64,6 +74,26 @@ function createLocationLabel(location: HoennLocation | null): HTMLElement {
   return label;
 }
 
+function createNativeMapImage(frame: HTMLElement, svg: SVGSVGElement): HTMLImageElement {
+  const image = document.createElement('img');
+  image.className = 'areanav-native-map';
+  image.alt = '';
+  image.setAttribute('aria-hidden', 'true');
+  image.width = AREA_NAV_CLYT_LAYOUT.map.width;
+  image.height = AREA_NAV_CLYT_LAYOUT.map.height;
+  image.src = areaNavTextureUrl('poke_navi_map.png');
+  image.addEventListener('load', () => {
+    setNativeMapAvailability(frame, true);
+    positionAreaNavMarkers(svg, true);
+  }, { once: true });
+  image.addEventListener('error', () => {
+    setNativeMapAvailability(frame, false);
+    positionAreaNavMarkers(svg, false);
+    image.remove();
+  }, { once: true });
+  return image;
+}
+
 function createAreaNavIconRow(): HTMLElement {
   const row = document.createElement('div');
   row.className = 'areanav-icon-row';
@@ -88,6 +118,7 @@ function createAreaNavIcon(pathData: string): HTMLElement {
 function createHoennSvg(
   playerLocation: HoennLocation | null,
   selectedId: string | null,
+  playerGender: 'male' | 'female',
   selectLocation: (id: string) => void,
 ): SVGSVGElement {
   const svg = document.createElementNS(SVG_NAMESPACE, 'svg');
@@ -98,7 +129,7 @@ function createHoennSvg(
   addMapBackdrop(svg);
   for (const [from, to] of HOENN_MAP_CONNECTIONS) addMapConnection(svg, from, to);
   for (const location of HOENN_LOCATIONS) addMapLocation(svg, location, selectedId, selectLocation);
-  if (playerLocation) addPlayerMarker(svg, playerLocation);
+  if (playerLocation) addPlayerMarker(svg, playerLocation, playerGender);
   return svg;
 }
 
@@ -164,14 +195,45 @@ function addMapLocation(
   group.setAttribute('tabindex', '0');
   group.setAttribute('aria-label', `${location.name}. ${location.description}`);
   group.setAttribute('aria-pressed', String(location.id === selectedId));
+  const markerTexture = areaNavMarkerTexture(location.kind);
+  if (markerTexture) {
+    const icon = createNativeCityMarker(markerTexture);
+    icon.addEventListener('load', () => group.classList.add('has-native-city-marker'), { once: true });
+    group.appendChild(icon);
+  }
   group.appendChild(createLocationTitle(location));
   group.appendChild(createLocationDot(location));
   group.addEventListener('click', () => selectLocation(location.id));
   group.addEventListener('keydown', (event) => {
     if (event instanceof KeyboardEvent) activateMapLocation(event, location.id, selectLocation);
   });
+  group.dataset.mapX = String(location.x);
+  group.dataset.mapY = String(location.y);
   group.setAttribute('transform', `translate(${location.x} ${location.y})`);
   svg.appendChild(group);
+}
+
+function createNativeCityMarker(filename: NonNullable<ReturnType<typeof areaNavMarkerTexture>>): SVGImageElement {
+  const icon = document.createElementNS(SVG_NAMESPACE, 'image');
+  icon.setAttribute('class', 'areanav-native-city-icon');
+  icon.setAttribute('href', areaNavTextureUrl(filename));
+  icon.setAttribute('x', '-24');
+  icon.setAttribute('y', '-24');
+  icon.setAttribute('width', '48');
+  icon.setAttribute('height', '48');
+  icon.setAttribute('preserveAspectRatio', 'none');
+  icon.setAttribute('aria-hidden', 'true');
+  icon.addEventListener('error', () => icon.remove(), { once: true });
+  return icon;
+}
+
+function positionAreaNavMarkers(svg: SVGSVGElement, useNativeMap: boolean): void {
+  svg.querySelectorAll<SVGGElement>('.hoenn-map-location, .hoenn-player-marker').forEach((marker) => {
+    const x = Number(marker.dataset.mapX);
+    const y = Number(marker.dataset.mapY);
+    const point = useNativeMap ? areaNavNativeMapPoint(x, y) : { x, y };
+    marker.setAttribute('transform', `translate(${point.x} ${point.y})`);
+  });
 }
 
 function createLocationTitle(location: HoennLocation): SVGTitleElement {
@@ -192,15 +254,33 @@ function activateMapLocation(event: KeyboardEvent, id: string, selectLocation: (
   selectLocation(id);
 }
 
-function addPlayerMarker(svg: SVGSVGElement, location: HoennLocation): void {
+function addPlayerMarker(svg: SVGSVGElement, location: HoennLocation, gender: 'male' | 'female'): void {
   const marker = document.createElementNS(SVG_NAMESPACE, 'g');
   marker.setAttribute('class', 'hoenn-player-marker');
+  marker.dataset.mapX = String(location.x);
+  marker.dataset.mapY = String(location.y);
   marker.setAttribute('transform', `translate(${location.x} ${location.y})`);
   marker.setAttribute('aria-label', `Sua posição: ${location.name}`);
+  marker.appendChild(createPlayerAvatar(gender));
   const ring = document.createElementNS(SVG_NAMESPACE, 'circle');
+  ring.setAttribute('class', 'hoenn-player-marker-ring');
   ring.setAttribute('r', '13');
   marker.appendChild(ring);
   svg.appendChild(marker);
+}
+
+function createPlayerAvatar(gender: 'male' | 'female'): SVGImageElement {
+  const avatar = document.createElementNS(SVG_NAMESPACE, 'image');
+  avatar.setAttribute('class', 'areanav-player-avatar');
+  avatar.setAttribute('href', areaNavTextureUrl(areaNavPlayerTexture(gender)));
+  avatar.setAttribute('x', '-18');
+  avatar.setAttribute('y', '-18');
+  avatar.setAttribute('width', '36');
+  avatar.setAttribute('height', '36');
+  avatar.setAttribute('preserveAspectRatio', 'none');
+  avatar.setAttribute('aria-hidden', 'true');
+  avatar.addEventListener('error', () => avatar.remove(), { once: true });
+  return avatar;
 }
 
 function createMapDetails(location: HoennLocation | undefined): HTMLElement {

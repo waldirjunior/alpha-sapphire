@@ -343,6 +343,7 @@ const menuHost = {
     const zoneName = MAPS[state.player.mapId]?.name;
     return zoneName ? { mapId: state.player.mapId, zoneName } : { mapId: state.player.mapId };
   },
+  getPlayerGender: () => state.player.gender ?? 'male',
   getSelectedMapLocationId: () => selectedHoennMapLocationId,
   setSelectedMapLocationId: (locationId: string) => { selectedHoennMapLocationId = locationId; },
   renderIntro,
