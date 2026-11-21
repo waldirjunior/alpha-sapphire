@@ -1268,7 +1268,7 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   ou observe a seleção/upload em runtime. Nomes, vtables e constantes de
   caminho delimitam a busca, mas não autorizam parâmetros de renderização.
 
-## A-TMP-roxanne A party de `lab_save.main` não está pronta para batalhar
+## A-124 A party de `lab_save.main` não está pronta para batalhar
 
 - **Data:** 2026-11-21; ROADMAP #3, entrada no Ginásio de Rustboro com Azahar.
 - **Contexto:** `lab_save.main` foi copiado para um perfil temporário, relocalizado
