@@ -1,4 +1,4 @@
-import { isEscapeBlocked, type BattleMove, type PokemonInstance } from './battlePokemon';
+import { isEscapeBlocked, pokemonTypes, type BattleMove, type PokemonInstance } from './battlePokemon';
 import { moveEffectiveness } from './damage';
 import { getMoveById } from './dex';
 import { accuracyStageMultiplier } from './statStages';
@@ -8,6 +8,7 @@ import { executeDamagingMove, executeOneHitKnockout } from './battleDamageExecut
 import { applyStatChanges, inflictConfusion } from './battleMoveEffects';
 import { attractMove, disableMove, encoreMove, perishSongMove, yawnMove } from './battleVolatileMoves';
 import { executeQuality13Move } from './battleQuality13Moves';
+import { executeAdvancedQuality13Move } from './battleQuality13Advanced';
 
 export interface MoveOutcome {
   user: PokemonInstance;
@@ -21,6 +22,10 @@ export interface MoveOutcome {
   hitSubstitute?: boolean;
   escapeBattle?: boolean;
   curePartyStatus?: boolean;
+  scheduleWish?: { healAmount: number };
+  scheduleDelayedAttack?: { move: BattleMove; source: PokemonInstance };
+  schedulePartyRestore?: { fullPp: boolean };
+  copiedMoveId?: number;
 }
 
 export interface MoveExecutionContext {
@@ -31,6 +36,16 @@ export interface MoveExecutionContext {
   targetHazards?: BattleHazards;
   targetMoveCategory?: BattleMove['category'] | null;
   trainerBattle?: boolean;
+  biome?: 'grass' | 'water' | 'cave' | 'gym' | 'normal';
+  userParty?: readonly PokemonInstance[];
+  targetParty?: readonly PokemonInstance[];
+  userActiveIndex?: number;
+  targetActiveIndex?: number;
+  lastMoveUsedId?: number | null;
+  delayedAttackPending?: boolean;
+  userHasMoved?: boolean;
+  targetHasMoved?: boolean;
+  targetChosenMoveId?: number | null;
 }
 
 export const ALWAYS_HITS_ACCURACY = 101;
@@ -96,6 +111,11 @@ export function executeMove(
   if (move.quality === 9) {
     if (moveEffectiveness(move, target) === 0) return ineffectiveMove(actionUser, target, move);
     return executeOneHitKnockout(actionUser, target, move);
+  }
+  if (move.name === 'Future Sight' || move.name === 'Doom Desire') {
+    const used = `${actionUser.species.name} usou ${move.name}!`;
+    return executeAdvancedQuality13Move(actionUser, target, move, rng, used, context, executeMove)
+      ?? unsupportedMove(actionUser, target, move, used);
   }
   return move.category === 'status'
     ? executeStatusMove(actionUser, target, move, rng, context)
@@ -185,6 +205,8 @@ function executeQualityThirteen(
   used: string,
   context: MoveExecutionContext,
 ): MoveOutcome {
+  const advanced = executeAdvancedQuality13Move(user, target, move, rng, used, context, executeMove);
+  if (advanced) return advanced;
   if (move.name === 'Splash') return { user, target, messages: [used, 'Mas não teve efeito!'], flinched: false };
   if (move.name === 'Teleport') return teleportMove(user, target, used, context.trainerBattle === true);
   if (isEscapeTrap(move.name)) return escapeTrapMove(user, target, used);
@@ -245,7 +267,7 @@ function isDamagingCategory(category: BattleMove['category'] | null | undefined)
 }
 
 function inflictLeechSeed(target: PokemonInstance): { target: PokemonInstance; message: string | null } {
-  if (target.currentHp === 0 || target.volatile.leechSeeded || target.species.types.includes('grass')) return { target, message: null };
+  if (target.currentHp === 0 || target.volatile.leechSeeded || pokemonTypes(target).includes('grass')) return { target, message: null };
   return { target: { ...target, volatile: { ...target.volatile, leechSeeded: true } }, message: `${target.species.name} foi semeado!` };
 }
 
@@ -306,7 +328,7 @@ function weatherStartMessage(weather: BattleWeather): string {
 
 function ohkoAccuracy(user: PokemonInstance, target: PokemonInstance, move: BattleMove): number {
   if (user.level < target.level) return 0;
-  const base = move.name === 'Sheer Cold' && !user.species.types.includes('ice') ? 20 : move.accuracy;
+  const base = move.name === 'Sheer Cold' && !pokemonTypes(user).includes('ice') ? 20 : move.accuracy;
   return Math.min(100, base + user.level - target.level);
 }
 

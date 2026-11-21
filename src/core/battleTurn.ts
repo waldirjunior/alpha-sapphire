@@ -13,7 +13,7 @@ import {
   type BattleState,
 } from './battleParty';
 import { isPartiallyTrapped, toBattleMove, type BattleMove, type PokemonInstance } from './battlePokemon';
-import { STRUGGLE_MOVE_ID } from './damage';
+import { calculateDamage, rollCritical, STRUGGLE_MOVE_ID } from './damage';
 import { getMoveById } from './dex';
 import { healthEvents } from './battleEvents';
 import { executeMove, isChargeMove, spendPp, targetsFoe, type MoveExecutionContext, type MoveOutcome } from './moveExecution';
@@ -84,8 +84,10 @@ export function effectiveSpeed(pokemon: PokemonInstance): number {
 
 /** Prioridade (−7..+5) decide primeiro; depois velocidade efetiva; empate sorteado. */
 export function orderActions(state: BattleState, a: BattleAction, b: BattleAction, rng: Rng): [BattleAction, BattleAction] {
-  const priorityA = moveFor(pokemonOf(state, a.side), a.moveIndex).priority;
-  const priorityB = moveFor(pokemonOf(state, b.side), b.moveIndex).priority;
+  const pokemonA = pokemonOf(state, a.side);
+  const pokemonB = pokemonOf(state, b.side);
+  const priorityA = priorityFor(moveFor(pokemonA, a.moveIndex));
+  const priorityB = priorityFor(moveFor(pokemonB, b.moveIndex));
   if (priorityA !== priorityB) return priorityA > priorityB ? [a, b] : [b, a];
   const speedA = effectiveSpeed(pokemonOf(state, a.side));
   const speedB = effectiveSpeed(pokemonOf(state, b.side));
@@ -93,19 +95,25 @@ export function orderActions(state: BattleState, a: BattleAction, b: BattleActio
   return rng() < 0.5 ? [a, b] : [b, a];
 }
 
-function performAction(state: BattleState, action: BattleAction, targetAction: BattleAction | null, flinched: boolean, rng: Rng): { state: BattleState; flinchedSide: BattleSide | null } {
+function priorityFor(move: BattleMove): number {
+  if (move.name === 'Snatch' || move.name === 'Magic Coat') return 4;
+  if (move.name === 'Powder') return 1;
+  return move.priority;
+}
+
+function performAction(state: BattleState, action: BattleAction, targetAction: BattleAction | null, actedSides: readonly BattleSide[], flinched: boolean, rng: Rng): { state: BattleState; flinchedSide: BattleSide | null } {
   const actor = pokemonOf(state, action.side);
   const foeSide = opposite(action.side);
   if (actor.currentHp === 0 || pokemonOf(state, foeSide).currentHp === 0) return { state, flinchedSide: null };
   const chosenMove = moveFor(actor, action.moveIndex);
-  const expiredBond = actor.volatile.destinyBond
-    ? { ...actor, volatile: { ...actor.volatile, destinyBond: false } }
+  const expiredTurnFlags = actor.volatile.destinyBond || actor.volatile.grudge
+    ? { ...actor, volatile: { ...actor.volatile, destinyBond: false, grudge: false } }
     : actor;
   if (flinched) {
-    const unable = clearProtectStreak(expiredBond);
+    const unable = clearProtectStreak(expiredTurnFlags);
     return { state: appendLog(withPokemon(state, action.side, unable), [`${actor.species.name} recuou e não pôde agir!`]), flinchedSide: null };
   }
-  const check = checkCanAct(expiredBond, rng, chosenMove.name === 'Sleep Talk');
+  const check = checkCanAct(expiredTurnFlags, rng, chosenMove.name === 'Sleep Talk');
   let next = appendLog(withPokemon(state, action.side, check.pokemon), [check.message]);
   if (!check.canAct) return { state: { ...resetProtectStreak(next, action.side), events: [...(next.events ?? []),
     ...healthEvents(action.side, actor.currentHp, check.pokemon.currentHp)] }, flinchedSide: null };
@@ -115,6 +123,10 @@ function performAction(state: BattleState, action: BattleAction, targetAction: B
   if (isDisabled(check.pokemon, move)) {
     const disabled = withPokemon(next, action.side, clearProtectStreak(check.pokemon));
     return { state: appendLog(disabled, [`${check.pokemon.species.name} não pode usar ${move.name}!`]), flinchedSide: null };
+  }
+  const imprisoner = pokemonOf(state, foeSide);
+  if (imprisoner.volatile.imprisonedMoves?.includes(move.id)) {
+    return { state: appendLog(next, [`${check.pokemon.species.name} não pode usar ${move.name} por Imprison!`]), flinchedSide: null };
   }
   const encoreLocked = (check.pokemon.volatile.encoreTurns ?? 0) > 0 && check.pokemon.volatile.encoreMoveId === move.id;
   const moveIndex = charging || encoreLocked ? check.pokemon.moves.findIndex((slot) => slot.id === move.id) : action.moveIndex;
@@ -141,22 +153,76 @@ function performAction(state: BattleState, action: BattleAction, targetAction: B
     return { state: appendLog(next, [`${pokemonOf(next, foeSide).species.name} se protegeu!`]), flinchedSide: null };
   }
   const struggleNote = action.moveIndex === null && !charging ? `${user.species.name} não tem mais PP!` : null;
-  const context = moveContext(next, action.side, foeSide, targetAction);
-  const outcome = executeMove({ ...user, lastMoveId: move.id }, pokemonOf(next, foeSide), move, rng, context);
-  next = withPokemon(withPokemon(next, action.side, outcome.user), foeSide, outcome.target);
-  next = applyFieldUpdate(next, action.side, outcome);
-  if (outcome.curePartyStatus) next = curePartyStatuses(next, action.side);
+  const context = moveContext(next, action.side, foeSide, targetAction, actedSides);
+  const activeUser = { ...user, lastMoveId: move.id };
+  const activeTarget = pokemonOf(next, foeSide);
+  const isElectrified = activeUser.volatile.electrifiedMoveId === move.id;
+  const electrified = isElectrified ? { ...move, type: 'electric' as const } : move;
+  if ((activeUser.volatile.powderTurns ?? 0) > 0 && electrified.type === 'fire') {
+    const damaged = { ...activeUser, currentHp: Math.max(0, activeUser.currentHp - Math.floor(activeUser.maxHp / 4)),
+      volatile: { ...activeUser.volatile, powderTurns: 0, electrifiedMoveId: null } };
+    next = withPokemon(next, action.side, damaged);
+    return { state: appendLog(next, [`${activeUser.species.name} tentou usar ${move.name}, mas o Powder explodiu!`, `${activeUser.species.name} perdeu ${activeUser.maxHp - damaged.currentHp} HP!`]), flinchedSide: null };
+  }
+  const readyUser = isElectrified ? { ...activeUser, volatile: { ...activeUser.volatile, electrifiedMoveId: null } } : activeUser;
+  const outcome = executeWithReactions(readyUser, activeTarget, electrified, rng, context);
+  const grudgeTarget = pokemonOf(next, foeSide);
+  const grudgeApplied = grudgeTarget.volatile.grudge && electrified.category !== 'status' && outcome.target.currentHp === 0
+    ? zeroMovePp(outcome.user, move.id)
+    : outcome.user;
+  const finalOutcome = grudgeApplied === outcome.user ? outcome : { ...outcome, user: grudgeApplied,
+    messages: [...outcome.messages, `${move.name} perdeu todo o PP por Grudge!`] };
+  next = withPokemon(withPokemon(next, action.side, finalOutcome.user), foeSide, finalOutcome.target);
+  next = scheduleMoveEffects(next, action.side, foeSide, finalOutcome);
+  next = applyFieldUpdate(next, action.side, finalOutcome);
+  if (finalOutcome.curePartyStatus) next = curePartyStatuses(next, action.side);
+  const lastMoveUsedId = finalOutcome.copiedMoveId ?? move.id;
+  next = { ...next, lastMoveUsedId };
+  if (targetsFoe(move) && !finalOutcome.messages.some((message) => message.includes('errou'))) {
+    const hitTarget = { ...pokemonOf(next, foeSide), lastHitByMoveId: move.id };
+    next = withPokemon(next, foeSide, hitTarget);
+  }
   next = { ...next, events: [...(next.events ?? []),
     { type: 'move', side: action.side, category: move.category },
-    ...healthEvents(foeSide, pokemonOf(state, foeSide).currentHp, outcome.target.currentHp),
-    ...healthEvents(action.side, actor.currentHp, outcome.user.currentHp)] };
-  next = appendLog(next, [struggleNote, ...outcome.messages]);
-  if (outcome.escapeBattle) next = { ...next, status: 'fled' };
-  if (outcome.forceSwitch && pokemonOf(next, foeSide).currentHp > 0) next = forceSwitch(next, foeSide, rng);
-  if (outcome.switchUser && pokemonOf(next, action.side).currentHp > 0) {
-    next = switchToNextHealthy(next, action.side, outcome.batonPass === true);
+    ...healthEvents(foeSide, pokemonOf(state, foeSide).currentHp, finalOutcome.target.currentHp),
+    ...healthEvents(action.side, actor.currentHp, finalOutcome.user.currentHp)] };
+  next = appendLog(next, [struggleNote, ...finalOutcome.messages]);
+  if (finalOutcome.escapeBattle) next = { ...next, status: 'fled' };
+  if (finalOutcome.forceSwitch && pokemonOf(next, foeSide).currentHp > 0) next = forceSwitch(next, foeSide, rng);
+  if (finalOutcome.switchUser && pokemonOf(next, action.side).currentHp > 0) {
+    next = switchToNextHealthy(next, action.side, finalOutcome.batonPass === true);
   }
-  return { state: next, flinchedSide: outcome.flinched ? foeSide : null };
+  return { state: next, flinchedSide: finalOutcome.flinched ? foeSide : null };
+}
+
+function executeWithReactions(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng, context: MoveExecutionContext): MoveOutcome {
+  if (move.category === 'status' && targetsFoe(move) && target.volatile.magicCoat) {
+    const reflector = { ...target, volatile: { ...target.volatile, magicCoat: false } };
+    const reflected = executeMove(reflector, user, move, rng, context);
+    return { ...reflected, user: reflected.target, target: reflected.user,
+      messages: [`${target.species.name} refletiu ${move.name} com Magic Coat!`, ...reflected.messages.slice(1)] };
+  }
+  if (move.category === 'status' && move.target === 7 && target.volatile.snatch) {
+    const thief = { ...target, volatile: { ...target.volatile, snatch: false } };
+    const stolen = executeMove(thief, user, move, rng, context);
+    return { ...stolen, user: stolen.target, target: stolen.user,
+      messages: [`${target.species.name} roubou ${move.name} com Snatch!`, ...stolen.messages.slice(1)] };
+  }
+  return executeMove(user, target, move, rng, context);
+}
+
+function zeroMovePp(user: PokemonInstance, moveId: number): PokemonInstance {
+  return { ...user, moves: user.moves.map((slot) => slot.id === moveId ? { ...slot, currentPp: 0 } : slot) };
+}
+
+function scheduleMoveEffects(state: BattleState, userSide: BattleSide, targetSide: BattleSide, outcome: MoveOutcome): BattleState {
+  let next = state;
+  if (outcome.scheduleWish) next = { ...next, pendingWish: { ...next.pendingWish,
+    [userSide]: { turnsRemaining: 2, healAmount: outcome.scheduleWish.healAmount } } };
+  if (outcome.scheduleDelayedAttack) next = { ...next, delayedAttacks: { ...next.delayedAttacks,
+    [targetSide]: { turnsRemaining: 3, source: outcome.scheduleDelayedAttack.source, move: outcome.scheduleDelayedAttack.move } } };
+  if (outcome.schedulePartyRestore) next = { ...next, pendingPartyRestore: { ...next.pendingPartyRestore, [userSide]: outcome.schedulePartyRestore } };
+  return next;
 }
 
 function isDisabled(pokemon: PokemonInstance, move: BattleMove): boolean {
@@ -212,8 +278,13 @@ function forceSwitch(state: BattleState, side: BattleSide, rng: Rng): BattleStat
   return side === 'player' ? switchPlayerIn(state, index) : switchEnemyIn(state, index, true);
 }
 
-function moveContext(state: BattleState, userSide: BattleSide, targetSide: BattleSide, targetAction: BattleAction | null): MoveExecutionContext {
+function moveContext(state: BattleState, userSide: BattleSide, targetSide: BattleSide, targetAction: BattleAction | null, actedSides: readonly BattleSide[]): MoveExecutionContext {
   const weatherSuppressed = [state.player.ability, state.enemy.ability].some((ability) => ability === 'Air Lock' || ability === 'Cloud Nine');
+  const userParty = userSide === 'player' ? state.playerParty : state.enemyParty;
+  const targetParty = targetSide === 'player' ? state.playerParty : state.enemyParty;
+  const userActiveIndex = userSide === 'player' ? state.playerActive : state.enemyActive;
+  const targetActiveIndex = targetSide === 'player' ? state.playerActive : state.enemyActive;
+  const targetHasMoved = actedSides.includes(targetSide);
   return {
     weather: state.field.weather,
     weatherSuppressed,
@@ -222,6 +293,16 @@ function moveContext(state: BattleState, userSide: BattleSide, targetSide: Battl
     targetHazards: state.field.hazards[targetSide],
     trainerBattle: state.isTrainer === true,
     targetMoveCategory: targetAction ? moveFor(pokemonOf(state, targetSide), targetAction.moveIndex).category : null,
+    biome: state.biome,
+    userParty,
+    targetParty,
+    userActiveIndex,
+    targetActiveIndex,
+    lastMoveUsedId: state.lastMoveUsedId,
+    delayedAttackPending: state.delayedAttacks?.[targetSide] !== undefined,
+    userHasMoved: actedSides.includes(userSide),
+    targetHasMoved,
+    targetChosenMoveId: targetAction ? moveFor(pokemonOf(state, targetSide), targetAction.moveIndex).id : null,
   };
 }
 
@@ -258,7 +339,10 @@ function applyEndOfTurn(state: BattleState, order: readonly BattleSide[], rng: R
     const residual = applyResidualDamage(pokemonOf(current, side), current.field.weather?.kind ?? null, weatherSuppressed);
     const aged = advanceVolatileTurn(residual.pokemon, rng);
     const item = applyEndTurnHeldItem(aged.pokemon);
-    const boosted = applySpeedBoost(item.pokemon);
+    const consumed = item.pokemon.heldItem === null && aged.pokemon.heldItem !== null
+      ? { ...item.pokemon, consumedItem: aged.pokemon.heldItem }
+      : item.pokemon;
+    const boosted = applySpeedBoost(consumed);
     let next = appendLog(withPokemon(current, side, boosted), [residual.message, ...aged.messages, item.message]);
     if (residual.leechSeedDrain > 0) next = healOpposingActive(next, side, residual.leechSeedDrain);
     return { ...next, events: [...(next.events ?? []),
@@ -300,7 +384,7 @@ export function resolveTurn(state: BattleState, playerAction: BattleAction | nul
   for (const action of actions) {
     if (current.status !== 'ongoing') break;
     const targetAction = actions.find((candidate) => candidate.side !== action.side) ?? null;
-    const result = performAction(current, action, targetAction, flinchedSide === action.side, rng);
+    const result = performAction(current, action, targetAction, actions.slice(0, actions.indexOf(action)).map((item) => item.side), flinchedSide === action.side, rng);
     current = result.state;
     flinchedSide = result.flinchedSide;
   }
@@ -309,6 +393,69 @@ export function resolveTurn(state: BattleState, playerAction: BattleAction | nul
   for (const side of ['player', 'enemy'] as const) {
     if (!residualOrder.includes(side)) residualOrder.push(side);
   }
-  const resolved = resolveFaints(ageBattleField(applyEndOfTurn(current, residualOrder, rng)));
+  const afterResidual = ageBattleField(applyEndOfTurn(current, residualOrder, rng));
+  const resolved = resolveFaints(applyPendingTurnEffects(afterResidual, rng));
   return { ...resolved, turn: resolved.turn + 1 };
+}
+
+function applyPendingTurnEffects(state: BattleState, rng: Rng): BattleState {
+  let next = applyPendingWishes(state);
+  next = applyPendingAttacks(next, rng);
+  return next;
+}
+
+function applyPendingWishes(state: BattleState): BattleState {
+  let next = state;
+  for (const side of ['player', 'enemy'] as const) {
+    const wish = next.pendingWish?.[side];
+    if (!wish) continue;
+    if (wish.turnsRemaining > 1) {
+      next = { ...next, pendingWish: { ...next.pendingWish, [side]: { ...wish, turnsRemaining: wish.turnsRemaining - 1 } } };
+      continue;
+    }
+    const receiver = pokemonOf(next, side);
+    const healed = receiver.currentHp === 0 ? receiver : { ...receiver, currentHp: Math.min(receiver.maxHp, receiver.currentHp + wish.healAmount) };
+    next = withPokemon(next, side, healed);
+    next = { ...next, events: [...(next.events ?? []), ...healthEvents(side, receiver.currentHp, healed.currentHp)] };
+    next = { ...next, pendingWish: removeSide(next.pendingWish, side) };
+    next = appendLog(next, [`O desejo de ${receiver.species.name} restaurou HP!`]);
+  }
+  return next;
+}
+
+function applyPendingAttacks(state: BattleState, rng: Rng): BattleState {
+  let next = state;
+  for (const side of ['player', 'enemy'] as const) {
+    const pending = next.delayedAttacks?.[side];
+    if (!pending) continue;
+    if (pending.turnsRemaining > 1) {
+      next = { ...next, delayedAttacks: { ...next.delayedAttacks, [side]: { ...pending, turnsRemaining: pending.turnsRemaining - 1 } } };
+      continue;
+    }
+    const target = pokemonOf(next, side);
+    const weatherSuppressed = [pending.source.ability, target.ability].some((ability) => ability === 'Air Lock' || ability === 'Cloud Nine');
+    const screen = (next.field.screens[side].lightScreen ?? 0) > 0 && pending.move.category !== 'physical' ? 'lightScreen'
+      : (next.field.screens[side].reflect ?? 0) > 0 && pending.move.category === 'physical' ? 'reflect' : null;
+    const critical = rollCritical(target, pending.move, rng, pending.source);
+    const damage = target.currentHp === 0 ? 0 : calculateDamage(pending.source, target, pending.move, rng, {
+      weather: next.field.weather?.kind ?? null,
+      weatherSuppressed,
+      screen,
+      critical,
+    });
+    const hit = { ...target, currentHp: Math.max(0, target.currentHp - damage) };
+    next = withPokemon(next, side, hit);
+    next = { ...next, events: [...(next.events ?? []), ...healthEvents(side, target.currentHp, hit.currentHp)] };
+    next = { ...next, delayedAttacks: removeSide(next.delayedAttacks, side) };
+    const line = damage > 0 ? `${target.species.name} foi atingido pelo ataque atrasado e perdeu ${damage} HP!` : `${pending.move.name} não afetou ${target.species.name}!`;
+    next = appendLog(next, [line]);
+  }
+  return next;
+}
+
+function removeSide<T>(values: Partial<Record<BattleSide, T>> | undefined, side: BattleSide): Partial<Record<BattleSide, T>> | undefined {
+  if (!values?.[side]) return values;
+  const next = { ...values };
+  delete next[side];
+  return next;
 }

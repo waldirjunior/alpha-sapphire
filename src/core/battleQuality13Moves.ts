@@ -1,4 +1,4 @@
-import type { BattleMove, BattleVolatileState, PokemonInstance } from './battlePokemon';
+import { pokemonTypes, type BattleMove, type BattleVolatileState, type PokemonInstance } from './battlePokemon';
 import type { StageStat } from './statStages';
 import { applyStageDelta } from './statStages';
 import { rollInRange, type Rng } from './statusConditions';
@@ -188,7 +188,7 @@ function shellSmash(user: PokemonInstance, target: PokemonInstance, used: string
 }
 
 function curse(user: PokemonInstance, target: PokemonInstance, used: string): MoveOutcome {
-  if (!user.species.types.includes('ghost')) {
+  if (!pokemonTypes(user).includes('ghost')) {
     const stages = applyStageDelta(applyStageDelta(applyStageDelta(user.stages, 'spe', -1).stages, 'atk', 1).stages, 'def', 1).stages;
     return { user: { ...user, stages }, target, messages: [used, `${user.species.name} ficou amaldiçoado e alterou seus atributos!`], flinched: false };
   }

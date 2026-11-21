@@ -274,3 +274,52 @@ ROM, menos os 13 efeitos já cobertos antes deste lote e estes 32.
 263 testes Python (2 skips pela ausência de assets no worktree); a
 catraca de cobertura do core passou. O build manteve o aviso existente de
 chunks acima de 500 kB.
+
+## 15. Entrega — 2026-11-21 (quality 13: lote final de 45 golpes)
+
+O core cobre os 45 golpes que restavam no Section 14. Wish (273) agenda cura de
+metade do HP máximo do slot ativo ao fim do próximo turno; Future Sight (248) e
+Doom Desire (353) registram um ataque para dois turnos depois, usando o Sp. Atk
+do usuário e as defesas, tipos, clima e telas no momento do impacto. Healing
+Wish (361) e Lunar Dance (461) desmaiam o usuário e restauram o próximo Pokémon
+daquele lado; Lunar Dance também recupera todos os PP.
+
+Power Split (471) e Guard Split (470) calculam a média dos atributos ofensivos
+ou defensivos dos dois ativos. Stockpile (254) guarda até três cargas e os
+estágios aplicados; Acupressure (367) escolhe por `rng` um estágio não máximo e
+o eleva em dois; Flower Shield (579) aumenta a Defesa dos ativos do tipo Grass.
+Gastro Acid (380), Worry Seed (388), Simple Beam (493), Entrainment (494), Role
+Play (272) e Skill Swap (285) atualizam habilidades temporárias, que voltam ao
+estado anterior na troca. Soak (487), Reflect Type (513), Trick-or-Treat (567),
+Forest’s Curse (571), Conversion (160), Conversion 2 (176) e Camouflage (293)
+alteram tipos efetivos até a troca; Camouflage lê o biome opcional da batalha.
+
+Electrify (582) modifica o tipo do golpe escolhido pelo alvo se ele ainda não
+agiu. Powder (600) tem prioridade +1 e pune golpes Fire com dano de um quarto do
+HP máximo. Recycle (278) recupera itens consumidos; Imprison (286) bloqueia os
+golpes compartilhados; Grudge (288) zera o PP do golpe direto que nocauteia o
+usuário; Snatch (289) tem prioridade +4 e rouba golpes de alvo próprio; Magic
+Coat (277) tem prioridade +4 e reflete golpes de status direcionados. Psycho
+Shift (375) transfere status maior respeitando imunidades. Copycat (383), Mirror
+Move (119), Mimic (102), Metronome (118), Assist (274) e Nature Power (267)
+copiam ou chamam golpes; Transform (144) copia tipos, atributos efetivos,
+estágios, habilidade e golpes; Sketch (166) substitui seu espaço de golpe com
+1 PP.
+
+Em singles, Follow Me (266), Rage Powder (476), Helping Hand (270), After You
+(495), Ally Switch (502) e Quash (511) falham sem efeito por não haver parceiro
+ou ordem entre aliados. Essa regra segue os handlers do formato Gen VI no
+[Pokémon Showdown](https://github.com/smogon/pokemon-showdown/blob/master/data/moves.ts)
+e seus overrides da
+[geração 6](https://github.com/smogon/pokemon-showdown/blob/master/data/mods/gen6/moves.ts).
+Combates doubles continuam fora deste core 1v1.
+
+`battleQuality13Batch3.test.ts` enumera os 90 golpes `quality=13` da tabela ROM e
+verifica que nenhum usa o fallback “ainda não é simulado”; também cobre a
+contagem de 45 golpes do lote, os turnos atrasados, substituição após sacrifício,
+mudanças temporárias e efeitos de reação. `src/ai/battleParity.test.ts` fixa a
+paridade de tipos alterados e Power Split na fórmula de dano.
+
+`npm run verify` passou: 675 testes Vitest em 89 arquivos, build e 263 testes
+Python (1 skip porque o worktree não contém os assets locais). Permanecem os
+avisos de build existentes para chunks acima de 500 kB.

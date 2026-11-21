@@ -1,4 +1,4 @@
-import { prepareBattleEntry, refreshStats, withdrawFromBattle, type PokemonInstance } from './battlePokemon';
+import { prepareBattleEntry, refreshStats, withdrawFromBattle, type BattleMove, type PokemonInstance } from './battlePokemon';
 import { expYield } from './experience';
 import { gainExperience } from './levelUp';
 import { addEvs } from './statSpread';
@@ -14,6 +14,21 @@ export type BattleSide = 'player' | 'enemy';
 export interface PendingMoveLearn {
   partyIndex: number;
   moveId: number;
+}
+
+export interface PendingWish {
+  turnsRemaining: number;
+  healAmount: number;
+}
+
+export interface PendingDelayedAttack {
+  turnsRemaining: number;
+  source: PokemonInstance;
+  move: BattleMove;
+}
+
+export interface PendingPartyRestore {
+  fullPp: boolean;
 }
 
 /** `player`/`enemy` espelham sempre `playerParty[playerActive]`/`enemyParty[enemyActive]`. */
@@ -40,6 +55,11 @@ export interface BattleState {
   isTrainer?: boolean;
   trainerName?: string;
   events?: readonly BattleEvent[];
+  pendingWish?: Partial<Record<BattleSide, PendingWish>>;
+  delayedAttacks?: Partial<Record<BattleSide, PendingDelayedAttack>>;
+  pendingPartyRestore?: Partial<Record<BattleSide, PendingPartyRestore>>;
+  lastMoveUsedId?: number | null;
+  biome?: 'grass' | 'water' | 'cave' | 'gym' | 'normal';
 }
 
 export function validateParty(party: readonly PokemonInstance[], owner: string): void {
@@ -94,13 +114,14 @@ export function switchPlayerIn(state: BattleState, partyIndex: number, batonPass
     throw new RangeError(`Troca inválida para o slot ${partyIndex} (ativo ${state.playerActive}, time de ${state.playerParty.length}).`);
   }
   const withdrawn = replaceAt(state.playerParty, state.playerActive, withdrawFromBattle(state.player));
-  const entering = incomingForSwitch(state.player, incoming, batonPass);
+  const entering = restoreIncoming(incomingForSwitch(state.player, incoming, batonPass), state.pendingPartyRestore?.player);
   const participants = state.participants.includes(partyIndex) ? state.participants : [...state.participants, partyIndex];
   const switched = {
     ...state,
     playerParty: replaceAt(withdrawn, partyIndex, entering),
     player: entering,
     playerActive: partyIndex,
+    pendingPartyRestore: withoutSide(state.pendingPartyRestore, 'player'),
     participants,
     log: [...state.log, ...naturalCureMessage(state.player), `Vai, ${entering.species.name}!`],
   };
@@ -113,18 +134,32 @@ export function switchEnemyIn(state: BattleState, partyIndex: number, forced = f
     throw new RangeError(`Troca inválida para o slot inimigo ${partyIndex} (ativo ${state.enemyActive}, time de ${state.enemyParty.length}).`);
   }
   const withdrawn = replaceAt(state.enemyParty, state.enemyActive, withdrawFromBattle(state.enemy));
-  const entering = incomingForSwitch(state.enemy, incoming, batonPass);
+  const entering = restoreIncoming(incomingForSwitch(state.enemy, incoming, batonPass), state.pendingPartyRestore?.enemy);
   const sent = {
     ...state,
     enemy: entering,
     enemyActive: partyIndex,
     enemyParty: replaceAt(withdrawn, partyIndex, entering),
+    pendingPartyRestore: withoutSide(state.pendingPartyRestore, 'enemy'),
     participants: state.player.currentHp > 0 ? [state.playerActive] : [],
     log: [...state.log, ...naturalCureMessage(state.enemy), forced
       ? `${state.trainerName ?? 'O oponente'} foi forçado a trocar para ${entering.species.name}!`
       : `${state.trainerName ?? 'O oponente'} enviou ${entering.species.name} (Lv.${entering.level})!`],
   };
   return activateEntryAbility(applyHazardsOnEntry(sent, 'enemy'), 'enemy');
+}
+
+function restoreIncoming(pokemon: PokemonInstance, restore: PendingPartyRestore | undefined): PokemonInstance {
+  if (!restore) return pokemon;
+  return { ...pokemon, currentHp: pokemon.maxHp, status: null,
+    moves: restore.fullPp ? pokemon.moves.map((move) => ({ ...move, currentPp: move.maxPp })) : pokemon.moves };
+}
+
+function withoutSide<T>(values: Partial<Record<BattleSide, T>> | undefined, side: BattleSide): Partial<Record<BattleSide, T>> | undefined {
+  if (!values?.[side]) return values;
+  const next = { ...values };
+  delete next[side];
+  return next;
 }
 
 function applyHazardsOnEntry(state: BattleState, side: BattleFieldSide): BattleState {

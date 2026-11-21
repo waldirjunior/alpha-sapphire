@@ -20,7 +20,8 @@ export function applyStatChanges(
   for (const change of changes) {
     if (!guaranteed && change.percent > 0 && rng() * 100 >= change.percent) continue;
     for (const stat of statsForRomId(change.stat)) {
-      const { stages, applied } = applyStageDelta(current.stages, stat, change.stages);
+      const amount = current.ability === 'Simple' ? change.stages * 2 : change.stages;
+      const { stages, applied } = applyStageDelta(current.stages, stat, amount);
       current = { ...current, stages };
       messages.push(stageMessage(current, STAT_LABELS[stat], applied, change.stages));
     }
