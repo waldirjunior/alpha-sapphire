@@ -1,4 +1,4 @@
-import { neutralVolatileState, type BattleMove, type MajorStatus, type MajorStatusKind, type PokemonInstance } from './battlePokemon';
+import { neutralVolatileState, pokemonTypes, type BattleMove, type MajorStatus, type MajorStatusKind, type PokemonInstance } from './battlePokemon';
 import type { ElementalType } from './typeChart';
 import { weatherChipDamage, type BattleWeather } from './battleField';
 import { statStageMultiplier } from './statStages';
@@ -66,7 +66,7 @@ export function tryInflictStatus(
   rng: Rng
 ): { target: PokemonInstance; message: string | null } {
   if (target.currentHp === 0 || target.status) return { target, message: null };
-  if (target.species.types.some((type) => IMMUNE_TYPES[kind].includes(type))) return { target, message: null };
+  if (pokemonTypes(target).some((type) => IMMUNE_TYPES[kind].includes(type))) return { target, message: null };
   const status: MajorStatus = { kind, counter: initialCounter(kind, move, rng) };
   return { target: { ...target, status }, message: `${target.species.name} ${STATUS_NAMES[kind]}!` };
 }
@@ -150,6 +150,10 @@ export function advanceVolatileTurn(pokemon: PokemonInstance, rng: Rng = Math.ra
     protectionKind: null,
     enduring: false,
     magnetRiseTurns: Math.max(0, (volatile.magnetRiseTurns ?? 0) - 1),
+    snatch: false,
+    magicCoat: false,
+    powderTurns: 0,
+    electrifiedMoveId: null,
   };
   const messages: string[] = [];
   const perishExpired = (volatile.perishSongTurns ?? 0) === 1;

@@ -110,7 +110,9 @@ function applyHits(
     hitSubstitute ||= result.hitSubstitute;
     if (result.message) survivalMessages.push(result.message);
     const berry = defender.currentHp < hpBeforeHit ? triggerThresholdBerry(defender) : null;
-    if (berry) defender = berry.pokemon;
+    if (berry) defender = berry.pokemon.heldItem === null && defender.heldItem !== null
+      ? { ...berry.pokemon, consumedItem: defender.heldItem }
+      : berry.pokemon;
     if (berry?.message) berryMessages.push(berry.message);
     damage += damageForHit;
     criticals += critical ? 1 : 0;
@@ -196,7 +198,7 @@ function saveFromLethalHit(target: PokemonInstance): { pokemon: PokemonInstance;
     return { pokemon: { ...target, currentHp: 1 }, message: `A habilidade Sturdy de ${target.species.name} impediu o nocaute!` };
   }
   if (target.heldItem === 'Focus Sash') {
-    return { pokemon: { ...target, currentHp: 1, heldItem: null }, message: `${target.species.name} aguentou o golpe com Focus Sash!` };
+    return { pokemon: { ...target, currentHp: 1, heldItem: null, consumedItem: 'Focus Sash' }, message: `${target.species.name} aguentou o golpe com Focus Sash!` };
   }
   return null;
 }

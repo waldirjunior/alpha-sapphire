@@ -1,4 +1,4 @@
-import { genderFromPersonality, type BattleMove, type PokemonGender, type PokemonInstance } from './battlePokemon';
+import { genderFromPersonality, pokemonTypes, type BattleMove, type PokemonGender, type PokemonInstance } from './battlePokemon';
 import type { MoveOutcome } from './moveExecution';
 import { rollInRange, type Rng } from './statusConditions';
 
@@ -7,7 +7,7 @@ export function inflictPartialTrap(
   move: BattleMove,
   rng: Rng
 ): { target: PokemonInstance; message: string | null } {
-  if (target.currentHp === 0 || target.species.types.includes('ghost') || (target.volatile.partialTrapTurns ?? 0) > 0) {
+  if (target.currentHp === 0 || pokemonTypes(target).includes('ghost') || (target.volatile.partialTrapTurns ?? 0) > 0) {
     return { target, message: null };
   }
   const turns = rollInRange(4, 5, rng);

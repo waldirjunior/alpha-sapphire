@@ -1,6 +1,6 @@
-import type { BattleMove, PokemonInstance } from './battlePokemon';
+import { pokemonTypes, type BattleMove, type PokemonInstance } from './battlePokemon';
 import type { DexMove } from './dex';
-import { abilityImmunity, attackingAbilityMultiplier, defendingAbilityMultiplier, movePowerAbilityMultiplier, stabMultiplier } from './battleAbilities';
+import { abilityImmunity, attackingAbilityMultiplier, defendingAbilityMultiplier, movePowerAbilityMultiplier } from './battleAbilities';
 import { lifeOrbMultiplier } from './battleHeldItems';
 import { statStageMultiplier } from './statStages';
 import { rollInRange, type Rng } from './statusConditions';
@@ -46,7 +46,7 @@ export function moveEffectiveness(move: DexMove, defender: PokemonInstance): num
   if (abilityImmunity(defender, move.type)) return 0;
   if (move.type === 'ground' && defender.ability === 'Levitate') return 0;
   if (move.type === 'ground' && (defender.volatile.magnetRiseTurns ?? 0) > 0) return 0;
-  return move.id === STRUGGLE_MOVE_ID ? 1 : getTypeEffectiveness(move.type, defender.species.types);
+  return move.id === STRUGGLE_MOVE_ID ? 1 : getTypeEffectiveness(move.type, pokemonTypes(defender));
 }
 
 /** Crítico ignora estágios ofensivos negativos do atacante e defensivos positivos do alvo. */
@@ -74,7 +74,8 @@ function defendingStat(
 }
 
 function stabFor(attacker: PokemonInstance, move: DexMove): number {
-  return stabMultiplier(attacker, move);
+  if (move.id === STRUGGLE_MOVE_ID || !pokemonTypes(attacker).includes(move.type)) return 1;
+  return attacker.ability === 'Adaptability' ? 2 : 1.5;
 }
 
 function burnFor(attacker: PokemonInstance, move: DexMove): number {

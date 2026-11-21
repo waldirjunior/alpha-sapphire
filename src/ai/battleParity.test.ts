@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { calculateDamage, createPokemonInstance, executeBattleTurn, genSixCatchShakeThreshold, genSixCriticalCaptureOdds, startWildBattle } from '../core/battle';
 import { applyEntryHazards, createBattleField, setEntryHazard } from '../core/battleField';
 import { orderActions } from '../core/battleTurn';
-import { toBattleMove } from '../core/battlePokemon';
+import { pokemonTypes, toBattleMove } from '../core/battlePokemon';
 import { getMoveByName, getSpeciesById } from '../core/dex';
 import { applyResidualDamage, checkCanAct } from '../core/statusConditions';
 import { executeMove } from '../core/moveExecution';
@@ -159,5 +159,20 @@ describe('Gen VI battle formula parity vectors', () => {
     );
 
     expect(first.side).toBe('player');
+  });
+
+  it('uses quality-13 type and stat changes in Gen VI damage calculations', () => {
+    const attacker = { ...pokemon('torchic', 30, 'Tackle'), attack: 100 };
+    const target = { ...pokemon('wurmple', 30, 'Tackle'), attack: 50 };
+    const tackle = toBattleMove(getMoveByName('Tackle'));
+    const electric = { ...tackle, type: 'electric' as const };
+    const soaked = executeMove(attacker, target, toBattleMove(getMoveByName('Soak')), () => 0);
+    const neutral = calculateDamage(attacker, target, electric, alwaysMaxDamage);
+    const superEffective = calculateDamage(attacker, soaked.target, electric, alwaysMaxDamage);
+    const split = executeMove(attacker, target, toBattleMove(getMoveByName('Power Split')), () => 0);
+
+    expect(pokemonTypes(soaked.target)).toEqual(['water']);
+    expect(superEffective).toBeGreaterThan(neutral);
+    expect([split.user.attack, split.target.attack]).toEqual([75, 75]);
   });
 });

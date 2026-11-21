@@ -3,6 +3,7 @@ import { MAX_LEVEL, toGrowthRate, totalExpForLevel } from './experience';
 import { getDefaultMoveset } from './learnsets';
 import { calculateStats, validateSpread, ZERO_SPREAD, type BattleStats, type StatSpread } from './statSpread';
 import { NEUTRAL_STAGES, type StatStages } from './statStages';
+import type { ElementalType } from './typeChart';
 
 export interface BattleMove extends DexMove {
   currentPp: number;
@@ -46,6 +47,15 @@ export interface BattleVolatileState {
   destinyBond?: boolean;
   lockedOn?: boolean;
   powerTrick?: boolean;
+  stockpileCount?: number;
+  stockpileDefenseBoost?: number;
+  stockpileSpDefenseBoost?: number;
+  imprisonedMoves?: readonly number[];
+  grudge?: boolean;
+  snatch?: boolean;
+  magicCoat?: boolean;
+  powderTurns?: number;
+  electrifiedMoveId?: number | null;
 }
 
 export function neutralVolatileState(): BattleVolatileState {
@@ -77,6 +87,15 @@ export function neutralVolatileState(): BattleVolatileState {
     destinyBond: false,
     lockedOn: false,
     powerTrick: false,
+    stockpileCount: 0,
+    stockpileDefenseBoost: 0,
+    stockpileSpDefenseBoost: 0,
+    imprisonedMoves: [],
+    grudge: false,
+    snatch: false,
+    magicCoat: false,
+    powderTurns: 0,
+    electrifiedMoveId: null,
   };
 }
 
@@ -109,7 +128,14 @@ export interface PokemonInstance {
   personality: number;
   gender?: PokemonGender;
   lastMoveId?: number | null;
+  lastHitByMoveId?: number | null;
   heldItem: string | null;
+  consumedItem?: string | null;
+  originalAbility?: string;
+  abilitySuppressed?: boolean;
+  typesOverride?: readonly ElementalType[];
+  transformedMoves?: readonly BattleMove[];
+  originalSpecies?: DexSpecies;
 }
 
 export interface PokemonCreationOptions {
@@ -180,7 +206,9 @@ export function createPokemonInstance(
     personality,
     gender: genderFromPersonality(species.genderRatio, personality),
     lastMoveId: null,
+    lastHitByMoveId: null,
     heldItem: options.heldItem ?? null,
+    consumedItem: null,
   };
 }
 
@@ -203,13 +231,33 @@ export function withdrawFromBattle(pokemon: PokemonInstance): PokemonInstance {
 }
 
 export function prepareBattleEntry(pokemon: PokemonInstance): PokemonInstance {
+  const stats = computeStats(pokemon);
   return {
     ...pokemon,
+    species: pokemon.originalSpecies ?? pokemon.species,
+    ability: pokemon.originalAbility ?? pokemon.ability,
+    ...stats,
+    moves: [...(pokemon.transformedMoves ?? pokemon.moves)],
     status: pokemon.status?.kind === 'toxic' ? { kind: 'toxic', counter: 1 } : pokemon.status,
     stages: NEUTRAL_STAGES,
     lastMoveId: null,
+    lastHitByMoveId: null,
+    abilitySuppressed: false,
+    typesOverride: undefined,
+    originalAbility: undefined,
+    transformedMoves: undefined,
+    originalSpecies: undefined,
     volatile: neutralVolatileState(),
   };
+}
+
+export function pokemonTypes(pokemon: PokemonInstance): readonly ElementalType[] {
+  return pokemon.typesOverride ?? pokemon.species.types;
+}
+
+export function overridePokemonTypes(pokemon: PokemonInstance, types: readonly ElementalType[]): PokemonInstance {
+  return { ...pokemon, originalSpecies: pokemon.originalSpecies ?? pokemon.species,
+    species: { ...pokemon.species, types }, typesOverride: types };
 }
 
 export function isPartiallyTrapped(pokemon: PokemonInstance): boolean {
