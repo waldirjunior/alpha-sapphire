@@ -39,6 +39,44 @@ describe('save serialization', () => {
     expect(loaded?.pokedex).toEqual(pokedex);
   });
 
+  it('migrates a saved bag without evolution items and round-trips the new inventory', () => {
+    const state = createInitialState('route_101');
+    const party = [createPokemonInstance(SPECIES.torchic, 5)];
+    const legacy = deserializeSave(JSON.stringify({
+      version: 1,
+      state,
+      party,
+      bag: { pokeballs: 5, potions: 2, keyItems: [] },
+      caughtCount: 0,
+    }));
+
+    expect(legacy?.bag?.evolutionItems).toEqual({});
+    const saved = serializeSave({
+      version: 1,
+      state,
+      party,
+      bag: { pokeballs: 5, potions: 2, keyItems: [], evolutionItems: { 'Fire Stone': 2 } },
+      caughtCount: 0,
+      pokedex: createPokedex(party),
+    });
+    expect(deserializeSave(saved)?.bag?.evolutionItems).toEqual({ 'Fire Stone': 2 });
+  });
+
+  it('persists queued evolution move choices', () => {
+    const state = createInitialState('route_101');
+    const party = [createPokemonInstance(SPECIES.torchic, 5)];
+    const loaded = deserializeSave(serializeSave({
+      version: 1,
+      state,
+      party,
+      caughtCount: 0,
+      pokedex: createPokedex(party),
+      pendingMoves: [{ partyIndex: 0, moveId: 1 }],
+    }));
+
+    expect(loaded?.pendingMoves).toEqual([{ partyIndex: 0, moveId: 1 }]);
+  });
+
   it('backfills a Pokédex from the party when loading a legacy save', () => {
     const state = createInitialState('route_101');
     const party = [createPokemonInstance(SPECIES.torchic, 5)];

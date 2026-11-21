@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
+  applyEvolutionItemFromMenu,
   bagPocketItems,
+  evolutionItemPartyOptions,
   formatPlayNavTime,
   menuTabFrom,
   menuTabPresentation,
@@ -22,6 +24,10 @@ import {
 import { bindAudioControls, type AudioControlsHost } from './audioControls';
 import type { BagState } from '../core/bag';
 import type { PokedexState } from '../core/pokedex';
+import { createPokemonInstance } from '../core/battle';
+import { getSpeciesById } from '../core/dex';
+import { createInitialBag, addEvolutionItem } from '../core/bag';
+import type { PendingMoveLearn } from '../core/battle';
 
 class FakeAudioControl implements EventTarget {
   readonly listeners = new Map<string, () => void>();
@@ -158,5 +164,51 @@ describe('game menus', () => {
     expect(bagPocketItems(bag, 'key')).toEqual([
       { label: 'PokéNav Plus', count: 1, desc: 'Equipado na tela inferior do 3DS.' },
     ]);
+  });
+
+  it('lists evolution stones and shows only matching party evolutions in the selector', () => {
+    const bag = addEvolutionItem(createInitialBag(), 'Thunder Stone', 1);
+    const party = [createPokemonInstance(getSpeciesById('pikachu'), 20)];
+
+    expect(bagPocketItems(bag, 'items')).toContainEqual({
+      label: 'Thunder Stone',
+      count: 1,
+      desc: 'Evolui Pokémon compatíveis.',
+    });
+    expect(evolutionItemPartyOptions(party, 'Thunder Stone')).toEqual([{
+      index: 0,
+      pokemonName: 'Pikachu',
+      targetSpeciesName: 'Raichu',
+      eligible: true,
+    }]);
+  });
+
+  it('applies a stone outside battle and updates party, bag, Pokédex, moves, and save', () => {
+    let party = [createPokemonInstance(getSpeciesById('pikachu'), 20)];
+    let bag = addEvolutionItem(createInitialBag(), 'Thunder Stone', 1);
+    let pokedex: PokedexState = { seenSpecies: ['pikachu'], caughtSpecies: ['pikachu'] };
+    let pendingMoves: PendingMoveLearn[] = [{ partyIndex: 0, moveId: 1 }];
+    let saves = 0;
+    const host = {
+      getActiveBattle: () => null,
+      getParty: () => party,
+      setParty: (next: typeof party) => { party = next; },
+      getBag: () => bag,
+      setBag: (next: typeof bag) => { bag = next; },
+      getPokedex: () => pokedex,
+      setPokedex: (next: PokedexState) => { pokedex = next; },
+      getPendingMoves: () => pendingMoves,
+      setPendingMoves: (next: PendingMoveLearn[]) => { pendingMoves = next; },
+      persistSave: () => { saves += 1; },
+      renderIntro: () => {},
+      syncUi: () => {},
+    };
+
+    expect(applyEvolutionItemFromMenu(host, 'Thunder Stone', 0)).toBe(true);
+    expect(party[0]?.species.id).toBe('raichu');
+    expect(bag.evolutionItems).toEqual({});
+    expect(pokedex.caughtSpecies).toContain('raichu');
+    expect(pendingMoves).toEqual([{ partyIndex: 0, moveId: 1 }]);
+    expect(saves).toBe(1);
   });
 });

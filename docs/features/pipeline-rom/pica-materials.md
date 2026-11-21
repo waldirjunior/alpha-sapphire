@@ -258,6 +258,60 @@ The audit records the combined inspector/assembly hash. Its local cache
 under `rom/pica-material-validation/` validates input and tool hashes.
 This normalization does not require another Blender/assimp conversion.
 
+## LightSetIndex and DefaultShader static XREF scan (2026-11-21)
+
+`scripts/inspect_pica_lightset.py` performs a reproducible ExeFS pointer-table
+inspection and Capstone ARM-mode scan with `skipdata=True`, and disassembles
+the candidate `H3dModel`/`H3dLightSet` methods and `DllField.cro` callback. On
+the extracted `ExeFS/code.bin` (SHA-256
+`b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16`; base VA
+`0x100000`), the table at file offset `0x517460` has seven pointers. Its first,
+second, and fourth entries are respectively
+`gfl_DefaultShader.bcsdr`, `gfl_DefaultShader.bchsdr`, and
+`nwgfx_DefaultShader.bcsdr`; the other entries name a particle shader, a
+shadow model, and two bloom boards. The three requested shader string pointers
+occur in that table, but no raw pointer or Capstone ARM candidate targets the
+table's seven entries or those shader path strings. The full-file linear scan
+reported 121 ARM candidates overall (96 other `rom:/` path literals, 17
+class-vtable region references, and eight references into zero-filled adjacent
+storage); those candidates are not proof of reachable code because the scan
+also decodes data as ARM instructions.
+
+The `H3dLightSet` vtable group at `0x4ddf14` and `H3dModel` group at `0x4dde08`
+resolve method addresses and nearby class RTTI, but no discovered reference
+connects a model `LightSetIndex` to the shader table. In `DllField.cro`
+(SHA-256
+`9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925`),
+`PseudoLightingListener` has name string `0x1003db`, typeinfo `0xfdee8`,
+vtable `0x1077e8`, and candidate callback `0x2ee38`. The callback loops over
+eight slots and makes indirect virtual calls through offsets `+0x50` and
+`+0x54`; this does not identify the records, uniforms, or selected light set.
+The extracted `RomFS/g3d_common/` directory is absent, so none of the three
+shader files could be checked against the ROM filesystem. The binding chain
+remains unresolved; no renderer change is justified by this scan.
+
+Four synthetic unit tests cover pointer-table discovery, vtable address
+decoding, ARM literal loads, and ARM PC-relative address calculations. The two
+disassembly tests skip when the optional Python Capstone package is absent; the
+ROM scan itself requires Capstone. This run used Capstone 5.0.3. Run the tests
+without ROM assets with:
+
+```bash
+python3 -m unittest scripts.test_inspect_pica_lightset -v
+```
+
+With local extracted assets, reproduce the report with:
+
+```bash
+# If needed, install the script's optional disassembler dependency first.
+python3 -m pip install capstone==5.0.3
+
+python3 scripts/inspect_pica_lightset.py \
+  --code-bin "$ROM_EXTRACTED/ExeFS/code.bin" \
+  --dll-field "$ROM_EXTRACTED/RomFS/DllField.cro" \
+  --output /tmp/pica-lightset.json
+```
+
 ## Visual validation and remaining work
 
 Visible Chromium, isolated Vite port 5195, worktree code, and main public

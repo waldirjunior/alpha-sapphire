@@ -158,3 +158,47 @@ ALPHA_PUBLIC_DIR=/Users/wjunior/projetos/outros/estudos-ia/projeto-testes/v1/alp
 ALPHA_E2E_PORT=56871 npx playwright test e2e/pokemonBattleModels.spec.ts \
 e2e/visual.spec.ts --workers=1
 ```
+
+## 10. Busca de recursos AreaNav na ROM — 2026-11-21
+
+`scripts/inspect_arenav_assets.py` varreu os 299 arquivos de `RomFS/a/`:
+298 GARCs com 51.043 entradas e um arquivo que não é GARC (`a/0/8/7`). O
+scan profundo não encontrou GARC malformado; 19 entradas tiveram avisos ao
+decodificar prefixos LZ11. Entre os cabeçalhos de recursos reconhecidos havia
+2.347 BCH e 3.230 CGFX; nenhum BCLYT, BCFLY, BFLYT, BFLIM, CLYT, FLIM, FLYT,
+CLIM ou ARC. A busca pelos
+nomes de AreaNav encontrou seis entradas BCH consecutivas em `a/1/5/2`, slots
+181–186, todas nomeadas `pokenavi`.
+
+O slot 181 contém o modelo 3D `ad10_pokenavi`, com três materiais e quatro
+texturas: `pokenavi_gamen01` (256×512), `pokenavi01` (512×512),
+`bc_Bchara_hlight01` (64×64) e `pokenavi03` (128×128). Os slots 182–186 são
+recursos nomeados como cenas/animações `ad10_pokenavi_scene*` e não contêm
+modelos nem texturas. As texturas exportadas do slot 181 foram inspecionadas
+localmente; elas não fornecem o mapa Hoenn nem os quatro ícones da AreaNav.
+Assim, a busca produziu um candidato PokéNav extraível, mas não identificou o
+recurso visual em falta e não justifica ligar esses arquivos a `areaNav.ts`.
+P-011 continua aberto.
+
+O scanner lê os índices GARC e verifica cabeçalhos sintéticos sem depender dos
+assets locais no CI. A extração valida o tipo BCH e só permite gravar sob
+`rom/extracted/` ou `public/assets/`, ambos destinos ignorados pelo Git. Os seis
+testes sintéticos cobrem leitura de cabeçalhos, LZ11, extração, offsets
+malformados e restrição do destino. Para reproduzir a varredura e extrair o
+candidato em uma máquina com assets locais:
+
+```bash
+python3 scripts/inspect_arenav_assets.py \
+  --romfs "$ROM_EXTRACTED/RomFS" --deep \
+  --output /tmp/arenav-rom-scan.json
+
+python3 scripts/inspect_arenav_assets.py \
+  --romfs "$ROM_EXTRACTED/RomFS" \
+  --extract-archive a/1/5/2 --slot 181 --expect-magic BCH \
+  --extract-root "$ROM_EXTRACTED/area-nav-candidates" \
+  --filename pokenavi-181.bch
+```
+
+Os arquivos extraídos e PNGs de inspeção permaneceram fora do worktree e não
+foram versionados. Não foi executado e2e, pois esta entrega altera somente
+scripts e documentação; nenhuma captura ou baseline foi criada ou aprovada.
