@@ -1297,7 +1297,7 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   preserve o estado curado na cópia temporária; não relocalize diretamente para
   dentro de `zone_0441`.
 
-## A-TMP-taillow-expr Slots BCH de expressão não são limitados a Eye/Mouth
+## A-127 Slots BCH de expressão não são limitados a Eye/Mouth
 
 - **Data:** 2026-11-21; P-012, perfis de expressão e exportação de Taillow.
 - **Contexto:** `scripts/pokemon_battle_expressions.py` lê PC/PB na GARC
