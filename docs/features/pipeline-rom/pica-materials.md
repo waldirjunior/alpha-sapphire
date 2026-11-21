@@ -161,10 +161,11 @@ callback 0x2ee38) and `mmodel::EffectCycleLight` (name 0x100ec0, typeinfo
 native registrations. Their presence and callback arithmetic do not recover
 the GR light-set contents or DefaultShader dispatch. No ROM code was run.
 
-**Unknown/next evidence:** locate the generic `DefaultShader` program and the
-runtime loader/binding for the recovered light resource; trace selected
-values through the callback and model binding, then compare fragment inputs
-with an emulator or native renderer. Projection, Texture1/Texture2,
+**Unknown/next evidence:** verify whether the `DefaultShader` path literals
+found in `ExeFS/code.bin` are active, locate the matching program, and trace
+the loader/binding for the recovered light resource. Follow selected values
+through the callback and model binding, then compare fragment inputs with an
+emulator or native renderer. Projection, Texture1/Texture2,
 PreviousBuffer, runtime constant mutation, fog, and LUT dispatch remain
 explicit P-007 gaps. No brightness, saturation, color-space, unlit, or
 generic multi-texture fix was applied based on appearance.
@@ -202,6 +203,40 @@ material. Therefore `light_sun` cannot yet be assigned to `LightSetIndex=0`
 or to a displayed zone, and no RGB/lightmap change is justified. P-007 stays
 open pending the loader/model binding and an emulator or native-renderer
 comparison.
+
+## ExeFS loader-name triage (A-TMP-Codex)
+
+The extracted `ExeFS/code.bin` (SHA-256
+`b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16`)
+contains RTTI names for `nn::nw::gfx::LightSet`,
+`gfl::grp::g3d::H3dLightSet`, `H3dModel`, `H3dResShader`, `H3dEnvironment`,
+and `SceneSystem`. It also contains the literals
+`rom:/g3d_common/gfl_DefaultShader.bcsdr`,
+`rom:/g3d_common/nwgfx_DefaultShader.bcsdr`, and
+`rom:/g3d_common/gfl_DefaultShader.bchsdr` (file offsets `0x4e3905`,
+`0x4e392d`, and `0x4e3989`, respectively). The `H3dLightSet` vtable group
+at file offset `0x4ddf14` points to methods at `0x39bcec`, `0x39bc94`,
+`0x39b930`, and `0x39b968`; those methods expose lifecycle and a resource
+wrapper, but do not identify a model's selected set. The `H3dModel` vtable
+group begins at `0x4dde08`.
+
+These names and paths identify candidate renderer code, not a completed
+load/bind chain. A direct pointer scan finds the shader path pointers in a
+table at `0x517460`, but no callsite that connects that table to a model's
+`LightSetIndex` or shader-uniform upload. This scan does not rule out computed
+addresses or indirect dispatch. The next step is to follow a concrete loader
+callsite from the BM/H3D light records through the model's material index to
+the shader upload, or observe those objects at runtime in Azahar. No rendering
+change follows from these strings alone.
+
+Validation on 2026-11-20: `python3 scripts/test_pokemon_glb_materials.py`
+passed 5 tests. The initial `npm run verify` passed 642 Vitest tests, the build,
+and 256 Python tests; its two skips were missing public map assets and the
+shared Azahar RPC port being occupied. After the port was released, the final
+`npm run verify` passed with the same counts and only the expected asset skip;
+a verbose Python rerun confirmed the reason. The requested battle and visual
+Playwright specs passed 31/31; their captures were inspected, and no baseline
+was approved.
 
 ## Reproduction
 

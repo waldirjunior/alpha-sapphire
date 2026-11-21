@@ -1251,4 +1251,21 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   AreaNav em Littleroot; `e2e/visual.spec.ts` exige a mesma localização, o título
   e quatro ícones no recorte do port, sem ligar os ícones a ações.
 
+## A-TMP-Codex RTTI e caminhos de shader não provam binding PICA
+
+- **Data:** 2026-11-20; ROADMAP #4/P-007, triagem do loader em `ExeFS/code.bin`.
+- **Contexto:** `code.bin` contém nomes de classes `H3dLightSet`, `H3dModel`,
+  `H3dResShader`, `H3dEnvironment` e caminhos `gfl_DefaultShader`/`nwgfx`.
+- **Erro a evitar:** tratar essas strings ou uma tabela de caminhos como prova
+  de que uma entrada BM foi carregada, selecionada pelo `LightSetIndex` ou usada
+  para preencher uniforms de um material.
+- **Evidência:** o arquivo tem SHA-256
+  `b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16`;
+  os caminhos ficam nos offsets `0x4e3905`, `0x4e392d` e `0x4e3989`, e os
+  grupos de vtable `H3dLightSet`/`H3dModel` em `0x4ddf14`/`0x4dde08`. A
+  análise estática não fechou o fluxo de dados até o material ou o upload.
+- **Regra:** exija um callsite que ligue recurso, modelo/material e uniforms,
+  ou observe a seleção/upload em runtime. Nomes, vtables e constantes de
+  caminho delimitam a busca, mas não autorizam parâmetros de renderização.
+
 
