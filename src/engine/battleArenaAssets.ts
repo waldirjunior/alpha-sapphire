@@ -1,6 +1,11 @@
 import * as THREE from 'three';
 import type { BattleArena } from './battleArena';
-import { attachBattleArenaModel, battleArenaModelUrl } from './battleArena';
+import {
+  attachBattleArenaModel,
+  attachBattleArenaStageModel,
+  battleArenaModelUrl,
+  battleArenaStageModelUrl,
+} from './battleArena';
 import { fixOrasMaterials } from './picaMaterials';
 
 export interface BattleArenaAssetLoader {
@@ -21,14 +26,21 @@ export function loadBattleArenaModel(
 ): void {
   if (requestedArenas.has(arena)) return;
   requestedArenas.add(arena);
-  const url = battleArenaModelUrl(arena.biome);
-  if (!url) return;
+  const stageUrl = battleArenaStageModelUrl(arena.biome);
+  const layers = [
+    { url: battleArenaModelUrl(arena.biome), attach: attachBattleArenaModel, name: 'arena' },
+    ...(stageUrl
+      ? [{ url: stageUrl, attach: attachBattleArenaStageModel, name: 'platforma' }]
+      : []),
+  ];
 
-  loader.load(url, (result) => {
-    if (getCurrentArena() !== arena) return;
-    fixOrasMaterials(result.scene);
-    attachBattleArenaModel(arena, result.scene);
-  }, undefined, (error) => {
-    console.warn(`Falha ao carregar arena ${arena.biome} em ${url}; mantendo fallback procedural.`, error);
-  });
+  for (const layer of layers) {
+    loader.load(layer.url, (result) => {
+      if (getCurrentArena() !== arena) return;
+      fixOrasMaterials(result.scene);
+      layer.attach(arena, result.scene);
+    }, undefined, (error) => {
+      console.warn(`Falha ao carregar camada ${layer.name} da arena ${arena.biome} em ${layer.url}; mantendo fallback procedural.`, error);
+    });
+  }
 }

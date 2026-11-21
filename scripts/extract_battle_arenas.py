@@ -42,6 +42,13 @@ BATTLE_ARENA_SOURCES = {
     "water": BattleArenaSource(slot=12, tag="btl_F_mizu"),
     "cave": BattleArenaSource(slot=44, tag="btl_G_c_a1", container_magic=b"BG", package_entry=0),
     "gym": BattleArenaSource(slot=78, tag="btl_G_gym1", container_magic=b"BG", package_entry=0),
+    "indoor": BattleArenaSource(slot=136, tag="btl_O_heya_m", container_magic=b"BG", package_entry=0),
+}
+BATTLE_ARENA_STAGE_SOURCES = {
+    "grass": BattleArenaSource(slot=150, tag="btl_O_kusa_m", container_magic=b"BG", package_entry=0),
+    "water": BattleArenaSource(slot=139, tag="btl_O_mizu_m", container_magic=b"BG", package_entry=0),
+    "cave": BattleArenaSource(slot=118, tag="btl_O_do_0_m", container_magic=b"BG", package_entry=0),
+    "gym": BattleArenaSource(slot=125, tag="btl_O_gym1_m", container_magic=b"BG", package_entry=0),
 }
 
 
@@ -51,6 +58,16 @@ def load_battle_arena_sources(unpacked_dir: Path) -> dict[str, Path]:
         path = unpacked_dir / f"{source.slot:04d}.bin"
         if not path.is_file():
             raise FileNotFoundError(f"Campo ORAS {source.tag} não encontrado no slot {source.slot:04d} de a/1/3/6")
+        sources[biome] = load_battle_arena_model(path, biome, source)
+    return sources
+
+
+def load_battle_arena_stage_sources(unpacked_dir: Path) -> dict[str, Path]:
+    sources: dict[str, Path] = {}
+    for biome, source in BATTLE_ARENA_STAGE_SOURCES.items():
+        path = unpacked_dir / f"{source.slot:04d}.bin"
+        if not path.is_file():
+            raise FileNotFoundError(f"Camada ROM da arena {source.tag} não encontrada no slot {source.slot:04d} de a/1/3/6")
         sources[biome] = load_battle_arena_model(path, biome, source)
     return sources
 
@@ -130,10 +147,15 @@ def extract_battle_arenas(
         unpacked_dir = Path(temporary) / "a_1_3_6"
         unpack_garc(garc_path, unpacked_dir, decompress=True)
         sources = load_battle_arena_sources(unpacked_dir)
+        stage_sources = load_battle_arena_stage_sources(unpacked_dir)
         for biome, source in sources.items():
             output = output_dir / biome / f"{biome}.glb"
             convert_battle_arena(source, output, spica_export, assimp_path)
             print(f"Gerado {output} ({output.stat().st_size} bytes)")
+        for biome, source in stage_sources.items():
+            output = output_dir / biome / "stage" / "stage.glb"
+            convert_battle_arena(source, output, spica_export, assimp_path)
+            print(f"Gerada camada ROM {output} ({output.stat().st_size} bytes)")
 
 
 def main() -> int:
