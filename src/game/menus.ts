@@ -1,7 +1,8 @@
 import type { BagState } from '../core/bag';
-import { usePotion } from '../core/bag';
-import type { BattleState, PokemonInstance } from '../core/battle';
-import type { PokedexState } from '../core/pokedex';
+import { useBagEvolutionItem, usePotion } from '../core/bag';
+import type { BattleState, PendingMoveLearn, PokemonInstance } from '../core/battle';
+import { findItemEvolution } from '../core/evolution';
+import { recordCaughtSpecies, type PokedexState } from '../core/pokedex';
 import { createHpBarMarkup } from './battleUi';
 import { bindAudioControls, type AudioControlsHost } from './audioControls';
 import { renderAreaNavTab } from './areaNav';
@@ -14,6 +15,13 @@ export interface BagPocketItem {
   label: string;
   count: number;
   desc: string;
+}
+
+export interface EvolutionItemPartyOption {
+  index: number;
+  pokemonName: string;
+  targetSpeciesName: string;
+  eligible: true;
 }
 
 export interface MenuTabPresentation {
@@ -58,30 +66,83 @@ export function toggleMenuTab(current: MenuTab | null, selected: MenuTab): MenuT
 }
 
 export function bagPocketItems(bag: BagState, pocket: BagPocket): BagPocketItem[] {
-  if (pocket === 'items') return [{ label: 'Potion', count: bag.potions, desc: 'Restaura 20 HP de um Pokémon.' }];
+  if (pocket === 'items') return [
+    { label: 'Potion', count: bag.potions, desc: 'Restaura 20 HP de um Pokémon.' },
+    ...Object.entries(bag.evolutionItems ?? {}).map(([label, count]) => ({
+      label, count, desc: 'Evolui Pokémon compatíveis.',
+    })),
+  ];
   if (pocket === 'balls') return [{ label: 'Poké Ball', count: bag.pokeballs, desc: 'Captura Pokémon selvagens em batalha.' }];
   if (bag.keyItems.length) return bag.keyItems.map((label) => ({ label, count: 1, desc: 'Item-chave de aventura.' }));
   return [{ label: 'PokéNav Plus', count: 1, desc: 'Equipado na tela inferior do 3DS.' }];
 }
 
-export interface MenuHost {
+export function evolutionItemPartyOptions(
+  party: readonly PokemonInstance[],
+  itemName: string
+): EvolutionItemPartyOption[] {
+  return party.flatMap((pokemon, index) => {
+    const target = findItemEvolution(pokemon, itemName);
+    return target ? [{
+      index,
+      pokemonName: pokemon.species.name,
+      targetSpeciesName: target.name,
+      eligible: true as const,
+    }] : [];
+  });
+}
+
+export function applyEvolutionItemFromMenu(
+  host: EvolutionItemMenuHost,
+  itemName: string,
+  partyIndex: number
+): boolean {
+  if (host.getActiveBattle()) return false;
+  const pokemon = host.getParty()[partyIndex];
+  if (!pokemon) return false;
+  const result = useBagEvolutionItem(host.getBag(), pokemon, itemName);
+  if (!result.used) return false;
+
+  const party = [...host.getParty()];
+  party[partyIndex] = result.pokemon;
+  host.setBag(result.bag);
+  host.setParty(party);
+  host.setPokedex(recordCaughtSpecies(host.getPokedex(), result.pokemon.species.id));
+  host.setPendingMoves([
+    ...host.getPendingMoves(),
+    ...result.pendingMoves.map(moveId => ({ partyIndex, moveId })),
+  ]);
+  host.persistSave();
+  host.renderIntro();
+  host.syncUi();
+  return true;
+}
+
+export interface EvolutionItemMenuHost {
+  getActiveBattle(): BattleState | null;
+  getParty(): PokemonInstance[];
+  setParty(party: PokemonInstance[]): void;
+  getPokedex(): PokedexState;
+  setPokedex(pokedex: PokedexState): void;
+  getBag(): BagState;
+  setBag(bag: BagState): void;
+  getPendingMoves(): PendingMoveLearn[];
+  setPendingMoves(moves: PendingMoveLearn[]): void;
+  persistSave(): void;
+  renderIntro(): void;
+  syncUi(): void;
+}
+
+export interface MenuHost extends EvolutionItemMenuHost {
   panel: HTMLElement | null;
   tabButtons: NodeListOf<HTMLButtonElement>;
   getOpenTab(): MenuTab | null;
   setOpenTab(tab: MenuTab | null): void;
-  getActiveBattle(): BattleState | null;
-  getParty(): PokemonInstance[];
-  getPokedex(): PokedexState;
-  getBag(): BagState;
-  setBag(bag: BagState): void;
-  setParty(party: PokemonInstance[]): void;
   getActiveBagPocket(): BagPocket;
   setActiveBagPocket(pocket: BagPocket): void;
   getPlayerMap(): { mapId: string; zoneName?: string };
   getSelectedMapLocationId(): string | null;
   setSelectedMapLocationId(locationId: string): void;
-  renderIntro(): void;
-  syncUi(): void;
 }
 
 export type StarterId = 'treecko' | 'torchic' | 'mudkip';
@@ -318,6 +379,42 @@ function renderBagTab(host: MenuHost, panel: HTMLElement): void {
     const row = document.createElement('div');
     row.className = 'ds-item';
     row.innerHTML = `<div><strong>${item.label}</strong><div style="color:#94a3b8">${item.desc}</div></div><span>x${item.count}</span>`;
+    if (item.count > 0 && Object.prototype.hasOwnProperty.call(host.getBag().evolutionItems ?? {}, item.label)) {
+      const useButton = document.createElement('button');
+      useButton.textContent = 'Usar';
+      useButton.onclick = () => renderEvolutionItemPartySelector(host, panel, item.label);
+      row.appendChild(useButton);
+    }
     panel.appendChild(row);
   });
+}
+
+function renderEvolutionItemPartySelector(host: MenuHost, panel: HTMLElement, itemName: string): void {
+  panel.replaceChildren();
+  const selector = document.createElement('section');
+  selector.className = 'oras-evolution-item-selector';
+  const title = document.createElement('strong');
+  title.textContent = `Usar ${itemName} em:`;
+  selector.appendChild(title);
+
+  const options = evolutionItemPartyOptions(host.getParty(), itemName);
+  if (options.length === 0) {
+    const message = document.createElement('p');
+    message.textContent = 'Nenhum Pokémon da equipe pode evoluir com este item.';
+    selector.appendChild(message);
+  }
+  for (const option of options) {
+    const button = document.createElement('button');
+    button.textContent = `${option.pokemonName} → ${option.targetSpeciesName}`;
+    button.onclick = () => {
+      if (applyEvolutionItemFromMenu(host, itemName, option.index)) renderDsPanel(host);
+    };
+    selector.appendChild(button);
+  }
+
+  const cancel = document.createElement('button');
+  cancel.textContent = 'Voltar à mochila';
+  cancel.onclick = () => renderDsPanel(host);
+  selector.appendChild(cancel);
+  panel.appendChild(selector);
 }

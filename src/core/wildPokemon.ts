@@ -52,6 +52,22 @@ export interface ZoneEncounterSource {
   encounters: readonly ZoneEncounterSlot[];
 }
 
+export type ZoneEncounterSources = Readonly<Record<string, ZoneEncounterSource>>;
+
+interface TileEncounterMap {
+  id: string;
+  width: number;
+  height: number;
+  terrain?: readonly (readonly number[])[];
+  surfTiles?: readonly { x: number; z: number }[];
+  surfTileKeys?: ReadonlySet<string>;
+}
+
+interface EncounterTilePosition {
+  x: number;
+  z: number;
+}
+
 export interface EncounterSubtableSlot extends ZoneEncounterSlot {
   slotIndex: number;
   methodSlot: number;
@@ -91,6 +107,60 @@ export type EncounterSpeciesResolver = (dexNumber: number, form: number) => stri
 
 export function mapIdForZoneName(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+}
+
+/** Guarda a primeira fonte de encontros encontrada para cada mapa. */
+export function buildZoneEncounterSources(zones: readonly ZoneEncounterSource[]): Record<string, ZoneEncounterSource> {
+  const sources: Record<string, ZoneEncounterSource> = {};
+  for (const zone of zones) {
+    const mapId = mapIdForZoneName(zone.name);
+    if (!sources[mapId] && zone.encounters.length > 0) sources[mapId] = zone;
+  }
+  return sources;
+}
+
+/** Resolve o método pedido; somente a grama usa a tabela legada como fallback. */
+export function resolveEncounterTableForMethod(
+  mapId: string,
+  method: EncounterMethod,
+  sources: ZoneEncounterSources,
+  resolve: EncounterSpeciesResolver,
+  fallback: Readonly<Record<string, WildEncounterEntry[]>> = {}
+): WildEncounterEntry[] | undefined {
+  const source = sources[mapId];
+  if (source) return encounterTableFromZone(source, method, resolve);
+  return method === 'grass' ? fallback[mapId] : undefined;
+}
+
+/** Resolve o encontro de campo pela superfície; terreno 2 usa a tabela de grama. */
+export function encounterMethodForTile(map: TileEncounterMap, pos: EncounterTilePosition): EncounterMethod | null {
+  if (pos.x < 0 || pos.z < 0 || pos.x >= map.width || pos.z >= map.height) return null;
+  if (map.surfTileKeys?.has(`${pos.x},${pos.z}`) ||
+    map.surfTiles?.some(tile => tile.x === pos.x && tile.z === pos.z)) return 'surf';
+  return map.terrain?.[pos.z]?.[pos.x] === 2 ? 'grass' : null;
+}
+
+/** Escolhe uma das subtabelas de horda ORAS e então um dos cinco slots dela. */
+export function rollHordeEncounter(
+  zone: ZoneEncounterSource,
+  resolve: EncounterSpeciesResolver,
+  rng: Rng = Math.random
+): { method: 'horde_a' | 'horde_b' | 'horde_c'; speciesId: string; level: number } | null {
+  const chance = normalizeRandom(rng());
+  const method = chance < 0.6 ? 'horde_a' : chance < 0.95 ? 'horde_b' : 'horde_c';
+  const slots = encounterSubtableFromZone(zone, method).slots;
+  if (slots.length !== 5) return null;
+  const slot = slots[Math.floor(normalizeRandom(rng()) * slots.length)];
+  if (!slot || slot.species === 0) return null;
+  const speciesId = resolve(slot.species, slot.form);
+  if (!speciesId) return null;
+  const levelSpan = slot.levelMax - slot.levelMin + 1;
+  const level = slot.levelMin + Math.floor(normalizeRandom(rng()) * levelSpan);
+  return { method, speciesId, level };
+}
+
+function normalizeRandom(value: number): number {
+  return Math.min(0.999999, Math.max(0, value));
 }
 
 /** Primeira sub-tabela do ZO (grama): slots até o primeiro `species = 0` (A-009). */

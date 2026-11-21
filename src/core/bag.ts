@@ -1,9 +1,16 @@
 import type { PokemonInstance } from './battle';
+import { findItemEvolution, useEvolutionItem, type EvolutionResult } from './evolution';
 
 export interface BagState {
   pokeballs: number;
   potions: number;
   keyItems: string[];
+  evolutionItems?: Record<string, number>;
+}
+
+export interface BagEvolutionItemResult extends EvolutionResult {
+  bag: BagState;
+  used: boolean;
 }
 
 export type ConsumableItemKind = 'pokeballs' | 'potions';
@@ -14,7 +21,44 @@ export function createInitialBag(): BagState {
     pokeballs: 5,
     potions: 2,
     keyItems: [],
+    evolutionItems: {},
   };
+}
+
+/** Adiciona itens evolutivos por nome, acumulando o estoque sem mutar a mochila. */
+export function addEvolutionItem(bag: BagState, itemName: string, amount: number): BagState {
+  if (amount <= 0) return bag;
+  const evolutionItems = bag.evolutionItems ?? {};
+  return {
+    ...bag,
+    evolutionItems: { ...evolutionItems, [itemName]: (evolutionItems[itemName] ?? 0) + amount },
+  };
+}
+
+/** Só consome o item se existir estoque e a espécie tiver evolução compatível. */
+export function useBagEvolutionItem(
+  bag: BagState,
+  pokemon: PokemonInstance,
+  itemName: string
+): BagEvolutionItemResult {
+  const count = bag.evolutionItems?.[itemName] ?? 0;
+  const target = findItemEvolution(pokemon, itemName);
+  if (count <= 0) return unchangedEvolutionItemUse(bag, pokemon, ['Você não tem esse item.']);
+  if (!target) return { ...useEvolutionItem(pokemon, itemName), bag, used: false };
+
+  const result = useEvolutionItem(pokemon, itemName);
+  const evolutionItems = { ...(bag.evolutionItems ?? {}) };
+  if (count === 1) delete evolutionItems[itemName];
+  else evolutionItems[itemName] = count - 1;
+  return { ...result, bag: { ...bag, evolutionItems }, used: result.evolved };
+}
+
+function unchangedEvolutionItemUse(
+  bag: BagState,
+  pokemon: PokemonInstance,
+  messages: string[]
+): BagEvolutionItemResult {
+  return { bag, pokemon, used: false, evolved: false, pendingMoves: [], messages };
 }
 
 /** Adiciona quantidade positiva de um item consumível mantendo imutabilidade. */

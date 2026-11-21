@@ -1,14 +1,15 @@
 import { createInitialBag } from './core/bag';
 import {
   type BattleState,
+  type PendingMoveLearn,
   createPokemonInstance,
   startWildBattle,
 } from './core/battle';
+import type { ZoneEncounterSource } from './core/wildPokemon';
 import type { AmxPokemon } from './core/amxTypes';
 import { createInitialState } from './core/gameState';
 import { createPokedex, recordCaughtSpecies, recordSeenSpecies } from './core/pokedex';
 import { zoneMaps, startingMapId, saveStorageKey } from './data/maps_v2/runtime';
-import type { WildEncounterEntry } from './data/pokemon/route101';
 import { SPECIES } from './data/pokemon/species';
 import { SceneManager } from './engine/SceneManager';
 import { BgmPlayer } from './engine/audioPlayer';
@@ -35,8 +36,8 @@ const MAPS = zoneMaps.maps;
 const START_MAP_ID = startingMapId(window.location.search);
 let moving = false;
 
-let zoneEncounterTables: Record<string, WildEncounterEntry[]> = {};
-void loadZoneEncounters(Object.keys(MAPS)).then((tables) => { zoneEncounterTables = tables; });
+let zoneEncounterSources: Record<string, ZoneEncounterSource> = {};
+void loadZoneEncounters(Object.keys(MAPS)).then((sources) => { zoneEncounterSources = sources; });
 
 const app = document.getElementById('app');
 const hudPos = document.getElementById('hud-pos');
@@ -90,6 +91,7 @@ let pokedex = saved?.pokedex ?? createPokedex(party);
 let bag = saved?.bag ?? createInitialBag();
 let activePartyIndex = 0;
 let caughtCount = saved?.caughtCount ?? 0;
+let pendingMoves: PendingMoveLearn[] = saved?.pendingMoves ?? [];
 let activeBattle: BattleState | null = null;
 let activeBattleMusicContext: BattleMusicKind | null = null;
 let battleAnimating = false;
@@ -112,6 +114,10 @@ function zoneTrackFor(mapId: string): string | null {
 }
 
 function setActiveBattle(battle: BattleState | null): void {
+  if (battle && !activeBattle && pendingMoves.length > 0) {
+    battle = { ...battle, pendingMoves: [...pendingMoves, ...battle.pendingMoves] };
+  }
+  if (!battle && activeBattle) pendingMoves = [];
   if (battle) pokedex = recordSeenSpecies(pokedex, battle.enemy.species.id);
   activeBattle = battle;
   activeBattleMusicContext = resolveBattleMusicContext(battle);
@@ -137,7 +143,9 @@ void import('./data/zone_audio.json').then((module) => {
 });
 
 function persistSave(): void {
-  storeSavedGame(window.localStorage, SAVE_STORAGE_KEY, { version: 1, state, party, bag, caughtCount, pokedex });
+  storeSavedGame(window.localStorage, SAVE_STORAGE_KEY, {
+    version: 1, state, party, bag, caughtCount, pokedex, pendingMoves,
+  });
 }
 
 function setParty(nextParty: typeof party): void {
@@ -211,6 +219,7 @@ function startNewGame(): void {
   pokedex = createPokedex(party);
   bag = createInitialBag();
   caughtCount = 0;
+  pendingMoves = [];
   introStep = 'birch';
   openDsTab = null;
   selectedHoennMapLocationId = null;
@@ -322,6 +331,9 @@ const menuHost = {
   getActiveBattle: () => activeBattle,
   getParty: () => party,
   getPokedex: () => pokedex,
+  setPokedex: (nextPokedex: typeof pokedex) => { pokedex = nextPokedex; },
+  getPendingMoves: () => pendingMoves,
+  setPendingMoves: (nextMoves: PendingMoveLearn[]) => { pendingMoves = nextMoves; },
   getBag: () => bag,
   setBag: (nextBag: typeof bag) => { bag = nextBag; },
   setParty,
@@ -335,6 +347,7 @@ const menuHost = {
   setSelectedMapLocationId: (locationId: string) => { selectedHoennMapLocationId = locationId; },
   renderIntro,
   syncUi,
+  persistSave,
 };
 
 const introHost = {
@@ -390,7 +403,7 @@ const inputHost = {
   app,
   hudPosition: hudPos,
   zoneEvents,
-  getEncounterTables: () => zoneEncounterTables,
+  getEncounterSources: () => zoneEncounterSources,
   move: zoneMaps.move,
   getState: () => state,
   setState: (nextState: typeof state) => { state = nextState; },

@@ -5,13 +5,17 @@ import { getSpeciesById } from './dex';
 import { MAX_IV } from './statSpread';
 import {
   buildZoneEncounterTables,
+  buildZoneEncounterSources,
   createSeededRng,
+  encounterMethodForTile,
   encounterSubtableFromZone,
   encounterTableFromZone,
   generatePokemon,
   grassTableFromZone,
   mapIdForZoneName,
   resolveEncounterTable,
+  resolveEncounterTableForMethod,
+  rollHordeEncounter,
   type ZoneEncounterSource,
 } from './wildPokemon';
 
@@ -121,6 +125,52 @@ describe('zone encounter adapter (src/data/zones)', () => {
     expect(resolveEncounterTable('route_101', tables, MAP_ENCOUNTERS)).toBe(tables.route_101);
     expect(resolveEncounterTable('route_102', tables, MAP_ENCOUNTERS)).toBe(MAP_ENCOUNTERS.route_102);
     expect(resolveEncounterTable('petalburg_city', tables, MAP_ENCOUNTERS)).toBeUndefined();
+  });
+
+  it('resolves Surf and fishing methods from the matching zone source', () => {
+    const encounters = Array.from({ length: 61 }, () => slot(0, 0));
+    encounters[27] = slot(261, 3);
+    encounters[41] = slot(263, 4);
+    encounters[43] = slot(265, 5);
+    const zone: ZoneEncounterSource = { name: 'Route 101', encounterFormat: 'oras-61-slot-v1', encounters };
+    const sources = buildZoneEncounterSources([zone]);
+
+    expect(resolveEncounterTableForMethod('route_101', 'surf', sources, resolveAll)).toEqual([
+      { speciesId: 'poochyena', minLevel: 3, maxLevel: 3, weight: 50 },
+    ]);
+    expect(resolveEncounterTableForMethod('route_101', 'good_rod', sources, resolveAll)).toEqual([
+      { speciesId: 'zigzagoon', minLevel: 4, maxLevel: 4, weight: 35 },
+    ]);
+  });
+
+  it('selects a tile encounter method from grass and Surf terrain metadata', () => {
+    const map = {
+      id: 'route_101', name: 'Route 101', width: 4, height: 3,
+      terrain: [[0, 0, 0, 0], [0, 2, 0, 0], [0, 0, 0, 0]],
+      surfTiles: [{ x: 2, z: 1 }],
+    };
+    expect(encounterMethodForTile(map, { x: 1, z: 1 })).toBe('grass');
+    expect(encounterMethodForTile(map, { x: 2, z: 1 })).toBe('surf');
+    expect(encounterMethodForTile(map, { x: 0, z: 0 })).toBeNull();
+    expect(encounterMethodForTile(map, { x: 4, z: 0 })).toBeNull();
+  });
+
+  it('rolls the 60/35/5 horde subtables and a species from each five-slot table', () => {
+    const encounters = Array.from({ length: 61 }, () => slot(0, 0));
+    encounters[46] = slot(261, 5);
+    encounters[51] = slot(263, 6);
+    encounters[56] = slot(265, 7);
+    const zone: ZoneEncounterSource = { name: 'Route 101', encounterFormat: 'oras-61-slot-v1', encounters };
+    const roll = (values: number[]) => {
+      let index = 0;
+      return () => values[index++] ?? 0;
+    };
+
+    expect(rollHordeEncounter(zone, resolveAll, roll([0.59, 0, 0]))).toEqual({
+      method: 'horde_a', speciesId: 'poochyena', level: 5,
+    });
+    expect(rollHordeEncounter(zone, resolveAll, roll([0.6, 0, 0]))?.method).toBe('horde_b');
+    expect(rollHordeEncounter(zone, resolveAll, roll([0.95, 0, 0]))?.method).toBe('horde_c');
   });
 });
 

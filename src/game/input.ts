@@ -1,9 +1,14 @@
 import type { Direction } from '../core/types';
 import { addBagItem } from '../core/bag';
 import {
+  encounterMethodForTile,
+  encounterTableFromZone,
   generatePokemon,
-  grassTableFromZone,
-  resolveEncounterTable,
+  resolveEncounterTableForMethod,
+  rollHordeEncounter,
+  type EncounterMethod,
+  type ZoneEncounterSources,
+  type ZoneEncounterSource,
 } from '../core/wildPokemon';
 import {
   healParty,
@@ -16,12 +21,11 @@ import {
 import {
   findTriggeredTrainer,
   interact,
-  isTallGrass,
 } from '../core/gameState';
 import type { BagState } from '../core/bag';
 import type { GameState, MapDefinition } from '../core/types';
-import { stepWarp } from '../core/warps';
-import { MAP_ENCOUNTERS, type WildEncounterEntry } from '../data/pokemon/route101';
+import { stepPosition, stepWarp } from '../core/warps';
+import { MAP_ENCOUNTERS } from '../data/pokemon/route101';
 import { findRosterSpecies } from '../data/pokemon/species';
 import { facingNpc, mapEntryReason } from '../engine/eventHost';
 import { transitionMap } from '../engine/mapTransition';
@@ -47,32 +51,60 @@ export function directionForKey(code: string): Direction | null {
   return KEY_TO_DIR[code] ?? null;
 }
 
+export function encounterMethodForInput(
+  code: string,
+  shiftKey = false,
+  altKey = false
+): EncounterMethod | null {
+  if (code === 'KeyF') return altKey ? 'super_rod' : shiftKey ? 'good_rod' : 'old_rod';
+  if (code === 'KeyR') return 'rock_smash';
+  if (code === 'KeyH') return 'horde_a';
+  if (code === 'KeyU') return 'surf';
+  if (code === 'KeyT') return 'tall_grass';
+  return null;
+}
+
+export function hasSurfEncounterAccess(
+  map: MapDefinition,
+  player: Pick<GameState['player'], 'pos' | 'facing'>
+): boolean {
+  return encounterMethodForTile(map, player.pos) === 'surf' ||
+    encounterMethodForTile(map, stepPosition(player.pos, player.facing)) === 'surf';
+}
+
 type InputZoneEvents = Pick<ZoneEvents, 'busy' | 'interactionActive' | 'canAdvance' | 'advance' | 'interact' | 'enter'>;
 
-export interface GameInputHost {
+export interface EncounterInputHost {
   maps: Record<string, MapDefinition>;
+  getEncounterSources(): Record<string, ZoneEncounterSource>;
+  getState(): GameState;
+  getBattle(): BattleState | null;
+  setBattle(battle: BattleState): void;
+  getParty(): PokemonInstance[];
+  syncPartyFromBattle(): void;
+  renderBattle(): void;
+}
+
+export interface GameInputHost extends EncounterInputHost {
   app: HTMLElement;
   hudPosition: HTMLElement | null;
   zoneEvents: InputZoneEvents;
-  getEncounterTables(): Record<string, WildEncounterEntry[]>;
   move(state: GameState, direction: Direction): Promise<GameState>;
-  getState(): GameState;
   setState(state: GameState): void;
-  getBattle(): BattleState | null;
-  setBattle(battle: BattleState): void;
   getIntroStep(): 'birch' | 'truck' | null;
   getMoving(): boolean;
   setMoving(value: boolean): void;
-  getParty(): PokemonInstance[];
   setParty(party: PokemonInstance[]): void;
   getBag(): BagState;
   setBag(bag: BagState): void;
   setActiveTrainerId(id: string): void;
   renderIntro(): void;
   syncUi(): void;
-  syncPartyFromBattle(): void;
-  renderBattle(): void;
   playSfx(cue: SfxCue): void;
+}
+
+export function triggerEncounterForMethod(host: EncounterInputHost, method: EncounterMethod): void {
+  startWildEncounter(host, method);
 }
 
 export function bindGameInput(target: Window, host: GameInputHost): void {
@@ -83,6 +115,12 @@ async function handleGameKeyDown(event: KeyboardEvent, host: GameInputHost): Pro
   if (host.getBattle() || host.getIntroStep() || host.getMoving()) return;
   if (event.code === 'Space' || event.code === 'Enter') {
     await handleInteractionKey(event, host);
+    return;
+  }
+  const encounterMethod = encounterMethodForInput(event.code, event.shiftKey, event.altKey);
+  if (encounterMethod) {
+    event.preventDefault();
+    startWildEncounter(host, encounterMethod);
     return;
   }
   const direction = directionForKey(event.code);
@@ -223,26 +261,44 @@ function handleMovementResult(
       return;
     }
   }
-  if (moved && currentMap && isTallGrass(currentMap, state.player.pos)) startWildEncounter(host);
+  const method = currentMap ? encounterMethodForTile(currentMap, state.player.pos) : null;
+  if (moved && method) startWildEncounter(host, method);
   host.renderIntro();
   host.syncUi();
 }
 
-function startWildEncounter(host: GameInputHost): void {
+function startWildEncounter(host: EncounterInputHost, method: EncounterMethod): void {
   const state = host.getState();
   const currentMap = host.maps[state.player.mapId];
   if (!currentMap) return;
-  const table = currentMap.encounters
-    ? grassTableFromZone({
+  if ((method === 'surf' || method.endsWith('_rod')) && !hasSurfEncounterAccess(currentMap, state.player)) return;
+  const sources = host.getEncounterSources();
+  const source = currentMap.encounters
+    ? {
       name: currentMap.name,
       encounterFormat: currentMap.encounterFormat,
       encounters: currentMap.encounters,
-    }, resolveRosterSpeciesId)
-    : resolveEncounterTable(state.player.mapId, host.getEncounterTables(), MAP_ENCOUNTERS);
-  const encounter = table ? rollWildEncounter(table) : null;
+    }
+    : sources[state.player.mapId];
+  const encounter = method === 'horde_a'
+    ? source ? rollHordeEncounter(source, resolveRosterSpeciesId) : null
+    : resolveEncounter(source, sources, state.player.mapId, method);
   const species = encounter ? findRosterSpecies(encounter.speciesId) : undefined;
   if (!encounter || !species || !host.getParty().some((pokemon) => pokemon.currentHp > 0)) return;
   host.setBattle(startWildBattle(host.getParty(), createWildBattlePokemon(species, encounter.level)));
   host.syncPartyFromBattle();
   host.renderBattle();
+}
+
+function resolveEncounter(
+  source: ZoneEncounterSource | undefined,
+  sources: ZoneEncounterSources,
+  mapId: string,
+  method: EncounterMethod
+): { speciesId: string; level: number } | null {
+  if (method.startsWith('horde_')) return null;
+  const table = source
+    ? encounterTableFromZone(source, method, resolveRosterSpeciesId)
+    : resolveEncounterTableForMethod(mapId, method, sources, resolveRosterSpeciesId, MAP_ENCOUNTERS);
+  return table ? rollWildEncounter(table) : null;
 }

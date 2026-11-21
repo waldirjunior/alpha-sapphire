@@ -1,5 +1,5 @@
 import type { BagState } from './bag';
-import type { PokemonInstance } from './battle';
+import type { PendingMoveLearn, PokemonInstance } from './battle';
 import { createPokedex, restorePokedex, type PokedexState } from './pokedex';
 import type { GameState } from './types';
 
@@ -8,6 +8,7 @@ export interface SaveData {
   state: GameState;
   party: PokemonInstance[];
   bag?: BagState;
+  pendingMoves?: PendingMoveLearn[];
   caughtCount: number;
   pokedex: PokedexState;
 }
@@ -79,8 +80,20 @@ function isValidBagState(value: unknown): value is BagState {
   return (
     typeof value.pokeballs === 'number' &&
     typeof value.potions === 'number' &&
-    Array.isArray(value.keyItems)
+    Array.isArray(value.keyItems) &&
+    (!('evolutionItems' in value) || isValidEvolutionItems(value.evolutionItems))
   );
+}
+
+function isValidEvolutionItems(value: unknown): value is Record<string, number> {
+  return isObjectRecord(value) && !Array.isArray(value) && Object.entries(value).every(([name, count]) =>
+    name.length > 0 && typeof count === 'number' && Number.isInteger(count) && count >= 0);
+}
+
+function isValidPendingMoves(value: unknown): value is PendingMoveLearn[] {
+  return Array.isArray(value) && value.every(move => isObjectRecord(move) &&
+    typeof move.partyIndex === 'number' && Number.isInteger(move.partyIndex) && move.partyIndex >= 0 && move.partyIndex < 6 &&
+    typeof move.moveId === 'number' && Number.isInteger(move.moveId) && move.moveId > 0);
 }
 
 function isValidPokedex(value: unknown): value is PokedexState {
@@ -103,8 +116,11 @@ export function deserializeSave(raw: string): SaveData | null {
     if (!parsed.party.every(isValidPokemonInstance)) return null;
     if (typeof parsed.caughtCount !== 'number') return null;
     if ('pokedex' in parsed && !isValidPokedex(parsed.pokedex)) return null;
+    if ('pendingMoves' in parsed && !isValidPendingMoves(parsed.pendingMoves)) return null;
 
-    const bag = isValidBagState(parsed.bag) ? parsed.bag : undefined;
+    const bag = isValidBagState(parsed.bag)
+      ? { ...parsed.bag, evolutionItems: parsed.bag.evolutionItems ?? {} }
+      : undefined;
     const pokedex = isValidPokedex(parsed.pokedex)
       ? restorePokedex(parsed.pokedex.seenSpecies, parsed.pokedex.caughtSpecies)
       : createPokedex(parsed.party);
@@ -113,6 +129,7 @@ export function deserializeSave(raw: string): SaveData | null {
       state: parsed.state,
       party: parsed.party,
       ...(bag ? { bag } : {}),
+      ...(isValidPendingMoves(parsed.pendingMoves) ? { pendingMoves: parsed.pendingMoves } : {}),
       caughtCount: parsed.caughtCount,
       pokedex,
     };
