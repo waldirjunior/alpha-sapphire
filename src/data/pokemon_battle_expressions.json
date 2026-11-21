@@ -415,6 +415,12 @@
         1,
         0
       ],
+      "materialBaseTranslations": {
+        "Mouth": [
+          1,
+          0
+        ]
+      },
       "actions": {
         "idle": {
           "eyeTranslations": [
@@ -423,7 +429,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "physical": {
           "eyeTranslations": [
@@ -452,7 +467,26 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 4,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 28,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "special": {
           "eyeTranslations": [
@@ -486,7 +520,36 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 6,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 8,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 20,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 35,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -505,7 +568,36 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 1,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 5,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 12,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 14,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "faint": {
           "eyeTranslations": [
@@ -529,7 +621,26 @@
               "x": 1,
               "y": 0.5
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 4,
+                "x": 0.5,
+                "y": 0.25
+              }
+            ]
+          }
         }
       }
     },
@@ -539,6 +650,12 @@
         1,
         0
       ],
+      "materialBaseTranslations": {
+        "Mouth": [
+          1,
+          0
+        ]
+      },
       "actions": {
         "idle": {
           "eyeTranslations": [
@@ -547,7 +664,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "physical": {
           "eyeTranslations": [
@@ -586,7 +712,36 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 9,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 17,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 32,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 48,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "special": {
           "eyeTranslations": [
@@ -625,7 +780,31 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 3,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 19,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 41,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -654,7 +833,31 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 9,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 18,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "faint": {
           "eyeTranslations": [
@@ -683,7 +886,26 @@
               "x": 1,
               "y": 0.75
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 3,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 31,
+                "x": 1,
+                "y": 0.75
+              }
+            ]
+          }
         }
       }
     },
@@ -1098,33 +1320,7 @@
               "x": 1,
               "y": 0
             }
-          ],
-          "meshVisibility": {
-            "pm0255_00_CloseMouthSkin": [
-              {
-                "frame": 0,
-                "visible": true
-              }
-            ],
-            "pm0255_00_OpenMouthSkin": [
-              {
-                "frame": 0,
-                "visible": false
-              }
-            ],
-            "pm0255_01_CloseMouthSkin": [
-              {
-                "frame": 0,
-                "visible": true
-              }
-            ],
-            "pm0255_01_OpenMouthSkin": [
-              {
-                "frame": 0,
-                "visible": false
-              }
-            ]
-          }
+          ]
         },
         "physical": {
           "eyeTranslations": [
@@ -1681,7 +1877,37 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "meshVisibility": {
+            "pm0257_00_FireCoreASkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 1,
+                "visible": true
+              },
+              {
+                "frame": 36,
+                "visible": false
+              }
+            ],
+            "pm0257_00_FireStenASkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 1,
+                "visible": true
+              },
+              {
+                "frame": 36,
+                "visible": false
+              }
+            ]
+          }
         },
         "special": {
           "eyeTranslations": [
@@ -1735,7 +1961,37 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "meshVisibility": {
+            "pm0257_00_FireCoreASkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 9,
+                "visible": true
+              },
+              {
+                "frame": 56,
+                "visible": false
+              }
+            ],
+            "pm0257_00_FireStenASkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 9,
+                "visible": true
+              },
+              {
+                "frame": 56,
+                "visible": false
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -2047,6 +2303,241 @@
               "y": 0.75
             }
           ]
+        }
+      }
+    },
+    "swampert": {
+      "fps": 30,
+      "materialBaseTranslations": {
+        "Eye00": [
+          1,
+          0
+        ],
+        "Eye01": [
+          1,
+          0
+        ]
+      },
+      "actions": {
+        "idle": {
+          "materialTranslations": {
+            "Eye00": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "Eye01": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "physical": {
+          "materialTranslations": {
+            "Eye00": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 17,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 18,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 25,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 54,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "Eye01": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 17,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 18,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 25,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 54,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "special": {
+          "materialTranslations": {
+            "Eye00": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 7,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 8,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 14,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 39,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "Eye01": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 7,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 8,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 14,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 39,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "damage": {
+          "materialTranslations": {
+            "Eye00": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 1,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 17,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 19,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "Eye01": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 1,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 17,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 19,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "faint": {
+          "materialTranslations": {
+            "Eye00": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 4,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 5,
+                "x": 1,
+                "y": 0.75
+              }
+            ],
+            "Eye01": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 4,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 5,
+                "x": 1,
+                "y": 0.75
+              }
+            ]
+          }
         }
       }
     },
@@ -2433,6 +2924,12 @@
         1,
         0
       ],
+      "materialBaseTranslations": {
+        "Mouth": [
+          1,
+          0
+        ]
+      },
       "actions": {
         "idle": {
           "eyeTranslations": [
@@ -2441,7 +2938,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "physical": {
           "eyeTranslations": [
@@ -2470,7 +2976,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "special": {
           "eyeTranslations": [
@@ -2504,7 +3019,41 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 10,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 17,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 20,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 34,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 35,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -2533,7 +3082,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "faint": {
           "eyeTranslations": [
@@ -2552,7 +3110,16 @@
               "x": 1,
               "y": 0.75
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         }
       }
     },
@@ -2658,7 +3225,23 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "meshVisibility": {
+            "pm0276_00_BodyBSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 2,
+                "visible": false
+              },
+              {
+                "frame": 57,
+                "visible": true
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -2677,7 +3260,19 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "meshVisibility": {
+            "pm0276_00_BodyBSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 17,
+                "visible": true
+              }
+            ]
+          }
         },
         "faint": {
           "eyeTranslations": [
@@ -2959,6 +3554,12 @@
         1,
         0
       ],
+      "materialBaseTranslations": {
+        "Mouth": [
+          1,
+          0
+        ]
+      },
       "actions": {
         "idle": {
           "eyeTranslations": [
@@ -2967,7 +3568,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "physical": {
           "eyeTranslations": [
@@ -2996,7 +3606,31 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 20,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 54,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "special": {
           "eyeTranslations": [
@@ -3030,7 +3664,31 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 3,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 20,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 44,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -3049,7 +3707,31 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 16,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 19,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "faint": {
           "eyeTranslations": [
@@ -3063,7 +3745,31 @@
               "x": 1,
               "y": 0.75
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 15,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 35,
+                "x": 0.5,
+                "y": 0.25
+              }
+            ]
+          }
         }
       }
     },
@@ -3424,6 +4130,12 @@
         1,
         0
       ],
+      "materialBaseTranslations": {
+        "EyeInc": [
+          0,
+          0
+        ]
+      },
       "actions": {
         "idle": {
           "eyeTranslations": [
@@ -3799,6 +4511,152 @@
         }
       }
     },
+    "shellos": {
+      "fps": 30,
+      "materialBaseTranslations": {
+        "AEye": [
+          1,
+          0
+        ]
+      },
+      "actions": {
+        "idle": {
+          "materialTranslations": {
+            "AEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "physical": {
+          "materialTranslations": {
+            "AEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 21,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 23,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 30,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 59,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 62,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "special": {
+          "materialTranslations": {
+            "AEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 10,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 12,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 18,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 38,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 40,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 41,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "damage": {
+          "materialTranslations": {
+            "AEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 1,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 18,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "faint": {
+          "materialTranslations": {
+            "AEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 11,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 13,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 60,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        }
+      }
+    },
     "chatot": {
       "fps": 30,
       "eyeBaseTranslation": [
@@ -3906,7 +4764,37 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "meshVisibility": {
+            "pm0441_00_LCloseWingSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 4,
+                "visible": false
+              },
+              {
+                "frame": 54,
+                "visible": true
+              }
+            ],
+            "pm0441_00_RCloseWingSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 4,
+                "visible": false
+              },
+              {
+                "frame": 54,
+                "visible": true
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -3958,12 +4846,645 @@
         }
       }
     },
+    "lillipup": {
+      "fps": 30,
+      "materialBaseTranslations": {
+        "LEye": [
+          1,
+          0
+        ],
+        "Mouth": [
+          1,
+          0
+        ],
+        "REye": [
+          1,
+          0
+        ]
+      },
+      "actions": {
+        "idle": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "physical": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 3,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 38,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 41,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 42,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 16,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 19,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 42,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 3,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 38,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 41,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 42,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "special": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 56,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 59,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 60,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 20,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 43,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 60,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 56,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 59,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 60,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "damage": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 17,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 13,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 18,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 17,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "faint": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 1,
+                "y": 0.75
+              }
+            ],
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 18,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 31,
+                "x": 0.5,
+                "y": 0.25
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 1,
+                "y": 0.75
+              }
+            ]
+          }
+        }
+      }
+    },
+    "pidove": {
+      "fps": 30,
+      "materialBaseTranslations": {
+        "LEye": [
+          1,
+          0
+        ],
+        "REye": [
+          1,
+          0
+        ]
+      },
+      "actions": {
+        "idle": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "physical": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 5,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 7,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 11,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 13,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 42,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 5,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 7,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 11,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 13,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 42,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "special": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 6,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 8,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 15,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 44,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 6,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 8,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 15,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 44,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          },
+          "meshVisibility": {
+            "pm0519_00_LCloseWingSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 4,
+                "visible": false
+              },
+              {
+                "frame": 44,
+                "visible": true
+              }
+            ],
+            "pm0519_00_LWingSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 4,
+                "visible": true
+              },
+              {
+                "frame": 44,
+                "visible": false
+              }
+            ],
+            "pm0519_00_RCloseWingSkin": [
+              {
+                "frame": 0,
+                "visible": true
+              },
+              {
+                "frame": 4,
+                "visible": false
+              },
+              {
+                "frame": 44,
+                "visible": true
+              }
+            ],
+            "pm0519_00_RWingSkin": [
+              {
+                "frame": 0,
+                "visible": false
+              },
+              {
+                "frame": 4,
+                "visible": true
+              },
+              {
+                "frame": 44,
+                "visible": false
+              }
+            ]
+          }
+        },
+        "damage": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 1,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 2,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 15,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 16,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 1,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 2,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 15,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 16,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "faint": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 4,
+                "x": 1,
+                "y": 0.75
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 4,
+                "x": 1,
+                "y": 0.75
+              }
+            ]
+          }
+        }
+      }
+    },
     "tympole": {
       "fps": 30,
       "eyeBaseTranslation": [
         1,
         0
       ],
+      "materialBaseTranslations": {
+        "Mouth": [
+          1,
+          0
+        ]
+      },
       "actions": {
         "idle": {
           "eyeTranslations": [
@@ -3972,7 +5493,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "special": {
           "eyeTranslations": [
@@ -4001,7 +5531,41 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 5,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 20,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 44,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 46,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -4020,7 +5584,31 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 3,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 12,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 19,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         }
       }
     },
@@ -4030,6 +5618,12 @@
         1,
         0
       ],
+      "materialBaseTranslations": {
+        "Mouth": [
+          1,
+          0
+        ]
+      },
       "actions": {
         "idle": {
           "eyeTranslations": [
@@ -4038,7 +5632,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "physical": {
           "eyeTranslations": [
@@ -4087,7 +5690,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "special": {
           "eyeTranslations": [
@@ -4136,7 +5748,36 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 19,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 20,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 52,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 53,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -4160,7 +5801,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "faint": {
           "eyeTranslations": [
@@ -4179,7 +5829,36 @@
               "x": 1,
               "y": 0.75
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 20,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 21,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 31,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 32,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         }
       }
     },
@@ -4189,6 +5868,12 @@
         1,
         0
       ],
+      "materialBaseTranslations": {
+        "Mouth": [
+          1,
+          0
+        ]
+      },
       "actions": {
         "idle": {
           "eyeTranslations": [
@@ -4197,7 +5882,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "physical": {
           "eyeTranslations": [
@@ -4221,7 +5915,31 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 3,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 27,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 36,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "special": {
           "eyeTranslations": [
@@ -4245,7 +5963,26 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 19,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 42,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -4259,7 +5996,31 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 3,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 14,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 18,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "faint": {
           "eyeTranslations": [
@@ -4273,7 +6034,286 @@
               "x": 1,
               "y": 0.75
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "frame": 18,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 34,
+                "x": 0.5,
+                "y": 0.25
+              }
+            ]
+          }
+        }
+      }
+    },
+    "gothita": {
+      "fps": 30,
+      "materialBaseTranslations": {
+        "LEye": [
+          1,
+          0
+        ],
+        "REye": [
+          1,
+          0
+        ]
+      },
+      "actions": {
+        "idle": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "physical": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 1,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 30,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 31,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 32,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 1,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 30,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 31,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 32,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "special": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 7,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 8,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 17,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 59,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 60,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 63,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 64,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 7,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 8,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 17,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 59,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 60,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 63,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 64,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "damage": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 19,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 20,
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0.75
+              },
+              {
+                "frame": 19,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 20,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
+        },
+        "faint": {
+          "materialTranslations": {
+            "LEye": [
+              {
+                "frame": 0,
+                "x": 0.5,
+                "y": 0.5
+              },
+              {
+                "frame": 2,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 3,
+                "x": 1,
+                "y": 0.75
+              }
+            ],
+            "REye": [
+              {
+                "frame": 0,
+                "x": 0.5,
+                "y": 0.5
+              },
+              {
+                "frame": 2,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 3,
+                "x": 1,
+                "y": 0.75
+              }
+            ]
+          }
         }
       }
     },
@@ -4283,6 +6323,12 @@
         1,
         0
       ],
+      "materialBaseTranslations": {
+        "Mouth": [
+          1,
+          0
+        ]
+      },
       "actions": {
         "idle": {
           "eyeTranslations": [
@@ -4291,7 +6337,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "physical": {
           "eyeTranslations": [
@@ -4315,7 +6370,16 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "special": {
           "eyeTranslations": [
@@ -4339,7 +6403,26 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 20,
+                "x": 1,
+                "y": 0.5
+              },
+              {
+                "frame": 52,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "damage": {
           "eyeTranslations": [
@@ -4358,7 +6441,26 @@
               "x": 1,
               "y": 0
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 2,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 11,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         },
         "faint": {
           "eyeTranslations": [
@@ -4372,7 +6474,31 @@
               "x": 1,
               "y": 0.75
             }
-          ]
+          ],
+          "materialTranslations": {
+            "Mouth": [
+              {
+                "frame": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "frame": 1,
+                "x": 0.5,
+                "y": 0
+              },
+              {
+                "frame": 35,
+                "x": 1,
+                "y": 0.25
+              },
+              {
+                "frame": 37,
+                "x": 1,
+                "y": 0
+              }
+            ]
+          }
         }
       }
     },

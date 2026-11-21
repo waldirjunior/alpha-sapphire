@@ -11,18 +11,26 @@ foreach (var job in inputs.RootElement.EnumerateArray())
 {
     var slug = job.GetProperty("slug").GetString() ?? throw new InvalidDataException("Model slug is empty");
     var model = H3D.Open(ModelSection(File.ReadAllBytes(job.GetProperty("model").GetString()!)));
-    var eyeMaterial = model.Models[0].Materials.FirstOrDefault(material => material.Name == "Eye");
     var profile = new ExpressionProfile();
-    if (eyeMaterial is not null && eyeMaterial.EnabledTextures[0] && !string.IsNullOrEmpty(eyeMaterial.Texture0Name))
+    var expressionMaterials = model.Models[0].Materials
+        .Where(material => isExpressionMaterial(material.Name) && material.EnabledTextures[0] && !string.IsNullOrEmpty(material.Texture0Name))
+        .ToDictionary(material => material.Name, material =>
+        {
+            var translation = material.MaterialParams.TextureCoords[0].Translation;
+            return new[] { translation.X, translation.Y };
+        });
+    if (expressionMaterials.Remove("Eye", out var eyeBaseTranslation))
     {
-        var translation = eyeMaterial.MaterialParams.TextureCoords[0].Translation;
-        profile.eyeBaseTranslation = [translation.X, translation.Y];
+        profile.eyeBaseTranslation = eyeBaseTranslation;
     }
+    if (expressionMaterials.Count > 0) profile.materialBaseTranslations = expressionMaterials;
+    var animatedMaterials = expressionMaterials.Keys.ToHashSet();
+    if (profile.eyeBaseTranslation is not null) animatedMaterials.Add("Eye");
 
     foreach (var actionInput in job.GetProperty("actions").EnumerateObject())
     {
-        var action = ReadAction(actionInput.Value, profile.eyeBaseTranslation is not null);
-        if (action.meshVisibility?.Count > 0 || action.eyeTranslations?.Length > 0)
+        var action = ReadAction(actionInput.Value, animatedMaterials);
+        if (action.meshVisibility?.Count > 0 || action.eyeTranslations?.Length > 0 || action.materialTranslations?.Count > 0)
             profile.actions[actionInput.Name] = action;
     }
     if (profile.actions.Count > 0) output.pokemon[slug] = profile;
@@ -32,7 +40,7 @@ File.WriteAllText(args[1], JsonSerializer.Serialize(output, new JsonSerializerOp
     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 }) + "\n");
 
-static ActionExpression ReadAction(JsonElement input, bool hasEyeMaterial)
+static ActionExpression ReadAction(JsonElement input, HashSet<string> materialNames)
 {
     var output = new ActionExpression();
     if (input.TryGetProperty("visibility", out var visibilityPath))
@@ -44,7 +52,7 @@ static ActionExpression ReadAction(JsonElement input, bool hasEyeMaterial)
             var frameCount = LastFrame(animation.FramesCount);
             foreach (var element in animation.Elements)
             {
-                if (!element.Name.Contains("mouth", StringComparison.OrdinalIgnoreCase) || element.Content is not H3DAnimBoolean curve || curve.Values.Count == 0)
+                if (element.Content is not H3DAnimBoolean curve || curve.Values.Distinct().Count() < 2)
                     continue;
                 output.meshVisibility ??= new Dictionary<string, VisibilityKey[]>();
                 output.meshVisibility[element.Name] = visibilityKeys(curve, frameCount);
@@ -52,20 +60,32 @@ static ActionExpression ReadAction(JsonElement input, bool hasEyeMaterial)
         }
     }
 
-    if (hasEyeMaterial && input.TryGetProperty("material", out var materialPath))
+    if (input.TryGetProperty("material", out var materialPath))
     {
         var animations = H3D.Open(File.ReadAllBytes(materialPath.GetString()!)).MaterialAnimations;
         var animation = animations.FirstOrDefault();
-        var element = animation?.Elements.FirstOrDefault(candidate => candidate.Name == "Eye" &&
-            candidate.TargetType == H3DTargetType.MaterialTexCoord0Trans);
-        if (element?.Content is H3DAnimVector2D curve)
+        if (animation is not null)
         {
             var frameCount = LastFrame(animation!.FramesCount);
-            output.eyeTranslations = eyeTranslationKeys(curve, frameCount);
+            foreach (var element in animation.Elements.Where(candidate => materialNames.Contains(candidate.Name) &&
+                candidate.TargetType == H3DTargetType.MaterialTexCoord0Trans && candidate.Content is H3DAnimVector2D))
+            {
+                var curve = (H3DAnimVector2D)element.Content;
+                var keys = eyeTranslationKeys(curve, frameCount);
+                if (element.Name == "Eye") output.eyeTranslations = keys;
+                else
+                {
+                    output.materialTranslations ??= new Dictionary<string, EyeTranslationKey[]>();
+                    output.materialTranslations[element.Name] = keys;
+                }
+            }
         }
     }
     return output;
 }
+
+static bool isExpressionMaterial(string name) => name.Contains("eye", StringComparison.OrdinalIgnoreCase) ||
+    name.Contains("mouth", StringComparison.OrdinalIgnoreCase);
 
 static int LastFrame(float frameCount) => Math.Max(0, (int)Math.Ceiling(frameCount));
 
@@ -116,12 +136,14 @@ sealed class ExpressionProfile
 {
     public int fps { get; set; } = 30;
     public float[]? eyeBaseTranslation { get; set; }
+    public Dictionary<string, float[]>? materialBaseTranslations { get; set; }
     public Dictionary<string, ActionExpression> actions { get; set; } = new();
 }
 
 sealed class ActionExpression
 {
     public EyeTranslationKey[]? eyeTranslations { get; set; }
+    public Dictionary<string, EyeTranslationKey[]>? materialTranslations { get; set; }
     public Dictionary<string, VisibilityKey[]>? meshVisibility { get; set; }
 }
 

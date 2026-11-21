@@ -48,11 +48,13 @@ describe('native asset catalog', () => {
     expect(pokemonModelUrl('missing')).toBe('/assets/pokemon/missing/missing.glb');
   });
 
-  it('exposes every promoted species/form, including the recorded legacy fallback', () => {
+  it('exposes every promoted species/form, including Taillow native battle clips', () => {
     const ids = listRosterSpecies().map((species) => species.id);
     expect(ids.sort()).toEqual(Object.keys(catalog.pokemon).sort());
     expect(ids).toContain('taillow');
     expect(ids).toContain('groudon-1');
-    expect(catalog.models.find((model) => model.id === 'pokemon/0276/0')?.native).toBe(false);
+    const taillow = catalog.models.find((model) => model.id === 'pokemon/0276/0');
+    expect(taillow?.native).toBe(true);
+    expect(taillow?.clips).toEqual(['idle', 'physical', 'special', 'damage', 'faint']);
   });
 });

@@ -98,4 +98,49 @@ describe('default Pokémon expressions', () => {
     expect(eyeTexture.offset.toArray()).toEqual([0.5, 0]);
     expressions?.dispose();
   });
+
+  it('plays extracted curves for ROM eye materials and Pidove wing meshes', () => {
+    const cases = [
+      { slug: 'gothita', frame: 1, names: ['LEye', 'REye'], offset: [0.5, 0] },
+      { slug: 'lillipup', frame: 3, names: ['LEye', 'REye', 'Mouth'], offset: [0.5, 0] },
+      { slug: 'pidove', frame: 5, names: ['LEye', 'REye'], offset: [0, 0.25] },
+      { slug: 'shellos', frame: 21, names: ['AEye'], offset: [0, 0.25] },
+      { slug: 'swampert', frame: 17, names: ['Eye00', 'Eye01'], offset: [0, 0.25] },
+    ] as const;
+
+    for (const entry of cases) {
+      const model = new THREE.Group();
+      const textures = new Map<string, THREE.Texture>();
+      for (const name of entry.names) {
+        const texture = new THREE.Texture();
+        const material = new THREE.MeshBasicMaterial({ map: texture });
+        material.name = name;
+        textures.set(name, texture);
+        model.add(new THREE.Mesh(new THREE.BoxGeometry(), material));
+      }
+      if (entry.slug === 'pidove') {
+        for (const name of ['pm0519_00_LCloseWingSkin', 'pm0519_00_LWingSkin', 'pm0519_00_RCloseWingSkin', 'pm0519_00_RWingSkin']) {
+          const wing = new THREE.Mesh();
+          wing.name = name;
+          model.add(wing);
+        }
+      }
+
+      const expressions = preparePokemonBattleModel(model, entry.slug);
+      expect(expressions, entry.slug).not.toBeNull();
+      expressions?.update('physical', entry.frame / 30);
+      for (const name of entry.names.filter(name => name.toLowerCase().includes('eye'))) {
+        expect(textures.get(name)?.offset.toArray(), `${entry.slug}/${name}`).toEqual(entry.offset);
+      }
+      if (entry.slug === 'lillipup') {
+        expect(textures.get('Mouth')?.offset.toArray()).toEqual([0.5, 0.25]);
+      }
+      if (entry.slug === 'pidove') {
+        expressions?.update('special', 5 / 30);
+        expect(model.getObjectByName('pm0519_00_LCloseWingSkin')?.visible).toBe(false);
+        expect(model.getObjectByName('pm0519_00_LWingSkin')?.visible).toBe(true);
+      }
+      expressions?.dispose();
+    }
+  });
 });
