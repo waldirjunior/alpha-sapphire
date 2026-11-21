@@ -8,7 +8,7 @@ Verificado em 2026-11-21 (macOS; suporte headless Linux validado anteriormente n
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 683 em 90 arquivos, todos passando | `npm test` |
+| Testes unitários (Vitest) | 695 em 91 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | acima da catraca de 95% linhas / 85% branches | `npm run test:coverage` |
 | Testes do pipeline e do oráculo (Python) | 273 passando (1 skip só em worktree sem `public/assets/maps`) | `npm run test:py` |
 | Jogo real no browser (smoke + campanha + corredor) | 7 smoke e campanha 1/1 (`e2e/campaign.spec.ts`; fade modo 2 até `PokePartyGetParam(0,8,0)`); corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`); suíte completa 41/41 em 8,4 min (Onda 14) | `npm run test:e2e` |
@@ -22,7 +22,7 @@ Atores `0x1000`/`0x2000` renderizam modelo real (`failedAssets = 0`); câmera/oc
 - **Mundo**: 536 zonas em `src/data/maps_v2/`, sob demanda, com colisão, terreno, altura, warps, NPCs e bordas contínuas.
 - **Corredor jogável**: Littleroot → Petalburg → Rustboro → Verdanturf → Mauville → Slateport → Fallarbor → Meteor Falls → bondinho → Lavaridge (trechos com fixture pós-evento: [PRD-010](features/engine-3d/prds/PRD-010-corredor-rustboro-verdanturf.md)–[PRD-013](features/engine-3d/prds/PRD-013-bondinho-mt-chimney-lavaridge.md)). Leste até Lilycove só em trechos ([PRD-014](features/engine-3d/prds/PRD-014-trechos-leste-mauville-lilycove.md)).
 - **Eventos**: VM Pawn/AMX — diálogo, warp 6 → 227, hide-flags, expressões e serviços (Joy, Mãe, Poké Mart). Campanha natural até a primeira query de party na interação com Roxanne em `zone_0441` (Mart é `zone_0285`; binding `map/case 2`).
-- **Batalha**: encontros usam taxas de slot ORAS em 150 zonas (grama, grama alta `T`, Surf `U`, Rock Smash `R`, varas `F` e hordas `H` no host), IVs/natureza, Substitute, 2 turnos, aprisionamento parcial, Baton Pass, pivots, itens, habilidades (clima/Moxie/Sheer Force/Magic Guard/Natural Cure/Rough Skin), hazards, voláteis, Protect/troca, captura + crítico via Pokédex, UI de golpes/pedras evolutivas, persistência de `pendingMoves`, lotes `quality=13` e IA com troca (`battleParity.test.ts`).
+- **Batalha**: encontros usam taxas de slot ORAS em 150 zonas (grama, grama alta `T`, Surf `U`, Rock Smash `R`, varas `F` e hordas `H` no host), IVs/natureza, Substitute, 2 turnos, aprisionamento parcial, Baton Pass, pivots, itens, habilidades (clima/Moxie/Sheer Force/Magic Guard/Natural Cure/Rough Skin), hazards, voláteis, Protect/troca, captura + crítico via Pokédex, UI de golpes/pedras evolutivas, persistência de `pendingMoves`, todos os 90 golpes `quality=13` da ROM e IA com troca (`battleParity.test.ts`).
 - **Apresentação**: 41 Pokémon GLB normalizados + curvas BCH boca/olhos (36 perfis); grama 3D; arenas ROM grass/água (cave/gym ainda procedurais)/VFX; Pokébola; BGM/fanfarras; `SEPlay` roteado; 8 samples CWAV BCSAR; AreaNav do PokéNav recomposta; volume/mudo; save `localStorage`.
 - **Multiplayer**: protocolo puro em `roomProtocol.ts` e servidor WebSocket Node (`npm run server:multiplayer`; [PRD-002](features/multiplayer-salas/prds/PRD-002-protocolo-e-servidor-de-salas.md)).
 - **Oráculo (Azahar 2126.2)**: roteiros intro/continue, `oras_save.py`, 25 refs visuais, RPC de posição e traço Littleroot vs `movePlayer`.
