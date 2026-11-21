@@ -36,6 +36,7 @@ export interface BattleVolatileState {
   encoreMoveId?: number | null;
   encoreTurns?: number;
   partialTrapTurns?: number;
+  escapeBlocked?: boolean;
 }
 
 export function neutralVolatileState(): BattleVolatileState {
@@ -57,6 +58,7 @@ export function neutralVolatileState(): BattleVolatileState {
     encoreMoveId: null,
     encoreTurns: 0,
     partialTrapTurns: 0,
+    escapeBlocked: false,
   };
 }
 
@@ -191,6 +193,10 @@ export function prepareBattleEntry(pokemon: PokemonInstance): PokemonInstance {
 
 export function isPartiallyTrapped(pokemon: PokemonInstance): boolean {
   return (pokemon.volatile.partialTrapTurns ?? 0) > 0;
+}
+
+export function isEscapeBlocked(pokemon: PokemonInstance): boolean {
+  return pokemon.volatile.escapeBlocked === true;
 }
 
 export function restoreAtPokemonCenter(pokemon: PokemonInstance): PokemonInstance {

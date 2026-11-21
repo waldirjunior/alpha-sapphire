@@ -6,13 +6,13 @@ Extraídas por [scripts/extract_battle_tables.py](../../../scripts/extract_battl
 
 ```bash
 R=rom/extracted
-for g in 1/8/9 1/9/1 1/9/5; do
+for g in 0/3/6 0/3/8 0/7/3 1/8/9 1/9/1 1/9/2 1/9/5; do
   python3 scripts/unpack_garc.py --garc $R/RomFS/a/$g --out $R/garc/a_${g//\//_} --decompress
 done
 python3 scripts/extract_battle_tables.py --garc-root $R/garc --romfs $R/RomFS --exefs $R/ExeFS --out-dir src/data/battle
 ```
 
-`a_0_7_3` (gametext EN) já precisa estar desempacotado. Todos os `.bin` ficam em `rom/` (ignorado pelo Git). Só são gravados números de mecânica e nomes curtos (espécie, golpe, tipo, habilidade); textos descritivos/flavor não são extraídos.
+Todos os `.bin` ficam em `rom/` (ignorado pelo Git). Só são gravados números de mecânica e nomes curtos (espécie, golpe, tipo, habilidade e classe); textos descritivos/flavor não são extraídos.
 
 ## Fontes e offsets
 
@@ -24,6 +24,7 @@ python3 scripts/extract_battle_tables.py --garc-root $R/garc --romfs $R/RomFS --
 | Tipos | `RomFS/DllBattle.cro` @`0xDB428` | 18×18 `u8`, linha = atacante, coluna = defensor; `0/2/4/8` = ×0/×½/×1/×2 |
 | TM/HM | `ExeFS/code.bin` (descomprimido), após assinatura `D4 00 AE 02 AF 02 B0 02` (achada em `0x4A67E6`, dados em `0x4A67EE`) | 107 `u16`: TM01–92, HM01–05, HM06, TM93–100, HM07 |
 | Evolução | `a/1/9/2/NNNN.bin` (826, um por índice personal) | 8 × `<method u16, argument u16, species u16>` (48 B); `method` = índice em `EVOLUTION_METHODS` (`battle_progression_parsers.py`, ordem do pk3DS `EvolutionEditor6`), `argument` = nível, item, golpe, espécie ou tipo conforme o método |
+| Treinadores | `a/0/3/6/NNNN.bin` + `a/0/3/8/NNNN.bin` (950 índices) | Cabeçalho de 24 B: classe `u16` @`0x02`, tipo de batalha `u8` @`0x06`, tamanho da equipe `u8` @`0x07`; cada membro começa com o byte IV, nível `u16` @`0x02`, espécie `u16` @`0x04` e forma `u16` @`0x06` |
 | Naturezas | nomes em `a/0/7/3/0051`; modificadores pela regra canônica Gen III+ | natureza `n` aumenta `[atk,def,spe,spa,spd][n÷5]` e reduz `[...][n mod 5]` (Bulbapedia "Nature"); a ROM não traz a tabela de modificadores como dado |
 | Nomes | `a/0/7/3` | `0014` golpes, `0018` tipos, `0037` habilidades, `0051` naturezas, `0098` espécies, `0114` itens |
 
@@ -62,6 +63,7 @@ Um registro por linha para diffs legíveis.
 - `machines.json` — `{tmMoves[100], hmMoves[7]}` (IDs de golpe).
 - `evolutions.json` — `[{personalIndex, evolutions: [{method, argument, species, itemName?, moveName?}]}]`.
 - `natures.json` — 25 `{id, name, increased, decreased}`.
+- `trainers.json` — 949 treinadores `{id, classId, className, party: [{speciesId, form, level, ivByte}]}`; `ivByte` conserva o byte da ROM sem presumir como o jogo o expande para os seis IVs.
 
 ## Validação (oráculo Bulbapedia/pokemondb)
 

@@ -8,6 +8,7 @@ Fontes (layout validado contra pk3DS; ver docs/features/pipeline-rom/battle-tabl
   types     DllBattle.cro @0xDB428 (18x18 bytes, multiplicador x4)
   TM/HM     code.bin, logo após a assinatura D4 00 AE 02 AF 02 B0 02
   evolução  a/1/9/2 (um arquivo por entrada de personal, 8 × <method u16, argument u16, species u16>)
+  treinador a/0/3/6 (cabeçalho de 24 bytes) + a/0/3/8 (equipe; classe em 0x02, IV bruto por membro)
   nomes     a/0/7/3 (gametext EN): 0014 golpes, 0018 tipos, 0037 habilidades, 0051 naturezas, 0098 espécies, 0114 itens
 
 Uso:
@@ -43,6 +44,8 @@ EGG_GROUPS = (
 )
 MOVE_CATEGORIES = ("status", "physical", "special")
 STAT_KEYS = ("hp", "atk", "def", "spe", "spa", "spd")
+TRAINER_HEADER_SIZE = 24
+TRAINER_MEMBER_SIZE_MIN = 8
 
 
 def read_bits(blob: bytes) -> list[bool]:
@@ -174,8 +177,88 @@ def parse_tm_moves(code: bytes) -> dict[str, list[int]]:
     }
 
 
+def parse_trainer_record(
+    trainer_id: int,
+    metadata: bytes,
+    team_blob: bytes,
+    class_names: list[str],
+) -> dict[str, object]:
+    if len(metadata) != TRAINER_HEADER_SIZE:
+        raise ValueError(f"Treinador {trainer_id}: cabeçalho com {len(metadata)} bytes; esperado {TRAINER_HEADER_SIZE}")
+    trainer_format = struct.unpack_from("<H", metadata, 0)[0]
+    class_id = struct.unpack_from("<H", metadata, 2)[0]
+    party_count = metadata[7]
+    if party_count == 0:
+        raise ValueError(
+            f"Treinador {trainer_id}: contagem da equipe {party_count} inválida para {len(team_blob)} bytes"
+        )
+    has_moves = bool(trainer_format & 1)
+    has_item = bool(trainer_format & 2)
+    member_size = TRAINER_MEMBER_SIZE_MIN + (8 if has_moves else 0) + (2 if has_item else 0)
+    if len(team_blob) != member_size * party_count:
+        raise ValueError(
+            f"Treinador {trainer_id}: contagem da equipe {party_count} com formato {trainer_format} "
+            f"espera {member_size * party_count} bytes; recebidos {len(team_blob)}"
+        )
+    if class_id >= len(class_names):
+        raise ValueError(f"Treinador {trainer_id}: classe {class_id} fora da tabela de {len(class_names)} nomes")
+
+    party = []
+    for member_index in range(party_count):
+        offset = member_index * member_size
+        member = {
+            "speciesId": struct.unpack_from("<H", team_blob, offset + 4)[0],
+            "form": struct.unpack_from("<H", team_blob, offset + 6)[0],
+            "level": struct.unpack_from("<H", team_blob, offset + 2)[0],
+            "ivByte": team_blob[offset],
+        }
+        extra_offset = offset + TRAINER_MEMBER_SIZE_MIN
+        if has_item:
+            held_item_id = struct.unpack_from("<H", team_blob, extra_offset)[0]
+            if held_item_id:
+                member["heldItemId"] = held_item_id
+            extra_offset += 2
+        if has_moves:
+            move_ids = [move_id for move_id in struct.unpack_from("<4H", team_blob, extra_offset) if move_id]
+            if move_ids:
+                member["moveIds"] = move_ids
+        party.append(member)
+    return {"id": trainer_id, "classId": class_id, "className": class_names[class_id], "party": party}
+
+
+def parse_trainer_tables(
+    metadata_entries: list[bytes],
+    team_entries: list[bytes],
+    class_names: list[str],
+) -> list[dict[str, object]]:
+    if len(metadata_entries) != len(team_entries):
+        raise ValueError(
+            f"GARCs de treinador têm contagens diferentes: {len(metadata_entries)} cabeçalhos e {len(team_entries)} equipes"
+        )
+    trainers = []
+    for trainer_id, (metadata, team_blob) in enumerate(zip(metadata_entries, team_entries, strict=True)):
+        if not any(metadata):
+            continue
+        if len(metadata) < 8:
+            raise ValueError(f"Treinador {trainer_id}: cabeçalho curto demais ({len(metadata)} bytes)")
+        if metadata[7] == 0:
+            continue
+        trainers.append(parse_trainer_record(trainer_id, metadata, team_blob, class_names))
+    return trainers
+
+
 def read_names(text_dir: Path, file_index: int) -> list[str]:
     return decode_gen6_text((text_dir / f"{file_index:04d}.bin").read_bytes())
+
+
+def read_indexed_blobs(directory: Path) -> list[bytes]:
+    paths = sorted(directory.glob("*.bin"), key=lambda path: int(path.stem))
+    if not paths:
+        raise FileNotFoundError(f"Nenhuma entrada GARC em {directory}")
+    indexes = [int(path.stem) for path in paths]
+    if indexes != list(range(indexes[-1] + 1)):
+        raise ValueError(f"Entradas GARC em {directory} devem cobrir índices contínuos de 0000 a {indexes[-1]:04d}")
+    return [path.read_bytes() for path in paths]
 
 
 def build_species(personal: list[dict[str, object]], names: dict[str, list[str]]) -> list[dict[str, object]]:
@@ -220,7 +303,7 @@ def write_json(path: Path, payload: list[object] | dict[str, object]) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Extrai personal, golpes, tipos e learnsets ORAS para JSON.")
-    parser.add_argument("--garc-root", required=True, type=Path, help="rom/extracted/garc (a_1_8_9, a_1_9_1, a_1_9_5, a_0_7_3)")
+    parser.add_argument("--garc-root", required=True, type=Path, help="rom/extracted/garc (inclui a_0_3_6, a_0_3_8, a_0_7_3, a_1_8_9, a_1_9_1, a_1_9_2, a_1_9_5)")
     parser.add_argument("--romfs", required=True, type=Path)
     parser.add_argument("--exefs", required=True, type=Path)
     parser.add_argument("--out-dir", required=True, type=Path)
@@ -235,6 +318,7 @@ def main() -> int:
         "natures": read_names(text_dir, 51),
         "items": read_names(text_dir, 114),
     }
+    trainer_classes = read_names(text_dir, 21)
     personal_files = sorted((args.garc_root / "a_1_9_5").glob("*.bin"))
     personal = parse_personal_table(personal_files[-1].read_bytes())
     move_blobs = unpack_mini((args.garc_root / "a_1_8_9" / "0000.bin").read_bytes(), b"WD")
@@ -255,8 +339,14 @@ def main() -> int:
         {"personalIndex": i, "evolutions": [annotate_evolution(e, names["items"], names["moves"]) for e in parse_evolution_set(f.read_bytes())]}
         for i, f in enumerate(evolution_files)
     ])
+    trainer_data = parse_trainer_tables(
+        read_indexed_blobs(args.garc_root / "a_0_3_6"),
+        read_indexed_blobs(args.garc_root / "a_0_3_8"),
+        trainer_classes,
+    )
+    write_json(args.out_dir / "trainers.json", trainer_data)
     write_json(args.out_dir / "natures.json", build_natures(names["natures"]))
-    print(f"species={len(personal)} moves={len(move_blobs)} learnsets={len(learnset_files)} -> {args.out_dir}")
+    print(f"species={len(personal)} moves={len(move_blobs)} learnsets={len(learnset_files)} trainers={len(trainer_data)} -> {args.out_dir}")
     return 0
 
 

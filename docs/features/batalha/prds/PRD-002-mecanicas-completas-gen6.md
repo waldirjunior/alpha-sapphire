@@ -191,3 +191,49 @@ das taxas está registrada em [A-117](../../../APRENDIZADOS.md). `npm run verify
 passou com 639 testes Vitest, build (aviso herdado de chunks acima de 500 kB) e
 252 testes Python (1 skip pela ausência de `public/assets/maps` no worktree). O
 smoke `e2e/smoke.spec.ts` passou em 7/7, incluindo batalha selvagem, golpe e fuga.
+
+## 11. Entrega parcial — 2026-11-20 (extração de IVs de treinador)
+
+`scripts/extract_battle_tables.py` agora lê classe de treinador em `a/0/3/6`,
+classe nominal em `a/0/7/3/0021.bin` e os campos de espécie, forma, nível e
+byte IV em `a/0/3/8`. A regeneração produziu 949 registros em
+`src/data/battle/trainers.json`; os testes sintéticos verificam classe, offsets,
+preservação do byte IV e rejeição de equipes malformadas.
+
+O byte IV foi mantido literal porque ainda não há evidência ROM/emulador para a
+regra que o converte aos seis IVs do Pokémon. A rotina do host também não tem
+vínculo comprovado entre IDs dos eventos AMX e esses registros. O próximo passo
+é observar um Pokémon adversário em batalha no Azahar via RPC, rastrear a
+conversão no runtime e então integrar o ID confirmado ao `TrainerSpec`.
+
+## 12. Entrega parcial — 2026-11-20 (quality 13: Splash)
+
+Splash (ID 150) agora retorna “Mas não teve efeito!” sem alterar usuário ou
+alvo. A tabela ROM de golpes o classifica com `quality=13`; a descrição em
+`a/0/7/3/0016.bin`, linha 150, diz que o movimento não tem efeito, e a tabela de
+encontros ROM inclui Magikarp em Route 104. `battleMechanics.test.ts` e
+`src/ai/battleParity.test.ts` verificam o estado imutável e a mensagem; os dois
+testes foram executados antes do código e falharam com o fallback P-010.
+
+Continuam sem simulação os demais quality 13. Em encontros do corredor até
+Mauville aparecem, entre outros, Focus Energy, Curse, Rest, Aqua Ring, Block,
+Helping Hand, Mirror Move, Teleport, Spider Web e Bestow; vários exigem estado
+de crítico, turno residual, alvo aliado ou fuga/troca. Próximo passo: confirmar
+cada comportamento via runtime Azahar ou CRO antes de escolher outra regra.
+
+## 13. Entrega parcial — 2026-11-20 (quality 13: fuga)
+
+O parser de treinadores lê o formato do registro e preserva `moveIds` e
+`heldItemId` quando esses campos aparecem no GARC ROM; a regeneração produziu
+949 treinadores, 284 membros com moveset explícito e 78 com item. Registros sem
+lista explícita continuam usando os golpes do learnset ROM até o nível do
+Pokémon. O cruzamento encontrou Teleport no moveset padrão do Ralts do treinador
+18 e, nos encontros do corredor, Teleport, Block e Spider Web.
+
+Os textos ROM de `src/data/texts/gametext/0016.json` (linhas 100, 169, 212 e
+335) comprovam fuga de batalha selvagem com Teleport e bloqueio de fuga por
+Mean Look, Spider Web e Block. `battleQualityThirteen.test.ts` cobre a fuga, a
+falha contra treinador e o bloqueio de fuga; `scripts/test_pipeline.py` cobre os
+campos customizados de moveset/item. O teste foi escrito antes do código. O
+warp de campo do Teleport e a interação de bloqueio com troca voluntária,
+retirada do usuário e Ghost continuam pendentes de observação Azahar em P-010.

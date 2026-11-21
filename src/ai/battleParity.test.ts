@@ -122,6 +122,16 @@ describe('Gen VI battle formula parity vectors', () => {
     expect(result.pokemon.currentHp).toBe(torchic.currentHp - 17);
   });
 
+  it('matches the ROM no-effect description for Splash', () => {
+    const magikarp = pokemon('magikarp', 10, 'Splash');
+    const poochyena = pokemon('poochyena', 10, 'Tackle');
+    const outcome = executeMove(magikarp, poochyena, toBattleMove(getMoveByName('Splash')), () => 0);
+
+    expect(outcome.user).toBe(magikarp);
+    expect(outcome.target).toBe(poochyena);
+    expect(outcome.messages).toEqual(['Magikarp usou Splash!', 'Mas não teve efeito!']);
+  });
+
   it('resolves +2 priority before a much faster −6 priority move', () => {
     const state = startWildBattle(pokemon('wurmple', 5, 'Extreme Speed'), pokemon('torchic', 5, 'Whirlwind'));
     const [first] = orderActions(
