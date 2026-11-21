@@ -8,10 +8,10 @@ Verificado em 2026-11-20 (macOS; suporte headless Linux validado anteriormente n
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 642 em 86 arquivos, todos passando | `npm test` |
+| Testes unitários (Vitest) | 649 em 87 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | acima da catraca de 95% linhas / 85% branches | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 256 passando (1 skip só em worktree sem `public/assets/maps`) | `npm run test:py` |
-| Jogo real no browser (smoke + campanha + corredor) | 7 smoke e campanha 1/1 (`e2e/campaign.spec.ts`; fade modo 2 até `PokePartyGetParam(0,8,0)`); corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`) | `npm run test:e2e` |
+| Testes do pipeline e do oráculo (Python) | 263 passando (1 skip só em worktree sem `public/assets/maps`) | `npm run test:py` |
+| Jogo real no browser (smoke + campanha + corredor) | 7 smoke e campanha 1/1 (`e2e/campaign.spec.ts`; fade modo 2 até `PokePartyGetParam(0,8,0)`); corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`); suíte completa 41/41 em 7,3 min (Onda 13) | `npm run test:e2e` |
 | Cenários visuais | 28/28 cenas do mundo aceitas; 1 comparação UI do PokéNav com AreaNav recomposta (P-011 residual de ícones/semântica) | `npm run test:e2e`, galeria e comparação em `rom/visual-report/` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
 

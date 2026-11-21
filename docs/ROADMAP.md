@@ -1,6 +1,6 @@
 # Roadmap
 
-O objetivo e a definição de pronto estão em [VISAO.md](VISAO.md); o estado medido, em [STATUS.md](STATUS.md). Este arquivo diz **o que fazer a seguir** (fila) e **em que fase** o projeto está. Versão anterior, com o relato de cada entrega: [historico/ROADMAP-ate-2026-11-18.md](historico/ROADMAP-ate-2026-11-18.md). Passagem de bastão detalhada (2026-11-20): [historico/HANDOFF-2026-11-20.md](historico/HANDOFF-2026-11-20.md).
+O objetivo e a definição de pronto estão em [VISAO.md](VISAO.md); o estado medido, em [STATUS.md](STATUS.md). Este arquivo diz **o que fazer a seguir** (fila) e **em que fase** o projeto está. Versão anterior, com o relato de cada entrega: [historico/ROADMAP-ate-2026-11-18.md](historico/ROADMAP-ate-2026-11-18.md). Passagem de bastão detalhada (2026-11-20): [historico/HANDOFF-2026-11-20.md](historico/HANDOFF-2026-11-20.md); fim da Onda 13: [historico/HANDOFF-2026-11-20-onda-13.md](historico/HANDOFF-2026-11-20-onda-13.md).
 
 ## Fila de execução
 
@@ -9,10 +9,10 @@ Pegue o primeiro item não bloqueado. Cada item termina quando a verificação i
 | # | Resultado | Verificação | Ref. |
 | --- | --- | --- | --- |
 | 1 | *(Bloqueado por save ORAS avançado)* Permissões de movimento restantes (bike e Surf) fechadas por observação no emulador. | Testes do core por regra + corredor conectado até Lilycove. | PRD-015, P-017 |
-| 3 | Interação/batalha natural da Roxanne e entrega da Stone Badge em `zone_0441` (binding e ABI CRO registrados; modo 2 do fade confirmado; campanha para em `PokePartyGetParam(0,8,0)`; faltam semântica dos seletores, equipe/callback e badge). | Regressão AMX + `e2e/campaign.spec.ts` avançando até a primeira nativa sem contrato; sem fixture de vitória. | PRD-003, P-013, A-114, A-116, A-119 |
-| 4 | Binding de luz/combiners PICA e paridade residual PokéNav (AreaNav recomposta; ícones/semântica abertos; A-118/A-121). | `scripts/test_pokemon_glb_materials.py` + `e2e/pokemonBattleModels.spec.ts` + `e2e/visual.spec.ts`. | P-007, P-011, P-012, A-112, A-118, A-121 |
-| 5 | IVs por classe de treinador, golpes `quality` 13 restantes, UI de item evolutivo e ativação host dos métodos além da grama (taxas ORAS 61 slots já no core; A-117). | `battleMechanics.test.ts` + `src/ai/battleParity.test.ts` + `src/game/`. | PRD-002, P-010, A-117 |
-| 6 | Arenas cave/gym e paridade de texturas (grass/água ROM já integrados; A-120). | Extrator Python + `battleArena.test.ts` + captura E2E revisada. | P-014, A-120 |
+| 3 | Interação/batalha natural da Roxanne e entrega da Stone Badge em `zone_0441` (binding e ABI CRO registrados; modo 2 do fade confirmado; campanha para em `PokePartyGetParam(0,8,0)`; leituras de seletor 0/8/44/53 vistas no disassembly, mas sem valores reais: o Azahar não chegou à Roxanne; próximo ensaio pelo warp ROM, branch `w13-roxanne-party-badge` @ `5c78b98` não integrada). | Regressão AMX + `e2e/campaign.spec.ts` avançando até a primeira nativa sem contrato; sem fixture de vitória. | PRD-003, P-013, A-114, A-116, A-119 |
+| 4 | Binding de luz PICA (`LightSetIndex`): triagem de `ExeFS/code.bin` deu classes/caminhos candidatos sem fechar o binding (A-123); rastrear o callsite por disassembly. Paridade PokéNav: ícones/semântica abertos, toques no Azahar sem semântica estável. | `scripts/test_pokemon_glb_materials.py` + `e2e/pokemonBattleModels.spec.ts` + `e2e/visual.spec.ts`. | P-007, P-011, P-012, A-112, A-118, A-121, A-123 |
+| 5 | Restam 77 golpes `quality` 13 (próximos: Bestow, Switcheroo, Focus Energy, Endure; lista em P-010), IVs por classe no host (byte IV por membro extraído em `src/data/battle/trainers.json`, sem consumidor; conversão do byte para os seis IVs ainda não provada), UI de item evolutivo e ativação no host de Surf/pesca/horda; Teleport de campo e interação com troca/Ghost dependem do Azahar. | `battleMechanics.test.ts` + `src/ai/battleParity.test.ts` + `src/game/`. | PRD-002, P-010, A-117 |
+| 6 | Paridade visual completa de texturas das arenas (cave/gym já extraídas da ROM, A-122; grass/água já ROM, A-120); revisar capturas lado a lado com o Azahar. | Extrator Python + `battleArena.test.ts` + captura E2E revisada. | P-014, A-120, A-122 |
 | 7 | Servidor de salas multiplayer (Fase 4) reutilizando `src/core/` puro sem dependências de browser. | Testes de protocolo/sala no core + build/verify passando. | Fase 4 |
 
 Regras da fila:

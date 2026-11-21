@@ -204,7 +204,7 @@ or to a displayed zone, and no RGB/lightmap change is justified. P-007 stays
 open pending the loader/model binding and an emulator or native-renderer
 comparison.
 
-## ExeFS loader-name triage (A-TMP-Codex)
+## ExeFS loader-name triage (A-123)
 
 The extracted `ExeFS/code.bin` (SHA-256
 `b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16`)
