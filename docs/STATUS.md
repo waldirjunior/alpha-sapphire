@@ -8,9 +8,9 @@ Verificado em 2026-11-21 (macOS; suporte headless Linux validado anteriormente n
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 703 em 92 arquivos, todos passando | `npm test` |
+| Testes unitários (Vitest) | 707 em 93 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | acima da catraca de 95% linhas / 85% branches | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 294 passando (2 skips: assets locais ausentes e `ALPHA_TAILLOW_*` ausentes) | `npm run test:py` |
+| Testes do pipeline e do oráculo (Python) | 307 passando (1 skip: `ALPHA_TAILLOW_*` ausentes) | `npm run test:py` |
 | Jogo real no browser (smoke + campanha + corredor) | 7 smoke e campanha 1/1 (`e2e/campaign.spec.ts`; fade modo 2 até `PokePartyGetParam(0,8,0)`); corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`); suíte completa 41/41 | `npm run test:e2e` |
 | Cenários visuais | 28/28 cenas do mundo aceitas; `pokenav-hoenn-map` integrado com mapa/marcadores/avatar ROM e aprovado (P-011 residual dos 4 glifos/toque) | `npm run test:e2e`, galeria e comparação em `rom/visual-report/` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
