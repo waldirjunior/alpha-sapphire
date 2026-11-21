@@ -1229,6 +1229,13 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
 - **Evidência:** `RomFS/a/1/3/6` é GARC; slots 11 e 12 começam com `BCH\0` e contêm as tags `btl_F_kusa` e `btl_F_mizu`. SpicaExport lê um modelo/textura no primeiro e um modelo/duas texturas no segundo.
 - **Regra:** use `scripts/extract_battle_arenas.py`, valide magic BCH e tag esperada antes de exportar slot 11/12, e mantenha GLB/PNG em `public/assets/battle-arenas/` ignorado pelo Git.
 
+## A-TMP-codex Pacotes BG de arena guardam BCHs em entradas indexadas
+
+- **Data:** 2026-11-20; P-014, extração das arenas cave/gym.
+- **Contexto:** os slots 44 e 78 de RomFS/a/1/3/6 não começam com BCH; são pacotes BG com tabela de intervalos.
+- **Evidência:** a entrada 0 dos slots 44 e 78 contém o magic BCH e as tags btl_G_c_a1 e btl_G_gym1; SpicaExport abriu os modelos extraídos com 19/10 texturas.
+- **Regra:** decodifique limites da tabela BG, extraia a entrada selecionada e valide magic/tag BCH antes de exportar; não envie GLB/PNG ou captura derivada da ROM ao Git.
+
 ## A-121 Captura da AreaNav comprova composição, não semântica dos ícones
 
 - **Data:** 2026-11-20; P-011, comparação da interface PokéNav.

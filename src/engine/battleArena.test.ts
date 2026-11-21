@@ -173,8 +173,9 @@ describe('battleArena', () => {
     expect(resolveBattleArenaBiome('Route 101', 'zone_0023')).toBe('grass');
     expect(resolveBattleArenaBiome('Route 109', 'zone_0032')).toBe('water');
     expect(resolveBattleArenaBiome('Granite Cave', 'zone_0078')).toBe('cave');
-    expect(resolveBattleArenaBiome('Mossdeep Gym', 'zone_0443')).toBe('indoor');
-    expect(resolveBattleArenaBiome('Mossdeep City', 'zone_0443')).toBe('indoor');
+    expect(resolveBattleArenaBiome('Mossdeep Gym', 'zone_0443')).toBe('gym');
+    expect(resolveBattleArenaBiome('Mossdeep City', 'zone_0443')).toBe('gym');
+    expect(resolveBattleArenaBiome('Pokémon Center', 'zone_0228')).toBe('indoor');
   });
 
   it('dá fundo, piso e luzes coerentes a cada bioma', () => {

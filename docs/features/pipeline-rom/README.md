@@ -25,6 +25,8 @@ Responsável por extrair as partições proprietárias (`RomFS`, `ExeFS`) da ROM
 
 ## Estado atual
 
+- O extrator de arenas também abre os pacotes BG dos slots 44/78 de a/1/3/6 e valida BCH/tag embutidos antes da conversão cave/gym; GLBs/PNGs continuam locais e ignorados.
+
 - ROM `.3ds` (`2.0G`) disponível localmente em `rom/` (ignorada pelo Git).
 - `ctrtool` instalado em `/usr/local/bin/ctrtool` (`P-001` fechada).
 - `ExeFS` (`5.6M`) e `RomFS` completa (`655` arquivos, `40` diretórios) extraídas em `rom/extracted/` via `ctrtool` e [scripts/extract_romfs.py](../../../scripts/extract_romfs.py) (`P-002` fechada, `A-003`).

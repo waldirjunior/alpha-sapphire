@@ -9,7 +9,7 @@ export { damageReactionFrame, normalizePokeballShakes, parabolicFlightPoint, pok
 
 // P-014: arena estilizada e efeitos de golpe por tipo enquanto os modelos/partículas nativas completos não são extraídos.
 
-export type BattleArenaBiome = 'grass' | 'water' | 'cave' | 'indoor';
+export type BattleArenaBiome = 'grass' | 'water' | 'cave' | 'indoor' | 'gym';
 
 export interface BattleArena {
   group: THREE.Group;
@@ -62,6 +62,12 @@ const ARENA_PALETTES: Record<BattleArenaBiome, ArenaPalette> = {
     directionalIntensity: 0.75, hemisphereSky: '#cbd5e1', hemisphereGround: '#1e293b',
     hemisphereIntensity: 0.85, point: '#fde68a', pointIntensity: 8,
   },
+  gym: {
+    sky: '#111827', horizon: '#334155', ground: '#1e3a5f', innerGround: '#334155',
+    platformBase: '#475569', platformTop: '#64748b', accent: '#f8fafc', directional: '#fef3c7',
+    directionalIntensity: 0.75, hemisphereSky: '#cbd5e1', hemisphereGround: '#1e293b',
+    hemisphereIntensity: 0.85, point: '#fde68a', pointIntensity: 8,
+  },
 };
 
 const GYM_ZONE_IDS = new Set([
@@ -72,7 +78,7 @@ const GYM_ZONE_IDS = new Set([
 const ROM_ARENA_DIAMETER = 12;
 
 export function battleArenaModelUrl(biome: BattleArenaBiome): string | null {
-  if (biome !== 'grass' && biome !== 'water') return null;
+  if (biome === 'indoor') return null;
   return `/assets/battle-arenas/${biome}/${biome}.glb`;
 }
 
@@ -100,7 +106,8 @@ export function attachBattleArenaModel(arena: BattleArena, model: THREE.Group): 
 
 export function resolveBattleArenaBiome(zoneName: string, zoneId = ''): BattleArenaBiome {
   const name = zoneName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  if (GYM_ZONE_IDS.has(zoneId) || /gym|pokemon league|pokemon center|pokemart|house|lab|contest hall|secret base|department store|museum|s\.s\. tidal/.test(name)) {
+  if (GYM_ZONE_IDS.has(zoneId) || /\bgym\b/.test(name)) return 'gym';
+  if (/pokemon league|pokemon center|pokemart|house|lab|contest hall|secret base|department store|museum|s\.s\. tidal/.test(name)) {
     return 'indoor';
   }
   if (/cave|cavern|falls|tunnel|chamber|ruins|mountain|mt\.|pyre|fiery path|den/.test(name)) {
@@ -196,12 +203,12 @@ function addSkyDome(group: THREE.Group, palette: ArenaPalette): void {
 }
 
 function addPlatform(group: THREE.Group, x: number, z: number, biome: BattleArenaBiome, palette: ArenaPalette): void {
-  const baseGeometry = biome === 'indoor'
+  const baseGeometry = biome === 'indoor' || biome === 'gym'
     ? new THREE.BoxGeometry(2.5, 0.2, 2.5)
     : biome === 'cave'
       ? new THREE.DodecahedronGeometry(1.25, 1)
       : new THREE.CylinderGeometry(1.3, 1.45, 0.2, 32);
-  const topGeometry = biome === 'indoor'
+  const topGeometry = biome === 'indoor' || biome === 'gym'
     ? new THREE.BoxGeometry(2.25, 0.06, 2.25)
     : new THREE.CylinderGeometry(1.15, 1.15, 0.06, 32);
   const base = new THREE.Mesh(baseGeometry, new THREE.MeshStandardMaterial({ color: palette.platformBase, roughness: 0.8 }));
@@ -302,7 +309,7 @@ export function createBattleArena(biome: BattleArenaBiome = 'grass'): BattleAren
   if (biome === 'grass') addGrassTufts(backdropGroup);
   if (biome === 'water') addWaterDecor(backdropGroup);
   if (biome === 'cave') addCaveDecor(backdropGroup);
-  if (biome === 'indoor') addGymLines(backdropGroup);
+  if (biome === 'indoor' || biome === 'gym') addGymLines(backdropGroup);
   fallbackGroup.add(backdropGroup);
   addGround(fallbackGroup, palette);
   addPlatform(fallbackGroup, -1.6, 1.4, biome, palette);
