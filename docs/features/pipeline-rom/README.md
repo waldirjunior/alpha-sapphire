@@ -18,14 +18,14 @@ Responsável por extrair as partições proprietárias (`RomFS`, `ExeFS`) da ROM
 - [Catálogo runtime](../../../src/data/nativeAssets.json) e [auditoria UV](native-uv-audit.json) — promoção local por SHA-256 de 140 modelos (99 personagens/41 Pokémon), com fallbacks explícitos por falta de motion; [PRD-007](../engine-3d/prds/PRD-007-animacoes-nativas-no-runtime.md) documenta reprodução, poses de índice 0 e limites de atlas/pés. GLBs permanecem ignorados.
 - [pica-materials.md](pica-materials.md) / [auditoria](pica-material-coverage.json) — P-007/A-069–A-071/A-074/A-075: proveniência BCH/DAE/CRO, V seletivo, alpha e COLOR_0 recuperado por vértice/triângulo sem inventar iluminação RGB.336 GLBs/4.547 materiais,329 URLs imutáveis; três diffs de cor resolvidos, seis close-ups adicionais e caminhada por teclado32 passos/fase em oito capturas inspecionadas. Shader/ambiente externos, projeção/LUT/multi-textura e emulador permanecem abertos.
 - [maps-format.md](maps-format.md) — layout completo observado das 431 MM, grid de zonas, escala e geração dos 536 mapas `maps_v2`; [PRD-003](prds/PRD-003-mapas-por-zona.md), [ADR-005](adrs/ADR-005-recorte-de-mapas-por-zone-grid.md), A-024/P-017.
-- [extract_battle_arenas.py](../../../scripts/extract_battle_arenas.py) — P-014: converte os modelos BCH grass/water dos slots 11/12 de `RomFS/a/1/3/6` via SpicaExport + assimp; GLBs/texturas gerados ficam apenas em `public/assets/battle-arenas/`.
+- [extract_battle_arenas.py](../../../scripts/extract_battle_arenas.py) — P-014: extrai campos grass/water (`F`, slots 11/12), ambientes cave/gym (`G`, slots 44/78), interior (`O`, slot 136) e camadas `O` de grass/water/cave/gym (slots 150/139/118/125) de `RomFS/a/1/3/6` via SpicaExport + assimp. GLBs/texturas gerados ficam apenas em `public/assets/battle-arenas/`.
 - Referência TCC: [docs/tcc/01-pipeline-rom.md](../../tcc/01-pipeline-rom.md).
 
 - P-017/A-084–A-086: `scripts/gr_layers.py`/`audit_ground_layers.py` validam857 GRs/899 colisores sem alimentar o runtime. Coll adicional depende do número de pisos;0436–0439 usam9/10, não8. [PRD-016](../engine-3d/prds/PRD-016-camadas-fisicas-e-oclusao-nativas.md) registra offsets CRO, cinco candidatos entre133 desvios ZO e539 null não resolvidos.
 
 ## Estado atual
 
-- O extrator de arenas também abre os pacotes BG dos slots 44/78 de a/1/3/6 e valida BCH/tag embutidos antes da conversão cave/gym; GLBs/PNGs continuam locais e ignorados.
+- O extrator de arenas abre os pacotes BG dos slots 44/78 e 118/125/136/139 de `a/1/3/6`, valida BCH/tag embutidos e converte cinco biomas mais quatro camadas `O`; GLBs/PNGs continuam locais e ignorados. Capturas Chromium de cave/gym ainda mostram oclusões e composição parcial, pendentes de comparação visual com o emulador (P-014).
 
 - ROM `.3ds` (`2.0G`) disponível localmente em `rom/` (ignorada pelo Git).
 - `ctrtool` instalado em `/usr/local/bin/ctrtool` (`P-001` fechada).

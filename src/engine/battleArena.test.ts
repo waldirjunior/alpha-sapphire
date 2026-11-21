@@ -4,6 +4,7 @@ import type { PokemonType } from '../data/pokemon/species';
 import { BattleEventPresenter, planBattleEventPresentation } from './battleEventPresentation';
 import {
   BattleCameraMotion,
+  battleArenaModelUrl,
   createBattleArena,
   createBattleSlots,
   damageReactionFrame,
@@ -176,6 +177,12 @@ describe('battleArena', () => {
     expect(resolveBattleArenaBiome('Mossdeep Gym', 'zone_0443')).toBe('gym');
     expect(resolveBattleArenaBiome('Mossdeep City', 'zone_0443')).toBe('gym');
     expect(resolveBattleArenaBiome('Pokémon Center', 'zone_0228')).toBe('indoor');
+  });
+
+  it('associa um modelo ROM a todos os cinco biomas de batalha', () => {
+    for (const biome of ['grass', 'water', 'cave', 'gym', 'indoor'] as const) {
+      expect(battleArenaModelUrl(biome)).toBe(`/assets/battle-arenas/${biome}/${biome}.glb`);
+    }
   });
 
   it('dá fundo, piso e luzes coerentes a cada bioma', () => {

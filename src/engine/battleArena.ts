@@ -18,6 +18,7 @@ export interface BattleArena {
   cameraMotion: BattleCameraMotion;
   fallbackGroup: THREE.Group;
   romModel: THREE.Group | null;
+  romStage: THREE.Group | null;
 }
 
 interface ArenaPalette {
@@ -77,31 +78,63 @@ const GYM_ZONE_IDS = new Set([
 ]);
 const ROM_ARENA_DIAMETER = 12;
 
-export function battleArenaModelUrl(biome: BattleArenaBiome): string | null {
-  if (biome === 'indoor') return null;
+export function battleArenaModelUrl(biome: BattleArenaBiome): string {
   return `/assets/battle-arenas/${biome}/${biome}.glb`;
 }
 
+export function battleArenaStageModelUrl(biome: BattleArenaBiome): string | null {
+  if (biome === 'indoor') return null;
+  return `/assets/battle-arenas/${biome}/stage/stage.glb`;
+}
+
 export function attachBattleArenaModel(arena: BattleArena, model: THREE.Group): void {
-  if (!battleArenaModelUrl(arena.biome)) return;
+  const fittedModel = fitBattleArenaModel(
+    model,
+    arena.biome,
+    'battle-rom-arena-model',
+    arena.biome === 'indoor'
+  );
+  if (!fittedModel) return;
+  arena.group.add(fittedModel);
+  arena.romModel = fittedModel;
+  if (arena.biome === 'indoor') hideProceduralFallback(arena);
+}
+
+export function attachBattleArenaStageModel(arena: BattleArena, model: THREE.Group): void {
+  const fittedModel = fitBattleArenaModel(model, arena.biome, 'battle-rom-arena-stage', true);
+  if (!fittedModel) return;
+  arena.group.add(fittedModel);
+  arena.romStage = fittedModel;
+  hideProceduralFallback(arena);
+}
+
+function fitBattleArenaModel(
+  model: THREE.Group,
+  biome: BattleArenaBiome,
+  name: string,
+  alignLowestSurface: boolean,
+): THREE.Group | null {
   model.updateMatrixWorld(true);
   const bounds = new THREE.Box3().setFromObject(model);
   const size = bounds.getSize(new THREE.Vector3());
   const horizontalSize = Math.max(size.x, size.z);
-  if (horizontalSize <= 0) return;
+  if (horizontalSize <= 0) return null;
 
   const scale = ROM_ARENA_DIAMETER / horizontalSize;
   const center = bounds.getCenter(new THREE.Vector3());
   const fittedModel = new THREE.Group();
-  fittedModel.name = 'battle-rom-arena-model';
-  fittedModel.userData.biome = arena.biome;
+  fittedModel.name = name;
+  fittedModel.userData.biome = biome;
   fittedModel.add(model);
   fittedModel.scale.setScalar(scale);
-  fittedModel.position.set(-center.x * scale, -bounds.min.y * scale, -center.z * scale);
-  arena.group.add(fittedModel);
-  arena.romModel = fittedModel;
-  const proceduralBackdrop = arena.fallbackGroup.getObjectByName('battle-procedural-backdrop');
-  if (proceduralBackdrop) proceduralBackdrop.visible = false;
+  const groundOffset = alignLowestSurface ? -bounds.min.y * scale : 0;
+  fittedModel.position.set(-center.x * scale, groundOffset, -center.z * scale);
+  return fittedModel;
+}
+
+function hideProceduralFallback(arena: BattleArena): void {
+  arena.fallbackGroup.traverse((object) => { object.visible = false; });
+  arena.fallbackGroup.visible = false;
 }
 
 export function resolveBattleArenaBiome(zoneName: string, zoneId = ''): BattleArenaBiome {
@@ -318,7 +351,7 @@ export function createBattleArena(biome: BattleArenaBiome = 'grass'): BattleAren
   addLights(group, palette);
   const effects = new MoveEffects();
   group.add(effects.group);
-  return { group, effects, biome, cameraMotion: new BattleCameraMotion(), fallbackGroup, romModel: null };
+  return { group, effects, biome, cameraMotion: new BattleCameraMotion(), fallbackGroup, romModel: null, romStage: null };
 }
 
 export function createBattleSlots(): { playerSlot: THREE.Group; enemySlot: THREE.Group } {
