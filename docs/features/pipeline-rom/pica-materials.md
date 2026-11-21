@@ -192,7 +192,11 @@ embedded H3D section parses to 13 named shader records, including
 `MatAmbi`, `MatDiff`, `LightPowScale`, `DirLightVec`, `DirLightColor`, and
 `PointLightPos`, but the binary does not provide the runtime values uploaded
 to them. Other shader binaries in the scanned GARCs are also specialized
-records such as `0@BattleField`.
+records such as `0@BattleField`. A fresh direct GARC read in the section below
+measured slot 1 as 231,808 bytes with SHA-256
+`f26fe18f2471f12f068fa035dad1919ff1543207d96bf6b57e46c6ab6d1557b4`, rather
+than the 236,712-byte/`1e434f...` value in this earlier A-118 snapshot; use the
+fresh source and section hashes below to reproduce this catalog.
 
 The evidence chain still stops before runtime binding. The 336 model BCHs
 reference `0@DefaultShader` and `LightSetIndex=0`, while the `BM` resource has
@@ -203,6 +207,178 @@ material. Therefore `light_sun` cannot yet be assigned to `LightSetIndex=0`
 or to a displayed zone, and no RGB/lightmap change is justified. P-007 stays
 open pending the loader/model binding and an emulator or native-renderer
 comparison.
+
+## DVLB catalog and static LightSet trace (2026-11-21)
+
+[`inspect_pica_dvlb_lights.py`](../../../scripts/inspect_pica_dvlb_lights.py)
+parses DVLB/DVLP/DVLE ranges, symbols, uniforms, source filenames, and hashes;
+it scans GARC entries, nested DARC/mini packages, and loose `.shbin` files.
+It uses a read-only memory map for large GARC files. Reproduce the inventory
+with:
+
+```sh
+python3 -B scripts/inspect_pica_dvlb_lights.py \
+  --extracted rom/extracted --output /tmp/pica-dvlb-lights.json
+```
+
+The scan found 293 DVLB signatures: 291 structurally valid records and two
+rejected false signatures. Of the valid records, 287 are under `RomFS/a/`
+and four are loose shaders. The scan recorded 23 incomplete GARC-table errors
+separately. Counts by source are:
+
+| Source | Valid DVLB records |
+| --- | ---: |
+| `a/1/0/1` | 159 |
+| `a/1/8/0` | 47 |
+| `a/1/5/2` | 42 |
+| `a/0/0/8` | 24 |
+| `a/0/6/4` | 6 |
+| `a/0/0/3` | 4 |
+| `a/0/6/3` | 2 |
+| `a/1/7/5` | 2 |
+| `a/1/3/6` | 1 |
+| `RomFS/shader/` | 4 |
+
+The checked GARC files `a/0/2/1` (22,538,408 bytes,
+SHA-256 `06c21576ecf38180a456180fbe7baa58f529ca5fd57bf89130e90fe67ce230b6`)
+and `a/0/3/9` (108,419,976 bytes,
+SHA-256 `31a3335c4356b550e407017de9abd51c8b8ec7d71695eec0842d3f5082541109`)
+contain no structurally valid DVLB records. The four loose files are
+`nwfont_RectDrawerShader.shbin` (964 bytes, SHA-256
+`0ca7566cab8f8559a954f1390d02d346deb26309728db5a9f1fec41e037bc1ea`),
+`nwfont_TextWriterShader.shbin` (484 bytes, SHA-256
+`87e9a661a499dfe18818310d6758855eba5d56892fe266c155b18e3e0f4d881e`),
+`nwlyt_ConstColorShader.shbin` (328 bytes, SHA-256
+`6e6d5058aa64c8201fbd487e635eec0de3549bb3b5fedd1eaa1aa284ad3ad330`), and
+`nwlyt_PaneShader.shbin` (1,060 bytes, SHA-256
+`4d41713c0d4cf1b3e89cd4db3da65cea2fd766f2345500ed0866e743ed207fbb`).
+
+### Named H3D shaders in `a/0/0/8`, slot 1
+
+The source GARC `RomFS/a/0/0/8` is 1,070,643,868 bytes,
+SHA-256 `45100100d8ca1c220f588771631e03585023b5b29c91180c23507e0325310304`.
+Slot 1 decompresses to a 231,808-byte `PC` package, SHA-256
+`f26fe18f2471f12f068fa035dad1919ff1543207d96bf6b57e46c6ab6d1557b4`;
+section 0 is a 52,608-byte BCH, SHA-256
+`e36e76411b11f8008fd2d4671dfea4c4a9f2e3df45c5f3f0d259548071ed9092`.
+SPICA parses 13 H3D shader records from this section (no lights, scenes, or
+LUTs). [`inspect_pica_materials.cs`](../../../scripts/inspect_pica_materials.cs)
+reports each shader name, the exact `Program` byte-array offset, length, and
+SHA-256. Exact byte matches identify ten unique named program payloads among
+the 14 DVLB records. The offsets below are package-relative: add `0x80` to
+the BCH-relative `programOffset` reported by SPICA.
+
+| DVLB offset | H3D `Shader.Name` | Program bytes | Program SHA-256 |
+| ---: | --- | ---: | --- |
+| `0x30c` | `0@BattleChar` | 4,424 | `4c936cd13e03d51e6fd54922727658ae8cd8d20c18dee21b216d08e04fac9684` |
+| `0x1484` | `0@MegaYamiramiShader` | 4,528 | `cf670ed0e2fc44a7972f22ef3065f4f0e17bee5729cf799b9a126e005eee775b` |
+| `0x2664` | `0@PokePack`, `1@PokePack`, `2@PokePack` | 7,300 | `b0266cd6400748bdf0727132ff0a50d1fccecd68123c0de84b8b64fff168cd96` |
+| `0x4378` | `0@PressShadowTextureAlpha` | 2,584 | `4e4543ca7e091c019ee6b7ac2cc8feff7249d191a7bce5c0ccc1574c4af42f11` |
+| `0x4dc0` | `0@PokeFire` | 2,984 | `eb7a978a8b14b77bf68ebfc3f84a62fa32df94189d62d7337ce41f11ed35d2fa` |
+| `0x5998` | `0@PokeFireShadow` | 2,500 | `cd82d88aa0e3fbce90110e840312f35a560931c454a546cb2f6a1d817aedaf54` |
+| `0x638c` | `0@RareEffect` | 2,796 | `cdf80979d6b0b4c4a8113d1f7e6113932da8703bf0e62d890dec6939cf4401cd` |
+| `0x6ea8` | `0@MegaGangar`, `1@MegaGangar` | 5,852 | `6ba13807b0839b81f2c7ce4f98295f97e2874f3980540bfccc311bcfbbef8890` |
+| `0x85e4` | `0@PressShadow` | 4,740 | `956b70c5b9fbf6c44df9805ff962603428ec6bd9eb74a0096482562fb34cc1d6` |
+| `0x9898` | `0@RefrectShader` | 4,572 | `d8e4e8b4a2bed3c34570f4e67b0c27261291175df0cd44aa9340529fe02197fe` |
+
+`0@DefaultShader` is absent from these H3D shader records. The other four
+DVLB records in slot 1 have source-symbol names such as `gfx_UserShader.vsh`;
+those symbols do not provide an H3D `Shader.Name` or a material binding.
+`0@BattleChar` declares DVLE uniforms at register identifiers `MatAmbi=0x24`,
+`MatDiff=0x25`, `LightPowScale=0x26`, `DirLightVec=0x27`,
+`DirLightColor=0x28`, `PointLightPos=0x65`, and `LightCt=0x70`. `0@PokePack`
+also declares `InverseLightEnable=0x7d` and `LightingEnable=0x7e`. These are
+uniform/register identifiers from the shader metadata, not uploaded values or
+the PICA lighting-register range `0x0140..0x01bf`.
+
+### BM shader bytes
+
+`RomFS/a/0/0/3` is 1,147,800 bytes, SHA-256
+`1ca59c28a648293c7b34483d7a7d0544fc29bb55d71af26f482881dba962fa5f`. Slot
+138 is a 691,072-byte `BM` package, SHA-256
+`ae9175a8b3a028f0b4fb77d9d6fd242d8671d39fc03749fbbec3d483f3e751ff`. The
+H3D scene data has 16 lights, one scene, one LUT, no models, and no H3D shader
+records. Three nested DVLB records occur in sections 2, 5, and 11:
+
+| Package offset | Record bytes | DVLB record SHA-256 |
+| ---: | ---: | --- |
+| `0x2fbc` | 4,162 | `bcd7b8e677466dd67039e339e1b5d9c75dc4fdf6468c07ba5bd2c723ab7abcfa` |
+| `0xf930` | 2,646 | `592c21cde44f5bd0a0d065157a1f2d0d65b4aa0cdecadd5d204e1a50a2198676` |
+| `0xa7890` | 4,162 | `bcd7b8e677466dd67039e339e1b5d9c75dc4fdf6468c07ba5bd2c723ab7abcfa` |
+
+Their DVLE symbols include lighting-related interface names (`MatAmbi`,
+`MatDiff`, `LightCt`, and `HslSDir`), but no material or `LightSetIndex`
+selects these records. The resource's named light data therefore does not
+identify which entry reaches a model.
+
+### ExeFS table and class references
+
+`ExeFS/code.bin` is 5,439,488 bytes, SHA-256
+`b7f9ce60361f3709ed0ce879658afe10a712f7db060640fa72bba826301b7c16`, with
+analysis base VA `0x100000`. The seven-entry shader path table begins at file
+offset `0x517460` (runtime VA `0x617460`):
+
+| Entry | Path |
+| ---: | --- |
+| 0 | `rom:/g3d_common/gfl_DefaultShader.bcsdr` |
+| 1 | `rom:/g3d_common/gfl_DefaultShader.bchsdr` |
+| 2 | `rom:/g3d_common/nwgfx_ParticleDefaultShader.bcsdr` |
+| 3 | `rom:/g3d_common/nwgfx_DefaultShader.bcsdr` |
+| 4 | `rom:/kawada/shadow_resource/ShadowModel.bcmdl` |
+| 5 | `rom:/g3d_common/bloom_filter_high_luminance_board.bcres` |
+| 6 | `rom:/g3d_common/bloom_filter_bloom_board.bcres` |
+
+The path strings are at file offsets `0x4e3905`, `0x4e3989`, and `0x4e392d`
+for the GFL shader, GFL geometry shader, and NWGX shader respectively. The
+ARM literal-pool/PC-relative scan found no reference to the table's seven
+entries, and the Thumb literal-pool scan found none. It did find eight ARM
+literal loads into storage after the table: instructions at file offsets
+`0x282eb4/0x282ed0` target file offset `0x517490`; `0x282eec/0x282f08`
+target `0x51748c`; `0x282f24/0x282f3c` target `0x517488`; and
+`0x282f58/0x282f70` target `0x517484`. The table ends at `0x51747c`, so these
+loads do not point to a shader path entry. Other string references are not
+table references.
+
+The RTTI and vtable scan reports these file offsets and leading method targets:
+
+| Class | RTTI string | Vtable group | Leading method file offsets |
+| --- | ---: | ---: | --- |
+| `H3dLightSet` | `0x4cff60` | `0x4ddf14` | `0x39bcec`, `0x39bc94`, `0x39b930`, `0x39b968` |
+| `H3dModel` | `0x4cff48` | `0x4dde08` | `0x39b8f4`, `0x39b8b8`, `0x39b478`, `0x399ff8` |
+| `H3dResShader` | `0x4cfa3e` | `0x4dd85c` | `0x375884`, `0x375838`, `0x372708` |
+| `H3dEnvironment` | `0x4cfb4a` | `0x4dd9cc` | `0x37d41c`, `0x37d3f8` |
+| `SceneSystem` | `0x4cfa22` | `0x4dd84c` | `0x37565c`, `0x375568` |
+
+There is no `H3dMaterial` or `LightSetIndex` string in `code.bin`. The scan
+does find separate `nn::nw::gfx::Material` and `nn::nw::lyt::Material`
+vtable groups at `0x4dbafc` and `0x4dbf7c`; neither is evidence for the
+missing GFL material binding. Function VA `0x4ddf40` calls `0x19c368` at
+`0x4ddf5c`, `0x19c5d8` at `0x4ddf68`, `0x19c470` at `0x4ddf78`, and
+`0x19c5d8` again at `0x4ddf84`. The direct-call scan found no callers of
+`0x4ddf40` and no direct callers of the candidate class methods.
+
+### `PseudoLightingListener` boundary
+
+`DllField.cro` is 1,323,008 bytes, SHA-256
+`9ef39f553dfba33056f12f23051b8da1f667a5ba80c6f8f2af7a76db004bd925`.
+`PseudoLightingListener` has name offset `0x1003db`, typeinfo `0xfdee8`,
+vtable `0x1077e8`, and callback `0x2ee38`. Relocations point from vtable
+entry `0x1077f4` to the callback. The constructor candidate at `0x2f460`
+loads the address-point pointer `0x1077ec` from its literal at `0x2f47c` and
+stores it at `[r0]`; no direct caller of that constructor was found.
+
+The callback loops over eight records (counter `0..7`, active byte at
+`[record+0x164]`) and dispatches through vtable slots `+0x54` and `+0x50`.
+The four indirect calls are at CRO offsets `0x2f3b4`, `0x2f3d0`, `0x2f414`,
+and `0x2f430`. No static caller or call target ties those records to BM
+entries, a material's `LightSetIndex`, or PICA writes at `0x0140..0x01bf`.
+
+If runtime observation becomes necessary, set the first breakpoint at the
+loaded `DllField.cro` base plus `0x2ee38`; inspect the call arguments and
+the selected record at `base+0x2f3b4` and `base+0x2f414`. The loaded module
+base is runtime-dependent. This work did not open Azahar. The evidence still
+does not map material indices 0/1 to `light_sun`, `light_night`, a zone, or a
+time of day, and it does not justify changing `zoneEnvironment.ts`.
 
 ## ExeFS loader-name triage (A-123)
 

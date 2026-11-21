@@ -1362,4 +1362,25 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   cidade; seus quatro vertex colors são `(128,128,128,255)`, reproduzidos com
   `brightness(0.5)`, e os panes indicam tamanhos 16×16/32×16/16×16.
 
+## A-129 Nomes de shaders DVLB e callback de iluminação não provam binding de LightSet
+
+- **Data:** 2026-11-21; ROADMAP #4/P-007, `RomFS/a/`, `ExeFS/code.bin` e
+  `DllField.cro`.
+- **Erro a evitar:** atribuir `Shader.Name`, os uniforms `LightCt`/`DirLightVec`
+  ou uma luz do BM ao `LightSetIndex` de um material apenas porque os nomes,
+  vtables e recursos aparecem no mesmo processo.
+- **Evidência:** 291 DVLBs válidos foram catalogados, incluindo 13 registros
+  H3D nomeados no PC `a/0/0/8` slot 1 (231.808 bytes, SHA-256
+  `f26fe18f2471f12f068fa035dad1919ff1543207d96bf6b57e46c6ab6d1557b4`) e
+  três DVLBs dentro do BM `a/0/0/3` slot 138. Esse tamanho/hash atualiza a
+  medição antiga de A-118; o callback `PseudoLightingListener @0x2ee38`
+  percorre oito registros e usa chamadas indiretas, mas o rastreio não conecta
+  esses registros a um material, a uma entrada BM ou aos registradores PICA.
+  Veja [o catálogo e os offsets](features/pipeline-rom/pica-materials.md).
+- **Regra:** associe o nome H3D por correspondência exata do payload `Program`;
+  trate nomes e registradores do DVLE como metadados estáticos, não como valores
+  enviados em runtime. Só atribua `LightSetIndex` após seguir modelo/material
+  até a seleção da luz e o upload; sem essa prova, não extraia iluminação de
+  zona/horário nem altere `zoneEnvironment.ts`.
+
 
