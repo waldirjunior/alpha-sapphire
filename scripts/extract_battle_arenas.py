@@ -40,7 +40,7 @@ class BattleArenaSource:
 BATTLE_ARENA_SOURCES = {
     "grass": BattleArenaSource(slot=11, tag="btl_F_kusa"),
     "water": BattleArenaSource(slot=12, tag="btl_F_mizu"),
-    "cave": BattleArenaSource(slot=44, tag="btl_G_c_a1", container_magic=b"BG", package_entry=0),
+    "cave": BattleArenaSource(slot=70, tag="btl_G_do_0", container_magic=b"BG", package_entry=0),
     "gym": BattleArenaSource(slot=78, tag="btl_G_gym1", container_magic=b"BG", package_entry=0),
     "indoor": BattleArenaSource(slot=136, tag="btl_O_heya_m", container_magic=b"BG", package_entry=0),
 }
