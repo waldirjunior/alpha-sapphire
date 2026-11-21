@@ -231,6 +231,20 @@ def sound_reference(encoded_id: int | None, sounds: dict[int, dict[str, Any]]) -
     }
 
 
+def build_seplay_map(mappings: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    result: dict[str, dict[str, Any]] = {}
+    for row in sorted(mappings, key=lambda item: item["id"]):
+        reference = row.get("bcsar")
+        if reference is None:
+            continue
+        literal = f"0x{row['id'] & 0xFFFFFFFF:08X}"
+        mapping = {"bcsarIndex": reference["soundIndex"], "label": reference["label"]}
+        previous = result.setdefault(literal, mapping)
+        if previous != mapping:
+            raise ValueError(f"Literal SEPlay {literal} resolve para rótulos BCSAR conflitantes")
+    return result
+
+
 def scan_byte_offsets(blob: bytes, word: int, *, aligned: bool = False) -> list[int]:
     needle = struct.pack("<I", word)
     offsets = []
@@ -453,6 +467,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--zone-scripts", type=Path, default=Path("src/data/zone_scripts"))
     parser.add_argument("--trainers-json", type=Path, default=Path("src/data/battle/trainers.json"))
     parser.add_argument("--report", type=Path, default=Path("/tmp/audio-dispatch-report.json"))
+    parser.add_argument("--seplay-map", type=Path, help="exporta o lookup literal verificado como JSON puro")
     return parser
 
 
@@ -477,6 +492,10 @@ def main() -> int:
     report = build_report(args)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if args.seplay_map:
+        args.seplay_map.parent.mkdir(parents=True, exist_ok=True)
+        mappings = build_seplay_map(report["seplayDispatch"]["mappings"])
+        args.seplay_map.write_text(json.dumps(mappings, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(
         f"SEPlay {report['seplayDispatch']['verifiedCount']}/{report['seplayDispatch']['corpusLiteralCount']}; "
         f"trdata {report['trainerClassBgm']['trdataLiveTrainerCount']} treinadores; "

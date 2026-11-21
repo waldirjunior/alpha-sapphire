@@ -115,13 +115,18 @@ export class BgmPlayer {
   playSfx(cue: SfxCue, native?: BcsarSfxReference): void {
     if (!this.canPlaySfx()) return;
     if (native) {
-      void this.playNativeSfx(cue, native);
+      void this.playNativeSfxBuffer(cue, native);
       return;
     }
     this.playProceduralSfx(cue);
   }
 
-  private async playNativeSfx(cue: SfxCue, native: BcsarSfxReference): Promise<void> {
+  playNativeSfx(native: BcsarSfxReference): void {
+    if (!this.canPlaySfx()) return;
+    void this.playNativeSfxBuffer(undefined, native);
+  }
+
+  private async playNativeSfxBuffer(cue: SfxCue | undefined, native: BcsarSfxReference): Promise<void> {
     const context = this.context;
     if (!context) return;
     try {
@@ -132,7 +137,7 @@ export class BgmPlayer {
       source.connect(this.master ?? context.destination);
       source.start();
     } catch {
-      this.playProceduralSfx(cue);
+      if (cue) this.playProceduralSfx(cue);
     }
   }
 

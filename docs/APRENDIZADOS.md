@@ -1383,4 +1383,21 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   até a seleção da luz e o upload; sem essa prova, não extraia iluminação de
   zona/horário nem altere `zoneEnvironment.ts`.
 
+## A-TMP-seplay-cwav Duas referências de banco podem deixar um `SEPlay` ambíguo
+
+- **Data:** 2026-11-21; P-008, integração do dispatch literal e dos samples CWAV.
+- **Contexto:** o BCSAR liga as 72 chamadas literais do corpus ao índice/label
+  corretos, mas um CSEQ pode ter mais de um item de banco `0x03` no detalhe da
+  sequência (`+0x10` e `+0x74`), cada um seguindo para CWAR/CWAV diferentes.
+- **Evidência:** `SEQ_SE_MESSAGE`, `SEQ_SE_SYS_006`, `SEQ_SE_SYS_066` e
+  `SEQ_SE_FLD_KAIDAN` têm dois candidatos cada; os 70 literais ambíguos não
+  escolhem um sample. Só `0x000A0121 → 669 SEQ_SE_FLD_210` e
+  `0x000A0130 → 684 SEQ_SE_FLD_225` têm um único CWAV existente no corpus e
+  decodificado com pico PCM não zero. Veja a tabela completa em
+  [audio-dispatch-probe.md](features/pipeline-rom/audio-dispatch-probe.md).
+- **Regra:** preserve todos os ramos CSEQ → CBNK → CWAR → CWAV; exponha um WAV
+  ao runtime apenas se o caminho convergir a um único CWAV válido e audível.
+  Um sample de banco não prova a composição CSEQ nem substitui a observação do
+  banco/instrumento escolhido; caso contrário, mantenha o `SEPlay` em silêncio.
+
 

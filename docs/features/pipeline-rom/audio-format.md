@@ -66,6 +66,37 @@ A associação anterior de `343` a `file_3109_wave_000.cwav` estava errada: esse
 
 O `vgmstream-cli` local (r2168) lista `CWAV`, não `CSEQ`; a tentativa `vgmstream-cli -m file_0203.cseq` retorna `failed opening`. Não há sequenciador CSEQ instalado neste worktree, então a composição ficou bloqueada nesta sessão. A reprodução web procura `/assets/audio/sfx/bcsar_<índice>_<rótulo>.wav`; quando o WAV está ausente ou não decodifica, toca o padrão procedural do cue. CWAV é sample do banco, não uma gravação fiel da sequência nem prova de que o instrumento/nota selecionado usa aquele sample.
 
+### Exportar e verificar os CWAVs referenciados por `SEPlay`
+
+O comando abaixo exporta o lookup literal comprovado para `seplay_map.json`,
+resolve as referências CSEQ → CBNK → CWAR → CWAV, converte os quatro alvos
+prioritários e os caminhos CWAV únicos para `public/assets/audio/sfx/`, e grava
+em `seplay_samples.json` somente os samples com WAV audível e cadeia única.
+Os WAVs permanecem no checkout principal e são ignorados pelo Git.
+
+```sh
+python3 scripts/inspect_audio_dispatch.py \
+  --rom-root rom/extracted \
+  --seplay-map src/data/audio/seplay_map.json
+python3 scripts/convert_bcsar_cwav.py \
+  --input-dir rom/extracted/audio/bcsar_sfx \
+  --out-dir public/assets/audio/sfx \
+  --bcsar rom/extracted/RomFS/sound/sango_sound.bcsar \
+  --seplay-map src/data/audio/seplay_map.json \
+  --catalog-out src/data/audio/seplay_samples.json
+```
+
+No dump local, os 72 literais resolvem para índices/labels BCSAR. O conversor
+encontra dois caminhos CWAV únicos (`0x000A0121` → `669 SEQ_SE_FLD_210` e
+`0x000A0130` → `684 SEQ_SE_FLD_225`) e 70 literais ambíguos. Os quatro alvos
+prioritários têm dois CWAVs candidatos cada; seus oito samples foram decodificados
+com pico PCM não zero, mas não foram associados ao playback literal. A lista
+completa, incluindo cada literal e seus arquivos candidatos, está em
+[audio-dispatch-probe.md](audio-dispatch-probe.md#cadeias-cseq-e-amostras-cwav).
+O relatório local `seplay-cwav-manifest.json` registra as tentativas e falhas de
+decoder. O host permanece silencioso para sequências ambíguas e não toca cue
+procedural para elas; cues semânticos comprovados ainda usam o fallback deles.
+
 Comando reproduzível a partir da raiz do checkout, apontando `--bcsar` ao dump local da ROM:
 
 ```sh

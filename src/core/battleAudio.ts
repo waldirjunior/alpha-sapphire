@@ -2,6 +2,8 @@
 // WIN1..WIN3 por tipo de batalha é inferência pela ordem dos rótulos (A-027), não um campo lido da ROM.
 
 import type { BattleEvent } from './battleEvents';
+import seplayMap from '../data/audio/seplay_map.json';
+import seplaySamples from '../data/audio/seplay_samples.json';
 
 export type SfxCue = 'dialogue-confirm' | 'menu-open' | 'menu-select' | 'wall-bump' | 'zone-warp' |
   'door-close' | 'heal-chime' | 'battle-hit' | 'pokeball-throw' | 'pokeball-capture' | 'faint';
@@ -12,6 +14,12 @@ export interface BcsarSfxReference {
   label: string;
   url?: string;
 }
+
+interface SePlayMapping { bcsarIndex: number; label: string }
+interface SePlaySample { label: string; url: string }
+
+const SEPLAY_MAP: Readonly<Record<string, SePlayMapping>> = seplayMap;
+const SEPLAY_SAMPLES: Readonly<Record<string, SePlaySample>> = seplaySamples;
 
 const BCSAR_SFX = {
   message: { index: 261, label: 'SEQ_SE_MESSAGE' },
@@ -24,7 +32,16 @@ const BCSAR_SFX = {
   doorOpen: { index: 1481, label: 'SEQ_SE_KW_DOOROPEN' },
 } satisfies Readonly<Record<string, BcsarSfxReference>>;
 
-export const BCSAR_SFX_REFERENCES: readonly BcsarSfxReference[] = Object.values(BCSAR_SFX);
+const SEPLAY_SFX_REFERENCES: Readonly<Record<number, BcsarSfxReference>> = Object.entries(SEPLAY_SAMPLES)
+  .reduce<Record<number, BcsarSfxReference>>((references, [index, sample]) => {
+    const bcsarIndex = Number(index);
+    references[bcsarIndex] = { index: bcsarIndex, label: sample.label, url: sample.url };
+    return references;
+  }, {});
+
+export const BCSAR_SFX_REFERENCES: readonly BcsarSfxReference[] = [
+  ...Object.values(BCSAR_SFX), ...Object.values(SEPLAY_SFX_REFERENCES),
+];
 
 const NATIVE_SFX_BY_CUE: Readonly<Partial<Record<SfxCue, BcsarSfxReference>>> = {
   'dialogue-confirm': BCSAR_SFX.message,
@@ -131,6 +148,16 @@ export function resolveBattleSfx(event: BattleSfxEvent): SfxCue | null {
 
 export function resolveZoneSfx(soundId: number): SfxCue | null {
   return ZONE_SFX_CUES[soundId] ?? null;
+}
+
+export function resolveSePlayNativeSfx(soundId: number): BcsarSfxReference | undefined {
+  if (!Number.isInteger(soundId) || soundId < -0x80000000 || soundId > 0xffffffff) return undefined;
+  const value = soundId >>> 0;
+  const literal = `0x${(((value >>> 16) & 0xff) << 16 | (value & 0xffff)).toString(16).padStart(8, '0').toUpperCase()}`;
+  const mapping = SEPLAY_MAP[literal];
+  if (!mapping) return undefined;
+  const reference = SEPLAY_SFX_REFERENCES[mapping.bcsarIndex];
+  return reference?.label === mapping.label ? reference : undefined;
 }
 
 export function resolveSePlayBcsarId(

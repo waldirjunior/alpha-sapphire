@@ -235,6 +235,28 @@ describe('BgmPlayer', () => {
     expect(FakeContext.last.oscillators[0]).toMatchObject({ type: 'triangle', started: true });
   });
 
+  it('plays a native SEPlay sample directly without turning it into a procedural cue', async () => {
+    const fetchMock = stubFetch();
+    const player = new BgmPlayer();
+    await player.unlock();
+    player.playNativeSfx({ index: 669, label: 'SEQ_SE_FLD_210', url: '/assets/audio/sfx/field-210.wav' });
+
+    await vi.waitFor(() => expect(FakeContext.last.sources).toHaveLength(1));
+    expect(fetchMock).toHaveBeenCalledWith('/assets/audio/sfx/field-210.wav');
+    expect(FakeContext.last.oscillators).toHaveLength(0);
+  });
+
+  it('keeps an unavailable native SEPlay sample silent', async () => {
+    const fetchMock = stubFetch(404);
+    const player = new BgmPlayer();
+    await player.unlock();
+    player.playNativeSfx({ index: 669, label: 'SEQ_SE_FLD_210', url: '/assets/audio/sfx/missing.wav' });
+
+    await vi.waitFor(() => expect(fetchMock).toHaveBeenCalledOnce());
+    expect(FakeContext.last.sources).toHaveLength(0);
+    expect(FakeContext.last.oscillators).toHaveLength(0);
+  });
+
   it('does nothing for sound cues while muted, locked, or when WebAudio is unavailable', async () => {
     const player = new BgmPlayer();
     expect(() => player.playSfx('battle-hit')).not.toThrow();

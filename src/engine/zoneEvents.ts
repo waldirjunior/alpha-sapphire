@@ -9,7 +9,12 @@ import { classifyEventRequest, npcActorId, projectEventActors } from './eventHos
 import { EventMessageBanks } from './eventMessages';
 import type { EventWarp } from './eventWarp';
 import type { EventActorContext } from './eventTurns';
-import { resolveZoneSfx, type SfxCue } from '../core/battleAudio';
+import {
+  resolveSePlayNativeSfx,
+  resolveZoneSfx,
+  type BcsarSfxReference,
+  type SfxCue,
+} from '../core/battleAudio';
 
 interface TextSource { zone: number; lines: string[] }
 const texts = import.meta.glob<TextSource>('../data/texts/zones/*.json', { import: 'default' });
@@ -32,6 +37,7 @@ interface EventPorts {
   report(message: string): void;
   silentAudio(soundId: number): void;
   playSfx?(cue: SfxCue): void;
+  playNativeSfx?(native: BcsarSfxReference): void;
   chooseStarter?(active: () => boolean): Promise<{ handle: number; pokemon: AmxPokemon } | undefined>;
   battle?(args: readonly number[], party: readonly AmxPokemon[], active: () => boolean): Promise<number | undefined>;
   presentation?: { reset(): void; directions?(): Readonly<Record<number, number>>;
@@ -288,8 +294,16 @@ export class ZoneEvents {
 
   private playSoundEffect(soundId: number): AmxInput {
     const cue = resolveZoneSfx(soundId);
-    if (cue && this.ports.playSfx) this.ports.playSfx(cue);
-    else this.ports.silentAudio(soundId);
+    if (cue && this.ports.playSfx) {
+      this.ports.playSfx(cue);
+      return { kind: 'native-result', value: 0 };
+    }
+    const native = resolveSePlayNativeSfx(soundId);
+    if (native && this.ports.playNativeSfx) {
+      this.ports.playNativeSfx(native);
+      return { kind: 'native-result', value: 0 };
+    }
+    this.ports.silentAudio(soundId);
     return { kind: 'native-result', value: 0 };
   }
 
