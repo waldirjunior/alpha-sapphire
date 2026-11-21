@@ -1268,6 +1268,13 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   ou observe a seleção/upload em runtime. Nomes, vtables e constantes de
   caminho delimitam a busca, mas não autorizam parâmetros de renderização.
 
+## A-126 `SEPlay` usa `(arg >> 16) & 0xFF` (grupo) e `arg & 0xFFFF` (índice); `trclass @0x0C` guarda BGM de encontro EYE
+
+- **Data:** 2026-11-21; P-008, disassembly `DllField.cro` / `ExeFS/code.bin` e tabelas `trdata`/`trclass` (`audio-dispatch-probe.md`).
+- **Contexto:** suspeitava-se que literais `SEPlay` como `0x00060061` ou `0x000A001D` fossem menu/porta e que `trclass @0x0C` guardasse o tema de batalha `VS_*`.
+- **Evidência:** `DllField.cro @0x5CDE0` chama `code.bin @0x15984` sobre a tabela `0x492728`, resolvendo os 72 literais do corpus para rótulos BCSAR reais (`0x00060061→358 SEQ_SE_SYS_066`, `0x000A001D→409 SEQ_SE_FLD_KAIDAN`); já `trclass @0x0C` (`a/0/3/7`, lido por `TrainerGetInfo(3)` → `_TrainerBGMPlay`) aponta para 20 faixas `STRM_BGM_EYE_*` / `STRM_BGM_E_*`, não para `VS_*`.
+- **Regra:** decodifique `SEPlay` via `resolveSePlayBcsarId` sem assumir semântica pelo valor bruto, e não substitua `battleAudio.ts` `VS_*` pelo campo `trclass @0x0C`; próximo ID livre `A-127`.
+
 ## A-125 Recursos UI 2D e shaders ficam em GARC → LZ11 → darc (com footer CLIM em `-0x28`)
 
 - **Data:** 2026-11-21; P-011 / P-007, sondagem `DllTownmap.cro` e GARCs de UI (`townmap-cro-probe.md`).
