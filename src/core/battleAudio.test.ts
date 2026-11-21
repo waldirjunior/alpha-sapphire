@@ -7,6 +7,7 @@ import {
   resolveBattleSfx,
   resolveBcsarSfxReference,
   resolveCurrentMusic,
+  resolveSePlayBcsarId,
   resolveZoneSfx,
 } from './battleAudio';
 
@@ -63,12 +64,23 @@ describe('battle music adapter (P-008)', () => {
     expect(resolveBattleSfx({ type: 'pokeball', captured: true })).toBe('pokeball-capture');
   });
 
-  it('maps the observed early-game SEPlay IDs to procedural cues', () => {
+  it('keeps only zone literals with verified BCSAR cues', () => {
     expect(resolveZoneSfx(0x060000)).toBe('dialogue-confirm');
-    expect(resolveZoneSfx(0x060061)).toBe('menu-select');
-    expect(resolveZoneSfx(0x0a00dd)).toBe('zone-warp');
-    expect(resolveZoneSfx(0x0a0240)).toBe('battle-hit');
+    expect(resolveZoneSfx(0x060061)).toBeNull();
+    expect(resolveZoneSfx(0x0a001d)).toBeNull();
+    expect(resolveZoneSfx(0x0a00dd)).toBeNull();
+    expect(resolveZoneSfx(0x0a0240)).toBeNull();
     expect(resolveZoneSfx(123456)).toBeNull();
+  });
+
+  it('decodes SEPlay group and local ID through a ROM lookup table', () => {
+    const groups = { 6: [0x01000105, 0x01000166], 10: [0x0100017c] };
+
+    expect(resolveSePlayBcsarId(0x00060000, groups)).toBe(0x01000105);
+    expect(resolveSePlayBcsarId(0xab060001, groups)).toBe(0x01000166);
+    expect(resolveSePlayBcsarId(0x000a0000, groups)).toBe(0x0100017c);
+    expect(resolveSePlayBcsarId(0x00060002, groups)).toBeNull();
+    expect(resolveSePlayBcsarId(0x00070000, groups)).toBeNull();
   });
 
   it('resolves cue aliases to labeled BCSAR references without mapping battle-hit', () => {
