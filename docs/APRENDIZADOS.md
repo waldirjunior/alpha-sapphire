@@ -1332,4 +1332,55 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   apenas quando a escala correspondente de repouso BCH for diferente de zero;
   preserve escalas de repouso realmente zero.
 
+## A-128 Recursos de AreaNav, subslot inglês e chroma-key ciano
+
+- **Data:** 2026-11-21; ROADMAP #4/P-011, extração da AreaNav.
+- **Contexto:** `a/2/7/6` guarda sete subarquivos de idioma na única entrada GARC
+  (`FATO` conta 1 slot; `BTAF` conta 7 subarquivos). O leitor GARC legado que
+  usa a contagem BTAF como número de slots falha ao avançar para o slot 1.
+- **Erro a evitar:** procurar `CLYT`/`CLIM` somente no início do slot GARC ou
+  tratar subslot 0 como idioma inglês. O DARC está dentro do payload LZ11; o
+  BCLIM tem footer de 40 bytes, e o subslot inglês `map_navi01..05` é 1.
+- **Evidência:** `scripts/extract_arenav_ui.py` percorre `GARC → LZ11 → DARC`,
+  lê as panes `pan1`/`pic1`/`txt1` de `map_lower.bclyt` e gera 16 PNG/JSON locais.
+  O subslot 1 mostra “Places”, “Pokémon”, “Trainers”, “Bases” e “Berries”; os
+  BCLIMs exportados incluem o mapa Hoenn, sprites Brendan/May e os três arquivos
+  `map_city_icon`. A captura portada usa o mapa e marcadores nativos. A busca não
+  identificou os quatro glifos inferiores; `pokenavi_logo` é “POKEMON MULTI NAVI”,
+  não o título AreaNav.
+- **Regra:** use os limites de seção CLYT e os bounds exportados; mantenha o mapa
+  vetorial como fallback quando o PNG local faltar e não associe ação aos quatro
+  glifos sem evidência independente (A-121). A posição dos locais no texture map
+  é apenas ajuste visual enquanto a tabela de coordenadas nativa não for ligada.
+- **Atualização 2026-11-21:** `map_city_icon01..03.bclim` e `cursol.bclim` usam
+  formato 8 (`RGBA4`), mas os pixels de fundo ciano estão opacos. O decoder deve
+  zerar alpha para a chave ciano e seus tons de borda nos quatro assets; os
+  demais pixels mantêm o alpha embutido. Para exibir o mapa, preserve os 380×270
+  pixels de origem e centralize o ponto atual dentro da viewport recortada,
+  limitando o offset a `viewport - mapa` para não revelar espaço fora da textura.
+  As panes `4t`/`4v`/`4x` vinculam os materiais 36/37/38 às três texturas de
+  cidade; seus quatro vertex colors são `(128,128,128,255)`, reproduzidos com
+  `brightness(0.5)`, e os panes indicam tamanhos 16×16/32×16/16×16.
+
+## A-129 Nomes de shaders DVLB e callback de iluminação não provam binding de LightSet
+
+- **Data:** 2026-11-21; ROADMAP #4/P-007, `RomFS/a/`, `ExeFS/code.bin` e
+  `DllField.cro`.
+- **Erro a evitar:** atribuir `Shader.Name`, os uniforms `LightCt`/`DirLightVec`
+  ou uma luz do BM ao `LightSetIndex` de um material apenas porque os nomes,
+  vtables e recursos aparecem no mesmo processo.
+- **Evidência:** 291 DVLBs válidos foram catalogados, incluindo 13 registros
+  H3D nomeados no PC `a/0/0/8` slot 1 (231.808 bytes, SHA-256
+  `f26fe18f2471f12f068fa035dad1919ff1543207d96bf6b57e46c6ab6d1557b4`) e
+  três DVLBs dentro do BM `a/0/0/3` slot 138. Esse tamanho/hash atualiza a
+  medição antiga de A-118; o callback `PseudoLightingListener @0x2ee38`
+  percorre oito registros e usa chamadas indiretas, mas o rastreio não conecta
+  esses registros a um material, a uma entrada BM ou aos registradores PICA.
+  Veja [o catálogo e os offsets](features/pipeline-rom/pica-materials.md).
+- **Regra:** associe o nome H3D por correspondência exata do payload `Program`;
+  trate nomes e registradores do DVLE como metadados estáticos, não como valores
+  enviados em runtime. Só atribua `LightSetIndex` após seguir modelo/material
+  até a seleção da luz e o upload; sem essa prova, não extraia iluminação de
+  zona/horário nem altere `zoneEnvironment.ts`.
+
 

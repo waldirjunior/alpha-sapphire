@@ -18,7 +18,9 @@ byte[] ModelSection(byte[] blob)
 object Inspect(string file)
 {
     byte[] blob = File.ReadAllBytes(file);
+    string sourceSha256 = Convert.ToHexString(SHA256.HashData(blob)).ToLowerInvariant();
     var scenes = new List<H3D>();
+    var shaderSources = new List<byte[]>();
     if (blob.AsSpan(0, 2).SequenceEqual("AD"u8))
     {
         int count = BinaryPrimitives.ReadUInt16LittleEndian(blob.AsSpan(2));
@@ -27,14 +29,33 @@ object Inspect(string file)
             int start = BinaryPrimitives.ReadInt32LittleEndian(blob.AsSpan(4 + i * 4));
             int end = BinaryPrimitives.ReadInt32LittleEndian(blob.AsSpan(8 + i * 4));
             if (end-start >= 4 && blob.AsSpan(start, 4).SequenceEqual("BCH\0"u8))
-                scenes.Add(H3D.Open(blob.AsSpan(start, end-start).ToArray()));
+            {
+                byte[] source = blob.AsSpan(start, end-start).ToArray();
+                shaderSources.Add(source);
+                scenes.Add(H3D.Open(source.ToArray()));
+            }
         }
     }
-    else scenes.Add(H3D.Open(ModelSection(blob)));
+    else
+    {
+        byte[] source = ModelSection(blob);
+        shaderSources.Add(source);
+        scenes.Add(H3D.Open(source.ToArray()));
+    }
+    var shaders = new List<object>();
+    for (int index = 0; index < scenes.Count; index++)
+        foreach (var shader in scenes[index].Shaders)
+            shaders.Add(new {
+                shader.Name, shader.VtxShaderIndex, shader.GeoShaderIndex,
+                programOffset = shaderSources[index].AsSpan().IndexOf(shader.Program),
+                programLength = shader.Program.Length,
+                programSha256 = Convert.ToHexString(SHA256.HashData(shader.Program)).ToLowerInvariant()
+            });
     return new {
-        source = file, sha256 = Convert.ToHexString(SHA256.HashData(blob)).ToLowerInvariant(),
+        source = file, sha256 = sourceSha256,
         resourceCounts = new {lights = scenes.Sum(s => s.Lights.Count), scenes = scenes.Sum(s => s.Scenes.Count),
             shaders = scenes.Sum(s => s.Shaders.Count), luts = scenes.Sum(s => s.LUTs.Count)},
+        shaders,
         textures = scenes.SelectMany(scene => scene.Textures).Select(texture => new {texture.Name, texture.Width, texture.Height,
             rgba_sha256 = Convert.ToHexString(SHA256.HashData(texture.ToRGBA())).ToLowerInvariant()}),
         models = scenes.SelectMany(scene => scene.Models).Select(model => new {

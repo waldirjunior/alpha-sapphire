@@ -202,3 +202,57 @@ python3 scripts/inspect_arenav_assets.py \
 Os arquivos extraídos e PNGs de inspeção permaneceram fora do worktree e não
 foram versionados. Não foi executado e2e, pois esta entrega altera somente
 scripts e documentação; nenhuma captura ou baseline foi criada ou aprovada.
+
+## 11. Extração e integração da AreaNav — 2026-11-21
+
+`scripts/extract_arenav_ui.py` percorre GARC → LZ11 → DARC, extrai BCLIMs
+selecionados para PNG e decodifica as panes `pan1`, `pic1` e `txt1` de
+`map_lower.bclyt` para `map_lower.layout.json`. A saída local contém 16 arquivos:
+`poke_navi_map.png` (380×270 ETC1), `map_city_icon01..03.png`, os sprites
+`hero_obj.png`/`heroine_obj.png`, `map_navi01..05.png` do subslot inglês 1,
+`map.png` (320×240), `finger_icon.png` e o JSON com 335 panes. O CLYT confirma
+tela raiz 320×240, pane do mapa em `(0,15)` com 380×270 e pane de título 190×30.
+
+`areaNav.ts` mostra `poke_navi_map.png`, marcadores nativos para cidades e
+vilas, e o sprite Brendan/May conforme o gênero salvo; se o mapa falhar ao
+carregar, a composição vetorial anterior volta a aparecer. As coordenadas dos
+marcadores existentes são ajustadas visualmente à textura, pois `map_lower`
+não contém o vínculo entre cada local Hoenn e um pixel do mapa. O título textual
+AreaNav permanece no host: o arquivo consultado contém panes de texto, sem uma
+faixa bitmap com esse título. `pokenavi_logo.bclim` em `a/2/4/7` diz “POKEMON
+MULTI NAVI”, não “AreaNav”. A busca em `a/0/6/6..9`, `a/1/5/0`, slots
+181–186 de `a/1/5/2`, `a/2/4/4`, `a/2/4/7` e subslots 0–6 de `a/2/7/6` não
+identificou os quatro glifos quadrados da faixa inferior. `map_navi01..05`
+mostram “Places”, “Pokémon”, “Trainers”, “Bases” e “Berries”; não são essa
+faixa. Os quatro glifos permanecem decorativos e sem handlers, conforme A-121.
+
+Testes sintéticos em `scripts/test_extract_arenav_ui.py` cobrem bounds/nome de
+panes e extração DARC/BCLIM. `src/game/areaNav.test.ts` cobre medidas do CLYT,
+URLs, marcadores e retorno ao fallback.
+
+No ajuste visual v2, `map_lower.layout.json` confirmou `RootPane` 320×240,
+`pic1` do mapa em `(0,15)` com 380×270 e `pan1` `s` em `(0,15)` com 320×210.
+A moldura visível da captura Azahar foi ajustada para 245×176 em `(0,15)`; a
+imagem é desenhada 1:1 e deslocada para centralizar o marcador do jogador,
+limitando o recorte aos bounds da textura. A faixa superior cobre y=0..15. Os
+marcadores nativos usam 32×16 (cidade) e 16×16 (vila), conforme as panes `4v`
+e `4t` do CLYT; a ordem de desenho mantém o ponto selecionado clicável mesmo
+quando outro ponto fica sobreposto.
+
+Os BCLIMs dos ícones têm pixel format 8 (`RGBA4`), portanto carregam alpha de 4
+bits; pixels ciano `(0,255,255)`/`(0,255,221)` e tons próximos nas bordas chegam
+com alpha opaco. O decoder aplica a chave ciano nesses quatro assets e mantém o
+alpha dos demais pixels. O CLYT liga `pic1` `4t`, `4v` e `4x` aos materiais 36,
+37 e 38, que apontam para `map_city_icon01..03`; seus quatro vertex colors são
+`(128,128,128,255)`, por isso a integração aplica `brightness(0.5)`. O `pic1`
+do mapa (`name=0`) tem os quatro vértices brancos, material index 0 e UVs
+cobrindo o conteúdo.
+
+A captura `/tmp/arenav-check-v2.png` foi comparada com a referência Azahar: o
+mapa aparece em escala 1:1, recortado no sudoeste ao redor de Littleroot, com
+marcadores sem caixas ciano e a faixa superior clara. Os glifos inferiores
+seguem aproximados; a busca anterior não localizou seus bitmaps, e continuam
+sem handlers conforme A-121. O cenário e2e passou métricas, seleção e conteúdo,
+mas o snapshot visual segue diferente do baseline versionado (40.211 pixels,
+53%); não regravá-lo nesta etapa. `npm run verify` e os sete cenários smoke
+passaram. PNGs e relatórios locais ficam fora do Git.

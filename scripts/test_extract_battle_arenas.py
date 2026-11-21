@@ -21,8 +21,8 @@ class BattleArenaSourceTest(unittest.TestCase):
         self.assertEqual(BATTLE_ARENA_SOURCES["grass"].tag, "btl_F_kusa")
         self.assertEqual(BATTLE_ARENA_SOURCES["water"].slot, 12)
         self.assertEqual(BATTLE_ARENA_SOURCES["water"].tag, "btl_F_mizu")
-        self.assertEqual(BATTLE_ARENA_SOURCES["cave"].slot, 44)
-        self.assertEqual(BATTLE_ARENA_SOURCES["cave"].tag, "btl_G_c_a1")
+        self.assertEqual(BATTLE_ARENA_SOURCES["cave"].slot, 70)
+        self.assertEqual(BATTLE_ARENA_SOURCES["cave"].tag, "btl_G_do_0")
         self.assertEqual(BATTLE_ARENA_SOURCES["gym"].slot, 78)
         self.assertEqual(BATTLE_ARENA_SOURCES["gym"].tag, "btl_G_gym1")
         self.assertEqual(BATTLE_ARENA_SOURCES["indoor"].slot, 136)
@@ -47,6 +47,7 @@ class BattleArenaSourceTest(unittest.TestCase):
             grass = b"BCH\x00" + b"btl_F_kusa\x00"
             water = b"BCH\x00" + b"btl_F_mizu\x00"
             cave = b"BCH\x00" + b"btl_G_c_a1\x00"
+            dungeon = b"BCH\x00" + b"btl_G_do_0\x00"
             gym = b"BCH\x00" + b"btl_G_gym1\x00"
             indoor = b"BCH\x00btl_O_heya_m\x00"
             grass_stage = b"BCH\x00btl_O_kusa_m\x00"
@@ -56,6 +57,7 @@ class BattleArenaSourceTest(unittest.TestCase):
             (unpacked / "0011.bin").write_bytes(grass)
             (unpacked / "0012.bin").write_bytes(water)
             (unpacked / "0044.bin").write_bytes(self.pack_bg(cave))
+            (unpacked / "0070.bin").write_bytes(self.pack_bg(dungeon))
             (unpacked / "0078.bin").write_bytes(self.pack_bg(gym))
             (unpacked / "0118.bin").write_bytes(self.pack_bg(cave_stage))
             (unpacked / "0125.bin").write_bytes(self.pack_bg(gym_stage))
@@ -69,7 +71,7 @@ class BattleArenaSourceTest(unittest.TestCase):
             self.assertEqual(set(sources), {"grass", "water", "cave", "gym", "indoor"})
             self.assertEqual(sources["grass"].read_bytes(), grass)
             self.assertEqual(sources["water"].read_bytes(), water)
-            self.assertEqual(sources["cave"].read_bytes(), cave)
+            self.assertEqual(sources["cave"].read_bytes(), dungeon)
             self.assertEqual(sources["gym"].read_bytes(), gym)
             self.assertEqual(sources["indoor"].read_bytes(), indoor)
             self.assertEqual(stages["grass"].read_bytes(), grass_stage)
@@ -102,11 +104,11 @@ class BattleArenaSourceTest(unittest.TestCase):
             unpacked = Path(temporary)
             (unpacked / "0011.bin").write_bytes(b"BCH\x00btl_F_kusa\x00")
             (unpacked / "0012.bin").write_bytes(b"BCH\x00btl_F_mizu\x00")
-            (unpacked / "0044.bin").write_bytes(self.pack_bg(b"BCH\x00btl_G_c_b1\x00"))
+            (unpacked / "0070.bin").write_bytes(self.pack_bg(b"BCH\x00btl_G_c_b1\x00"))
             (unpacked / "0078.bin").write_bytes(self.pack_bg(b"BCH\x00btl_G_gym1\x00"))
             (unpacked / "0136.bin").write_bytes(self.pack_bg(b"BCH\x00btl_O_heya_m\x00"))
 
-            with self.assertRaisesRegex(ValueError, "btl_G_c_a1"):
+            with self.assertRaisesRegex(ValueError, "btl_G_do_0"):
                 load_battle_arena_sources(unpacked)
 
     def test_rejects_bg_entry_with_out_of_bounds_offsets(self) -> None:
@@ -114,9 +116,9 @@ class BattleArenaSourceTest(unittest.TestCase):
             unpacked = Path(temporary)
             (unpacked / "0011.bin").write_bytes(b"BCH\x00btl_F_kusa\x00")
             (unpacked / "0012.bin").write_bytes(b"BCH\x00btl_F_mizu\x00")
-            malformed = bytearray(self.pack_bg(b"BCH\x00btl_G_c_a1\x00"))
+            malformed = bytearray(self.pack_bg(b"BCH\x00btl_G_do_0\x00"))
             struct.pack_into("<II", malformed, 4, 128, len(malformed) + 1)
-            (unpacked / "0044.bin").write_bytes(malformed)
+            (unpacked / "0070.bin").write_bytes(malformed)
             (unpacked / "0078.bin").write_bytes(self.pack_bg(b"BCH\x00btl_G_gym1\x00"))
             (unpacked / "0136.bin").write_bytes(self.pack_bg(b"BCH\x00btl_O_heya_m\x00"))
 
@@ -128,7 +130,7 @@ class BattleArenaSourceTest(unittest.TestCase):
             unpacked = Path(temporary)
             (unpacked / "0011.bin").write_bytes(b"BCH\x00btl_F_kusa\x00")
             (unpacked / "0012.bin").write_bytes(b"BCH\x00btl_F_mizu\x00")
-            (unpacked / "0044.bin").write_bytes(b"BG\x04\x00")
+            (unpacked / "0070.bin").write_bytes(b"BG\x04\x00")
             (unpacked / "0078.bin").write_bytes(self.pack_bg(b"BCH\x00btl_G_gym1\x00"))
             (unpacked / "0136.bin").write_bytes(self.pack_bg(b"BCH\x00btl_O_heya_m\x00"))
 
