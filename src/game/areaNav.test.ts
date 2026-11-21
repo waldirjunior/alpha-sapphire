@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bringSelectedLocationForward } from './areaNav';
+import { placeSelectedLocationBeforePlayer } from './areaNav';
 import {
   AREA_NAV_CLYT_LAYOUT,
   areaNavMarkerSize,
@@ -49,9 +49,7 @@ describe('AreaNav ROM assets', () => {
     const rustboro = { dataset: { locationId: 'rustboro-city' } };
     const player = { dataset: {} };
     const order: Array<{ dataset: { locationId?: string } }> = [littleroot, rustboro, player];
-    const svg = {
-      querySelectorAll: () => [littleroot, rustboro],
-      querySelector: () => player,
+    const layer = {
       insertBefore: (node: typeof littleroot, child: typeof player | null) => {
         const current = order.indexOf(node);
         if (current >= 0) order.splice(current, 1);
@@ -65,7 +63,7 @@ describe('AreaNav ROM assets', () => {
       },
     };
 
-    bringSelectedLocationForward(svg, 'littleroot-town');
+    placeSelectedLocationBeforePlayer(layer, [littleroot, rustboro], player, 'littleroot-town');
 
     expect(order.map((node) => node.dataset.locationId ?? 'player')).toEqual([
       'rustboro-city',

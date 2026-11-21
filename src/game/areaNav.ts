@@ -341,22 +341,29 @@ function updateMapSelection(
   updateMapDetails(details, location);
 }
 
-export interface AreaNavSvgLayer<TMarker, TPlayer> {
-  querySelectorAll(selectors: string): Iterable<TMarker>;
-  querySelector(selectors: string): TPlayer | null;
+export interface AreaNavMarkerLayer<TMarker, TPlayer> {
   insertBefore(node: TMarker, child: TPlayer | null): unknown;
   appendChild(node: TMarker): unknown;
 }
 
-export function bringSelectedLocationForward<
+export function bringSelectedLocationForward(svg: SVGSVGElement, locationId: string | null): void {
+  const markers = Array.from(svg.querySelectorAll<SVGGElement>('.hoenn-map-location'));
+  const playerMarker = svg.querySelector<SVGGElement>('.hoenn-player-marker');
+  placeSelectedLocationBeforePlayer<SVGGElement, SVGGElement>(svg, markers, playerMarker, locationId);
+}
+
+export function placeSelectedLocationBeforePlayer<
   TMarker extends { readonly dataset: { readonly locationId?: string } },
   TPlayer,
->(svg: AreaNavSvgLayer<TMarker, TPlayer>, locationId: string | null): void {
-  const selected = Array.from(svg.querySelectorAll('.hoenn-map-location'))
-    .find((marker) => marker.dataset.locationId === locationId);
-  const playerMarker = svg.querySelector('.hoenn-player-marker');
-  if (selected && playerMarker) svg.insertBefore(selected, playerMarker);
-  else if (selected) svg.appendChild(selected);
+>(
+  layer: AreaNavMarkerLayer<TMarker, TPlayer>,
+  markers: readonly TMarker[],
+  playerMarker: TPlayer | null,
+  locationId: string | null,
+): void {
+  const selected = markers.find((marker) => marker.dataset.locationId === locationId);
+  if (selected && playerMarker) layer.insertBefore(selected, playerMarker);
+  else if (selected) layer.appendChild(selected);
 }
 
 function updateMapDetails(details: HTMLElement, location: HoennLocation | undefined): void {
