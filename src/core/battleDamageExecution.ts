@@ -19,7 +19,8 @@ export function executeOneHitKnockout(user: PokemonInstance, target: PokemonInst
   }
   const saved = saveFromLethalHit(target);
   if (saved) return { user, target: saved.pokemon, messages: [used, saved.message], flinched: false };
-  return withMoxie({ user, target: { ...target, currentHp: 0 }, messages: [used, 'Nocaute em um golpe!'], flinched: false }, true);
+  const outcome = withMoxie({ user, target: { ...target, currentHp: 0 }, messages: [used, 'Nocaute em um golpe!'], flinched: false }, true);
+  return applyDestinyBond(outcome, target, true);
 }
 
 export function executeDamagingMove(
@@ -60,7 +61,8 @@ function damageHits(
   const hit = applyHits(user, target, move, damageMove, rng, context, hits);
   const outcome = summarizeHits(user, move, hit, effectiveness, hits);
   const hpEffects = applyAfterDamage(outcome, move, hit.damage, rng);
-  const boosted = withMoxie(hpEffects, hit.knockedOut);
+  const bonded = applyDestinyBond(hpEffects, target, hit.knockedOut);
+  const boosted = withMoxie(bonded, hit.knockedOut);
   const withContact = addContactEffect(boosted, move, rng, hit.landedHits, hit.damage);
   const postHit = removeKnockedOffItem(withContact, move);
   const switched = (move.name === 'U-turn' || move.name === 'Volt Switch') && hit.damage > 0
@@ -135,7 +137,7 @@ function summarizeHits(
 }
 
 function withMoxie(outcome: MoveOutcome, knockedOut: boolean): MoveOutcome {
-  if (!knockedOut) return outcome;
+  if (!knockedOut || outcome.user.currentHp === 0) return outcome;
   const result = triggerMoxie(outcome.user);
   return {
     ...outcome,
@@ -186,6 +188,9 @@ function applyDamageHit(target: PokemonInstance, damage: number): { pokemon: Pok
 }
 
 function saveFromLethalHit(target: PokemonInstance): { pokemon: PokemonInstance; message: string } | null {
+  if (target.volatile.enduring) {
+    return { pokemon: { ...target, currentHp: 1 }, message: `${target.species.name} aguentou o golpe com 1 HP!` };
+  }
   if (target.currentHp !== target.maxHp) return null;
   if (target.ability === 'Sturdy') {
     return { pokemon: { ...target, currentHp: 1 }, message: `A habilidade Sturdy de ${target.species.name} impediu o nocaute!` };
@@ -194,6 +199,15 @@ function saveFromLethalHit(target: PokemonInstance): { pokemon: PokemonInstance;
     return { pokemon: { ...target, currentHp: 1, heldItem: null }, message: `${target.species.name} aguentou o golpe com Focus Sash!` };
   }
   return null;
+}
+
+function applyDestinyBond(outcome: MoveOutcome, target: PokemonInstance, knockedOut: boolean): MoveOutcome {
+  if (!knockedOut || !target.volatile.destinyBond) return outcome;
+  return {
+    ...outcome,
+    user: { ...outcome.user, currentHp: 0 },
+    messages: [...outcome.messages, `${target.species.name} levou o atacante junto com Destiny Bond!`],
+  };
 }
 
 function addContactEffect(outcome: MoveOutcome, move: BattleMove, rng: Rng, hits: number, damage: number): MoveOutcome {

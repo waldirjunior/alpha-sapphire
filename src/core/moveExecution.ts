@@ -7,6 +7,7 @@ import type { BattleHazards, BattleScreen, BattleScreenState, BattleWeather, Bat
 import { executeDamagingMove, executeOneHitKnockout } from './battleDamageExecution';
 import { applyStatChanges, inflictConfusion } from './battleMoveEffects';
 import { attractMove, disableMove, encoreMove, perishSongMove, yawnMove } from './battleVolatileMoves';
+import { executeQuality13Move } from './battleQuality13Moves';
 
 export interface MoveOutcome {
   user: PokemonInstance;
@@ -19,6 +20,7 @@ export interface MoveOutcome {
   batonPass?: boolean;
   hitSubstitute?: boolean;
   escapeBattle?: boolean;
+  curePartyStatus?: boolean;
 }
 
 export interface MoveExecutionContext {
@@ -61,6 +63,7 @@ export function spendPp(user: PokemonInstance, moveIndex: number, target: Pokemo
 
 export function rollAccuracy(user: PokemonInstance, target: PokemonInstance, move: BattleMove, rng: Rng): boolean {
   if (isUntargetableInCharge(target, move)) return false;
+  if (user.volatile.lockedOn) return true;
   if (move.accuracy === ALWAYS_HITS_ACCURACY || !targetsFoe(move)) return true;
   const threshold = move.quality === 9 ? ohkoAccuracy(user, target, move) : move.accuracy * accuracyStageMultiplier(user.stages.accuracy, target.stages.evasion);
   if (threshold === 0) return false;
@@ -77,22 +80,26 @@ export function executeMove(
   const charge = prepareCharge(user, target, move);
   if (charge) return charge;
   const readyUser = clearCompletedCharge(user, move);
+  const consumesLock = readyUser.volatile.lockedOn === true && move.name !== 'Mind Reader' && move.name !== 'Lock-On';
+  const actionUser = consumesLock
+    ? { ...readyUser, volatile: { ...readyUser.volatile, lockedOn: false } }
+    : readyUser;
   if (targetsFoe(move) && move.category === 'status' && move.name !== 'Perish Song' && (target.volatile.substituteHp ?? 0) > 0) {
-    return { user: readyUser, target, messages: [`O substituto de ${target.species.name} protegeu o alvo!`], flinched: false };
+    return { user: actionUser, target, messages: [`O substituto de ${target.species.name} protegeu o alvo!`], flinched: false };
   }
   if (move.name === 'Sucker Punch' && !isDamagingCategory(context.targetMoveCategory)) {
-    return { user: readyUser, target, messages: [`${readyUser.species.name} usou Sucker Punch, mas falhou!`], flinched: false };
+    return { user: actionUser, target, messages: [`${actionUser.species.name} usou Sucker Punch, mas falhou!`], flinched: false };
   }
-  if (!rollAccuracy(readyUser, target, move, rng)) {
-    return { user: readyUser, target, messages: [`${readyUser.species.name} usou ${move.name}, mas errou!`], flinched: false };
+  if (!consumesLock && !rollAccuracy(actionUser, target, move, rng)) {
+    return { user: actionUser, target, messages: [`${actionUser.species.name} usou ${move.name}, mas errou!`], flinched: false };
   }
   if (move.quality === 9) {
-    if (moveEffectiveness(move, target) === 0) return ineffectiveMove(readyUser, target, move);
-    return executeOneHitKnockout(readyUser, target, move);
+    if (moveEffectiveness(move, target) === 0) return ineffectiveMove(actionUser, target, move);
+    return executeOneHitKnockout(actionUser, target, move);
   }
   return move.category === 'status'
-    ? executeStatusMove(readyUser, target, move, rng, context)
-    : executeDamagingMove(readyUser, target, move, rng, context);
+    ? executeStatusMove(actionUser, target, move, rng, context)
+    : executeDamagingMove(actionUser, target, move, rng, context);
 }
 
 function prepareCharge(user: PokemonInstance, target: PokemonInstance, move: BattleMove): MoveOutcome | null {
@@ -181,7 +188,6 @@ function executeQualityThirteen(
   if (move.name === 'Splash') return { user, target, messages: [used, 'Mas não teve efeito!'], flinched: false };
   if (move.name === 'Teleport') return teleportMove(user, target, used, context.trainerBattle === true);
   if (isEscapeTrap(move.name)) return escapeTrapMove(user, target, used);
-  if (move.name === 'Protect' || move.name === 'Detect') return protectMove(user, target, rng, used);
   if (move.name === 'Baton Pass') return { user, target, messages: [used], flinched: false, switchUser: true, batonPass: true };
   if (move.name === 'Taunt') return tauntMove(user, target, used);
   if (move.name === 'Disable') return disableMove(user, target, used);
@@ -189,7 +195,8 @@ function executeQualityThirteen(
   if (move.name === 'Substitute') return substituteMove(user, target, used);
   if (move.name === 'Defog') return { user, target, messages: [used, 'Os perigos e barreiras foram dissipados!'], flinched: false,
     fieldUpdate: { clearHazards: 'both', clearScreens: true } };
-  return unsupportedMove(user, target, move, used);
+  return executeQuality13Move(user, target, move, rng, used, context, executeMove)
+    ?? unsupportedMove(user, target, move, used);
 }
 
 function teleportMove(user: PokemonInstance, target: PokemonInstance, used: string, trainerBattle: boolean): MoveOutcome {
@@ -221,17 +228,6 @@ function substituteMove(user: PokemonInstance, target: PokemonInstance, used: st
     volatile: { ...user.volatile, substituteHp: cost },
   };
   return { user: created, target, messages: [used, `${user.species.name} criou um substituto!`], flinched: false };
-}
-
-function protectMove(user: PokemonInstance, target: PokemonInstance, rng: Rng, used: string): MoveOutcome {
-  const volatile = user.volatile;
-  const successChance = 1 / (2 ** volatile.protectStreak);
-  if (Math.min(0.999999, Math.max(0, rng())) >= successChance) {
-    return { user: { ...user, volatile: { ...volatile, protectStreak: 0, protecting: false } }, target,
-      messages: [used, `${user.species.name} não conseguiu se proteger!`], flinched: false };
-  }
-  const protectedUser = { ...user, volatile: { ...volatile, protectStreak: volatile.protectStreak + 1, protecting: true } };
-  return { user: protectedUser, target, messages: [used, `${user.species.name} se protegeu!`], flinched: false };
 }
 
 function tauntMove(user: PokemonInstance, target: PokemonInstance, used: string): MoveOutcome {

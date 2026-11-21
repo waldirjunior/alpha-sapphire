@@ -6,6 +6,7 @@ import { toBattleMove } from '../core/battlePokemon';
 import { getMoveByName, getSpeciesById } from '../core/dex';
 import { applyResidualDamage, checkCanAct } from '../core/statusConditions';
 import { executeMove } from '../core/moveExecution';
+import { rollCritical } from '../core/damage';
 
 const alwaysMaxDamage = () => 1;
 
@@ -58,6 +59,22 @@ describe('Gen VI battle formula parity vectors', () => {
     ];
 
     expect(values).toEqual([42, 54, 8, 15]);
+  });
+
+  it('matches the Focus Energy critical-stage boundary and Aqua Ring recovery vector', () => {
+    const focusedBase = pokemon('torchic', 30, 'Focus Energy');
+    const focused = executeMove(focusedBase, pokemon('wurmple', 30, 'Splash'), toBattleMove(getMoveByName('Focus Energy')), () => 0).user;
+    const target = pokemon('wurmple', 30, 'Splash');
+    const ring = executeMove(focusedBase, target, toBattleMove(getMoveByName('Aqua Ring')), () => 0).user;
+    const recovery = applyResidualDamage({ ...ring, currentHp: ring.maxHp - 16 }).pokemon.currentHp - (ring.maxHp - 16);
+    const values = [
+      rollCritical(target, getMoveByName('Tackle'), () => 0.49, focused),
+      rollCritical(target, getMoveByName('Tackle'), () => 0.5, focused),
+      calculateDamage(focused, target, toBattleMove(getMoveByName('Tackle')), alwaysMaxDamage, { critical: true }),
+      recovery,
+    ];
+
+    expect(values).toEqual([true, false, 36, 4]);
   });
 
   it('matches deterministic Gen VI vectors for Knock Off, pivot attacks, and Sucker Punch', () => {

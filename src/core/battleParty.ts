@@ -71,6 +71,17 @@ export function withPokemon(state: BattleState, side: BattleSide, pokemon: Pokem
   return { ...state, enemy: pokemon, enemyParty: replaceAt(state.enemyParty, state.enemyActive, pokemon) };
 }
 
+export function curePartyStatuses(state: BattleState, side: BattleSide): BattleState {
+  if (side === 'player') {
+    const playerParty = state.playerParty.map((member) => member.status ? { ...member, status: null } : member);
+    const player = playerParty[state.playerActive];
+    return player ? { ...state, player, playerParty } : state;
+  }
+  const enemyParty = state.enemyParty.map((member) => member.status ? { ...member, status: null } : member);
+  const enemy = enemyParty[state.enemyActive];
+  return enemy ? { ...state, enemy, enemyParty } : state;
+}
+
 export function appendLog(state: BattleState, messages: readonly (string | null)[]): BattleState {
   const lines = messages.filter((line): line is string => line !== null);
   return lines.length === 0 ? state : { ...state, log: [...state.log, ...lines] };
@@ -150,7 +161,12 @@ function incomingForSwitch(outgoing: PokemonInstance, incoming: PokemonInstance,
   return {
     ...entering,
     stages: outgoing.stages,
-    volatile: { ...entering.volatile, substituteHp: outgoing.volatile.substituteHp ?? 0 },
+    volatile: {
+      ...entering.volatile,
+      substituteHp: outgoing.volatile.substituteHp ?? 0,
+      focusEnergy: outgoing.volatile.focusEnergy ?? false,
+      aquaRing: outgoing.volatile.aquaRing ?? false,
+    },
   };
 }
 

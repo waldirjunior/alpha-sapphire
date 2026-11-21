@@ -37,6 +37,15 @@ export interface BattleVolatileState {
   encoreTurns?: number;
   partialTrapTurns?: number;
   escapeBlocked?: boolean;
+  focusEnergy?: boolean;
+  enduring?: boolean;
+  protectionKind?: 'all' | 'spiky' | 'kings' | null;
+  aquaRing?: boolean;
+  magnetRiseTurns?: number;
+  cursed?: boolean;
+  destinyBond?: boolean;
+  lockedOn?: boolean;
+  powerTrick?: boolean;
 }
 
 export function neutralVolatileState(): BattleVolatileState {
@@ -59,6 +68,15 @@ export function neutralVolatileState(): BattleVolatileState {
     encoreTurns: 0,
     partialTrapTurns: 0,
     escapeBlocked: false,
+    focusEnergy: false,
+    enduring: false,
+    protectionKind: null,
+    aquaRing: false,
+    magnetRiseTurns: 0,
+    cursed: false,
+    destinyBond: false,
+    lockedOn: false,
+    powerTrick: false,
   };
 }
 
@@ -178,7 +196,10 @@ export function genderFromPersonality(ratio: number | undefined, personality: nu
 export function withdrawFromBattle(pokemon: PokemonInstance): PokemonInstance {
   const status = pokemon.ability === 'Natural Cure' ? null
     : pokemon.status?.kind === 'toxic' ? { kind: 'toxic' as const, counter: 1 } : pokemon.status;
-  return prepareBattleEntry({ ...pokemon, status });
+  const reverted = pokemon.volatile.powerTrick
+    ? { ...pokemon, attack: pokemon.defense, defense: pokemon.attack }
+    : pokemon;
+  return prepareBattleEntry({ ...reverted, status });
 }
 
 export function prepareBattleEntry(pokemon: PokemonInstance): PokemonInstance {

@@ -72,12 +72,20 @@ export function tryInflictStatus(
 }
 
 /** Checagem antes de agir: sono decrementa, congelamento descongela 20%, paralisia trava 25%. */
-export function checkCanAct(pokemon: PokemonInstance, rng: Rng): { pokemon: PokemonInstance; canAct: boolean; message: string | null } {
+export function checkCanAct(
+  pokemon: PokemonInstance,
+  rng: Rng,
+  allowSleepTalk = false
+): { pokemon: PokemonInstance; canAct: boolean; message: string | null } {
   const status = pokemon.status;
   const name = pokemon.species.name;
   if (status?.kind === 'sleep') {
     if (status.counter <= 1) return { pokemon: { ...pokemon, status: null }, canAct: true, message: `${name} acordou!` };
-    return { pokemon: { ...pokemon, status: { ...status, counter: status.counter - 1 } }, canAct: false, message: `${name} está dormindo.` };
+    return {
+      pokemon: { ...pokemon, status: { ...status, counter: status.counter - 1 } },
+      canAct: allowSleepTalk,
+      message: `${name} está dormindo.`,
+    };
   }
   if (status?.kind === 'freeze') {
     if (rng() < THAW_CHANCE) return { pokemon: { ...pokemon, status: null }, canAct: true, message: `${name} descongelou!` };
@@ -139,6 +147,9 @@ export function advanceVolatileTurn(pokemon: PokemonInstance, rng: Rng = Math.ra
     perishSongTurns,
     partialTrapTurns,
     protecting: false,
+    protectionKind: null,
+    enduring: false,
+    magnetRiseTurns: Math.max(0, (volatile.magnetRiseTurns ?? 0) - 1),
   };
   const messages: string[] = [];
   const perishExpired = (volatile.perishSongTurns ?? 0) === 1;
@@ -184,7 +195,32 @@ export function applyResidualDamage(
   const weatherMessage = weatherDamage > 0 && statusDamage.pokemon.currentHp > 0
     ? `${pokemon.species.name} sofreu ${weatherDamage} de dano do clima.` : null;
   const result = weatherDamage > 0 ? { ...statusDamage.pokemon, currentHp } : statusDamage.pokemon;
-  return { pokemon: result, message: [seed.message, trap.message, statusDamage.message, weatherMessage].filter(Boolean).join(' ') || null, leechSeedDrain: seed.damage };
+  const cursed = curseResidual(result);
+  const ring = aquaRingResidual(cursed.pokemon);
+  return {
+    pokemon: ring.pokemon,
+    message: [seed.message, trap.message, statusDamage.message, weatherMessage, cursed.message, ring.message].filter(Boolean).join(' ') || null,
+    leechSeedDrain: seed.damage,
+  };
+}
+
+function curseResidual(pokemon: PokemonInstance): { pokemon: PokemonInstance; message: string | null } {
+  if (!pokemon.volatile.cursed || pokemon.currentHp === 0 || pokemon.ability === 'Magic Guard') return { pokemon, message: null };
+  const damage = Math.min(pokemon.currentHp, Math.max(1, Math.floor(pokemon.maxHp / 4)));
+  return {
+    pokemon: { ...pokemon, currentHp: pokemon.currentHp - damage },
+    message: `${pokemon.species.name} perdeu ${damage} HP para a maldição.`,
+  };
+}
+
+function aquaRingResidual(pokemon: PokemonInstance): { pokemon: PokemonInstance; message: string | null } {
+  if (!pokemon.volatile.aquaRing || pokemon.currentHp === 0) return { pokemon, message: null };
+  const healed = Math.min(pokemon.maxHp, pokemon.currentHp + Math.max(1, Math.floor(pokemon.maxHp / 16)));
+  if (healed === pokemon.currentHp) return { pokemon, message: null };
+  return {
+    pokemon: { ...pokemon, currentHp: healed },
+    message: `${pokemon.species.name} recuperou HP com Aqua Ring.`,
+  };
 }
 
 function leechSeedResidual(pokemon: PokemonInstance): { pokemon: PokemonInstance; damage: number; message: string | null } {

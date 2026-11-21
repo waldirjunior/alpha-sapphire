@@ -1,6 +1,7 @@
 import { chooseTrainerAction, selectTrainerMoveIndex, selectWildMoveIndex } from './battleAi';
 import {
   appendLog,
+  curePartyStatuses,
   firstHealthyIndex,
   opposite,
   pokemonOf,
@@ -96,8 +97,15 @@ function performAction(state: BattleState, action: BattleAction, targetAction: B
   const actor = pokemonOf(state, action.side);
   const foeSide = opposite(action.side);
   if (actor.currentHp === 0 || pokemonOf(state, foeSide).currentHp === 0) return { state, flinchedSide: null };
-  if (flinched) return { state: appendLog(resetProtectStreak(state, action.side), [`${actor.species.name} recuou e não pôde agir!`]), flinchedSide: null };
-  const check = checkCanAct(actor, rng);
+  const chosenMove = moveFor(actor, action.moveIndex);
+  const expiredBond = actor.volatile.destinyBond
+    ? { ...actor, volatile: { ...actor.volatile, destinyBond: false } }
+    : actor;
+  if (flinched) {
+    const unable = clearProtectStreak(expiredBond);
+    return { state: appendLog(withPokemon(state, action.side, unable), [`${actor.species.name} recuou e não pôde agir!`]), flinchedSide: null };
+  }
+  const check = checkCanAct(expiredBond, rng, chosenMove.name === 'Sleep Talk');
   let next = appendLog(withPokemon(state, action.side, check.pokemon), [check.message]);
   if (!check.canAct) return { state: { ...resetProtectStreak(next, action.side), events: [...(next.events ?? []),
     ...healthEvents(action.side, actor.currentHp, check.pokemon.currentHp)] }, flinchedSide: null };
@@ -127,6 +135,9 @@ function performAction(state: BattleState, action: BattleAction, targetAction: B
       ? { ...user, volatile: { ...user.volatile, chargeMoveId: null } }
       : { ...user, lastMoveId: move.id };
     next = withPokemon(next, action.side, protectedUser);
+    const hpBeforeShield = pokemonOf(next, action.side).currentHp;
+    next = blockedByShield(next, action.side, foeSide, move);
+    next = { ...next, events: [...(next.events ?? []), ...healthEvents(action.side, hpBeforeShield, pokemonOf(next, action.side).currentHp)] };
     return { state: appendLog(next, [`${pokemonOf(next, foeSide).species.name} se protegeu!`]), flinchedSide: null };
   }
   const struggleNote = action.moveIndex === null && !charging ? `${user.species.name} não tem mais PP!` : null;
@@ -134,6 +145,7 @@ function performAction(state: BattleState, action: BattleAction, targetAction: B
   const outcome = executeMove({ ...user, lastMoveId: move.id }, pokemonOf(next, foeSide), move, rng, context);
   next = withPokemon(withPokemon(next, action.side, outcome.user), foeSide, outcome.target);
   next = applyFieldUpdate(next, action.side, outcome);
+  if (outcome.curePartyStatus) next = curePartyStatuses(next, action.side);
   next = { ...next, events: [...(next.events ?? []),
     { type: 'move', side: action.side, category: move.category },
     ...healthEvents(foeSide, pokemonOf(state, foeSide).currentHp, outcome.target.currentHp),
@@ -157,15 +169,35 @@ function resetProtectStreak(state: BattleState, side: BattleSide): BattleState {
 }
 
 function clearProtectStreak(pokemon: PokemonInstance): PokemonInstance {
-  return pokemon.volatile.protectStreak === 0 ? pokemon : { ...pokemon, volatile: { ...pokemon.volatile, protectStreak: 0 } };
+  return pokemon.volatile.protectStreak === 0 && !pokemon.volatile.protecting
+    ? pokemon
+    : { ...pokemon, volatile: { ...pokemon.volatile, protectStreak: 0, protecting: false, protectionKind: null } };
 }
 
 function isProtectionMove(move: BattleMove): boolean {
-  return move.name === 'Protect' || move.name === 'Detect';
+  return ['Protect', 'Detect', 'Endure', 'Spiky Shield', 'King’s Shield'].includes(move.name);
 }
 
 function targetsProtectedPokemon(state: BattleState, side: BattleSide, move: BattleMove): boolean {
-  return targetsFoe(move) && pokemonOf(state, opposite(side)).volatile.protecting;
+  const target = pokemonOf(state, opposite(side));
+  if (!targetsFoe(move) || !target.volatile.protecting) return false;
+  return target.volatile.protectionKind !== 'kings' || move.category !== 'status';
+}
+
+function blockedByShield(state: BattleState, attackerSide: BattleSide, defenderSide: BattleSide, move: BattleMove): BattleState {
+  const shield = pokemonOf(state, defenderSide).volatile.protectionKind;
+  const attacker = pokemonOf(state, attackerSide);
+  if (!move.contact || move.category === 'status' || attacker.currentHp === 0) return state;
+  if (shield === 'spiky' && attacker.ability !== 'Magic Guard') {
+    const damage = Math.max(1, Math.floor(attacker.maxHp / 8));
+    const hurt = { ...attacker, currentHp: Math.max(0, attacker.currentHp - damage) };
+    return withPokemon(state, attackerSide, hurt);
+  }
+  if (shield === 'kings') {
+    const lowered = applyStageDelta(attacker.stages, 'atk', -2);
+    return lowered.applied === 0 ? state : withPokemon(state, attackerSide, { ...attacker, stages: lowered.stages });
+  }
+  return state;
 }
 
 function forceSwitch(state: BattleState, side: BattleSide, rng: Rng): BattleState {

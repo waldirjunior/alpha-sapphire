@@ -237,3 +237,40 @@ falha contra treinador e o bloqueio de fuga; `scripts/test_pipeline.py` cobre os
 campos customizados de moveset/item. O teste foi escrito antes do código. O
 warp de campo do Teleport e a interação de bloqueio com troca voluntária,
 retirada do usuário e Ghost continuam pendentes de observação Azahar em P-010.
+
+## 14. Entrega parcial — 2026-11-21 (quality 13: lote de 32 golpes)
+
+O core implementa mais 32 dos 77 golpes `quality=13` pendentes, conferindo
+IDs, alvos, flags e descrições em `src/data/battle/moves.json` e
+`src/data/texts/gametext/0016.json`: Focus Energy (116), Endure (203), Bestow
+(516), Switcheroo (415), Trick (271), Rest (156), Sleep Talk (214), Refresh
+(287), Heal Bell (215), Aromatherapy (312), Belly Drum (187), Shell Smash
+(504), Curse (174), Pain Split (220), Psych Up (244), Power Trick (379), Power
+Swap (384), Guard Swap (385), Heart Swap (391), Topsy-Turvy (576), Aqua Ring
+(392), Magnet Rise (393), Memento (262), Destiny Bond (194), Mind Reader
+(170), Lock-On (199), Spite (180), Spiky Shield (596), King’s Shield (588),
+Celebrate (606), Hold Hands (607) e Happy Hour (603).
+
+Os efeitos incluem crítico e Baton Pass, Endure e escudos com chance consecutiva,
+troca de itens, sono/cura e execução via Sleep Talk, estágios, compartilhamento
+de HP, maldição, Aqua Ring, Magnet Rise, Destiny Bond, precisão garantida e PP.
+Heal Bell e Aromatherapy limpam status do time inteiro; contato usa a flag ROM
+do golpe para Spiky Shield e King’s Shield. `battleQuality13Batch2.test.ts`
+cobre os grupos e `src/ai/battleParity.test.ts` fixa `[true, false, 36, 4]`
+para o limite de crítico do Focus Energy, dano crítico e cura de Aqua Ring.
+
+Restam 45 golpes quality 13 sem simulação: Mimic, Metronome, Mirror Move,
+Transform, Conversion, Sketch, Conversion 2, Future Sight, Stockpile, Follow
+Me, Nature Power, Helping Hand, Role Play, Wish, Assist, Magic Coat, Recycle,
+Skill Swap, Imprison, Grudge, Snatch, Camouflage, Doom Desire, Healing Wish,
+Acupressure, Psycho Shift, Gastro Acid, Copycat, Worry Seed, Lunar Dance,
+Guard Split, Power Split, Rage Powder, Soak, Simple Beam, Entrainment, After
+You, Ally Switch, Quash, Reflect Type, Trick-or-Treat, Forest’s Curse, Flower
+Shield, Electrify e Powder. A lista enumerada em P-010 omite Grudge, Snatch e
+Camouflage; a contagem 45 é calculada pelas 90 entradas quality 13 da tabela da
+ROM, menos os 13 efeitos já cobertos antes deste lote e estes 32.
+
+`npm run verify` passou após o lote: 663 testes Vitest em 88 arquivos, build e
+263 testes Python (2 skips pela ausência de assets no worktree); a
+catraca de cobertura do core passou. O build manteve o aviso existente de
+chunks acima de 500 kB.

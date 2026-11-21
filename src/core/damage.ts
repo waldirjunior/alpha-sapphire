@@ -28,7 +28,9 @@ export interface DamageOptions {
 
 export function rollCritical(defender: PokemonInstance, move: DexMove, rng: Rng, attacker?: PokemonInstance): boolean {
   if (CRIT_IMMUNE_ABILITIES.has(defender.ability)) return false;
-  const modifier = (attacker?.ability === 'Super Luck' ? 1 : 0) + (attacker?.heldItem === 'Scope Lens' ? 1 : 0);
+  const modifier = (attacker?.ability === 'Super Luck' ? 1 : 0)
+    + (attacker?.heldItem === 'Scope Lens' ? 1 : 0)
+    + (attacker?.volatile.focusEnergy ? 2 : 0);
   const stage = Math.min(CRIT_CHANCE_BY_STAGE.length - 1, Math.max(0, move.critStage + modifier));
   const chance = CRIT_CHANCE_BY_STAGE[stage] ?? 1;
   return chance >= 1 || rng() < chance;
@@ -43,6 +45,7 @@ export function getTypeEffectiveness(moveType: ElementalType, defenderTypes: rea
 export function moveEffectiveness(move: DexMove, defender: PokemonInstance): number {
   if (abilityImmunity(defender, move.type)) return 0;
   if (move.type === 'ground' && defender.ability === 'Levitate') return 0;
+  if (move.type === 'ground' && (defender.volatile.magnetRiseTurns ?? 0) > 0) return 0;
   return move.id === STRUGGLE_MOVE_ID ? 1 : getTypeEffectiveness(move.type, defender.species.types);
 }
 
