@@ -8,10 +8,10 @@ Verificado em 2026-11-21 (macOS; suporte headless Linux validado anteriormente n
 
 | Medida | Valor | Como reproduzir |
 | --- | --- | --- |
-| Testes unitários (Vitest) | 707 em 93 arquivos, todos passando | `npm test` |
+| Testes unitários (Vitest) | 709 em 93 arquivos, todos passando | `npm test` |
 | Cobertura de `src/core` | acima da catraca de 95% linhas / 85% branches | `npm run test:coverage` |
-| Testes do pipeline e do oráculo (Python) | 307 passando (1 skip: `ALPHA_TAILLOW_*` ausentes) | `npm run test:py` |
-| Jogo real no browser (smoke + campanha + corredor) | 7 smoke e campanha 1/1 (`e2e/campaign.spec.ts`; fade modo 2 até `PokePartyGetParam(0,8,0)`); corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`); suíte completa 41/41 | `npm run test:e2e` |
+| Testes do pipeline e do oráculo (Python) | 307 passando, 2 skips | `npm run test:py` |
+| Jogo real no browser (smoke + campanha + corredor) | 7 smoke e campanha 1/1 (`e2e/campaign.spec.ts`; fade modo 2 até `PokePartyGetParam(0,8,0)`); corredor Littleroot → Lavaridge (`e2e/corridor.spec.ts`); suíte completa anterior 41/41; specs smoke + arenas 8/8 | `npm run test:e2e` |
 | Cenários visuais | 28/28 cenas do mundo aceitas; `pokenav-hoenn-map` integrado com mapa/marcadores/avatar ROM e aprovado (P-011 residual dos 4 glifos/toque) | `npm run test:e2e`, galeria e comparação em `rom/visual-report/` |
 | Build | passa; aviso de chunks > 500 kB | `npm run build` |
 
@@ -23,7 +23,7 @@ Atores `0x1000`/`0x2000` renderizam modelo real (`failedAssets = 0`); câmera/oc
 - **Corredor jogável**: Littleroot → Petalburg → Rustboro → Verdanturf → Mauville → Slateport → Fallarbor → Meteor Falls → bondinho → Lavaridge (trechos com fixture pós-evento: [PRD-010](features/engine-3d/prds/PRD-010-corredor-rustboro-verdanturf.md)–[PRD-013](features/engine-3d/prds/PRD-013-bondinho-mt-chimney-lavaridge.md)). Leste até Lilycove só em trechos ([PRD-014](features/engine-3d/prds/PRD-014-trechos-leste-mauville-lilycove.md)).
 - **Eventos**: VM Pawn/AMX — diálogo, warp 6 → 227, hide-flags, expressões e serviços (Joy, Mãe, Poké Mart). Campanha natural até a primeira query de party na interação com Roxanne em `zone_0441` (Mart é `zone_0285`; binding `map/case 2`).
 - **Batalha**: encontros usam taxas de slot ORAS em 150 zonas (grama, grama alta `T`, Surf `U`, Rock Smash `R`, varas `F` e hordas `H` no host), IVs/natureza, Substitute, 2 turnos, aprisionamento parcial, Baton Pass, pivots, itens, habilidades (clima/Moxie/Sheer Force/Magic Guard/Natural Cure/Rough Skin), hazards, voláteis, Protect/troca, captura + crítico via Pokédex, UI de golpes/pedras evolutivas, persistência de `pendingMoves`, todos os 90 golpes `quality=13` da ROM e IA com troca (`battleParity.test.ts`).
-- **Apresentação**: 41 Pokémon GLB nativos (incl. Taillow) + 41 perfis BCH boca/olhos/asas (`A-127`); grama 3D; arenas ROM grass/água/cave/gym (ambientes + plataformas) e indoor/VFX; Pokébola; BGM/fanfarras; `SEPlay` decodificado por grupo/ID; 8 samples CWAV BCSAR; AreaNav ROM 1:1 com mapa, marcadores e avatar (`A-128`); volume/mudo; save `localStorage`.
+- **Apresentação**: 41 Pokémon GLB nativos (incl. Taillow) + 41 perfis BCH boca/olhos/asas (`A-127`); grama 3D; arenas ROM grass/água/cave, ginásios `gym1..gym8` (ambientes + plataformas) e indoor/VFX; Pokébola; BGM/fanfarras; `SEPlay` decodificado por grupo/ID; 8 samples CWAV BCSAR; AreaNav ROM 1:1 com mapa, marcadores e avatar (`A-128`); volume/mudo; save `localStorage`.
 - **Multiplayer**: protocolo puro em `roomProtocol.ts` e servidor WebSocket Node (`npm run server:multiplayer`; [PRD-002](features/multiplayer-salas/prds/PRD-002-protocolo-e-servidor-de-salas.md)).
 - **Oráculo (Azahar 2126.2)**: roteiros intro/continue, `oras_save.py`, 25 refs visuais, RPC de posição e traço Littleroot vs `movePlayer`.
 
@@ -34,7 +34,7 @@ Atores `0x1000`/`0x2000` renderizam modelo real (`failedAssets = 0`); câmera/oc
 | Campanha chega a `zone_0441`; fade modo 2 ok; pausa em `PokePartyGetParam(0,8,0)`; batalha/badge da Roxanne bloqueadas. | P-013 |
 | Bike/Surf e oclusão residual (ex.: `z0015-mauville-patio`). | P-017 |
 | Combiners RGB / luz PICA parciais; `a/0/0/3` com 16 luzes externas sem binding a `LightSetIndex=0`; ambiente por zona em `zoneEnvironment.ts`. | P-007 |
-| PokéNav vs Azahar (ícones/semântica); CSEQ/SFX; arenas ainda sem comparação final de luz/câmera contra Azahar (cave usa G70/O118); IVs por classe e residual Gen VI. | P-011, P-014, P-008, P-010 |
+| PokéNav vs Azahar (ícones/semântica); CSEQ/SFX; arenas ainda sem comparação final de luz/câmera/composição contra Azahar; IVs por classe e residual Gen VI. | P-011, P-014, P-008, P-010 |
 
 ## Frentes pausadas
 

@@ -1,29 +1,46 @@
 import { expect, test } from '@playwright/test';
+import { mkdirSync } from 'node:fs';
 import { trackPageErrors } from './support/pageErrors';
 
 const ROM_ARENA_CASES = [
   { biome: 'grass', mapId: 'zone_0023' },
   { biome: 'water', mapId: 'zone_0032' },
   { biome: 'cave', mapId: 'zone_0078' },
-  { biome: 'gym', mapId: 'zone_0441' },
+  { biome: 'gym1', mapId: 'zone_0441' },
+  { biome: 'gym2', mapId: 'zone_0428' },
+  { biome: 'gym3', mapId: 'zone_0440' },
+  { biome: 'gym4', mapId: 'zone_0429' },
+  { biome: 'gym5', mapId: 'zone_0431' },
+  { biome: 'gym6', mapId: 'zone_0442' },
+  { biome: 'gym7', mapId: 'zone_0443' },
+  { biome: 'gym8', mapId: 'zone_0444' },
   { biome: 'indoor', mapId: 'zone_0286' },
 ] as const;
 
 test('arenas ROM de todos os biomas carregam suas camadas e ocultam piso/plataformas procedurais', async ({ page }) => {
   const errors = trackPageErrors(page);
+  const failedAssetUrls = new Set<string>();
+  page.on('response', (response) => {
+    if (response.url().includes('/assets/') && response.status() >= 400) failedAssetUrls.add(response.url());
+  });
+  page.on('requestfailed', (request) => {
+    if (request.url().includes('/assets/')) failedAssetUrls.add(request.url());
+  });
+  mkdirSync('/tmp/arena-gyms-check', { recursive: true });
   await page.goto('/');
+
+  const torchicRequest = page.waitForResponse(response =>
+    response.url().includes('/assets/native/pokemon/torchic-') && response.status() === 200);
+  const poochyenaRequest = page.waitForResponse(response =>
+    response.url().includes('/assets/native/pokemon/poochyena-') && response.status() === 200);
 
   for (const { biome, mapId } of ROM_ARENA_CASES) {
     const modelRequest = page.waitForResponse(response =>
-      response.url().endsWith(`/assets/battle-arenas/${biome}/${biome}.glb`) && response.status() === 200);
+      response.url().endsWith(`/assets/battle-arenas/${biome}/${biome}.glb`));
     const stageRequest = biome === 'indoor' ? null : page.waitForResponse(response =>
-      response.url().endsWith(`/assets/battle-arenas/${biome}/stage/stage.glb`) && response.status() === 200);
+      response.url().endsWith(`/assets/battle-arenas/${biome}/stage/stage.glb`));
     const textureRequest = page.waitForResponse(response =>
-      response.url().includes(`/assets/battle-arenas/${biome}/`) && response.url().endsWith('.png') && response.status() === 200);
-    const torchicRequest = page.waitForResponse(response =>
-      response.url().includes('/assets/native/pokemon/torchic-') && response.status() === 200);
-    const poochyenaRequest = page.waitForResponse(response =>
-      response.url().includes('/assets/native/pokemon/poochyena-') && response.status() === 200);
+      response.url().includes(`/assets/battle-arenas/${biome}/`) && response.url().endsWith('.png'));
     const result = await page.evaluate(async (targetMapId) => {
       const { getZoneMap } = await import('/src/data/maps_v2/loader.ts');
       const { createPokemonInstance, startWildBattle } = await import('/src/core/battle.ts');
@@ -75,6 +92,9 @@ test('arenas ROM de todos os biomas carregam suas camadas e ocultam piso/platafo
         mapName: map.name,
         romModelAttached: Boolean(scene.getObjectByName('battle-rom-arena-model')),
         romStageAttached: Boolean(scene.getObjectByName('battle-rom-arena-stage')),
+        romModelVisible: scene.getObjectByName('battle-rom-arena-model')?.visible === true,
+        playerPokemonVisible: scene.getObjectByName('pm0255_00')?.visible === true,
+        enemyPokemonVisible: scene.getObjectByName('pm0261_00')?.visible === true,
         proceduralFallbackVisible: scene.getObjectByName('battle-procedural-fallback')?.visible === true,
         proceduralGroundVisible: scene.getObjectByName('battle-ground')?.visible === true,
         proceduralPlatformVisible: scene.getObjectByName('battle-platform-top')?.visible === true,
@@ -87,12 +107,18 @@ test('arenas ROM de todos os biomas carregam suas camadas e ocultam piso/platafo
     if (stageRequest) expect((await stageRequest).status()).toBe(200);
     expect((await textureRequest).status()).toBe(200);
     expect(result.romModelAttached).toBe(true);
+    expect(result.romModelVisible).toBe(true);
     expect(result.romStageAttached).toBe(biome !== 'indoor');
+    expect(result.playerPokemonVisible).toBe(true);
+    expect(result.enemyPokemonVisible).toBe(true);
     expect(result.proceduralFallbackVisible).toBe(false);
     expect(result.proceduralGroundVisible).toBe(false);
     expect(result.proceduralPlatformVisible).toBe(false);
     expect(result.mapName).toBeTruthy();
-    await page.locator('#battle-arena-capture canvas').screenshot({ path: `/tmp/battle-arena-${biome}.png` });
+    const screenshotPath = biome.startsWith('gym')
+      ? `/tmp/arena-gyms-check/${biome}.png`
+      : `/tmp/battle-arena-${biome}.png`;
+    await page.locator('#battle-arena-capture canvas').screenshot({ path: screenshotPath });
     await page.locator('#battle-arena-capture canvas').evaluate((canvas) => {
       const context = canvas.getContext('webgl2') ?? canvas.getContext('webgl');
       context?.getExtension('WEBGL_lose_context')?.loseContext();
@@ -100,5 +126,6 @@ test('arenas ROM de todos os biomas carregam suas camadas e ocultam piso/platafo
     });
   }
 
+  expect(failedAssetUrls.size, `failedAssets: ${[...failedAssetUrls].join(', ')}`).toBe(0);
   expect(errors).toEqual([]);
 });
