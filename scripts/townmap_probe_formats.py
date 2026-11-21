@@ -432,14 +432,39 @@ def _png_chunk(tag: bytes, payload: bytes) -> bytes:
     return struct.pack('>I', len(payload)) + body + struct.pack('>I', binascii.crc32(body) & 0xFFFFFFFF)
 
 
-def write_png(blob: bytes, destination: Path) -> bool:
+def write_png(
+    blob: bytes,
+    destination: Path,
+    transparent_colors: set[tuple[int, int, int]] | None = None,
+) -> bool:
     decoded = decode_texture_pixels(blob)
     if decoded is None:
         return False
     width, height, rgba = decoded
+    if transparent_colors:
+        rgba = _apply_texture_color_key(rgba, transparent_colors)
     scanlines = b''.join(b'\0' + rgba[y * width * 4:(y + 1) * width * 4] for y in range(height))
     header = struct.pack('>IIBBBBB', width, height, 8, 6, 0, 0, 0)
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_bytes(b'\x89PNG\r\n\x1a\n' + _png_chunk(b'IHDR', header)
                             + _png_chunk(b'IDAT', zlib.compress(scanlines)) + _png_chunk(b'IEND', b''))
     return True
+
+
+def _apply_texture_color_key(
+    rgba: bytes,
+    transparent_colors: set[tuple[int, int, int]],
+) -> bytes:
+    keyed = bytearray(rgba)
+    cyan_key_enabled = bool(transparent_colors & {(0, 255, 255), (0, 255, 221)})
+    for offset in range(0, len(keyed), 4):
+        red, green, blue = keyed[offset:offset + 3]
+        if (red, green, blue) in transparent_colors or (
+            cyan_key_enabled and _is_cyan_texture_key(red, green, blue)
+        ):
+            keyed[offset + 3] = 0
+    return bytes(keyed)
+
+
+def _is_cyan_texture_key(red: int, green: int, blue: int) -> bool:
+    return red <= 85 and green >= 238 and blue >= 204

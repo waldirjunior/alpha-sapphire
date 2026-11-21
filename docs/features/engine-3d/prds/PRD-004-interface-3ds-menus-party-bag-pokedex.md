@@ -228,14 +228,31 @@ faixa. Os quatro glifos permanecem decorativos e sem handlers, conforme A-121.
 
 Testes sintéticos em `scripts/test_extract_arenav_ui.py` cobrem bounds/nome de
 panes e extração DARC/BCLIM. `src/game/areaNav.test.ts` cobre medidas do CLYT,
-URLs, marcadores e retorno ao fallback. `npm run verify` passou com 702 testes
-Vitest, build e 289 testes Python (1 skip). O Playwright executou o cenário
-`pokenav-hoenn-map`: métricas, seleção e conteúdo passaram; a comparação de
-imagem reportou diferença de 41.405 pixels (54%) contra o snapshot anterior. A
-captura atual foi comparada com a referência Azahar e ficou em
-`/tmp/arenav-check.png`; o baseline não foi aprovado. A captura nova mostra o
-mapa Hoenn inteiro reduzido dentro da moldura, enquanto a referência Azahar
-mostra uma região ampliada/cortada e os glifos inferiores originais; por isso,
-o coordenador deve revisar o enquadramento antes de regravar o snapshot. Se a
-composição atual for aceita como resultado visual intencional, o baseline deve
-ser regravado depois dessa revisão. PNGs e relatórios locais ficam fora do Git.
+URLs, marcadores e retorno ao fallback.
+
+No ajuste visual v2, `map_lower.layout.json` confirmou `RootPane` 320×240,
+`pic1` do mapa em `(0,15)` com 380×270 e `pan1` `s` em `(0,15)` com 320×210.
+A moldura visível da captura Azahar foi ajustada para 245×176 em `(0,15)`; a
+imagem é desenhada 1:1 e deslocada para centralizar o marcador do jogador,
+limitando o recorte aos bounds da textura. A faixa superior cobre y=0..15. Os
+marcadores nativos usam 32×16 (cidade) e 16×16 (vila), conforme as panes `4v`
+e `4t` do CLYT; a ordem de desenho mantém o ponto selecionado clicável mesmo
+quando outro ponto fica sobreposto.
+
+Os BCLIMs dos ícones têm pixel format 8 (`RGBA4`), portanto carregam alpha de 4
+bits; pixels ciano `(0,255,255)`/`(0,255,221)` e tons próximos nas bordas chegam
+com alpha opaco. O decoder aplica a chave ciano nesses quatro assets e mantém o
+alpha dos demais pixels. O CLYT liga `pic1` `4t`, `4v` e `4x` aos materiais 36,
+37 e 38, que apontam para `map_city_icon01..03`; seus quatro vertex colors são
+`(128,128,128,255)`, por isso a integração aplica `brightness(0.5)`. O `pic1`
+do mapa (`name=0`) tem os quatro vértices brancos, material index 0 e UVs
+cobrindo o conteúdo.
+
+A captura `/tmp/arenav-check-v2.png` foi comparada com a referência Azahar: o
+mapa aparece em escala 1:1, recortado no sudoeste ao redor de Littleroot, com
+marcadores sem caixas ciano e a faixa superior clara. Os glifos inferiores
+seguem aproximados; a busca anterior não localizou seus bitmaps, e continuam
+sem handlers conforme A-121. O cenário e2e passou métricas, seleção e conteúdo,
+mas o snapshot visual segue diferente do baseline versionado (40.211 pixels,
+53%); não regravá-lo nesta etapa. `npm run verify` e os sete cenários smoke
+passaram. PNGs e relatórios locais ficam fora do Git.

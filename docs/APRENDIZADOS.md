@@ -1352,5 +1352,14 @@ Erros, restrições reais e regras operacionais descobertas durante o projeto. U
   vetorial como fallback quando o PNG local faltar e não associe ação aos quatro
   glifos sem evidência independente (A-121). A posição dos locais no texture map
   é apenas ajuste visual enquanto a tabela de coordenadas nativa não for ligada.
+- **Atualização 2026-11-21:** `map_city_icon01..03.bclim` e `cursol.bclim` usam
+  formato 8 (`RGBA4`), mas os pixels de fundo ciano estão opacos. O decoder deve
+  zerar alpha para a chave ciano e seus tons de borda nos quatro assets; os
+  demais pixels mantêm o alpha embutido. Para exibir o mapa, preserve os 380×270
+  pixels de origem e centralize o ponto atual dentro da viewport recortada,
+  limitando o offset a `viewport - mapa` para não revelar espaço fora da textura.
+  As panes `4t`/`4v`/`4x` vinculam os materiais 36/37/38 às três texturas de
+  cidade; seus quatro vertex colors são `(128,128,128,255)`, reproduzidos com
+  `brightness(0.5)`, e os panes indicam tamanhos 16×16/32×16/16×16.
 
 

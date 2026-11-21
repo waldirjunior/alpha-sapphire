@@ -33,6 +33,13 @@ TEXTURE_OUTPUTS = {
 ENGLISH_MAP_NAV_ARCHIVE = "a/2/7/6"
 ENGLISH_MAP_NAV_SUBFILE = 1
 MAP_NAV_TEXTURES = tuple(f"map_navi{index:02}.bclim" for index in range(1, 6))
+CHROMA_KEY_TEXTURES = frozenset({
+    "map_city_icon01.bclim",
+    "map_city_icon02.bclim",
+    "map_city_icon03.bclim",
+    "cursol.bclim",
+})
+CYAN_COLOR_KEYS = {(0, 255, 255), (0, 255, 221)}
 
 
 @dataclass(frozen=True)
@@ -43,6 +50,8 @@ class ClytPane:
     y: float
     width: float
     height: float
+    material_index: int | None = None
+    vertex_colors: tuple[tuple[int, int, int, int], ...] | None = None
 
 
 def parse_clyt(blob: bytes) -> list[ClytPane]:
@@ -83,7 +92,23 @@ def _parse_clyt_pane(blob: bytes, cursor: int, kind: str, section_size: int) -> 
         raise ValueError(f"CLYT chunk {kind!r} curto: {section_size} bytes, esperado ao menos {minimum_size}")
     name = blob[cursor + 12:cursor + 36].split(b"\0", 1)[0].decode("ascii", errors="replace")
     x, y, _, _, _, _, _, _, width, height = struct.unpack_from("<10f", blob, cursor + 36)
-    return ClytPane(kind, name, x, y, width, height)
+    material_index, vertex_colors = _pic1_metadata(blob, cursor, kind)
+    return ClytPane(kind, name, x, y, width, height, material_index, vertex_colors)
+
+
+def _pic1_metadata(
+    blob: bytes,
+    cursor: int,
+    kind: str,
+) -> tuple[int | None, tuple[tuple[int, int, int, int], ...] | None]:
+    if kind != "pic1":
+        return None, None
+    vertex_colors = tuple(
+        tuple(blob[cursor + 76 + offset:cursor + 80 + offset])
+        for offset in (0, 4, 8, 12)
+    )
+    material_index = struct.unpack_from("<H", blob, cursor + 92)[0]
+    return material_index, vertex_colors
 
 
 def _darc_members(romfs: Path, archive_name: str, subfiles: set[int] | None = None) -> list[DarcEntry]:
@@ -120,7 +145,8 @@ def _named_members(members: list[DarcEntry]) -> dict[str, DarcEntry]:
 
 def _export_texture(members: dict[str, DarcEntry], source_name: str, output_name: str, output_dir: Path) -> bool:
     member = members.get(source_name)
-    if member is None or not write_png(member.data, output_dir / output_name):
+    color_key = CYAN_COLOR_KEYS if source_name in CHROMA_KEY_TEXTURES else None
+    if member is None or not write_png(member.data, output_dir / output_name, color_key):
         return False
     return True
 

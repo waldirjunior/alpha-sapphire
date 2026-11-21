@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   AREA_NAV_CLYT_LAYOUT,
+  areaNavMarkerSize,
   areaNavMarkerTexture,
   areaNavNativeMapPoint,
+  areaNavViewportOffset,
   areaNavTextureUrl,
   setNativeMapAvailability,
 } from './areaNavAssets';
@@ -12,6 +14,7 @@ describe('AreaNav ROM assets', () => {
     expect(AREA_NAV_CLYT_LAYOUT).toEqual({
       screen: { width: 320, height: 240 },
       map: { x: 0, y: 15, width: 380, height: 270 },
+      viewport: { x: 0, y: 15, width: 245, height: 176 },
       title: { width: 190, height: 30 },
     });
   });
@@ -22,7 +25,12 @@ describe('AreaNav ROM assets', () => {
     expect(areaNavMarkerTexture('town')).toBe('map_city_icon01.png');
     expect(areaNavMarkerTexture('landmark')).toBeNull();
     expect(areaNavMarkerTexture('route')).toBeNull();
-    expect(areaNavNativeMapPoint(395, 418)).toEqual({ x: 273, y: 318 });
+    expect(areaNavMarkerSize('city')).toEqual({ width: 32, height: 16 });
+    expect(areaNavMarkerSize('town')).toEqual({ width: 16, height: 16 });
+    expect(areaNavNativeMapPoint(395, 418)).toEqual({ x: 129.675, y: 186.65217391304347 });
+    expect(areaNavViewportOffset({ x: 129.675, y: 186.65217391304347 })).toEqual({ x: -7, y: -94 });
+    expect(areaNavViewportOffset({ x: 0, y: 0 })).toEqual({ x: 0, y: 0 });
+    expect(areaNavViewportOffset({ x: 380, y: 270 })).toEqual({ x: -135, y: -94 });
   });
 
   it('switches to the vector fallback after the native map image fails', () => {

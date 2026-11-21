@@ -11,6 +11,7 @@ from scripts.inspect_townmap_cro import (
     _scan_loose_assets,
 )
 from scripts.townmap_probe_formats import (
+    _apply_texture_color_key,
     decode_texture_dimensions,
     decompress_lz11_payload,
     parse_darc,
@@ -73,6 +74,16 @@ def synthetic_clim(width, height, fmt=9):
 
 
 class InspectTownmapCroTests(unittest.TestCase):
+    def test_cyan_texture_key_becomes_transparent_without_changing_other_alpha(self):
+        rgba = bytes((0, 255, 255, 255, 17, 255, 221, 255, 68, 255, 255, 255, 255, 0, 0, 85))
+
+        keyed = _apply_texture_color_key(rgba, {(0, 255, 255), (0, 255, 221)})
+
+        self.assertEqual(
+            keyed,
+            bytes((0, 255, 255, 0, 17, 255, 221, 0, 68, 255, 255, 0, 255, 0, 0, 85)),
+        )
+
     def test_garc_decompresses_entire_lz11_slot(self):
         payload = b'BCH\0' + bytes(range(64))
         entries = parse_garc(synthetic_garc(payload))

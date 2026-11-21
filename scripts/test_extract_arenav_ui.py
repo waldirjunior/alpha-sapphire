@@ -4,6 +4,7 @@ import json
 import struct
 import tempfile
 import unittest
+import zlib
 from pathlib import Path
 
 from scripts.extract_arenav_ui import extract_arenav_ui, parse_clyt
@@ -34,6 +35,16 @@ class AreaNavUiExtractionTests(unittest.TestCase):
 
         with self.assertRaisesRegex(ValueError, "CLYT chunk"):
             parse_clyt(bytes(malformed))
+
+    def test_parses_pic1_vertex_colors_and_material_index(self) -> None:
+        pane = bytearray(clyt_pane("pic1", "MapCityIcon", 0, 0, 16, 16))
+        pane[76:92] = bytes((128, 128, 128, 255)) * 4
+        struct.pack_into("<H", pane, 92, 37)
+
+        parsed = parse_clyt(synthetic_clyt([bytes(pane)]))[0]
+
+        self.assertEqual(parsed.material_index, 37)
+        self.assertEqual(parsed.vertex_colors, ((128, 128, 128, 255),) * 4)
 
     def test_extracts_named_bclim_pngs_and_layout_json_from_garc_darc(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -67,6 +78,29 @@ class AreaNavUiExtractionTests(unittest.TestCase):
             self.assertEqual((output / "map_city_icon01.png").read_bytes()[:8], b"\x89PNG\r\n\x1a\n")
             layout = json.loads((output / "map_lower.layout.json").read_text(encoding="utf-8"))
             self.assertEqual(layout[0]["name"], "RootPane")
+            self.assertEqual(layout[1]["material_index"], 0)
+            self.assertEqual(layout[1]["vertex_colors"], [[0, 0, 0, 0]] * 4)
+
+    def test_city_icon_png_export_turns_cyan_color_key_transparent(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            romfs = root / "RomFS"
+            archive_dir = romfs / "a/0/6"
+            archive_dir.mkdir(parents=True)
+            (archive_dir / "7").write_bytes(synthetic_garc([lz11_literals(synthetic_darc([
+                ("./timg/poke_navi_map.bclim", synthetic_bclim(8, 8)),
+                ("./timg/map_city_icon01.bclim", synthetic_bclim(8, 8, (0, 255, 255, 255))),
+                ("./blyt/map_lower.bclyt", synthetic_clyt([
+                    clyt_pane("pan1", "RootPane", 0, 0, 320, 240),
+                    clyt_pane("pic1", "MapTexture", 0, 15, 380, 270),
+                ])),
+            ]))]))
+
+            output = root / "out"
+            extract_arenav_ui(romfs, output)
+            png = (output / "map_city_icon01.png").read_bytes()
+
+        self.assertEqual(first_png_pixel(png), (0, 255, 255, 0))
 
 
 def clyt_pane(kind: str, name: str, x: float, y: float, width: float, height: float) -> bytes:
@@ -141,14 +175,27 @@ def lz11_literals(payload: bytes) -> bytes:
     return bytes(result)
 
 
-def synthetic_bclim(width: int, height: int) -> bytes:
-    pixel_data = bytes((255, 64, 32, 255)) * (width * height)
+def synthetic_bclim(width: int, height: int, color: tuple[int, int, int, int] = (255, 64, 32, 255)) -> bytes:
+    pixel_data = bytes(color) * (width * height)
     footer = bytearray(40)
     footer[:4] = b"CLIM"
     struct.pack_into("<H", footer, 4, 0xFEFF)
     struct.pack_into("<H", footer, 6, 0x14)
     struct.pack_into("<HHH", footer, 0x1C, width, height, 9)
     return pixel_data + footer
+
+
+def first_png_pixel(blob: bytes) -> tuple[int, int, int, int]:
+    cursor = 8
+    compressed = bytearray()
+    while cursor < len(blob):
+        size = struct.unpack_from(">I", blob, cursor)[0]
+        kind = blob[cursor + 4:cursor + 8]
+        payload = blob[cursor + 8:cursor + 8 + size]
+        if kind == b"IDAT":
+            compressed.extend(payload)
+        cursor += 12 + size
+    return tuple(zlib.decompress(compressed)[1:5])
 
 
 if __name__ == "__main__":
