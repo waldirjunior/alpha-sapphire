@@ -77,6 +77,7 @@ const GYM_ZONE_IDS = new Set([
   'zone_0443', 'zone_0444',
 ]);
 const ROM_ARENA_DIAMETER = 12;
+const ROM_ENVIRONMENT_SCALE = 0.01;
 
 export function battleArenaModelUrl(biome: BattleArenaBiome): string {
   return `/assets/battle-arenas/${biome}/${biome}.glb`;
@@ -88,12 +89,9 @@ export function battleArenaStageModelUrl(biome: BattleArenaBiome): string | null
 }
 
 export function attachBattleArenaModel(arena: BattleArena, model: THREE.Group): void {
-  const fittedModel = fitBattleArenaModel(
-    model,
-    arena.biome,
-    'battle-rom-arena-model',
-    arena.biome === 'indoor'
-  );
+  const fittedModel = arena.biome === 'indoor'
+    ? fitBattleArenaStage(model, arena.biome, 'battle-rom-arena-model')
+    : fitBattleArenaEnvironment(model, arena.biome);
   if (!fittedModel) return;
   arena.group.add(fittedModel);
   arena.romModel = fittedModel;
@@ -101,18 +99,30 @@ export function attachBattleArenaModel(arena: BattleArena, model: THREE.Group): 
 }
 
 export function attachBattleArenaStageModel(arena: BattleArena, model: THREE.Group): void {
-  const fittedModel = fitBattleArenaModel(model, arena.biome, 'battle-rom-arena-stage', true);
+  const fittedModel = fitBattleArenaStage(model, arena.biome, 'battle-rom-arena-stage');
   if (!fittedModel) return;
   arena.group.add(fittedModel);
   arena.romStage = fittedModel;
   hideProceduralFallback(arena);
 }
 
-function fitBattleArenaModel(
+function fitBattleArenaEnvironment(model: THREE.Group, biome: BattleArenaBiome): THREE.Group | null {
+  model.updateMatrixWorld(true);
+  const bounds = new THREE.Box3().setFromObject(model);
+  const size = bounds.getSize(new THREE.Vector3());
+  if (bounds.isEmpty() || Math.max(size.x, size.z) <= 0) return null;
+  const fittedModel = new THREE.Group();
+  fittedModel.name = 'battle-rom-arena-model';
+  fittedModel.userData.biome = biome;
+  fittedModel.add(model);
+  fittedModel.scale.setScalar(ROM_ENVIRONMENT_SCALE);
+  return fittedModel;
+}
+
+function fitBattleArenaStage(
   model: THREE.Group,
   biome: BattleArenaBiome,
   name: string,
-  alignLowestSurface: boolean,
 ): THREE.Group | null {
   model.updateMatrixWorld(true);
   const bounds = new THREE.Box3().setFromObject(model);
@@ -127,7 +137,7 @@ function fitBattleArenaModel(
   fittedModel.userData.biome = biome;
   fittedModel.add(model);
   fittedModel.scale.setScalar(scale);
-  const groundOffset = alignLowestSurface ? -bounds.min.y * scale : 0;
+  const groundOffset = -bounds.min.y * scale;
   fittedModel.position.set(-center.x * scale, groundOffset, -center.z * scale);
   return fittedModel;
 }

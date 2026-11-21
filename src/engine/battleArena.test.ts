@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import type { PokemonType } from '../data/pokemon/species';
 import { BattleEventPresenter, planBattleEventPresentation } from './battleEventPresentation';
 import {
+  attachBattleArenaModel,
+  attachBattleArenaStageModel,
   BattleCameraMotion,
   battleArenaModelUrl,
   createBattleArena,
@@ -170,6 +172,31 @@ describe('battleArena', () => {
     expect(enemySlot.rotation.y).toBeCloseTo(-Math.PI * 0.25);
   });
 
+  it('preserva escala e origem ROM do ambiente cave/gym separado da plataforma O', () => {
+    for (const [biome, rawSize, rawCenter] of [
+      ['cave', [3701.65, 2881, 4062.26], [-309.175, 498.5, 0]],
+      ['gym', [5472, 4254.28, 5472], [0, 639.14, 0]],
+    ] as const) {
+      const arena = createBattleArena(biome);
+      const environment = createRawModel(rawSize, rawCenter);
+      const stage = createRawModel([0.254, 0.014862, 0.254], [0, 0.006333, 0]);
+
+      attachBattleArenaModel(arena, environment);
+      attachBattleArenaStageModel(arena, stage);
+
+      const fittedEnvironment = arena.romModel;
+      const fittedStage = arena.romStage;
+      if (!fittedEnvironment || !fittedStage) throw new Error(`${biome}: camada ROM ausente`);
+      expect(fittedEnvironment.scale.x).toBeCloseTo(0.01);
+      expect(fittedEnvironment.position.toArray()).toEqual([0, 0, 0]);
+      expect(fittedStage.position.x).toBeCloseTo(0);
+      expect(fittedStage.position.z).toBeCloseTo(0);
+      expect(new THREE.Box3().setFromObject(fittedEnvironment).getSize(new THREE.Vector3()).x).toBeGreaterThan(12);
+      expect(new THREE.Box3().setFromObject(fittedStage).getSize(new THREE.Vector3()).x).toBeCloseTo(12);
+      expect(new THREE.Box3().setFromObject(fittedStage).min.y).toBeCloseTo(0);
+    }
+  });
+
   it('classifica as quatro famílias ambientais de arena a partir da zona', () => {
     expect(resolveBattleArenaBiome('Route 101', 'zone_0023')).toBe('grass');
     expect(resolveBattleArenaBiome('Route 109', 'zone_0032')).toBe('water');
@@ -225,3 +252,11 @@ describe('battleArena', () => {
     expect(camera.position.distanceTo(idlePosition)).toBeLessThan(0.0001);
   });
 });
+
+function createRawModel(size: readonly [number, number, number], center: readonly [number, number, number]): THREE.Group {
+  const model = new THREE.Group();
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshBasicMaterial());
+  mesh.position.set(...center);
+  model.add(mesh);
+  return model;
+}

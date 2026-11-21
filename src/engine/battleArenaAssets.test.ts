@@ -22,7 +22,7 @@ describe('battleArena ROM assets', () => {
     expect(battleArenaStageModelUrl('indoor')).toBeNull();
   });
 
-  it('fits ROM arena layers and hides procedural ground/platforms after the ROM stage loads', () => {
+  it('keeps native ROM environment origin and fits stage layers to the battle field', () => {
     for (const biome of ['grass', 'water', 'cave', 'gym'] as const) {
       const arena = createBattleArena(biome);
       const model = createModel();
@@ -34,9 +34,10 @@ describe('battleArena ROM assets', () => {
       expect(arena.romModel, `${biome} ROM model`).not.toBeNull();
       expect(arena.romStage, `${biome} ROM stage`).not.toBeNull();
       expect(arena.romModel?.parent).toBe(arena.group);
-      expect(arena.romModel?.scale.x).toBeCloseTo(1.2);
-      expect(arena.romModel?.position.x).toBeCloseTo(-3.6);
+      expect(arena.romModel?.scale.x).toBeCloseTo(0.01);
+      expect(arena.romModel?.position.x).toBe(0);
       expect(arena.romModel?.position.y).toBe(0);
+      expect(arena.romModel?.position.z).toBe(0);
       expect(arena.romStage?.scale.x).toBeCloseTo(1.2);
       expect(arena.romStage?.position.x).toBeCloseTo(-3.6);
       expect(arena.romStage?.position.y).toBeCloseTo(-4.8);

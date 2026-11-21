@@ -25,7 +25,7 @@ Responsável por extrair as partições proprietárias (`RomFS`, `ExeFS`) da ROM
 
 ## Estado atual
 
-- O extrator de arenas abre os pacotes BG dos slots 44/78 e 118/125/136/139 de `a/1/3/6`, valida BCH/tag embutidos e converte cinco biomas mais quatro camadas `O`; GLBs/PNGs continuam locais e ignorados. Capturas Chromium de cave/gym ainda mostram oclusões e composição parcial, pendentes de comparação visual com o emulador (P-014).
+- O extrator de arenas abre os pacotes BG dos slots 44/78 e 118/125/136/139 de `a/1/3/6`, valida BCH/tag embutidos e converte cinco biomas mais quatro camadas `O`; GLBs/PNGs continuam locais e ignorados. Ambientes `F/G` ficam na origem ROM com escala `0.01`; camadas `O` são ajustadas ao diâmetro de batalha. Capturas Chromium mostram cave/gym e os dois Pokémon sem obstrução de primeiro plano, mas iluminação e composição ainda precisam de comparação Azahar (P-014).
 
 - ROM `.3ds` (`2.0G`) disponível localmente em `rom/` (ignorada pelo Git).
 - `ctrtool` instalado em `/usr/local/bin/ctrtool` (`P-001` fechada).
